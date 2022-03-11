@@ -45,11 +45,10 @@ Before we jump to creating application it is important to define a few terms
 which are the key to understand new classes.
 
 1. `TealDataset` and `TealDatasetConnector` - `TealDataset` is a class which contains physical
-data in form of `data.frame` plus reproducible code. `TealDatasetConnector` is a
+data in the form of a single `data.frame` plus reproducible code. `TealDatasetConnector` is a
 class which contains R call to obtain `TealDataset`.
 
-2. `data.frame`, `TealDataset` and `TealData`- object of class `TealDataset` contains
-a single `data.frame` object. `TealData` is a collection of `TealDataset` objects.
+2. `TealData` is a collection of `TealDataset` objects.
 
 ## Creating an app
 
@@ -81,10 +80,14 @@ cat(fun$get_call())
 
 It's also possible to execute `fun$run()` function with arguments added on the fly
 in a named `list`. Dynamic arguments won't be reflected in the reproducible code,
-what will have a consequences in other places - we will get back to this in later
+which will have consequences in other places - we will get back to this in later
 stages of the documentation.
 
 ```{r}
+
+# initialize object
+fun <- callable_function(fun = synthetic_cdisc_dataset)
+
 # add arguments on the fly
 df <- fun$run(args = list(dataset_name = "adae", name = "latest"))
 head(df)
@@ -95,9 +98,9 @@ cat(fun$get_call())
 
 `CallableFunction` can also depend on other R objects as the example function below
 depends on `ADSL`. The function can be executed in specific environment where we can
-copy objects needed to execute call. To include object in the function call,
+copy objects needed to execute a call. To include objects in the function call,
 one has to use `$assign_to_env()` to copy object and
-`$set_args(list(ADSL = as.symbol(ADSL)))` to link object with function argument.
+`$set_args(list(ADSL = as.name(ADSL)))` to link object with function argument.
 
 ```{r}
 adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
@@ -124,17 +127,18 @@ fun$get_call()
 ### `CallableCode`
 
 Simpler version of `Callable` class is `CallableCode`. Similarly to `CallableFunction`,
-`CallableCode` stores some code which can be evaluated using `run()` but it
-isn't able to use dynamic arguments to have the code more general. `CallableCode`
-also allows the assignment of objects to an independent environment. `CallableCode` can
-contain multiple lines code and also allows `library` calls.
+`CallableCode` stores code which can be evaluated using `run()` but it
+isn't able to use dynamic arguments to make the code more general. `CallableCode`
+also allows the assignment of objects to its environment. `CallableCode` can
+contain multiple lines (commands) of code and also allows `library` calls.
 Please note that objects assigned to this independent environment can't be modified
-because they are locked immediately. This means that in `CallableCode` created
-below it is not allowed to make any changes in `ADSL`.
+because they are locked immediately. This means that the `CallableCode` created
+below is not allowed to make any changes in `ADSL`.
 
 ```{r}
 code <- callable_code(
-  "ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
+  "library(scda)
+  ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
   ADTTE$x1 <- 1
   ADTTE <- dplyr::filter(ADTTE, PARAMCD %in% c('EFS', 'OS'))"
 )
@@ -152,15 +156,14 @@ head(df)
 
 ### `TealDataset` (including `CDISCTealDataset`)
 
-`TealDataset` object is an R6 class which keeps a `data.frame` in its `raw_data` slot. One
+`TealDataset` is an R6 class which keeps a `data.frame` in its `raw_data` slot. One
 can create a `TealDataset` by including `data.frame` and setting data attributes. In
 the example below we first create `adsl` and then put this `data.frame` into the
-`cdisc_dataset` function. Together with `data.frame` one should always provide a
-`dataname` and `code` to reproduce the data. For irreproducible apps `code`
-can be omitted.
+`cdisc_dataset` function. Together with `data.frame` one should also provide a
+`dataname` and optional `code` to reproduce the data if reproducibility is required.
 
-Note `cdisc_dataset` returns an object of `CDISCTealDataset` (inherited from `TealDataset`) which
-allows datasets to have parents and is needed for CDISC analysis.
+Note `cdisc_dataset` returns an object of `CDISCTealDataset` (inherited from `TealDataset`,
+allowing datasets to have parents), which is needed for CDISC analysis.
 
 ```{r}
 library(magrittr)
@@ -196,10 +199,10 @@ adsl_dataset$get_keys()
 
 ### `TealDatasetConnector` (including `CDISCTealDatasetConnector`)
 
-`TealDatasetConnector` contains `Callable` object to obtain a single dataset along
+`TealDatasetConnector` contains a `Callable` object to obtain a single dataset along
 with other information such as keys, dataname, label and reproducible code. In
-the code chunk below, connector is created basing on `synthetic_cdisc_dataset`
-function
+the code chunk below, a connector is created basing on `synthetic_cdisc_dataset`
+function.
 
 ```{r}
 adsl_conn <- dataset_connector(
@@ -211,9 +214,15 @@ adsl_conn <- dataset_connector(
 )
 ```
 
-Initially, `adsl_conn` doesn't contain any data, but they can be loaded using
-`load_dataset()` function. Before data loading, `adsl_conn` contains reproducible
-code which is also an execution code to pull the data.
+Initially, `adsl_conn` doesn't contain any data. Attempting to fetch unavailable data will produce an error.
+
+```{r eval=FALSE}
+# get raw data
+get_raw_data(adsl_conn)
+```
+
+Data can be loaded using `load_dataset()` function. Before data loading, `adsl_conn` contains reproducible
+code which is also the code to pull the data.
 
 ```{r}
 # execution/reproducible code
@@ -226,14 +235,15 @@ load_dataset(adsl_conn)
 get_raw_data(adsl_conn)
 ```
 
-`teal.data` also allows other variables to be passed to the connector which `Callable` object
-can depend on. In the code below, one can add an `adsl`
-object created above and `set_args` to `CallableFunction`. To properly link
-`ADSL` argument several parameters have to match:
-1. `dataname` of `adsl` should be `"ADSL"`
-2. `vars = list(ADSL = adsl)` - `adsl` object should be passed to vars as a list
-element with name `ADSL`.
-3. Value of the `ADSL` argument in the `CallableFunction` has to be `as.name("ADSL")`.
+`TealDatasetConnector` also allows other variables to be passed to its `Callable` object that may depend on them.
+In the code below the `adsl_raw` object - created above - is added to the `CallableFunction`.
+To properly link the `ADSL` argument of the function inside the `CallableFunction` object with the raw data `adsl_raw`
+several parameters have to match:
+1. `as.name("dummy_name")` must be the value with name `"ADSL"` - `set_args(list(ADSL = as.name("dummy_name")))`
+2. and then `dummy_name` must be linked with the raw data `adsl_raw` - `vars = list(dummy_name = adsl_raw)`
+
+The name `ADSL` is fixed because it is the name of the argument of the function inside of the `CallableFunction`.
+The name `dummy_name` can be free to be any valid `R` name.
 
 ```{r eval=TRUE}
 # here we use the general dataset_connector function which pulls an object of type TealDataset
@@ -241,10 +251,10 @@ element with name `ADSL`.
 adsl_2 <- dataset_connector(
   dataname = "ADSL_2",
   pull_callable = callable_function(fun = function(ADSL) ADSL_2 <- ADSL) %>% # nolint
-    set_args(list(ADSL = as.name("ADSL"))),
+    set_args(list(ADSL = as.name("dummy_name"))),
   keys = get_cdisc_keys("ADSL"),
   label = "Example label",
-  vars = list(ADSL = adsl_raw)
+  vars = list(dummy_name = adsl_raw)
 )
 
 load_dataset(adsl_2)
@@ -424,7 +434,7 @@ what kind of connectors are set within, but one must be aware that it should
 rather contain similar connectors (i.e. calling functions which share some arguments).
 For example, if we execute `data$set_pull_args(args = list(name = "latest"))`, this
 argument will be set for all connectors. In case when one connector contains
-`CallableFunction` which doesn't have `seed` in its formals then it will fail.
+`CallableFunction` which doesn't have `name` in its formals then it will fail.
 `CallableCode` can't hold any additional arguments as it's fixed and it will
 ignore every arguments set with `set_pull_args`.
 
@@ -477,24 +487,27 @@ data$set_ui(
 
 data$set_server(
   function(id, connection, connectors) {
-    # opens connection
-    if (!is.null(connection$get_open_server())) {
-      connection$get_open_server()(
-        id = "open_connection",
-        connection = connection
-      )
-    }
-
-    for (connector in connectors) {
-      # set_args before to return them in the code (fixed args)
-      set_args(connector, args = list(name = input$name))
-
-      # pull each dataset
-      connector$get_server()(id = connector$get_dataname())
-      if (connector$is_failed()) {
-        break
+    moduleServer(
+      id = id,
+      module = function(input, output, session) {
+        # opens connection
+        if (!is.null(connection$get_open_server())) {
+          connection$get_open_server()(
+            id = "open_connection",
+            connection = connection
+          )
+        }
+        for (connector in connectors) {
+          # set_args before to return them in the code (fixed args)
+          set_args(connector, args = list(name = input$name))
+          # pull each dataset
+          connector$get_server()(id = connector$get_dataname())
+          if (connector$is_failed()) {
+            break
+          }
+        }
       }
-    }
+    )
   }
 )
 ```
@@ -554,7 +567,7 @@ correctly. Unlike the other connectors, this class lacks `pull()` method.
 data$launch()
 ```
 
-Reproducible code attached to the `data` object is a combined code of all components,
+Reproducible code attached to the `data` object is combined code of all components,
 but one can also extract code from single dataset by specifying `dataname` argument.
 
 ```{r}
@@ -628,8 +641,7 @@ cat(get_code(data))
 cat(get_code(data, dataname = "ADSL"))
 ```
 
-One can also combine multiple `mutate_dataset` calls applied interchangeably to
-all datasets.
+One can also pipe multiple `mutate_dataset` calls applied on different datasets.
 
 ```{r}
 data <- mutate_dataset(data, code = "ADTTE$x4 <- 4", dataname = "ADTTE") %>%
