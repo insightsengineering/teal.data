@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">teal.data</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9002</span>
       </span>
     </div>
 
@@ -57,15 +57,6 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<!-- start_releases -->
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-Other releases
-<span class="caret"></span></a><ul class="dropdown-menu" role="menu">
-   <li><a href="../index.html">latest</a></li>
-   <li><a href="..//index.html"></a></li>
-</ul></li>
-<!-- end_releases -->
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -91,7 +82,7 @@ Other releases
                         <h4 data-toc-skip class="author">Dawid
 Kałędkowski</h4>
             
-            <h4 data-toc-skip class="date">2022-03-10</h4>
+            <h4 data-toc-skip class="date">2022-03-14</h4>
       
       
       <div class="hidden name"><code>teal.data.Rmd</code></div>
@@ -134,14 +125,12 @@ two-staged:</p>
 few terms which are the key to understand new classes.</p>
 <ol style="list-style-type: decimal">
 <li><p><code>TealDataset</code> and <code>TealDatasetConnector</code> -
-<code>TealDataset</code> is a class which contains physical data in form
-of <code>data.frame</code> plus reproducible code.
+<code>TealDataset</code> is a class which contains physical data in the
+form of a single <code>data.frame</code> plus reproducible code.
 <code>TealDatasetConnector</code> is a class which contains R call to
 obtain <code>TealDataset</code>.</p></li>
-<li><p><code>data.frame</code>, <code>TealDataset</code> and
-<code>TealData</code>- object of class <code>TealDataset</code> contains
-a single <code>data.frame</code> object. <code>TealData</code> is a
-collection of <code>TealDataset</code> objects.</p></li>
+<li><p><code>TealData</code> is a collection of <code>TealDataset</code>
+objects.</p></li>
 </ol>
 </div>
 <div class="section level2">
@@ -224,11 +213,15 @@ before.</p>
 <span class="co">#&gt; scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span></code></pre></div>
 <p>It’s also possible to execute <code>fun$run()</code> function with
 arguments added on the fly in a named <code>list</code>. Dynamic
-arguments won’t be reflected in the reproducible code, what will have a
+arguments won’t be reflected in the reproducible code, which will have
 consequences in other places - we will get back to this in later stages
 of the documentation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># add arguments on the fly</span>
+<code class="sourceCode R">
+<span class="co"># initialize object</span>
+<span class="va">fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">synthetic_cdisc_dataset</span><span class="op">)</span>
+
+<span class="co"># add arguments on the fly</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">fun</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataset_name <span class="op">=</span> <span class="st">"adae"</span>, name <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
 <span class="co">#&gt;   STUDYID              USUBJID SUBJID SITEID AGE SEX  RACE COUNTRY DTHFL</span>
@@ -304,13 +297,13 @@ of the documentation.</p>
 
 <span class="co"># dynamic arguments not reflected in the call</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span></code></pre></div>
+<span class="co">#&gt; scda::synthetic_cdisc_dataset()</span></code></pre></div>
 <p><code>CallableFunction</code> can also depend on other R objects as
 the example function below depends on <code>ADSL</code>. The function
 can be executed in specific environment where we can copy objects needed
-to execute call. To include object in the function call, one has to use
-<code>$assign_to_env()</code> to copy object and
-<code>$set_args(list(ADSL = as.symbol(ADSL)))</code> to link object with
+to execute a call. To include objects in the function call, one has to
+use <code>$assign_to_env()</code> to copy object and
+<code>$set_args(list(ADSL = as.name(ADSL)))</code> to link object with
 function argument.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_dataset.html" class="external-link">synthetic_cdisc_dataset</a></span><span class="op">(</span>dataset_name <span class="op">=</span> <span class="st">"adsl"</span>, name <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span>
@@ -384,24 +377,26 @@ function argument.</p>
 </h3>
 <p>Simpler version of <code>Callable</code> class is
 <code>CallableCode</code>. Similarly to <code>CallableFunction</code>,
-<code>CallableCode</code> stores some code which can be evaluated using
-<code>run()</code> but it isn’t able to use dynamic arguments to have
+<code>CallableCode</code> stores code which can be evaluated using
+<code>run()</code> but it isn’t able to use dynamic arguments to make
 the code more general. <code>CallableCode</code> also allows the
-assignment of objects to an independent environment.
-<code>CallableCode</code> can contain multiple lines code and also
-allows <code>library</code> calls. Please note that objects assigned to
-this independent environment can’t be modified because they are locked
-immediately. This means that in <code>CallableCode</code> created below
-it is not allowed to make any changes in <code>ADSL</code>.</p>
+assignment of objects to its environment. <code>CallableCode</code> can
+contain multiple lines (commands) of code and also allows
+<code>library</code> calls. Please note that objects assigned to this
+independent environment can’t be modified because they are locked
+immediately. This means that the <code>CallableCode</code> created below
+is not allowed to make any changes in <code>ADSL</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_code.html">callable_code</a></span><span class="op">(</span>
-  <span class="st">"ADTTE &lt;- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
+  <span class="st">"library(scda)
+  ADTTE &lt;- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
   ADTTE$x1 &lt;- 1
   ADTTE &lt;- dplyr::filter(ADTTE, PARAMCD %in% c('EFS', 'OS'))"</span>
 <span class="op">)</span>
 
 <span class="co"># examine call</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">code</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; library(scda)</span>
 <span class="co">#&gt; ADTTE &lt;- synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest")</span>
 <span class="co">#&gt; ADTTE$x1 &lt;- 1</span>
 <span class="co">#&gt; ADTTE &lt;- dplyr::filter(ADTTE, PARAMCD %in% c("EFS", "OS"))</span>
@@ -434,18 +429,18 @@ it is not allowed to make any changes in <code>ADSL</code>.</p>
 <code>TealDataset</code> (including
 <code>CDISCTealDataset</code>)<a class="anchor" aria-label="anchor" href="#tealdataset-including-cdisctealdataset"></a>
 </h3>
-<p><code>TealDataset</code> object is an R6 class which keeps a
+<p><code>TealDataset</code> is an R6 class which keeps a
 <code>data.frame</code> in its <code>raw_data</code> slot. One can
 create a <code>TealDataset</code> by including <code>data.frame</code>
 and setting data attributes. In the example below we first create
 <code>adsl</code> and then put this <code>data.frame</code> into the
 <code>cdisc_dataset</code> function. Together with
-<code>data.frame</code> one should always provide a
-<code>dataname</code> and <code>code</code> to reproduce the data. For
-irreproducible apps <code>code</code> can be omitted.</p>
+<code>data.frame</code> one should also provide a <code>dataname</code>
+and optional <code>code</code> to reproduce the data if reproducibility
+is required.</p>
 <p>Note <code>cdisc_dataset</code> returns an object of
-<code>CDISCTealDataset</code> (inherited from <code>TealDataset</code>)
-which allows datasets to have parents and is needed for CDISC
+<code>CDISCTealDataset</code> (inherited from <code>TealDataset</code>,
+allowing datasets to have parents), which is needed for CDISC
 analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
@@ -497,11 +492,11 @@ which can be extracted in any occasion.</p>
 <code>TealDatasetConnector</code> (including
 <code>CDISCTealDatasetConnector</code>)<a class="anchor" aria-label="anchor" href="#tealdatasetconnector-including-cdisctealdatasetconnector"></a>
 </h3>
-<p><code>TealDatasetConnector</code> contains <code>Callable</code>
+<p><code>TealDatasetConnector</code> contains a <code>Callable</code>
 object to obtain a single dataset along with other information such as
-keys, dataname, label and reproducible code. In the code chunk below,
+keys, dataname, label and reproducible code. In the code chunk below, a
 connector is created basing on <code>synthetic_cdisc_dataset</code>
-function</p>
+function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl_conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
@@ -510,11 +505,15 @@ function</p>
   keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,
   label <span class="op">=</span> <span class="st">"Subject-Level Analysis Dataset"</span>
 <span class="op">)</span></code></pre></div>
-<p>Initially, <code>adsl_conn</code> doesn’t contain any data, but they
-can be loaded using <code><a href="../reference/load_dataset.html">load_dataset()</a></code> function. Before data
-loading, <code>adsl_conn</code> contains reproducible code which is also
-an execution code to pull the data.</p>
+<p>Initially, <code>adsl_conn</code> doesn’t contain any data.
+Attempting to fetch unavailable data will produce an error.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get raw data</span>
+<span class="fu"><a href="../reference/get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">adsl_conn</span><span class="op">)</span></code></pre></div>
+<p>Data can be loaded using <code><a href="../reference/load_dataset.html">load_dataset()</a></code> function. Before
+data loading, <code>adsl_conn</code> contains reproducible code which is
+also the code to pull the data.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># execution/reproducible code</span>
 <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adsl_conn</span><span class="op">)</span>
 <span class="co">#&gt; [1] "ADSL &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"</span>
@@ -544,27 +543,33 @@ an execution code to pull the data.</p>
 <span class="co">#&gt; <span style="color: #949494;">#   EOTSTT &lt;fct&gt;, EOSDT &lt;date&gt;, EOSDY &lt;int&gt;, DCSREAS &lt;fct&gt;, DTHDT &lt;date&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   DTHCAUS &lt;fct&gt;, DTHCAT &lt;fct&gt;, LDDTHELD &lt;int&gt;, LDDTHGR1 &lt;fct&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   LSTALVDT &lt;date&gt;, study_duration_secs &lt;dbl&gt;</span></span></code></pre></div>
-<p><code>teal.data</code> also allows other variables to be passed to
-the connector which <code>Callable</code> object can depend on. In the
-code below, one can add an <code>adsl</code> object created above and
-<code>set_args</code> to <code>CallableFunction</code>. To properly link
-<code>ADSL</code> argument several parameters have to match: 1.
-<code>dataname</code> of <code>adsl</code> should be <code>"ADSL"</code>
-2. <code>vars = list(ADSL = adsl)</code> - <code>adsl</code> object
-should be passed to vars as a list element with name <code>ADSL</code>.
-3. Value of the <code>ADSL</code> argument in the
-<code>CallableFunction</code> has to be
-<code>as.name("ADSL")</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><code>TealDatasetConnector</code> also allows other variables to be
+passed to its <code>Callable</code> object that may depend on them. In
+the code below the <code>adsl_raw</code> object - created above - is
+added to the <code>CallableFunction</code>. To properly link the
+<code>ADSL</code> argument of the function inside the
+<code>CallableFunction</code> object with the raw data
+<code>adsl_raw</code> several parameters have to match: 1.
+<code>as.name("dummy_name")</code> must be the value with name
+<code>"ADSL"</code> -
+<code>set_args(list(ADSL = as.name("dummy_name")))</code> 2. and then
+<code>dummy_name</code> must be linked with the raw data
+<code>adsl_raw</code> -
+<code>vars = list(dummy_name = adsl_raw)</code></p>
+<p>The name <code>ADSL</code> is fixed because it is the name of the
+argument of the function inside of the <code>CallableFunction</code>.
+The name <code>dummy_name</code> can be free to be any valid
+<code>R</code> name.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># here we use the general dataset_connector function which pulls an object of type TealDataset</span>
 <span class="co"># there is also a cdisc_dataset_connector function which pulls an object of type CDISCTealDataset</span>
 <span class="va">adsl_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL_2"</span>,
   pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">ADSL</span><span class="op">)</span> <span class="va">ADSL_2</span> <span class="op">&lt;-</span> <span class="va">ADSL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># nolint</span>
-    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ADSL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/name.html" class="external-link">as.name</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ADSL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/name.html" class="external-link">as.name</a></span><span class="op">(</span><span class="st">"dummy_name"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
   keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,
   label <span class="op">=</span> <span class="st">"Example label"</span>,
-  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ADSL <span class="op">=</span> <span class="va">adsl_raw</span><span class="op">)</span>
+  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dummy_name <span class="op">=</span> <span class="va">adsl_raw</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="fu"><a href="../reference/load_dataset.html">load_dataset</a></span><span class="op">(</span><span class="va">adsl_2</span><span class="op">)</span></code></pre></div>
@@ -576,7 +581,7 @@ By default shiny app won’t render any inputs for datasets until we
 specify them. To set inputs we should use <code>$set_ui_input()</code>,
 by passing ui module function, with <code>ns</code> argument
 (<code>shiny</code> namespace ID object).</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL_3"</span>,
   pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">n</span><span class="op">)</span> <span class="va">ADSL_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># nolint</span>
@@ -606,7 +611,7 @@ arguments.</p>
 below, a <code>TealDataConnection</code>uses
 <code>rice_session_open</code> and <code>rice_session_close</code>
 functions.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="st">"rice"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/parse.html" class="external-link">parse</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"library(rice)"</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
@@ -635,7 +640,7 @@ or other sensitive information. In code below <code>username</code> is
 set (and stored) to the open function and <code>password</code> is a
 dynamic argument not included in <code>rice_conn$get_open_call()</code>
 output.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set open args</span>
 <span class="va">rice_conn</span><span class="op">$</span><span class="fu">set_open_args</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>username <span class="op">=</span> <span class="st">"your username"</span><span class="op">)</span><span class="op">)</span>
 
@@ -662,7 +667,7 @@ customize UI inputs to open the connection using
 <code>set_open_server()</code>. It’s important to keep in mind that the
 server module needs a connection as a argument to <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">open()</a></code>
 and <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">close()</a></code> if needed.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rice_conn</span><span class="op">$</span><span class="fu">set_open_ui</span><span class="op">(</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">ns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/NS.html" class="external-link">NS</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
@@ -705,7 +710,7 @@ connection and to load data. Below we create two
 <code>TealDatasetConnector</code> objects and a
 <code>TealDataConnection</code> and we combine them together in a
 <code>TealDataConnector</code> object.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create TealDatasetConnectors</span>
 <span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
@@ -752,11 +757,11 @@ arguments). For example, if we execute
 <code>data$set_pull_args(args = list(name = "latest"))</code>, this
 argument will be set for all connectors. In case when one connector
 contains <code>CallableFunction</code> which doesn’t have
-<code>seed</code> in its formals then it will fail.
+<code>name</code> in its formals then it will fail.
 <code>CallableCode</code> can’t hold any additional arguments as it’s
 fixed and it will ignore every arguments set with
 <code>set_pull_args</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; library(package = "scda")</span>
 <span class="co">#&gt; ADSL &lt;- scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
@@ -780,7 +785,7 @@ interface by adding a text input which will be passed to the
 <code>scda_conn</code> and <code>connectors</code> object while the
 server module requires <code>connectors</code> and
 <code>connection</code> objects as additional arguments.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span><span class="op">$</span><span class="fu">set_ui</span><span class="op">(</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">id</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">ns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/NS.html" class="external-link">NS</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
@@ -807,30 +812,33 @@ server module requires <code>connectors</code> and
 
 <span class="va">data</span><span class="op">$</span><span class="fu">set_server</span><span class="op">(</span>
   <span class="kw">function</span><span class="op">(</span><span class="va">id</span>, <span class="va">connection</span>, <span class="va">connectors</span><span class="op">)</span> <span class="op">{</span>
-    <span class="co"># opens connection</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">connection</span><span class="op">$</span><span class="fu">get_open_server</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">connection</span><span class="op">$</span><span class="fu">get_open_server</span><span class="op">(</span><span class="op">)</span><span class="op">(</span>
-        id <span class="op">=</span> <span class="st">"open_connection"</span>,
-        connection <span class="op">=</span> <span class="va">connection</span>
-      <span class="op">)</span>
-    <span class="op">}</span>
-
-    <span class="kw">for</span> <span class="op">(</span><span class="va">connector</span> <span class="kw">in</span> <span class="va">connectors</span><span class="op">)</span> <span class="op">{</span>
-      <span class="co"># set_args before to return them in the code (fixed args)</span>
-      <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="va">connector</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>
-
-      <span class="co"># pull each dataset</span>
-      <span class="va">connector</span><span class="op">$</span><span class="fu">get_server</span><span class="op">(</span><span class="op">)</span><span class="op">(</span>id <span class="op">=</span> <span class="va">connector</span><span class="op">$</span><span class="fu">get_dataname</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-      <span class="kw">if</span> <span class="op">(</span><span class="va">connector</span><span class="op">$</span><span class="fu">is_failed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="kw">break</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/moduleServer.html" class="external-link">moduleServer</a></span><span class="op">(</span>
+      id <span class="op">=</span> <span class="va">id</span>,
+      module <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
+        <span class="co"># opens connection</span>
+        <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">connection</span><span class="op">$</span><span class="fu">get_open_server</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+          <span class="va">connection</span><span class="op">$</span><span class="fu">get_open_server</span><span class="op">(</span><span class="op">)</span><span class="op">(</span>
+            id <span class="op">=</span> <span class="st">"open_connection"</span>,
+            connection <span class="op">=</span> <span class="va">connection</span>
+          <span class="op">)</span>
+        <span class="op">}</span>
+        <span class="kw">for</span> <span class="op">(</span><span class="va">connector</span> <span class="kw">in</span> <span class="va">connectors</span><span class="op">)</span> <span class="op">{</span>
+          <span class="co"># set_args before to return them in the code (fixed args)</span>
+          <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="va">connector</span>, args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>
+          <span class="co"># pull each dataset</span>
+          <span class="va">connector</span><span class="op">$</span><span class="fu">get_server</span><span class="op">(</span><span class="op">)</span><span class="op">(</span>id <span class="op">=</span> <span class="va">connector</span><span class="op">$</span><span class="fu">get_dataname</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+          <span class="kw">if</span> <span class="op">(</span><span class="va">connector</span><span class="op">$</span><span class="fu">is_failed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+            <span class="kw">break</span>
+          <span class="op">}</span>
+        <span class="op">}</span>
       <span class="op">}</span>
-    <span class="op">}</span>
+    <span class="op">)</span>
   <span class="op">}</span>
 <span class="op">)</span></code></pre></div>
 <p>Executing <code>data$launch()</code> will open shiny application.
 Remember that data can be loaded only once, in case you run above code
 please reinitialize datasets, connection and data object again.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># if datasets have been pulled already</span>
 <span class="co">#  - reinitialize datasets and data object again</span>
 <span class="va">data</span><span class="op">$</span><span class="fu">launch</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -846,7 +854,7 @@ creating apps to analyze CDISC data. These objects are created using
 <code>teal_data</code> and <code>cdisc_data</code> respectively. When
 using the <code>teal</code> package these objects can be passed as the
 <code>data</code> argument into <code>init</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span>
     dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
@@ -865,7 +873,7 @@ application. <code>TealData</code> gathers all objects and sets combined
 UI with shiny inputs from all objects. In the code chunk below we
 specified four dataset connectors but developers can include any number
 and any type of objects.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="st">"adsl"</span><span class="op">)</span>
 <span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="st">"adae"</span><span class="op">)</span>
 <span class="va">advs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADVS"</span>, <span class="st">"advs"</span><span class="op">)</span>
@@ -875,12 +883,12 @@ and any type of objects.</p>
 <p>Similar to other connectors one can use <code>launch()</code> method
 to investigate if data is set correctly. Unlike the other connectors,
 this class lacks <code>pull()</code> method.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span><span class="op">$</span><span class="fu">launch</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Reproducible code attached to the <code>data</code> object is a
+<p>Reproducible code attached to the <code>data</code> object is
 combined code of all components, but one can also extract code from
 single dataset by specifying <code>dataname</code> argument.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "ADSL &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")\nADAE &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", name = \"latest\")\nADVS &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", name = \"latest\")\nADTTE &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")"</span>
 <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span>
@@ -889,7 +897,7 @@ single dataset by specifying <code>dataname</code> argument.</p>
 <span class="co">#&gt; [1] "ADTTE &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")"</span></code></pre></div>
 <p>Developers can also extract datasets and connectors included in the
 <code>TealData</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get loaded datasets</span>
 <span class="va">data</span><span class="op">$</span><span class="fu">get_datasets</span><span class="op">(</span><span class="op">)</span>
 
@@ -910,7 +918,7 @@ there are dedicated functions to allow dataset mutations. To modify a
 single dataset one should use <code>mutate_dataset</code> by specifying
 <code>code</code> argument with code as a single character or
 <code>script</code> with location of the script file.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
   <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_dataset.html" class="external-link">synthetic_cdisc_dataset</a></span><span class="op">(</span>dataset_name <span class="op">=</span> <span class="st">"adsl"</span>, name <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span>,
@@ -926,7 +934,7 @@ single dataset one should use <code>mutate_dataset</code> by specifying
 <p><code><a href="../reference/get_code.html">get_code()</a></code> function returns loading code from
 <code>CallableFunction</code> and mutation code as provided in using
 <code>mutate_dataset</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ADSL &lt;- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
 <span class="co">#&gt; ADSL$x1 &lt;- 1</span>
@@ -943,7 +951,7 @@ below, where we create data containing two datasets using the
 datasets, with one requirement - one needs to specify
 <code>dataname</code>. Afterwards, one can extract reproducible code
 from data which affects this particular <code>dataname</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span><span class="va">adsl</span>, <span class="va">adtte</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span>code <span class="op">=</span> <span class="st">"ADSL$x3 &lt;- 3"</span>, dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span>
 
@@ -960,9 +968,9 @@ from data which affects this particular <code>dataname</code>.</p>
 <span class="co">#&gt; ADSL &lt;- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
 <span class="co">#&gt; ADSL$x1 &lt;- 1</span>
 <span class="co">#&gt; ADSL$x3 &lt;- 3</span></code></pre></div>
-<p>One can also combine multiple <code>mutate_dataset</code> calls
-applied interchangeably to all datasets.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<p>One can also pipe multiple <code>mutate_dataset</code> calls applied
+on different datasets.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="va">data</span>, code <span class="op">=</span> <span class="st">"ADTTE$x4 &lt;- 4"</span>, dataname <span class="op">=</span> <span class="st">"ADTTE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span>code <span class="op">=</span> <span class="st">"ADSL &lt;- dplyr::filter(ADSL, SEX == 'F')"</span>, dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span>
 
@@ -980,7 +988,7 @@ can link them in the same way how we link
 <code>TealDatasetConnector</code> objects. If object code is dependent
 on another, as ADTTE depends on ADSL below, <code>get_code</code> will
 return everything we need to be executed to reproduce this dataset.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span>
   <span class="va">data</span>,
   code <span class="op">=</span> <span class="st">"ADTTE &lt;- filter(ADTTE, USUBJID %in% ADSL$USUBJID)"</span>,
@@ -1005,7 +1013,7 @@ be easily subset by <code>dataname</code>, but developers can also use
 <code>dataname</code> to be specified. When <code>mutate_data</code> is
 used, code for a single dataset is not possible to be subset, instead
 code of all datasets is returned.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mutate_data.html">mutate_data</a></span><span class="op">(</span><span class="va">data</span>,
   code <span class="op">=</span> <span class="st">"
     ADSL$x3 &lt;- 3
@@ -1033,7 +1041,7 @@ code of all datasets is returned.</p>
 <h3 id="teal-data-in-shiny-app">
 <code>teal.data</code> in shiny app<a class="anchor" aria-label="anchor" href="#teal-data-in-shiny-app"></a>
 </h3>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="st">"adsl"</span><span class="op">)</span>
 <span class="va">adrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADRS"</span>, <span class="st">"adrs"</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset.html">dataset</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, code <span class="op">=</span> <span class="st">"x &lt;- data.frame(x = 1, b = 2)"</span><span class="op">)</span>
@@ -1067,8 +1075,8 @@ code of all datasets is returned.</p>
   <span class="op">}</span>
 <span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Listening on http://127.0.0.1:4186</span></code></pre></div>
-<p><img src="teal.data_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
+<span class="co">#&gt; Listening on http://127.0.0.1:7073</span></code></pre></div>
+<p><img src="teal.data_files/figure-html/unnamed-chunk-30-1.png" width="700"></p>
 </div>
 </div>
   </div>
