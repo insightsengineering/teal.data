@@ -39,7 +39,8 @@ within another dataset.}
 }
 \examples{
 # Simple example
-mae_d <- dataset("MAE", MultiAssayExperiment::miniACC)
+utils::data(miniACC, package = "MultiAssayExperiment")
+mae_d <- dataset("MAE", miniACC)
 mae_d$get_dataname()
 mae_d$get_dataset_label()
 mae_d$get_code()

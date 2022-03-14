@@ -73,9 +73,10 @@ should be atomic and length one.}
 }
 \examples{
 # Simple example
+utils::data(miniACC, package = "MultiAssayExperiment")
 mae_d <- dataset(
   "MAE",
-  MultiAssayExperiment::miniACC,
+  miniACC,
   keys = c("STUDYID", "USUBJID"),
   metadata = list(type = "example")
 )

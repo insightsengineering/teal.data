@@ -261,9 +261,10 @@ MAETealDataset <- R6::R6Class( # nolint
 #'
 #' @examples
 #' # Simple example
+#' utils::data(miniACC, package = "MultiAssayExperiment")
 #' mae_d <- dataset(
 #'   "MAE",
-#'   MultiAssayExperiment::miniACC,
+#'   miniACC,
 #'   keys = c("STUDYID", "USUBJID"),
 #'   metadata = list(type = "example")
 #' )
@@ -310,7 +311,8 @@ dataset.MultiAssayExperiment <- function(dataname,
 #'
 #' @examples
 #' # Simple example
-#' mae_d <- dataset("MAE", MultiAssayExperiment::miniACC)
+#' utils::data(miniACC, package = "MultiAssayExperiment")
+#' mae_d <- dataset("MAE", miniACC)
 #' mae_d$get_dataname()
 #' mae_d$get_dataset_label()
 #' mae_d$get_code()
