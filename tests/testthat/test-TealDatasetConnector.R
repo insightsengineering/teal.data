@@ -4,11 +4,7 @@ library(scda)
 testthat::test_that("TealDatasetConnector", {
   fun <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
 
-  testthat::expect_error(
-    dataset_connector(pull_callable = fun),
-    "dataname"
-  )
-
+  testthat::expect_error(dataset_connector(pull_callable = fun), "dataname")
   testthat::expect_silent(
     x1 <- dataset_connector(
       dataname = "ADSL",
@@ -28,28 +24,11 @@ testthat::test_that("TealDatasetConnector", {
     as.list(as.call(parse(text = 'ADSL <- (function() synthetic_cdisc_data("latest")$adsl)()')))
   )
 
-  testthat::expect_error(
-    x1$get_dataset(),
-    "'ADSL' has not been pulled yet"
-  )
-
-  testthat::expect_error(
-    get_dataset(x1),
-    "'ADSL' has not been pulled yet"
-  )
-
-  testthat::expect_error(
-    x1$get_raw_data(),
-    "'ADSL' has not been pulled yet"
-  )
-
-
+  testthat::expect_error(x1$get_dataset(), "'ADSL' has not been pulled yet")
+  testthat::expect_error(get_dataset(x1), "'ADSL' has not been pulled yet")
+  testthat::expect_error(x1$get_raw_data(), "'ADSL' has not been pulled yet")
   testthat::expect_silent(x1$pull())
-
-  testthat::expect_true(
-    is(x1$get_dataset(), "TealDataset")
-  )
-
+  testthat::expect_true(inherits(x1$get_dataset(), "TealDataset"))
   testthat::expect_identical(
     get_keys(get_dataset(x1)),
     get_keys(x1)
@@ -79,8 +58,6 @@ testthat::test_that("TealDatasetConnector", {
     get_keys(get_dataset(x2))
   )
 
-
-
   fun <- callable_function(data.frame)
   fun$set_args(list(id = 1:3, marker = c(100, 1, 10), alive = TRUE))
   fun$set_args(list(new_feature = c(3, 4, 1)))
@@ -106,9 +83,7 @@ testthat::test_that("TealDatasetConnector", {
     m <- mutate_dataset(x3, "ADSL$newest2 <- 'best'")
   )
 
-  testthat::expect_true(
-    is(get_dataset(m), "TealDataset")
-  )
+  testthat::expect_true(inherits(get_dataset(m), "TealDataset"))
 
   testthat::expect_identical(
     m$get_raw_data(),
@@ -125,28 +100,14 @@ testthat::test_that("metadata for TealDatasetConnector can be Callable, list or 
   metadata_fun <- callable_function(function(a, b) list(A = a, B = b))
   metadata_fun$set_args(args = list(a = TRUE, b = 12))
 
-  testthat::expect_error(
-    dataset_connector("test", pull_fun, metadata = list(A = TRUE)),
-    NA
-  )
-
-  testthat::expect_error(
-    dataset_connector("test", pull_fun, metadata = NULL),
-    NA
-  )
-
-  testthat::expect_error(
-    dataset_connector("test", pull_fun, metadata = metadata_fun),
-    NA
-  )
+  testthat::expect_error(dataset_connector("test", pull_fun, metadata = list(A = TRUE)), NA)
+  testthat::expect_error(dataset_connector("test", pull_fun, metadata = NULL), NA)
+  testthat::expect_error(dataset_connector("test", pull_fun, metadata = metadata_fun), NA)
 })
 
 # Test conversions
 testthat::test_that("scda_dataset_connector", {
-  x <- scda_cdisc_dataset_connector(
-    dataname = "ADSL",
-    "adsl"
-  )
+  x <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
   x2 <- scda_dataset_connector(
     dataname = "ADSL",
     "adsl",
@@ -154,36 +115,22 @@ testthat::test_that("scda_dataset_connector", {
   ) %>%
     as_cdisc()
   testthat::expect_equal(x, x2)
-  testthat::expect_true(is(x, c("TealDatasetConnector", "R6")))
+  testthat::expect_true(inherits(x, "TealDatasetConnector"))
 
   testthat::expect_identical(
     x$.__enclos_env__$private$pull_callable$.__enclos_env__$private$fun_name,
     "scda::synthetic_cdisc_dataset"
   )
 
-  testthat::expect_identical(
-    x$get_dataname(),
-    "ADSL"
-  )
-
+  testthat::expect_identical(x$get_dataname(), "ADSL")
   testthat::expect_equal(
     x$get_code(),
     "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
   )
 
-  testthat::expect_silent(
-    load_dataset(x)
-  )
-
-  testthat::expect_identical(
-    x$get_raw_data(),
-    synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
-  )
-
-  testthat::expect_equal(
-    x$get_dataset()$get_metadata(),
-    list(type = "scda", version = "latest")
-  )
+  testthat::expect_silent(load_dataset(x))
+  testthat::expect_identical(x$get_raw_data(), synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest"))
+  testthat::expect_equal(x$get_dataset()$get_metadata(), list(type = "scda", version = "latest"))
 })
 
 testthat::test_that("rds_dataset_connector", {
@@ -203,21 +150,15 @@ testthat::test_that("rds_dataset_connector", {
   )
 
   testthat::expect_equal(x, x2)
-  testthat::expect_true(is(x, c("TealDatasetConnector", "R6")))
-
-  testthat::expect_equal(
-    x$get_code(),
-    "ADSL <- readRDS(file = \"./data_connectors/table.rds\")"
-  )
+  testthat::expect_true(inherits(x, "TealDatasetConnector"))
+  testthat::expect_equal(x$get_code(), "ADSL <- readRDS(file = \"./data_connectors/table.rds\")")
 })
 
 # test with unexpected input
 testthat::test_that("csv_dataset_connector not expected input", {
 
   # check error if csv file doesn't exist
-  testthat::expect_error(
-    csv_dataset_connector("ADSL", file = "not_exists.csv", keys = get_cdisc_keys("ADSL"))
-  )
+  testthat::expect_error(csv_dataset_connector("ADSL", file = "not_exists.csv", keys = get_cdisc_keys("ADSL")))
 
   # check error if args are named
   testthat::expect_error(
@@ -230,14 +171,8 @@ testthat::test_that("csv_dataset_connector not expected input", {
       "a"
     )
   )
-  testthat::expect_error(
-    csv_dataset_connector("ADSL", file = c("a", "b")),
-    "Assertion on 'file'"
-  )
-  testthat::expect_error(
-    csv_dataset_connector("ADSL", file = 1),
-    "Assertion on 'file'"
-  )
+  testthat::expect_error(csv_dataset_connector("ADSL", file = c("a", "b")), regexp = "Assertion on 'file'")
+  testthat::expect_error(csv_dataset_connector("ADSL", file = 1), regexp = "Assertion on 'file'")
 })
 
 # test with cdisc data input
@@ -455,11 +390,9 @@ testthat::test_that("script_dataset_connector", {
     sprintf("File %s does not exist.", wrong_file)
   )
 
-  testthat::expect_silent(load_dataset(x))
-
-  testthat::expect_true(is(get_dataset(x), c("TealDataset", "R6")))
-
-  testthat::expect_true(is(x$get_raw_data(), c("data.frame")))
+  load_dataset(x)
+  testthat::expect_true(inherits(get_dataset(x), "TealDataset"))
+  testthat::expect_true(inherits(x$get_raw_data(), "data.frame"))
 })
 
 testthat::test_that("script_cdisc_dataset_connector", {
@@ -474,16 +407,10 @@ testthat::test_that("script_cdisc_dataset_connector", {
     con = file_example
   )
 
-  x <- script_cdisc_dataset_connector(
-    dataname = "ADSL",
-    file = file_example
-  )
-
+  x <- script_cdisc_dataset_connector(dataname = "ADSL", file = file_example)
   testthat::expect_silent(load_dataset(x))
-
-  testthat::expect_true(is(get_dataset(x), c("TealDataset", "R6")))
-
-  testthat::expect_true(is(x$get_raw_data(), c("data.frame")))
+  testthat::expect_true(inherits(get_dataset(x), "TealDataset"))
+  testthat::expect_true(inherits(x$get_raw_data(), "data.frame"))
 })
 
 testthat::test_that("fun_cdisc_dataset_connector", {
@@ -521,16 +448,8 @@ testthat::test_that("fun_cdisc_dataset_connector", {
     x
   }
 
-  y_1 <- fun_cdisc_dataset_connector(
-    dataname = "ADSL",
-    fun = my_data_1
-  )
-
-  y_wrong <- fun_cdisc_dataset_connector(
-    dataname = "ADSL",
-    fun = my_data_wrong
-  )
-
+  y_1 <- fun_cdisc_dataset_connector(dataname = "ADSL", fun = my_data_1)
+  y_wrong <- fun_cdisc_dataset_connector(dataname = "ADSL", fun = my_data_wrong)
   y_1$pull()
 
   expect_equal(environmentName(environment(my_data_wrong)), environmentName(environment(my_data_1)))
@@ -571,10 +490,7 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
     con = file_example
   )
 
-  from_file <- code_dataset_connector(
-    dataname = "ADSL",
-    code = paste0(readLines(file_example), collapse = "\n")
-  )
+  from_file <- code_dataset_connector(dataname = "ADSL", code = paste0(readLines(file_example), collapse = "\n"))
 
   expect_equal(
     from_file$get_code(),
@@ -1080,7 +996,7 @@ testthat::test_that("TealDatasetConnector$get_join_keys returns an empty JoinKey
     pull_fun,
     code = "test_dc$tail_letters = tail(letters)"
   )
-  testthat::expect_true(is(t_dc$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(t_dc$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(t_dc$get_join_keys()$get()), 0)
 })
 
@@ -1098,7 +1014,7 @@ testthat::test_that("TealDatasetConnector$set_join_keys works independently", {
   testthat::expect_error(
     t_dc$set_join_keys(join_key("test_dc", "other_dataset", c("Sepal.Length" = "some_col2")))
   )
-  testthat::expect_true(is(t_dc$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(t_dc$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(t_dc$get_join_keys()$get()), 2)
 })
 
@@ -1113,7 +1029,7 @@ testthat::test_that("TealDatasetConnector$mutate_join_keys works independently",
   testthat::expect_silent(
     t_dc$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_col2"))
   )
-  testthat::expect_true(is(t_dc$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(t_dc$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(t_dc$get_join_keys()$get()), 2)
 })
 
@@ -1349,11 +1265,7 @@ testthat::test_that("if pulling metadata fails, dataset is still created but met
   metadata_fun$set_args(args = list(a = TRUE, b = 12))
   x <- dataset_connector("test", pull_fun, metadata = metadata_fun)
 
-  testthat::expect_output(
-    load_dataset(x),
-    "TealDatasetConnector\\$pull pulling metadata failed for dataset: test"
-  )
-
+  testthat::expect_output(load_dataset(x), "TealDatasetConnector\\$pull pulling metadata failed for dataset: test")
   testthat::expect_null(x$get_dataset()$get_metadata())
   testthat::expect_true(x$is_pulled())
 })
@@ -1366,11 +1278,7 @@ testthat::test_that("if pulled metadata is invalid, dataset is still created but
   metadata_fun$set_args(args = list(a = TRUE, b = 12))
   x <- dataset_connector("test", pull_fun, metadata = metadata_fun)
 
-  testthat::expect_output(
-    load_dataset(x),
-    "TealDatasetConnector\\$pull invalid metadata for dataset: test"
-  )
-
+  testthat::expect_output(load_dataset(x), "TealDatasetConnector\\$pull invalid metadata for dataset: test")
   testthat::expect_null(x$get_dataset()$get_metadata())
   testthat::expect_true(x$is_pulled())
 })
