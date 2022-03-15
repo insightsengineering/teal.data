@@ -66,16 +66,15 @@ get_key_duplicates.data.frame <- function(dataset, keys = NULL) { # nolint
 #' defined as two rows, which have the same values in columns defined by `keys`.
 #' Per each key value with duplicates returns a row in a `tibble`. The return table
 #' has columns corresponding to the variable names passed in `keys` and
-#' two additional columns: `row_no` and `duplicates_count`, which provide
+#' two additional columns: `rows` and `n`, which provide
 #' information about row numbers of the original dataframe, which contain duplicated keys
 #' and total duplicates counts.
 #'
 #' @param dataframe dataframe
-#' @param keys `character` list of variable names consisting the key to the `data.frame`
+#' @param keys `character` vector of variable names consisting the key to the `data.frame`
 #'
-#' @return `tibble` with a duplicate keys information summary
+#' @return `data.frame` with a duplicate keys information summary
 #'
-#' @importFrom rlang .data
 #' @keywords internal
 #'
 #' @examples
@@ -88,9 +87,8 @@ get_key_duplicates.data.frame <- function(dataset, keys = NULL) { # nolint
 #' print(res) # duplicated keys are in rows 3 and 4
 #' @seealso [get_key_duplicates]
 get_key_duplicates_util <- function(dataframe, keys) {
-  stopifnot(!is.null(keys))
-  stopifnot(is.data.frame(dataframe))
-  stopifnot(is.character(keys))
+  checkmate::assert_data_frame(dataframe)
+  checkmate::assert_character(keys)
   stopifnot(
     all(
       vapply(keys, FUN.VALUE = logical(1), FUN = function(key) key %in% colnames(dataframe))
@@ -98,18 +96,27 @@ get_key_duplicates_util <- function(dataframe, keys) {
   )
 
   # The goal is to print values of duplicated primary keys with number of duplicates and row numbers
-  # Seemed like adding a column with id numbers and pasting it once duplicates are subset was
-  # the simplest course of action.
-  summary <- dplyr::mutate(dataframe, rows = dplyr::row_number())
-  summary <- summary[
-    duplicated(dplyr::select(summary, dplyr::all_of(keys))) |
-      duplicated(dplyr::select(summary, dplyr::all_of(keys)), fromLast = TRUE),
-  ]
-  summary <- dplyr::summarise(
-    dplyr::group_by(summary, dplyr::across(dplyr::all_of(keys))),
-    rows = paste0(.data$rows, collapse = ","),
-    n = dplyr::n(),
-    .groups = "drop"
-  )
+  duplicates <- dataframe[, keys, drop = FALSE]
+  duplicates$dups <- duplicated(duplicates, fromLast = FALSE) | duplicated(duplicates, fromLast = TRUE)
+  duplicates$row_number <- seq_len(nrow(duplicates))
+  duplicates <- duplicates[duplicates$dups, ]
+  duplicates$dups <- NULL
+
+  if (nrow(duplicates) == 0) {
+    duplicates$rows <- character(0)
+    duplicates$row_number <- NULL
+    duplicates$n <- integer(0)
+    return(duplicates)
+  }
+
+  groups <- split(duplicates, duplicates[, keys, drop = FALSE], drop = TRUE)
+  summary_list <- lapply(groups, function(group) {
+    ans <- group[1, keys, drop = FALSE]
+    ans$rows <- paste(group[, "row_number"], collapse = ",")
+    ans$n <- nrow(group)
+    ans
+  })
+  summary <- do.call(rbind, summary_list)
+  rownames(summary) <- NULL
   summary
 }

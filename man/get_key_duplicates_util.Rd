@@ -9,10 +9,10 @@ get_key_duplicates_util(dataframe, keys)
 \arguments{
 \item{dataframe}{dataframe}
 
-\item{keys}{\code{character} list of variable names consisting the key to the \code{data.frame}}
+\item{keys}{\code{character} vector of variable names consisting the key to the \code{data.frame}}
 }
 \value{
-\code{tibble} with a duplicate keys information summary
+\code{data.frame} with a duplicate keys information summary
 }
 \description{
 Creates a duplicate keys information summary.
@@ -23,7 +23,7 @@ key to the \code{data.frame} argument. An instance of duplicated key is
 defined as two rows, which have the same values in columns defined by \code{keys}.
 Per each key value with duplicates returns a row in a \code{tibble}. The return table
 has columns corresponding to the variable names passed in \code{keys} and
-two additional columns: \code{row_no} and \code{duplicates_count}, which provide
+two additional columns: \code{rows} and \code{n}, which provide
 information about row numbers of the original dataframe, which contain duplicated keys
 and total duplicates counts.
 }

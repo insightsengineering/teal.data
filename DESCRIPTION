@@ -23,7 +23,6 @@ Depends:
 Imports:
     checkmate,
     digest,
-    dplyr,
     lifecycle,
     logger (>= 0.2.0),
     methods,
@@ -35,6 +34,7 @@ Imports:
     utils,
     yaml
 Suggests:
+    dplyr,
     knitr,
     magrittr,
     MultiAssayExperiment,
