@@ -116,7 +116,7 @@ Callable <- R6::R6Class( # nolint
     },
     # Checks output and handles error messages
     check_run_output = function(res, try) {
-      if (is(res, "error")) {
+      if (inherits(res, "error")) {
         msg <- conditionMessage(res)
         is_locked <- grepl(pattern = "cannot change value of locked", x = msg)
 

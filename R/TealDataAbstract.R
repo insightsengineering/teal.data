@@ -99,7 +99,7 @@ TealDataAbstract <- R6::R6Class( # nolint
           assign(
             x = names(private$mutate_vars)[[var_idx]],
             value = `if`(
-              is(mutate_var, "TealDataset") || is(mutate_var, "TealDatasetConnector"),
+              inherits(mutate_var, "TealDataset") || inherits(mutate_var, "TealDatasetConnector"),
               get_raw_data(mutate_var),
               mutate_var
             ),
@@ -342,7 +342,7 @@ TealDataAbstract <- R6::R6Class( # nolint
       is_dataset <- vapply(
         self$get_items(),
         function(item) {
-          is(item, "TealDataset")
+          inherits(item, "TealDataset")
         },
         logical(1)
       )

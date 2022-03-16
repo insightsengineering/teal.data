@@ -186,7 +186,7 @@ TealData <- R6::R6Class( # nolint
     get_connectors = function() {
       return(Filter(
         function(x) {
-          is(x, "TealDatasetConnector") || is(x, "TealDataConnector")
+          inherits(x, "TealDatasetConnector") || inherits(x, "TealDataConnector")
         },
         private$datasets
       ))
@@ -202,7 +202,7 @@ TealData <- R6::R6Class( # nolint
       checkmate::assert_string(dataname, null.ok = TRUE)
 
       get_sets <- function(x) {
-        if (is(object = x, class2 = "TealDataConnector")) {
+        if (inherits(x, "TealDataConnector")) {
           x$get_items()
         } else {
           x
@@ -422,7 +422,7 @@ TealData <- R6::R6Class( # nolint
                   private$datasets,
                   function(x) {
                     div(
-                      if (is(x, class2 = "TealDataConnector")) {
+                      if (inherits(x, "TealDataConnector")) {
                         ui <- x$get_ui(id = ns(x$id))
                         if (is.null(ui)) {
                           ui <- div(
@@ -431,7 +431,7 @@ TealData <- R6::R6Class( # nolint
                           )
                         }
                         ui
-                      } else if (is(x, class2 = "TealDatasetConnector")) {
+                      } else if (inherits(x, "TealDatasetConnector")) {
                         ui <- x$get_ui(id = ns(paste0(x$get_datanames(), collapse = "_")))
                         if (is.null(ui)) {
                           ui <- div(
@@ -460,7 +460,7 @@ TealData <- R6::R6Class( # nolint
 
       shinyjs::show("delayed_data")
       for (dc in self$get_connectors()) {
-        if (is(dc, class2 = "TealDataConnector")) {
+        if (inherits(dc, "TealDataConnector")) {
           dc$get_preopen_server()(id = dc$id)
         }
       }
@@ -469,13 +469,13 @@ TealData <- R6::R6Class( # nolint
         logger::log_trace("TealData$server@1 submit button clicked.")
         # load data from all connectors
         for (dc in self$get_connectors()) {
-          if (is(dc, class2 = "TealDataConnector")) {
+          if (inherits(dc, "TealDataConnector")) {
             dc$get_server()(
               id = dc$id,
               connection = dc$get_connection(),
               connectors = dc$get_items()
             )
-          } else if (is(dc, class2 = "TealDatasetConnector")) {
+          } else if (inherits(dc, "TealDatasetConnector")) {
             dc$get_server()(id = dc$get_dataname())
           }
           if (dc$is_failed()) {
@@ -505,21 +505,3 @@ TealData <- R6::R6Class( # nolint
     }
   )
 )
-
-is_any_class_list <- function(x, class) {
-  vapply(
-    x,
-    function(xx) {
-      any(
-        vapply(
-          class,
-          function(class_name) {
-            is(object = xx, class2 = class_name)
-          },
-          logical(1)
-        )
-      )
-    },
-    logical(1)
-  )
-}

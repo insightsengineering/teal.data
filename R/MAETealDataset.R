@@ -57,7 +57,7 @@ MAETealDataset <- R6::R6Class( # nolint
         stop("Cannot load MultiAssayExperiment - please install the package or restart your session.")
       }
       checkmate::assert_string(dataname)
-      stopifnot(is(x, "MultiAssayExperiment"))
+      stopifnot(inherits(x, "MultiAssayExperiment"))
       checkmate::assert_character(keys, any.missing = FALSE)
       checkmate::assert(
         checkmate::check_character(code, max.len = 1, any.missing = FALSE),
@@ -217,7 +217,7 @@ MAETealDataset <- R6::R6Class( # nolint
     # @param vars (named `list`) additional pre-requisite vars to execute code
     # @return (`environment`) which stores modified `x`
     execute_code = function(code, vars = list()) {
-      stopifnot(is(code, "CodeClass"))
+      stopifnot(inherits(code, "CodeClass"))
       checkmate::assert_list(vars, min.len = 0, names = "unique")
 
       execution_environment <- new.env(parent = parent.env(globalenv()))
@@ -226,7 +226,7 @@ MAETealDataset <- R6::R6Class( # nolint
       for (vars_idx in seq_along(vars)) {
         var_name <- names(vars)[[vars_idx]]
         var_value <- vars[[vars_idx]]
-        if (is(var_value, "TealDatasetConnector") || is(var_value, "TealDataset")) {
+        if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
           var_value <- get_raw_data(var_value)
         }
         assign(envir = execution_environment, x = var_name, value = var_value)
@@ -235,7 +235,7 @@ MAETealDataset <- R6::R6Class( # nolint
       # execute
       code$eval(envir = execution_environment)
 
-      if (!is(execution_environment[[self$get_dataname()]], "MultiAssayExperiment")) {
+      if (!inherits(execution_environment[[self$get_dataname()]], "MultiAssayExperiment")) {
         out_msg <- sprintf(
           "\n%s\n\n - Code from %s needs to return a MultiAssayExperiment assigned to an object of dataset name.",
           self$get_code(),
@@ -329,7 +329,7 @@ mae_dataset <- function(dataname,
     with = "teal.data::dataset()"
   )
 
-  if (!is(x, "MultiAssayExperiment")) {
+  if (!inherits(x, "MultiAssayExperiment")) {
     stop("Argument x must be a MultiAssayExperiment object")
   }
 

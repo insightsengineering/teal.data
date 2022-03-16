@@ -52,7 +52,7 @@ testthat::test_that("data_connection returns a TealDataConnection object on basi
   close_fun$set_args(list(x = 1:2))
 
   con <- data_connection(open_fun = open_fun, close_fun = close_fun)
-  testthat::expect_true(is(con, c("TealDataConnection", "R6")))
+  testthat::expect_true(inherits(con, c("TealDataConnection", "R6")))
 })
 
 testthat::test_that("TealDataConnection can be initialized", {

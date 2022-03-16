@@ -73,7 +73,7 @@ CodeClass <- R6::R6Class( # nolint
     #' @param x (`CodeClass`) object to be appended
     #' @return changed `CodeClass` object
     append = function(x) {
-      stopifnot(is(x, "CodeClass"))
+      stopifnot(inherits(x, "CodeClass"))
       if (length(x$code) > 0) {
         for (code_i in x$code) {
           private$set_code_single(code_i)
@@ -130,7 +130,7 @@ CodeClass <- R6::R6Class( # nolint
           error = function(e) e
         )
 
-        if (is(out, "error")) {
+        if (inherits(out, "error")) {
           error_msg <- sprintf(
             "%s\n\nEvaluation of the code failed:\n %s", deparse1(x, collapse = "\n"), conditionMessage(out)
           )
@@ -246,7 +246,7 @@ list_to_code_class <- function(x) {
     for (var_idx in seq_along(x)) {
       var_value <- x[[var_idx]]
       var_name <- names(x)[[var_idx]]
-      if (is(var_value, "TealDatasetConnector") || is(var_value, "TealDataset")) {
+      if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
         res$append(var_value$get_code_class())
         if (var_name != var_value$get_dataname()) {
           res$set_code(

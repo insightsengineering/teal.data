@@ -516,7 +516,7 @@ testthat::test_that("TealDataset$is_mutate_delayed stays FALSE if the TealDatase
 
 testthat::test_that("TealDataset$get_join_keys returns an empty JoinKeys object", {
   dataset1 <- TealDataset$new("iris", head(iris))
-  testthat::expect_true(is(dataset1$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(dataset1$get_join_keys()$get()), 0)
 })
 
@@ -528,7 +528,7 @@ testthat::test_that("TealDataset$set_join_keys works independently", {
   testthat::expect_error(
     dataset1$set_join_keys(join_key("iris", "other_dataset", c("Sepal.Length" = "some_col2")))
   )
-  testthat::expect_true(is(dataset1$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(dataset1$get_join_keys()$get()), 2)
 })
 
@@ -537,14 +537,14 @@ testthat::test_that("TealDataset$mutate_join_keys works independently", {
   testthat::expect_silent(
     dataset1$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_col2"))
   )
-  testthat::expect_true(is(dataset1$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(dataset1$get_join_keys()$get()), 2)
 
   dataset2 <- TealDataset$new("iris", head(iris))
   testthat::expect_silent(
     dataset2$mutate_join_keys("other_dataset", c("Sepal.Length"))
   )
-  testthat::expect_true(is(dataset2$get_join_keys(), "JoinKeys"))
+  testthat::expect_true(inherits(dataset2$get_join_keys(), "JoinKeys"))
   testthat::expect_equal(length(dataset2$get_join_keys()$get()), 2)
 })
 
@@ -686,7 +686,7 @@ test_that("mutate_dataset", {
     "testds <- whatever\ntestds$z <- c(\"one\", \"two\")\nmut_fun <- function(x) {\n    x$z <- 1\n    return(x)\n}\ntestds <- mut_fun(testds)" # nolint
   )
 
-  expect_true(is(test_ds_mut, "TealDataset"))
+  expect_true(inherits(test_ds_mut, "TealDataset"))
 
   expect_silent({
     test_ds_mut <- test_ds %>% mutate_dataset(read_script("mutate_code/testds.R"))
@@ -706,7 +706,7 @@ test_that("mutate_dataset", {
     "testds <- whatever\ntestds$z <- c(\"one\", \"two\")\nmut_fun <- function(x) {\n    x$z <- 1\n    return(x)\n}\ntestds <- mut_fun(testds)\nmut_fun <- function(x) {\n    x$z <- 1\n    return(x)\n}\ntestds <- mut_fun(testds)" # nolint
   )
 
-  expect_true(is(test_ds_mut, "TealDataset"))
+  expect_true(inherits(test_ds_mut, "TealDataset"))
 
   expect_error(
     object = {

@@ -400,7 +400,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
         sprintf(
           "TealDatasetConnector$mutate mutated dataset '%s' using the code (%s lines) and vars (%s).",
           self$get_dataname(),
-          length(parse(text = if (is(code, "CodeClass")) code$get_code() else code)),
+          length(parse(text = if (inherits(code, "CodeClass")) code$get_code() else code)),
           paste(names(vars), collapse = ", ")
         )
       )
@@ -636,12 +636,12 @@ TealDatasetConnector <- R6::R6Class( # nolint
       return(res)
     },
     set_pull_callable = function(pull_callable) {
-      stopifnot(is(pull_callable, "Callable"))
+      stopifnot(inherits(pull_callable, "Callable"))
       private$pull_callable <- pull_callable
       return(invisible(self))
     },
     set_metadata = function(metadata) {
-      if (methods::is(metadata, "Callable")) {
+      if (inherits(metadata, "Callable")) {
         private$metadata <- metadata
       } else {
         validate_metadata(metadata)
@@ -694,7 +694,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
           # During the app loading, assign is called only once.
           private$pull_callable$assign_to_env(
             x = var_name,
-            value = if (is(var_value, "TealDatasetConnector") || is(var_value, "TealDataset")) {
+            value = if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
               get_raw_data(var_value)
             } else {
               var_value
@@ -716,7 +716,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
       )
     },
     set_failure = function(res) {
-      if (is(res, "error")) {
+      if (inherits(res, "error")) {
         private$failed <- TRUE
         private$failure_msg <- conditionMessage(res)
       } else {
@@ -730,7 +730,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
       for (varname in names(vars)) {
         var <- vars[[varname]]
 
-        if (is(var, "TealDatasetConnector") || is(var, "TealDataset")) {
+        if (inherits(var, "TealDatasetConnector") || inherits(var, "TealDataset")) {
           var_deps <- var$get_var_r6()
           var_deps[[varname]] <- var
           for (var_dep_name in names(var_deps)) {

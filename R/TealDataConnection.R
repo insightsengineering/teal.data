@@ -48,15 +48,15 @@ TealDataConnection <- R6::R6Class( # nolint
     initialize = function(open_fun = NULL, close_fun = NULL, ping_fun = NULL, if_conn_obj = FALSE) {
       checkmate::assert_flag(if_conn_obj)
       if (!is.null(open_fun)) {
-        stopifnot(is(open_fun, "Callable"))
+        stopifnot(inherits(open_fun, "Callable"))
         private$set_open_fun(open_fun)
       }
       if (!is.null(close_fun)) {
-        stopifnot(is(close_fun, "Callable"))
+        stopifnot(inherits(close_fun, "Callable"))
         private$set_close_fun(close_fun)
       }
       if (!is.null(ping_fun)) {
-        stopifnot(is(ping_fun, "Callable"))
+        stopifnot(inherits(ping_fun, "Callable"))
         private$set_ping_fun(ping_fun)
       }
       private$if_conn_obj <- if_conn_obj
@@ -314,7 +314,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining.
     set_preopen_server = function(preopen_module) {
-      stopifnot(is(preopen_module, "function"))
+      stopifnot(inherits(preopen_module, "function"))
       module_name <- "open_conn"
       if (all(names(formals(preopen_module)) %in% c("input", "output", "session", "connection"))) {
         private$preopen_server <- function(input, output, session, connection) {
@@ -351,7 +351,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining.
     set_open_server = function(open_module) {
-      stopifnot(is(open_module, "function"))
+      stopifnot(inherits(open_module, "function"))
       module_name <- "open_conn"
       if (all(names(formals(open_module)) %in% c("input", "output", "session", "connection"))) {
         private$open_server <- function(input, output, session, connection) {
@@ -389,7 +389,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining.
     set_open_ui = function(open_module) {
-      stopifnot(is(open_module, "function"))
+      stopifnot(inherits(open_module, "function"))
       stopifnot(identical(names(formals(open_module)), "id"))
 
       private$open_ui <- function(id) {
@@ -421,7 +421,7 @@ TealDataConnection <- R6::R6Class( # nolint
         return()
       }
       close_res <- private$close_fun$run(try = try)
-      if (is(close_res, "error")) {
+      if (inherits(close_res, "error")) {
         logger::log_error("TealDataConnection$close failed to close the connection.")
         return(close_res)
       } else {
@@ -500,7 +500,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining.
     set_close_ui = function(close_module) {
-      stopifnot(is(close_module, "function"))
+      stopifnot(inherits(close_module, "function"))
       stopifnot(identical(names(formals(close_module)), "id"))
 
       private$close_ui <- function(id) {
@@ -529,7 +529,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining.
     set_close_server = function(close_module) {
-      stopifnot(is(close_module, "function"))
+      stopifnot(inherits(close_module, "function"))
       if (all(names(formals(close_module)) %in% c("input", "output", "session", "connection"))) {
         function(input, output, session, connection) {
           connection$close(try = TRUE)
@@ -636,7 +636,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #
     # @return (`self`) invisibly for chaining.
     set_close_fun = function(fun) {
-      stopifnot(is(fun, "Callable"))
+      stopifnot(inherits(fun, "Callable"))
       private$close_fun <- fun
       return(invisible(self))
     },
@@ -647,7 +647,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #
     # @return (`self`) invisibly for chaining.
     set_open_fun = function(fun) {
-      stopifnot(is(fun, "Callable"))
+      stopifnot(inherits(fun, "Callable"))
       private$open_fun <- fun
       return(invisible(self))
     },
@@ -658,7 +658,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #
     # @return (`self`) invisibly for chaining.
     set_ping_fun = function(fun) {
-      stopifnot(is(fun, "Callable"))
+      stopifnot(inherits(fun, "Callable"))
       private$ping_fun <- fun
       return(invisible(self))
     },

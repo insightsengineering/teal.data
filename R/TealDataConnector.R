@@ -102,7 +102,7 @@ TealDataConnector <- R6::R6Class( # nolint
       private$check_names(connectors_names)
 
       if (!missing(connection)) {
-        stopifnot(is(connection, "TealDataConnection"))
+        stopifnot(inherits(connection, "TealDataConnection"))
         private$connection <- connection
       }
 
@@ -272,7 +272,7 @@ TealDataConnector <- R6::R6Class( # nolint
     #'
     #' @return nothing
     set_ui = function(f) {
-      stopifnot(is(f, "function"))
+      stopifnot(inherits(f, "function"))
       stopifnot("id" %in% names(formals(f)))
       stopifnot(all(c("connection", "connectors") %in% names(formals(f))) || "..." %in% names(formals(f)))
       private$ui <- f
@@ -291,7 +291,7 @@ TealDataConnector <- R6::R6Class( # nolint
     #'
     #' @return nothing
     set_server = function(f) {
-      stopifnot(is(f, "function"))
+      stopifnot(inherits(f, "function"))
       stopifnot(all(c("id", "connection", "connectors") %in% names(formals(f))))
       private$server <- f
       logger::log_trace("TealDataConnector$set_server server set.")
@@ -307,7 +307,7 @@ TealDataConnector <- R6::R6Class( # nolint
     #'
     #' @return nothing
     set_preopen_server = function(f) {
-      stopifnot(is(f, "function"))
+      stopifnot(inherits(f, "function"))
       stopifnot(all(c("id", "connection") %in% names(formals(f))))
       private$preopen_server <- f
       logger::log_trace("TealDataConnector$set_preopen_server preopen_server set.")
@@ -563,7 +563,7 @@ TealDataConnector <- R6::R6Class( # nolint
 #' @return `TealDataConnector` object
 #' @export
 relational_data_connector <- function(connection, connectors) {
-  stopifnot(is(connection, "TealDataConnection"))
+  stopifnot(inherits(connection, "TealDataConnection"))
   checkmate::assert_list(connectors, types = "TealDatasetConnector", min.len = 1)
   TealDataConnector$new(connection, connectors)
 }

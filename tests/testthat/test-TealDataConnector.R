@@ -26,7 +26,7 @@ testthat::test_that("TealDataConnector with TealDataConnection", {
   scda2 <- cdisc_dataset_connector(dataname = "ADLB", adlb_cf, keys = get_cdisc_keys("ADLB"))
 
   x <- TealDataConnector$new(connection = con, connectors = list(scda1, scda2))
-  testthat::expect_true(is(x, "TealDataConnector"))
+  testthat::expect_true(inherits(x, "TealDataConnector"))
 
   x$set_ui(function(id, ...) {
     ns <- NS(id)
@@ -41,10 +41,10 @@ testthat::test_that("TealDataConnector with TealDataConnection", {
     })
   })
 
-  testthat::expect_true(is(x, c("TealDataConnector", "R6")))
+  testthat::expect_true(inherits(x, c("TealDataConnector", "R6")))
 
-  testthat::expect_true(is(x$get_server(), "function"))
-  testthat::expect_true(is(x$get_ui(id = ""), c("shiny.tag")))
+  testthat::expect_true(inherits(x$get_server(), "function"))
+  testthat::expect_true(inherits(x$get_ui(id = ""), c("shiny.tag")))
 })
 
 testthat::test_that("TealDataConnector$print prints out expected output on basic input", {
@@ -75,7 +75,7 @@ testthat::test_that("relational_data_connector returns a TealDataConnector objec
     connection = TealDataConnection$new(open_fun = CallableFunction$new(function() "open function")),
     connectors = list(adsl, adae)
   )
-  testthat::expect_true(is(data, c("TealDataConnector", "TealDataAbstract", "R6")))
+  testthat::expect_true(inherits(data, c("TealDataConnector", "TealDataAbstract", "R6")))
 })
 
 testthat::test_that("relational_data_connector has input validation", {

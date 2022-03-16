@@ -29,15 +29,15 @@ CDISCTealData <- R6::R6Class( # nolint
 
       new_parent <- list()
       for (x in dot_args) {
-        if (is(x, "TealDataset") || is(x, "TealDatasetConnector")) {
+        if (inherits(x, "TealDataset") || inherits(x, "TealDatasetConnector")) {
           x_dataname <- x$get_dataname()
-          new_parent[[x_dataname]] <- if (is(x, "CDISCTealDataset") || is(x, "CDISCTealDatasetConnector")) {
+          new_parent[[x_dataname]] <- if (inherits(x, "CDISCTealDataset") || inherits(x, "CDISCTealDatasetConnector")) {
             x$get_parent()
           } else {
             character(0L)
           }
-        } else if (is(x, "TealDataConnector")) {
-          added_parent <- if (is(x, "CDISCTealDataConnector")) {
+        } else if (inherits(x, "TealDataConnector")) {
+          added_parent <- if (inherits(x, "CDISCTealDataConnector")) {
             x$get_parent()
           } else {
             sapply(x$get_datanames(), function(i) character(0), USE.NAMES = TRUE, simplify = FALSE)

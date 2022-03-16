@@ -96,7 +96,7 @@ object_file <- function(path, class) {
   lines <- paste0(readLines(path), collapse = "\n")
   object <- eval(parse(text = lines, keep.source = FALSE))
 
-  if (!is(object, class)) {
+  if (!inherits(object, class)) {
     stop("The object returned from the file is not of ", class, " class.")
   }
   return(object)

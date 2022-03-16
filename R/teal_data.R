@@ -40,7 +40,7 @@ teal_data <- function(...,
     X = data_objects,
     FUN.VALUE = logical(1),
     FUN = function(x) {
-      is(x, "CDISCTealDataConnector") || is(x, "CDISCTealDatasetConnector") || is(x, "CDISCTealDataset")
+      inherits(x, "CDISCTealDataConnector") || inherits(x, "CDISCTealDatasetConnector") || inherits(x, "CDISCTealDataset")
     }
   )
 

@@ -25,7 +25,7 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
       new_parent <- list()
       for (x in connectors) {
         x_dataname <- x$get_dataname()
-        new_parent[[x_dataname]] <- if (is(x, "CDISCTealDatasetConnector")) {
+        new_parent[[x_dataname]] <- if (inherits(x, "CDISCTealDatasetConnector")) {
           x$get_parent()
         } else {
           character(0L)
@@ -89,7 +89,7 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
 #' @return `CDISCTealDataConnector` object
 #' @export
 cdisc_data_connector <- function(connection, connectors) {
-  stopifnot(is(connection, "TealDataConnection"))
+  stopifnot(inherits(connection, "TealDataConnection"))
   checkmate::assert_list(connectors, types = "TealDatasetConnector", min.len = 1)
   CDISCTealDataConnector$new(connection, connectors)
 }

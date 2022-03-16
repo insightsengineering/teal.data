@@ -149,7 +149,7 @@ testthat::test_that("cdisc_data_connector returns a CDISCTealDataConnector objec
     connection = TealDataConnection$new(open_fun = CallableFunction$new(function() "open function")),
     connectors = list(adsl, adae)
   )
-  testthat::expect_true(is(data, c("CDISCTealDataConnector", "TealDataConnector", "TealDataAbstract", "R6")))
+  testthat::expect_true(inherits(data, c("CDISCTealDataConnector", "TealDataConnector", "TealDataAbstract", "R6")))
 })
 
 testthat::test_that("cdisc_data_connector validates the 'connection' and 'connectors' arguments", {

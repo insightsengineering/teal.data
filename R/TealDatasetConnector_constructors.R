@@ -73,7 +73,7 @@ dataset_connector <- function(dataname,
                               vars = list(),
                               metadata = NULL) {
   checkmate::assert_string(dataname)
-  stopifnot(is(pull_callable, "Callable"))
+  stopifnot(inherits(pull_callable, "Callable"))
   checkmate::assert_character(keys, any.missing = FALSE)
   checkmate::assert_character(code, any.missing = FALSE)
   checkmate::assert_character(label, any.missing = FALSE)
@@ -117,7 +117,7 @@ cdisc_dataset_connector <- function(dataname,
                                     vars = list(),
                                     metadata = NULL) {
   checkmate::assert_string(dataname)
-  stopifnot(is(pull_callable, "Callable"))
+  stopifnot(inherits(pull_callable, "Callable"))
   checkmate::assert_character(keys, any.missing = FALSE)
   checkmate::assert_character(parent, max.len = 1, any.missing = FALSE)
   checkmate::assert_character(code, max.len = 1, any.missing = FALSE)

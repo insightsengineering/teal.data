@@ -65,5 +65,5 @@ topological_sort <- function(graph) {
 #' @return `logical(1)` `TRUE` if the graph is a `DAG`; `FALSE` otherwise
 #' @keywords internal
 is_dag <- function(graph) {
-  is(try(topological_sort(graph), silent = TRUE), "try-error")
+  inherits(try(topological_sort(graph), silent = TRUE), "try-error")
 }

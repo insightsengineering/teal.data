@@ -476,7 +476,7 @@ TealDataset <- R6::R6Class( # nolint
         sprintf(
           "TealDatasetConnector$mutate mutating dataset '%s' using the code (%s lines) and vars (%s).",
           self$get_dataname(),
-          length(parse(text = if (is(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
+          length(parse(text = if (inherits(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
           paste(names(vars), collapse = ", ")
         )
       )
@@ -509,7 +509,7 @@ TealDataset <- R6::R6Class( # nolint
         sprintf(
           "TealDataset$mutate mutated dataset '%s' using the code (%s lines) and vars (%s).",
           self$get_dataname(),
-          length(parse(text = if (is(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
+          length(parse(text = if (inherits(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
           paste(names(vars), collapse = ", ")
         )
       )
@@ -607,7 +607,7 @@ TealDataset <- R6::R6Class( # nolint
       logger::log_trace(
         sprintf(
           "TealDatasetConnector$mutate_delayed set the code (%s lines) and vars (%s) for dataset: %s.",
-          length(parse(text = if (is(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
+          length(parse(text = if (inherits(code, "CodeClass")) code$get_code() else code, keep.source = FALSE)),
           paste(names(vars), collapse = ", "),
           self$get_dataname()
         )
@@ -667,7 +667,7 @@ TealDataset <- R6::R6Class( # nolint
     mutate_list_to_code_class = function() {
       res <- CodeClass$new()
       for (mutate_code in private$mutate_code) {
-        if (is(mutate_code$code, "CodeClass")) {
+        if (inherits(mutate_code$code, "CodeClass")) {
           res$append(mutate_code$code)
         } else {
           res$set_code(
@@ -681,7 +681,7 @@ TealDataset <- R6::R6Class( # nolint
     },
     append_mutate_code = function() {
       for (mutate_code in private$mutate_code) {
-        if (is(mutate_code$code, "CodeClass")) {
+        if (inherits(mutate_code$code, "CodeClass")) {
           private$code$append(mutate_code$code)
         } else {
           private$code$set_code(
@@ -697,9 +697,9 @@ TealDataset <- R6::R6Class( # nolint
         c(list(), private$var_r6, vars),
         FUN.VALUE = logical(1),
         FUN = function(var) {
-          if (is(var, "TealDatasetConnector")) {
+          if (inherits(var, "TealDatasetConnector")) {
             !var$is_pulled() || var$is_mutate_delayed()
-          } else if (is(var, "TealDataset")) {
+          } else if (inherits(var, "TealDataset")) {
             var$is_mutate_delayed()
           } else {
             FALSE
@@ -753,7 +753,7 @@ TealDataset <- R6::R6Class( # nolint
     # @param vars (named `list`) additional pre-requisite vars to execute code
     # @return (`environment`) which stores modified `x`
     execute_code = function(code, vars = list()) {
-      stopifnot(is(code, "CodeClass"))
+      stopifnot(inherits(code, "CodeClass"))
       checkmate::assert_list(vars, min.len = 0, names = "unique")
 
       execution_environment <- new.env(parent = parent.env(globalenv()))
@@ -762,7 +762,7 @@ TealDataset <- R6::R6Class( # nolint
       for (vars_idx in seq_along(vars)) {
         var_name <- names(vars)[[vars_idx]]
         var_value <- vars[[vars_idx]]
-        if (is(var_value, "TealDatasetConnector") || is(var_value, "TealDataset")) {
+        if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
           var_value <- get_raw_data(var_value)
         }
         assign(envir = execution_environment, x = var_name, value = var_value)
@@ -809,7 +809,7 @@ TealDataset <- R6::R6Class( # nolint
       for (varname in names(vars)) {
         var <- vars[[varname]]
 
-        if (is(var, "TealDatasetConnector") || is(var, "TealDataset")) {
+        if (inherits(var, "TealDatasetConnector") || inherits(var, "TealDataset")) {
           var_deps <- var$get_var_r6()
           var_deps[[varname]] <- var
           for (var_dep_name in names(var_deps)) {

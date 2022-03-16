@@ -251,7 +251,7 @@ testthat::test_that("JoinKeys$split method returns a named list of JoinKeys obje
     )
   )
   res <- x$split()
-  testthat::expect_true(is(res, "list"))
+  testthat::expect_true(inherits(res, "list"))
   testthat::expect_equal(length(res), 5)
   testthat::expect_equal(names(res), c("A", "B", "C", "Z", "Y"))
   checkmate::expect_list(res, types = "JoinKeys")
