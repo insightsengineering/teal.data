@@ -238,7 +238,7 @@ testthat::test_that("TealData with single dataset and connector", {
   example_data_connector <- function(...) {
     connectors <- list(...)
     open_fun <- callable_function(library)
-    open_fun$set_args(list(package = "teal"))
+    open_fun$set_args(list(package = "teal.data"))
     con <- TealDataConnection$new(open_fun = open_fun)
     TealDataConnector$new(connection = con, connectors = connectors)
   }
@@ -291,20 +291,29 @@ testthat::test_that("TealData with single dataset and connector", {
 
   testthat::expect_equal(
     data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
+    paste0(
+      "library(package = \"teal.data\")\n",
+      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
+    )
   )
   testthat::expect_equal(
     data$get_code("ADTTE"),
-    "library(package = \"teal\")\nADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")"
+    paste0(
+      "library(package = \"teal.data\")\n",
+      "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")"
+    )
   )
   testthat::expect_equal(
     data$get_code("ADAE"),
-    "library(package = \"teal\")\nADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", name = \"latest\")"
+    paste0(
+      "library(package = \"teal.data\")\n",
+      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", name = \"latest\")"
+    )
   )
   testthat::expect_equal(
     data$get_code(),
     paste0(
-      "library(package = \"teal\")\n",
+      "library(package = \"teal.data\")\n",
       "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")\n",
       "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")\n",
       "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", name = \"latest\")"

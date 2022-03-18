@@ -107,3 +107,9 @@ to_relational_data.list <- function(data) {
 to_relational_data.MultiAssayExperiment <- function(data) { # nolint
   teal_data(dataset("MAE", data))
 }
+
+#' @keywords internal
+#' @export
+to_relational_data.TealData <- function(data) { # nolint
+  data
+}

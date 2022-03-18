@@ -19,6 +19,15 @@ downstream_repos:
   insightsengineering/teal:
     repo: insightsengineering/teal
     host: https://github.com
+  insightsengineering/teal.modules.clinical:
+    repo: insightsengineering/teal.modules.clinical
+    host: https://github.com
   insightsengineering/teal.transform:
     repo: insightsengineering/teal.transform
+    host: https://github.com
+  insightsengineering/teal.osprey:
+    repo: insightsengineering/teal.osprey
+    host: https://github.com
+  insightsengineering/teal.modules.hermes:
+    repo: insightsengineering/teal.modules.hermes
     host: https://github.com
