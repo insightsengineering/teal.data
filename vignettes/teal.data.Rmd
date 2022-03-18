@@ -216,9 +216,9 @@ adsl_conn <- dataset_connector(
 
 Initially, `adsl_conn` doesn't contain any data. Attempting to fetch unavailable data will produce an error.
 
-```{r eval=FALSE}
+```{r}
 # get raw data
-get_raw_data(adsl_conn)
+try(get_raw_data(adsl_conn))
 ```
 
 Data can be loaded using `load_dataset()` function. Before data loading, `adsl_conn` contains reproducible
@@ -245,7 +245,7 @@ several parameters have to match:
 The name `ADSL` is fixed because it is the name of the argument of the function inside of the `CallableFunction`.
 The name `dummy_name` can be free to be any valid `R` name.
 
-```{r eval=TRUE}
+```{r}
 # here we use the general dataset_connector function which pulls an object of type TealDataset
 # there is also a cdisc_dataset_connector function which pulls an object of type CDISCTealDataset
 adsl_2 <- dataset_connector(
@@ -267,7 +267,7 @@ investigate potential mistakes. By default shiny app won't render any inputs for
 datasets until we specify them. To set inputs we should use `$set_ui_input()`, by
 passing ui module function, with `ns` argument (`shiny` namespace ID object).
 
-```{r eval=FALSE}
+```{r}
 adsl_3 <- dataset_connector(
   dataname = "ADSL_3",
   pull_callable = callable_function(fun = function(ADSL, n) ADSL_3 <- head(ADSL, n)) %>% # nolint
@@ -283,7 +283,9 @@ adsl_3$set_ui_input(function(ns) {
   )
 })
 
-adsl_3$launch()
+if (interactive()) {
+  adsl_3$launch()
+}
 ```
 
 ### `TealDataConnection`
@@ -291,98 +293,29 @@ Objects of this class are responsible to set connection with remote data sources
 `TealDataConnection` opens and closes connections by calling `CallableFunction` with
 appropriate arguments.
 
-For example in a simplified version of `rice_connection`
-below, a `TealDataConnection `uses `rice_session_open` and `rice_session_close`
-functions.
-
-```{r eval=FALSE}
-if ("rice" %in% installed.packages()) {
-  eval(parse(text = "library(rice)"))
-}
-open_fun <- callable_function("rice::rice_session_open")
-close_fun <- callable_function("rice::rice_session_close")
-close_fun$set_args(list(message = FALSE))
-
-rice_conn <- teal.data:::TealDataConnection$new(
-  open_fun = open_fun,
-  close_fun = close_fun
-)
-```
-
-One can open and close connection by using `rice_conn$open()` and `rice_conn$close()`
-functions respectively. As in `TealDatasetConnector$pull()`, `open()` and `close()`
-delegates function execution to `CallableFunction$run()`. Developers should use
-`rice_conn$set_open_args()` to set some argument values to the reproducible call.
-Arguments values set to the `CallableFunction` are saved persistently and will
-be reflected when getting open code. Arguments passed to `rice_conn$open()` will
-be used only to execute the function, but won't be returned in the code as they
-are not stored anywhere. This feature is designed to hide some arguments from
-being revealed in the code and can be intentional - for example, when using
-personal passwords or other sensitive information. In code below `username` is
-set (and stored) to the open function and `password` is a dynamic argument not
-included in `rice_conn$get_open_call()` output.
-
-```{r eval=FALSE}
-# set open args
-rice_conn$set_open_args(list(username = "your username"))
-
-# open the rice connection
-rice_conn$open(args = list(password = "your password"))
-
-# check if open (open function evaluated successfully)
-rice_conn$is_opened()
-
-# check if open failed
-rice_conn$is_open_failed()
-
-# close
-rice_conn$close()
-
-# get reproducible call
-rice_conn$get_open_call()
-rice_conn$get_close_call()
-```
-
 In `shiny` application connection arguments needs to be linked with `inputs`,
 that is why `TealDataConnection` contains a module. Developers can customize UI inputs to
 open the connection using `set_open_ui()` and specify a relevant server function
 using `set_open_server()`. It's important to keep in mind that the server module
 needs a connection as a argument to `open()` and `close()` if needed.
 
-```{r eval=FALSE}
-rice_conn$set_open_ui(
-  function(id) {
-    ns <- NS(id)
-    div(
-      textInput(ns("username"), "Username"),
-      passwordInput(ns("password"), "Password")
-    )
-  }
+```{r}
+open_fun <- callable_function(data.frame) # define opening function
+open_fun$set_args(list(x = 1:5)) # define fixed arguments to opening function
+
+close_fun <- callable_function(sum) # define closing function
+close_fun$set_args(list(x = 1:5)) # define fixed arguments to closing function
+
+ping_fun <- callable_function(function() TRUE)
+
+x <- data_connection(
+  ping_fun = ping_fun, # define ping function
+  open_fun = open_fun, # define opening function
+  close_fun = close_fun # define closing function
 )
-
-rice_conn$set_open_server(
-  function(input, output, session, connection) {
-    connection$open(
-      args = list(
-        username = input$username,
-        password = input$password
-      ),
-      try = TRUE
-    )
-
-    if (connection$is_open_failed()) {
-      shinyjs::alert(
-        paste("Error opening connection\nError message:", connection$get_open_error_message())
-      )
-    }
-  }
-)
-
-rice_conn$launch()
 ```
 
 ### `TealDataConnector` (including `CDISCTealDataConnector`)
-
 This class combines multiple `TealDatasetConnector` (or `CDISCTealDatasetConnector`) and a single `TealDataConnection` object.
 It creates a module to manage connection and to load data. Below we create two
 `TealDatasetConnector` objects and a `TealDataConnection` and we combine them
@@ -516,10 +449,10 @@ Executing `data$launch()` will open shiny application. Remember that data can be
 loaded only once, in case you run above code please reinitialize datasets,
 connection and data object again.
 
-```{r eval=FALSE}
-# if datasets have been pulled already
-#  - reinitialize datasets and data object again
-data$launch()
+```{r}
+if (interactive()) {
+  data$launch()
+}
 ```
 
 ### `TealData` (including `CDISCTealData`)
@@ -563,8 +496,10 @@ data <- cdisc_data(adsl, adae, advs, adtte)
 Similar to other connectors one can use `launch()` method to investigate if data is set
 correctly. Unlike the other connectors, this class lacks `pull()` method.
 
-```{r eval=FALSE}
-data$launch()
+```{r}
+if (interactive()) {
+  data$launch()
+}
 ```
 
 Reproducible code attached to the `data` object is combined code of all components,
@@ -578,7 +513,11 @@ get_code(data, dataname = "ADTTE")
 
 Developers can also extract datasets and connectors included in the `TealData`.
 
-```{r, eval=FALSE}
+```{r}
+adsl$pull()
+adae$pull()
+advs$pull()
+adtte$pull()
 # get loaded datasets
 data$get_datasets()
 

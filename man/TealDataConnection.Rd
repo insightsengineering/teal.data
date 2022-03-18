@@ -13,8 +13,8 @@ It can be a database or server connection.}
 open_fun <- callable_function(data.frame) # define opening function
 open_fun$set_args(list(x = 1:5)) # define fixed arguments to opening function
 
-close_fun <- callable_function(print) # define closing function
-close_fun$set_args(list(x = "Hi there")) # define fixed arguments to closing function
+close_fun <- callable_function(sum) # define closing function
+close_fun$set_args(list(x = 1:5)) # define fixed arguments to closing function
 
 ping_fun <- callable_function(function() TRUE)
 

@@ -1,0 +1,224 @@
+---
+title: "Preprocessing Delayed Data"
+author: "Dawid Kałędkowski"
+date: "15.03.2022"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Preprocessing Delayed Data}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+When creating apps which do not use `DDL`, once the datasets are created there is often some preprocessing
+required before initializing the teal app. The processing cannot be done in the same way for `DDL` but it
+is possible to process the data.
+
+* `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function.
+For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
+
+```{r}
+library(scda)
+library(teal.data)
+library(magrittr)
+
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+) %>%
+  mutate_dataset("ADSL$SEX <- as.factor(ADSL$SEX)")
+
+
+adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae <- cdisc_dataset_connector(
+  dataname = "ADAE",
+  pull_callable = adae_cf,
+  keys = get_cdisc_keys("ADAE")
+) %>%
+  mutate_dataset("ADAE$X <- rep(ADSL$SEX[1])", vars = list(ADSL = adsl))
+
+adsl$pull() %>% get_raw_data()
+adae$pull() %>% get_raw_data()
+```
+
+* `mutate_data`: Collections of datasets should only be processed using the `mutate_data` function:
+
+```{r}
+cdisc_data(adsl, adae, check = TRUE) %>%
+  mutate_data("ADAE$x <- ADSL$SUBJID[1]")
+```
+The code is processed in the order the datasets are pulled so if there are dependencies between datasets
+it is important to ensure the order is correct.
+
+Finally, the `code` argument directly in `teal_data` and `cdisc_data` call does not need to be used for `DDL` because data loaded with `DDL` are reproducible by design.
+Because of this, it is recommended to set argument `check = TRUE` inside `cdisc_data` function when creating apps with `DDL`.
+
+## Processing dependencies
+
+It may be required to generate a delayed data object that is dependent on some other delayed object or some constant value.
+
+For this, when creating your delayed data object it's possible to supply the additional variables that are to be accessed
+during the data loading (pull) using additional arguments through `...`:
+
+```{r}
+get_code(adsl)
+
+pull_fun_adae <- callable_function(
+  function() {
+    synthetic_cdisc_data("latest")$adae
+  }
+)
+adae <- dataset_connector(
+  dataname = "ADAE",
+  pull_callable = pull_fun_adae,
+  keys = get_cdisc_keys("ADAE")
+)
+
+get_code(adae)
+```
+
+It's also possible to supply these additional variables after creating your object using the `mutate_dataset` function.
+```{r}
+last_run <- Sys.Date() # constant value stored as a variable in the current session
+
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+) %>%
+  mutate_dataset("ADSL$last_run <- last_run", vars = list(last_run = last_run))
+
+cat(get_code(adsl))
+
+# compared to evaluating the variable at the time of loading
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+) %>%
+  mutate_dataset("last_run <- Sys.Date()\nADSL$last_run <- last_run")
+
+adsl %>%
+  get_code() %>%
+  cat()
+```
+
+This is also required when creating the object depends on another delayed data object:
+
+```{r}
+adsl <- synthetic_cdisc_data("latest")$adsl
+adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae <- cdisc_dataset_connector(
+  dataname = "ADAE",
+  pull_callable = adae_cf,
+  keys = get_cdisc_keys("ADAE")
+) %>%
+  mutate_dataset("ADAE$n <- nrow(ADSL)")
+
+cat(get_code(adae)) # the code returned by `adae` is not sufficient to reproduce `adae`
+
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+)
+adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae <- cdisc_dataset_connector(
+  dataname = "ADAE",
+  pull_callable = adae_cf,
+  keys = get_cdisc_keys("ADAE")
+) %>%
+  mutate_dataset("ADAE$n <- nrow(ADSL)", vars = list(ADSL = adsl))
+
+cat(get_code(adae)) # this code can be run independently
+```
+
+Related to this idea, it is possible to provide the code on a `Data` level.
+However, this will always return all the code used to generate all the datasets in the object:
+
+```{r}
+adsl_adae <- cdisc_data(
+  adsl,
+  adae
+) %>% mutate_data("ADAE$avg_age <- mean(ADAE$AGE)")
+
+adsl_adae %>%
+  get_code() %>%
+  cat()
+adsl_adae %>%
+  get_code(dataname = "ADAE") %>%
+  cat()
+adsl_adae %>%
+  get_code(dataname = "ADSL") %>%
+  cat()
+```
+
+The better approach would be to supply the code on a `Dataset` level.
+This ensures that the code can be accessed on a dataset level:
+
+```{r}
+adsl_adae <- cdisc_data(
+  adsl,
+  adae %>% mutate_dataset("ADAE$avg_age <- mean(ADAE$AGE)")
+)
+
+adsl_adae %>%
+  get_code() %>%
+  cat()
+adsl_adae %>%
+  get_code("ADAE") %>%
+  cat()
+adsl_adae %>%
+  get_code("ADSL") %>%
+  cat()
+```
+
+Related to this idea, the delayed data object needs to be supplied with the code needed to
+reproduce the data. This can be provided at the `Dataset` level or the `Data` level.
+
+Below is a comparison of these two approaches:
+
+```{r}
+adsl <- synthetic_cdisc_data("latest")$adsl
+cdisc_dataset("ADSL", adsl) %>% get_code() # no reproducible code
+
+# provide the code to reproduce the data:
+cdisc_dataset("ADSL", adsl,
+  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+) %>%
+  get_code()
+
+# it's possible to supply the code at the `Data` level:
+adae <- synthetic_cdisc_data("latest")$adae
+adsl_adae <- cdisc_data(cdisc_dataset("ADSL", adsl),
+  cdisc_dataset("ADAE", adae),
+  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADAE <- synthetic_cdisc_data(\"latest\")$adae"
+)
+
+adsl_adae %>%
+  get_code() %>%
+  cat()
+
+# but it's not possible then to access the code at a `Dataset` level:
+adsl_adae %>%
+  get_code("ADSL") %>%
+  cat()
+
+# this can be avoided by storing the code like so:
+adsl_adae <- cdisc_data(
+  cdisc_dataset("ADSL", adsl, code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"),
+  cdisc_dataset("ADAE", adae, code = "ADAE <- synthetic_cdisc_data(\"latest\")$adsl")
+)
+
+adsl_adae %>%
+  get_code("ADSL") %>%
+  cat()
+```

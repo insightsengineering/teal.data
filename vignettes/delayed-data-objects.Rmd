@@ -1,0 +1,103 @@
+---
+title: "Delayed Data Objects"
+author: "Dawid Kałędkowski"
+date: "15.03.2022"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Delayed Data Objects}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+## Basic understanding
+Delayed data objects are `R` objects that contain instructions on how to acquire data. In practice, you can use
+`DDL` objects to pass data into a `teal` application without actually downloading the data before launching
+application.
+
+### Key concepts
+* A **`TealDatasetConnector`** is an object used to pull a single delayed data set into a `teal` app.
+Connectors to pull data from proprietary data storage are not included in this package.
+```{r}
+library(teal.data)
+library(scda)
+# create delayed data using scda (could
+# also set keys using cdisc_dataset_connector)
+adlb <- scda_dataset_connector("ADLB", "adlb", keys = get_cdisc_keys("ADLB"))
+
+# create delayed data from code see package help for other connectors
+x <- code_dataset_connector(
+  dataname = "ADSL",
+  keys = get_cdisc_keys("ADSL"),
+  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+)
+```
+* A **`TealDataConnector`** is an object used to pull a set of delayed data sets into a `teal` app which
+all share a common connection:
+```{r}
+# using scda
+adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", scda_dataname = "adsl")
+adae <- scda_cdisc_dataset_connector(dataname = "ADAE", scda_dataname = "adae")
+adsl_adae <- relational_data_connector(
+  connection = data_connection(),
+  connectors = list(adsl, adae)
+)
+```
+* The `cdisc_data` function takes a set of **`TealDataConnector`**, **`TealDatasetConnector`**
+and `cdisc_datasets` (non-delayed datasets) to create the **`TealData`** object which is used to create `teal`
+applications.
+```{r}
+# create a TealDatasetConnector for ADVS
+advs <- scda_cdisc_dataset_connector(dataname = "ADVS", scda_dataname = "advs")
+# use cdisc_data() to create a `DDL` object
+delayed_data <- cdisc_data(adsl_adae, advs)
+```
+
+### Constructors
+Below is a list of all of the constructors available in `teal.data` to create `TealDataset` and delayed `TealDatasetConnector` objects:
+
+|                            |                                    Description                |           Base Constructor                | Constructor Wrappers                                                                                                                                                                                                                           |
+|:--------------------------:|:-------------------------------------------------------------:|:-----------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TealDataset`                | Dataframe with name (and optionally keys)                     | `dataset`, `dataset_file`                      | `dataset`, `cdisc_dataset`                                                                                                                                                                                                                         |
+| `TealDatasetConnector`       | Delayed Dataset                                               | `dataset_connector`, `dataset_connector_file`  | (see note 1 below) `rds_dataset_connector`, `script_dataset_connector`, `code_dataset_connector`,  `csv_dataset_connector`, `fun_dataset_connector`, `python_dataset_connector`, `scda_dataset_connector` |
+| `TealDataConnector`          | Group of `TealDatasetConnector`                                 |                   |                                                                                                                                                                                                                                                |
+| `TealData`                   | Group of `TealDatasetConnector`, `TealDataConnector`, `TealDataset` | `teal_data`, `teal_data_file`                  | (see note 2 below) `cdisc_data`, `cdisc_data_file`                                                                                                                                                                                                  |
+
+Notes:
+
+1. All `xyz_dataset_connector` functions have an equivalent `xyz_cdisc_dataset_connector` function (for example `rds_cdisc_dataset_connector`) which specifies additional dataset metadata.
+2. `cdisc_data` is the standard function used to create a data object to be used within teal apps for standard `CDISC` study data. The more general `teal_data` function can be used to allow arbitrary relational data to be used within teal apps.
+
+### Dataset dependencies
+
+The datasets passed into `teal.data` and `cdisc_data` are pulled in the order they are defined so if datasets depend on other
+datasets being available they should be placed later in the argument list:
+
+```{r}
+adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
+adsl_2 <- code_cdisc_dataset_connector("ADSL_2",
+  code = "head(ADSL, 5)",
+  keys = get_cdisc_keys("ADSL"), ADSL = adsl
+)
+
+# launch method will be able to load the data as adsl will be pulled first
+cdisc_data(adsl, adsl_2)
+
+# launch method will not be able to load the data as adae is pulled
+# first but it depends on adsl
+cdisc_data(adsl_2, adsl)
+```
+
+Note that in this case, the `adsl` object, which is used as an argument to `adsl_2` object,
+need to be defined before the call to `cdisc_data`.
+
+## Suggested development workflow
+The following workflow facilitates building `teal` apps with `DDL` by minimizing debugging overhead.
+
+1. Run a teal app configured without delayed data to verify that the app starts as expected.
+1. Replace the `cdisc_dataset` functions with the appropriate `TealDatasetConnector`.
+1. Add preprocessing code as described above and verify once again by running the newly created object's `$launch` method.
+1. Include just a single module to verify that the teal app starts and that it loads all the expected data.
+1. Add modules one by one, replacing all dataset calls with strings and iteratively verify that the app functions as
+expected.

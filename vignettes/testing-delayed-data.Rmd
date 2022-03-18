@@ -1,0 +1,146 @@
+---
+title: "Examining Delayed Data Objects"
+author: "Dawid Kałędkowski"
+date: "15.03.2022"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Examining Delayed Data Objects}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+## Overview
+
+Once your delayed data object has been created as described in [Delayed Data Objects](delayed-data-objects.html), `teal.data` provides a useful set of functions
+to examine the object outside of your `teal.data` application. Below is an exhaustive list of all such functions
+available to use:
+
+|                                             | `TealDataset`       | `TealDatasetConnector`       | `TealDataConnector` & `TealData`      |
+|---------------------------------------------|-------------------|----------------------------|------------------------------------------|
+| Get Reproducible Code (Optionally Deparsed) | `get_code`          | `get_code`                   | `get_code`                          |
+| Get data.frame                              | `get_raw_data`      | `get_raw_data`               | `get_raw_data`                      |
+| Get Dataset Name                            | `get_dataname`      | `get_dataname`               | `get_dataname`                      |
+| Get Single Dataset Object                   | `get_dataset`       | `get_dataset`                | `get_dataset`                       |
+| Get All Dataset Objects                     | -                 | -                          | `get_datasets`                      |
+| Load Data                                   | -                 | `load_dataset`               | `load_datasets`                     |
+| Check if Loaded                             | -                 | `is_pulled`                  | `is_pulled`                         |
+| Mutate Single Dataset                       | `mutate_dataset`    | `mutate_dataset`             | `mutate_dataset`                    |
+| Mutate All Datasets                         | -                 | -                          | `mutate_data`                       |
+
+The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
+```{r}
+library(scda)
+library(teal.data)
+
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+)
+get_dataname(adsl) # "ADSL"
+
+adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae <- cdisc_dataset_connector(
+  dataname = "ADAE",
+  pull_callable = adae_cf,
+  keys = get_cdisc_keys("ADAE")
+)
+delayed_data <- cdisc_data(adsl, adae)
+get_dataname(delayed_data) # "ADSL" "ADAE"
+```
+
+The delayed data objects described above all also contain a `launch` method which can be used to test the data
+loading screen:
+
+```{r}
+if (interactive()) {
+  delayed_data$launch()
+}
+```
+
+There is also a `pull` method to test that the data can be loaded without launching a shiny app.
+See the `teal.data` package documentation for further details.
+
+Alternatively `teal.data` provides a `load_dataset` function for `<...>Dataset<...>` objects which is used to pull the
+data without launching the delayed loading screen, and a `load_datasets`function for `<...>Data<...>` objects which
+launches the delayed loading screen used to pull the datasets from the connection.
+
+After loading the data, it can be checked that the data has been successfully pulled using the `is_pulled` function:
+```{r}
+if (interactive()) {
+  load_datasets(delayed_data)
+}
+is_pulled(delayed_data)
+```
+
+#### Aside: Loading page UI
+
+It is possible to set default values of the boxes on the loading page using the `set_ui_input`
+method:
+
+```{r}
+adae$set_ui_input(function(ns) {
+  list(pickerInput("name", label = "Version of the dataset", choices = ls_synthetic_cdisc_data(), selected = "latest"))
+})
+```
+
+#### Testing data loading continued
+
+Once the data are loaded, it's also possible to access the individual dataset objects using the `get_dataset` function,
+or for `<...>Data<...>` objects, retrieve all dataset objects using the `get_datasets` function:
+```{r}
+lapply(delayed_data$get_items(), function(item) item$pull())
+get_dataset(adsl)
+
+# return a particular dataset by name
+get_dataset(delayed_data, dataname = "ADSL")
+
+# or return all datasets
+load_datasets(delayed_data)
+get_datasets(delayed_data)
+```
+
+To view the raw dataframe object, use the `get_raw_data` function:
+```{r}
+# for a single <...>Dataset<..> object
+get_raw_data(adsl)
+
+# or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
+get_raw_data(delayed_data, "ADSL")
+```
+
+The `get_code` function is provided to check the processing code is as expected.
+```{r}
+get_code(delayed_data)
+```
+
+See the section on [Preprocessing Delayed Data](preprocessing-delayed-data.html) to
+specify additional transformations to your delayed data which can also be accessed using `get_code`.
+
+#### Aside: Piping functions
+
+The examples above covered some basic piping, but as discussed above there is a natural sequence to the loading and inspection
+of a delayed data object. For this reason, the `magrittr` pipe `%>%` works well for many preprocessing tasks.
+
+```{r}
+library(teal.data)
+library(scda)
+library(magrittr)
+
+adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = adsl_cf,
+  keys = get_cdisc_keys("ADSL")
+) %>%
+  mutate_dataset("ADSL$TRTDUR <- round(as.numeric(ADSL$TRTEDTM - ADSL$TRTSDTM), 1)") %>%
+  load_dataset() %>%
+  get_raw_data()
+```
+
+Since these functions modify (operate on) the objects that are given to them, there is no need to assign the result.
+
+For an introduction to pipes refer to the documentation for `%>%` or other resources on [pipes](https://r4ds.had.co.nz/pipes.html).
