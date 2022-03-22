@@ -1,4 +1,4 @@
-# teal.data 0.0.0.9011
+# teal.data 0.0.0.9012
 
 * Initial release of `teal.data` a package for the data model used by `teal` applications.
 
