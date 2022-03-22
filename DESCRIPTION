@@ -23,6 +23,7 @@ Depends:
 Imports:
     checkmate,
     digest,
+    formatable,
     lifecycle,
     logger (>= 0.2.0),
     methods,

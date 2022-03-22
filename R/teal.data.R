@@ -16,4 +16,5 @@
 #' @importFrom stats setNames
 #' @importFrom shinyjs show
 #' @importFrom logger log_trace
+#' @importFrom formatable var_labels
 NULL

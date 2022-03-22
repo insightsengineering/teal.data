@@ -87,9 +87,6 @@ reference:
       - join_keys
       - python_code
       - read_script
-      - var_relabel
-      - variable_labels
-      - variable_labels<-
   - title: For Developers
     subtitle: R6 Classes
     desc: Abstract and concrete classes used to build teal functionality.
