@@ -191,7 +191,7 @@ TealDataset <- R6::R6Class( # nolint
     #' Derive the column labels
     #' @return `character` vector.
     get_column_labels = function() {
-      formatable::var_labels(private$.raw_data, fill = FALSE)
+      formatters::var_labels(private$.raw_data, fill = FALSE)
     },
     #' @description
     #' Get the number of columns of the data

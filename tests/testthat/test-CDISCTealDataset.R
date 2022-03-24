@@ -1,7 +1,7 @@
 ## CDISCTealDataset ====
 testthat::test_that("CDISCTealDataset basics", {
   x <- data.frame(x = c(1, 2), y = c("a", "b"), stringsAsFactors = TRUE)
-  formatable::var_labels(x) <- c("X", "Y")
+  formatters::var_labels(x) <- c("X", "Y")
 
   testthat::expect_error(
     teal.data:::CDISCTealDataset$new(dataname = "abc", x = x)
