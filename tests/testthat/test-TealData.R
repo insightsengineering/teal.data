@@ -66,6 +66,19 @@ test_that("check_metadata fails if inconsistent join_keys for given datasets", {
   )
 })
 
+test_that("get_check method is default FALSE", {
+  data <- teal_data(dataset("df_1", data.frame(x = 1:10, y = 1:10)))
+  expect_false(data$get_check())
+})
+
+test_that("get_check_result method returns true if object created with check = TRUE", {
+  data <- teal_data(
+    dataset("df_1", data.frame(x = 1:10, y = 1:10)),
+    code = "df_1 <- data.frame(x = 1:10, y = 1:10)", check = TRUE
+  )
+  expect_true(data$get_check())
+})
+
 test_that("deep clone", {
   ## TealDatasetConnector
   expect_silent({

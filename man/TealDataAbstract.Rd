@@ -28,6 +28,7 @@ Abstract class containing code for handling set of datasets.
 \item \href{#method-get_dataset}{\code{TealDataAbstract$get_dataset()}}
 \item \href{#method-get_datasets}{\code{TealDataAbstract$get_datasets()}}
 \item \href{#method-get_items}{\code{TealDataAbstract$get_items()}}
+\item \href{#method-get_check}{\code{TealDataAbstract$get_check()}}
 \item \href{#method-is_pulled}{\code{TealDataAbstract$is_pulled()}}
 \item \href{#method-mutate}{\code{TealDataAbstract$mutate()}}
 \item \href{#method-mutate_dataset}{\code{TealDataAbstract$mutate_dataset()}}
@@ -212,6 +213,19 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 }
 \subsection{Returns}{
 \code{list} with all datasets and all connectors
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_check"></a>}}
+\if{latex}{\out{\hypertarget{method-get_check}{}}}
+\subsection{Method \code{get_check()}}{
+Has this data been or will this data be subjected to a reproducibility check
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TealDataAbstract$get_check()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\code{logical}
 }
 }
 \if{html}{\out{<hr>}}

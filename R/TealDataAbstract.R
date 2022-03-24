@@ -219,6 +219,12 @@ TealDataAbstract <- R6::R6Class( # nolint
         return(private$datasets)
       }
     },
+    #' @description
+    #' Has this data been or will this data be subjected to a reproducibility check
+    #' @return `logical`
+    get_check = function() {
+      private$.check
+    },
     #' @field id String used to create unique GUI elements
     id = NULL,
     #' @description
