@@ -12,10 +12,10 @@
 * `get_call()` function of `CallableFunction` now returns call with namespace included. 
 * `MultiAssayExperiment` and `SummarizedExperiment` are now suggested packages, not required. Objects dependent on `MultiAssayExperiment` are changed to lazy-load these now suggested packages.
 * Minor changes to the interface of `TealDataset`, for example some active fields should be replaced by explicit "get" calls.
+* removed `var_relabel` and `variable_labels` to resolve conflict with `formatters`.
 
 ### Miscellaneous
 * As `reticulate` is in Suggests, added `requireNamespace` call whenever it is needed.
 * `dplyr` moved from imports to suggests.
-* removed `var_relabel` and `variable_labels` to resolve conflict with `formatters`.
 * Removed redundant calling of the `JoinKeys$mutate` method inside of `for-loops`.
 * Removed `rtables` dependency from the package.
