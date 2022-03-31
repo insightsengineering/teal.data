@@ -9,7 +9,7 @@
 This package extends \code{teal} applications by module which
 stores the data with they relationships (keys) and reproducible
 code. Package offers also to load data from files, databases and
-it's easy extendable by another data sources.
+it's easily extendable by another data sources.
 }
 \author{
 \strong{Maintainer}: NEST \email{basel.nestcicd@roche.com}

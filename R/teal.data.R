@@ -3,7 +3,7 @@
 #' This package extends `teal` applications by module which
 #' stores the data with they relationships (keys) and reproducible
 #' code. Package offers also to load data from files, databases and
-#' it's easy extendable by another data sources.
+#' it's easily extendable by another data sources.
 #'
 #'
 #' @keywords internal
@@ -11,7 +11,6 @@
 
 # Fix R CMD check notes
 #' @import shiny
-#' @import R6
 #' @importFrom digest digest
 #' @importFrom stats setNames
 #' @importFrom shinyjs show
