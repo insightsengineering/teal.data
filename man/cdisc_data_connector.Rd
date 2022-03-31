@@ -20,17 +20,17 @@ list with dataset connectors}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
-adsl_cf <- CallableFunction$new(
+adsl_cf <- callable_function(
   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
 )
-adae_cf <- CallableFunction$new(
+adae_cf <- callable_function(
   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
 )
-adsl <- CDISCTealDatasetConnector$new(
+adsl <- cdisc_dataset_connector(
   "ADSL", adsl_cf,
   keys = get_cdisc_keys("ADSL"), parent = character(0)
 )
-adae <- CDISCTealDatasetConnector$new(
+adae <- cdisc_dataset_connector(
   "ADAE", adae_cf,
   keys = get_cdisc_keys("ADAE"), parent = "ADSL"
 )
