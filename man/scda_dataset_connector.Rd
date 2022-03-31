@@ -58,8 +58,7 @@ should be atomic and length one) or a \code{CallableFuntion} to pull the metadat
 from a connection. This should return a \code{list} or an object which can be
 converted to a list with \code{as.list}.}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

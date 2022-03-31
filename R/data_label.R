@@ -79,7 +79,6 @@ get_cdisc_keys <- function(dataname) {
 #' @export
 #'
 #' @examples
-#' library(scda)
 #' iris_with_labels <- iris
 #' attr(iris_with_labels, "label") <- "Custom iris dataset with labels"
 #' attr(iris_with_labels["Sepal.Length"], "label") <- c(`Sepal.Length` = "Sepal Length")

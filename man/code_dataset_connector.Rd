@@ -62,8 +62,7 @@ this/these object(s) should be included. Please note that \code{vars}
 are included to this object as local \code{vars} and they cannot be modified
 within another dataset.}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

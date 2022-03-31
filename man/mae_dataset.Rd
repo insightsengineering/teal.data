@@ -13,20 +13,17 @@ mae_dataset(
 )
 }
 \arguments{
-\item{dataname}{(\code{character})\cr
-A given name for the dataset it may not contain spaces}
+\item{dataname}{(\code{character}) a given name for the dataset, it cannot contain spaces}
 
 \item{x}{(\code{MultiAssayExperiment})}
 
-\item{label}{(\code{character})\cr
-Label to describe the dataset}
+\item{label}{(\code{character}) label to describe the dataset}
 
-\item{code}{(\code{character})\cr
-A character string defining the code needed to produce the data set in \code{x}}
+\item{code}{(\code{character}) a character string defining the code needed to
+produce the data set in \code{x}}
 
-\item{vars}{(named \code{list})) \cr
-In case when this object code depends on other \code{TealDataset} object(s) or
-other constant value, this/these object(s) should be included as named
+\item{vars}{(named \code{list}) in case when this object code depends on other \code{TealDataset}
+object(s) or other constant value, this/these object(s) should be included as named
 element(s) of the list. For example if this object code needs \code{ADSL}
 object we should specify \verb{vars = list(ADSL = <adsl object>)}.
 It's recommended to include \code{TealDataset} or \code{TealDatasetConnector} objects to

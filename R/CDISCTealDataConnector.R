@@ -66,7 +66,6 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
 #'   list with dataset connectors
 #'
 #' @examples
-#' \dontrun{
 #' adsl_cf <- CallableFunction$new(
 #'   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
 #' )
@@ -85,7 +84,6 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
 #'   connection = data_connection(open_fun = CallableFunction$new(function() "open function")),
 #'   connectors = list(adsl, adae)
 #' )
-#' }
 #' @return `CDISCTealDataConnector` object
 #' @export
 cdisc_data_connector <- function(connection, connectors) {

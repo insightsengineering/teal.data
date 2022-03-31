@@ -20,7 +20,6 @@ list with dataset connectors}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
-\dontrun{
 adsl_cf <- CallableFunction$new(
   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
 )
@@ -39,5 +38,4 @@ data <- cdisc_data_connector(
   connection = data_connection(open_fun = CallableFunction$new(function() "open function")),
   connectors = list(adsl, adae)
 )
-}
 }

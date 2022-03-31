@@ -145,8 +145,7 @@ CDISCTealDataset <- R6::R6Class( # nolint
 #' Function that creates `CDISCTealDataset` object
 #'
 #' @inheritParams dataset
-#' @param parent optional, (`character`) \cr
-#'   parent dataset name
+#' @param parent (`character`, optional) parent dataset name
 #'
 #' @return (`CDISCTealDataset`) a dataset with connected metadata
 #'

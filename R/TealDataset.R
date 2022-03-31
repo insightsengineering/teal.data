@@ -847,23 +847,19 @@ TealDataset <- R6::R6Class( # nolint
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @param dataname (`character`)\cr
-#'  A given name for the dataset it may not contain spaces
+#' @param dataname (`character`) a given name for the dataset, it cannot contain spaces
 #'
-#' @param x (`data.frame` or `MultiAssayExperiment`)\cr
+#' @param x (`data.frame` or `MultiAssayExperiment`) object from which the dataset will be created
 #'
-#' @param keys optional, (`character`)\cr
-#'   vector with primary keys
+#' @param keys optional, (`character`) vector with primary keys
 #'
-#' @param code (`character`)\cr
-#'   A character string defining the code needed to produce the data set in `x`
+#' @param code (`character`) a character string defining the code needed to
+#'   produce the data set in `x`
 #'
-#' @param label (`character`)\cr
-#'   Label to describe the dataset
+#' @param label (`character`) label to describe the dataset
 #'
-#' @param vars (named `list`)) \cr
-#'   In case when this object code depends on other `TealDataset` object(s) or
-#'   other constant value, this/these object(s) should be included as named
+#' @param vars (named `list`) in case when this object code depends on other `TealDataset`
+#'   object(s) or other constant value, this/these object(s) should be included as named
 #'   element(s) of the list. For example if this object code needs `ADSL`
 #'   object we should specify `vars = list(ADSL = <adsl object>)`.
 #'   It's recommended to include `TealDataset` or `TealDatasetConnector` objects to
@@ -871,9 +867,8 @@ TealDataset <- R6::R6Class( # nolint
 #'   are included to this object as local `vars` and they cannot be modified
 #'   within another dataset.
 #'
-#' @param metadata (named `list` or `NULL`) \cr
-#'   Field containing metadata about the dataset. Each element of the list
-#'   should be atomic and length one.
+#' @param metadata (named `list` or `NULL`) field containing metadata about the dataset.
+#'   Each element of the list should be atomic and length one.
 #'
 #' @return [`TealDataset`] object
 #'

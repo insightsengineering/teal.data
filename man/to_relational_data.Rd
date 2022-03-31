@@ -14,6 +14,21 @@ or \code{function} returning a named list.}
 \code{TealData} object
 }
 \description{
-Takes the input of data argument and translates them to relational data objects.
+This function takes an object and converts into a \code{TealData} object, the primary data
+objet for use in teal applications.
+}
+\details{
+Passing a \code{TealData} into this function leaves the object unchanged.
+}
+\examples{
+
+to_relational_data(head(iris))
+to_relational_data(dataset("IRIS", head(iris)))
+to_relational_data(list(iris = head(iris), mtcars = head(mtcars)))
+
+d_connector <- dataset_connector("iris", callable_function(function() head(iris)))
+d_connector$pull()
+to_relational_data(d_connector)
+
 }
 \keyword{internal}

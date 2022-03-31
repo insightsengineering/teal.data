@@ -1,11 +1,24 @@
 #' S3 generic for `to_relational_data` function.
 #'
-#' Takes the input of data argument and translates them to relational data objects.
+#' This function takes an object and converts into a `TealData` object, the primary data
+#' objet for use in teal applications.
 #'
 #' @param data `TealDataset`, `TealDatasetConnector`, `data.frame`, `MultiAssayExperiment`,  `list`
 #' or `function` returning a named list.
 #'
+#' @details Passing a `TealData` into this function leaves the object unchanged.
+#'
 #' @return `TealData` object
+#'
+#' @examples
+#'
+#' to_relational_data(head(iris))
+#' to_relational_data(dataset("IRIS", head(iris)))
+#' to_relational_data(list(iris = head(iris), mtcars = head(mtcars)))
+#'
+#' d_connector <- dataset_connector("iris", callable_function(function() head(iris)))
+#' d_connector$pull()
+#' to_relational_data(d_connector)
 #'
 #' @keywords internal
 #' @export

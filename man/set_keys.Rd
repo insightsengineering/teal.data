@@ -34,29 +34,26 @@ Set dataset primary keys
 \examples{
 # TealDataset --------
 
-library(scda)
 set_keys(
   dataset(
-    "ADSL",
-    synthetic_cdisc_data("latest")$adsl,
-    code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+    "DF",
+    data.frame(ID = 1:10, x = runif(10))
   ),
-  keys = get_cdisc_keys("ADSL")
+  keys = c("ID")
 )
 # TealDatasetConnector --------
 
-library(scda)
-pull_fun_adsl <- callable_function(
+pull_fun <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    data.frame(ID = 1:10, x = runif(10))
   }
 )
 set_keys(
   dataset_connector(
-    "ADSL",
-    pull_fun_adsl
+    "DF",
+    pull_fun
   ),
-  keys = get_cdisc_keys("ADSL")
+  keys = c("ID")
 )
 # TealData --------
 

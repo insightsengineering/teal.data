@@ -24,8 +24,7 @@ as_cdisc(
 \arguments{
 \item{x}{an object of \code{TealDataset} or \code{TealDatasetConnector} class}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 }
 \value{
 (\code{CDISCTealDataset} or \code{CDISCTealDatasetConnector}) object
