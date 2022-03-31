@@ -81,7 +81,7 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
 #'   keys = get_cdisc_keys("ADAE"), parent = "ADSL"
 #' )
 #' data <- cdisc_data_connector(
-#'   connection = data_connection(open_fun = CallableFunction$new(function() "open function")),
+#'   connection = data_connection(open_fun = callable_function(function() "open function")),
 #'   connectors = list(adsl, adae)
 #' )
 #' @return `CDISCTealDataConnector` object
