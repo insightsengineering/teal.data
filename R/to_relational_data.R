@@ -1,7 +1,7 @@
 #' S3 generic for `to_relational_data` function.
 #'
 #' This function takes an object and converts into a `TealData` object, the primary data
-#' objet for use in teal applications.
+#' object for use in teal applications.
 #'
 #' @param data `TealDataset`, `TealDatasetConnector`, `data.frame`, `MultiAssayExperiment`,  `list`
 #' or `function` returning a named list.

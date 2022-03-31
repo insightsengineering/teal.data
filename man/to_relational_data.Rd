@@ -15,7 +15,7 @@ or \code{function} returning a named list.}
 }
 \description{
 This function takes an object and converts into a \code{TealData} object, the primary data
-objet for use in teal applications.
+object for use in teal applications.
 }
 \details{
 Passing a \code{TealData} into this function leaves the object unchanged.
