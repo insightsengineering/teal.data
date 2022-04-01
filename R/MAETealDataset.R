@@ -197,7 +197,7 @@ MAETealDataset <- R6::R6Class( # nolint
   ),
   ## __Private Fields ====
   private = list(
-    .raw_data = MultiAssayExperiment::MultiAssayExperiment(),
+    .raw_data = NULL,
     get_class_colnames = function(class_type = "character") {
       checkmate::assert_string(class_type)
 
