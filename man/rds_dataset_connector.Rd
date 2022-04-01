@@ -61,8 +61,7 @@ converted to a list with \code{as.list}.}
 \item{...}{(\code{optional})\cr
 additional arguments applied to \code{\link[base:readRDS]{base::readRDS()}} function}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

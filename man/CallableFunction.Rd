@@ -2,17 +2,10 @@
 % Please edit documentation in R/CallableFunction.R
 \name{CallableFunction}
 \alias{CallableFunction}
-\title{A \code{CallableFunction} class of objects
-
-Object that stores function name with its arguments. Methods to get call and run it.}
+\title{A \code{CallableFunction} class of objects}
 \description{
-A \code{CallableFunction} class of objects
-
-Object that stores function name with its arguments. Methods to get call and run it.
-
-A \code{CallableFunction} class of objects
-
-Object that stores function name with its arguments. Methods to get call and run it.
+Object that stores a function name together with its arguments.
+Methods are then available to get the function call and evaluate it.
 }
 \keyword{internal}
 \section{Super class}{
@@ -52,7 +45,8 @@ Create a new \code{CallableFunction} object
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{fun}}{(\code{function})\cr
-function to be evaluated in class. Function should be named}
+function to be evaluated in class.
+This is either a \code{function} object or its name as a string.}
 
 \item{\code{env}}{(\code{environment})\cr
 environment where function will be evaluated}

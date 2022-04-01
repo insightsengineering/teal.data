@@ -16,26 +16,21 @@ cdisc_dataset(
 )
 }
 \arguments{
-\item{dataname}{(\code{character})\cr
-A given name for the dataset it may not contain spaces}
+\item{dataname}{(\code{character}) a given name for the dataset, it cannot contain spaces}
 
-\item{x}{(\code{data.frame} or \code{MultiAssayExperiment})\cr}
+\item{x}{(\code{data.frame} or \code{MultiAssayExperiment}) object from which the dataset will be created}
 
-\item{keys}{optional, (\code{character})\cr
-vector with primary keys}
+\item{keys}{optional, (\code{character}) vector with primary keys}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 
-\item{label}{(\code{character})\cr
-Label to describe the dataset}
+\item{label}{(\code{character}) label to describe the dataset}
 
-\item{code}{(\code{character})\cr
-A character string defining the code needed to produce the data set in \code{x}}
+\item{code}{(\code{character}) a character string defining the code needed to
+produce the data set in \code{x}}
 
-\item{vars}{(named \code{list})) \cr
-In case when this object code depends on other \code{TealDataset} object(s) or
-other constant value, this/these object(s) should be included as named
+\item{vars}{(named \code{list}) in case when this object code depends on other \code{TealDataset}
+object(s) or other constant value, this/these object(s) should be included as named
 element(s) of the list. For example if this object code needs \code{ADSL}
 object we should specify \verb{vars = list(ADSL = <adsl object>)}.
 It's recommended to include \code{TealDataset} or \code{TealDatasetConnector} objects to
@@ -43,9 +38,8 @@ the \code{vars} list to preserve reproducibility. Please note that \code{vars}
 are included to this object as local \code{vars} and they cannot be modified
 within another dataset.}
 
-\item{metadata}{(named \code{list} or \code{NULL}) \cr
-Field containing metadata about the dataset. Each element of the list
-should be atomic and length one.}
+\item{metadata}{(named \code{list} or \code{NULL}) field containing metadata about the dataset.
+Each element of the list should be atomic and length one.}
 }
 \value{
 (\code{CDISCTealDataset}) a dataset with connected metadata

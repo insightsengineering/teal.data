@@ -26,8 +26,7 @@ function with necessary arguments set to fetch data from connection.}
 \item{keys}{optional, (\code{character})\cr
 vector of dataset primary keys column names}
 
-\item{parent}{optional, (\code{character}) \cr
-parent dataset name}
+\item{parent}{(\code{character}, optional) parent dataset name}
 
 \item{label}{(\code{character})\cr
 Label to describe the dataset.}

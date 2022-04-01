@@ -16,6 +16,7 @@ set_args <- function(x, args) {
 #' @rdname set_args
 #' @export
 #' @examples
+#' ## Using CallableFunction
 #' library(scda)
 #' f <- function(df) {
 #'   synthetic_cdisc_data("latest")[[df]]
@@ -30,6 +31,7 @@ set_args.CallableFunction <- function(x, args) {
 #' @rdname set_args
 #' @export
 #' @examples
+#' ## Using CallableCode
 #' library(scda)
 #' f <- function(df) {
 #'   synthetic_cdisc_data("latest")[[df]]
@@ -47,6 +49,7 @@ set_args.CallableCode <- function(x, args) {
 #' @rdname set_args
 #' @export
 #' @examples
+#' ## Using TealDatasetConnector
 #' ds <- dataset_connector("x", pull_callable = callable_function(data.frame))
 #' set_args(ds, list(x = 1:5, y = letters[1:5]))
 set_args.TealDatasetConnector <- function(x, args) {

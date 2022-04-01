@@ -16,8 +16,9 @@ If empty then it would be automatically derived basing on intersection of datase
 
 \item{code}{(\code{character}) code to reproduce the datasets.}
 
-\item{check}{(\code{logical}) reproducibility check - whether evaluated preprocessing code gives the same objects
-as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.}
+\item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
+code included in the object definitions actually produces those objects.
+If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
 a \code{CDISCTealData} object
