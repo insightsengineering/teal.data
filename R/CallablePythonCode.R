@@ -56,9 +56,9 @@ CallablePythonCode <- R6::R6Class( # nolint
     #' argument. If `run` fails it will return object of class `simple-error` error
     #' when `try = TRUE` or will stop if `try = FALSE`.
     run = function(args = NULL, try = FALSE) {
-      withr::with_options(
-        list(reticulate.engine.environment = private$env),
-        res <- super$run(args = args, try = try)
+      rlang::with_options(
+        res <- super$run(args = args, try = try),
+        reticulate.engine.environment = private$env
       )
       if (is.null(res)) {
         stop("The specified python object returned NULL or does not exist in the python code")
@@ -70,8 +70,7 @@ CallablePythonCode <- R6::R6Class( # nolint
   ## __Private Fields ====
   private = list(
     object = NULL,
-    duplicate_vars = list(), # variables that already exist in the global env but were supplied as pull vars
-    vars_to_assign = list(), # during $run, these variables will be temporarily assigned to the .GlobalEnv
+
     ## __Private Methods ====
     # @description
     # Refresh call with function name and saved arguments
@@ -176,6 +175,7 @@ PythonCodeClass <- R6::R6Class( # nolint
 #' \dontrun{
 #' library(scda)
 #' library(reticulate)
+#' library(magrittr)
 #'
 #' # mutate dataset object
 #'
