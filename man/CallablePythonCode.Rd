@@ -17,7 +17,6 @@ A \code{CallablePythonCode} class of objects
 \itemize{
 \item \href{#method-new}{\code{CallablePythonCode$new()}}
 \item \href{#method-set_object}{\code{CallablePythonCode$set_object()}}
-\item \href{#method-assign_to_env}{\code{CallablePythonCode$assign_to_env()}}
 \item \href{#method-run}{\code{CallablePythonCode$run()}}
 \item \href{#method-clone}{\code{CallablePythonCode$clone()}}
 }
@@ -25,6 +24,7 @@ A \code{CallablePythonCode} class of objects
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env">}\href{../../teal.data/html/Callable.html#method-assign_to_env}{\code{teal.data::Callable$assign_to_env()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message">}\href{../../teal.data/html/Callable.html#method-get_error_message}{\code{teal.data::Callable$get_error_message()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed">}\href{../../teal.data/html/Callable.html#method-is_failed}{\code{teal.data::Callable$is_failed()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_args">}\href{../../teal.data/html/CallableFunction.html#method-get_args}{\code{teal.data::CallableFunction$get_args()}}\out{</span>}
@@ -40,7 +40,7 @@ A \code{CallablePythonCode} class of objects
 \subsection{Method \code{new()}}{
 Create a new \code{CallablePythonCode} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CallablePythonCode$new(fun)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CallablePythonCode$new(fun, env = new.env(parent = parent.env(globalenv())))}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -48,6 +48,9 @@ Create a new \code{CallablePythonCode} object
 \describe{
 \item{\code{fun}}{(\code{function})\cr
 function to be evaluated in class. Function should be named}
+
+\item{\code{env}}{(\code{environment})\cr
+environment where function will be evaluated}
 }
 \if{html}{\out{</div>}}
 }
@@ -74,36 +77,6 @@ or script.}
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-(\code{self}) invisibly for chaining.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign_to_env"></a>}}
-\if{latex}{\out{\hypertarget{method-assign_to_env}{}}}
-\subsection{Method \code{assign_to_env()}}{
-Assigns \code{x <- value} object to \code{.GlobalEnv}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CallablePythonCode$assign_to_env(x, value)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{(\code{character} value)\cr
-name of the variable in class environment}
-
-\item{\code{value}}{(\code{data.frame})\cr
-object to be assigned to \code{x}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Details}{
-Assignment is done to the global environment. Any variables that
-are overwritten are saved in \code{private$duplicate_vars} and restored
-after \verb{$run}.
-}
-
 \subsection{Returns}{
 (\code{self}) invisibly for chaining.
 }

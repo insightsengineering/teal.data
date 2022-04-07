@@ -14,14 +14,15 @@ CallablePythonCode <- R6::R6Class( # nolint
     #'
     #' @param fun (`function`)\cr
     #'  function to be evaluated in class. Function should be named
-    #'
+    #' @param env (\code{environment})\cr
+    #'  environment where function will be evaluated
     #' @return new `CallablePythonCode` object
-    initialize = function(fun) {
+    initialize = function(fun, env = new.env(parent = parent.env(globalenv()))) {
       if (!requireNamespace("reticulate", quietly = TRUE)) {
         stop("Cannot load package 'reticulate' - please install the package.", call. = FALSE)
       }
 
-      super$initialize(fun = fun)
+      super$initialize(fun = fun, env = env)
       logger::log_trace("CallablePythonCode initialized.")
       return(invisible(self))
     },
@@ -41,29 +42,6 @@ CallablePythonCode <- R6::R6Class( # nolint
       return(invisible(self))
     },
     #' @description
-    #'   Assigns `x <- value` object to `.GlobalEnv`.
-    #' @details
-    #'  Assignment is done to the global environment. Any variables that
-    #'  are overwritten are saved in `private$duplicate_vars` and restored
-    #'  after `$run`.
-    #'
-    #' @param x (`character` value)\cr
-    #'  name of the variable in class environment
-    #' @param value (`data.frame`)\cr
-    #'  object to be assigned to `x`
-    #'
-    #' @return (`self`) invisibly for chaining.
-    assign_to_env = function(x, value) {
-      if (exists(x, .GlobalEnv)) {
-        private$duplicate_vars[[x]] <- get(x, envir = .GlobalEnv)
-      }
-
-      private$vars_to_assign[[x]] <- value
-      logger::log_trace("CallablePythonCode$assign_to_env assigned { x } to the environment.")
-
-      return(invisible(self))
-    },
-    #' @description
     #'   Execute `Callable` python code.
     #'
     #' @param args (`NULL` or named `list`)\cr
@@ -78,28 +56,10 @@ CallablePythonCode <- R6::R6Class( # nolint
     #' argument. If `run` fails it will return object of class `simple-error` error
     #' when `try = TRUE` or will stop if `try = FALSE`.
     run = function(args = NULL, try = FALSE) {
-      on.exit({
-        # clean up environment if global env was used
-        # remove all newly assigned vars
-        for (vars_idx in seq_along(private$vars_to_assign)) {
-          var_name <- names(private$vars_to_assign)[[vars_idx]]
-          rm(list = var_name, envir = .GlobalEnv)
-        }
-
-        # reassign duplicate vars
-        for (idx in seq_along(private$duplicate_vars)) {
-          var_name <- names(private$duplicate_vars)[idx]
-          var_value <- private$duplicate_vars[[idx]]
-          assign(var_name, var_value, envir = .GlobalEnv)
-        }
-      })
-
-      # for execution of pull function, assign pull vars to .GlobalEnv
-      for (var in names(private$vars_to_assign)) {
-        assign(var, private$vars_to_assign[[var]], envir = .GlobalEnv)
-      }
-
-      res <- super$run(args = args, try = try)
+      withr::with_options(
+        list(reticulate.engine.environment = private$env),
+        res <- super$run(args = args, try = try)
+      )
       if (is.null(res)) {
         stop("The specified python object returned NULL or does not exist in the python code")
       }
@@ -142,54 +102,31 @@ PythonCodeClass <- R6::R6Class( # nolint
   ## __Public Methods ====
   public = list(
     #' @description
-    #'   Evaluates internal code within global environment
+    #'   Evaluates internal code within environment
     #'
     #' @param vars (named `list`) additional pre-requisite vars to execute code
     #' @param dataname (`character`) name of the data frame object to be returned
     #' @param envir (`environment`) environment in which code will be evaluated
     #'
     #' @return `data.frame` containing the mutated dataset
-    eval = function(vars = list(), dataname = NULL, envir = .GlobalEnv) {
+    eval = function(vars = list(), dataname = NULL, envir = new.env(parent = parent.env(.GlobalEnv))) {
       checkmate::assert_list(vars, min.len = 0, names = "unique")
-      execution_environment <- .GlobalEnv
+      execution_environment <- envir
 
-      dupl_vars <- list() # only if using global environment
-
-      # set up environment for execution
       for (vars_idx in seq_along(vars)) {
         var_name <- names(vars)[[vars_idx]]
         var_value <- vars[[vars_idx]]
         if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
           var_value <- get_raw_data(var_value)
         }
-
-        if (var_name %in% ls(execution_environment)) {
-          dupl_vars[[var_name]] <- get(var_name, envir = execution_environment)
-        }
         assign(envir = execution_environment, x = var_name, value = var_value)
       }
 
-      on.exit({
-        # clean up environment if global env was used
-        # remove all newly assigned vars
-        for (vars_idx in seq_along(vars)) {
-          var_name <- names(vars)[[vars_idx]]
-          rm(list = var_name, envir = execution_environment)
-        }
-
-        # reassign duplicate vars
-        for (idx in seq_along(dupl_vars)) {
-          var_name <- names(dupl_vars)[idx]
-          var_value <- dupl_vars[[idx]]
-          if (inherits(var_value, "TealDatasetConnector") || inherits(var_value, "TealDataset")) {
-            var_value <- get_raw_data(var_value)
-          }
-          assign(var_name, var_value, envir = execution_environment)
-        }
-      })
-
       # execute
-      super$eval(envir = execution_environment)
+      rlang::with_options(
+        super$eval(envir = execution_environment),
+        reticulate.engine.environment = execution_environment
+      )
 
       # return early if only executing and not grabbing the dataset
       if (is.null(dataname)) {
@@ -198,7 +135,7 @@ PythonCodeClass <- R6::R6Class( # nolint
 
       if (!is.data.frame(execution_environment[[dataname]])) {
         out_msg <- sprintf(
-          "\n%s\n\n - Code from %s need to return a data.frame assigned to an object of dataset name.",
+          "\n%s\n\n - Code from %s needs to return a data.frame assigned to an object of dataset name.",
           self$get_code(),
           self$get_dataname()
         )
