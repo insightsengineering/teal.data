@@ -2,7 +2,8 @@
 #'
 #' @title A \code{CallableFunction} class of objects
 #'
-#' Object that stores function name with its arguments. Methods to get call and run it.
+#' @description Object that stores a function name together with its arguments.
+#' Methods are then available to get the function call and evaluate it.
 #'
 #' @keywords internal
 #'
@@ -16,7 +17,8 @@ CallableFunction <- R6::R6Class( # nolint
     #' Create a new \code{CallableFunction} object
     #'
     #' @param fun (\code{function})\cr
-    #'  function to be evaluated in class. Function should be named
+    #'  function to be evaluated in class.
+    #'  This is either a `function` object or its name as a string.
     #' @param env (\code{environment})\cr
     #'  environment where function will be evaluated
     #'

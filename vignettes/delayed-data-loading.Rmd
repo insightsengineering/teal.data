@@ -20,29 +20,29 @@ knitr::opts_chunk$set(
 
 ### Overview
 
-Data plays an essential role in data analysis and this package provide several ways to
-include datasets into shiny applications. Normally, one develops an application
-in such a way that data are available before the app starts. This always involves
+`teal.data` provides several ways to include datasets into shiny applications. Normally, one develops an application
+in such a way that the data is available before the app starts. This always involves
 passing `data.frame` objects using the `cdisc_data` or `teal_data` functions to the shiny application.
 This way of building an app is applicable if data is physically available before the app is created.
 
 Including data to the shiny app as [global objects](https://shiny.rstudio.com/articles/scoping.html) means
-that they will be fixed and data won't change in time.
+that they will be fixed and won't change throughout the life of the application session.
 
-On the other hand data can be loaded by the shiny app itself and can request information from the app user such
-as login, password, file location etc. before being loaded. Delayed data loading in applications
+The other possible scenario is that data may not be available during the creation or initialization of the application.
+Such data would need to be loaded by the shiny application after being initialized, which may also involve the entering of
+user name and password credentials via shiny UI components. Delayed data loading in applications
 involves specifying metadata which stores all information needed to pull the data
-from the right source with appropriate arguments.
-In standard delayed data loading application, before the main app loads a data loading screen is visible first.
-This means that application can be two-staged:
+from the right source. In delayed data loading applications, before the main app loads the user is prompted with data loading UI.
+
+This means that delayed data applications can be two-staged:
 
 1. Data loading app
 2. Main app
 
 ## Key definitions
 
-Before we jump to creating application it is important to define a few terms
-which are the key to understand new classes.
+Before we jump to creating applications it is important to define a few terms
+which are the keys to understand the main classes of the `teal.data` package.
 
 1. `TealDataset` and `TealDatasetConnector` - `TealDataset` is a class which contains physical
 data in the form of a single `data.frame` plus reproducible code. `TealDatasetConnector` is a
@@ -99,8 +99,8 @@ cat(fun$get_call())
 `CallableFunction` can also depend on other R objects as the example function below
 depends on `ADSL`. The function can be executed in specific environment where we can
 copy objects needed to execute a call. To include objects in the function call,
-one has to use `$assign_to_env()` to copy object and
-`$set_args(list(ADSL = as.name(ADSL)))` to link object with function argument.
+one has to use `$assign_to_env()` to copy the object and
+`$set_args(list(ADSL = as.name(ADSL)))` to link the object with function argument.
 
 ```{r}
 adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
@@ -126,14 +126,14 @@ fun$get_call()
 ```
 ### `CallableCode`
 
-Simpler version of `Callable` class is `CallableCode`. Similarly to `CallableFunction`,
+A simpler version of the `Callable` class is `CallableCode`. Similar to `CallableFunction`,
 `CallableCode` stores code which can be evaluated using `run()` but it
 isn't able to use dynamic arguments to make the code more general. `CallableCode`
 also allows the assignment of objects to its environment. `CallableCode` can
 contain multiple lines (commands) of code and also allows `library` calls.
 Please note that objects assigned to this independent environment can't be modified
 because they are locked immediately. This means that the `CallableCode` created
-below is not allowed to make any changes in `ADSL`.
+below is not allowed to make any changes to `ADSL`.
 
 ```{r}
 code <- callable_code(
@@ -177,8 +177,7 @@ adsl_dataset <- cdisc_dataset(
 )
 ```
 
-The object created above contains all previously defined attributes which can be
-extracted in any occasion.
+The object created above contains all previously defined attributes which can be extracted.
 
 ```{r}
 # check if code is reproducible
@@ -201,8 +200,7 @@ adsl_dataset$get_keys()
 
 `TealDatasetConnector` contains a `Callable` object to obtain a single dataset along
 with other information such as keys, dataname, label and reproducible code. In
-the code chunk below, a connector is created basing on `synthetic_cdisc_dataset`
-function.
+the code chunk below, a connector is created based on the `synthetic_cdisc_dataset` function.
 
 ```{r}
 adsl_conn <- dataset_connector(
@@ -221,7 +219,7 @@ Initially, `adsl_conn` doesn't contain any data. Attempting to fetch unavailable
 try(get_raw_data(adsl_conn))
 ```
 
-Data can be loaded using `load_dataset()` function. Before data loading, `adsl_conn` contains reproducible
+Data can be loaded using `load_dataset()` function. Before data is loaded, `adsl_conn` contains reproducible
 code which is also the code to pull the data.
 
 ```{r}
@@ -243,7 +241,7 @@ several parameters have to match:
 2. and then `dummy_name` must be linked with the raw data `adsl_raw` - `vars = list(dummy_name = adsl_raw)`
 
 The name `ADSL` is fixed because it is the name of the argument of the function inside of the `CallableFunction`.
-The name `dummy_name` can be free to be any valid `R` name.
+The name `dummy_name` is free to be any valid `R` name.
 
 ```{r}
 # here we use the general dataset_connector function which pulls an object of type TealDataset
@@ -260,7 +258,7 @@ adsl_2 <- dataset_connector(
 load_dataset(adsl_2)
 ```
 
-`TealDatasetConnector` like the other delayed data objects contains  a
+`TealDatasetConnector` like the other delayed data objects contains a
 `launch` method which can be used to obtain data using shiny application.
 This function can be used to check if the objects are specified correctly and to
 investigate potential mistakes. By default shiny app won't render any inputs for
@@ -289,15 +287,14 @@ if (interactive()) {
 ```
 
 ### `TealDataConnection`
-Objects of this class are responsible to set connection with remote data sources.
-`TealDataConnection` opens and closes connections by calling `CallableFunction` with
-appropriate arguments.
+Objects of this class are responsible to set a connection with remote data sources.
+`TealDataConnection` opens and closes connections by calling `CallableFunction` with appropriate arguments.
 
-In `shiny` application connection arguments needs to be linked with `inputs`,
+In `shiny` applications, connection arguments need to be linked with `inputs`,
 that is why `TealDataConnection` contains a module. Developers can customize UI inputs to
 open the connection using `set_open_ui()` and specify a relevant server function
 using `set_open_server()`. It's important to keep in mind that the server module
-needs a connection as a argument to `open()` and `close()` if needed.
+needs a connection as an argument to `open()` and `close()` if needed.
 
 ```{r}
 open_fun <- callable_function(data.frame) # define opening function

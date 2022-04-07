@@ -1,4 +1,4 @@
-# teal.data 0.0.0.9014
+# teal.data 0.0.1
 
 * Initial release of `teal.data` a package for the data model used by `teal` applications.
 
@@ -16,6 +16,5 @@
 ### Miscellaneous
 * As `reticulate` is in Suggests, added `requireNamespace` call whenever it is needed.
 * `dplyr` moved from imports to suggests.
-* removed `var_relabel` and `variable_labels` to resolve conflict with `formatters`.
 * Removed redundant calling of the `JoinKeys$mutate` method inside of `for-loops`.
 * Removed `rtables` dependency from the package.

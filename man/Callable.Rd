@@ -2,16 +2,8 @@
 % Please edit documentation in R/Callable.R
 \name{Callable}
 \alias{Callable}
-\title{A \code{Callable} class of objects
-
-Object that stores function name with its arguments. Methods to get call and run it.}
+\title{A \code{Callable} class of objects}
 \description{
-A \code{Callable} class of objects
-
-Object that stores function name with its arguments. Methods to get call and run it.
-
-A \code{Callable} class of objects
-
 Object that stores function name with its arguments. Methods to get call and run it.
 }
 \keyword{internal}

@@ -2,12 +2,11 @@
 % Please edit documentation in R/CallableCode.R
 \name{CallableCode}
 \alias{CallableCode}
-\title{A \code{CallableCode} class of objects
-
-Object that stores code to reproduce an object. It includes methods to
-get or run the code and return the object.}
+\title{A \code{CallableCode} class of objects}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+Object that stores code to reproduce an object. It includes methods to
+get or run the code and return the object.
 }
 \section{Super class}{
 \code{\link[teal.data:Callable]{teal.data::Callable}} -> \code{CallableCode}

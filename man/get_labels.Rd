@@ -19,7 +19,6 @@ otherwise will return \code{NA} for them}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
-library(scda)
 iris_with_labels <- iris
 attr(iris_with_labels, "label") <- "Custom iris dataset with labels"
 attr(iris_with_labels["Sepal.Length"], "label") <- c(`Sepal.Length` = "Sepal Length")

@@ -66,26 +66,24 @@ CDISCTealDataConnector <- R6::R6Class( # nolint
 #'   list with dataset connectors
 #'
 #' @examples
-#' \dontrun{
-#' adsl_cf <- CallableFunction$new(
+#' adsl_cf <- callable_function(
 #'   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
 #' )
-#' adae_cf <- CallableFunction$new(
+#' adae_cf <- callable_function(
 #'   function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
 #' )
-#' adsl <- CDISCTealDatasetConnector$new(
+#' adsl <- cdisc_dataset_connector(
 #'   "ADSL", adsl_cf,
 #'   keys = get_cdisc_keys("ADSL"), parent = character(0)
 #' )
-#' adae <- CDISCTealDatasetConnector$new(
+#' adae <- cdisc_dataset_connector(
 #'   "ADAE", adae_cf,
 #'   keys = get_cdisc_keys("ADAE"), parent = "ADSL"
 #' )
 #' data <- cdisc_data_connector(
-#'   connection = data_connection(open_fun = CallableFunction$new(function() "open function")),
+#'   connection = data_connection(open_fun = callable_function(function() "open function")),
 #'   connectors = list(adsl, adae)
 #' )
-#' }
 #' @return `CDISCTealDataConnector` object
 #' @export
 cdisc_data_connector <- function(connection, connectors) {

@@ -97,14 +97,12 @@ set_keys <- function(x, ...) {
 #' @examples
 #' # TealDataset --------
 #'
-#' library(scda)
 #' set_keys(
 #'   dataset(
-#'     "ADSL",
-#'     synthetic_cdisc_data("latest")$adsl,
-#'     code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+#'     "DF",
+#'     data.frame(ID = 1:10, x = runif(10))
 #'   ),
-#'   keys = get_cdisc_keys("ADSL")
+#'   keys = c("ID")
 #' )
 set_keys.TealDataset <- function(x, keys, ...) {
   check_ellipsis(...)
@@ -116,18 +114,17 @@ set_keys.TealDataset <- function(x, keys, ...) {
 #' @examples
 #' # TealDatasetConnector --------
 #'
-#' library(scda)
-#' pull_fun_adsl <- callable_function(
+#' pull_fun <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     data.frame(ID = 1:10, x = runif(10))
 #'   }
 #' )
 #' set_keys(
 #'   dataset_connector(
-#'     "ADSL",
-#'     pull_fun_adsl
+#'     "DF",
+#'     pull_fun
 #'   ),
-#'   keys = get_cdisc_keys("ADSL")
+#'   keys = c("ID")
 #' )
 set_keys.TealDatasetConnector <- function(x, keys, ...) {
   check_ellipsis(...)
