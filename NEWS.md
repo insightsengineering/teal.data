@@ -1,5 +1,9 @@
 # teal.data 0.0.1.9000
 
+* `Python` code execution no longer uses `.Globalenv`.
+
+# teal.data 0.0.1
+
 * Initial release of `teal.data` a package for the data model used by `teal` applications.
 
 ## Changes (from behavior when functionality was part of `teal`)
