@@ -50,7 +50,7 @@ Create a new \code{CallablePythonCode} object
 function to be evaluated in class. Function should be named}
 
 \item{\code{env}}{(\code{environment})\cr
-environment where function will be evaluated}
+environment where the result of python code evaluation are stored}
 }
 \if{html}{\out{</div>}}
 }
