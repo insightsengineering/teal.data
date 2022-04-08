@@ -14,26 +14,26 @@ cc$set_code(c("foo <- function() {1}", "foo2 <- function() {2}"))
 cc$get_code()
 cc$get_code(deparse = FALSE)
 
-cc$set_code(c("ADSL <- radsl()", "ADSL$var <- 1"), "ADSL")
-cc$set_code("ADSL$a <- foo()", "ADSL")
+cc$set_code(c("DF <- data.frame(x = 1:10)", "DF$y <- 1"), "DF")
+cc$set_code("DF$a <- foo()", "DF")
 
 # dependent dataset
-cc$set_code("ADAE <- radae(ADSL = ADSL)", "ADAE", deps = "ADSL")
+cc$set_code(c("DF2 <- data.frame(x2 = 1:10)", "DF2$y2 <- DF$y"), "DF2", deps = "DF")
 
 cc$set_code("baz <- function() {2}")
-cc$set_code("ADAE$a <- baz()", "ADAE")
+cc$set_code("DF2$a <- baz()", "DF2")
 
 cc$get_code()
-cc$get_code("ADSL")
-cc$get_code("ADAE")
+cc$get_code("DF")
+cc$get_code("DF2")
 
 
 x1 <- teal.data:::CodeClass$new()
-x1$set_code("ADSL <- radsl(cached = TRUE)", "ADSL")
+x1$set_code("DF <- data.frame(x = 1:10)", "DF")
 x1$get_code()
 
 x2 <- teal.data:::CodeClass$new()
-x2$set_code("ADAE <- radae(ADSL = ADSL)", "ADAE", "ADSL")
+x2$set_code(c("DF2 <- data.frame(x2 = 1:10)", "DF2$x2 <- DF$x"), "DF2", deps = "DF")
 x2$get_code()
 
 x <- teal.data:::CodeClass$new()
@@ -41,20 +41,20 @@ x$append(x1)
 x$append(x2)
 
 x$get_code()
-x$get_code("ADSL")
-x$get_code("ADAE")
-x$get_code(c("ADSL", "ADAE"))
+x$get_code("DF")
+x$get_code("DF2")
+x$get_code(c("DF", "DF2"))
 
 x3 <- teal.data:::CodeClass$new()
-x3$set_code("ADRS <- radae(cached = TRUE)", "ADRS")
+x3$set_code("DF3 <- data.frame(x3 = 1:10) ", "DF3")
 x3$get_code()
 
 x$append(x3)
-x$get_code("ADRS")
+x$get_code("DF3")
 
 # mutation simulation
-x$set_code("ADRS$x <- foo(ADSL$x)", "ADRS", deps = "ADSL")
-x$get_code("ADRS")
+x$set_code("DF3$x <- foo(DF$x)", "DF3", deps = "DF")
+x$get_code("DF3")
 }
 \keyword{internal}
 \section{Active bindings}{
