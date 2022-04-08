@@ -1,4 +1,4 @@
-# teal.data 0.0.1
+# teal.data 0.1.0
 
 * Initial release of `teal.data` a package for the data model used by `teal` applications.
 
@@ -9,7 +9,7 @@
 
 ### Breaking changes
 * `get_key_duplicates` returns a `data.frame` instead of a `tibble`.
-* `get_call()` function of `CallableFunction` now returns call with namespace included. 
+* `get_call()` function of `CallableFunction` now returns call with namespace included.
 * `MultiAssayExperiment` and `SummarizedExperiment` are now suggested packages, not required. Objects dependent on `MultiAssayExperiment` are changed to lazy-load these now suggested packages.
 * Minor changes to the interface of `TealDataset`, for example some active fields should be replaced by explicit "get" calls.
 
