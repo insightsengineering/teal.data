@@ -15,7 +15,7 @@ CallablePythonCode <- R6::R6Class( # nolint
     #' @param fun (`function`)\cr
     #'  function to be evaluated in class. Function should be named
     #' @param env (\code{environment})\cr
-    #'  environment where function will be evaluated
+    #'  environment where the result of python code evaluation are stored
     #' @return new `CallablePythonCode` object
     initialize = function(fun, env = new.env(parent = parent.env(globalenv()))) {
       if (!requireNamespace("reticulate", quietly = TRUE)) {
