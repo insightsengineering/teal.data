@@ -30,9 +30,13 @@
 \if{html}{\out{<a id="method-eval"></a>}}
 \if{latex}{\out{\hypertarget{method-eval}{}}}
 \subsection{Method \code{eval()}}{
-Evaluates internal code within global environment
+Evaluates internal code within environment
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{PythonCodeClass$eval(vars = list(), dataname = NULL, envir = .GlobalEnv)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{PythonCodeClass$eval(
+  vars = list(),
+  dataname = NULL,
+  envir = new.env(parent = parent.env(.GlobalEnv))
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
