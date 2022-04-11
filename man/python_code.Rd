@@ -29,6 +29,7 @@ Used to mutate dataset connector objects with python code. See
 \dontrun{
 library(scda)
 library(reticulate)
+library(magrittr)
 
 # mutate dataset object
 
