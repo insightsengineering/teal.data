@@ -39,5 +39,6 @@ data$check() # returns NULL even though the code does not match the raw data
 Find out more in the [teal_data()] documentation.
 
 ## Final considerations
-Any `<x>_data` functions accept the `check` argument. Any `<x>_connector` object does not accept raw data as input
-and therefore is not checked the same way that `teal.data` objects accepting raw data are validated.
+- `<x>_connector` objects do not accept raw data as input and therefore are not checked even if `check = TRUE` is used.
+- The reproducibility check is performed on the data and code passed to the constructor. It does not take
+any mutations into consideration.
