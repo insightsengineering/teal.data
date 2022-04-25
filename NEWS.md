@@ -2,6 +2,7 @@
 ### Miscellaneous
 * Added a template to the `pkgdown` site.
 * `Python` code execution no longer uses `.Globalenv`.
+* Added a short vignette about the reproducibility check.
 
 # teal.data 0.1.0
 
