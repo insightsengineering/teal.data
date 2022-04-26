@@ -40,5 +40,3 @@ Find out more in the [teal_data()] documentation.
 
 ## Final considerations
 - `<x>_connector` objects do not accept raw data as input and therefore are not checked even if `check = TRUE` is used.
-- The reproducibility check is performed on the data and code passed to the constructor. It does not take
-any mutations into consideration.
