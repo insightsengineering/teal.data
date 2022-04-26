@@ -1,0 +1,42 @@
+---
+title: "Reproducibility check"
+author: "NEST CoreDev Team"
+date: "2022-04-20"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reproducibility check}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Reproducibility check
+## Mechanism
+`teal.data` classes that accumulate raw data accept a boolean `check` argument, e.g. [teal_data()]. This boolean
+flag indicates whether `teal` performs validation of the data passed to the `TealData` object during launch of a
+`teal` application.
+
+The validation compares the raw data passed to the class with the dataset returned by the code stored in the class.
+E.g.:
+```r
+library(teal.data)
+iris_ds <- dataset("iris", iris, code = "iris <- iris")
+data <- teal_data(iris_ds, check = TRUE)
+data$check() # returns TRUE
+```
+
+The `check()` method called during launch can be invoked directly and returns `TRUE` if the raw data passed
+to `teal_data` matches the return value of the code stored in the class. It returns an error if the comparison
+fails and `NULL` if the `check = FALSE` was passed to `teal_data`.
+
+```r
+data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = TRUE)
+data$check() # returns FALSE
+
+data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = FALSE)
+data$check() # returns NULL even though the code does not match the raw data
+```
+
+Find out more in the [teal_data()] documentation.
+
+## Final considerations
+- `<x>_connector` objects do not accept raw data as input and therefore are not checked even if `check = TRUE` is used.
