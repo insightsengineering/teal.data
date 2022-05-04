@@ -1,0 +1,21 @@
+---
+title: "teal.data with Python"
+author: "NEST coreDev"
+date: "2022-05-10"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{teal.data with Python}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Overview
