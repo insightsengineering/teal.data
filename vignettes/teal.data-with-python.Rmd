@@ -11,11 +11,71 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include = FALSE, echo=FALSE}
+```{r setup, include = FALSE, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-### Overview
+## Overview
+
+It is possible to use python code (via the `reticulate` package) to create a `teal` dataset. 
+Therefore if a python package is required to access/create your data, it can still be used in a `teal` application.
+
+We recommend having a thorough understanding of the `reticulate` package (see [here](https://rstudio.github.io/reticulate))
+before using the python functionality described below. 
+
+## Example
+
+In this section we show a simple example showing how python code can be used to create a `teal` dataset.
+
+For this example we require a python environment with `pandas` installed. See [here](https://rstudio.github.io/reticulate/articles/python_packages.html) for further details.
+
+We first load the packages:
+
+```{r}
+library(reticulate) # may need to be installed if not available
+library(teal.data)
+```
+
+Next we define the python code which we want to use to create the dataset.
+In this example, for demonstration purposes we create a trivial dataset which could easily be done directly in R.
+Note we use a variable `num_rows` which needs to be passed to the python code from R. 
+
+```{r}
+python_code <- "import pandas as pd
+data = pd.DataFrame({\"id\" : range(r.num_rows), \"val\" : range(r.num_rows)})"
+```
+
+Next we create a `python_dataset_connector` object. 
+
+```{r}
+x <- python_dataset_connector(
+  dataname = "DATA", # the teal dataset name
+  code = python_code, # the code used to generate the dataset
+  object = "data", # the object in the python code to be converted to a data.frame for the teal dataset
+  keys = "id", # the key for teal dataset object
+  vars = list(num_rows = 5L) # any variables passed from R into python (note this could be an R variable)
+)
+```
+
+Finally we can test the code by pulling the data into R:
+
+```{r eval = FALSE}
+x$pull()
+print(x)
+```
+
+## Further Concerns
+
+### Reproducibility
+
+In order to ensure reproducibility when generating `teal` datasets using python it is necessary to use a reproducible
+python environment (for example using `virtualenv` or `conda`) see [here](https://rstudio.github.io/reticulate/articles/versions.html)
+for more details.
+
+### Deployment
+
+A python interpreter (or the python environment described above) will need to be available when deploying your app.
+We recommend following the example [here](https://github.com/ranikay/shiny-reticulate-app) to see how this can be done.

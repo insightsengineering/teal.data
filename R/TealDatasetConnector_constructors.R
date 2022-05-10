@@ -1033,6 +1033,9 @@ python_dataset_connector <- function(dataname,
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Cannot load package 'reticulate' - please install the package.", call. = FALSE)
   }
+  if (utils::packageVersion("reticulate") < "1.22") {
+    stop("Please upgrade package 'reticulate', teal.data requires version >= 1.22")
+  }
 
   checkmate::assert_string(object)
   if (!xor(missing(code), missing(file))) stop("Exactly one of 'code' and 'script' is required")
