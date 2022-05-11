@@ -36,8 +36,7 @@ We first load the packages:
 
 ```{r}
 library(reticulate) # may need to be installed if not available
-# reticulate function to call to install the pandas package if not installed
-# py_install("pandas") 
+# reticulate function to call to install the pandas package if not installed: py_install("pandas") 
 library(teal.data)
 ```
 
