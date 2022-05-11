@@ -21,6 +21,9 @@ CallablePythonCode <- R6::R6Class( # nolint
       if (!requireNamespace("reticulate", quietly = TRUE)) {
         stop("Cannot load package 'reticulate' - please install the package.", call. = FALSE)
       }
+      if (utils::packageVersion("reticulate") < 1.22) {
+        stop("Please upgrade package 'reticulate', teal.data requires version >= 1.22")
+      }
 
       super$initialize(fun = fun, env = env)
       logger::log_trace("CallablePythonCode initialized.")
