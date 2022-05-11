@@ -7,10 +7,25 @@
     <loc>https://insightsengineering.github.io/teal.data/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/articles/delayed-data-loading.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/articles/delayed-data-objects.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/articles/teal.data.html</loc>
+    <loc>https://insightsengineering.github.io/teal.data/articles/preprocessing-delayed-data.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/articles/reproducibility.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/articles/teal.data-with-python.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/articles/testing-delayed-data.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/authors.html</loc>
@@ -290,14 +305,5 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/topological_sort.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/var_relabel.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/variable_labels-set.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/variable_labels.html</loc>
   </url>
 </urlset>
