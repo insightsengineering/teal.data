@@ -1033,7 +1033,7 @@ python_dataset_connector <- function(dataname,
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     stop("Cannot load package 'reticulate' - please install the package.", call. = FALSE)
   }
-  if (utils::packageVersion("reticulate") < "1.22") {
+  if (utils::packageVersion("reticulate") < 1.22) {
     stop("Please upgrade package 'reticulate', teal.data requires version >= 1.22")
   }
 
