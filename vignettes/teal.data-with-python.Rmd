@@ -28,7 +28,7 @@ before using the python functionality described below.
 
 ## Example
 
-In this section we show a simple example showing how python code can be used to create a `teal` dataset.
+In this section we show a simple example of how python code can be used to create a `teal` dataset.
 
 For this example we require a python environment with `pandas` installed. See [here](https://rstudio.github.io/reticulate/articles/python_packages.html) for further details.
 
