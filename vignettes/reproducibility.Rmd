@@ -29,8 +29,9 @@ to `teal_data` matches the return value of the code stored in the class. It retu
 fails and `NULL` if the `check = FALSE` was passed to `teal_data`.
 
 ```r
+# throws an error:
+# Error in x$check_reproducibility() : Reproducibility check failed.
 data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = TRUE)
-data$check() # returns FALSE
 
 data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = FALSE)
 data$check() # returns NULL even though the code does not match the raw data
