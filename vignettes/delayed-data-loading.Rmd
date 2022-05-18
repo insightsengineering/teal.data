@@ -258,6 +258,8 @@ if (interactive()) {
 
 Objects of this class are responsible to set a connection with remote data sources. `TealDataConnection` opens and closes connections by calling `CallableFunction` with appropriate arguments.
 
+Note that if an app pulls data from a remote source, then the outputs will change even if the code is the same if the data in the remote source changes.
+
 In `shiny` applications, connection arguments need to be linked with `inputs`, which is why `TealDataConnection` contains a module. Developers can customize UI inputs to open the connection using `set_open_ui()` and specify a relevant server function using `set_open_server()`. It's important to keep in mind that the server module needs a connection as an argument to `open()` and `close()` if needed.
 
 ```{r}
