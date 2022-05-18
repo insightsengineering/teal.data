@@ -25,8 +25,8 @@ library(scda)
 
 # specialized function to create delayed data using scda (could also set keys when using cdisc_dataset_connector)
 adlb <- scda_dataset_connector(
-  "ADLB", 
-  "adlb", 
+  "ADLB",
+  "adlb",
   keys = get_cdisc_keys("ADLB")
 )
 

@@ -294,10 +294,10 @@ adsl <- dataset_connector(
 
 adsl_3 <- dataset_connector(
   dataname = "ADSL_3",
-  pull_callable = callable_function(fun = function(ADSL, name, n = 5) {
+  pull_callable = callable_function(fun = function(ADSL, name, n = 5) { # nolint
     print(paste("slicing data from", name))
-    ADSL_3 <- head(ADSL, n)
-  }) %>% # nolint
+    ADSL_3 <- head(ADSL, n) # nolint
+  }) %>%
     set_args(list(ADSL = as.name("ADSL"))),
   keys = get_cdisc_keys("ADSL"),
   label = "Example label",
