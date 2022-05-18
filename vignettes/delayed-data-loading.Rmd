@@ -176,7 +176,7 @@ adsl_dataset$get_keys()
 
 ### `TealDatasetConnector` (base class which `CDISCTealDatasetConnector` inherits from)
 
-`TealDatasetConnector` contains a `Callable` object to obtain a single dataset along with other information such as keys, dataname, label and reproducible code. In the code chunk below, a connector is created based on the `synthetic_cdisc_dataset` function.
+`TealDatasetConnector` contains a `Callable` object to obtain a single `TealDataset` object. In the code chunk below, a connector is created based on the `synthetic_cdisc_dataset` function.
 
 ```{r}
 adsl_conn <- dataset_connector(
@@ -231,7 +231,7 @@ adsl_2 <- dataset_connector(
 load_dataset(adsl_2)
 ```
 
-`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing ui module function, with `ns` argument (`shiny` namespace ID object).
+`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing ui module function, with `ns` argument (`shiny` namespace ID object). In the example below, the `callable_function` object contains two arguments, `ADSL` and `n`. `ADSL` is given while `n` is entered from a shiny app after the `launch` method is called.
 
 ```{r}
 adsl_3 <- dataset_connector(
@@ -289,10 +289,13 @@ adsl <- dataset_connector(
   keys = get_cdisc_keys("ADSL"),
   label = "Subject-Level Analysis Dataset"
 )
-adsl_3 <- dataset_connector(
 
+adsl_3 <- dataset_connector(
   dataname = "ADSL_3",
-  pull_callable = callable_function(fun = function(ADSL, name, n = 5) ADSL_3 <- head(ADSL, n)) %>% # nolint
+  pull_callable = callable_function(fun = function(ADSL, name, n = 5) {
+    print(paste("slicing data from", name))
+    ADSL_3 <- head(ADSL, n)
+  }) %>% # nolint
     set_args(list(ADSL = as.name("ADSL"))),
   keys = get_cdisc_keys("ADSL"),
   label = "Example label",
@@ -319,7 +322,7 @@ data <- teal.data:::TealDataConnector$new(
 )
 ```
 
-The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(name = "latest"))`, this argument will be set for all connectors. In case when one connector contains `CallableFunction` which doesn't have `name` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
+The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(name = "latest"))`, this argument will be set for all connectors. In case when any connector contains a `CallableFunction` which doesn't have `name` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
 
 ```{r}
 cat(get_code(data))
@@ -329,18 +332,12 @@ data$set_pull_args(args = list(name = "latest"))
 data$pull()
 ```
 
-By default `TealDataConnector` creates simple shiny module without any
-inputs for connectors and datasets. This means that connection opening/closing
-and pulling datasets are done on default arguments. However, users can easily
-extend the module using `set_ui()` and `set_server()` to specify
+By default `TealDataConnector` creates simple shiny module without any inputs to the arguments for the `callable_function` of the connectors. This means that, opening, closing, and pulling datasets are done on default arguments. However, users can easily extend the module using `set_ui()` and `set_server()` to specify
 the UI and server function themselves. The general rule for creating these modules is that callback
 from server to UI is not possible, because server module is executed after the submit
-button is clicked. Although see `set_preopen_server` of `TealDataConnection` object for a slight
-relaxation of this rule.
-Below we extend the app interface by adding a text input which will be passed to the
-`scda` function. The UI is created from `scda_conn` and
-`connectors` object while the server module requires `connectors` and `connection`
-objects as additional arguments.
+button is clicked. But see `set_preopen_server` of `TealDataConnection` object for a slight
+relaxation of this rule. Below we extend the app interface by adding a text input which will be passed to the
+`scda` function. The UI is created from `scda_conn` and `connectors` object while the server module requires `connectors` and `connection` objects as additional arguments.
 
 
 ```{r}
@@ -395,9 +392,7 @@ data$set_server(
 )
 ```
 
-Executing `data$launch()` will open shiny application. Remember that data can be
-loaded only once, in case you run above code please reinitialize datasets,
-connection and data object again.
+Executing `data$launch()` will open a shiny application that prompts the user for input to load the data. Remember that data can be loaded only once. So if you run the code to `data$pull()` above please reinitialize the connectors, connection and data object again before running the code below.
 
 ```{r}
 if (interactive()) {
@@ -407,10 +402,7 @@ if (interactive()) {
 
 ### `TealData` (base class which `CDISCTealData` inherits from)
 
-`TealData` manages `TealDataset`, `TealDatasetConnector` and `TealDataConnector`
-objects. `CDISCTealData` is the equivalent object when creating apps to analyze CDISC data.
-These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects can be passed as the `data` argument into `init`.
-
+`TealData` manages `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects. `CDISCTealData` is the equivalent object when creating apps to analyze CDISC data. These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects are passed as the `data` argument into `init`.
 
 ```{r}
 data <- cdisc_data(
@@ -427,11 +419,7 @@ data <- cdisc_data(
 )
 ```
 
-One can combine multiple delayed data objects using `[teal|cdisc]_data` functions and
-include them in a shiny application. `TealData` gathers all objects and sets
-combined UI with shiny inputs from all objects.
-In the code chunk below we specified four dataset connectors but
-developers can include any number and any type of objects.
+One can combine multiple delayed data objects using `[teal|cdisc]_data` functions and include them in a shiny application. `TealData` gathers all objects and sets combined UI with shiny inputs from all objects. In the code chunk below we specified four dataset connectors, but it works with arbitrary many objects of any combination of the classes `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector`.
 
 ```{r}
 adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
@@ -442,8 +430,7 @@ adtte <- scda_cdisc_dataset_connector("ADTTE", "adtte")
 data <- cdisc_data(adsl, adae, advs, adtte)
 ```
 
-Similar to other connectors one can use `launch()` method to investigate if data is set
-correctly. Unlike the other connectors, this class lacks `pull()` method.
+`TealData` also contains a `launch()` method to investigate if data is set correctly. However, `TealData` lacks the `pull()` method.
 
 ```{r}
 if (interactive()) {
@@ -451,8 +438,7 @@ if (interactive()) {
 }
 ```
 
-Reproducible code attached to the `data` object is combined code of all components,
-but one can also extract code from single dataset by specifying `dataname` argument.
+Reproducible code attached to the `data` object is combined code of all components, but one can also extract code from single dataset by specifying `dataname` argument.
 
 ```{r}
 get_code(data)
@@ -463,10 +449,13 @@ get_code(data, dataname = "ADTTE")
 Developers can also extract datasets and connectors included in the `TealData`.
 
 ```{r}
+# if you launched the shiny app and pressed the submit button above to load the data,
+# then these 4 lines do not need to be run
 adsl$pull()
 adae$pull()
 advs$pull()
 adtte$pull()
+
 # get loaded datasets
 data$get_datasets()
 
@@ -482,10 +471,7 @@ data$get_items()
 
 ### Data modification
 
-Since delayed data objects are just metadata before data is loaded there are
-dedicated functions to allow dataset mutations. To modify a single dataset one
-should use `mutate_dataset` by specifying `code` argument with code as a single
-character or `script` with location of the script file.
+To modify a single dataset one should use `mutate_dataset` by specifying `code` argument with code as a single character or `script` with location of the script file. In the case of delayed data, the pre-processing code passed into `mutate_dataset` would be run after the data becomes available.
 
 ```{r}
 adsl <- cdisc_dataset(
@@ -502,8 +488,7 @@ adtte <- scda_cdisc_dataset_connector(
   mutate_dataset(code = "ADTTE$x2 <- 2")
 ```
 
-`get_code()` function returns loading code from `CallableFunction` and mutation
-code as provided in using `mutate_dataset`.
+`get_code()` function returns loading code from `CallableFunction` and mutation code as provided in using `mutate_dataset`.
 
 ```{r}
 cat(get_code(adsl))
@@ -536,13 +521,11 @@ data <- mutate_dataset(data, code = "ADTTE$x4 <- 4", dataname = "ADTTE") %>%
   mutate_dataset(code = "ADSL <- dplyr::filter(ADSL, SEX == 'F')", dataname = "ADSL")
 
 cat(get_code(data, "ADSL"))
+# note that the code for ADTTE below does not contain any mention of ADSL
 cat(get_code(data, "ADTTE"))
 ```
 
-Sometimes code of one object can depend on another, in this case we can link
-them in the same way how we link `TealDatasetConnector` objects. If object code
-is dependent on another, as ADTTE depends on ADSL below, `get_code`
-will return everything we need to be executed to reproduce this dataset.
+Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as ADTTE depends on ADSL below, `get_code` will return everything we need to be executed to reproduce this dataset.
 
 ```{r}
 data <- mutate_dataset(
@@ -553,15 +536,13 @@ data <- mutate_dataset(
 ) %>%
   mutate_dataset("ADSL$var_created_after <- NA", dataname = "ADSL")
 
-
+# note that the code that defines ADSL is now part of the code of ADTTE below
 cat(get_code(data, dataname = "ADTTE"))
+
+# moreover, note that the code inserted to the mutate_dataset after the pipe was not included.
 ```
 
-Using `mutate_dataset` creates a tree of calls, which can be easily
-subset by `dataname`, but developers can also use `mutate_data` function which
-doesn't require `dataname` to be specified. When `mutate_data` is used, code for
-a single dataset is not possible to be subset, instead code of all datasets is
-returned.
+Using `mutate_dataset` creates a tree of calls, which can be subset by `dataname`, but developers can also use `mutate_data` function which doesn't require `dataname` to be specified. When `mutate_data` is used, code for a single dataset is not possible to be subset, instead code of all datasets is returned.
 
 ```{r}
 data <- mutate_data(data,
@@ -573,11 +554,14 @@ data <- mutate_data(data,
 )
 
 # single dataset code is not possible to obtain anymore
-cat(get_code(data, "ADSL"))
+cat(adsl_code <- get_code(data, "ADSL"))
+cat(adtte_code <- get_code(data, "ADTTE"))
+
+# TRUE
+as.character(adsl_code) == as.character(adtte_code)
 ```
 
 ### `teal.data` in shiny app
-
 
 ```{r}
 adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
