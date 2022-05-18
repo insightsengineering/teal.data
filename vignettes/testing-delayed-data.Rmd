@@ -13,9 +13,7 @@ editor_options:
 
 ## Overview
 
-Once your delayed data object has been created as described in [Delayed Data Objects](delayed-data-objects.html), `teal.data` provides a useful set of functions
-to examine the object outside of your `teal.data` application. Below is an exhaustive list of all such functions
-available to use:
+Once your delayed data object has been created as described in [Delayed Data Objects](delayed-data-objects.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
 
 |                                             | `TealDataset`       | `TealDatasetConnector`       | `TealDataConnector` & `TealData`      |
 |---------------------------------------------|-------------------|----------------------------|------------------------------------------|
@@ -30,6 +28,7 @@ available to use:
 | Mutate All Datasets                         | -                 | -                          | `mutate_data`                       |
 
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
+
 ```{r}
 library(scda)
 library(teal.data)
@@ -61,14 +60,12 @@ if (interactive()) {
 }
 ```
 
-There is also a `pull` method to test that the data can be loaded without launching a shiny app.
-See the `teal.data` package documentation for further details.
+There is also a `pull` method to test that the data can be loaded without launching a shiny app. See [Delayed Data Loading](delayed-data-loading.html).
 
-Alternatively `teal.data` provides a `load_dataset` function for `<...>Dataset<...>` objects which is used to pull the
-data without launching the delayed loading screen, and a `load_datasets`function for `<...>Data<...>` objects which
-launches the delayed loading screen used to pull the datasets from the connection.
+Alternatively `teal.data` provides a `load_dataset` function for `<...>Dataset<...>` objects which is used to pull the data without launching the delayed loading screen, and a `load_datasets`function for `<...>Data<...>` objects which launches the delayed loading screen used to pull the datasets from the connection.
 
 After loading the data, it can be checked that the data has been successfully pulled using the `is_pulled` function:
+
 ```{r}
 if (interactive()) {
   load_datasets(delayed_data)
@@ -89,11 +86,10 @@ adae$set_ui_input(function(ns) {
 
 #### Testing data loading continued
 
-Once the data are loaded, it's also possible to access the individual dataset objects using the `get_dataset` function,
-or for `<...>Data<...>` objects, retrieve all dataset objects using the `get_datasets` function:
+Once the data are loaded, it's also possible to access the individual dataset objects using the `get_dataset` function, or for `<...>Data<...>` objects, retrieve all dataset objects using the `get_datasets` function:
+
 ```{r}
 lapply(delayed_data$get_items(), function(item) item$pull())
-get_dataset(adsl)
 
 # return a particular dataset by name
 get_dataset(delayed_data, dataname = "ADSL")
@@ -103,27 +99,42 @@ load_datasets(delayed_data)
 get_datasets(delayed_data)
 ```
 
-To view the raw dataframe object, use the `get_raw_data` function:
-```{r}
-# for a single <...>Dataset<..> object
-get_raw_data(adsl)
+Note that when a connector is loaded, the result is a dataset object:
 
-# or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
-get_raw_data(delayed_data, "ADSL")
+```{r}
+
+# "CDISCTealDatasetConnector" "TealDatasetConnector" "R6"
+class(adsl)
+
+# "CDISCTealDataset" "TealDataset" "R6"
+class(get_dataset(adsl))
 ```
 
-The `get_code` function is provided to check the processing code is as expected.
+To view the raw dataframe object, use the `get_raw_data` function:
+
+```{r}
+# for a single <...>Dataset<..> object
+head(get_raw_data(adsl))
+
+# or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
+raw <- get_raw_data(delayed_data, "ADSL")
+head(raw)
+
+# note the raw data is now just a regular R table
+class(raw)
+```
+
+The `get_code` function is called to check that the processing code is as expected (and for reproducibility).
+
 ```{r}
 get_code(delayed_data)
 ```
 
-See the section on [Preprocessing Delayed Data](preprocessing-delayed-data.html) to
-specify additional transformations to your delayed data which can also be accessed using `get_code`.
+See the section on [pre-processing Delayed Data](pre-processing-delayed-data.html) to specify additional code instructions to transform your delayed data which will also be added to the output of `get_code`.
 
 #### Aside: Piping functions
 
-The examples above covered some basic piping, but as discussed above there is a natural sequence to the loading and inspection
-of a delayed data object. For this reason, the `magrittr` pipe `%>%` works well for many preprocessing tasks.
+The examples above covered some basic piping, but there is a natural sequence to the loading and inspection of a delayed data object. For this reason, the `magrittr` pipe `%>%` works well for many pre-processing tasks.
 
 ```{r}
 library(teal.data)
@@ -138,7 +149,8 @@ cdisc_dataset_connector(
 ) %>%
   mutate_dataset("ADSL$TRTDUR <- round(as.numeric(ADSL$TRTEDTM - ADSL$TRTSDTM), 1)") %>%
   load_dataset() %>%
-  get_raw_data()
+  get_raw_data() %>%
+  head()
 ```
 
 Since these functions modify (operate on) the objects that are given to them, there is no need to assign the result.
