@@ -1,7 +1,7 @@
 ---
 title: "Delayed Data Objects"
 author: "Dawid Kałędkowski"
-date: "15.03.2022"
+date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Delayed Data Objects}

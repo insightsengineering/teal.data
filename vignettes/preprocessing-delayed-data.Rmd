@@ -1,7 +1,7 @@
 ---
 title: "pre-processing Delayed Data"
 author: "Dawid Kałędkowski"
-date: "15.03.2022"
+date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{pre-processing Delayed Data}
