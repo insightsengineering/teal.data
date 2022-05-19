@@ -112,11 +112,11 @@ object_file <- function(path, class) {
 check_pkg_quietly <- function(pckg, msg) {
   checkmate::assert_string(pckg)
   checkmate::assert_string(msg)
-  if (!pckg %in% utils::installed.packages()) {
+  if (!pckg %in% rownames(utils::installed.packages())) {
     stop(msg)
   }
 
-  return(invisible(NULL))
+  invisible(NULL)
 }
 
 # validate metadata as a list of length one atomic
