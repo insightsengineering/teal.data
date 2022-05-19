@@ -14,6 +14,7 @@ editor_options:
 ## Basic understanding
 
 Delayed data objects are `R` objects that contain instructions on how to acquire data. In practice, you will pass these `DDL` objects with its instructions into a `teal` application so that you can launch a `teal` app first and then pull the data afterwards.
+The main difference between a `DDL` object and a non-`DDL` object is that data is available immediately after creating a non-`DDL` object. In contrast, data in a `DDL` object is not available after construction, only after `pulling` it (executing instructions stored in the object).
 
 ### Key concepts
 
