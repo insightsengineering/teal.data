@@ -1,4 +1,4 @@
-# teal.data 0.1.0.9005
+# teal.data 0.1.0.9006
 ### Miscellaneous
 * Added a template to the `pkgdown` site.
 * `Python` code execution no longer uses `.Globalenv`.
