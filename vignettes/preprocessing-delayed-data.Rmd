@@ -1,24 +1,19 @@
 ---
-title: "Preprocessing Delayed Data"
+title: "Pre-processing Delayed Data"
 author: "Dawid Kałędkowski"
-date: "15.03.2022"
+date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Preprocessing Delayed Data}
+  %\VignetteIndexEntry{Pre-processing Delayed Data}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
+When creating apps which do not use `DDL`, once the datasets are created there is often some pre-processing required before initializing the teal app. Similarly, in the case of delayed data additional code instructions to pre-process data can be added to `DDL` objects which will be run after the data is loaded, which may happen after the launching of the shiny app or when the `pull()` method is called.
 
-When creating apps which do not use `DDL`, once the datasets are created there is often some preprocessing
-required before initializing the teal app. The processing cannot be done in the same way for `DDL` but it
-is possible to process the data.
-
-* `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function.
-For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
+* `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
 
 ```{r}
 library(scda)
@@ -52,18 +47,16 @@ adae$pull() %>% get_raw_data()
 cdisc_data(adsl, adae, check = TRUE) %>%
   mutate_data("ADAE$x <- ADSL$SUBJID[1]")
 ```
-The code is processed in the order the datasets are pulled so if there are dependencies between datasets
-it is important to ensure the order is correct.
 
-Finally, the `code` argument directly in `teal_data` and `cdisc_data` call does not need to be used for `DDL` because data loaded with `DDL` are reproducible by design.
-Because of this, it is recommended to set argument `check = TRUE` inside `cdisc_data` function when creating apps with `DDL`.
+The code is processed in the order the datasets are pulled so if there are dependencies between datasets it matters the order in which pre-processing code is added to the `CDISCTealData` object just as order matters when the arguments are inputted to the `cdisc_data` function to create the `CDISCTealData` object.
+
+Finally, the `code` argument directly in `teal_data` and `cdisc_data` call does not need to be used for `DDL` because data loaded with `DDL` are reproducible by design. Because of this, it is recommended to set argument `check = TRUE` inside `cdisc_data` function when creating apps with `DDL`.
 
 ## Processing dependencies
 
 It may be required to generate a delayed data object that is dependent on some other delayed object or some constant value.
 
-For this, when creating your delayed data object it's possible to supply the additional variables that are to be accessed
-during the data loading (pull) using additional arguments through `...`:
+For this, when creating your delayed data object it's possible to supply the additional variables that are to be accessed during the data loading (pull) using additional arguments through `...`:
 
 ```{r}
 get_code(adsl)
@@ -83,6 +76,7 @@ get_code(adae)
 ```
 
 It's also possible to supply these additional variables after creating your object using the `mutate_dataset` function.
+
 ```{r}
 last_run <- Sys.Date() # constant value stored as a variable in the current session
 
@@ -141,8 +135,7 @@ adae <- cdisc_dataset_connector(
 cat(get_code(adae)) # this code can be run independently
 ```
 
-Related to this idea, it is possible to provide the code on a `Data` level.
-However, this will always return all the code used to generate all the datasets in the object:
+Related to this idea, it is possible to provide the code on a `Data` level. However, this will always return all the code used to generate all the datasets in the object:
 
 ```{r}
 adsl_adae <- cdisc_data(
@@ -150,19 +143,21 @@ adsl_adae <- cdisc_data(
   adae
 ) %>% mutate_data("ADAE$avg_age <- mean(ADAE$AGE)")
 
+# the output for all 3 are the same
 adsl_adae %>%
   get_code() %>%
   cat()
+
 adsl_adae %>%
   get_code(dataname = "ADAE") %>%
   cat()
+
 adsl_adae %>%
   get_code(dataname = "ADSL") %>%
   cat()
 ```
 
-The better approach would be to supply the code on a `Dataset` level.
-This ensures that the code can be accessed on a dataset level:
+The better approach would be to supply the code on a `Dataset` level. This ensures that the code accessed on a dataset level only contains the snippets that pertains to itself:
 
 ```{r}
 adsl_adae <- cdisc_data(
@@ -181,8 +176,7 @@ adsl_adae %>%
   cat()
 ```
 
-Related to this idea, the delayed data object needs to be supplied with the code needed to
-reproduce the data. This can be provided at the `Dataset` level or the `Data` level.
+Related to this idea, the delayed data object needs to be supplied with the code needed to reproduce the data. This can be provided at the `Dataset` level or the `Data` level.
 
 Below is a comparison of these two approaches:
 
@@ -198,7 +192,8 @@ cdisc_dataset("ADSL", adsl,
 
 # it's possible to supply the code at the `Data` level:
 adae <- synthetic_cdisc_data("latest")$adae
-adsl_adae <- cdisc_data(cdisc_dataset("ADSL", adsl),
+adsl_adae <- cdisc_data(
+  cdisc_dataset("ADSL", adsl),
   cdisc_dataset("ADAE", adae),
   code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADAE <- synthetic_cdisc_data(\"latest\")$adae"
 )
