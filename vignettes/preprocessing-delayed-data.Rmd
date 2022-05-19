@@ -1,10 +1,10 @@
 ---
-title: "pre-processing Delayed Data"
+title: "Pre-processing Delayed Data"
 author: "Dawid Kałędkowski"
 date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pre-processing Delayed Data}
+  %\VignetteIndexEntry{Pre-processing Delayed Data}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
