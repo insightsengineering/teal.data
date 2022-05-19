@@ -115,8 +115,7 @@ fun$get_call()
 
 ### `CallableCode`
 
-A simpler version of the `Callable` class is `CallableCode`. Similar to `CallableFunction`, `CallableCode` stores code which can be evaluated using `run()` but it isn't able to use dynamic arguments to make the code more general. `CallableCode` also allows the assignment of objects to its environment. `CallableCode` can contain multiple lines (commands) of code and also allows `library` calls. Please note that objects assigned to this independent environment can't be modified because they are locked immediately. This means that the `CallableCode` created
-below is not allowed to make any changes to `x1`.
+A simpler version of the `Callable` class is `CallableCode`. Similar to `CallableFunction`, `CallableCode` stores code which can be evaluated using `run()` but it isn't able to use dynamic arguments to make the code more general. `CallableCode` also allows the assignment of objects to its environment. `CallableCode` can contain multiple lines (commands) of code and also allows `library` calls. Please note that objects assigned to this independent environment can't be modified because they are locked immediately. This means that the `CallableCode` created below is not allowed to make any changes to `x1`.
 
 ```{r}
 code <- callable_code(
