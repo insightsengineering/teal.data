@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9004</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 30px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/delayed-data-loading.html">Delayed Data Loading</a>
     <a class="dropdown-item" href="../articles/delayed-data-objects.html">Delayed Data Objects</a>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Preprocessing Delayed Data</a>
+    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
     <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
     <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
@@ -52,15 +52,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start_releases -->
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-Other releases
-<span class="caret"></span></a><ul class="dropdown-menu" role="menu">
-   <li><a href="../index.html">latest</a></li>
-   <li><a href="..//index.html"></a></li>
-</ul></li>
-<!-- end_releases -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -89,7 +80,7 @@ Other releases
                         <h4 data-toc-skip class="author">Dawid
 Kałędkowski</h4>
             
-            <h4 data-toc-skip class="date">15.03.2022</h4>
+            <h4 data-toc-skip class="date">15.05.2022</h4>
       
       
       <div class="d-none name"><code>delayed-data-objects.Rmd</code></div>
@@ -101,10 +92,16 @@ Kałędkowski</h4>
 <h2 id="basic-understanding">Basic understanding<a class="anchor" aria-label="anchor" href="#basic-understanding"></a>
 </h2>
 <p>Delayed data objects are <code>R</code> objects that contain
-instructions on how to acquire data. In practice, you can use
-<code>DDL</code> objects to pass data into a <code>teal</code>
-application without actually downloading the data before launching
-application.</p>
+instructions on how to acquire data. In practice, you will pass these
+<code>DDL</code> objects with its instructions into a <code>teal</code>
+application so that you can launch a <code>teal</code> app first and
+then pull the data afterwards.</p>
+<p>The main difference between a <code>DDL</code> object and a
+non-<code>DDL</code> object is that data is available immediately after
+creating a non-<code>DDL</code> object. In contrast, data in a
+<code>DDL</code> object is not available after construction, only after
+<code>pulling</code> it (executing instructions stored in the
+object).</p>
 <div class="section level3">
 <h3 id="key-concepts">Key concepts<a class="anchor" aria-label="anchor" href="#key-concepts"></a>
 </h3>
@@ -121,11 +118,14 @@ in this package.</li>
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## </span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create delayed data using scda (could</span>
-<span class="co"># also set keys using cdisc_dataset_connector)</span>
-<span class="va">adlb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_dataset_connector</a></span><span class="op">(</span><span class="st">"ADLB"</span>, <span class="st">"adlb"</span>, keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADLB"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># specialized function to create delayed data using scda (could also set keys when using cdisc_dataset_connector)</span>
+<span class="va">adlb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_dataset_connector</a></span><span class="op">(</span>
+  <span class="st">"ADLB"</span>,
+  <span class="st">"adlb"</span>,
+  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADLB"</span><span class="op">)</span>
+<span class="op">)</span>
 
-<span class="co"># create delayed data from code see package help for other connectors</span>
+<span class="co"># generalized function to create delayed data from code - see package help for other connectors</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/code_dataset_connector.html">code_dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
   keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,
@@ -134,7 +134,8 @@ in this package.</li>
 <ul>
 <li>A <strong><code>TealDataConnector</code></strong> is an object used
 to pull a set of delayed data sets into a <code>teal</code> app which
-all share a common connection:</li>
+all share a common connection (see <a href="delayed-data-loading.html">Delayed Data Loading</a> for the
+definition of a connection object).</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># using scda</span>
@@ -147,7 +148,7 @@ all share a common connection:</li>
 <ul>
 <li>The <code>cdisc_data</code> function takes a set of
 <strong><code>TealDataConnector</code></strong>,
-<strong><code>TealDatasetConnector</code></strong> and
+<strong><code>TealDatasetConnector</code></strong> and / or
 <code>cdisc_datasets</code> (non-delayed datasets) to create the
 <strong><code>TealData</code></strong> object which is used to create
 <code>teal</code> applications.</li>
@@ -241,8 +242,8 @@ to allow arbitrary relational data to be used within teal apps.</li>
 <div class="section level3">
 <h3 id="dataset-dependencies">Dataset dependencies<a class="anchor" aria-label="anchor" href="#dataset-dependencies"></a>
 </h3>
-<p>The datasets passed into <code>teal.data</code> and
-<code>cdisc_data</code> are pulled in the order they are defined so if
+<p>The datasets passed into <code>teal_data</code> and
+<code>cdisc_data</code> are pulled in the order they are inputted. So if
 datasets depend on other datasets being available they should be placed
 later in the argument list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -260,17 +261,13 @@ later in the argument list:</p>
 <span class="co">## --&gt; Element 2:</span>
 <span class="co">## A CDISCTealDatasetConnector object, named ADSL_2, containing a TealDataset object that has not been loaded/pulled</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># launch method will not be able to load the data as adae is pulled</span>
-<span class="co"># first but it depends on adsl</span>
+<code class="sourceCode R"><span class="co"># launch method will not be able to load the data as adae is pulled first but it depends on adsl</span>
 <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span><span class="va">adsl_2</span>, <span class="va">adsl</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## A CDISCTealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):</span>
 <span class="co">## --&gt; Element 1:</span>
 <span class="co">## A CDISCTealDatasetConnector object, named ADSL_2, containing a TealDataset object that has not been loaded/pulled</span>
 <span class="co">## --&gt; Element 2:</span>
 <span class="co">## A CDISCTealDatasetConnector object, named ADSL, containing a TealDataset object that has not been loaded/pulled</span></code></pre>
-<p>Note that in this case, the <code>adsl</code> object, which is used
-as an argument to <code>adsl_2</code> object, need to be defined before
-the call to <code>cdisc_data</code>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -282,13 +279,15 @@ with <code>DDL</code> by minimizing debugging overhead.</p>
 <li>Run a teal app configured without delayed data to verify that the
 app starts as expected.</li>
 <li>Replace the <code>cdisc_dataset</code> functions with the
-appropriate <code>TealDatasetConnector</code>.</li>
-<li>Add preprocessing code as described above and verify once again by
-running the newly created object’s <code>$launch</code> method.</li>
-<li>Include just a single module to verify that the teal app starts and
-that it loads all the expected data.</li>
-<li>Add modules one by one, replacing all dataset calls with strings and
-iteratively verify that the app functions as expected.</li>
+appropriate <code>TealDatasetConnector</code> objects.</li>
+<li>Add preprocessing code (see <a href="delayed-data-loading.html">Delayed Data Loading</a> for
+preprocessing documentation) and verify once again by running the newly
+created object’s <code>$launch</code> method.</li>
+<li>First, include just a single module to verify that the teal app
+starts and that it loads all the expected data.</li>
+<li>Then, add the rest of the modules one by one, replacing all dataset
+calls with strings and iteratively verify that the app functions as
+expected.</li>
 </ol>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9004</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 30px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/delayed-data-loading.html">Delayed Data Loading</a>
     <a class="dropdown-item" href="../articles/delayed-data-objects.html">Delayed Data Objects</a>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Preprocessing Delayed Data</a>
+    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
     <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
     <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
@@ -52,15 +52,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start_releases -->
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-Other releases
-<span class="caret"></span></a><ul class="dropdown-menu" role="menu">
-   <li><a href="../index.html">latest</a></li>
-   <li><a href="..//index.html"></a></li>
-</ul></li>
-<!-- end_releases -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -89,7 +80,7 @@ Other releases
                         <h4 data-toc-skip class="author">Dawid
 Kałędkowski</h4>
             
-            <h4 data-toc-skip class="date">2022-05-11</h4>
+            <h4 data-toc-skip class="date">15.05.2022</h4>
       
       
       <div class="d-none name"><code>delayed-data-loading.Rmd</code></div>
@@ -127,18 +118,25 @@ main app loads the user is prompted with data loading UI.</p>
 <div class="section level2">
 <h2 id="key-definitions">Key definitions<a class="anchor" aria-label="anchor" href="#key-definitions"></a>
 </h2>
-<p>Before we jump to creating applications it is important to define a
-few terms which are the keys to understand the main classes of the
+<p>The following are general descriptions for the main classes of the
 <code>teal.data</code> package.</p>
 <ol style="list-style-type: decimal">
-<li><p><code>TealDataset</code> and <code>TealDatasetConnector</code> -
-<code>TealDataset</code> is a class which contains physical data in the
-form of a single <code>data.frame</code> plus reproducible code.
-<code>TealDatasetConnector</code> is a class which contains R call to
-obtain <code>TealDataset</code>.</p></li>
-<li><p><code>TealData</code> is a collection of <code>TealDataset</code>
-objects.</p></li>
+<li><p><code>TealDataset</code> contains physical data in the form of a
+single <code>data.frame</code> plus reproducible code.</p></li>
+<li><p><code>TealDatasetConnector</code> contains instructions to obtain
+a single <code>TealDataset</code> object.</p></li>
+<li><p><code>TealDataConnection</code> opens and closes connections
+(with remote data sources).</p></li>
+<li><p><code>TealDataConnector</code> contains arbitrary many
+<code>TealDatasetConnector</code> objects and optionally one
+<code>TealDataConnection</code> object.</p></li>
+<li><p><code>TealData</code> contains arbitrary many
+<code>TealDataset</code>, <code>TealDatasetConnector</code> and / or
+<code>TealDataConnector</code> objects.</p></li>
 </ol>
+<p>With the exception of <code>TealDataConnection</code>, all of the
+above classes have their CDISC equivalent, e.g. <code>TealData</code>
+-&gt; <code>CDISCTealData</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="creating-an-app">Creating an app<a class="anchor" aria-label="anchor" href="#creating-an-app"></a>
@@ -152,11 +150,11 @@ objects.</p></li>
 <code>CallableFunction</code><a class="anchor" aria-label="anchor" href="#callablefunction"></a>
 </h4>
 <p>This class won’t be used often by the developers but it’s essential
-for all connectors to store and execute R function with possibility to
-get code to reproduce function calls. In the example below and object of
-class <code>CallableFunction</code> is created which runs
-<code>synthetic_cdisc_dataset</code> function with arguments set
-before.</p>
+for all connectors to store and execute R functions with the feature to
+get the code to reproduce the function calls. In the example below an
+object of class <code>CallableFunction</code> is created which runs
+<code>synthetic_cdisc_dataset</code> function with arguments specified
+by the user.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: shiny</span>
@@ -225,8 +223,8 @@ before.</p>
 <span class="co"># check reproducible code</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span></code></pre></div>
-<p>It’s also possible to execute <code>fun$run()</code> function with
-arguments added on the fly in a named <code>list</code>. Dynamic
+<p>It’s also possible to execute the <code>fun$run()</code> function
+with arguments added on the fly in a named <code>list</code>. Dynamic
 arguments won’t be reflected in the reproducible code, which will have
 consequences in other places - we will get back to this in later stages
 of the documentation.</p>
@@ -420,12 +418,12 @@ contain multiple lines (commands) of code and also allows
 <code>library</code> calls. Please note that objects assigned to this
 independent environment can’t be modified because they are locked
 immediately. This means that the <code>CallableCode</code> created below
-is not allowed to make any changes to <code>ADSL</code>.</p>
+is not allowed to make any changes to <code>x1</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_code.html">callable_code</a></span><span class="op">(</span>
   <span class="st">"library(scda)
   ADTTE &lt;- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
-  ADTTE$x1 &lt;- 1
+  ADTTE$x1 &lt;- x1
   ADTTE &lt;- dplyr::filter(ADTTE, PARAMCD %in% c('EFS', 'OS'))"</span>
 <span class="op">)</span>
 
@@ -433,36 +431,21 @@ is not allowed to make any changes to <code>ADSL</code>.</p>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">code</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; library(scda)</span>
 <span class="co">#&gt; ADTTE &lt;- synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest")</span>
-<span class="co">#&gt; ADTTE$x1 &lt;- 1</span>
+<span class="co">#&gt; ADTTE$x1 &lt;- x1</span>
 <span class="co">#&gt; ADTTE &lt;- dplyr::filter(ADTTE, PARAMCD %in% c("EFS", "OS"))</span>
 
-<span class="co"># assign ADSL to environment</span>
-<span class="va">code</span><span class="op">$</span><span class="fu">assign_to_env</span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl_raw</span><span class="op">)</span>
+<span class="co"># assign x1 to environment (otherwise code would run with error as x1 would not be defined)</span>
+<span class="va">code</span><span class="op">$</span><span class="fu">assign_to_env</span><span class="op">(</span><span class="st">"x1"</span>, <span class="fl">1</span><span class="op">)</span>
 
 <span class="co"># evaluate call</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">code</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 53</span></span>
-<span class="co">#&gt;   STUDYID USUBJID     SUBJID SITEID   AGE SEX   RACE  ETHNIC COUNTRY DTHFL INVID</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AB12345 AB12345-BR… id-105 BRA-1     38 M     BLAC… NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AB12345 AB12345-BR… id-105 BRA-1     38 M     BLAC… NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> AB12345 AB12345-BR… id-134 BRA-1     47 M     WHITE NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> AB12345 AB12345-BR… id-134 BRA-1     47 M     WHITE NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> AB12345 AB12345-BR… id-141 BRA-1     35 F     WHITE NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> AB12345 AB12345-BR… id-141 BRA-1     35 F     WHITE NOT H… BRA     N     INV …</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 42 more variables: INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;, ACTARM &lt;fct&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   ACTARMCD &lt;fct&gt;, REGION1 &lt;fct&gt;, STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;, SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   RANDDT &lt;date&gt;, TRTSDTM &lt;dttm&gt;, TRTEDTM &lt;dttm&gt;, EOSSTT &lt;fct&gt;, EOTSTT &lt;fct&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   EOSDT &lt;date&gt;, EOSDY &lt;int&gt;, DCSREAS &lt;fct&gt;, DTHDT &lt;date&gt;, DTHCAUS &lt;fct&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   DTHCAT &lt;fct&gt;, LDDTHELD &lt;int&gt;, LDDTHGR1 &lt;fct&gt;, LSTALVDT &lt;date&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   DTHADY &lt;int&gt;, study_duration_secs &lt;dbl&gt;, ASEQ &lt;int&gt;, TTESEQ &lt;int&gt;, …</span></span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">x1</span><span class="op">)</span>
+<span class="co">#&gt; [1] 1 1 1 1 1 1</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="tealdataset-including-cdisctealdataset">
-<code>TealDataset</code> (including
-<code>CDISCTealDataset</code>)<a class="anchor" aria-label="anchor" href="#tealdataset-including-cdisctealdataset"></a>
+<h3 id="tealdataset-base-class-which-cdisctealdataset-inherits-from">
+<code>TealDataset</code> (base class which
+<code>CDISCTealDataset</code> inherits from)<a class="anchor" aria-label="anchor" href="#tealdataset-base-class-which-cdisctealdataset-inherits-from"></a>
 </h3>
 <p><code>TealDataset</code> is an R6 class which keeps a
 <code>data.frame</code> in its <code>raw_data</code> slot. One can
@@ -474,9 +457,7 @@ and setting data attributes. In the example below we first create
 and optional <code>code</code> to reproduce the data if reproducibility
 is required.</p>
 <p>Note <code>cdisc_dataset</code> returns an object of
-<code>CDISCTealDataset</code> (inherited from <code>TealDataset</code>,
-allowing datasets to have parents), which is needed for CDISC
-analysis.</p>
+<code>CDISCTealDataset</code>, which is needed for CDISC analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
 
@@ -523,15 +504,14 @@ which can be extracted.</p>
 <span class="co">#&gt; [1] "STUDYID" "USUBJID"</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="tealdatasetconnector-including-cdisctealdatasetconnector">
-<code>TealDatasetConnector</code> (including
-<code>CDISCTealDatasetConnector</code>)<a class="anchor" aria-label="anchor" href="#tealdatasetconnector-including-cdisctealdatasetconnector"></a>
+<h3 id="tealdatasetconnector-base-class-which-cdisctealdatasetconnector-inherits-from">
+<code>TealDatasetConnector</code> (base class which
+<code>CDISCTealDatasetConnector</code> inherits from)<a class="anchor" aria-label="anchor" href="#tealdatasetconnector-base-class-which-cdisctealdatasetconnector-inherits-from"></a>
 </h3>
 <p><code>TealDatasetConnector</code> contains a <code>Callable</code>
-object to obtain a single dataset along with other information such as
-keys, dataname, label and reproducible code. In the code chunk below, a
-connector is created based on the <code>synthetic_cdisc_dataset</code>
-function.</p>
+object to obtain a single <code>TealDataset</code> object. In the code
+chunk below, a connector is created based on the
+<code>synthetic_cdisc_dataset</code> function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl_conn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
@@ -586,13 +566,18 @@ the code below the <code>adsl_raw</code> object - created above - is
 added to the <code>CallableFunction</code>. To properly link the
 <code>ADSL</code> argument of the function inside the
 <code>CallableFunction</code> object with the raw data
-<code>adsl_raw</code> several parameters have to match: 1.
+<code>adsl_raw</code> several parameters have to match:</p>
+<ol style="list-style-type: decimal">
+<li>
 <code>as.name("dummy_name")</code> must be the value with name
 <code>"ADSL"</code> -
-<code>set_args(list(ADSL = as.name("dummy_name")))</code> 2. and then
-<code>dummy_name</code> must be linked with the raw data
+<code>set_args(list(ADSL = as.name("dummy_name")))</code>
+</li>
+<li>and then <code>dummy_name</code> must be linked with the raw data
 <code>adsl_raw</code> -
-<code>vars = list(dummy_name = adsl_raw)</code></p>
+<code>vars = list(dummy_name = adsl_raw)</code>
+</li>
+</ol>
 <p>The name <code>ADSL</code> is fixed because it is the name of the
 argument of the function inside of the <code>CallableFunction</code>.
 The name <code>dummy_name</code> is free to be any valid <code>R</code>
@@ -614,10 +599,14 @@ name.</p>
 contains a <code>launch</code> method which can be used to obtain data
 using shiny application. This function can be used to check if the
 objects are specified correctly and to investigate potential mistakes.
-By default shiny app won’t render any inputs for datasets until we
+By default the shiny app won’t render any inputs for datasets until we
 specify them. To set inputs we should use <code>$set_ui_input()</code>,
 by passing ui module function, with <code>ns</code> argument
-(<code>shiny</code> namespace ID object).</p>
+(<code>shiny</code> namespace ID object). In the example below, the
+<code>callable_function</code> object contains two arguments,
+<code>ADSL</code> and <code>n</code>. <code>ADSL</code> is given while
+<code>n</code> is entered from a shiny app after the <code>launch</code>
+method is called.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL_3"</span>,
@@ -646,8 +635,11 @@ by passing ui module function, with <code>ns</code> argument
 data sources. <code>TealDataConnection</code> opens and closes
 connections by calling <code>CallableFunction</code> with appropriate
 arguments.</p>
+<p>Note that if an app pulls data from a remote source, then the outputs
+will change even if the code is the same if the data in the remote
+source changes.</p>
 <p>In <code>shiny</code> applications, connection arguments need to be
-linked with <code>inputs</code>, that is why
+linked with <code>inputs</code>, which is why
 <code>TealDataConnection</code> contains a module. Developers can
 customize UI inputs to open the connection using
 <code>set_open_ui()</code> and specify a relevant server function using
@@ -670,16 +662,16 @@ and <code><a href="https://rdrr.io/r/base/connections.html" class="external-link
 <span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="tealdataconnector-including-cdisctealdataconnector">
-<code>TealDataConnector</code> (including
-<code>CDISCTealDataConnector</code>)<a class="anchor" aria-label="anchor" href="#tealdataconnector-including-cdisctealdataconnector"></a>
+<h3 id="tealdataconnector-base-class-which-cdisctealdataconnector-inherits-from">
+<code>TealDataConnector</code> (base class which
+<code>CDISCTealDataConnector</code> inherits from)<a class="anchor" aria-label="anchor" href="#tealdataconnector-base-class-which-cdisctealdataconnector-inherits-from"></a>
 </h3>
 <p>This class combines multiple <code>TealDatasetConnector</code> (or
 <code>CDISCTealDatasetConnector</code>) and a single
 <code>TealDataConnection</code> object. It creates a module to manage
 connection and to load data. Below we create two
 <code>TealDatasetConnector</code> objects and a
-<code>TealDataConnection</code> and we combine them together in a
+<code>TealDataConnection</code> object and we combine them together in a
 <code>TealDataConnector</code> object.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create TealDatasetConnectors</span>
@@ -693,7 +685,10 @@ connection and to load data. Below we create two
 
 <span class="va">adsl_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL_3"</span>,
-  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">name</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="va">ADSL_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># nolint</span>
+  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">name</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span> <span class="co"># nolint</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"slicing data from"</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">ADSL_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ADSL</span>, <span class="va">n</span><span class="op">)</span> <span class="co"># nolint</span>
+  <span class="op">}</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
     <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ADSL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/name.html" class="external-link">as.name</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
   keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,
   label <span class="op">=</span> <span class="st">"Example label"</span>,
@@ -726,8 +721,8 @@ connectors are set within, but one must be aware that it should rather
 contain similar connectors (i.e. calling functions which share some
 arguments). For example, if we execute
 <code>data$set_pull_args(args = list(name = "latest"))</code>, this
-argument will be set for all connectors. In case when one connector
-contains <code>CallableFunction</code> which doesn’t have
+argument will be set for all connectors. In case when any connector
+contains a <code>CallableFunction</code> which doesn’t have
 <code>name</code> in its formals then it will fail.
 <code>CallableCode</code> can’t hold any additional arguments as it’s
 fixed and it will ignore every arguments set with
@@ -736,20 +731,25 @@ fixed and it will ignore every arguments set with
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; library(package = "scda")</span>
 <span class="co">#&gt; ADSL &lt;- scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
-<span class="co">#&gt; ADSL_3 &lt;- (function(ADSL, name, n = 5) ADSL_3 &lt;- head(ADSL, n))(ADSL = ADSL)</span>
+<span class="co">#&gt; ADSL_3 &lt;- (function(ADSL, name, n = 5) {</span>
+<span class="co">#&gt;     print(paste("slicing data from", name))</span>
+<span class="co">#&gt;     ADSL_3 &lt;- head(ADSL, n)</span>
+<span class="co">#&gt; })(ADSL = ADSL)</span>
 
 <span class="co"># pull ADSL and ADSL_3</span>
 <span class="va">data</span><span class="op">$</span><span class="fu">set_pull_args</span><span class="op">(</span>args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">data</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">data</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "slicing data from latest"</span></code></pre></div>
 <p>By default <code>TealDataConnector</code> creates simple shiny module
-without any inputs for connectors and datasets. This means that
-connection opening/closing and pulling datasets are done on default
-arguments. However, users can easily extend the module using
-<code>set_ui()</code> and <code>set_server()</code> to specify the UI
-and server function themselves. The general rule for creating these
-modules is that callback from server to UI is not possible, because
-server module is executed after the submit button is clicked. Although
-see <code>set_preopen_server</code> of <code>TealDataConnection</code>
+without any inputs to the arguments for the
+<code>callable_function</code> of the connectors. This means that,
+opening, closing, and pulling datasets are done on default arguments.
+However, users can easily extend the module using <code>set_ui()</code>
+and <code>set_server()</code> to specify the UI and server function
+themselves. The general rule for creating these modules is that callback
+from server to UI is not possible, because server module is executed
+after the submit button is clicked. But see
+<code>set_preopen_server</code> of <code>TealDataConnection</code>
 object for a slight relaxation of this rule. Below we extend the app
 interface by adding a text input which will be passed to the
 <code>scda</code> function. The UI is created from
@@ -806,25 +806,29 @@ server module requires <code>connectors</code> and
     <span class="op">)</span>
   <span class="op">}</span>
 <span class="op">)</span></code></pre></div>
-<p>Executing <code>data$launch()</code> will open shiny application.
-Remember that data can be loaded only once, in case you run above code
-please reinitialize datasets, connection and data object again.</p>
+<p>Executing <code>data$launch()</code> will open a shiny application
+that prompts the user for input to load the data. Remember that data can
+be loaded only once. So if you run the code to <code>data$pull()</code>
+above please reinitialize the connectors, connection and data object
+again before running the code below.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">data</span><span class="op">$</span><span class="fu">launch</span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="tealdata-including-cdisctealdata">
-<code>TealData</code> (including <code>CDISCTealData</code>)<a class="anchor" aria-label="anchor" href="#tealdata-including-cdisctealdata"></a>
+<h3 id="tealdata-base-class-which-cdisctealdata-inherits-from">
+<code>TealData</code> (base class which <code>CDISCTealData</code>
+inherits from)<a class="anchor" aria-label="anchor" href="#tealdata-base-class-which-cdisctealdata-inherits-from"></a>
 </h3>
 <p><code>TealData</code> manages <code>TealDataset</code>,
-<code>TealDatasetConnector</code> and <code>TealDataConnector</code>
-objects. <code>CDISCTealData</code> is the equivalent object when
-creating apps to analyze CDISC data. These objects are created using
-<code>teal_data</code> and <code>cdisc_data</code> respectively. When
-using the <code>teal</code> package these objects can be passed as the
-<code>data</code> argument into <code>init</code>.</p>
+<code>TealDatasetConnector</code> and / or
+<code>TealDataConnector</code> objects. <code>CDISCTealData</code> is
+the equivalent object when creating apps to analyze CDISC data. These
+objects are created using <code>teal_data</code> and
+<code>cdisc_data</code> respectively. When using the <code>teal</code>
+package these objects are passed as the <code>data</code> argument into
+<code>init</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span>
@@ -842,8 +846,10 @@ using the <code>teal</code> package these objects can be passed as the
 <code>[teal|cdisc]_data</code> functions and include them in a shiny
 application. <code>TealData</code> gathers all objects and sets combined
 UI with shiny inputs from all objects. In the code chunk below we
-specified four dataset connectors but developers can include any number
-and any type of objects.</p>
+specified four dataset connectors, but it works with arbitrary many
+objects of any combination of the classes <code>TealDataset</code>,
+<code>TealDatasetConnector</code> and / or
+<code>TealDataConnector</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="st">"adsl"</span><span class="op">)</span>
 <span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="st">"adae"</span><span class="op">)</span>
@@ -851,9 +857,9 @@ and any type of objects.</p>
 <span class="va">adtte</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADTTE"</span>, <span class="st">"adtte"</span><span class="op">)</span>
 
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span><span class="va">adsl</span>, <span class="va">adae</span>, <span class="va">advs</span>, <span class="va">adtte</span><span class="op">)</span></code></pre></div>
-<p>Similar to other connectors one can use <code>launch()</code> method
-to investigate if data is set correctly. Unlike the other connectors,
-this class lacks <code>pull()</code> method.</p>
+<p><code>TealData</code> also contains a <code>launch()</code> method to
+investigate if data is set correctly. However, <code>TealData</code>
+lacks the <code>pull()</code> method.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">data</span><span class="op">$</span><span class="fu">launch</span><span class="op">(</span><span class="op">)</span>
@@ -871,10 +877,13 @@ single dataset by specifying <code>dataname</code> argument.</p>
 <p>Developers can also extract datasets and connectors included in the
 <code>TealData</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">adsl</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co"># if you launched the shiny app and pressed the submit button above to load the data,</span>
+<span class="co"># then these 4 lines do not need to be run</span>
+<span class="va">adsl</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
 <span class="va">adae</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
 <span class="va">advs</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
 <span class="va">adtte</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span>
+
 <span class="co"># get loaded datasets</span>
 <span class="va">data</span><span class="op">$</span><span class="fu">get_datasets</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $ADSL</span>
@@ -1992,11 +2001,12 @@ single dataset by specifying <code>dataname</code> argument.</p>
 <div class="section level3">
 <h3 id="data-modification">Data modification<a class="anchor" aria-label="anchor" href="#data-modification"></a>
 </h3>
-<p>Since delayed data objects are just metadata before data is loaded
-there are dedicated functions to allow dataset mutations. To modify a
-single dataset one should use <code>mutate_dataset</code> by specifying
-<code>code</code> argument with code as a single character or
-<code>script</code> with location of the script file.</p>
+<p>To modify a single dataset one should use <code>mutate_dataset</code>
+by specifying <code>code</code> argument with code as a single character
+or <code>script</code> with location of the script file. In the case of
+delayed data, the pre-processing code passed into
+<code>mutate_dataset</code> would be run after the data becomes
+available.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span>
   dataname <span class="op">=</span> <span class="st">"ADSL"</span>,
@@ -2058,15 +2068,16 @@ on different datasets.</p>
 <span class="co">#&gt; ADSL$x1 &lt;- 1</span>
 <span class="co">#&gt; ADSL$x3 &lt;- 3</span>
 <span class="co">#&gt; ADSL &lt;- dplyr::filter(ADSL, SEX == "F")</span>
+<span class="co"># note that the code for ADTTE below does not contain any mention of ADSL</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"ADTTE"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ADTTE &lt;- scda::synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest")</span>
 <span class="co">#&gt; ADTTE$x2 &lt;- 2</span>
 <span class="co">#&gt; ADTTE$x4 &lt;- 4</span></code></pre></div>
 <p>Sometimes code of one object can depend on another, in this case we
-can link them in the same way how we link
-<code>TealDatasetConnector</code> objects. If object code is dependent
-on another, as ADTTE depends on ADSL below, <code>get_code</code> will
-return everything we need to be executed to reproduce this dataset.</p>
+can link them in the same way we link <code>TealDatasetConnector</code>
+objects. If object code is dependent on another, as ADTTE depends on
+ADSL below, <code>get_code</code> will return everything we need to be
+executed to reproduce this dataset.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span>
   <span class="va">data</span>,
@@ -2076,7 +2087,7 @@ return everything we need to be executed to reproduce this dataset.</p>
 <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="st">"ADSL$var_created_after &lt;- NA"</span>, dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span>
 
-
+<span class="co"># note that the code that defines ADSL is now part of the code of ADTTE below</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, dataname <span class="op">=</span> <span class="st">"ADTTE"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ADSL &lt;- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
 <span class="co">#&gt; ADSL$x1 &lt;- 1</span>
@@ -2085,9 +2096,11 @@ return everything we need to be executed to reproduce this dataset.</p>
 <span class="co">#&gt; ADSL$x3 &lt;- 3</span>
 <span class="co">#&gt; ADTTE$x4 &lt;- 4</span>
 <span class="co">#&gt; ADSL &lt;- dplyr::filter(ADSL, SEX == "F")</span>
-<span class="co">#&gt; ADTTE &lt;- filter(ADTTE, USUBJID %in% ADSL$USUBJID)</span></code></pre></div>
+<span class="co">#&gt; ADTTE &lt;- filter(ADTTE, USUBJID %in% ADSL$USUBJID)</span>
+
+<span class="co"># moreover, note that the code inserted to the mutate_dataset after the pipe was not included.</span></code></pre></div>
 <p>Using <code>mutate_dataset</code> creates a tree of calls, which can
-be easily subset by <code>dataname</code>, but developers can also use
+be subset by <code>dataname</code>, but developers can also use
 <code>mutate_data</code> function which doesn’t require
 <code>dataname</code> to be specified. When <code>mutate_data</code> is
 used, code for a single dataset is not possible to be subset, instead
@@ -2102,7 +2115,7 @@ code of all datasets is returned.</p>
 <span class="op">)</span>
 
 <span class="co"># single dataset code is not possible to obtain anymore</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">adsl_code</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; ADSL &lt;- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
 <span class="co">#&gt; ADSL$x1 &lt;- 1</span>
 <span class="co">#&gt; ADTTE &lt;- scda::synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest")</span>
@@ -2114,7 +2127,24 @@ code of all datasets is returned.</p>
 <span class="co">#&gt; ADSL$var_created_after &lt;- NA</span>
 <span class="co">#&gt; ADSL$x3 &lt;- 3</span>
 <span class="co">#&gt; proxy_var &lt;- 4</span>
-<span class="co">#&gt; ADTTE$x4 &lt;- proxy_var</span></code></pre></div>
+<span class="co">#&gt; ADTTE$x4 &lt;- proxy_var</span>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">adtte_code</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">data</span>, <span class="st">"ADTTE"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; ADSL &lt;- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")</span>
+<span class="co">#&gt; ADSL$x1 &lt;- 1</span>
+<span class="co">#&gt; ADTTE &lt;- scda::synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest")</span>
+<span class="co">#&gt; ADTTE$x2 &lt;- 2</span>
+<span class="co">#&gt; ADSL$x3 &lt;- 3</span>
+<span class="co">#&gt; ADTTE$x4 &lt;- 4</span>
+<span class="co">#&gt; ADSL &lt;- dplyr::filter(ADSL, SEX == "F")</span>
+<span class="co">#&gt; ADTTE &lt;- filter(ADTTE, USUBJID %in% ADSL$USUBJID)</span>
+<span class="co">#&gt; ADSL$var_created_after &lt;- NA</span>
+<span class="co">#&gt; ADSL$x3 &lt;- 3</span>
+<span class="co">#&gt; proxy_var &lt;- 4</span>
+<span class="co">#&gt; ADTTE$x4 &lt;- proxy_var</span>
+
+<span class="co"># TRUE</span>
+<span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">adsl_code</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">adtte_code</span><span class="op">)</span>
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="teal-data-in-shiny-app">
@@ -2154,7 +2184,7 @@ code of all datasets is returned.</p>
   <span class="op">}</span>
 <span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Listening on http://127.0.0.1:3762</span></code></pre></div>
+<span class="co">#&gt; Listening on http://127.0.0.1:4206</span></code></pre></div>
 <p><img src="delayed-data-loading_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
 </div>
 </div>
