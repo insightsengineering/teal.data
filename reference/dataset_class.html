@@ -24,7 +24,7 @@ be automatically derived."><!-- mathjax --><script src="https://cdnjs.cloudflare
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9006</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 30px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,15 +49,6 @@ be automatically derived."><!-- mathjax --><script src="https://cdnjs.cloudflare
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start_releases -->
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-Other releases
-<span class="caret"></span></a><ul class="dropdown-menu" role="menu">
-   <li><a href="../index.html">latest</a></li>
-   <li><a href="..//index.html"></a></li>
-</ul></li>
-<!-- end_releases -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -101,49 +92,49 @@ be automatically derived.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>MAETealDataset$new()</code></a></p></li>
-<li><p><a href="#method-check"><code>MAETealDataset$check()</code></a></p></li>
-<li><p><a href="#method-check_keys"><code>MAETealDataset$check_keys()</code></a></p></li>
-<li><p><a href="#method-get_colnames"><code>MAETealDataset$get_colnames()</code></a></p></li>
-<li><p><a href="#method-get_column_labels"><code>MAETealDataset$get_column_labels()</code></a></p></li>
-<li><p><a href="#method-get_ncol"><code>MAETealDataset$get_ncol()</code></a></p></li>
-<li><p><a href="#method-get_nrow"><code>MAETealDataset$get_nrow()</code></a></p></li>
-<li><p><a href="#method-get_rownames"><code>MAETealDataset$get_rownames()</code></a></p></li>
-<li><p><a href="#method-print"><code>MAETealDataset$print()</code></a></p></li>
-<li><p><a href="#method-clone"><code>MAETealDataset$clone()</code></a></p></li>
-</ul></div><p><details><summary>Inherited methods</summary><ul><li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_attrs"><a href="TealDataset.html#method-get_attrs"><code>teal.data::TealDataset$get_attrs()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_character_colnames"><a href="TealDataset.html#method-get_character_colnames"><code>teal.data::TealDataset$get_character_colnames()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code"><a href="TealDataset.html#method-get_code"><code>teal.data::TealDataset$get_code()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code_class"><a href="TealDataset.html#method-get_code_class"><code>teal.data::TealDataset$get_code_class()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataname"><a href="TealDataset.html#method-get_dataname"><code>teal.data::TealDataset$get_dataname()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_datanames"><a href="TealDataset.html#method-get_datanames"><code>teal.data::TealDataset$get_datanames()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset"><a href="TealDataset.html#method-get_dataset"><code>teal.data::TealDataset$get_dataset()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset_label"><a href="TealDataset.html#method-get_dataset_label"><code>teal.data::TealDataset$get_dataset_label()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_factor_colnames"><a href="TealDataset.html#method-get_factor_colnames"><code>teal.data::TealDataset$get_factor_colnames()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_hash"><a href="TealDataset.html#method-get_hash"><code>teal.data::TealDataset$get_hash()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_join_keys"><a href="TealDataset.html#method-get_join_keys"><code>teal.data::TealDataset$get_join_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_keys"><a href="TealDataset.html#method-get_keys"><code>teal.data::TealDataset$get_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_metadata"><a href="TealDataset.html#method-get_metadata"><code>teal.data::TealDataset$get_metadata()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_code_class"><a href="TealDataset.html#method-get_mutate_code_class"><code>teal.data::TealDataset$get_mutate_code_class()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_vars"><a href="TealDataset.html#method-get_mutate_vars"><code>teal.data::TealDataset$get_mutate_vars()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_numeric_colnames"><a href="TealDataset.html#method-get_numeric_colnames"><code>teal.data::TealDataset$get_numeric_colnames()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_raw_data"><a href="TealDataset.html#method-get_raw_data"><code>teal.data::TealDataset$get_raw_data()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_row_labels"><a href="TealDataset.html#method-get_row_labels"><code>teal.data::TealDataset$get_row_labels()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_var_r6"><a href="TealDataset.html#method-get_var_r6"><code>teal.data::TealDataset$get_var_r6()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_vars"><a href="TealDataset.html#method-get_vars"><code>teal.data::TealDataset$get_vars()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_mutate_delayed"><a href="TealDataset.html#method-is_mutate_delayed"><code>teal.data::TealDataset$is_mutate_delayed()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_pulled"><a href="TealDataset.html#method-is_pulled"><code>teal.data::TealDataset$is_pulled()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="merge_join_keys"><a href="TealDataset.html#method-merge_join_keys"><code>teal.data::TealDataset$merge_join_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate"><a href="TealDataset.html#method-mutate"><code>teal.data::TealDataset$mutate()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate_join_keys"><a href="TealDataset.html#method-mutate_join_keys"><code>teal.data::TealDataset$mutate_join_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="reassign_datasets_vars"><a href="TealDataset.html#method-reassign_datasets_vars"><code>teal.data::TealDataset$reassign_datasets_vars()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="recreate"><a href="TealDataset.html#method-recreate"><code>teal.data::TealDataset$recreate()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_code"><a href="TealDataset.html#method-set_code"><code>teal.data::TealDataset$set_code()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_dataset_label"><a href="TealDataset.html#method-set_dataset_label"><code>teal.data::TealDataset$set_dataset_label()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_join_keys"><a href="TealDataset.html#method-set_join_keys"><code>teal.data::TealDataset$set_join_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_keys"><a href="TealDataset.html#method-set_keys"><code>teal.data::TealDataset$set_keys()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_vars"><a href="TealDataset.html#method-set_vars"><code>teal.data::TealDataset$set_vars()</code></a></span></p></li>
-</ul></details></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-MAETealDataset-new"><code>MAETealDataset$new()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-check"><code>MAETealDataset$check()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-check_keys"><code>MAETealDataset$check_keys()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-get_colnames"><code>MAETealDataset$get_colnames()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-get_column_labels"><code>MAETealDataset$get_column_labels()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-get_ncol"><code>MAETealDataset$get_ncol()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-get_nrow"><code>MAETealDataset$get_nrow()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-get_rownames"><code>MAETealDataset$get_rownames()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-print"><code>MAETealDataset$print()</code></a></p></li>
+<li><p><a href="#method-MAETealDataset-clone"><code>MAETealDataset$clone()</code></a></p></li>
+</ul></div><p><details><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_attrs"><a href="TealDataset.html#method-get_attrs"><code>teal.data::TealDataset$get_attrs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_character_colnames"><a href="TealDataset.html#method-get_character_colnames"><code>teal.data::TealDataset$get_character_colnames()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code"><a href="TealDataset.html#method-get_code"><code>teal.data::TealDataset$get_code()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code_class"><a href="TealDataset.html#method-get_code_class"><code>teal.data::TealDataset$get_code_class()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataname"><a href="TealDataset.html#method-get_dataname"><code>teal.data::TealDataset$get_dataname()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_datanames"><a href="TealDataset.html#method-get_datanames"><code>teal.data::TealDataset$get_datanames()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset"><a href="TealDataset.html#method-get_dataset"><code>teal.data::TealDataset$get_dataset()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset_label"><a href="TealDataset.html#method-get_dataset_label"><code>teal.data::TealDataset$get_dataset_label()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_factor_colnames"><a href="TealDataset.html#method-get_factor_colnames"><code>teal.data::TealDataset$get_factor_colnames()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_hash"><a href="TealDataset.html#method-get_hash"><code>teal.data::TealDataset$get_hash()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_join_keys"><a href="TealDataset.html#method-get_join_keys"><code>teal.data::TealDataset$get_join_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_keys"><a href="TealDataset.html#method-get_keys"><code>teal.data::TealDataset$get_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_metadata"><a href="TealDataset.html#method-get_metadata"><code>teal.data::TealDataset$get_metadata()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_code_class"><a href="TealDataset.html#method-get_mutate_code_class"><code>teal.data::TealDataset$get_mutate_code_class()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_vars"><a href="TealDataset.html#method-get_mutate_vars"><code>teal.data::TealDataset$get_mutate_vars()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_numeric_colnames"><a href="TealDataset.html#method-get_numeric_colnames"><code>teal.data::TealDataset$get_numeric_colnames()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_raw_data"><a href="TealDataset.html#method-get_raw_data"><code>teal.data::TealDataset$get_raw_data()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_row_labels"><a href="TealDataset.html#method-get_row_labels"><code>teal.data::TealDataset$get_row_labels()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_var_r6"><a href="TealDataset.html#method-get_var_r6"><code>teal.data::TealDataset$get_var_r6()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_vars"><a href="TealDataset.html#method-get_vars"><code>teal.data::TealDataset$get_vars()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_mutate_delayed"><a href="TealDataset.html#method-is_mutate_delayed"><code>teal.data::TealDataset$is_mutate_delayed()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_pulled"><a href="TealDataset.html#method-is_pulled"><code>teal.data::TealDataset$is_pulled()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="merge_join_keys"><a href="TealDataset.html#method-merge_join_keys"><code>teal.data::TealDataset$merge_join_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate"><a href="TealDataset.html#method-mutate"><code>teal.data::TealDataset$mutate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate_join_keys"><a href="TealDataset.html#method-mutate_join_keys"><code>teal.data::TealDataset$mutate_join_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="reassign_datasets_vars"><a href="TealDataset.html#method-reassign_datasets_vars"><code>teal.data::TealDataset$reassign_datasets_vars()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="recreate"><a href="TealDataset.html#method-recreate"><code>teal.data::TealDataset$recreate()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_code"><a href="TealDataset.html#method-set_code"><code>teal.data::TealDataset$set_code()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_dataset_label"><a href="TealDataset.html#method-set_dataset_label"><code>teal.data::TealDataset$set_dataset_label()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_join_keys"><a href="TealDataset.html#method-set_join_keys"><code>teal.data::TealDataset$set_join_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_keys"><a href="TealDataset.html#method-set_keys"><code>teal.data::TealDataset$set_keys()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_vars"><a href="TealDataset.html#method-set_vars"><code>teal.data::TealDataset$set_vars()</code></a></span></li>
+</ul></details></p><hr><a id="method-MAETealDataset-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new object of <code>MAETealDataset</code> class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -207,7 +198,7 @@ should be atomic and length one.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-check"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-check"></a><div class="section">
 <h3 id="method-check-">Method <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check()</a></code><a class="anchor" aria-label="anchor" href="#method-check-"></a></h3>
 <p>Check to determine if the raw data is reproducible from the <code><a href="get_code.html">get_code()</a></code> code.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -220,7 +211,7 @@ should be atomic and length one.</p></dd>
 <code><a href="get_code.html">get_code()</a></code> code is identical to the raw data, else <code>FALSE</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-check_keys"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-check_keys"></a><div class="section">
 <h3 id="method-check-keys-">Method <code>check_keys()</code><a class="anchor" aria-label="anchor" href="#method-check-keys-"></a></h3>
 <p>Check if keys has been specified correctly for dataset. Set of <code>keys</code>
 should distinguish unique rows or be <code>character(0)</code>.</p><div class="section">
@@ -242,7 +233,7 @@ vector with primary keys</p></dd>
 <p><code>TRUE</code> if dataset has been already pulled, else <code>FALSE</code></p>
 </div>
 
-</div><p></p><hr><a id="method-get_colnames"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-get_colnames"></a><div class="section">
 <h3 id="method-get-colnames-">Method <code>get_colnames()</code><a class="anchor" aria-label="anchor" href="#method-get-colnames-"></a></h3>
 <p>Derive the column names</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -254,7 +245,7 @@ vector with primary keys</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_column_labels"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-get_column_labels"></a><div class="section">
 <h3 id="method-get-column-labels-">Method <code>get_column_labels()</code><a class="anchor" aria-label="anchor" href="#method-get-column-labels-"></a></h3>
 <p>Derive the column labels</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
@@ -266,7 +257,7 @@ vector with primary keys</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_ncol"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-get_ncol"></a><div class="section">
 <h3 id="method-get-ncol-">Method <code>get_ncol()</code><a class="anchor" aria-label="anchor" href="#method-get-ncol-"></a></h3>
 <p>Get the number of columns of the data</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
@@ -278,7 +269,7 @@ vector with primary keys</p></dd>
 <p><code>numeric</code> vector</p>
 </div>
 
-</div><p></p><hr><a id="method-get_nrow"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-get_nrow"></a><div class="section">
 <h3 id="method-get-nrow-">Method <code>get_nrow()</code><a class="anchor" aria-label="anchor" href="#method-get-nrow-"></a></h3>
 <p>Get the number of rows of the data</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -290,7 +281,7 @@ vector with primary keys</p></dd>
 <p><code>numeric</code> vector</p>
 </div>
 
-</div><p></p><hr><a id="method-get_rownames"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-get_rownames"></a><div class="section">
 <h3 id="method-get-rownames-">Method <code>get_rownames()</code><a class="anchor" aria-label="anchor" href="#method-get-rownames-"></a></h3>
 <p>Derive the row names</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
@@ -302,7 +293,7 @@ vector with primary keys</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints this <code>MAETealDataset</code>.</p><div class="section">
 <h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
@@ -322,7 +313,7 @@ vector with primary keys</p></dd>
 <p>invisibly self</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-MAETealDataset-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
@@ -363,49 +354,49 @@ vector with primary keys</p></dd>
 <div class="section">
 <h3 id="public-methods-1">Public methods<a class="anchor" aria-label="anchor" href="#public-methods-1"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>TealDataset$new()</code></a></p></li>
-<li><p><a href="#method-recreate"><code>TealDataset$recreate()</code></a></p></li>
-<li><p><a href="#method-print"><code>TealDataset$print()</code></a></p></li>
-<li><p><a href="#method-get_dataset"><code>TealDataset$get_dataset()</code></a></p></li>
-<li><p><a href="#method-get_attrs"><code>TealDataset$get_attrs()</code></a></p></li>
-<li><p><a href="#method-get_raw_data"><code>TealDataset$get_raw_data()</code></a></p></li>
-<li><p><a href="#method-get_numeric_colnames"><code>TealDataset$get_numeric_colnames()</code></a></p></li>
-<li><p><a href="#method-get_character_colnames"><code>TealDataset$get_character_colnames()</code></a></p></li>
-<li><p><a href="#method-get_factor_colnames"><code>TealDataset$get_factor_colnames()</code></a></p></li>
-<li><p><a href="#method-get_colnames"><code>TealDataset$get_colnames()</code></a></p></li>
-<li><p><a href="#method-get_column_labels"><code>TealDataset$get_column_labels()</code></a></p></li>
-<li><p><a href="#method-get_ncol"><code>TealDataset$get_ncol()</code></a></p></li>
-<li><p><a href="#method-get_nrow"><code>TealDataset$get_nrow()</code></a></p></li>
-<li><p><a href="#method-get_rownames"><code>TealDataset$get_rownames()</code></a></p></li>
-<li><p><a href="#method-get_row_labels"><code>TealDataset$get_row_labels()</code></a></p></li>
-<li><p><a href="#method-get_dataname"><code>TealDataset$get_dataname()</code></a></p></li>
-<li><p><a href="#method-get_datanames"><code>TealDataset$get_datanames()</code></a></p></li>
-<li><p><a href="#method-get_dataset_label"><code>TealDataset$get_dataset_label()</code></a></p></li>
-<li><p><a href="#method-get_keys"><code>TealDataset$get_keys()</code></a></p></li>
-<li><p><a href="#method-get_metadata"><code>TealDataset$get_metadata()</code></a></p></li>
-<li><p><a href="#method-get_join_keys"><code>TealDataset$get_join_keys()</code></a></p></li>
-<li><p><a href="#method-get_hash"><code>TealDataset$get_hash()</code></a></p></li>
-<li><p><a href="#method-get_var_r6"><code>TealDataset$get_var_r6()</code></a></p></li>
-<li><p><a href="#method-reassign_datasets_vars"><code>TealDataset$reassign_datasets_vars()</code></a></p></li>
-<li><p><a href="#method-set_dataset_label"><code>TealDataset$set_dataset_label()</code></a></p></li>
-<li><p><a href="#method-set_keys"><code>TealDataset$set_keys()</code></a></p></li>
-<li><p><a href="#method-set_join_keys"><code>TealDataset$set_join_keys()</code></a></p></li>
-<li><p><a href="#method-merge_join_keys"><code>TealDataset$merge_join_keys()</code></a></p></li>
-<li><p><a href="#method-mutate_join_keys"><code>TealDataset$mutate_join_keys()</code></a></p></li>
-<li><p><a href="#method-set_vars"><code>TealDataset$set_vars()</code></a></p></li>
-<li><p><a href="#method-set_code"><code>TealDataset$set_code()</code></a></p></li>
-<li><p><a href="#method-get_code"><code>TealDataset$get_code()</code></a></p></li>
-<li><p><a href="#method-get_code_class"><code>TealDataset$get_code_class()</code></a></p></li>
-<li><p><a href="#method-get_mutate_code_class"><code>TealDataset$get_mutate_code_class()</code></a></p></li>
-<li><p><a href="#method-get_vars"><code>TealDataset$get_vars()</code></a></p></li>
-<li><p><a href="#method-get_mutate_vars"><code>TealDataset$get_mutate_vars()</code></a></p></li>
-<li><p><a href="#method-is_mutate_delayed"><code>TealDataset$is_mutate_delayed()</code></a></p></li>
-<li><p><a href="#method-mutate"><code>TealDataset$mutate()</code></a></p></li>
-<li><p><a href="#method-check"><code>TealDataset$check()</code></a></p></li>
-<li><p><a href="#method-check_keys"><code>TealDataset$check_keys()</code></a></p></li>
-<li><p><a href="#method-is_pulled"><code>TealDataset$is_pulled()</code></a></p></li>
-<li><p><a href="#method-clone"><code>TealDataset$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-TealDataset-new"><code>TealDataset$new()</code></a></p></li>
+<li><p><a href="#method-TealDataset-recreate"><code>TealDataset$recreate()</code></a></p></li>
+<li><p><a href="#method-TealDataset-print"><code>TealDataset$print()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_dataset"><code>TealDataset$get_dataset()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_attrs"><code>TealDataset$get_attrs()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_raw_data"><code>TealDataset$get_raw_data()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_numeric_colnames"><code>TealDataset$get_numeric_colnames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_character_colnames"><code>TealDataset$get_character_colnames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_factor_colnames"><code>TealDataset$get_factor_colnames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_colnames"><code>TealDataset$get_colnames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_column_labels"><code>TealDataset$get_column_labels()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_ncol"><code>TealDataset$get_ncol()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_nrow"><code>TealDataset$get_nrow()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_rownames"><code>TealDataset$get_rownames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_row_labels"><code>TealDataset$get_row_labels()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_dataname"><code>TealDataset$get_dataname()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_datanames"><code>TealDataset$get_datanames()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_dataset_label"><code>TealDataset$get_dataset_label()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_keys"><code>TealDataset$get_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_metadata"><code>TealDataset$get_metadata()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_join_keys"><code>TealDataset$get_join_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_hash"><code>TealDataset$get_hash()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_var_r6"><code>TealDataset$get_var_r6()</code></a></p></li>
+<li><p><a href="#method-TealDataset-reassign_datasets_vars"><code>TealDataset$reassign_datasets_vars()</code></a></p></li>
+<li><p><a href="#method-TealDataset-set_dataset_label"><code>TealDataset$set_dataset_label()</code></a></p></li>
+<li><p><a href="#method-TealDataset-set_keys"><code>TealDataset$set_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-set_join_keys"><code>TealDataset$set_join_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-merge_join_keys"><code>TealDataset$merge_join_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-mutate_join_keys"><code>TealDataset$mutate_join_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-set_vars"><code>TealDataset$set_vars()</code></a></p></li>
+<li><p><a href="#method-TealDataset-set_code"><code>TealDataset$set_code()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_code"><code>TealDataset$get_code()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_code_class"><code>TealDataset$get_code_class()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_mutate_code_class"><code>TealDataset$get_mutate_code_class()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_vars"><code>TealDataset$get_vars()</code></a></p></li>
+<li><p><a href="#method-TealDataset-get_mutate_vars"><code>TealDataset$get_mutate_vars()</code></a></p></li>
+<li><p><a href="#method-TealDataset-is_mutate_delayed"><code>TealDataset$is_mutate_delayed()</code></a></p></li>
+<li><p><a href="#method-TealDataset-mutate"><code>TealDataset$mutate()</code></a></p></li>
+<li><p><a href="#method-TealDataset-check"><code>TealDataset$check()</code></a></p></li>
+<li><p><a href="#method-TealDataset-check_keys"><code>TealDataset$check_keys()</code></a></p></li>
+<li><p><a href="#method-TealDataset-is_pulled"><code>TealDataset$is_pulled()</code></a></p></li>
+<li><p><a href="#method-TealDataset-clone"><code>TealDataset$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-TealDataset-new"></a><div class="section">
 <h3 id="method-new--1">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new--1"></a></h3>
 <p>Create a new object of <code>TealDataset</code> class</p><div class="section">
 <h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
@@ -469,7 +460,7 @@ should be atomic and length one.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-recreate"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-recreate"></a><div class="section">
 <h3 id="method-recreate-">Method <code>recreate()</code><a class="anchor" aria-label="anchor" href="#method-recreate-"></a></h3>
 <p>Recreate this <code>TealDataset</code> with its current attributes.</p><div class="section">
 <h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
@@ -537,7 +528,7 @@ should be atomic and length one.</p></dd>
 <p>a new object of the <code>TealDataset</code> class</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-print"></a><div class="section">
 <h3 id="method-print--1">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print--1"></a></h3>
 <p>Prints this <code>TealDataset</code>.</p><div class="section">
 <h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
@@ -557,7 +548,7 @@ should be atomic and length one.</p></dd>
 <p>invisibly self</p>
 </div>
 
-</div><p></p><hr><a id="method-get_dataset"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_dataset"></a><div class="section">
 <h3 id="method-get-dataset-">Method <code><a href="get_dataset.html">get_dataset()</a></code><a class="anchor" aria-label="anchor" href="#method-get-dataset-"></a></h3>
 <p>Performs any delayed mutate calls before returning self.</p><div class="section">
 <h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
@@ -569,7 +560,7 @@ should be atomic and length one.</p></dd>
 <p>dataset (<code>TealDataset</code>)</p>
 </div>
 
-</div><p></p><hr><a id="method-get_attrs"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_attrs"></a><div class="section">
 <h3 id="method-get-attrs-">Method <code><a href="get_attrs.html">get_attrs()</a></code><a class="anchor" aria-label="anchor" href="#method-get-attrs-"></a></h3>
 <p>Get all dataset attributes</p><div class="section">
 <h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
@@ -581,7 +572,7 @@ should be atomic and length one.</p></dd>
 <p>(named <code>list</code>) with dataset attributes</p>
 </div>
 
-</div><p></p><hr><a id="method-get_raw_data"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_raw_data"></a><div class="section">
 <h3 id="method-get-raw-data-">Method <code><a href="get_raw_data.html">get_raw_data()</a></code><a class="anchor" aria-label="anchor" href="#method-get-raw-data-"></a></h3>
 <p>Derive the raw data frame inside this object</p><div class="section">
 <h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
@@ -593,7 +584,7 @@ should be atomic and length one.</p></dd>
 <p><code>data.frame</code></p>
 </div>
 
-</div><p></p><hr><a id="method-get_numeric_colnames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_numeric_colnames"></a><div class="section">
 <h3 id="method-get-numeric-colnames-">Method <code>get_numeric_colnames()</code><a class="anchor" aria-label="anchor" href="#method-get-numeric-colnames-"></a></h3>
 <p>Derive the names of all <code>numeric</code> columns</p><div class="section">
 <h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
@@ -605,7 +596,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_character_colnames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_character_colnames"></a><div class="section">
 <h3 id="method-get-character-colnames-">Method <code>get_character_colnames()</code><a class="anchor" aria-label="anchor" href="#method-get-character-colnames-"></a></h3>
 <p>Derive the names of all <code>character</code> columns</p><div class="section">
 <h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
@@ -617,7 +608,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_factor_colnames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_factor_colnames"></a><div class="section">
 <h3 id="method-get-factor-colnames-">Method <code>get_factor_colnames()</code><a class="anchor" aria-label="anchor" href="#method-get-factor-colnames-"></a></h3>
 <p>Derive the names of all <code>factor</code> columns</p><div class="section">
 <h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
@@ -629,7 +620,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_colnames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_colnames"></a><div class="section">
 <h3 id="method-get-colnames--1">Method <code>get_colnames()</code><a class="anchor" aria-label="anchor" href="#method-get-colnames--1"></a></h3>
 <p>Derive the column names</p><div class="section">
 <h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
@@ -641,7 +632,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_column_labels"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_column_labels"></a><div class="section">
 <h3 id="method-get-column-labels--1">Method <code>get_column_labels()</code><a class="anchor" aria-label="anchor" href="#method-get-column-labels--1"></a></h3>
 <p>Derive the column labels</p><div class="section">
 <h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
@@ -653,7 +644,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_ncol"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_ncol"></a><div class="section">
 <h3 id="method-get-ncol--1">Method <code>get_ncol()</code><a class="anchor" aria-label="anchor" href="#method-get-ncol--1"></a></h3>
 <p>Get the number of columns of the data</p><div class="section">
 <h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
@@ -665,7 +656,7 @@ should be atomic and length one.</p></dd>
 <p><code>numeric</code> vector</p>
 </div>
 
-</div><p></p><hr><a id="method-get_nrow"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_nrow"></a><div class="section">
 <h3 id="method-get-nrow--1">Method <code>get_nrow()</code><a class="anchor" aria-label="anchor" href="#method-get-nrow--1"></a></h3>
 <p>Get the number of rows of the data</p><div class="section">
 <h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
@@ -677,7 +668,7 @@ should be atomic and length one.</p></dd>
 <p><code>numeric</code> vector</p>
 </div>
 
-</div><p></p><hr><a id="method-get_rownames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_rownames"></a><div class="section">
 <h3 id="method-get-rownames--1">Method <code>get_rownames()</code><a class="anchor" aria-label="anchor" href="#method-get-rownames--1"></a></h3>
 <p>Derive the row names</p><div class="section">
 <h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
@@ -689,7 +680,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_row_labels"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_row_labels"></a><div class="section">
 <h3 id="method-get-row-labels-">Method <code>get_row_labels()</code><a class="anchor" aria-label="anchor" href="#method-get-row-labels-"></a></h3>
 <p>Derive the row labels</p><div class="section">
 <h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
@@ -701,7 +692,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> vector.</p>
 </div>
 
-</div><p></p><hr><a id="method-get_dataname"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_dataname"></a><div class="section">
 <h3 id="method-get-dataname-">Method <code><a href="get_dataname.html">get_dataname()</a></code><a class="anchor" aria-label="anchor" href="#method-get-dataname-"></a></h3>
 <p>Derive the <code>name</code> which was formerly called <code>dataname</code></p><div class="section">
 <h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
@@ -713,7 +704,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> name of the dataset</p>
 </div>
 
-</div><p></p><hr><a id="method-get_datanames"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_datanames"></a><div class="section">
 <h3 id="method-get-datanames-">Method <code>get_datanames()</code><a class="anchor" aria-label="anchor" href="#method-get-datanames-"></a></h3>
 <p>Derive the dataname</p><div class="section">
 <h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
@@ -725,7 +716,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> name of the dataset</p>
 </div>
 
-</div><p></p><hr><a id="method-get_dataset_label"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_dataset_label"></a><div class="section">
 <h3 id="method-get-dataset-label-">Method <code><a href="get_dataset_label.html">get_dataset_label()</a></code><a class="anchor" aria-label="anchor" href="#method-get-dataset-label-"></a></h3>
 <p>Derive the <code>label</code> which was former called <code>datalabel</code></p><div class="section">
 <h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
@@ -737,7 +728,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> label of the dataset</p>
 </div>
 
-</div><p></p><hr><a id="method-get_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_keys"></a><div class="section">
 <h3 id="method-get-keys-">Method <code><a href="get_keys.html">get_keys()</a></code><a class="anchor" aria-label="anchor" href="#method-get-keys-"></a></h3>
 <p>Get primary keys of dataset</p><div class="section">
 <h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
@@ -749,7 +740,7 @@ should be atomic and length one.</p></dd>
 <p>(<code>character</code> vector) with dataset primary keys</p>
 </div>
 
-</div><p></p><hr><a id="method-get_metadata"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_metadata"></a><div class="section">
 <h3 id="method-get-metadata-">Method <code>get_metadata()</code><a class="anchor" aria-label="anchor" href="#method-get-metadata-"></a></h3>
 <p>Get metadata of dataset</p><div class="section">
 <h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
@@ -761,7 +752,7 @@ should be atomic and length one.</p></dd>
 <p>(named <code>list</code>)</p>
 </div>
 
-</div><p></p><hr><a id="method-get_join_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_join_keys"></a><div class="section">
 <h3 id="method-get-join-keys-">Method <code>get_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-get-join-keys-"></a></h3>
 <p>Get <code>JoinKeys</code> object with keys used for joining.</p><div class="section">
 <h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
@@ -773,7 +764,7 @@ should be atomic and length one.</p></dd>
 <p>(<code>JoinKeys</code>)</p>
 </div>
 
-</div><p></p><hr><a id="method-get_hash"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_hash"></a><div class="section">
 <h3 id="method-get-hash-">Method <code>get_hash()</code><a class="anchor" aria-label="anchor" href="#method-get-hash-"></a></h3>
 <p>Returns the string representation of the raw data hashed with the MD5 hash algorithm.</p><div class="section">
 <h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
@@ -785,7 +776,7 @@ should be atomic and length one.</p></dd>
 <p><code>character</code> the hash of the raw data</p>
 </div>
 
-</div><p></p><hr><a id="method-get_var_r6"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_var_r6"></a><div class="section">
 <h3 id="method-get-var-r-">Method <code>get_var_r6()</code><a class="anchor" aria-label="anchor" href="#method-get-var-r-"></a></h3>
 <p>Get the list of dependencies that are <code>TealDataset</code> or <code>TealDatasetConnector</code> objects</p><div class="section">
 <h4 id="usage-32">Usage<a class="anchor" aria-label="anchor" href="#usage-32"></a></h4>
@@ -797,7 +788,7 @@ should be atomic and length one.</p></dd>
 <p><code>list</code></p>
 </div>
 
-</div><p></p><hr><a id="method-reassign_datasets_vars"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-reassign_datasets_vars"></a><div class="section">
 <h3 id="method-reassign-datasets-vars-">Method <code>reassign_datasets_vars()</code><a class="anchor" aria-label="anchor" href="#method-reassign-datasets-vars-"></a></h3>
 <p>Overwrites <code>TealDataset</code> or <code>TealDatasetConnector</code> dependencies of this <code>TealDataset</code> with
 those found in <code>datasets</code>. Reassignment
@@ -840,7 +831,7 @@ in <code>datasets</code>.</p>
 </div>
 
 
-</div><p></p><hr><a id="method-set_dataset_label"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-set_dataset_label"></a><div class="section">
 <h3 id="method-set-dataset-label-">Method <code>set_dataset_label()</code><a class="anchor" aria-label="anchor" href="#method-set-dataset-label-"></a></h3>
 <p>Set the label for the dataset</p><div class="section">
 <h4 id="usage-34">Usage<a class="anchor" aria-label="anchor" href="#usage-34"></a></h4>
@@ -861,7 +852,7 @@ Label to describe the dataset</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-set_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-set_keys"></a><div class="section">
 <h3 id="method-set-keys-">Method <code><a href="set_keys.html">set_keys()</a></code><a class="anchor" aria-label="anchor" href="#method-set-keys-"></a></h3>
 <p>Set new keys</p><div class="section">
 <h4 id="usage-35">Usage<a class="anchor" aria-label="anchor" href="#usage-35"></a></h4>
@@ -882,7 +873,7 @@ Vector with primary keys</p></dd>
 <p>(<code>self</code>) invisibly for chaining.</p>
 </div>
 
-</div><p></p><hr><a id="method-set_join_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-set_join_keys"></a><div class="section">
 <h3 id="method-set-join-keys-">Method <code>set_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-set-join-keys-"></a></h3>
 <p>set join_keys for a given dataset and object</p><div class="section">
 <h4 id="usage-36">Usage<a class="anchor" aria-label="anchor" href="#usage-36"></a></h4>
@@ -903,7 +894,7 @@ or single <code>JoinKeySet</code> objects</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-merge_join_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-merge_join_keys"></a><div class="section">
 <h3 id="method-merge-join-keys-">Method <code>merge_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-merge-join-keys-"></a></h3>
 <p>merge input join key with join key inside of object</p><div class="section">
 <h4 id="usage-37">Usage<a class="anchor" aria-label="anchor" href="#usage-37"></a></h4>
@@ -923,7 +914,7 @@ or single <code>JoinKeySet</code> objects</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-mutate_join_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-mutate_join_keys"></a><div class="section">
 <h3 id="method-mutate-join-keys-">Method <code><a href="mutate_join_keys.html">mutate_join_keys()</a></code><a class="anchor" aria-label="anchor" href="#method-mutate-join-keys-"></a></h3>
 <p>mutate the join_keys for a given dataset and object</p><div class="section">
 <h4 id="usage-38">Usage<a class="anchor" aria-label="anchor" href="#usage-38"></a></h4>
@@ -947,7 +938,7 @@ or single <code>JoinKeySet</code> objects</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-set_vars"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-set_vars"></a><div class="section">
 <h3 id="method-set-vars-">Method <code>set_vars()</code><a class="anchor" aria-label="anchor" href="#method-set-vars-"></a></h3>
 <p>Adds variables which code depends on</p><div class="section">
 <h4 id="usage-39">Usage<a class="anchor" aria-label="anchor" href="#usage-39"></a></h4>
@@ -967,7 +958,7 @@ or single <code>JoinKeySet</code> objects</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-set_code"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-set_code"></a><div class="section">
 <h3 id="method-set-code-">Method <code>set_code()</code><a class="anchor" aria-label="anchor" href="#method-set-code-"></a></h3>
 <p>Sets reproducible code</p><div class="section">
 <h4 id="usage-40">Usage<a class="anchor" aria-label="anchor" href="#usage-40"></a></h4>
@@ -990,7 +981,7 @@ which is needed to preserve the code uniqueness and correct order.</p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-get_code"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_code"></a><div class="section">
 <h3 id="method-get-code-">Method <code><a href="get_code.html">get_code()</a></code><a class="anchor" aria-label="anchor" href="#method-get-code-"></a></h3>
 <p>Get code to get data</p><div class="section">
 <h4 id="usage-41">Usage<a class="anchor" aria-label="anchor" href="#usage-41"></a></h4>
@@ -1010,7 +1001,7 @@ which is needed to preserve the code uniqueness and correct order.</p></dd>
 <p>optionally deparsed <code>call</code> object</p>
 </div>
 
-</div><p></p><hr><a id="method-get_code_class"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_code_class"></a><div class="section">
 <h3 id="method-get-code-class-">Method <code>get_code_class()</code><a class="anchor" aria-label="anchor" href="#method-get-code-class-"></a></h3>
 <p>Get internal <code>CodeClass</code> object</p><div class="section">
 <h4 id="usage-42">Usage<a class="anchor" aria-label="anchor" href="#usage-42"></a></h4>
@@ -1032,7 +1023,7 @@ the <code>mutate</code></p></dd>
 <p><code>CodeClass</code></p>
 </div>
 
-</div><p></p><hr><a id="method-get_mutate_code_class"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_mutate_code_class"></a><div class="section">
 <h3 id="method-get-mutate-code-class-">Method <code>get_mutate_code_class()</code><a class="anchor" aria-label="anchor" href="#method-get-mutate-code-class-"></a></h3>
 <p>Get internal <code>CodeClass</code> object</p><div class="section">
 <h4 id="usage-43">Usage<a class="anchor" aria-label="anchor" href="#usage-43"></a></h4>
@@ -1044,7 +1035,7 @@ the <code>mutate</code></p></dd>
 <p><code>CodeClass</code></p>
 </div>
 
-</div><p></p><hr><a id="method-get_vars"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_vars"></a><div class="section">
 <h3 id="method-get-vars-">Method <code>get_vars()</code><a class="anchor" aria-label="anchor" href="#method-get-vars-"></a></h3>
 <p>Get internal <code>vars</code> object</p><div class="section">
 <h4 id="usage-44">Usage<a class="anchor" aria-label="anchor" href="#usage-44"></a></h4>
@@ -1056,7 +1047,7 @@ the <code>mutate</code></p></dd>
 <p><code>list</code></p>
 </div>
 
-</div><p></p><hr><a id="method-get_mutate_vars"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-get_mutate_vars"></a><div class="section">
 <h3 id="method-get-mutate-vars-">Method <code>get_mutate_vars()</code><a class="anchor" aria-label="anchor" href="#method-get-mutate-vars-"></a></h3>
 <p>Get internal <code>mutate_vars</code> object</p><div class="section">
 <h4 id="usage-45">Usage<a class="anchor" aria-label="anchor" href="#usage-45"></a></h4>
@@ -1068,7 +1059,7 @@ the <code>mutate</code></p></dd>
 <p><code>list</code></p>
 </div>
 
-</div><p></p><hr><a id="method-is_mutate_delayed"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-is_mutate_delayed"></a><div class="section">
 <h3 id="method-is-mutate-delayed-">Method <code>is_mutate_delayed()</code><a class="anchor" aria-label="anchor" href="#method-is-mutate-delayed-"></a></h3>
 <p>Whether mutate code has delayed evaluation.</p><div class="section">
 <h4 id="usage-46">Usage<a class="anchor" aria-label="anchor" href="#usage-46"></a></h4>
@@ -1080,7 +1071,7 @@ the <code>mutate</code></p></dd>
 <p><code>logical</code></p>
 </div>
 
-</div><p></p><hr><a id="method-mutate"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-mutate"></a><div class="section">
 <h3 id="method-mutate-">Method <code>mutate()</code><a class="anchor" aria-label="anchor" href="#method-mutate-"></a></h3>
 <p>Mutate dataset by code</p><div class="section">
 <h4 id="usage-47">Usage<a class="anchor" aria-label="anchor" href="#usage-47"></a></h4>
@@ -1109,7 +1100,7 @@ the <code>mutate</code></p></dd>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-check"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-check"></a><div class="section">
 <h3 id="method-check--1">Method <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check()</a></code><a class="anchor" aria-label="anchor" href="#method-check--1"></a></h3>
 <p>Check to determine if the raw data is reproducible from the <code><a href="get_code.html">get_code()</a></code> code.</p><div class="section">
 <h4 id="usage-48">Usage<a class="anchor" aria-label="anchor" href="#usage-48"></a></h4>
@@ -1122,7 +1113,7 @@ the <code>mutate</code></p></dd>
 <code><a href="get_code.html">get_code()</a></code> code is identical to the raw data, else <code>FALSE</code>.</p>
 </div>
 
-</div><p></p><hr><a id="method-check_keys"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-check_keys"></a><div class="section">
 <h3 id="method-check-keys--1">Method <code>check_keys()</code><a class="anchor" aria-label="anchor" href="#method-check-keys--1"></a></h3>
 <p>Check if keys has been specified correctly for dataset. Set of <code>keys</code>
 should distinguish unique rows or be <code>character(0)</code>.</p><div class="section">
@@ -1144,7 +1135,7 @@ Vector with primary keys</p></dd>
 <p><code>TRUE</code> if dataset has been already pulled, else <code>FALSE</code></p>
 </div>
 
-</div><p></p><hr><a id="method-is_pulled"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-is_pulled"></a><div class="section">
 <h3 id="method-is-pulled-">Method <code><a href="is_pulled.html">is_pulled()</a></code><a class="anchor" aria-label="anchor" href="#method-is-pulled-"></a></h3>
 <p>Check if dataset has already been pulled.</p><div class="section">
 <h4 id="usage-50">Usage<a class="anchor" aria-label="anchor" href="#usage-50"></a></h4>
@@ -1156,7 +1147,7 @@ Vector with primary keys</p></dd>
 <p><code>TRUE</code> if dataset has been already pulled, else <code>FALSE</code></p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-TealDataset-clone"></a><div class="section">
 <h3 id="method-clone--1">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone--1"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-51">Usage<a class="anchor" aria-label="anchor" href="#usage-51"></a></h4>

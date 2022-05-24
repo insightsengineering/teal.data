@@ -18,7 +18,7 @@ of these columns."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9006</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 30px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,15 +43,6 @@ of these columns."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start_releases -->
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-Other releases
-<span class="caret"></span></a><ul class="dropdown-menu" role="menu">
-   <li><a href="../index.html">latest</a></li>
-   <li><a href="..//index.html"></a></li>
-</ul></li>
-<!-- end_releases -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -88,15 +79,15 @@ of these columns.</p>
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>JoinKeys$new()</code></a></p></li>
-<li><p><a href="#method-split"><code>JoinKeys$split()</code></a></p></li>
-<li><p><a href="#method-merge"><code>JoinKeys$merge()</code></a></p></li>
-<li><p><a href="#method-get"><code>JoinKeys$get()</code></a></p></li>
-<li><p><a href="#method-mutate"><code>JoinKeys$mutate()</code></a></p></li>
-<li><p><a href="#method-set"><code>JoinKeys$set()</code></a></p></li>
-<li><p><a href="#method-print"><code>JoinKeys$print()</code></a></p></li>
-<li><p><a href="#method-clone"><code>JoinKeys$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-JoinKeys-new"><code>JoinKeys$new()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-split"><code>JoinKeys$split()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-merge"><code>JoinKeys$merge()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-get"><code>JoinKeys$get()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-mutate"><code>JoinKeys$mutate()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-set"><code>JoinKeys$set()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-print"><code>JoinKeys$print()</code></a></p></li>
+<li><p><a href="#method-JoinKeys-clone"><code>JoinKeys$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-JoinKeys-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new object of <code>JoinKeys</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
@@ -108,7 +99,7 @@ of these columns.</p>
 <p>empty (<code>JoinKeys</code>)</p>
 </div>
 
-</div><p></p><hr><a id="method-split"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-split"></a><div class="section">
 <h3 id="method-split-">Method <code><a href="https://rdrr.io/r/base/split.html" class="external-link">split()</a></code><a class="anchor" aria-label="anchor" href="#method-split-"></a></h3>
 <p>Split the current <code>JoinKeys</code> object into a named list of join keys objects with an element for each dataset</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
@@ -120,7 +111,7 @@ of these columns.</p>
 <p>(<code>list</code>) a list of <code>JoinKeys</code> object</p>
 </div>
 
-</div><p></p><hr><a id="method-merge"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-merge"></a><div class="section">
 <h3 id="method-merge-">Method <code><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge()</a></code><a class="anchor" aria-label="anchor" href="#method-merge-"></a></h3>
 <p>Merging a list (or one) of <code>JoinKeys</code> objects into the current <code>JoinKeys</code> object</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -140,7 +131,7 @@ of these columns.</p>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-get"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-get"></a><div class="section">
 <h3 id="method-get-">Method <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code><a class="anchor" aria-label="anchor" href="#method-get-"></a></h3>
 <p>Get join keys between two datasets.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -172,7 +163,7 @@ columns of <code>dataset_1</code> and the values of <code>(x)</code> the corresp
 keys in <code>dataset_2</code> or <code>character(0)</code> if no relationship</p>
 </div>
 
-</div><p></p><hr><a id="method-mutate"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-mutate"></a><div class="section">
 <h3 id="method-mutate-">Method <code>mutate()</code><a class="anchor" aria-label="anchor" href="#method-mutate-"></a></h3>
 <p>Change join_keys for a given pair of dataset names (or
 add join_keys for given pair if it does not exist)</p><div class="section">
@@ -201,7 +192,7 @@ add join_keys for given pair if it does not exist)</p><div class="section">
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-set"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-set"></a><div class="section">
 <h3 id="method-set-">Method <code>set()</code><a class="anchor" aria-label="anchor" href="#method-set-"></a></h3>
 <p>Set up join keys basing on list of <code>JoinKeySet</code> objects.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
@@ -228,7 +219,7 @@ to be specified once</p>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
-</div><p></p><hr><a id="method-print"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-print"></a><div class="section">
 <h3 id="method-print-">Method <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code><a class="anchor" aria-label="anchor" href="#method-print-"></a></h3>
 <p>Prints this <code>JoinKeys</code>.</p><div class="section">
 <h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
@@ -248,7 +239,7 @@ to be specified once</p>
 <p>invisibly self</p>
 </div>
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-JoinKeys-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
