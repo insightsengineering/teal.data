@@ -67,17 +67,17 @@ x$get_code("DF3")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CodeClass$new()}}
-\item \href{#method-append}{\code{CodeClass$append()}}
-\item \href{#method-set_code}{\code{CodeClass$set_code()}}
-\item \href{#method-get_code}{\code{CodeClass$get_code()}}
-\item \href{#method-eval}{\code{CodeClass$eval()}}
-\item \href{#method-clone}{\code{CodeClass$clone()}}
+\item \href{#method-CodeClass-new}{\code{CodeClass$new()}}
+\item \href{#method-CodeClass-append}{\code{CodeClass$append()}}
+\item \href{#method-CodeClass-set_code}{\code{CodeClass$set_code()}}
+\item \href{#method-CodeClass-get_code}{\code{CodeClass$get_code()}}
+\item \href{#method-CodeClass-eval}{\code{CodeClass$eval()}}
+\item \href{#method-CodeClass-clone}{\code{CodeClass$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CodeClass-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-new}{}}}
 \subsection{Method \code{new()}}{
 \code{CodeClass} constructor
 \subsection{Usage}{
@@ -105,8 +105,8 @@ object of class \code{CodeClass}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-append"></a>}}
-\if{latex}{\out{\hypertarget{method-append}{}}}
+\if{html}{\out{<a id="method-CodeClass-append"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-append}{}}}
 \subsection{Method \code{append()}}{
 Append \code{CodeClass} object to a given \code{CodeClass} object
 \subsection{Usage}{
@@ -125,8 +125,8 @@ changed \code{CodeClass} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_code"></a>}}
-\if{latex}{\out{\hypertarget{method-set_code}{}}}
+\if{html}{\out{<a id="method-CodeClass-set_code"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-set_code}{}}}
 \subsection{Method \code{set_code()}}{
 Set code in form of character
 \subsection{Usage}{
@@ -150,8 +150,8 @@ changed \code{CodeClass} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code}{}}}
+\if{html}{\out{<a id="method-CodeClass-get_code"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-get_code}{}}}
 \subsection{Method \code{get_code()}}{
 Get the code for a given data names
 \subsection{Usage}{
@@ -173,8 +173,8 @@ If \code{NULL} then get the code for all data names}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-CodeClass-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluates internal code within given environment
 \subsection{Usage}{
@@ -193,8 +193,8 @@ invisibly \code{NULL}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CodeClass-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CodeClass-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

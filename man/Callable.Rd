@@ -10,17 +10,17 @@ Object that stores function name with its arguments. Methods to get call and run
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{Callable$new()}}
-\item \href{#method-assign_to_env}{\code{Callable$assign_to_env()}}
-\item \href{#method-run}{\code{Callable$run()}}
-\item \href{#method-is_failed}{\code{Callable$is_failed()}}
-\item \href{#method-get_error_message}{\code{Callable$get_error_message()}}
-\item \href{#method-clone}{\code{Callable$clone()}}
+\item \href{#method-Callable-new}{\code{Callable$new()}}
+\item \href{#method-Callable-assign_to_env}{\code{Callable$assign_to_env()}}
+\item \href{#method-Callable-run}{\code{Callable$run()}}
+\item \href{#method-Callable-is_failed}{\code{Callable$is_failed()}}
+\item \href{#method-Callable-get_error_message}{\code{Callable$get_error_message()}}
+\item \href{#method-Callable-clone}{\code{Callable$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-Callable-new"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{CallableCode} object
 \subsection{Usage}{
@@ -40,8 +40,8 @@ new \code{CallableCode} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-assign_to_env"></a>}}
-\if{latex}{\out{\hypertarget{method-assign_to_env}{}}}
+\if{html}{\out{<a id="method-Callable-assign_to_env"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-assign_to_env}{}}}
 \subsection{Method \code{assign_to_env()}}{
 Assigns \code{x <- value} object to \code{env}. Assigned object can't
 be modified within local environment as it will be locked by using
@@ -67,8 +67,8 @@ object to be assigned to \code{x}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
-\if{latex}{\out{\hypertarget{method-run}{}}}
+\if{html}{\out{<a id="method-Callable-run"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-run}{}}}
 \subsection{Method \code{run()}}{
 Execute \code{Callable} function or code.
 \subsection{Usage}{
@@ -98,8 +98,8 @@ when \code{try = TRUE} or will stop if \code{try = FALSE}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_failed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_failed}{}}}
+\if{html}{\out{<a id="method-Callable-is_failed"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-is_failed}{}}}
 \subsection{Method \code{is_failed()}}{
 Check if evaluation of the function has not failed.
 \subsection{Usage}{
@@ -112,8 +112,8 @@ if evaluation failed or function hasn't yet been called.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_error_message"></a>}}
-\if{latex}{\out{\hypertarget{method-get_error_message}{}}}
+\if{html}{\out{<a id="method-Callable-get_error_message"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-get_error_message}{}}}
 \subsection{Method \code{get_error_message()}}{
 Get error message from last function execution
 \subsection{Usage}{
@@ -126,8 +126,8 @@ function evaluation was successful.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-Callable-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-Callable-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

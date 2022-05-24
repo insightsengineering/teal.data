@@ -39,37 +39,37 @@ x$close() # call closing function
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TealDataConnection$new()}}
-\item \href{#method-finalize}{\code{TealDataConnection$finalize()}}
-\item \href{#method-is_opened}{\code{TealDataConnection$is_opened()}}
-\item \href{#method-is_failed}{\code{TealDataConnection$is_failed()}}
-\item \href{#method-launch}{\code{TealDataConnection$launch()}}
-\item \href{#method-open}{\code{TealDataConnection$open()}}
-\item \href{#method-get_conn}{\code{TealDataConnection$get_conn()}}
-\item \href{#method-get_open_call}{\code{TealDataConnection$get_open_call()}}
-\item \href{#method-get_open_error_message}{\code{TealDataConnection$get_open_error_message()}}
-\item \href{#method-get_preopen_server}{\code{TealDataConnection$get_preopen_server()}}
-\item \href{#method-get_open_server}{\code{TealDataConnection$get_open_server()}}
-\item \href{#method-get_open_ui}{\code{TealDataConnection$get_open_ui()}}
-\item \href{#method-is_open_failed}{\code{TealDataConnection$is_open_failed()}}
-\item \href{#method-set_open_args}{\code{TealDataConnection$set_open_args()}}
-\item \href{#method-set_preopen_server}{\code{TealDataConnection$set_preopen_server()}}
-\item \href{#method-set_open_server}{\code{TealDataConnection$set_open_server()}}
-\item \href{#method-set_open_ui}{\code{TealDataConnection$set_open_ui()}}
-\item \href{#method-close}{\code{TealDataConnection$close()}}
-\item \href{#method-get_close_call}{\code{TealDataConnection$get_close_call()}}
-\item \href{#method-get_close_error_message}{\code{TealDataConnection$get_close_error_message()}}
-\item \href{#method-get_close_server}{\code{TealDataConnection$get_close_server()}}
-\item \href{#method-is_close_failed}{\code{TealDataConnection$is_close_failed()}}
-\item \href{#method-set_close_args}{\code{TealDataConnection$set_close_args()}}
-\item \href{#method-set_close_ui}{\code{TealDataConnection$set_close_ui()}}
-\item \href{#method-set_close_server}{\code{TealDataConnection$set_close_server()}}
-\item \href{#method-clone}{\code{TealDataConnection$clone()}}
+\item \href{#method-TealDataConnection-new}{\code{TealDataConnection$new()}}
+\item \href{#method-TealDataConnection-finalize}{\code{TealDataConnection$finalize()}}
+\item \href{#method-TealDataConnection-is_opened}{\code{TealDataConnection$is_opened()}}
+\item \href{#method-TealDataConnection-is_failed}{\code{TealDataConnection$is_failed()}}
+\item \href{#method-TealDataConnection-launch}{\code{TealDataConnection$launch()}}
+\item \href{#method-TealDataConnection-open}{\code{TealDataConnection$open()}}
+\item \href{#method-TealDataConnection-get_conn}{\code{TealDataConnection$get_conn()}}
+\item \href{#method-TealDataConnection-get_open_call}{\code{TealDataConnection$get_open_call()}}
+\item \href{#method-TealDataConnection-get_open_error_message}{\code{TealDataConnection$get_open_error_message()}}
+\item \href{#method-TealDataConnection-get_preopen_server}{\code{TealDataConnection$get_preopen_server()}}
+\item \href{#method-TealDataConnection-get_open_server}{\code{TealDataConnection$get_open_server()}}
+\item \href{#method-TealDataConnection-get_open_ui}{\code{TealDataConnection$get_open_ui()}}
+\item \href{#method-TealDataConnection-is_open_failed}{\code{TealDataConnection$is_open_failed()}}
+\item \href{#method-TealDataConnection-set_open_args}{\code{TealDataConnection$set_open_args()}}
+\item \href{#method-TealDataConnection-set_preopen_server}{\code{TealDataConnection$set_preopen_server()}}
+\item \href{#method-TealDataConnection-set_open_server}{\code{TealDataConnection$set_open_server()}}
+\item \href{#method-TealDataConnection-set_open_ui}{\code{TealDataConnection$set_open_ui()}}
+\item \href{#method-TealDataConnection-close}{\code{TealDataConnection$close()}}
+\item \href{#method-TealDataConnection-get_close_call}{\code{TealDataConnection$get_close_call()}}
+\item \href{#method-TealDataConnection-get_close_error_message}{\code{TealDataConnection$get_close_error_message()}}
+\item \href{#method-TealDataConnection-get_close_server}{\code{TealDataConnection$get_close_server()}}
+\item \href{#method-TealDataConnection-is_close_failed}{\code{TealDataConnection$is_close_failed()}}
+\item \href{#method-TealDataConnection-set_close_args}{\code{TealDataConnection$set_close_args()}}
+\item \href{#method-TealDataConnection-set_close_ui}{\code{TealDataConnection$set_close_ui()}}
+\item \href{#method-TealDataConnection-set_close_server}{\code{TealDataConnection$set_close_server()}}
+\item \href{#method-TealDataConnection-clone}{\code{TealDataConnection$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TealDataConnection} object
 \subsection{Usage}{
@@ -100,8 +100,8 @@ new \code{TealDataConnection} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-finalize"></a>}}
-\if{latex}{\out{\hypertarget{method-finalize}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-finalize"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-finalize}{}}}
 \subsection{Method \code{finalize()}}{
 Finalize method closing the connection.
 \subsection{Usage}{
@@ -113,8 +113,8 @@ NULL
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_opened"></a>}}
-\if{latex}{\out{\hypertarget{method-is_opened}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-is_opened"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-is_opened}{}}}
 \subsection{Method \code{is_opened()}}{
 If connection is opened
 
@@ -128,8 +128,8 @@ If open connection has been successfully evaluated
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_failed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_failed}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-is_failed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-is_failed}{}}}
 \subsection{Method \code{is_failed()}}{
 Check if connection has not failed.
 \subsection{Usage}{
@@ -141,8 +141,8 @@ Check if connection has not failed.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-launch"></a>}}
-\if{latex}{\out{\hypertarget{method-launch}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-launch"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-launch}{}}}
 \subsection{Method \code{launch()}}{
 Run simple application that uses its \code{ui} and \code{server} fields to open the
 connection.
@@ -157,8 +157,8 @@ An object that represents the app
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-open"></a>}}
-\if{latex}{\out{\hypertarget{method-open}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-open"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-open}{}}}
 \subsection{Method \code{open()}}{
 Open the connection.
 
@@ -185,8 +185,8 @@ opened. If \code{open_fun} fails, app returns an error in form of
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_conn"></a>}}
-\if{latex}{\out{\hypertarget{method-get_conn}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_conn"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_conn}{}}}
 \subsection{Method \code{get_conn()}}{
 Get internal connection object
 \subsection{Usage}{
@@ -198,8 +198,8 @@ Get internal connection object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_open_call"></a>}}
-\if{latex}{\out{\hypertarget{method-get_open_call}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_open_call"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_open_call}{}}}
 \subsection{Method \code{get_open_call()}}{
 Get executed open connection call
 \subsection{Usage}{
@@ -222,8 +222,8 @@ optionally deparsed \code{call} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_open_error_message"></a>}}
-\if{latex}{\out{\hypertarget{method-get_open_error_message}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_open_error_message"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_open_error_message}{}}}
 \subsection{Method \code{get_open_error_message()}}{
 Get error message from last connection
 \subsection{Usage}{
@@ -237,8 +237,8 @@ connection was successful.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_preopen_server"></a>}}
-\if{latex}{\out{\hypertarget{method-get_preopen_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_preopen_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_preopen_server}{}}}
 \subsection{Method \code{get_preopen_server()}}{
 Get shiny server module prior opening connection.
 \subsection{Usage}{
@@ -250,8 +250,8 @@ Get shiny server module prior opening connection.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_open_server"></a>}}
-\if{latex}{\out{\hypertarget{method-get_open_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_open_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_open_server}{}}}
 \subsection{Method \code{get_open_server()}}{
 Get shiny server module to open connection.
 \subsection{Usage}{
@@ -263,8 +263,8 @@ Get shiny server module to open connection.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_open_ui"></a>}}
-\if{latex}{\out{\hypertarget{method-get_open_ui}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_open_ui"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_open_ui}{}}}
 \subsection{Method \code{get_open_ui()}}{
 Get Shiny module with inputs to open connection
 \subsection{Usage}{
@@ -283,8 +283,8 @@ Get Shiny module with inputs to open connection
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_open_failed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_open_failed}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-is_open_failed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-is_open_failed}{}}}
 \subsection{Method \code{is_open_failed()}}{
 Check if open connection has not failed.
 \subsection{Usage}{
@@ -296,8 +296,8 @@ Check if open connection has not failed.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_open_args"></a>}}
-\if{latex}{\out{\hypertarget{method-set_open_args}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_open_args"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_open_args}{}}}
 \subsection{Method \code{set_open_args()}}{
 Set open connection function argument
 \subsection{Usage}{
@@ -318,8 +318,8 @@ Set open connection function argument
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_preopen_server"></a>}}
-\if{latex}{\out{\hypertarget{method-set_preopen_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_preopen_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_preopen_server}{}}}
 \subsection{Method \code{set_preopen_server()}}{
 Set pre-open connection server function
 
@@ -341,8 +341,8 @@ A shiny module server function}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_open_server"></a>}}
-\if{latex}{\out{\hypertarget{method-set_open_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_open_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_open_server}{}}}
 \subsection{Method \code{set_open_server()}}{
 Set open connection server function
 
@@ -366,8 +366,8 @@ A shiny module server function that should load data from all connectors}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_open_ui"></a>}}
-\if{latex}{\out{\hypertarget{method-set_open_ui}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_open_ui"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_open_ui}{}}}
 \subsection{Method \code{set_open_ui()}}{
 Set open connection UI function
 \subsection{Usage}{
@@ -388,8 +388,8 @@ defined by \code{set_open_server} method.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-close"></a>}}
-\if{latex}{\out{\hypertarget{method-close}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-close"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-close}{}}}
 \subsection{Method \code{close()}}{
 Close the connection.
 \subsection{Usage}{
@@ -412,8 +412,8 @@ depends on \code{try} argument: if \code{try = TRUE} then returns
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_close_call"></a>}}
-\if{latex}{\out{\hypertarget{method-get_close_call}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_close_call"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_close_call}{}}}
 \subsection{Method \code{get_close_call()}}{
 Get executed close connection call
 \subsection{Usage}{
@@ -434,8 +434,8 @@ optionally deparsed \code{call} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_close_error_message"></a>}}
-\if{latex}{\out{\hypertarget{method-get_close_error_message}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_close_error_message"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_close_error_message}{}}}
 \subsection{Method \code{get_close_error_message()}}{
 Get error message from last connection
 \subsection{Usage}{
@@ -449,8 +449,8 @@ connection was successful.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_close_server"></a>}}
-\if{latex}{\out{\hypertarget{method-get_close_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-get_close_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-get_close_server}{}}}
 \subsection{Method \code{get_close_server()}}{
 Get shiny server module to close connection.
 \subsection{Usage}{
@@ -462,8 +462,8 @@ the \verb{server function} to close connection.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_close_failed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_close_failed}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-is_close_failed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-is_close_failed}{}}}
 \subsection{Method \code{is_close_failed()}}{
 Check if close connection has not failed.
 \subsection{Usage}{
@@ -475,8 +475,8 @@ Check if close connection has not failed.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_close_args"></a>}}
-\if{latex}{\out{\hypertarget{method-set_close_args}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_close_args"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_close_args}{}}}
 \subsection{Method \code{set_close_args()}}{
 Set close connection function argument
 \subsection{Usage}{
@@ -497,8 +497,8 @@ Set close connection function argument
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_close_ui"></a>}}
-\if{latex}{\out{\hypertarget{method-set_close_ui}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_close_ui"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_close_ui}{}}}
 \subsection{Method \code{set_close_ui()}}{
 Set close connection UI function
 \subsection{Usage}{
@@ -519,8 +519,8 @@ defined by \code{set_close_server} method.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_close_server"></a>}}
-\if{latex}{\out{\hypertarget{method-set_close_server}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-set_close_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-set_close_server}{}}}
 \subsection{Method \code{set_close_server()}}{
 Set close-connection server function
 
@@ -544,8 +544,8 @@ A shiny module server function that should load data from all connectors}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TealDataConnection-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataConnection-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

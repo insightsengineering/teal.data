@@ -17,50 +17,50 @@ be empty (i.e. \code{character(0)}).
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CDISCTealDatasetConnector$new()}}
-\item \href{#method-get_parent}{\code{CDISCTealDatasetConnector$get_parent()}}
-\item \href{#method-pull}{\code{CDISCTealDatasetConnector$pull()}}
-\item \href{#method-clone}{\code{CDISCTealDatasetConnector$clone()}}
+\item \href{#method-CDISCTealDatasetConnector-new}{\code{CDISCTealDatasetConnector$new()}}
+\item \href{#method-CDISCTealDatasetConnector-get_parent}{\code{CDISCTealDatasetConnector$get_parent()}}
+\item \href{#method-CDISCTealDatasetConnector-pull}{\code{CDISCTealDatasetConnector$pull()}}
+\item \href{#method-CDISCTealDatasetConnector-clone}{\code{CDISCTealDatasetConnector$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="check">}\href{../../teal.data/html/TealDatasetConnector.html#method-check}{\code{teal.data::TealDatasetConnector$check()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_code">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_code}{\code{teal.data::TealDatasetConnector$get_code()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_code_class">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_code_class}{\code{teal.data::TealDatasetConnector$get_code_class()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataname">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_dataname}{\code{teal.data::TealDatasetConnector$get_dataname()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_datanames">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_datanames}{\code{teal.data::TealDatasetConnector$get_datanames()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataset">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_dataset}{\code{teal.data::TealDatasetConnector$get_dataset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataset_label">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_dataset_label}{\code{teal.data::TealDatasetConnector$get_dataset_label()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_error_message">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_error_message}{\code{teal.data::TealDatasetConnector$get_error_message()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_join_keys">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_join_keys}{\code{teal.data::TealDatasetConnector$get_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_keys">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_keys}{\code{teal.data::TealDatasetConnector$get_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_pull_args">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_pull_args}{\code{teal.data::TealDatasetConnector$get_pull_args()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_pull_callable">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_pull_callable}{\code{teal.data::TealDatasetConnector$get_pull_callable()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_raw_data">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_raw_data}{\code{teal.data::TealDatasetConnector$get_raw_data()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_server">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_server}{\code{teal.data::TealDatasetConnector$get_server()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_ui">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_ui}{\code{teal.data::TealDatasetConnector$get_ui()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_var_r6">}\href{../../teal.data/html/TealDatasetConnector.html#method-get_var_r6}{\code{teal.data::TealDatasetConnector$get_var_r6()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_failed">}\href{../../teal.data/html/TealDatasetConnector.html#method-is_failed}{\code{teal.data::TealDatasetConnector$is_failed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_mutate_delayed">}\href{../../teal.data/html/TealDatasetConnector.html#method-is_mutate_delayed}{\code{teal.data::TealDatasetConnector$is_mutate_delayed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_pulled">}\href{../../teal.data/html/TealDatasetConnector.html#method-is_pulled}{\code{teal.data::TealDatasetConnector$is_pulled()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="launch">}\href{../../teal.data/html/TealDatasetConnector.html#method-launch}{\code{teal.data::TealDatasetConnector$launch()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="mutate">}\href{../../teal.data/html/TealDatasetConnector.html#method-mutate}{\code{teal.data::TealDatasetConnector$mutate()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="mutate_join_keys">}\href{../../teal.data/html/TealDatasetConnector.html#method-mutate_join_keys}{\code{teal.data::TealDatasetConnector$mutate_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="print">}\href{../../teal.data/html/TealDatasetConnector.html#method-print}{\code{teal.data::TealDatasetConnector$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="reassign_datasets_vars">}\href{../../teal.data/html/TealDatasetConnector.html#method-reassign_datasets_vars}{\code{teal.data::TealDatasetConnector$reassign_datasets_vars()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_args">}\href{../../teal.data/html/TealDatasetConnector.html#method-set_args}{\code{teal.data::TealDatasetConnector$set_args()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_dataset_label">}\href{../../teal.data/html/TealDatasetConnector.html#method-set_dataset_label}{\code{teal.data::TealDatasetConnector$set_dataset_label()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_join_keys">}\href{../../teal.data/html/TealDatasetConnector.html#method-set_join_keys}{\code{teal.data::TealDatasetConnector$set_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_keys">}\href{../../teal.data/html/TealDatasetConnector.html#method-set_keys}{\code{teal.data::TealDatasetConnector$set_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_ui_input">}\href{../../teal.data/html/TealDatasetConnector.html#method-set_ui_input}{\code{teal.data::TealDatasetConnector$set_ui_input()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="check"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-check'><code>teal.data::TealDatasetConnector$check()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_code"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_code'><code>teal.data::TealDatasetConnector$get_code()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_code_class"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_code_class'><code>teal.data::TealDatasetConnector$get_code_class()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataname"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_dataname'><code>teal.data::TealDatasetConnector$get_dataname()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_datanames"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_datanames'><code>teal.data::TealDatasetConnector$get_datanames()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataset"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_dataset'><code>teal.data::TealDatasetConnector$get_dataset()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_dataset_label"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_dataset_label'><code>teal.data::TealDatasetConnector$get_dataset_label()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_error_message"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_error_message'><code>teal.data::TealDatasetConnector$get_error_message()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_join_keys"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_join_keys'><code>teal.data::TealDatasetConnector$get_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_keys"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_keys'><code>teal.data::TealDatasetConnector$get_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_pull_args"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_pull_args'><code>teal.data::TealDatasetConnector$get_pull_args()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_pull_callable"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_pull_callable'><code>teal.data::TealDatasetConnector$get_pull_callable()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_raw_data"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_raw_data'><code>teal.data::TealDatasetConnector$get_raw_data()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_server"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_server'><code>teal.data::TealDatasetConnector$get_server()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_ui"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_ui'><code>teal.data::TealDatasetConnector$get_ui()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="get_var_r6"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-get_var_r6'><code>teal.data::TealDatasetConnector$get_var_r6()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_failed"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-is_failed'><code>teal.data::TealDatasetConnector$is_failed()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_mutate_delayed"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-is_mutate_delayed'><code>teal.data::TealDatasetConnector$is_mutate_delayed()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="is_pulled"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-is_pulled'><code>teal.data::TealDatasetConnector$is_pulled()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="launch"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-launch'><code>teal.data::TealDatasetConnector$launch()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="mutate"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-mutate'><code>teal.data::TealDatasetConnector$mutate()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="mutate_join_keys"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-mutate_join_keys'><code>teal.data::TealDatasetConnector$mutate_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="print"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-print'><code>teal.data::TealDatasetConnector$print()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="reassign_datasets_vars"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-reassign_datasets_vars'><code>teal.data::TealDatasetConnector$reassign_datasets_vars()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_args"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-set_args'><code>teal.data::TealDatasetConnector$set_args()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_dataset_label"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-set_dataset_label'><code>teal.data::TealDatasetConnector$set_dataset_label()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_join_keys"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-set_join_keys'><code>teal.data::TealDatasetConnector$set_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_keys"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-set_keys'><code>teal.data::TealDatasetConnector$set_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDatasetConnector" data-id="set_ui_input"><a href='../../teal.data/html/TealDatasetConnector.html#method-TealDatasetConnector-set_ui_input'><code>teal.data::TealDatasetConnector$set_ui_input()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CDISCTealDatasetConnector-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CDISCTealDatasetConnector-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TealDatasetConnector} object. Set the pulling function
 \code{CallableFunction} which returns a \code{data.frame}, e.g. by reading
@@ -122,8 +122,8 @@ converted to a list with \code{as.list}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_parent"></a>}}
-\if{latex}{\out{\hypertarget{method-get_parent}{}}}
+\if{html}{\out{<a id="method-CDISCTealDatasetConnector-get_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-CDISCTealDatasetConnector-get_parent}{}}}
 \subsection{Method \code{get_parent()}}{
 Get parent dataset name
 \subsection{Usage}{
@@ -135,8 +135,8 @@ Get parent dataset name
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pull"></a>}}
-\if{latex}{\out{\hypertarget{method-pull}{}}}
+\if{html}{\out{<a id="method-CDISCTealDatasetConnector-pull"></a>}}
+\if{latex}{\out{\hypertarget{method-CDISCTealDatasetConnector-pull}{}}}
 \subsection{Method \code{pull()}}{
 Pull the data
 
@@ -165,8 +165,8 @@ whether perform function evaluation inside \code{try} clause}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CDISCTealDatasetConnector-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CDISCTealDatasetConnector-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

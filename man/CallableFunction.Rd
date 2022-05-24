@@ -14,27 +14,27 @@ Methods are then available to get the function call and evaluate it.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CallableFunction$new()}}
-\item \href{#method-get_args}{\code{CallableFunction$get_args()}}
-\item \href{#method-get_call}{\code{CallableFunction$get_call()}}
-\item \href{#method-set_args}{\code{CallableFunction$set_args()}}
-\item \href{#method-set_arg_value}{\code{CallableFunction$set_arg_value()}}
-\item \href{#method-clone}{\code{CallableFunction$clone()}}
+\item \href{#method-CallableFunction-new}{\code{CallableFunction$new()}}
+\item \href{#method-CallableFunction-get_args}{\code{CallableFunction$get_args()}}
+\item \href{#method-CallableFunction-get_call}{\code{CallableFunction$get_call()}}
+\item \href{#method-CallableFunction-set_args}{\code{CallableFunction$set_args()}}
+\item \href{#method-CallableFunction-set_arg_value}{\code{CallableFunction$set_arg_value()}}
+\item \href{#method-CallableFunction-clone}{\code{CallableFunction$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env">}\href{../../teal.data/html/Callable.html#method-assign_to_env}{\code{teal.data::Callable$assign_to_env()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message">}\href{../../teal.data/html/Callable.html#method-get_error_message}{\code{teal.data::Callable$get_error_message()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed">}\href{../../teal.data/html/Callable.html#method-is_failed}{\code{teal.data::Callable$is_failed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="run">}\href{../../teal.data/html/Callable.html#method-run}{\code{teal.data::Callable$run()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="run"><a href='../../teal.data/html/Callable.html#method-Callable-run'><code>teal.data::Callable$run()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CallableFunction-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{CallableFunction} object
 \subsection{Usage}{
@@ -58,8 +58,8 @@ new \code{CallableFunction} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_args"></a>}}
-\if{latex}{\out{\hypertarget{method-get_args}{}}}
+\if{html}{\out{<a id="method-CallableFunction-get_args"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-get_args}{}}}
 \subsection{Method \code{get_args()}}{
 get the arguments a function gets called with
 \subsection{Usage}{
@@ -71,8 +71,8 @@ arguments the function gets called with
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_call"></a>}}
-\if{latex}{\out{\hypertarget{method-get_call}{}}}
+\if{html}{\out{<a id="method-CallableFunction-get_call"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-get_call}{}}}
 \subsection{Method \code{get_call()}}{
 Get function call with substituted arguments in \code{args}.
 These arguments will not be stored in the object.
@@ -96,8 +96,8 @@ dynamic arguments to function}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_args"></a>}}
-\if{latex}{\out{\hypertarget{method-set_args}{}}}
+\if{html}{\out{<a id="method-CallableFunction-set_args"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-set_args}{}}}
 \subsection{Method \code{set_args()}}{
 Set up function arguments
 \subsection{Usage}{
@@ -119,8 +119,8 @@ To clean arguments specify \code{args = NULL}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_arg_value"></a>}}
-\if{latex}{\out{\hypertarget{method-set_arg_value}{}}}
+\if{html}{\out{<a id="method-CallableFunction-set_arg_value"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-set_arg_value}{}}}
 \subsection{Method \code{set_arg_value()}}{
 Set up single function argument with value
 \subsection{Usage}{
@@ -141,8 +141,8 @@ Set up single function argument with value
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CallableFunction-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CallableFunction-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
