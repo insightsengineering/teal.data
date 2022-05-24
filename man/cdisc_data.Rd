@@ -33,7 +33,9 @@ This function checks if there were keys added to all data sets
 \note{
 This function does not automatically assign keys to \code{TealDataset}
 and \code{TealDatasetConnector} objects passed to it. If the keys are needed
-they should be assigned before calling \code{cdisc_data}. See example:\preformatted{}
+they should be assigned before calling \code{cdisc_data}. See example:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{}\if{html}{\out{</div>}}
 }
 \examples{
 library(scda)

@@ -17,30 +17,30 @@ Abstract class containing code for handling set of datasets.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TealDataAbstract$new()}}
-\item \href{#method-check}{\code{TealDataAbstract$check()}}
-\item \href{#method-check_reproducibility}{\code{TealDataAbstract$check_reproducibility()}}
-\item \href{#method-execute_mutate}{\code{TealDataAbstract$execute_mutate()}}
-\item \href{#method-get_check_result}{\code{TealDataAbstract$get_check_result()}}
-\item \href{#method-get_code}{\code{TealDataAbstract$get_code()}}
-\item \href{#method-get_code_class}{\code{TealDataAbstract$get_code_class()}}
-\item \href{#method-get_datanames}{\code{TealDataAbstract$get_datanames()}}
-\item \href{#method-get_dataset}{\code{TealDataAbstract$get_dataset()}}
-\item \href{#method-get_datasets}{\code{TealDataAbstract$get_datasets()}}
-\item \href{#method-get_items}{\code{TealDataAbstract$get_items()}}
-\item \href{#method-get_check}{\code{TealDataAbstract$get_check()}}
-\item \href{#method-is_pulled}{\code{TealDataAbstract$is_pulled()}}
-\item \href{#method-mutate}{\code{TealDataAbstract$mutate()}}
-\item \href{#method-mutate_dataset}{\code{TealDataAbstract$mutate_dataset()}}
-\item \href{#method-set_check}{\code{TealDataAbstract$set_check()}}
-\item \href{#method-set_pull_code}{\code{TealDataAbstract$set_pull_code()}}
-\item \href{#method-reassign_datasets_vars}{\code{TealDataAbstract$reassign_datasets_vars()}}
-\item \href{#method-clone}{\code{TealDataAbstract$clone()}}
+\item \href{#method-TealDataAbstract-new}{\code{TealDataAbstract$new()}}
+\item \href{#method-TealDataAbstract-check}{\code{TealDataAbstract$check()}}
+\item \href{#method-TealDataAbstract-check_reproducibility}{\code{TealDataAbstract$check_reproducibility()}}
+\item \href{#method-TealDataAbstract-execute_mutate}{\code{TealDataAbstract$execute_mutate()}}
+\item \href{#method-TealDataAbstract-get_check_result}{\code{TealDataAbstract$get_check_result()}}
+\item \href{#method-TealDataAbstract-get_code}{\code{TealDataAbstract$get_code()}}
+\item \href{#method-TealDataAbstract-get_code_class}{\code{TealDataAbstract$get_code_class()}}
+\item \href{#method-TealDataAbstract-get_datanames}{\code{TealDataAbstract$get_datanames()}}
+\item \href{#method-TealDataAbstract-get_dataset}{\code{TealDataAbstract$get_dataset()}}
+\item \href{#method-TealDataAbstract-get_datasets}{\code{TealDataAbstract$get_datasets()}}
+\item \href{#method-TealDataAbstract-get_items}{\code{TealDataAbstract$get_items()}}
+\item \href{#method-TealDataAbstract-get_check}{\code{TealDataAbstract$get_check()}}
+\item \href{#method-TealDataAbstract-is_pulled}{\code{TealDataAbstract$is_pulled()}}
+\item \href{#method-TealDataAbstract-mutate}{\code{TealDataAbstract$mutate()}}
+\item \href{#method-TealDataAbstract-mutate_dataset}{\code{TealDataAbstract$mutate_dataset()}}
+\item \href{#method-TealDataAbstract-set_check}{\code{TealDataAbstract$set_check()}}
+\item \href{#method-TealDataAbstract-set_pull_code}{\code{TealDataAbstract$set_pull_code()}}
+\item \href{#method-TealDataAbstract-reassign_datasets_vars}{\code{TealDataAbstract$reassign_datasets_vars()}}
+\item \href{#method-TealDataAbstract-clone}{\code{TealDataAbstract$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-new}{}}}
 \subsection{Method \code{new()}}{
 Cannot create a \code{TealDataAbstract} object
 \subsection{Usage}{
@@ -52,8 +52,8 @@ throws error
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check"></a>}}
-\if{latex}{\out{\hypertarget{method-check}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-check"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-check}{}}}
 \subsection{Method \code{check()}}{
 Check if the object raw data is reproducible from the \code{get_code()} code.
 \subsection{Usage}{
@@ -67,8 +67,8 @@ Check if the object raw data is reproducible from the \code{get_code()} code.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check_reproducibility"></a>}}
-\if{latex}{\out{\hypertarget{method-check_reproducibility}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-check_reproducibility"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-check_reproducibility}{}}}
 \subsection{Method \code{check_reproducibility()}}{
 Execute \code{check()} and raise an error if it's not reproducible.
 \subsection{Usage}{
@@ -80,8 +80,8 @@ error if code is not reproducible else invisibly nothing
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-execute_mutate"></a>}}
-\if{latex}{\out{\hypertarget{method-execute_mutate}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-execute_mutate"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-execute_mutate}{}}}
 \subsection{Method \code{execute_mutate()}}{
 Execute mutate code. Using \verb{mutate_data(set).TealDataAbstract}
 does not cause instant execution, the \code{mutate_code} is
@@ -92,8 +92,8 @@ delayed and can be evaluated using this method.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_check_result"></a>}}
-\if{latex}{\out{\hypertarget{method-get_check_result}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_check_result"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_check_result}{}}}
 \subsection{Method \code{get_check_result()}}{
 Get result of reproducibility check
 \subsection{Usage}{
@@ -105,8 +105,8 @@ Get result of reproducibility check
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_code"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_code}{}}}
 \subsection{Method \code{get_code()}}{
 Get code for all datasets.
 \subsection{Usage}{
@@ -127,8 +127,8 @@ Get code for all datasets.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code_class"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code_class}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_code_class"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_code_class}{}}}
 \subsection{Method \code{get_code_class()}}{
 Get internal \code{CodeClass} object
 \subsection{Usage}{
@@ -148,8 +148,8 @@ if \code{TRUE} only code to pull datasets will be returned without the mutate co
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_datanames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_datanames}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_datanames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_datanames}{}}}
 \subsection{Method \code{get_datanames()}}{
 Get names of the datasets.
 \subsection{Usage}{
@@ -161,8 +161,8 @@ Get names of the datasets.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataset"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataset}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_dataset"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_dataset}{}}}
 \subsection{Method \code{get_dataset()}}{
 Get \code{TealDataset} object.
 \subsection{Usage}{
@@ -182,8 +182,8 @@ name of dataset to be returned. If \code{NULL}, all datasets are returned.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_datasets"></a>}}
-\if{latex}{\out{\hypertarget{method-get_datasets}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_datasets"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_datasets}{}}}
 \subsection{Method \code{get_datasets()}}{
 Get \code{list} of \code{TealDataset} objects.
 \subsection{Usage}{
@@ -195,8 +195,8 @@ Get \code{list} of \code{TealDataset} objects.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_items"></a>}}
-\if{latex}{\out{\hypertarget{method-get_items}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_items"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_items}{}}}
 \subsection{Method \code{get_items()}}{
 Get all datasets and all dataset connectors
 \subsection{Usage}{
@@ -216,8 +216,8 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_check"></a>}}
-\if{latex}{\out{\hypertarget{method-get_check}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-get_check"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-get_check}{}}}
 \subsection{Method \code{get_check()}}{
 Has this data been or will this data be subjected to a reproducibility check
 \subsection{Usage}{
@@ -229,8 +229,8 @@ Has this data been or will this data be subjected to a reproducibility check
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_pulled"></a>}}
-\if{latex}{\out{\hypertarget{method-is_pulled}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-is_pulled"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-is_pulled}{}}}
 \subsection{Method \code{is_pulled()}}{
 Check if dataset has already been pulled.
 \subsection{Usage}{
@@ -242,8 +242,8 @@ Check if dataset has already been pulled.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-mutate"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-mutate}{}}}
 \subsection{Method \code{mutate()}}{
 Mutate data by code. Code used in this mutation is not linked to particular
 but refers to all datasets.
@@ -280,8 +280,8 @@ self invisibly for chaining
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate_dataset"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate_dataset}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-mutate_dataset"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-mutate_dataset}{}}}
 \subsection{Method \code{mutate_dataset()}}{
 Mutate dataset by code.
 Execution of \code{mutate_code} is delayed after datasets are pulled
@@ -315,8 +315,8 @@ self invisibly for chaining
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_check"></a>}}
-\if{latex}{\out{\hypertarget{method-set_check}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-set_check"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-set_check}{}}}
 \subsection{Method \code{set_check()}}{
 Set reproducibility check
 \subsection{Usage}{
@@ -335,8 +335,8 @@ Set reproducibility check
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_pull_code"></a>}}
-\if{latex}{\out{\hypertarget{method-set_pull_code}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-set_pull_code"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-set_pull_code}{}}}
 \subsection{Method \code{set_pull_code()}}{
 Set pull code
 \subsection{Usage}{
@@ -357,8 +357,8 @@ has \code{code} set already.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reassign_datasets_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-reassign_datasets_vars}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-reassign_datasets_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-reassign_datasets_vars}{}}}
 \subsection{Method \code{reassign_datasets_vars()}}{
 Reassign \code{vars} in \code{TealDataset} and \code{TealDatasetConnector} objects
 to keep the valid reference after deep cloning
@@ -370,8 +370,8 @@ For example if \code{TealDatasetConnector} has a dependency on some \code{TealDa
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TealDataAbstract-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataAbstract-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

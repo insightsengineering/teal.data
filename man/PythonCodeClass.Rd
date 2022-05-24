@@ -12,23 +12,23 @@
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-eval}{\code{PythonCodeClass$eval()}}
-\item \href{#method-clone}{\code{PythonCodeClass$clone()}}
+\item \href{#method-PythonCodeClass-eval}{\code{PythonCodeClass$eval()}}
+\item \href{#method-PythonCodeClass-clone}{\code{PythonCodeClass$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="append">}\href{../../teal.data/html/CodeClass.html#method-append}{\code{teal.data::CodeClass$append()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="get_code">}\href{../../teal.data/html/CodeClass.html#method-get_code}{\code{teal.data::CodeClass$get_code()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="initialize">}\href{../../teal.data/html/CodeClass.html#method-initialize}{\code{teal.data::CodeClass$initialize()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="set_code">}\href{../../teal.data/html/CodeClass.html#method-set_code}{\code{teal.data::CodeClass$set_code()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="append"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-append'><code>teal.data::CodeClass$append()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="get_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-get_code'><code>teal.data::CodeClass$get_code()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="initialize"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-initialize'><code>teal.data::CodeClass$initialize()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="set_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-set_code'><code>teal.data::CodeClass$set_code()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-eval"></a>}}
-\if{latex}{\out{\hypertarget{method-eval}{}}}
+\if{html}{\out{<a id="method-PythonCodeClass-eval"></a>}}
+\if{latex}{\out{\hypertarget{method-PythonCodeClass-eval}{}}}
 \subsection{Method \code{eval()}}{
 Evaluates internal code within environment
 \subsection{Usage}{
@@ -55,8 +55,8 @@ Evaluates internal code within environment
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-PythonCodeClass-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-PythonCodeClass-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -37,59 +37,59 @@ test_dataset$reassign_datasets_vars(
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{MAETealDataset$new()}}
-\item \href{#method-check}{\code{MAETealDataset$check()}}
-\item \href{#method-check_keys}{\code{MAETealDataset$check_keys()}}
-\item \href{#method-get_colnames}{\code{MAETealDataset$get_colnames()}}
-\item \href{#method-get_column_labels}{\code{MAETealDataset$get_column_labels()}}
-\item \href{#method-get_ncol}{\code{MAETealDataset$get_ncol()}}
-\item \href{#method-get_nrow}{\code{MAETealDataset$get_nrow()}}
-\item \href{#method-get_rownames}{\code{MAETealDataset$get_rownames()}}
-\item \href{#method-print}{\code{MAETealDataset$print()}}
-\item \href{#method-clone}{\code{MAETealDataset$clone()}}
+\item \href{#method-MAETealDataset-new}{\code{MAETealDataset$new()}}
+\item \href{#method-MAETealDataset-check}{\code{MAETealDataset$check()}}
+\item \href{#method-MAETealDataset-check_keys}{\code{MAETealDataset$check_keys()}}
+\item \href{#method-MAETealDataset-get_colnames}{\code{MAETealDataset$get_colnames()}}
+\item \href{#method-MAETealDataset-get_column_labels}{\code{MAETealDataset$get_column_labels()}}
+\item \href{#method-MAETealDataset-get_ncol}{\code{MAETealDataset$get_ncol()}}
+\item \href{#method-MAETealDataset-get_nrow}{\code{MAETealDataset$get_nrow()}}
+\item \href{#method-MAETealDataset-get_rownames}{\code{MAETealDataset$get_rownames()}}
+\item \href{#method-MAETealDataset-print}{\code{MAETealDataset$print()}}
+\item \href{#method-MAETealDataset-clone}{\code{MAETealDataset$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_attrs">}\href{../../teal.data/html/TealDataset.html#method-get_attrs}{\code{teal.data::TealDataset$get_attrs()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_character_colnames">}\href{../../teal.data/html/TealDataset.html#method-get_character_colnames}{\code{teal.data::TealDataset$get_character_colnames()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code">}\href{../../teal.data/html/TealDataset.html#method-get_code}{\code{teal.data::TealDataset$get_code()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code_class">}\href{../../teal.data/html/TealDataset.html#method-get_code_class}{\code{teal.data::TealDataset$get_code_class()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataname">}\href{../../teal.data/html/TealDataset.html#method-get_dataname}{\code{teal.data::TealDataset$get_dataname()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_datanames">}\href{../../teal.data/html/TealDataset.html#method-get_datanames}{\code{teal.data::TealDataset$get_datanames()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset">}\href{../../teal.data/html/TealDataset.html#method-get_dataset}{\code{teal.data::TealDataset$get_dataset()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset_label">}\href{../../teal.data/html/TealDataset.html#method-get_dataset_label}{\code{teal.data::TealDataset$get_dataset_label()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_factor_colnames">}\href{../../teal.data/html/TealDataset.html#method-get_factor_colnames}{\code{teal.data::TealDataset$get_factor_colnames()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_hash">}\href{../../teal.data/html/TealDataset.html#method-get_hash}{\code{teal.data::TealDataset$get_hash()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_join_keys">}\href{../../teal.data/html/TealDataset.html#method-get_join_keys}{\code{teal.data::TealDataset$get_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_keys">}\href{../../teal.data/html/TealDataset.html#method-get_keys}{\code{teal.data::TealDataset$get_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_metadata">}\href{../../teal.data/html/TealDataset.html#method-get_metadata}{\code{teal.data::TealDataset$get_metadata()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_code_class">}\href{../../teal.data/html/TealDataset.html#method-get_mutate_code_class}{\code{teal.data::TealDataset$get_mutate_code_class()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_vars">}\href{../../teal.data/html/TealDataset.html#method-get_mutate_vars}{\code{teal.data::TealDataset$get_mutate_vars()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_numeric_colnames">}\href{../../teal.data/html/TealDataset.html#method-get_numeric_colnames}{\code{teal.data::TealDataset$get_numeric_colnames()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_raw_data">}\href{../../teal.data/html/TealDataset.html#method-get_raw_data}{\code{teal.data::TealDataset$get_raw_data()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_row_labels">}\href{../../teal.data/html/TealDataset.html#method-get_row_labels}{\code{teal.data::TealDataset$get_row_labels()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_var_r6">}\href{../../teal.data/html/TealDataset.html#method-get_var_r6}{\code{teal.data::TealDataset$get_var_r6()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_vars">}\href{../../teal.data/html/TealDataset.html#method-get_vars}{\code{teal.data::TealDataset$get_vars()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_mutate_delayed">}\href{../../teal.data/html/TealDataset.html#method-is_mutate_delayed}{\code{teal.data::TealDataset$is_mutate_delayed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_pulled">}\href{../../teal.data/html/TealDataset.html#method-is_pulled}{\code{teal.data::TealDataset$is_pulled()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="merge_join_keys">}\href{../../teal.data/html/TealDataset.html#method-merge_join_keys}{\code{teal.data::TealDataset$merge_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate">}\href{../../teal.data/html/TealDataset.html#method-mutate}{\code{teal.data::TealDataset$mutate()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate_join_keys">}\href{../../teal.data/html/TealDataset.html#method-mutate_join_keys}{\code{teal.data::TealDataset$mutate_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="reassign_datasets_vars">}\href{../../teal.data/html/TealDataset.html#method-reassign_datasets_vars}{\code{teal.data::TealDataset$reassign_datasets_vars()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="recreate">}\href{../../teal.data/html/TealDataset.html#method-recreate}{\code{teal.data::TealDataset$recreate()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_code">}\href{../../teal.data/html/TealDataset.html#method-set_code}{\code{teal.data::TealDataset$set_code()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_dataset_label">}\href{../../teal.data/html/TealDataset.html#method-set_dataset_label}{\code{teal.data::TealDataset$set_dataset_label()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_join_keys">}\href{../../teal.data/html/TealDataset.html#method-set_join_keys}{\code{teal.data::TealDataset$set_join_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_keys">}\href{../../teal.data/html/TealDataset.html#method-set_keys}{\code{teal.data::TealDataset$set_keys()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_vars">}\href{../../teal.data/html/TealDataset.html#method-set_vars}{\code{teal.data::TealDataset$set_vars()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_attrs"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_attrs'><code>teal.data::TealDataset$get_attrs()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_character_colnames"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_character_colnames'><code>teal.data::TealDataset$get_character_colnames()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_code'><code>teal.data::TealDataset$get_code()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_code_class"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_code_class'><code>teal.data::TealDataset$get_code_class()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataname"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_dataname'><code>teal.data::TealDataset$get_dataname()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_datanames"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_datanames'><code>teal.data::TealDataset$get_datanames()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_dataset'><code>teal.data::TealDataset$get_dataset()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset_label"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_dataset_label'><code>teal.data::TealDataset$get_dataset_label()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_factor_colnames"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_factor_colnames'><code>teal.data::TealDataset$get_factor_colnames()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_hash"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_hash'><code>teal.data::TealDataset$get_hash()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_join_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_join_keys'><code>teal.data::TealDataset$get_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_keys'><code>teal.data::TealDataset$get_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_metadata"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_metadata'><code>teal.data::TealDataset$get_metadata()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_code_class"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_mutate_code_class'><code>teal.data::TealDataset$get_mutate_code_class()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_mutate_vars"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_mutate_vars'><code>teal.data::TealDataset$get_mutate_vars()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_numeric_colnames"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_numeric_colnames'><code>teal.data::TealDataset$get_numeric_colnames()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_raw_data"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_raw_data'><code>teal.data::TealDataset$get_raw_data()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_row_labels"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_row_labels'><code>teal.data::TealDataset$get_row_labels()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_var_r6"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_var_r6'><code>teal.data::TealDataset$get_var_r6()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_vars"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_vars'><code>teal.data::TealDataset$get_vars()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_mutate_delayed"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-is_mutate_delayed'><code>teal.data::TealDataset$is_mutate_delayed()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="is_pulled"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-is_pulled'><code>teal.data::TealDataset$is_pulled()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="merge_join_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-merge_join_keys'><code>teal.data::TealDataset$merge_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-mutate'><code>teal.data::TealDataset$mutate()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="mutate_join_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-mutate_join_keys'><code>teal.data::TealDataset$mutate_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="reassign_datasets_vars"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-reassign_datasets_vars'><code>teal.data::TealDataset$reassign_datasets_vars()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="recreate"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-recreate'><code>teal.data::TealDataset$recreate()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_code"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-set_code'><code>teal.data::TealDataset$set_code()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_dataset_label"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-set_dataset_label'><code>teal.data::TealDataset$set_dataset_label()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_join_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-set_join_keys'><code>teal.data::TealDataset$set_join_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-set_keys'><code>teal.data::TealDataset$set_keys()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="set_vars"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-set_vars'><code>teal.data::TealDataset$set_vars()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-new"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new object of \code{MAETealDataset} class
 \subsection{Usage}{
@@ -141,8 +141,8 @@ should be atomic and length one.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check"></a>}}
-\if{latex}{\out{\hypertarget{method-check}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-check"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-check}{}}}
 \subsection{Method \code{check()}}{
 Check to determine if the raw data is reproducible from the \code{get_code()} code.
 \subsection{Usage}{
@@ -155,8 +155,8 @@ Check to determine if the raw data is reproducible from the \code{get_code()} co
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-check_keys}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-check_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-check_keys}{}}}
 \subsection{Method \code{check_keys()}}{
 Check if keys has been specified correctly for dataset. Set of \code{keys}
 should distinguish unique rows or be \code{character(0)}.
@@ -177,8 +177,8 @@ vector with primary keys}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_colnames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_colnames}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-get_colnames"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-get_colnames}{}}}
 \subsection{Method \code{get_colnames()}}{
 Derive the column names
 \subsection{Usage}{
@@ -190,8 +190,8 @@ Derive the column names
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_column_labels"></a>}}
-\if{latex}{\out{\hypertarget{method-get_column_labels}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-get_column_labels"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-get_column_labels}{}}}
 \subsection{Method \code{get_column_labels()}}{
 Derive the column labels
 \subsection{Usage}{
@@ -203,8 +203,8 @@ Derive the column labels
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_ncol"></a>}}
-\if{latex}{\out{\hypertarget{method-get_ncol}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-get_ncol"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-get_ncol}{}}}
 \subsection{Method \code{get_ncol()}}{
 Get the number of columns of the data
 \subsection{Usage}{
@@ -216,8 +216,8 @@ Get the number of columns of the data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_nrow"></a>}}
-\if{latex}{\out{\hypertarget{method-get_nrow}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-get_nrow"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-get_nrow}{}}}
 \subsection{Method \code{get_nrow()}}{
 Get the number of rows of the data
 \subsection{Usage}{
@@ -229,8 +229,8 @@ Get the number of rows of the data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_rownames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_rownames}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-get_rownames"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-get_rownames}{}}}
 \subsection{Method \code{get_rownames()}}{
 Derive the row names
 \subsection{Usage}{
@@ -242,8 +242,8 @@ Derive the row names
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-print"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-print}{}}}
 \subsection{Method \code{print()}}{
 Prints this \code{MAETealDataset}.
 \subsection{Usage}{
@@ -262,8 +262,8 @@ invisibly self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-MAETealDataset-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-MAETealDataset-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
@@ -293,53 +293,53 @@ The objects of this class are cloneable with this method.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TealDataset$new()}}
-\item \href{#method-recreate}{\code{TealDataset$recreate()}}
-\item \href{#method-print}{\code{TealDataset$print()}}
-\item \href{#method-get_dataset}{\code{TealDataset$get_dataset()}}
-\item \href{#method-get_attrs}{\code{TealDataset$get_attrs()}}
-\item \href{#method-get_raw_data}{\code{TealDataset$get_raw_data()}}
-\item \href{#method-get_numeric_colnames}{\code{TealDataset$get_numeric_colnames()}}
-\item \href{#method-get_character_colnames}{\code{TealDataset$get_character_colnames()}}
-\item \href{#method-get_factor_colnames}{\code{TealDataset$get_factor_colnames()}}
-\item \href{#method-get_colnames}{\code{TealDataset$get_colnames()}}
-\item \href{#method-get_column_labels}{\code{TealDataset$get_column_labels()}}
-\item \href{#method-get_ncol}{\code{TealDataset$get_ncol()}}
-\item \href{#method-get_nrow}{\code{TealDataset$get_nrow()}}
-\item \href{#method-get_rownames}{\code{TealDataset$get_rownames()}}
-\item \href{#method-get_row_labels}{\code{TealDataset$get_row_labels()}}
-\item \href{#method-get_dataname}{\code{TealDataset$get_dataname()}}
-\item \href{#method-get_datanames}{\code{TealDataset$get_datanames()}}
-\item \href{#method-get_dataset_label}{\code{TealDataset$get_dataset_label()}}
-\item \href{#method-get_keys}{\code{TealDataset$get_keys()}}
-\item \href{#method-get_metadata}{\code{TealDataset$get_metadata()}}
-\item \href{#method-get_join_keys}{\code{TealDataset$get_join_keys()}}
-\item \href{#method-get_hash}{\code{TealDataset$get_hash()}}
-\item \href{#method-get_var_r6}{\code{TealDataset$get_var_r6()}}
-\item \href{#method-reassign_datasets_vars}{\code{TealDataset$reassign_datasets_vars()}}
-\item \href{#method-set_dataset_label}{\code{TealDataset$set_dataset_label()}}
-\item \href{#method-set_keys}{\code{TealDataset$set_keys()}}
-\item \href{#method-set_join_keys}{\code{TealDataset$set_join_keys()}}
-\item \href{#method-merge_join_keys}{\code{TealDataset$merge_join_keys()}}
-\item \href{#method-mutate_join_keys}{\code{TealDataset$mutate_join_keys()}}
-\item \href{#method-set_vars}{\code{TealDataset$set_vars()}}
-\item \href{#method-set_code}{\code{TealDataset$set_code()}}
-\item \href{#method-get_code}{\code{TealDataset$get_code()}}
-\item \href{#method-get_code_class}{\code{TealDataset$get_code_class()}}
-\item \href{#method-get_mutate_code_class}{\code{TealDataset$get_mutate_code_class()}}
-\item \href{#method-get_vars}{\code{TealDataset$get_vars()}}
-\item \href{#method-get_mutate_vars}{\code{TealDataset$get_mutate_vars()}}
-\item \href{#method-is_mutate_delayed}{\code{TealDataset$is_mutate_delayed()}}
-\item \href{#method-mutate}{\code{TealDataset$mutate()}}
-\item \href{#method-check}{\code{TealDataset$check()}}
-\item \href{#method-check_keys}{\code{TealDataset$check_keys()}}
-\item \href{#method-is_pulled}{\code{TealDataset$is_pulled()}}
-\item \href{#method-clone}{\code{TealDataset$clone()}}
+\item \href{#method-TealDataset-new}{\code{TealDataset$new()}}
+\item \href{#method-TealDataset-recreate}{\code{TealDataset$recreate()}}
+\item \href{#method-TealDataset-print}{\code{TealDataset$print()}}
+\item \href{#method-TealDataset-get_dataset}{\code{TealDataset$get_dataset()}}
+\item \href{#method-TealDataset-get_attrs}{\code{TealDataset$get_attrs()}}
+\item \href{#method-TealDataset-get_raw_data}{\code{TealDataset$get_raw_data()}}
+\item \href{#method-TealDataset-get_numeric_colnames}{\code{TealDataset$get_numeric_colnames()}}
+\item \href{#method-TealDataset-get_character_colnames}{\code{TealDataset$get_character_colnames()}}
+\item \href{#method-TealDataset-get_factor_colnames}{\code{TealDataset$get_factor_colnames()}}
+\item \href{#method-TealDataset-get_colnames}{\code{TealDataset$get_colnames()}}
+\item \href{#method-TealDataset-get_column_labels}{\code{TealDataset$get_column_labels()}}
+\item \href{#method-TealDataset-get_ncol}{\code{TealDataset$get_ncol()}}
+\item \href{#method-TealDataset-get_nrow}{\code{TealDataset$get_nrow()}}
+\item \href{#method-TealDataset-get_rownames}{\code{TealDataset$get_rownames()}}
+\item \href{#method-TealDataset-get_row_labels}{\code{TealDataset$get_row_labels()}}
+\item \href{#method-TealDataset-get_dataname}{\code{TealDataset$get_dataname()}}
+\item \href{#method-TealDataset-get_datanames}{\code{TealDataset$get_datanames()}}
+\item \href{#method-TealDataset-get_dataset_label}{\code{TealDataset$get_dataset_label()}}
+\item \href{#method-TealDataset-get_keys}{\code{TealDataset$get_keys()}}
+\item \href{#method-TealDataset-get_metadata}{\code{TealDataset$get_metadata()}}
+\item \href{#method-TealDataset-get_join_keys}{\code{TealDataset$get_join_keys()}}
+\item \href{#method-TealDataset-get_hash}{\code{TealDataset$get_hash()}}
+\item \href{#method-TealDataset-get_var_r6}{\code{TealDataset$get_var_r6()}}
+\item \href{#method-TealDataset-reassign_datasets_vars}{\code{TealDataset$reassign_datasets_vars()}}
+\item \href{#method-TealDataset-set_dataset_label}{\code{TealDataset$set_dataset_label()}}
+\item \href{#method-TealDataset-set_keys}{\code{TealDataset$set_keys()}}
+\item \href{#method-TealDataset-set_join_keys}{\code{TealDataset$set_join_keys()}}
+\item \href{#method-TealDataset-merge_join_keys}{\code{TealDataset$merge_join_keys()}}
+\item \href{#method-TealDataset-mutate_join_keys}{\code{TealDataset$mutate_join_keys()}}
+\item \href{#method-TealDataset-set_vars}{\code{TealDataset$set_vars()}}
+\item \href{#method-TealDataset-set_code}{\code{TealDataset$set_code()}}
+\item \href{#method-TealDataset-get_code}{\code{TealDataset$get_code()}}
+\item \href{#method-TealDataset-get_code_class}{\code{TealDataset$get_code_class()}}
+\item \href{#method-TealDataset-get_mutate_code_class}{\code{TealDataset$get_mutate_code_class()}}
+\item \href{#method-TealDataset-get_vars}{\code{TealDataset$get_vars()}}
+\item \href{#method-TealDataset-get_mutate_vars}{\code{TealDataset$get_mutate_vars()}}
+\item \href{#method-TealDataset-is_mutate_delayed}{\code{TealDataset$is_mutate_delayed()}}
+\item \href{#method-TealDataset-mutate}{\code{TealDataset$mutate()}}
+\item \href{#method-TealDataset-check}{\code{TealDataset$check()}}
+\item \href{#method-TealDataset-check_keys}{\code{TealDataset$check_keys()}}
+\item \href{#method-TealDataset-is_pulled}{\code{TealDataset$is_pulled()}}
+\item \href{#method-TealDataset-clone}{\code{TealDataset$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TealDataset-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new object of \code{TealDataset} class
 \subsection{Usage}{
@@ -391,8 +391,8 @@ should be atomic and length one.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-recreate"></a>}}
-\if{latex}{\out{\hypertarget{method-recreate}{}}}
+\if{html}{\out{<a id="method-TealDataset-recreate"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-recreate}{}}}
 \subsection{Method \code{recreate()}}{
 Recreate this \code{TealDataset} with its current attributes.
 \subsection{Usage}{
@@ -447,8 +447,8 @@ a new object of the \code{TealDataset} class
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-TealDataset-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-print}{}}}
 \subsection{Method \code{print()}}{
 Prints this \code{TealDataset}.
 \subsection{Usage}{
@@ -467,8 +467,8 @@ invisibly self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataset"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataset}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_dataset"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_dataset}{}}}
 \subsection{Method \code{get_dataset()}}{
 Performs any delayed mutate calls before returning self.
 \subsection{Usage}{
@@ -480,8 +480,8 @@ dataset (\code{TealDataset})
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_attrs"></a>}}
-\if{latex}{\out{\hypertarget{method-get_attrs}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_attrs"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_attrs}{}}}
 \subsection{Method \code{get_attrs()}}{
 Get all dataset attributes
 \subsection{Usage}{
@@ -493,8 +493,8 @@ Get all dataset attributes
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_raw_data"></a>}}
-\if{latex}{\out{\hypertarget{method-get_raw_data}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_raw_data"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_raw_data}{}}}
 \subsection{Method \code{get_raw_data()}}{
 Derive the raw data frame inside this object
 \subsection{Usage}{
@@ -506,8 +506,8 @@ Derive the raw data frame inside this object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_numeric_colnames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_numeric_colnames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_numeric_colnames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_numeric_colnames}{}}}
 \subsection{Method \code{get_numeric_colnames()}}{
 Derive the names of all \code{numeric} columns
 \subsection{Usage}{
@@ -519,8 +519,8 @@ Derive the names of all \code{numeric} columns
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_character_colnames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_character_colnames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_character_colnames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_character_colnames}{}}}
 \subsection{Method \code{get_character_colnames()}}{
 Derive the names of all \code{character} columns
 \subsection{Usage}{
@@ -532,8 +532,8 @@ Derive the names of all \code{character} columns
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_factor_colnames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_factor_colnames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_factor_colnames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_factor_colnames}{}}}
 \subsection{Method \code{get_factor_colnames()}}{
 Derive the names of all \code{factor} columns
 \subsection{Usage}{
@@ -545,8 +545,8 @@ Derive the names of all \code{factor} columns
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_colnames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_colnames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_colnames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_colnames}{}}}
 \subsection{Method \code{get_colnames()}}{
 Derive the column names
 \subsection{Usage}{
@@ -558,8 +558,8 @@ Derive the column names
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_column_labels"></a>}}
-\if{latex}{\out{\hypertarget{method-get_column_labels}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_column_labels"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_column_labels}{}}}
 \subsection{Method \code{get_column_labels()}}{
 Derive the column labels
 \subsection{Usage}{
@@ -571,8 +571,8 @@ Derive the column labels
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_ncol"></a>}}
-\if{latex}{\out{\hypertarget{method-get_ncol}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_ncol"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_ncol}{}}}
 \subsection{Method \code{get_ncol()}}{
 Get the number of columns of the data
 \subsection{Usage}{
@@ -584,8 +584,8 @@ Get the number of columns of the data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_nrow"></a>}}
-\if{latex}{\out{\hypertarget{method-get_nrow}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_nrow"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_nrow}{}}}
 \subsection{Method \code{get_nrow()}}{
 Get the number of rows of the data
 \subsection{Usage}{
@@ -597,8 +597,8 @@ Get the number of rows of the data
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_rownames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_rownames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_rownames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_rownames}{}}}
 \subsection{Method \code{get_rownames()}}{
 Derive the row names
 \subsection{Usage}{
@@ -610,8 +610,8 @@ Derive the row names
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_row_labels"></a>}}
-\if{latex}{\out{\hypertarget{method-get_row_labels}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_row_labels"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_row_labels}{}}}
 \subsection{Method \code{get_row_labels()}}{
 Derive the row labels
 \subsection{Usage}{
@@ -623,8 +623,8 @@ Derive the row labels
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataname"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataname}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_dataname"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_dataname}{}}}
 \subsection{Method \code{get_dataname()}}{
 Derive the \code{name} which was formerly called \code{dataname}
 \subsection{Usage}{
@@ -636,8 +636,8 @@ Derive the \code{name} which was formerly called \code{dataname}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_datanames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_datanames}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_datanames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_datanames}{}}}
 \subsection{Method \code{get_datanames()}}{
 Derive the dataname
 \subsection{Usage}{
@@ -649,8 +649,8 @@ Derive the dataname
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataset_label"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataset_label}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_dataset_label"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_dataset_label}{}}}
 \subsection{Method \code{get_dataset_label()}}{
 Derive the \code{label} which was former called \code{datalabel}
 \subsection{Usage}{
@@ -662,8 +662,8 @@ Derive the \code{label} which was former called \code{datalabel}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-get_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_keys}{}}}
 \subsection{Method \code{get_keys()}}{
 Get primary keys of dataset
 \subsection{Usage}{
@@ -675,8 +675,8 @@ Get primary keys of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_metadata"></a>}}
-\if{latex}{\out{\hypertarget{method-get_metadata}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_metadata}{}}}
 \subsection{Method \code{get_metadata()}}{
 Get metadata of dataset
 \subsection{Usage}{
@@ -688,8 +688,8 @@ Get metadata of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-get_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_join_keys}{}}}
 \subsection{Method \code{get_join_keys()}}{
 Get \code{JoinKeys} object with keys used for joining.
 \subsection{Usage}{
@@ -701,8 +701,8 @@ Get \code{JoinKeys} object with keys used for joining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_hash"></a>}}
-\if{latex}{\out{\hypertarget{method-get_hash}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_hash"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_hash}{}}}
 \subsection{Method \code{get_hash()}}{
 Returns the string representation of the raw data hashed with the MD5 hash algorithm.
 \subsection{Usage}{
@@ -714,8 +714,8 @@ Returns the string representation of the raw data hashed with the MD5 hash algor
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_var_r6"></a>}}
-\if{latex}{\out{\hypertarget{method-get_var_r6}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_var_r6"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_var_r6}{}}}
 \subsection{Method \code{get_var_r6()}}{
 Get the list of dependencies that are \code{TealDataset} or \code{TealDatasetConnector} objects
 \subsection{Usage}{
@@ -727,8 +727,8 @@ Get the list of dependencies that are \code{TealDataset} or \code{TealDatasetCon
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reassign_datasets_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-reassign_datasets_vars}{}}}
+\if{html}{\out{<a id="method-TealDataset-reassign_datasets_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-reassign_datasets_vars}{}}}
 \subsection{Method \code{reassign_datasets_vars()}}{
 Overwrites \code{TealDataset} or \code{TealDatasetConnector} dependencies of this \code{TealDataset} with
 those found in \code{datasets}. Reassignment
@@ -773,8 +773,8 @@ test_dataset$reassign_datasets_vars(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_dataset_label"></a>}}
-\if{latex}{\out{\hypertarget{method-set_dataset_label}{}}}
+\if{html}{\out{<a id="method-TealDataset-set_dataset_label"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-set_dataset_label}{}}}
 \subsection{Method \code{set_dataset_label()}}{
 Set the label for the dataset
 \subsection{Usage}{
@@ -794,8 +794,8 @@ Label to describe the dataset}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-set_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-set_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-set_keys}{}}}
 \subsection{Method \code{set_keys()}}{
 Set new keys
 \subsection{Usage}{
@@ -815,8 +815,8 @@ Vector with primary keys}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-set_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-set_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-set_join_keys}{}}}
 \subsection{Method \code{set_join_keys()}}{
 set join_keys for a given dataset and object
 \subsection{Usage}{
@@ -836,8 +836,8 @@ or single \code{JoinKeySet} objects}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-merge_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-merge_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-merge_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-merge_join_keys}{}}}
 \subsection{Method \code{merge_join_keys()}}{
 merge input join key with join key inside of object
 \subsection{Usage}{
@@ -856,8 +856,8 @@ merge input join key with join key inside of object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-mutate_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-mutate_join_keys}{}}}
 \subsection{Method \code{mutate_join_keys()}}{
 mutate the join_keys for a given dataset and object
 \subsection{Usage}{
@@ -878,8 +878,8 @@ mutate the join_keys for a given dataset and object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-set_vars}{}}}
+\if{html}{\out{<a id="method-TealDataset-set_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-set_vars}{}}}
 \subsection{Method \code{set_vars()}}{
 Adds variables which code depends on
 \subsection{Usage}{
@@ -898,8 +898,8 @@ Adds variables which code depends on
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_code"></a>}}
-\if{latex}{\out{\hypertarget{method-set_code}{}}}
+\if{html}{\out{<a id="method-TealDataset-set_code"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-set_code}{}}}
 \subsection{Method \code{set_code()}}{
 Sets reproducible code
 \subsection{Usage}{
@@ -921,8 +921,8 @@ which is needed to preserve the code uniqueness and correct order.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_code"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_code}{}}}
 \subsection{Method \code{get_code()}}{
 Get code to get data
 \subsection{Usage}{
@@ -941,8 +941,8 @@ optionally deparsed \code{call} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code_class"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code_class}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_code_class"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_code_class}{}}}
 \subsection{Method \code{get_code_class()}}{
 Get internal \code{CodeClass} object
 \subsection{Usage}{
@@ -963,8 +963,8 @@ the \code{mutate}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_mutate_code_class"></a>}}
-\if{latex}{\out{\hypertarget{method-get_mutate_code_class}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_mutate_code_class"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_mutate_code_class}{}}}
 \subsection{Method \code{get_mutate_code_class()}}{
 Get internal \code{CodeClass} object
 \subsection{Usage}{
@@ -976,8 +976,8 @@ Get internal \code{CodeClass} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-get_vars}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_vars}{}}}
 \subsection{Method \code{get_vars()}}{
 Get internal \code{vars} object
 \subsection{Usage}{
@@ -989,8 +989,8 @@ Get internal \code{vars} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_mutate_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-get_mutate_vars}{}}}
+\if{html}{\out{<a id="method-TealDataset-get_mutate_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-get_mutate_vars}{}}}
 \subsection{Method \code{get_mutate_vars()}}{
 Get internal \code{mutate_vars} object
 \subsection{Usage}{
@@ -1002,8 +1002,8 @@ Get internal \code{mutate_vars} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_mutate_delayed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_mutate_delayed}{}}}
+\if{html}{\out{<a id="method-TealDataset-is_mutate_delayed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-is_mutate_delayed}{}}}
 \subsection{Method \code{is_mutate_delayed()}}{
 Whether mutate code has delayed evaluation.
 \subsection{Usage}{
@@ -1015,8 +1015,8 @@ Whether mutate code has delayed evaluation.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate}{}}}
+\if{html}{\out{<a id="method-TealDataset-mutate"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-mutate}{}}}
 \subsection{Method \code{mutate()}}{
 Mutate dataset by code
 \subsection{Usage}{
@@ -1041,8 +1041,8 @@ Either code or script must be provided, but not both.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check"></a>}}
-\if{latex}{\out{\hypertarget{method-check}{}}}
+\if{html}{\out{<a id="method-TealDataset-check"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-check}{}}}
 \subsection{Method \code{check()}}{
 Check to determine if the raw data is reproducible from the \code{get_code()} code.
 \subsection{Usage}{
@@ -1055,8 +1055,8 @@ Check to determine if the raw data is reproducible from the \code{get_code()} co
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-check_keys}{}}}
+\if{html}{\out{<a id="method-TealDataset-check_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-check_keys}{}}}
 \subsection{Method \code{check_keys()}}{
 Check if keys has been specified correctly for dataset. Set of \code{keys}
 should distinguish unique rows or be \code{character(0)}.
@@ -1077,8 +1077,8 @@ Vector with primary keys}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_pulled"></a>}}
-\if{latex}{\out{\hypertarget{method-is_pulled}{}}}
+\if{html}{\out{<a id="method-TealDataset-is_pulled"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-is_pulled}{}}}
 \subsection{Method \code{is_pulled()}}{
 Check if dataset has already been pulled.
 \subsection{Usage}{
@@ -1090,8 +1090,8 @@ Check if dataset has already been pulled.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TealDataset-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDataset-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

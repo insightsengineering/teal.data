@@ -15,28 +15,28 @@ A \code{CallablePythonCode} class of objects
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{CallablePythonCode$new()}}
-\item \href{#method-set_object}{\code{CallablePythonCode$set_object()}}
-\item \href{#method-run}{\code{CallablePythonCode$run()}}
-\item \href{#method-clone}{\code{CallablePythonCode$clone()}}
+\item \href{#method-CallablePythonCode-new}{\code{CallablePythonCode$new()}}
+\item \href{#method-CallablePythonCode-set_object}{\code{CallablePythonCode$set_object()}}
+\item \href{#method-CallablePythonCode-run}{\code{CallablePythonCode$run()}}
+\item \href{#method-CallablePythonCode-clone}{\code{CallablePythonCode$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env">}\href{../../teal.data/html/Callable.html#method-assign_to_env}{\code{teal.data::Callable$assign_to_env()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message">}\href{../../teal.data/html/Callable.html#method-get_error_message}{\code{teal.data::Callable$get_error_message()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed">}\href{../../teal.data/html/Callable.html#method-is_failed}{\code{teal.data::Callable$is_failed()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_args">}\href{../../teal.data/html/CallableFunction.html#method-get_args}{\code{teal.data::CallableFunction$get_args()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_call">}\href{../../teal.data/html/CallableFunction.html#method-get_call}{\code{teal.data::CallableFunction$get_call()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_arg_value">}\href{../../teal.data/html/CallableFunction.html#method-set_arg_value}{\code{teal.data::CallableFunction$set_arg_value()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_args">}\href{../../teal.data/html/CallableFunction.html#method-set_args}{\code{teal.data::CallableFunction$set_args()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_args'><code>teal.data::CallableFunction$get_args()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_call"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_call'><code>teal.data::CallableFunction$get_call()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_arg_value"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_arg_value'><code>teal.data::CallableFunction$set_arg_value()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_args'><code>teal.data::CallableFunction$set_args()</code></a></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-CallablePythonCode-new"></a>}}
+\if{latex}{\out{\hypertarget{method-CallablePythonCode-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{CallablePythonCode} object
 \subsection{Usage}{
@@ -59,8 +59,8 @@ new \code{CallablePythonCode} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_object"></a>}}
-\if{latex}{\out{\hypertarget{method-set_object}{}}}
+\if{html}{\out{<a id="method-CallablePythonCode-set_object"></a>}}
+\if{latex}{\out{\hypertarget{method-CallablePythonCode-set_object}{}}}
 \subsection{Method \code{set_object()}}{
 For scripts and code that contain multiple objects, save the name
 of the object that corresponds to the final dataset of interest.
@@ -82,8 +82,8 @@ or script.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
-\if{latex}{\out{\hypertarget{method-run}{}}}
+\if{html}{\out{<a id="method-CallablePythonCode-run"></a>}}
+\if{latex}{\out{\hypertarget{method-CallablePythonCode-run}{}}}
 \subsection{Method \code{run()}}{
 Execute \code{Callable} python code.
 \subsection{Usage}{
@@ -111,8 +111,8 @@ when \code{try = TRUE} or will stop if \code{try = FALSE}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-CallablePythonCode-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-CallablePythonCode-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -25,19 +25,19 @@ x$get("dataset_A", "dataset_B")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{JoinKeys$new()}}
-\item \href{#method-split}{\code{JoinKeys$split()}}
-\item \href{#method-merge}{\code{JoinKeys$merge()}}
-\item \href{#method-get}{\code{JoinKeys$get()}}
-\item \href{#method-mutate}{\code{JoinKeys$mutate()}}
-\item \href{#method-set}{\code{JoinKeys$set()}}
-\item \href{#method-print}{\code{JoinKeys$print()}}
-\item \href{#method-clone}{\code{JoinKeys$clone()}}
+\item \href{#method-JoinKeys-new}{\code{JoinKeys$new()}}
+\item \href{#method-JoinKeys-split}{\code{JoinKeys$split()}}
+\item \href{#method-JoinKeys-merge}{\code{JoinKeys$merge()}}
+\item \href{#method-JoinKeys-get}{\code{JoinKeys$get()}}
+\item \href{#method-JoinKeys-mutate}{\code{JoinKeys$mutate()}}
+\item \href{#method-JoinKeys-set}{\code{JoinKeys$set()}}
+\item \href{#method-JoinKeys-print}{\code{JoinKeys$print()}}
+\item \href{#method-JoinKeys-clone}{\code{JoinKeys$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-JoinKeys-new"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new object of \code{JoinKeys}
 \subsection{Usage}{
@@ -49,8 +49,8 @@ empty (\code{JoinKeys})
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-split"></a>}}
-\if{latex}{\out{\hypertarget{method-split}{}}}
+\if{html}{\out{<a id="method-JoinKeys-split"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-split}{}}}
 \subsection{Method \code{split()}}{
 Split the current \code{JoinKeys} object into a named list of join keys objects with an element for each dataset
 \subsection{Usage}{
@@ -62,8 +62,8 @@ Split the current \code{JoinKeys} object into a named list of join keys objects 
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-merge"></a>}}
-\if{latex}{\out{\hypertarget{method-merge}{}}}
+\if{html}{\out{<a id="method-JoinKeys-merge"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-merge}{}}}
 \subsection{Method \code{merge()}}{
 Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
 \subsection{Usage}{
@@ -82,8 +82,8 @@ Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKe
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get"></a>}}
-\if{latex}{\out{\hypertarget{method-get}{}}}
+\if{html}{\out{<a id="method-JoinKeys-get"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-get}{}}}
 \subsection{Method \code{get()}}{
 Get join keys between two datasets.
 \subsection{Usage}{
@@ -111,8 +111,8 @@ keys in \code{dataset_2} or \code{character(0)} if no relationship
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate}{}}}
+\if{html}{\out{<a id="method-JoinKeys-mutate"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-mutate}{}}}
 \subsection{Method \code{mutate()}}{
 Change join_keys for a given pair of dataset names (or
 add join_keys for given pair if it does not exist)
@@ -136,8 +136,8 @@ add join_keys for given pair if it does not exist)
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set"></a>}}
-\if{latex}{\out{\hypertarget{method-set}{}}}
+\if{html}{\out{<a id="method-JoinKeys-set"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-set}{}}}
 \subsection{Method \code{set()}}{
 Set up join keys basing on list of \code{JoinKeySet} objects.
 \subsection{Usage}{
@@ -162,8 +162,8 @@ to be specified once
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-JoinKeys-print"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-print}{}}}
 \subsection{Method \code{print()}}{
 Prints this \code{JoinKeys}.
 \subsection{Usage}{
@@ -182,8 +182,8 @@ invisibly self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-JoinKeys-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

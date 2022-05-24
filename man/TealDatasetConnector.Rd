@@ -47,43 +47,43 @@ ds$launch()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TealDatasetConnector$new()}}
-\item \href{#method-print}{\code{TealDatasetConnector$print()}}
-\item \href{#method-get_dataname}{\code{TealDatasetConnector$get_dataname()}}
-\item \href{#method-get_datanames}{\code{TealDatasetConnector$get_datanames()}}
-\item \href{#method-get_dataset_label}{\code{TealDatasetConnector$get_dataset_label()}}
-\item \href{#method-get_keys}{\code{TealDatasetConnector$get_keys()}}
-\item \href{#method-get_join_keys}{\code{TealDatasetConnector$get_join_keys()}}
-\item \href{#method-get_code}{\code{TealDatasetConnector$get_code()}}
-\item \href{#method-get_code_class}{\code{TealDatasetConnector$get_code_class()}}
-\item \href{#method-get_pull_args}{\code{TealDatasetConnector$get_pull_args()}}
-\item \href{#method-get_dataset}{\code{TealDatasetConnector$get_dataset()}}
-\item \href{#method-get_error_message}{\code{TealDatasetConnector$get_error_message()}}
-\item \href{#method-get_pull_callable}{\code{TealDatasetConnector$get_pull_callable()}}
-\item \href{#method-get_raw_data}{\code{TealDatasetConnector$get_raw_data()}}
-\item \href{#method-get_var_r6}{\code{TealDatasetConnector$get_var_r6()}}
-\item \href{#method-reassign_datasets_vars}{\code{TealDatasetConnector$reassign_datasets_vars()}}
-\item \href{#method-set_dataset_label}{\code{TealDatasetConnector$set_dataset_label()}}
-\item \href{#method-set_keys}{\code{TealDatasetConnector$set_keys()}}
-\item \href{#method-set_join_keys}{\code{TealDatasetConnector$set_join_keys()}}
-\item \href{#method-mutate_join_keys}{\code{TealDatasetConnector$mutate_join_keys()}}
-\item \href{#method-pull}{\code{TealDatasetConnector$pull()}}
-\item \href{#method-set_args}{\code{TealDatasetConnector$set_args()}}
-\item \href{#method-mutate}{\code{TealDatasetConnector$mutate()}}
-\item \href{#method-is_failed}{\code{TealDatasetConnector$is_failed()}}
-\item \href{#method-is_pulled}{\code{TealDatasetConnector$is_pulled()}}
-\item \href{#method-is_mutate_delayed}{\code{TealDatasetConnector$is_mutate_delayed()}}
-\item \href{#method-check}{\code{TealDatasetConnector$check()}}
-\item \href{#method-set_ui_input}{\code{TealDatasetConnector$set_ui_input()}}
-\item \href{#method-get_ui}{\code{TealDatasetConnector$get_ui()}}
-\item \href{#method-get_server}{\code{TealDatasetConnector$get_server()}}
-\item \href{#method-launch}{\code{TealDatasetConnector$launch()}}
-\item \href{#method-clone}{\code{TealDatasetConnector$clone()}}
+\item \href{#method-TealDatasetConnector-new}{\code{TealDatasetConnector$new()}}
+\item \href{#method-TealDatasetConnector-print}{\code{TealDatasetConnector$print()}}
+\item \href{#method-TealDatasetConnector-get_dataname}{\code{TealDatasetConnector$get_dataname()}}
+\item \href{#method-TealDatasetConnector-get_datanames}{\code{TealDatasetConnector$get_datanames()}}
+\item \href{#method-TealDatasetConnector-get_dataset_label}{\code{TealDatasetConnector$get_dataset_label()}}
+\item \href{#method-TealDatasetConnector-get_keys}{\code{TealDatasetConnector$get_keys()}}
+\item \href{#method-TealDatasetConnector-get_join_keys}{\code{TealDatasetConnector$get_join_keys()}}
+\item \href{#method-TealDatasetConnector-get_code}{\code{TealDatasetConnector$get_code()}}
+\item \href{#method-TealDatasetConnector-get_code_class}{\code{TealDatasetConnector$get_code_class()}}
+\item \href{#method-TealDatasetConnector-get_pull_args}{\code{TealDatasetConnector$get_pull_args()}}
+\item \href{#method-TealDatasetConnector-get_dataset}{\code{TealDatasetConnector$get_dataset()}}
+\item \href{#method-TealDatasetConnector-get_error_message}{\code{TealDatasetConnector$get_error_message()}}
+\item \href{#method-TealDatasetConnector-get_pull_callable}{\code{TealDatasetConnector$get_pull_callable()}}
+\item \href{#method-TealDatasetConnector-get_raw_data}{\code{TealDatasetConnector$get_raw_data()}}
+\item \href{#method-TealDatasetConnector-get_var_r6}{\code{TealDatasetConnector$get_var_r6()}}
+\item \href{#method-TealDatasetConnector-reassign_datasets_vars}{\code{TealDatasetConnector$reassign_datasets_vars()}}
+\item \href{#method-TealDatasetConnector-set_dataset_label}{\code{TealDatasetConnector$set_dataset_label()}}
+\item \href{#method-TealDatasetConnector-set_keys}{\code{TealDatasetConnector$set_keys()}}
+\item \href{#method-TealDatasetConnector-set_join_keys}{\code{TealDatasetConnector$set_join_keys()}}
+\item \href{#method-TealDatasetConnector-mutate_join_keys}{\code{TealDatasetConnector$mutate_join_keys()}}
+\item \href{#method-TealDatasetConnector-pull}{\code{TealDatasetConnector$pull()}}
+\item \href{#method-TealDatasetConnector-set_args}{\code{TealDatasetConnector$set_args()}}
+\item \href{#method-TealDatasetConnector-mutate}{\code{TealDatasetConnector$mutate()}}
+\item \href{#method-TealDatasetConnector-is_failed}{\code{TealDatasetConnector$is_failed()}}
+\item \href{#method-TealDatasetConnector-is_pulled}{\code{TealDatasetConnector$is_pulled()}}
+\item \href{#method-TealDatasetConnector-is_mutate_delayed}{\code{TealDatasetConnector$is_mutate_delayed()}}
+\item \href{#method-TealDatasetConnector-check}{\code{TealDatasetConnector$check()}}
+\item \href{#method-TealDatasetConnector-set_ui_input}{\code{TealDatasetConnector$set_ui_input()}}
+\item \href{#method-TealDatasetConnector-get_ui}{\code{TealDatasetConnector$get_ui()}}
+\item \href{#method-TealDatasetConnector-get_server}{\code{TealDatasetConnector$get_server()}}
+\item \href{#method-TealDatasetConnector-launch}{\code{TealDatasetConnector$launch()}}
+\item \href{#method-TealDatasetConnector-clone}{\code{TealDatasetConnector$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{TealDatasetConnector} object. Set the pulling function
 \code{CallableFunction} which returns a \code{data.frame} or \code{MultiAssayExperiment},
@@ -141,8 +141,8 @@ converted to a list with \code{as.list}.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-print"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-print}{}}}
 \subsection{Method \code{print()}}{
 Prints this \code{TealDatasetConnector}.
 \subsection{Usage}{
@@ -161,8 +161,8 @@ invisibly self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataname"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataname}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_dataname"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_dataname}{}}}
 \subsection{Method \code{get_dataname()}}{
 Get dataname of dataset
 \subsection{Usage}{
@@ -174,8 +174,8 @@ dataname of the dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_datanames"></a>}}
-\if{latex}{\out{\hypertarget{method-get_datanames}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_datanames"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_datanames}{}}}
 \subsection{Method \code{get_datanames()}}{
 Get dataname of dataset
 \subsection{Usage}{
@@ -187,8 +187,8 @@ Get dataname of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataset_label"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataset_label}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_dataset_label"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_dataset_label}{}}}
 \subsection{Method \code{get_dataset_label()}}{
 Get label of dataset
 \subsection{Usage}{
@@ -200,8 +200,8 @@ Get label of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-get_keys}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_keys}{}}}
 \subsection{Method \code{get_keys()}}{
 Get primary keys of dataset
 \subsection{Usage}{
@@ -213,8 +213,8 @@ Get primary keys of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-get_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_join_keys}{}}}
 \subsection{Method \code{get_join_keys()}}{
 Get \code{JoinKeys} object with keys used for joining.
 \subsection{Usage}{
@@ -226,8 +226,8 @@ Get \code{JoinKeys} object with keys used for joining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_code"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_code}{}}}
 \subsection{Method \code{get_code()}}{
 Get code to get data
 \subsection{Usage}{
@@ -247,8 +247,8 @@ optionally deparsed \code{call} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_code_class"></a>}}
-\if{latex}{\out{\hypertarget{method-get_code_class}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_code_class"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_code_class}{}}}
 \subsection{Method \code{get_code_class()}}{
 Get internal \code{CodeClass} object
 \subsection{Usage}{
@@ -260,8 +260,8 @@ Get internal \code{CodeClass} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_pull_args"></a>}}
-\if{latex}{\out{\hypertarget{method-get_pull_args}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_pull_args"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_pull_args}{}}}
 \subsection{Method \code{get_pull_args()}}{
 Derive the arguments this connector will pull with
 \subsection{Usage}{
@@ -273,8 +273,8 @@ Derive the arguments this connector will pull with
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_dataset"></a>}}
-\if{latex}{\out{\hypertarget{method-get_dataset}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_dataset"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_dataset}{}}}
 \subsection{Method \code{get_dataset()}}{
 Get dataset
 \subsection{Usage}{
@@ -286,8 +286,8 @@ dataset (\code{TealDataset})
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_error_message"></a>}}
-\if{latex}{\out{\hypertarget{method-get_error_message}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_error_message"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_error_message}{}}}
 \subsection{Method \code{get_error_message()}}{
 Get error message from last pull
 \subsection{Usage}{
@@ -300,8 +300,8 @@ pull was successful.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_pull_callable"></a>}}
-\if{latex}{\out{\hypertarget{method-get_pull_callable}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_pull_callable"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_pull_callable}{}}}
 \subsection{Method \code{get_pull_callable()}}{
 Get pull function
 \subsection{Usage}{
@@ -313,8 +313,8 @@ Get pull function
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_raw_data"></a>}}
-\if{latex}{\out{\hypertarget{method-get_raw_data}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_raw_data"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_raw_data}{}}}
 \subsection{Method \code{get_raw_data()}}{
 Get raw data from dataset
 \subsection{Usage}{
@@ -326,8 +326,8 @@ Get raw data from dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_var_r6"></a>}}
-\if{latex}{\out{\hypertarget{method-get_var_r6}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_var_r6"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_var_r6}{}}}
 \subsection{Method \code{get_var_r6()}}{
 Get the list of dependencies that are \code{TealDataset} or \code{TealDatasetConnector} objects
 \subsection{Usage}{
@@ -339,8 +339,8 @@ Get the list of dependencies that are \code{TealDataset} or \code{TealDatasetCon
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-reassign_datasets_vars"></a>}}
-\if{latex}{\out{\hypertarget{method-reassign_datasets_vars}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-reassign_datasets_vars"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-reassign_datasets_vars}{}}}
 \subsection{Method \code{reassign_datasets_vars()}}{
 Reassign \code{vars} in this object to keep references up to date after deep clone.
 Update is done based on the objects passed in \code{datasets} argument. Reassignment
@@ -362,8 +362,8 @@ NULL invisible
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_dataset_label"></a>}}
-\if{latex}{\out{\hypertarget{method-set_dataset_label}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-set_dataset_label"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_dataset_label}{}}}
 \subsection{Method \code{set_dataset_label()}}{
 Set label of the \code{dataset} object
 \subsection{Usage}{
@@ -383,8 +383,8 @@ Label to describe the dataset.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-set_keys}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-set_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_keys}{}}}
 \subsection{Method \code{set_keys()}}{
 Set new keys
 \subsection{Usage}{
@@ -404,8 +404,8 @@ vector of dataset primary keys column names}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-set_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-set_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_join_keys}{}}}
 \subsection{Method \code{set_join_keys()}}{
 set join_keys for a given dataset and self
 \subsection{Usage}{
@@ -425,8 +425,8 @@ or single \code{JoinKeySet} objects}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate_join_keys}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-mutate_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-mutate_join_keys}{}}}
 \subsection{Method \code{mutate_join_keys()}}{
 mutate the join_keys for a given dataset and self
 \subsection{Usage}{
@@ -447,8 +447,8 @@ mutate the join_keys for a given dataset and self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-pull"></a>}}
-\if{latex}{\out{\hypertarget{method-pull}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-pull"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-pull}{}}}
 \subsection{Method \code{pull()}}{
 Pull the data (and metadata if it is a \code{Callable})
 
@@ -477,8 +477,8 @@ whether perform function evaluation inside \code{try} clause}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_args"></a>}}
-\if{latex}{\out{\hypertarget{method-set_args}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-set_args"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_args}{}}}
 \subsection{Method \code{set_args()}}{
 Set arguments to the pulling function
 \subsection{Usage}{
@@ -497,8 +497,8 @@ Set arguments to the pulling function
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-mutate"></a>}}
-\if{latex}{\out{\hypertarget{method-mutate}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-mutate"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-mutate}{}}}
 \subsection{Method \code{mutate()}}{
 Dispatcher for either eager or delayed mutate methods
 
@@ -533,8 +533,8 @@ within another dataset.}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_failed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_failed}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-is_failed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-is_failed}{}}}
 \subsection{Method \code{is_failed()}}{
 Check if pull has not failed.
 \subsection{Usage}{
@@ -546,8 +546,8 @@ Check if pull has not failed.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_pulled"></a>}}
-\if{latex}{\out{\hypertarget{method-is_pulled}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-is_pulled"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-is_pulled}{}}}
 \subsection{Method \code{is_pulled()}}{
 Check if dataset has already been pulled.
 \subsection{Usage}{
@@ -559,8 +559,8 @@ Check if dataset has already been pulled.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-is_mutate_delayed"></a>}}
-\if{latex}{\out{\hypertarget{method-is_mutate_delayed}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-is_mutate_delayed"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-is_mutate_delayed}{}}}
 \subsection{Method \code{is_mutate_delayed()}}{
 Check if dataset has mutations that are delayed
 \subsection{Usage}{
@@ -572,8 +572,8 @@ Check if dataset has mutations that are delayed
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check"></a>}}
-\if{latex}{\out{\hypertarget{method-check}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-check"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-check}{}}}
 \subsection{Method \code{check()}}{
 Check to determine if the raw data is reproducible from the
 \code{get_code()} code.
@@ -586,8 +586,8 @@ Check to determine if the raw data is reproducible from the
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_ui_input"></a>}}
-\if{latex}{\out{\hypertarget{method-set_ui_input}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-set_ui_input"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_ui_input}{}}}
 \subsection{Method \code{set_ui_input()}}{
 Sets the shiny UI according to the given inputs.
 Inputs must provide only scalar (length of 1) variables.
@@ -628,8 +628,8 @@ ds$launch()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_ui"></a>}}
-\if{latex}{\out{\hypertarget{method-get_ui}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_ui"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_ui}{}}}
 \subsection{Method \code{get_ui()}}{
 Get shiny ui function
 \subsection{Usage}{
@@ -648,8 +648,8 @@ shiny UI in given namespace id
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_server"></a>}}
-\if{latex}{\out{\hypertarget{method-get_server}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-get_server"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_server}{}}}
 \subsection{Method \code{get_server()}}{
 Get shiny server function
 \subsection{Usage}{
@@ -661,8 +661,8 @@ shiny server function
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-launch"></a>}}
-\if{latex}{\out{\hypertarget{method-launch}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-launch"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-launch}{}}}
 \subsection{Method \code{launch()}}{
 Launches a shiny app.
 \subsection{Usage}{
@@ -691,8 +691,8 @@ ds$launch()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TealDatasetConnector-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TealDatasetConnector-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
