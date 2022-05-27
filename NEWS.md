@@ -1,12 +1,10 @@
 # teal.data 0.1.0.9007
 
-
 ### Miscellaneous
 * Added a template to the `pkgdown` site.
 * Removed the usage of `.Globalenv` in `Python` code execution.
 * Updated package authors.
-* Added a vignette about using `python` with `teal.data`.
-* Added a vignette about the reproducibility check.
+* Added package vignettes.
 
 # teal.data 0.1.0
 
