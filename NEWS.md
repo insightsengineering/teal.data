@@ -1,8 +1,5 @@
 # teal.data 0.1.0.9007
 
-### New features
-* Added a vignette about using `python` with `teal.data`.
-* Added a vignette about the reproducibility check.
 
 ### Miscellaneous
 * Added a template to the `pkgdown` site.
