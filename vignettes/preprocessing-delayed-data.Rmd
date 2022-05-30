@@ -37,8 +37,12 @@ adae <- cdisc_dataset_connector(
 ) %>%
   mutate_dataset("ADAE$X <- rep(ADSL$SEX[1])", vars = list(ADSL = adsl))
 
-adsl$pull() %>% get_raw_data() %>% head()
-adae$pull() %>% get_raw_data() %>% head()
+adsl$pull() %>%
+  get_raw_data() %>%
+  head()
+adae$pull() %>%
+  get_raw_data() %>%
+  head()
 ```
 
 * `mutate_data`: Collections of datasets should only be processed using the `mutate_data` function:
