@@ -1,4 +1,4 @@
-# teal.data 0.1.0.9007.3
+# teal.data 0.1.0.9007.4
 
 ### Miscellaneous
 * Added a template to the `pkgdown` site.
