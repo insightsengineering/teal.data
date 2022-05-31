@@ -49,6 +49,26 @@ get_datasets <- function(x) {
 #'   connection = data_connection(),
 #'   connectors = list(adsl, adlb)
 #' )
+#'
+#' rdc$set_ui(function(id, connection, connectors) p("Example UI"))
+#' rdc$set_server(
+#' function(id, connection, connectors) {
+#'  moduleServer(
+#'     id = id,
+#'     module = function(input, output, session) {
+#'       # Note this is simplified as we are not opening a real connection here
+#'       for (connector in connectors) {
+#'         set_args(connector, args = list(name = input$name))
+#'         # pull each dataset
+#'         connector$get_server()(id = connector$get_dataname())
+#'         if (connector$is_failed()) {
+#'           break
+#'         }
+#'       }
+#'     }
+#'   )
+#' }
+#' )
 #' \dontrun{
 #' load_datasets(rdc)
 #' get_datasets(rdc)
