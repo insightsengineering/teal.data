@@ -88,11 +88,8 @@ adae$set_ui_input(function(ns) {
 
 Once the data are loaded, it's also possible to access the individual dataset objects using the `get_dataset` function, or for `<...>Data<...>` objects, retrieve all dataset objects using the `get_datasets` function:
 
-```{r}
+```{r results=FALSE}
 lapply(delayed_data$get_items(), function(item) item$pull())
-```
-
-```{r eval=FALSE}
 
 # return a particular dataset by name
 get_dataset(delayed_data, dataname = "ADSL")

@@ -458,7 +458,7 @@ advs$pull()
 adtte$pull()
 ```
 
-```{r eval=FALSE}
+```{r results=FALSE}
 # get loaded datasets
 data$get_datasets()
 
