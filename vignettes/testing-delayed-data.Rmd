@@ -88,7 +88,7 @@ adae$set_ui_input(function(ns) {
 
 Once the data are loaded, it's also possible to access the individual dataset objects using the `get_dataset` function, or for `<...>Data<...>` objects, retrieve all dataset objects using the `get_datasets` function:
 
-```{r}
+```{r results=FALSE}
 lapply(delayed_data$get_items(), function(item) item$pull())
 
 # return a particular dataset by name
@@ -114,11 +114,11 @@ To view the raw dataframe object, use the `get_raw_data` function:
 
 ```{r}
 # for a single <...>Dataset<..> object
-head(get_raw_data(adsl))
+head(get_raw_data(adsl), 3)
 
 # or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
 raw <- get_raw_data(delayed_data, "ADSL")
-head(raw)
+head(raw, 3)
 
 # note the raw data is now just a regular R table
 class(raw)
@@ -130,7 +130,7 @@ The `get_code` function is called to check that the processing code is as expect
 get_code(delayed_data)
 ```
 
-See the section on [pre-processing Delayed Data](pre-processing-delayed-data.html) to specify additional code instructions to transform your delayed data which will also be added to the output of `get_code`.
+See the section on [pre-processing Delayed Data](preprocessing-delayed-data.html) to specify additional code instructions to transform your delayed data which will also be added to the output of `get_code`.
 
 #### Aside: Piping functions
 
@@ -150,9 +150,9 @@ cdisc_dataset_connector(
   mutate_dataset("ADSL$TRTDUR <- round(as.numeric(ADSL$TRTEDTM - ADSL$TRTSDTM), 1)") %>%
   load_dataset() %>%
   get_raw_data() %>%
-  head()
+  head(n = 3)
 ```
 
 Since these functions modify (operate on) the objects that are given to them, there is no need to assign the result.
 
-For an introduction to pipes refer to the documentation for `%>%` or other resources on [pipes](https://r4ds.had.co.nz/pipes.html).
+For an introduction to pipes, refer to the documentation for `%>%` or other resources on [pipes](https://r4ds.had.co.nz/pipes.html).

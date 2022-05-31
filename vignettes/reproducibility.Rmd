@@ -37,7 +37,7 @@ data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = FALSE)
 data$check() # returns NULL even though the code does not match the raw data
 ```
 
-Find out more in the [teal_data()] documentation.
+Find out more in the `teal_data()` documentation.
 
 ## Final considerations
 - `<x>_connector` objects do not accept raw data as input and therefore are not checked even if `check = TRUE` is used.
