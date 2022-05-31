@@ -198,6 +198,7 @@ Get internal \code{CodeClass} object
 \if{html}{\out{<a id="method-TealDataConnector-get_server"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDataConnector-get_server}{}}}
 \subsection{Method \code{get_server()}}{
+get the server function
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDataConnector$get_server()}\if{html}{\out{</div>}}
 }
@@ -210,6 +211,7 @@ the \code{server} function
 \if{html}{\out{<a id="method-TealDataConnector-get_preopen_server"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDataConnector-get_preopen_server}{}}}
 \subsection{Method \code{get_preopen_server()}}{
+get the \code{preopen} server function
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDataConnector$get_preopen_server()}\if{html}{\out{</div>}}
 }

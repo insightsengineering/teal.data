@@ -188,7 +188,7 @@ TealDataConnector <- R6::R6Class( # nolint
 
       return(all_code)
     },
-    #' @description
+    #' @description get the server function
     #'
     #' @return the `server` function
     get_server = function() {
@@ -211,7 +211,7 @@ TealDataConnector <- R6::R6Class( # nolint
         }
       }
     },
-    #' @description
+    #' @description get the `preopen` server function
     #'
     #' @return the `server` function
     get_preopen_server = function() {
