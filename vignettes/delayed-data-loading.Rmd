@@ -67,7 +67,7 @@ fun$set_args(list(dataset_name = "adsl", name = "latest"))
 
 # execute function with arguments set
 df <- fun$run()
-head(df)
+head(df, 3)
 
 # check reproducible code
 cat(fun$get_call())
@@ -82,7 +82,7 @@ fun <- callable_function(fun = synthetic_cdisc_dataset)
 
 # add arguments on the fly
 df <- fun$run(args = list(dataset_name = "adae", name = "latest"))
-head(df)
+head(df, 3)
 
 # dynamic arguments not reflected in the call
 cat(fun$get_call())
@@ -107,7 +107,7 @@ fun$set_args(args = list(adsl = as.name("adsl")))
 
 # execute function
 df <- fun$run()
-head(df)
+head(df, 3)
 
 # get R code
 fun$get_call()
@@ -133,7 +133,7 @@ code$assign_to_env("x1", 1)
 
 # evaluate call
 df <- code$run()
-head(df$x1)
+head(df$x1, 3)
 ```
 
 ### `TealDataset` (base class which `CDISCTealDataset` inherits from)
@@ -255,7 +255,7 @@ if (interactive()) {
 
 ### `TealDataConnection`
 
-Objects of this class are responsible to set a connection with remote data sources. `TealDataConnection` opens and closes connections by calling `CallableFunction` with appropriate arguments.
+Objects of this class are responsible to set a connection with remote data sources. `TealDataConnection` opens and closes connections by calling `CallableFunction` with the appropriate arguments.
 
 Note that if an app pulls data from a remote source, then the outputs will change even if the code is the same if the data in the remote source changes.
 
@@ -456,7 +456,9 @@ adsl$pull()
 adae$pull()
 advs$pull()
 adtte$pull()
+```
 
+```{r results=FALSE}
 # get loaded datasets
 data$get_datasets()
 
@@ -562,7 +564,7 @@ cat(adtte_code <- get_code(data, "ADTTE"))
 as.character(adsl_code) == as.character(adtte_code)
 ```
 
-### `teal.data` in shiny app
+### `teal.data` in a shiny app
 
 ```{r}
 adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
