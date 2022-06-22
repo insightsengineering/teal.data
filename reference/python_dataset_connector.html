@@ -16,7 +16,7 @@ Create a CDISCTealDatasetConnector from .py file or through python code supplied
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9001</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,30 +104,46 @@ Create a <code>CDISCTealDatasetConnector</code> from <code>.py</code> file or th
     <dl><dt>dataname</dt>
 <dd><p>(<code>character</code>)<br>
 A given name for the dataset it may not contain spaces</p></dd>
+
+
 <dt>file</dt>
 <dd><p>(<code>character</code>)<br>
 Path to the file location containing the python script used to generate the object.</p></dd>
+
+
 <dt>code</dt>
 <dd><p>(<code>character</code>)<br>
 string containing the python code to be run using <code>reticulate</code>. Carefully consider
 indentation to follow proper python syntax.</p></dd>
+
+
 <dt>object</dt>
 <dd><p>(<code>character</code>)<br>
 name of the object from the python script that is assigned to the dataset to be used.</p></dd>
+
+
 <dt>keys</dt>
 <dd><p>optional, (<code>character</code>)<br>
 vector of dataset primary keys column names</p></dd>
+
+
 <dt>label</dt>
 <dd><p>(<code>character</code>)<br>
 Label to describe the dataset.</p></dd>
+
+
 <dt>mutate_code</dt>
 <dd><p>(<code>character</code>)<br>
 String containing the code used to mutate the object
 after it is produced.</p></dd>
+
+
 <dt>mutate_script</dt>
 <dd><p>(<code>character</code>)<br>
 Alternatively to <code>mutate_code</code> - location of the file containing modification code.
 Can't be used simultaneously with <code>mutate_script</code>.</p></dd>
+
+
 <dt>vars</dt>
 <dd><p>(named <code>list</code>)) <br>
 In case when this object code depends on other <code>TealDataset</code> object(s) or
@@ -138,14 +154,19 @@ It's recommended to include <code>TealDataset</code> or <code>TealDatasetConnect
 the <code>vars</code> list to preserve reproducibility. Please note that <code>vars</code>
 are included to this object as local <code>vars</code> and they cannot be modified
 within another dataset.</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>(named <code>list</code>, <code>NULL</code> or <code>CallableFunction</code>) <br>
 Field containing either the metadata about the dataset (each element of the list
 should be atomic and length one) or a <code>CallableFuntion</code> to pull the metadata
 from a connection. This should return a <code>list</code> or an object which can be
 converted to a list with <code>as.list</code>.</p></dd>
+
+
 <dt>parent</dt>
 <dd><p>(<code>character</code>, optional) parent dataset name</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

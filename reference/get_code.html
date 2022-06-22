@@ -38,7 +38,7 @@ to close chunk #&amp;lt;code or #&amp;lt;ADSL code or #&amp;lt;ADSL ADTTE code
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9001</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,26 +127,41 @@ Get code from certain files and for specific datasets</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>(<code><a href="TealDatasetConnector.html">TealDatasetConnector</a></code> or <code><a href="dataset_class.html">TealDataset</a></code>). If of class <code>character</code> will be treated as file to read.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>not used, only for support of S3</p></dd>
+
+
 <dt>deparse</dt>
 <dd><p>(<code>logical</code>) whether return deparsed form of a call</p></dd>
+
+
 <dt>dataname</dt>
 <dd><p>(<code>character</code>) Name of dataset to return code for.</p></dd>
+
+
 <dt>exclude_comments</dt>
 <dd><p>(<code>logical</code>) whether exclude commented-out lines of code. Lines to be excluded
 should be ended with <code># nocode</code>. For multiple line exclusions one should enclose ignored block of code with
 <code># nocode&gt;</code> and <code># &lt;nocode</code></p></dd>
+
+
 <dt>read_sources</dt>
 <dd><p>(<code>logical</code>) whether to replace <code>source("path")</code> with code lines from sourced file.
 If <code>read_sources = TRUE</code> changing working directory inside preprocessing is not allowed.</p></dd>
+
+
 <dt>files_path</dt>
 <dd><p>(<code>character</code>) (optional) vector of files path to be read for preprocessing. Code from
 multiple files is joined together.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>(<code>character</code>) code of import and preparation of data for teal application.</p>
+    
+
+<p>(<code>character</code>) code of import and preparation of data for teal application.</p>
     </div>
 
     <div class="section level2">
