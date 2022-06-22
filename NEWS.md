@@ -1,5 +1,7 @@
 # teal.data 0.1.1.9001
 
+* Exported `validate_metadata` function.
+
 # teal.data 0.1.1
 
 ### Miscellaneous

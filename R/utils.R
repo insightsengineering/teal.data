@@ -119,10 +119,23 @@ check_pkg_quietly <- function(pckg, msg) {
   invisible(NULL)
 }
 
-# validate metadata as a list of length one atomic
+
+#' validate metadata as a list of length one atomic entries (or NULL)
+#' @param metadata `object` to be checked
+#' @return `NULL` or throw error
+#' @examples
+#'
+#' validate_metadata(NULL)
+#' validate_metadata(list(A = TRUE, B = 10, C = "test"))
+#' \dontrun{
+#' validate_metadata(list(a = 1:10))
+#' }
+#'
+#' @export
 validate_metadata <- function(metadata) {
   checkmate::assert_list(metadata, any.missing = FALSE, names = "named", null.ok = TRUE)
   lapply(names(metadata), function(name) {
     checkmate::assert_atomic(metadata[[name]], len = 1, .var.name = name)
   })
+  return(NULL)
 }
