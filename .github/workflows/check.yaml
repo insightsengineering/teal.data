@@ -41,7 +41,6 @@ jobs:
     uses: insightsengineering/r.pkg.template/.github/workflows/roxygen.yaml@debug_ot
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
-
   gitleaks:
     name: gitleaks 💧
     uses: insightsengineering/r.pkg.template/.github/workflows/gitleaks.yaml@main
