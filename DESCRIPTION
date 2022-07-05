@@ -44,6 +44,10 @@ Suggests:
     scda.2021 (>= 0.1.3),
     SummarizedExperiment,
     testthat (>= 2.0)
+Remotes:
+    insightsengineering/teal.logger@*release,
+    insightsengineering/scda@*release,
+    insightsengineering/scda.2021@*release
 VignetteBuilder:
     knitr
 RdMacros:

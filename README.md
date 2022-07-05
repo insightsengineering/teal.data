@@ -19,11 +19,10 @@ It is recommended that you [create and use a Github PAT](https://docs.github.com
 
 ```r
 Sys.setenv(GITHUB_PAT = "your_access_token_here")
-if (!require("devtools")) install.packages("devtools")
-devtools::install_github("insightsengineering/teal.data@*release", dependencies = FALSE)
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("insightsengineering/teal.data@*release")
 ```
 
-You might need to manually install all of the package dependencies before installing this package as without
-the `dependencies = FALSE` argument to `install_github` it may produce an error.
+A stable release of all `NEST` packages is also available [here](https://github.com/insightsengineering/depository#readme).
 
 See package vignettes `browseVignettes(package = "teal.data")` for usage of this package.
