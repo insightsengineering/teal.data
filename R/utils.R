@@ -76,11 +76,11 @@ get_package_file <- function(pkg = NULL, file_name = NULL) {
   checkmate::assert_string(pkg)
   checkmate::assert_string(file_name)
   base_file <- system.file(file_name, package = pkg)
-  inst_file <- system.file("inst", file_name, package = pkg)
+  inst_file <- file.path(system.file(package = pkg), file_name)
 
   if (file.exists(base_file)) {
     return(base_file)
-  } else if (file.exists(inst_file)) {
+  } else if (file.exists()) {
     return(inst_file)
   } else {
     stop(paste("There is no such file:", file_name, "or package:", pkg))
