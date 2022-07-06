@@ -80,7 +80,7 @@ get_package_file <- function(pkg = NULL, file_name = NULL) {
 
   if (file.exists(base_file)) {
     return(base_file)
-  } else if (file.exists()) {
+  } else if (file.exists(inst_file)) {
     return(inst_file)
   } else {
     stop(paste("There is no such file:", file_name, "or package:", pkg))
