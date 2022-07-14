@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9006</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,12 +35,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" href="https://insightsengineering.github.io/teal.data/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -184,20 +178,20 @@ reproducible code to re-create object</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   DCSREAS &lt;fct&gt;, DTHDT &lt;date&gt;, DTHCAUS &lt;fct&gt;, DTHCAT &lt;fct&gt;, LDDTHELD &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   LDDTHGR1 &lt;fct&gt;, LSTALVDT &lt;date&gt;, DTHADY &lt;int&gt;, study_duration_secs &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --&gt; Element 2:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A CDISCTealDataset object containing the following data.frame (1600 rows and 55 columns):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A CDISCTealDataset object containing the following data.frame (2000 rows and 56 columns):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID              USUBJID SUBJID SITEID AGE  AGEU SEX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 AB12345 AB12345-BRA-1-id-105 id-105  BRA-1  38 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 AB12345 AB12345-BRA-1-id-105 id-105  BRA-1  38 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 AB12345 AB12345-BRA-1-id-105 id-105  BRA-1  38 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 AB12345 AB12345-BRA-1-id-105 id-105  BRA-1  38 YEARS   M</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 AB12345 AB12345-BRA-1-id-105 id-105  BRA-1  38 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        RACE                 ETHNIC COUNTRY DTHFL        INVID</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     WHITE NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6                     WHITE NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          INVNAM       ARM ARMCD    ACTARM ACTARMCD    TRT01P    TRT01A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Dr. BRA-1 Doe A: Drug X ARM A A: Drug X    ARM A A: Drug X A: Drug X</span>
@@ -211,55 +205,55 @@ reproducible code to re-create object</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 South America       B      S1 4.156914 MEDIUM     Y     Y        Y       Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 South America       B      S1 4.156914 MEDIUM     Y     Y        Y       Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 South America       B      S1 4.156914 MEDIUM     Y     Y        Y       Y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 South America       B      S2 6.462991    LOW     Y     Y        Y       N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 South America       B      S1 4.156914 MEDIUM     Y     Y        Y       Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 South America       B      S2 6.462991    LOW     Y     Y        Y       N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       RANDDT             TRTSDTM             TRTEDTM       EOSSTT       EOTSTT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2020-03-08 2020-03-08 05:28:11 2021-02-17 18:49:59 DISCONTINUED DISCONTINUED</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 2020-03-08 2020-03-08 05:28:11 2021-02-17 18:49:59 DISCONTINUED DISCONTINUED</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 2020-03-08 2020-03-08 05:28:11 2021-02-17 18:49:59 DISCONTINUED DISCONTINUED</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 2020-03-08 2020-03-08 05:28:11 2021-02-17 18:49:59 DISCONTINUED DISCONTINUED</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2020-11-03 2020-11-04 03:50:33 2022-11-04 15:28:57    COMPLETED    COMPLETED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2020-03-08 2020-03-08 05:28:11 2021-02-17 18:49:59 DISCONTINUED DISCONTINUED</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 2020-11-03 2020-11-04 03:50:33 2022-11-04 15:28:57    COMPLETED    COMPLETED</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        EOSDT EOSDY       DCSREAS DTHDT DTHCAUS DTHCAT LDDTHELD LDDTHGR1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-02-17   347 ADVERSE EVENT  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 2021-02-17   347 ADVERSE EVENT  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 2021-02-17   347 ADVERSE EVENT  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 2021-02-17   347 ADVERSE EVENT  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-11-04   731          &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2021-02-17   347 ADVERSE EVENT  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-11-04   731          &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     LSTALVDT DTHADY study_duration_secs ASEQ TTESEQ</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-03-07     NA            63113904    2      2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 2021-03-07     NA            63113904    4      4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 2021-03-07     NA            63113904    3      3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 2021-03-07     NA            63113904    1      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-11-15     NA            63113904    4      4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-11-15     NA            63113904    2      2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2021-03-07     NA            63113904   NA     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-11-15     NA            63113904    4      4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            PARAM PARAMCD      AVAL AVALU       ADTM ADY CNSR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Duration of Confirmed Response    CRSD 1273.8498  DAYS 2020-08-13 158    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2            Event Free Survival     EFS  135.9787  DAYS 2021-02-16 345    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3               Overall Survival      OS 1759.8678  DAYS 2020-11-05 242    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      Progression Free Survival     PFS  241.1912  DAYS 2020-07-23 137    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Duration of Confirmed Response    CRSD  544.5728  DAYS 2021-10-25 355    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            Event Free Survival     EFS  401.2725  DAYS 2021-05-05 182    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      EVNTDESC                      CNSDTDSC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Last Date Known To Be Alive    End of AE Reporting Period</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       Death                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                       Death                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         Disease Progression                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                       Death                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Last Date Known To Be Alive Completion or Discontinuation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Total Number of Exacerbations     TNE    1.0000 COUNT       &lt;NA&gt;  NA    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Duration of Confirmed Response    CRSD  544.5728  DAYS 2021-10-25 355    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      EVNTDESC                   CNSDTDSC lgTMATRSK</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Last Date Known To Be Alive End of AE Reporting Period        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       Death                                   NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                       Death                                   NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         Disease Progression                                   NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                        &lt;NA&gt; End of AE Reporting Period -2.802988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                       Death                                   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 55</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 56</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     SUBJID SITEID   AGE AGEU  SEX   RACE  ETHNIC COUNTRY DTHFL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AB12345 AB12345-US… id-206 USA-8     34 YEARS F     ASIAN NOT H… USA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AB12345 AB12345-US… id-206 USA-8     34 YEARS F     ASIAN NOT H… USA     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AB12345 AB12345-US… id-130 USA-9     40 YEARS M     ASIAN NOT H… USA     N    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> AB12345 AB12345-US… id-130 USA-9     40 YEARS M     ASIAN NOT H… USA     N    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> AB12345 AB12345-US… id-130 USA-9     40 YEARS M     ASIAN NOT H… USA     N    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> AB12345 AB12345-US… id-130 USA-9     40 YEARS M     ASIAN NOT H… USA     N    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> AB12345 AB12345-US… id-130 USA-9     40 YEARS M     ASIAN NOT H… USA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 44 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 45 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ACTARM &lt;fct&gt;, ACTARMCD &lt;fct&gt;, TRT01P &lt;fct&gt;, TRT01A &lt;fct&gt;, REGION1 &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;, BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;, RANDDT &lt;date&gt;, TRTSDTM &lt;dttm&gt;,</span></span>
