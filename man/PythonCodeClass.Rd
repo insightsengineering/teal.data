@@ -19,10 +19,10 @@
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="append"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-append'><code>teal.data::CodeClass$append()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="get_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-get_code'><code>teal.data::CodeClass$get_code()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="initialize"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-initialize'><code>teal.data::CodeClass$initialize()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="set_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-set_code'><code>teal.data::CodeClass$set_code()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="append"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-append'><code>teal.data::CodeClass$append()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="get_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-get_code'><code>teal.data::CodeClass$get_code()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="initialize"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-initialize'><code>teal.data::CodeClass$initialize()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CodeClass" data-id="set_code"><a href='../../teal.data/html/CodeClass.html#method-CodeClass-set_code'><code>teal.data::CodeClass$set_code()</code></a></span></li>
 </ul>
 </details>
 }}
