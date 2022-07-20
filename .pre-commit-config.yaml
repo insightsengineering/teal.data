@@ -53,7 +53,7 @@ repos:
           .*\.svg|
           .*\.xml|
           .*/cdisc_datasets\.yaml|
-          (.*/|)\_pkgdown.yml|
+          (.*/|)\_pkgdown.y[a]ml|
           (.*/|)\.gitignore|
           (.*/|)\.gitlab-ci\.yml|
           (.*/|)\.lintr|
