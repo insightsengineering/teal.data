@@ -25,10 +25,10 @@ Methods are then available to get the function call and evaluate it.
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="run"><a href='../../teal.data/html/Callable.html#method-Callable-run'><code>teal.data::Callable$run()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="run"><a href='../../teal.data/html/Callable.html#method-Callable-run'><code>teal.data::Callable$run()</code></a></span></li>
 </ul>
 </details>
 }}
