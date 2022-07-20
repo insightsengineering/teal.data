@@ -16,7 +16,7 @@ inside `teal` applications.
 
 ## Quick Start
 
-For creating `ADaM` clinical trial data please use the `cdisc_data` and `cdisc_dataset` function:
+For creating `ADaM` clinical trial data please use the `cdisc_data` and `cdisc_dataset` functions:
 
 ```{r, message=FALSE}
 library(teal.data)
