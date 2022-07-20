@@ -24,13 +24,13 @@ A \code{CallablePythonCode} class of objects
 \if{html}{\out{
 <details><summary>Inherited methods</summary>
 <ul>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_args'><code>teal.data::CallableFunction$get_args()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_call"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_call'><code>teal.data::CallableFunction$get_call()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_arg_value"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_arg_value'><code>teal.data::CallableFunction$set_arg_value()</code></a></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_args'><code>teal.data::CallableFunction$set_args()</code></a></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="assign_to_env"><a href='../../teal.data/html/Callable.html#method-Callable-assign_to_env'><code>teal.data::Callable$assign_to_env()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="get_error_message"><a href='../../teal.data/html/Callable.html#method-Callable-get_error_message'><code>teal.data::Callable$get_error_message()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="Callable" data-id="is_failed"><a href='../../teal.data/html/Callable.html#method-Callable-is_failed'><code>teal.data::Callable$is_failed()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_args'><code>teal.data::CallableFunction$get_args()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="get_call"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-get_call'><code>teal.data::CallableFunction$get_call()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_arg_value"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_arg_value'><code>teal.data::CallableFunction$set_arg_value()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="CallableFunction" data-id="set_args"><a href='../../teal.data/html/CallableFunction.html#method-CallableFunction-set_args'><code>teal.data::CallableFunction$set_args()</code></a></span></li>
 </ul>
 </details>
 }}
