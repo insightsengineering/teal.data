@@ -9,11 +9,11 @@ test_that("check_simple_name behaves as expected", {
   expect_silent(check_simple_name("FILTERED"))
   expect_silent(check_simple_name("ADSLFILTERED"))
   expect_silent(check_simple_name("a_1_2_b_"))
+  expect_silent(check_simple_name("ADSL_FILTERED"))
 
   expect_error(check_simple_name("1a"))
   expect_error(check_simple_name("ADSL.modified"))
   expect_error(check_simple_name("a1..."))
   expect_error(check_simple_name("a a"))
-  expect_error(check_simple_name("ADSL_FILTERED"))
   expect_error(check_simple_name("_A_b"))
 })
