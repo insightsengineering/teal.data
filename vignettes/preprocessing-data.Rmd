@@ -18,7 +18,7 @@ vignette: >
 
 For example, for the following app only `ADSL <- readRDS("<your data path>/adsl.rds")` is considered as preprocessing code:
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 # for the purpose of example save the file to the current directory
 library(scda)
 library(teal)
@@ -41,7 +41,7 @@ shinyApp(app$ui, app$server)
 
 If you run the app above, the show R code button will return R code that contains big letters saying "Preprocessing is empty". In order to show the preprocessing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the above example this would be:
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 # for the purpose of example save the file to current directory
 library(scda)
 library(teal)

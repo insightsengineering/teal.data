@@ -21,7 +21,7 @@ The main difference between a `DDL` object and a non-`DDL` object is that data i
 
 * A **`TealDatasetConnector`** is an object used to pull a single delayed data set into a `teal` app. Connectors to pull data from proprietary data storage are not included in this package.
 
-```{r, message = FALSE}
+```{r, message=FALSE}
 library(teal.data)
 library(scda)
 

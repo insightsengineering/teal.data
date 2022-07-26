@@ -29,7 +29,7 @@ Using the `keys` argument to the `dataset` (or for `DDL` a `dataset_connector`) 
 dataset which together uniquely identify rows in the dataset. `teal` throws an error if it finds at least two rows
 sharing all the same values of the primary key columns.
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 library(teal)
 library(teal.data)
 library(dplyr)
@@ -63,7 +63,7 @@ columns are present in the parent table.
 
 For example:
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 library(teal)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)

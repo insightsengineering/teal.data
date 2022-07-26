@@ -15,7 +15,7 @@ When creating apps which do not use `DDL`, once the datasets are created there i
 
 * `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
 
-```{r, message = FALSE}
+```{r, message=FALSE}
 library(scda)
 library(teal.data)
 library(magrittr)
