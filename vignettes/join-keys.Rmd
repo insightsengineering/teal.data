@@ -25,7 +25,7 @@ Refer to `vignette("including-adam-data-in-teal", package = "teal")` for more in
 
 ### Primary key
 
-Using the `keys` argument to the `dataset` (or for DDL a `dataset_connector`) function, we can specify column(s) of the
+Using the `keys` argument to the `dataset` (or for `DDL` a `dataset_connector`) function, we can specify column(s) of the
 dataset which together uniquely identify rows in the dataset. `teal` throws an error if it finds at least two rows
 sharing all the same values of the primary key columns.
 
@@ -57,7 +57,7 @@ if (interactive()) shinyApp(app$ui, app$server)
 
 When passing multiple datasets to the `cdisc_data` function, dataset relationship are set using
 `join_keys` and `join_key` and these are used to merge datasets together
-within `teal` apps. For users familiar with `SQL` database schemas, these relationships are symmetric and not as strict
+within `teal` apps. For users familiar with `SQL` database schema, these relationships are symmetric and not as strict
 as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key
 columns are present in the parent table.
 
