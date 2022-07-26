@@ -11,7 +11,7 @@ vignette: >
 
 # Reproducibility check
 ## Mechanism
-`teal.data` classes that accumulate raw data accept a boolean `check` argument, e.g. [teal_data()]. This boolean
+`teal.data` classes that accumulate raw data accept a boolean `check` argument, e.g. `teal_data`. This boolean
 flag indicates whether `teal` performs validation of the data passed to the `TealData` object during launch of a
 `teal` application.
 

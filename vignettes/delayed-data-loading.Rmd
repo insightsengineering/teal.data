@@ -67,7 +67,7 @@ fun$set_args(list(dataset_name = "adsl", name = "latest"))
 
 # execute function with arguments set
 df <- fun$run()
-head(df, 3)
+head(df, 2)
 
 # check reproducible code
 cat(fun$get_call())
@@ -82,7 +82,7 @@ fun <- callable_function(fun = synthetic_cdisc_dataset)
 
 # add arguments on the fly
 df <- fun$run(args = list(dataset_name = "adae", name = "latest"))
-head(df, 3)
+head(df, 2)
 
 # dynamic arguments not reflected in the call
 cat(fun$get_call())
@@ -107,7 +107,7 @@ fun$set_args(args = list(adsl = as.name("adsl")))
 
 # execute function
 df <- fun$run()
-head(df, 3)
+head(df, 2)
 
 # get R code
 fun$get_call()
@@ -133,7 +133,7 @@ code$assign_to_env("x1", 1)
 
 # evaluate call
 df <- code$run()
-head(df$x1, 3)
+head(df$x1, 2)
 ```
 
 ### `TealDataset` (base class which `CDISCTealDataset` inherits from)

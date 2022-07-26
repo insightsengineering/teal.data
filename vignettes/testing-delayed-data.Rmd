@@ -29,7 +29,7 @@ Once your delayed data object has been created as described in [Delayed Data Obj
 
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
 
-```{r}
+```{r, message=FALSE}
 library(scda)
 library(teal.data)
 
@@ -114,11 +114,11 @@ To view the raw dataframe object, use the `get_raw_data` function:
 
 ```{r}
 # for a single <...>Dataset<..> object
-head(get_raw_data(adsl), 3)
+head(get_raw_data(adsl), 2)
 
 # or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
 raw <- get_raw_data(delayed_data, "ADSL")
-head(raw, 3)
+head(raw, 2)
 
 # note the raw data is now just a regular R table
 class(raw)
@@ -150,7 +150,7 @@ cdisc_dataset_connector(
   mutate_dataset("ADSL$TRTDUR <- round(as.numeric(ADSL$TRTEDTM - ADSL$TRTSDTM), 1)") %>%
   load_dataset() %>%
   get_raw_data() %>%
-  head(n = 3)
+  head(n = 2)
 ```
 
 Since these functions modify (operate on) the objects that are given to them, there is no need to assign the result.

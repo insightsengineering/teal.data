@@ -15,7 +15,7 @@ When creating apps which do not use `DDL`, once the datasets are created there i
 
 * `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
 
-```{r}
+```{r, message = FALSE}
 library(scda)
 library(teal.data)
 library(magrittr)
@@ -39,10 +39,10 @@ adae <- cdisc_dataset_connector(
 
 adsl$pull() %>%
   get_raw_data() %>%
-  head(n = 3)
+  head(n = 2)
 adae$pull() %>%
   get_raw_data() %>%
-  head(n = 3)
+  head(n = 2)
 ```
 
 * `mutate_data`: Collections of datasets should only be processed using the `mutate_data` function:
