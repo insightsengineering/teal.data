@@ -18,10 +18,6 @@ Therefore, we only allow alphanumeric characters with underscores.
 The first character of the \code{name} must be an alphabetic character
 and can be followed by alphanumeric characters.
 }
-\note{
-The suffix '_FILTERED' is reserved for filtered data and is not
-allowed in the dataset name.
-}
 \examples{
 teal.data:::check_simple_name("aas2df")
 teal.data:::check_simple_name("ADSL")
@@ -34,7 +30,6 @@ teal.data:::check_simple_name("1a")
 teal.data:::check_simple_name("ADSL.modified")
 teal.data:::check_simple_name("ADSL_modified")
 teal.data:::check_simple_name("a1...")
-teal.data:::check_simple_name("ADSL_FILTERED")
 }
 }
 \keyword{internal}
