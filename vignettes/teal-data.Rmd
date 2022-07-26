@@ -1,0 +1,58 @@
+---
+title: "Introduction to teal.data"
+author: "NEST CoreDev"
+date: "2022-07-20"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to teal.data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The `teal.data` package enables `teal` application developers to convert their data into a format which can be used
+inside `teal` applications.
+
+## Quick Start
+
+For creating `ADaM` clinical trial data please use the `cdisc_data` and `cdisc_dataset` functions:
+
+```{r, message=FALSE}
+library(teal.data)
+library(scda)
+
+# create some dummy data
+adsl <- synthetic_cdisc_data("latest")$adsl
+adtte <- synthetic_cdisc_data("latest")$adtte
+
+my_data <- cdisc_data(
+  cdisc_dataset("ADSL", adsl),
+  cdisc_dataset("ADTTE", adtte)
+)
+```
+
+For more general data use the `teal_data` and `dataset` functions:
+
+```{r}
+
+my_general_data <- teal_data(
+  dataset("iris", iris),
+  dataset("mtcars", mtcars)
+)
+```
+
+
+## Additional functionality
+
+The `teal.data` package provides many features to help specify your data:
+
+- [Specifying `ADaM` data](https://insightsengineering.github.io/teal/main/articles/including-adam-data-in-teal.html)
+- [Specifying `MultiAssayExperiment` data](https://insightsengineering.github.io/teal/main/articles/including-mae-data-in-teal.html)
+- [Specifying general relational data](https://insightsengineering.github.io/teal/main/articles/including-general-data-in-teal.html)
+- [Specifying relationships between your datasets](https://insightsengineering.github.io/teal/main/articles/join-keys.html)
+- [Dynamically loading your data (`DDL`)](https://insightsengineering.github.io/teal.data/main/articles/delayed-data-objects.html)
+- [Pre-processing data](https://insightsengineering.github.io/teal/main/articles/preprocessing-data.html)
+- [Pre-processing `DDL` data ](https://insightsengineering.github.io/teal.data/main/articles/preprocessing-delayed-data.html)
+- [Checking for reproducibility](https://insightsengineering.github.io/teal.data/main/articles/reproducibility.html)
+- [Using python to create your data](https://insightsengineering.github.io/teal.data/main/articles/teal.data-with-python.html)
