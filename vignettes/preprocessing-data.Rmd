@@ -48,6 +48,6 @@ data <- cdisc_data(
 data$get_code()
 ```
 
-The code used to get the `ADSL` datset is returned as expected. This can be used as input to the `data` argument of `teal::init`
+The code used to get the `ADSL` dataset is returned as expected. This can be used as input to the `data` argument of `teal::init`
 to ensure reproducibility in teal apps.
 
