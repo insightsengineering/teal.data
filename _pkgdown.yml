@@ -13,6 +13,7 @@ articles:
 - title: Articles
   navbar: ~
   contents:
+  - teal-data
   - preprocessing-data
   - preprocessing-delayed-data
   - reproducibility
