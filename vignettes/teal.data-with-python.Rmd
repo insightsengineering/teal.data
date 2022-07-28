@@ -63,7 +63,7 @@ x <- python_dataset_connector(
 
 Finally we can test the code by pulling the data into R:
 
-```{r}
+```{r eval = FALSE}
 x$pull()
 print(x)
 ```
