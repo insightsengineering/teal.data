@@ -10,11 +10,9 @@ vignette: >
 ---
 
 ## Overview
-`teal.data` gives `teal` applications the possibility to define individual keys per dataset and to define the relations 
-to other datasets.
+`teal.data` gives the possibility to define individual keys per dataset and to define the relations to other datasets.
 
-Each table passed into a `teal` app can have a set of keys that inform `teal` about its structure and relation
-to other tables. `teal` allows specifying:
+Each table can have a set of keys that inform its structure and relation to other tables by specifying:
 
 - columns consisting the primary key
 - merge keys, a concept similar to `SQL`s foreign key.
@@ -26,31 +24,22 @@ Refer to `vignette("including-adam-data-in-teal", package = "teal")` for more in
 ### Primary key
 
 Using the `keys` argument to the `dataset` (or for `DDL` a `dataset_connector`) function, we can specify column(s) of the
-dataset which together uniquely identify rows in the dataset. `teal` throws an error if it finds at least two rows
-sharing all the same values of the primary key columns.
+dataset which together uniquely identify rows in the dataset. 
 
-```{r, eval=FALSE}
-library(teal)
+```{r, message=FALSE}
 library(teal.data)
 library(dplyr)
 
 iris_with_keys <- mutate(iris, id = factor(row_number()))
 
-app <- init(
-  data = teal_data(
-    dataset("IRIS",
-      iris_with_keys,
-      code = "IRIS <- iris %>% mutate(id = factor(row_number()))",
-      keys = c("id")
-    ),
-    dataset("CARS", mtcars, code = "CARS <- mtcars")
-  ),
-  modules = modules(
-    example_module()
-  )
+ds <- dataset(
+  "IRIS",
+  iris_with_keys,
+  code = "IRIS <- iris %>% mutate(id = factor(row_number()))",
+  keys = c("id")
 )
 
-if (interactive()) shinyApp(app$ui, app$server)
+ds$get_keys()
 ```
 
 ### Merge keys
@@ -64,7 +53,7 @@ columns are present in the parent table.
 For example:
 
 ```{r, eval=FALSE}
-library(teal)
+library(teal.data)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
 data_2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))

@@ -1,10 +1,10 @@
 ---
-title: "Delayed Data Loading"
+title: "Creating Delayed Data Classes (Advanced)"
 author: "Dawid Kałędkowski"
 date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Delayed Data Loading}
+  %\VignetteIndexEntry{Creating Delayed Data Classes (Advanced)}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:

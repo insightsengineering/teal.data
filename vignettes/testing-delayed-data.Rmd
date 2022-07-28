@@ -13,7 +13,7 @@ editor_options:
 
 ## Overview
 
-Once your delayed data object has been created as described in [Delayed Data Objects](delayed-data-objects.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
+Once your delayed data object has been created as described in [Delayed Data Objects](using-delayed-data-basic.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
 
 |                                             | `TealDataset`       | `TealDatasetConnector`       | `TealDataConnector` & `TealData`      |
 |---------------------------------------------|-------------------|----------------------------|------------------------------------------|
@@ -60,7 +60,7 @@ if (interactive()) {
 }
 ```
 
-There is also a `pull` method to test that the data can be loaded without launching a shiny app. See [Delayed Data Loading](delayed-data-loading.html).
+There is also a `pull` method to test that the data can be loaded without launching a shiny app. See [Delayed Data Advanced](using-delayed-data-advanced.html).
 
 Alternatively `teal.data` provides a `load_dataset` function for `<...>Dataset<...>` objects which is used to pull the data without launching the delayed loading screen, and a `load_datasets`function for `<...>Data<...>` objects which launches the delayed loading screen used to pull the datasets from the connection.
 

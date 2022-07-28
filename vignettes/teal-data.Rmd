@@ -51,7 +51,7 @@ The `teal.data` package provides many features to help specify your data:
 - [Specifying `MultiAssayExperiment` data](https://insightsengineering.github.io/teal/main/articles/including-mae-data-in-teal.html)
 - [Specifying general relational data](https://insightsengineering.github.io/teal/main/articles/including-general-data-in-teal.html)
 - [Specifying relationships between your datasets](https://insightsengineering.github.io/teal.data/main/articles/join-keys.html)
-- [Dynamically loading your data (`DDL`)](https://insightsengineering.github.io/teal.data/main/articles/delayed-data-objects.html)
+- [Dynamically loading your data (`DDL`)](https://insightsengineering.github.io/teal.data/main/articles/using-delayed-data-basic.html)
 - [Pre-processing data](https://insightsengineering.github.io/teal.data/main/articles/preprocessing-data.html)
 - [Pre-processing `DDL` data ](https://insightsengineering.github.io/teal.data/main/articles/preprocessing-delayed-data.html)
 - [Checking for reproducibility](https://insightsengineering.github.io/teal.data/main/articles/reproducibility.html)
