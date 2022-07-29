@@ -1,10 +1,10 @@
 ---
-title: "Delayed Data Objects"
+title: "Using Delayed Data Loading (Basic)"
 author: "Dawid Kałędkowski"
 date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Delayed Data Objects}
+  %\VignetteIndexEntry{Using Delayed Data Loading (Basic)}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
@@ -21,7 +21,7 @@ The main difference between a `DDL` object and a non-`DDL` object is that data i
 
 * A **`TealDatasetConnector`** is an object used to pull a single delayed data set into a `teal` app. Connectors to pull data from proprietary data storage are not included in this package.
 
-```{r}
+```{r, message=FALSE}
 library(teal.data)
 library(scda)
 
@@ -101,6 +101,6 @@ The following workflow facilitates building `teal` apps with `DDL` by minimizing
 
 1. Run a teal app configured without delayed data to verify that the app starts as expected.
 1. Replace the `cdisc_dataset` functions with the appropriate `TealDatasetConnector` objects.
-1. Add preprocessing code (see [Delayed Data Loading](delayed-data-loading.html) for preprocessing documentation) and verify once again by running the newly created object's `$launch` method.
+1. Add preprocessing code (see [Delayed Data Advanced](using-delayed-data-advanced.html) for preprocessing documentation) and verify once again by running the newly created object's `$launch` method.
 1. First, include just a single module to verify that the teal app starts and that it loads all the expected data.
 1. Then, add the rest of the modules one by one, replacing all dataset calls with strings and iteratively verify that the app functions as expected.

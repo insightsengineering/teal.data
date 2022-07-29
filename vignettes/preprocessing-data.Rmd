@@ -1,0 +1,53 @@
+---
+title: "Pre-processing data"
+author: "NEST CoreDev"
+date: "2022-07-26"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Pre-processing data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+"Data" preprocessing refers to the code which contains:
+
+1. Data import calls
+2. Data modification
+
+Including the preprocessing code is an important step that is handled by `teal.data` functions.
+
+For example, for the following example only `ADSL <- readRDS("<your data path>/adsl.rds")` is considered as preprocessing code:
+```{r, message=FALSE}
+library(scda)
+library(teal.data)
+saveRDS(synthetic_cdisc_data("latest")$adsl, "adsl.rds")
+
+## preprocessing -------------------
+adsl <- readRDS("adsl.rds")
+## -------------------
+data <- cdisc_data(cdisc_dataset("ADSL", adsl))
+data$get_code()
+```
+
+If you run the example above, the `get_code` function will return an empty string reflecting that "Preprocessing is empty". In order to show the preprocessing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the above example this would be:
+
+```{r, message=FALSE}
+library(scda)
+saveRDS(synthetic_cdisc_data("latest")$adsl, "adsl.rds")
+
+## preprocessing -------------------
+adsl <- readRDS("adsl.rds")
+## -------------------
+unlink("adsl.rds")
+
+
+data <- cdisc_data(
+  cdisc_dataset("ADSL", adsl),
+  code = 'ADSL <- readRDS("adsl.rds")'
+)
+data$get_code()
+```
+
+The code used to get the `ADSL` dataset is returned as expected. This can be used as input to the `data` argument of `teal::init`
+to ensure reproducibility in teal apps.
+

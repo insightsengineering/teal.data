@@ -9,6 +9,20 @@ navbar:
     - icon: fa-github
       href: https://github.com/insightsengineering/teal.data
 
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - teal-data
+  - preprocessing-data
+  - preprocessing-delayed-data
+  - reproducibility
+  - join-keys
+  - using-delayed-data-basic
+  - using-delayed-data-advanced
+  - testing-delayed-data
+  - teal.data-with-python
+
 reference:
   - title: Delayed Dataset Constructors
     desc: For creating delayed dataset objects.

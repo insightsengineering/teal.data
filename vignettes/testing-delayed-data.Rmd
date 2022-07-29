@@ -13,7 +13,7 @@ editor_options:
 
 ## Overview
 
-Once your delayed data object has been created as described in [Delayed Data Objects](delayed-data-objects.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
+Once your delayed data object has been created as described in [Delayed Data Objects](using-delayed-data-basic.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
 
 |                                             | `TealDataset`       | `TealDatasetConnector`       | `TealDataConnector` & `TealData`      |
 |---------------------------------------------|-------------------|----------------------------|------------------------------------------|
@@ -29,7 +29,7 @@ Once your delayed data object has been created as described in [Delayed Data Obj
 
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
 
-```{r}
+```{r, message=FALSE}
 library(scda)
 library(teal.data)
 
@@ -60,7 +60,7 @@ if (interactive()) {
 }
 ```
 
-There is also a `pull` method to test that the data can be loaded without launching a shiny app. See [Delayed Data Loading](delayed-data-loading.html).
+There is also a `pull` method to test that the data can be loaded without launching a shiny app. See [Delayed Data Advanced](using-delayed-data-advanced.html).
 
 Alternatively `teal.data` provides a `load_dataset` function for `<...>Dataset<...>` objects which is used to pull the data without launching the delayed loading screen, and a `load_datasets`function for `<...>Data<...>` objects which launches the delayed loading screen used to pull the datasets from the connection.
 
@@ -114,11 +114,11 @@ To view the raw dataframe object, use the `get_raw_data` function:
 
 ```{r}
 # for a single <...>Dataset<..> object
-head(get_raw_data(adsl), 3)
+head(get_raw_data(adsl), 2)
 
 # or for a <...>Data<...> object containing multiple datasets, specify the name of the dataset of interest
 raw <- get_raw_data(delayed_data, "ADSL")
-head(raw, 3)
+head(raw, 2)
 
 # note the raw data is now just a regular R table
 class(raw)
@@ -150,7 +150,7 @@ cdisc_dataset_connector(
   mutate_dataset("ADSL$TRTDUR <- round(as.numeric(ADSL$TRTEDTM - ADSL$TRTSDTM), 1)") %>%
   load_dataset() %>%
   get_raw_data() %>%
-  head(n = 3)
+  head(n = 2)
 ```
 
 Since these functions modify (operate on) the objects that are given to them, there is no need to assign the result.
