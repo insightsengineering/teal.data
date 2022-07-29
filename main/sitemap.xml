@@ -16,13 +16,13 @@
     <loc>https://insightsengineering.github.io/teal.data/main/SECURITY.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/main/articles/delayed-data-loading.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/main/articles/delayed-data-objects.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/main/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/articles/join-keys.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/articles/preprocessing-data.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/articles/preprocessing-delayed-data.html</loc>
@@ -31,10 +31,19 @@
     <loc>https://insightsengineering.github.io/teal.data/main/articles/reproducibility.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/articles/teal-data.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/main/articles/teal.data-with-python.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/articles/testing-delayed-data.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/articles/using-delayed-data-advanced.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/articles/using-delayed-data-basic.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/authors.html</loc>

@@ -1,14 +1,17 @@
-pandoc: 2.17.1.1
-pkgdown: 2.0.5
+pandoc: '2.18'
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  delayed-data-loading: delayed-data-loading.html
-  delayed-data-objects: delayed-data-objects.html
+  join-keys: join-keys.html
+  preprocessing-data: preprocessing-data.html
   preprocessing-delayed-data: preprocessing-delayed-data.html
   reproducibility: reproducibility.html
+  teal-data: teal-data.html
   teal.data-with-python: teal.data-with-python.html
   testing-delayed-data: testing-delayed-data.html
-last_built: 2022-07-14T10:05Z
+  using-delayed-data-advanced: using-delayed-data-advanced.html
+  using-delayed-data-basic: using-delayed-data-basic.html
+last_built: 2022-07-29T12:19Z
 urls:
   reference: https://insightsengineering.github.io/teal.data/main/reference
   article: https://insightsengineering.github.io/teal.data/main/articles
