@@ -1,4 +1,4 @@
-# teal.data 0.1.1.9011
+# teal.data 0.1.1.9012
 
 * Exported `validate_metadata` function.
 
