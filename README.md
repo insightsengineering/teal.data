@@ -27,9 +27,16 @@ A stable release of all `NEST` packages from June 2022 is also available [here](
 
 See package vignettes `browseVignettes(package = "teal.data")` for usage of this package.
 
-[![Stargazers repo roster for @insightsengineering/teal.data](https://reporoster.com/stars/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/stargazers)
-[![Forkers repo roster for @insightsengineering/teal.data](https://reporoster.com/forks/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/network/members)
+## Stargazers and Forkers
 
-## Stargazers over time
+### Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/insightsengineering/teal.data.svg)](https://starchart.cc/insightsengineering/teal.data)
+
+### Stargazers
+
+[![Stargazers repo roster for @insightsengineering/teal.data](https://reporoster.com/stars/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/stargazers)
+
+### Forkers
+
+[![Forkers repo roster for @insightsengineering/teal.data](https://reporoster.com/forks/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/network/members)
