@@ -282,6 +282,7 @@ TealData <- R6::R6Class( # nolint
       # TealDatasetConnector with shiny app
       shinyApp(
         ui = fluidPage(
+          theme = get_teal_bs_version(),
           fluidRow(
             column(
               width = 8,
