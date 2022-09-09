@@ -52,15 +52,16 @@ get_raw_data(dc)
 
 # TealData ----------------
 library(scda)
+latest_data <- synthetic_cdisc_data("latest")
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = synthetic_cdisc_data("latest")$adsl,
+  x = latest_data$adsl,
   code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
 )
 
 adtte <- cdisc_dataset(
   dataname = "ADTTE",
-  x = synthetic_cdisc_data("latest")$adtte,
+  x = latest_data$adtte,
   code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adtte"
 )
 
