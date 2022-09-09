@@ -412,6 +412,7 @@ TealData <- R6::R6Class( # nolint
       # connectors ui(s) + submit button
       fluidPage(
         include_js_files(),
+        theme = get_teal_bs_version(),
         shinyjs::hidden(
           column(
             id = ns("delayed_data"),
