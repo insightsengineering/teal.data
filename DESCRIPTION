@@ -19,6 +19,7 @@ Depends:
     R (>= 4.0),
     shiny
 Imports:
+    bslib,
     checkmate,
     digest,
     formatters (>= 0.3.1),
