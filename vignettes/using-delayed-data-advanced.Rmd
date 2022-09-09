@@ -576,6 +576,7 @@ data <- teal_data(adsl, adrs, x)
 shinyApp(
   ui = fluidPage(
     shinyjs::useShinyjs(),
+    theme = get_teal_bs_version(),
     titlePanel("Delayed data loading"),
     sidebarLayout(
       sidebarPanel(data$get_ui("data"), uiOutput("dataset")),
