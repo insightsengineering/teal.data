@@ -40,8 +40,9 @@ they should be assigned before calling \code{cdisc_data}. See example:
 \examples{
 library(scda)
 
-ADSL <- synthetic_cdisc_data("latest")$adsl
-ADTTE <- synthetic_cdisc_data("latest")$adtte
+latest_data <- synthetic_cdisc_data("latest")
+ADSL <- latest_data$adsl
+ADTTE <- latest_data$adtte
 
 # basic example
 cdisc_data(
