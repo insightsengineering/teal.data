@@ -136,6 +136,7 @@ validate_metadata <- function(metadata) {
   })
   return(NULL)
 }
+
 #' Resolve the expected bootstrap version
 #' @keywords internal
 get_teal_bs_version <- function() {
