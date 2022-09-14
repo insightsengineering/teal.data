@@ -16,15 +16,16 @@ get_datasets <- function(x) {
 #'
 #' # TealData --------
 #' library(scda)
+#' latest_data <- synthetic_cdisc_data("latest")
 #' adsl <- cdisc_dataset(
 #'   dataname = "ADSL",
-#'   x = synthetic_cdisc_data("latest")$adsl,
+#'   x = latest_data$adsl,
 #'   code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
 #' )
 #'
 #' adae <- cdisc_dataset(
 #'   dataname = "ADAE",
-#'   x = synthetic_cdisc_data("latest")$adae,
+#'   x = latest_data$adae,
 #'   code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adae"
 #' )
 #'
@@ -75,8 +76,8 @@ get_datasets <- function(x) {
 #' }
 #'
 #' # TealData --------
-#' drc <- cdisc_data(rdc, adae)
 #' \dontrun{
+#' drc <- cdisc_data(rdc, adae)
 #' get_datasets(drc)
 #' }
 get_datasets.TealDataAbstract <- function(x) { # nolint

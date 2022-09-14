@@ -30,8 +30,12 @@ get_dataset <- function(x, dataname) {
 #'   dataname = "ADAE", pull_callable = pull_fun_adae,
 #'   keys = get_cdisc_keys("ADSL")
 #' )
+#'
+#' \dontrun{
 #' load_dataset(dc)
 #' get_dataset(dc)
+#' }
+#'
 get_dataset.TealDatasetConnector <- function(x, dataname = NULL) { # nolint
   if (!is.null(dataname)) {
     warning("'dataname' argument ignored - TealDatasetConnector can contain only one dataset.")
@@ -62,15 +66,16 @@ get_dataset.TealDataset <- function(x, dataname = NULL) { # nolint
 #'
 #' # TealData  (not containing connectors) --------
 #' library(scda)
+#' latest_data <- synthetic_cdisc_data("latest")
 #' adsl <- cdisc_dataset(
 #'   dataname = "ADSL",
-#'   x = synthetic_cdisc_data("latest")$adsl,
+#'   x = latest_data$adsl,
 #'   code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
 #' )
 #'
 #' adae <- cdisc_dataset(
 #'   dataname = "ADAE",
-#'   x = synthetic_cdisc_data("latest")$adsl,
+#'   x = latest_data$adsl,
 #'   code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adsl"
 #' )
 #'

@@ -882,6 +882,7 @@ TealDataset <- R6::R6Class( # nolint
 #'
 #' # Example with more arguments
 #' library(scda)
+#' \dontrun{
 #' ADSL <- synthetic_cdisc_data("latest")$adsl
 #' ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL)
 #'
@@ -897,6 +898,7 @@ TealDataset <- R6::R6Class( # nolint
 #' ADSL_dataset$get_metadata()
 #' ADSL_dataset$get_dataset_label()
 #' ADSL_dataset$get_code()
+#' }
 dataset <- function(dataname,
                     x,
                     keys = character(0),

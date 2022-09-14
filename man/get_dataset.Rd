@@ -47,8 +47,12 @@ dc <- dataset_connector(
   dataname = "ADAE", pull_callable = pull_fun_adae,
   keys = get_cdisc_keys("ADSL")
 )
+
+\dontrun{
 load_dataset(dc)
 get_dataset(dc)
+}
+
 
 # TealDataset --------
 library(scda)
@@ -59,15 +63,16 @@ get_dataset(x)
 
 # TealData  (not containing connectors) --------
 library(scda)
+latest_data <- synthetic_cdisc_data("latest")
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = synthetic_cdisc_data("latest")$adsl,
+  x = latest_data$adsl,
   code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
 )
 
 adae <- cdisc_dataset(
   dataname = "ADAE",
-  x = synthetic_cdisc_data("latest")$adsl,
+  x = latest_data$adsl,
   code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adsl"
 )
 
