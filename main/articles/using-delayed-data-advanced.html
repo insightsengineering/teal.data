@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9013</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,12 +59,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -196,14 +190,14 @@ by the user.</p>
 <span><span class="co">#&gt; 1      A: Drug X    Asia       C      S2 14.424934 MEDIUM     Y     Y        Y</span></span>
 <span><span class="co">#&gt; 2 C: Combination    Asia       C      S1  4.055463    LOW     Y     Y        N</span></span>
 <span><span class="co">#&gt;   BEP01FL AEWITHFL     RANDDT             TRTSDTM             TRTEDTM</span></span>
-<span><span class="co">#&gt; 1       Y        N 2019-02-22 2019-02-24 16:09:18 2021-02-12 03:06:46</span></span>
-<span><span class="co">#&gt; 2       N        Y 2019-02-26 2019-02-26 14:05:00 2021-02-26 01:43:24</span></span>
+<span><span class="co">#&gt; 1       Y        N 2019-02-22 2019-02-24 11:09:18 2021-02-11 22:06:46</span></span>
+<span><span class="co">#&gt; 2       N        Y 2019-02-26 2019-02-26 09:05:00 2021-02-25 20:43:24</span></span>
 <span><span class="co">#&gt;         EOSSTT       EOTSTT      EOSDT EOSDY            DCSREAS DTHDT DTHCAUS</span></span>
-<span><span class="co">#&gt; 1 DISCONTINUED DISCONTINUED 2021-02-12   719 PROTOCOL VIOLATION  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 2    COMPLETED    COMPLETED 2021-02-26   731               &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;   DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY study_duration_secs</span></span>
-<span><span class="co">#&gt; 1   &lt;NA&gt;       NA     &lt;NA&gt; 2021-02-25     NA            63113904</span></span>
-<span><span class="co">#&gt; 2   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA            63113904</span></span>
+<span><span class="co">#&gt; 1 DISCONTINUED DISCONTINUED 2021-02-11   719 PROTOCOL VIOLATION  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2    COMPLETED    COMPLETED 2021-02-25   731               &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;   DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY ADTHAUT study_duration_secs</span></span>
+<span><span class="co">#&gt; 1   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-07     NA    &lt;NA&gt;            63113904</span></span>
+<span><span class="co">#&gt; 2   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA    &lt;NA&gt;            63113904</span></span>
 <span></span>
 <span><span class="co"># check reproducible code</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -234,26 +228,29 @@ of the documentation.</p>
 <span><span class="co">#&gt; 1 6.462991    LOW     Y     Y        Y       N        N 2020-11-03</span></span>
 <span><span class="co">#&gt; 2 6.462991    LOW     Y     Y        Y       N        N 2020-11-03</span></span>
 <span><span class="co">#&gt;               TRTSDTM             TRTEDTM       EOSSTT       EOTSTT      EOSDT</span></span>
-<span><span class="co">#&gt; 1 2020-11-04 08:50:33 2021-02-20 02:12:19 DISCONTINUED DISCONTINUED 2021-02-20</span></span>
-<span><span class="co">#&gt; 2 2020-11-04 08:50:33 2021-02-20 02:12:19 DISCONTINUED DISCONTINUED 2021-02-20</span></span>
+<span><span class="co">#&gt; 1 2020-11-04 03:50:33 2021-02-19 21:12:19 DISCONTINUED DISCONTINUED 2021-02-19</span></span>
+<span><span class="co">#&gt; 2 2020-11-04 03:50:33 2021-02-19 21:12:19 DISCONTINUED DISCONTINUED 2021-02-19</span></span>
 <span><span class="co">#&gt;   EOSDY DCSREAS      DTHDT       DTHCAUS        DTHCAT LDDTHELD LDDTHGR1</span></span>
-<span><span class="co">#&gt; 1   108   DEATH 2021-02-24 ADVERSE EVENT ADVERSE EVENT        4     &lt;=30</span></span>
-<span><span class="co">#&gt; 2   108   DEATH 2021-02-24 ADVERSE EVENT ADVERSE EVENT        4     &lt;=30</span></span>
-<span><span class="co">#&gt;     LSTALVDT DTHADY study_duration_secs ASEQ AESEQ        AETERM         AELLT</span></span>
-<span><span class="co">#&gt; 1 2021-02-24    112            63113904    1     1 trm B.2.1.2.1 llt B.2.1.2.1</span></span>
-<span><span class="co">#&gt; 2 2021-02-24    112            63113904    2     2 trm D.1.1.4.2 llt D.1.1.4.2</span></span>
-<span><span class="co">#&gt;         AEDECOD       AEHLT     AEHLGT AEBODSYS AESOC    AESEV AESER</span></span>
-<span><span class="co">#&gt; 1 dcd B.2.1.2.1 hlt B.2.1.2 hlgt B.2.1   cl B.2  cl B MODERATE     N</span></span>
-<span><span class="co">#&gt; 2 dcd D.1.1.4.2 hlt D.1.1.4 hlgt D.1.1   cl D.1  cl D MODERATE     N</span></span>
-<span><span class="co">#&gt;              AEACN AEREL                AEOUT AESDTH TRTEMFL AECONTRT</span></span>
-<span><span class="co">#&gt; 1 DOSE NOT CHANGED     N   RECOVERED/RESOLVED      N       Y        N</span></span>
-<span><span class="co">#&gt; 2 DOSE NOT CHANGED     N RECOVERING/RESOLVING      N       Y        N</span></span>
-<span><span class="co">#&gt;       ASTDTM     AENDTM ASTDY AENDY AETOXGR SMQ01NAM SMQ02NAM SMQ01SC SMQ02SC</span></span>
-<span><span class="co">#&gt; 1 2020-12-11 2021-01-20    37    77       3     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 2 2020-12-19 2021-01-26    45    83       3     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;   CQ01NAM ANL01FL            AERELNST          AEACNOTH</span></span>
-<span><span class="co">#&gt; 1    &lt;NA&gt;       Y               OTHER PROCEDURE/SURGERY</span></span>
-<span><span class="co">#&gt; 2    &lt;NA&gt;       Y DISEASE UNDER STUDY        MEDICATION</span></span>
+<span><span class="co">#&gt; 1   108   DEATH 2021-03-30 ADVERSE EVENT ADVERSE EVENT       39      &gt;30</span></span>
+<span><span class="co">#&gt; 2   108   DEATH 2021-03-30 ADVERSE EVENT ADVERSE EVENT       39      &gt;30</span></span>
+<span><span class="co">#&gt;     LSTALVDT DTHADY ADTHAUT study_duration_secs ASEQ AESEQ        AETERM</span></span>
+<span><span class="co">#&gt; 1 2021-03-30    146     Yes            63113904    1     1 trm B.2.1.2.1</span></span>
+<span><span class="co">#&gt; 2 2021-03-30    146     Yes            63113904    2     2 trm D.1.1.4.2</span></span>
+<span><span class="co">#&gt;           AELLT       AEDECOD       AEHLT     AEHLGT AEBODSYS AESOC    AESEV</span></span>
+<span><span class="co">#&gt; 1 llt B.2.1.2.1 dcd B.2.1.2.1 hlt B.2.1.2 hlgt B.2.1   cl B.2  cl B MODERATE</span></span>
+<span><span class="co">#&gt; 2 llt D.1.1.4.2 dcd D.1.1.4.2 hlt D.1.1.4 hlgt D.1.1   cl D.1  cl D MODERATE</span></span>
+<span><span class="co">#&gt;   AESER            AEACN AEREL                AEOUT AESDTH AESCONG AESDISAB</span></span>
+<span><span class="co">#&gt; 1     N DOSE NOT CHANGED     N   RECOVERED/RESOLVED      N       N        N</span></span>
+<span><span class="co">#&gt; 2     N DOSE NOT CHANGED     N RECOVERING/RESOLVING      N       N        N</span></span>
+<span><span class="co">#&gt;   AESHOSP AESLIFE AESMIE TRTEMFL AECONTRT     ASTDTM     AENDTM ASTDY AENDY</span></span>
+<span><span class="co">#&gt; 1       N       N      Y       Y        N 2020-12-11 2021-01-19    37    76</span></span>
+<span><span class="co">#&gt; 2       N       N      Y       Y        N 2020-12-18 2021-01-25    44    82</span></span>
+<span><span class="co">#&gt;   AETOXGR SMQ01NAM SMQ02NAM SMQ01SC SMQ02SC CQ01NAM ANL01FL            AERELNST</span></span>
+<span><span class="co">#&gt; 1       3     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;       Y               OTHER</span></span>
+<span><span class="co">#&gt; 2       3     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;       Y DISEASE UNDER STUDY</span></span>
+<span><span class="co">#&gt;            AEACNOTH</span></span>
+<span><span class="co">#&gt; 1 PROCEDURE/SURGERY</span></span>
+<span><span class="co">#&gt; 2        MEDICATION</span></span>
 <span></span>
 <span><span class="co"># dynamic arguments not reflected in the call</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">fun</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -296,14 +293,17 @@ with function argument.</p>
 <span><span class="co">#&gt; 1      A: Drug X    Asia       C      S2 14.424934 MEDIUM     Y     Y        Y</span></span>
 <span><span class="co">#&gt; 2 C: Combination    Asia       C      S1  4.055463    LOW     Y     Y        N</span></span>
 <span><span class="co">#&gt;   BEP01FL AEWITHFL     RANDDT             TRTSDTM             TRTEDTM</span></span>
-<span><span class="co">#&gt; 1       Y        N 2019-02-22 2019-02-24 16:09:18 2021-02-12 03:06:46</span></span>
-<span><span class="co">#&gt; 2       N        Y 2019-02-26 2019-02-26 14:05:00 2021-02-26 01:43:24</span></span>
+<span><span class="co">#&gt; 1       Y        N 2019-02-22 2019-02-24 11:09:18 2021-02-11 22:06:46</span></span>
+<span><span class="co">#&gt; 2       N        Y 2019-02-26 2019-02-26 09:05:00 2021-02-25 20:43:24</span></span>
 <span><span class="co">#&gt;         EOSSTT       EOTSTT      EOSDT EOSDY            DCSREAS DTHDT DTHCAUS</span></span>
-<span><span class="co">#&gt; 1 DISCONTINUED DISCONTINUED 2021-02-12   719 PROTOCOL VIOLATION  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 2    COMPLETED    COMPLETED 2021-02-26   731               &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt;   DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY study_duration_secs new_col</span></span>
-<span><span class="co">#&gt; 1   &lt;NA&gt;       NA     &lt;NA&gt; 2021-02-25     NA            63113904    TRUE</span></span>
-<span><span class="co">#&gt; 2   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA            63113904    TRUE</span></span>
+<span><span class="co">#&gt; 1 DISCONTINUED DISCONTINUED 2021-02-11   719 PROTOCOL VIOLATION  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2    COMPLETED    COMPLETED 2021-02-25   731               &lt;NA&gt;  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;   DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY ADTHAUT study_duration_secs</span></span>
+<span><span class="co">#&gt; 1   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-07     NA    &lt;NA&gt;            63113904</span></span>
+<span><span class="co">#&gt; 2   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA    &lt;NA&gt;            63113904</span></span>
+<span><span class="co">#&gt;   new_col</span></span>
+<span><span class="co">#&gt; 1    TRUE</span></span>
+<span><span class="co">#&gt; 2    TRUE</span></span>
 <span></span>
 <span><span class="co"># get R code</span></span>
 <span><span class="va">fun</span><span class="op">$</span><span class="fu">get_call</span><span class="op">(</span><span class="op">)</span></span>
@@ -391,13 +391,13 @@ which can be extracted.</p>
 <span></span>
 <span><span class="co"># get data.frame</span></span>
 <span><span class="fu"><a href="../reference/get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">adsl_dataset</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 45</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 46</span></span></span>
 <span><span class="co">#&gt;   STUDYID USUBJID     SUBJID SITEID   AGE AGEU  SEX   RACE  ETHNIC COUNTRY DTHFL</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> AB12345 AB12345-CH… id-128 CHN-3     32 YEARS M     ASIAN NOT H… CHN     N    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> AB12345 AB12345-CH… id-262 CHN-15    35 YEARS M     BLAC… NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> AB12345 AB12345-RU… id-378 RUS-3     30 YEARS F     ASIAN UNKNO… RUS     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 34 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> AB12345 AB12345-RU… id-378 RUS-3     30 YEARS F     ASIAN NOT H… RUS     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 35 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ACTARM &lt;fct&gt;, ACTARMCD &lt;fct&gt;, TRT01P &lt;fct&gt;, TRT01A &lt;fct&gt;, REGION1 &lt;fct&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;, BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;, AEWITHFL &lt;fct&gt;, RANDDT &lt;date&gt;,</span></span></span>
@@ -446,20 +446,20 @@ is also the code to pull the data.</p>
 <span></span>
 <span><span class="co"># get raw data</span></span>
 <span><span class="fu"><a href="../reference/get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">adsl_conn</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 400 × 45</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 400 × 46</span></span></span>
 <span><span class="co">#&gt;    STUDYID USUBJID    SUBJID SITEID   AGE AGEU  SEX   RACE  ETHNIC COUNTRY DTHFL</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> AB12345 AB12345-C… id-128 CHN-3     32 YEARS M     ASIAN NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> AB12345 AB12345-C… id-262 CHN-15    35 YEARS M     BLAC… NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> AB12345 AB12345-R… id-378 RUS-3     30 YEARS F     ASIAN UNKNO… RUS     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> AB12345 AB12345-C… id-220 CHN-11    26 YEARS F     ASIAN NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> AB12345 AB12345-C… id-267 CHN-7     40 YEARS M     ASIAN NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> AB12345 AB12345-C… id-201 CHN-15    49 YEARS M     ASIAN NOT H… CHN     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> AB12345 AB12345-U… id-45  USA-1     34 YEARS F     ASIAN NOT H… USA     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> AB12345 AB12345-U… id-261 USA-1     32 YEARS F     ASIAN NOT H… USA     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> AB12345 AB12345-N… id-173 NGA-11    24 YEARS F     BLAC… NOT H… NGA     N    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> AB12345 AB12345-C… id-307 CHN-1     24 YEARS M     ASIAN NOT H… CHN     Y    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 390 more rows, and 34 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> AB12345 AB12345-C… id-128 CHN-3     32 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> AB12345 AB12345-C… id-262 CHN-15    35 YEARS M     BLAC… <span style="color: #949494;">"</span>NOT … CHN     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> AB12345 AB12345-R… id-378 RUS-3     30 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … RUS     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> AB12345 AB12345-C… id-220 CHN-11    26 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> AB12345 AB12345-C… id-267 CHN-7     40 YEARS M     ASIAN <span style="color: #949494;">"</span>HISP… CHN     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> AB12345 AB12345-C… id-201 CHN-15    49 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> AB12345 AB12345-U… id-45  USA-1     34 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … USA     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> AB12345 AB12345-U… id-261 USA-1     32 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … USA     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> AB12345 AB12345-N… id-173 NGA-11    24 YEARS F     BLAC… <span style="color: #949494;">"</span>NOT … NGA     N    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> AB12345 AB12345-C… id-307 CHN-1     24 YEARS M     ASIAN <span style="color: #949494;">"</span> NOT… CHN     Y    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 390 more rows, and 35 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ARM &lt;fct&gt;, ARMCD &lt;fct&gt;, ACTARM &lt;fct&gt;, ACTARMCD &lt;fct&gt;, TRT01P &lt;fct&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   TRT01A &lt;fct&gt;, REGION1 &lt;fct&gt;, STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;, SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;,</span></span></span>
@@ -988,7 +988,7 @@ code of all datasets is returned.</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Listening on http://127.0.0.1:4922</span></span></code></pre></div>
+<span><span class="co">#&gt; Listening on http://127.0.0.1:3199</span></span></code></pre></div>
 <p><img src="using-delayed-data-advanced_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 </div>
 </div>

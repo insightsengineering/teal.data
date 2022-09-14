@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9013</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,12 +43,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -168,7 +162,7 @@ converted to a list with <code>as.list</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ADSL &lt;- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"</span>
 <span class="r-in"><span><span class="fu"><a href="load_dataset.html">load_dataset</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A TealDataset object containing the following data.frame (400 rows and 45 columns):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A TealDataset object containing the following data.frame (400 rows and 46 columns):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID               USUBJID SUBJID SITEID AGE  AGEU SEX</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 AB12345  AB12345-CHN-3-id-128 id-128  CHN-3  32 YEARS   M</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 AB12345 AB12345-CHN-15-id-262 id-262 CHN-15  35 YEARS   M</span>
@@ -179,9 +173,9 @@ converted to a list with <code>as.list</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        RACE                 ETHNIC COUNTRY DTHFL         INVID</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                     ASIAN NOT HISPANIC OR LATINO     CHN     N  INV ID CHN-3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 BLACK OR AFRICAN AMERICAN NOT HISPANIC OR LATINO     CHN     N INV ID CHN-15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     ASIAN                UNKNOWN     RUS     N  INV ID RUS-3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                     ASIAN NOT HISPANIC OR LATINO     RUS     N  INV ID RUS-3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4                     ASIAN NOT HISPANIC OR LATINO     CHN     N INV ID CHN-11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     ASIAN NOT HISPANIC OR LATINO     CHN     N  INV ID CHN-7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                     ASIAN     HISPANIC OR LATINO     CHN     N  INV ID CHN-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6                     ASIAN NOT HISPANIC OR LATINO     CHN     N INV ID CHN-15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           INVNAM            ARM ARMCD         ACTARM ACTARMCD         TRT01P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  Dr. CHN-3 Doe      A: Drug X ARM A      A: Drug X    ARM A      A: Drug X</span>
@@ -198,38 +192,45 @@ converted to a list with <code>as.list</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5     B: Placebo    Asia       C      S1  6.206763    LOW     Y     Y        N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 C: Combination    Asia       C      S2  6.906799 MEDIUM     Y     Y        Y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BEP01FL AEWITHFL     RANDDT             TRTSDTM             TRTEDTM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y        N 2019-02-22 2019-02-24 16:09:18 2021-02-12 03:06:46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       N        Y 2019-02-26 2019-02-26 14:05:00 2021-02-26 01:43:24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       N        N 2019-02-24 2019-02-28 08:19:08 2021-02-27 19:57:32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       Y        N 2019-02-27 2019-03-01 18:33:03 2021-03-01 06:11:27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       N        N 2019-03-01 2019-03-02 05:09:16 2021-03-01 16:47:40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       N        N 2019-03-05 2019-03-05 20:23:44 2021-02-19 02:45:13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       Y        N 2019-02-22 2019-02-24 11:09:18 2021-02-11 22:06:46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       N        Y 2019-02-26 2019-02-26 09:05:00 2021-02-25 20:43:24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       N        N 2019-02-24 2019-02-28 03:19:08 2021-02-27 14:57:32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       Y        N 2019-02-27 2019-03-01 13:33:03 2021-03-01 01:11:27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       N        N 2019-03-01 2019-03-02 00:09:16 2021-03-01 11:47:40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       N        N 2019-03-05 2019-03-05 15:23:44 2021-02-18 21:45:13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         EOSSTT       EOTSTT      EOSDT EOSDY               DCSREAS DTHDT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 DISCONTINUED DISCONTINUED 2021-02-12   719    PROTOCOL VIOLATION  &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    COMPLETED    COMPLETED 2021-02-26   731                  &lt;NA&gt;  &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 DISCONTINUED DISCONTINUED 2021-02-11   719    PROTOCOL VIOLATION  &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    COMPLETED    COMPLETED 2021-02-25   731                  &lt;NA&gt;  &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    COMPLETED    COMPLETED 2021-02-27   731                  &lt;NA&gt;  &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    COMPLETED    COMPLETED 2021-03-01   731                  &lt;NA&gt;  &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    COMPLETED    COMPLETED 2021-03-01   731                  &lt;NA&gt;  &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 DISCONTINUED DISCONTINUED 2021-02-19   717 WITHDRAWAL BY SUBJECT  &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   DTHCAUS DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY study_duration_secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-02-25     NA            63113904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA            63113904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-24     NA            63113904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-11     NA            63113904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-30     NA            63113904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-11     NA            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 DISCONTINUED DISCONTINUED 2021-02-18   717 WITHDRAWAL BY SUBJECT  &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DTHCAUS DTHCAT LDDTHELD LDDTHGR1   LSTALVDT DTHADY ADTHAUT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-07     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-20     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-28     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-26     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-22     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;   &lt;NA&gt;       NA     &lt;NA&gt; 2021-03-10     NA    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study_duration_secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            63113904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            63113904</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 45</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     SUBJID SITEID   AGE AGEU  SEX   RACE  ETHNIC COUNTRY DTHFL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AB12345 AB12345-CH… id-11  CHN-9     28 YEARS F     NATI… NOT H… CHN     Y    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AB12345 AB12345-CH… id-352 CHN-16    28 YEARS M     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> AB12345 AB12345-CH… id-186 CHN-1     27 YEARS M     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> AB12345 AB12345-CH… id-371 CHN-1     28 YEARS F     ASIAN HISPA… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> AB12345 AB12345-CH… id-233 CHN-1     36 YEARS F     BLAC… NOT H… CHN     Y    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> AB12345 AB12345-US… id-131 USA-12    44 YEARS F     AMER… NOT H… USA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 34 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AB12345 AB12345-CH… id-11  CHN-9     28 YEARS F     NATI… <span style="color: #949494;">"</span>NOT … CHN     Y    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AB12345 AB12345-CH… id-352 CHN-16    28 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> AB12345 AB12345-CH… id-186 CHN-1     27 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> AB12345 AB12345-CH… id-371 CHN-1     28 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> AB12345 AB12345-CH… id-233 CHN-1     36 YEARS F     BLAC… <span style="color: #949494;">"</span>NOT … CHN     Y    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> AB12345 AB12345-US… id-131 USA-12    44 YEARS F     AMER… <span style="color: #949494;">"</span> NOT… USA     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 35 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;, ARM &lt;fct&gt;, ARMCD &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ACTARM &lt;fct&gt;, ACTARMCD &lt;fct&gt;, TRT01P &lt;fct&gt;, TRT01A &lt;fct&gt;, REGION1 &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;, BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;, AEWITHFL &lt;fct&gt;, RANDDT &lt;date&gt;,</span></span>
@@ -244,20 +245,20 @@ converted to a list with <code>as.list</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "latest"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="fu">get_raw_data</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 400 × 45</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 400 × 46</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    STUDYID USUBJID    SUBJID SITEID   AGE AGEU  SEX   RACE  ETHNIC COUNTRY DTHFL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AB12345 AB12345-C… id-128 CHN-3     32 YEARS M     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AB12345 AB12345-C… id-262 CHN-15    35 YEARS M     BLAC… NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AB12345 AB12345-R… id-378 RUS-3     30 YEARS F     ASIAN UNKNO… RUS     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AB12345 AB12345-C… id-220 CHN-11    26 YEARS F     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AB12345 AB12345-C… id-267 CHN-7     40 YEARS M     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AB12345 AB12345-C… id-201 CHN-15    49 YEARS M     ASIAN NOT H… CHN     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AB12345 AB12345-U… id-45  USA-1     34 YEARS F     ASIAN NOT H… USA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AB12345 AB12345-U… id-261 USA-1     32 YEARS F     ASIAN NOT H… USA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AB12345 AB12345-N… id-173 NGA-11    24 YEARS F     BLAC… NOT H… NGA     N    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AB12345 AB12345-C… id-307 CHN-1     24 YEARS M     ASIAN NOT H… CHN     Y    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 390 more rows, and 34 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AB12345 AB12345-C… id-128 CHN-3     32 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AB12345 AB12345-C… id-262 CHN-15    35 YEARS M     BLAC… <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AB12345 AB12345-R… id-378 RUS-3     30 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … RUS     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AB12345 AB12345-C… id-220 CHN-11    26 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AB12345 AB12345-C… id-267 CHN-7     40 YEARS M     ASIAN <span style="color: #949494;">"</span>HISP… CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AB12345 AB12345-C… id-201 CHN-15    49 YEARS M     ASIAN <span style="color: #949494;">"</span>NOT … CHN     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AB12345 AB12345-U… id-45  USA-1     34 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … USA     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AB12345 AB12345-U… id-261 USA-1     32 YEARS F     ASIAN <span style="color: #949494;">"</span>NOT … USA     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AB12345 AB12345-N… id-173 NGA-11    24 YEARS F     BLAC… <span style="color: #949494;">"</span>NOT … NGA     N    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AB12345 AB12345-C… id-307 CHN-1     24 YEARS M     ASIAN <span style="color: #949494;">"</span> NOT… CHN     Y    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 390 more rows, and 35 more variables: INVID &lt;chr&gt;, INVNAM &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ARM &lt;fct&gt;, ARMCD &lt;fct&gt;, ACTARM &lt;fct&gt;, ACTARMCD &lt;fct&gt;, TRT01P &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TRT01A &lt;fct&gt;, REGION1 &lt;fct&gt;, STRATA1 &lt;fct&gt;, STRATA2 &lt;fct&gt;, BMRKR1 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   BMRKR2 &lt;fct&gt;, ITTFL &lt;fct&gt;, SAFFL &lt;fct&gt;, BMEASIFL &lt;fct&gt;, BEP01FL &lt;fct&gt;,</span></span>
