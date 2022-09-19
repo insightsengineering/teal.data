@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 It is possible to use python code (via the `reticulate` package) to create a `teal` dataset. 
 Therefore if a python package is required to access/create your data, it can still be used in a `teal` application.
 
-We recommend having a thorough understanding of the `reticulate` package (see [here](https://rstudio.github.io/reticulate))
+We recommend having a thorough understanding of the `reticulate` package (see [here](https://rstudio.github.io/reticulate/))
 before using the python functionality described below. 
 
 ## Example

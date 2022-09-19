@@ -85,6 +85,7 @@ dataset("iris", iris)
 
 # Example with more arguments
 library(scda)
+\dontrun{
 ADSL <- synthetic_cdisc_data("latest")$adsl
 ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL)
 
@@ -100,4 +101,5 @@ ADSL_dataset <- dataset(
 ADSL_dataset$get_metadata()
 ADSL_dataset$get_dataset_label()
 ADSL_dataset$get_code()
+}
 }

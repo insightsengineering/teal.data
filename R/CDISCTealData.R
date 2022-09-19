@@ -183,8 +183,9 @@ CDISCTealData <- R6::R6Class( # nolint
 #' @examples
 #' library(scda)
 #'
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
-#' ADTTE <- synthetic_cdisc_data("latest")$adtte
+#' latest_data <- synthetic_cdisc_data("latest")
+#' ADSL <- latest_data$adsl
+#' ADTTE <- latest_data$adtte
 #'
 #' # basic example
 #' cdisc_data(
