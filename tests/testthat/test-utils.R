@@ -92,4 +92,3 @@ testthat::test_that("get_teal_bs_theme", {
     testthat::expect_s3_class(get_teal_bs_theme(), "bs_theme")
   })
 })
-
