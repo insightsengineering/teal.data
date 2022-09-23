@@ -282,7 +282,7 @@ TealData <- R6::R6Class( # nolint
       # TealDatasetConnector with shiny app
       shinyApp(
         ui = fluidPage(
-          theme = get_teal_bs_version(),
+          theme = get_teal_bs_theme(),
           fluidRow(
             column(
               width = 8,
@@ -412,7 +412,7 @@ TealData <- R6::R6Class( # nolint
       # connectors ui(s) + submit button
       fluidPage(
         include_js_files(),
-        theme = get_teal_bs_version(),
+        theme = get_teal_bs_theme(),
         shinyjs::hidden(
           column(
             id = ns("delayed_data"),

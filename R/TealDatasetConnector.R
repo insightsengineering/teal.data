@@ -515,7 +515,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
       }
       shinyApp(
         ui = fluidPage(
-          theme = get_teal_bs_version(),
+          theme = get_teal_bs_theme(),
           self$get_ui(id = "main_app"),
           shinyjs::useShinyjs(),
           br(),
