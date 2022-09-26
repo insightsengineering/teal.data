@@ -146,6 +146,6 @@ set_keys.TealDatasetConnector <- function(x, keys, ...) {
 #' )
 set_keys.TealDataAbstract <- function(x, dataname, keys, ...) {
   check_ellipsis(...)
-  set_keys(x$get_items(dataname), keys =       keys)
+  set_keys(x$get_items(dataname), keys = keys)
   return(invisible(x))
 }
