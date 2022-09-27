@@ -33,6 +33,7 @@ Imports:
     utils,
     yaml
 Suggests:
+    bslib,
     dplyr,
     knitr,
     magrittr,
