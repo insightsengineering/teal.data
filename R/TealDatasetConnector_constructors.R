@@ -265,7 +265,7 @@ scda_dataset_connector <- function(dataname,
   x <- fun_dataset_connector(
     dataname = dataname,
     fun = scda::synthetic_cdisc_dataset,
-    fun_args = list(dataset_name = scda_dataname, name = scda_name),
+    fun_args = list(dataset_name = scda_dataname, archive_name = scda_name),
     keys = keys,
     label = label,
     code = code_from_script(code, script),

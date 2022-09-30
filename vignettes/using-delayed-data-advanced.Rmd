@@ -63,7 +63,7 @@ library(scda)
 fun <- callable_function(fun = synthetic_cdisc_dataset)
 
 # set arguments to function
-fun$set_args(list(dataset_name = "adsl", name = "latest"))
+fun$set_args(list(dataset_name = "adsl", archive_name = "latest"))
 
 # execute function with arguments set
 df <- fun$run()
@@ -81,7 +81,7 @@ It's also possible to execute the `fun$run()` function with arguments added on t
 fun <- callable_function(fun = synthetic_cdisc_dataset)
 
 # add arguments on the fly
-df <- fun$run(args = list(dataset_name = "adae", name = "latest"))
+df <- fun$run(args = list(dataset_name = "adae", archive_name = "latest"))
 head(df, 2)
 
 # dynamic arguments not reflected in the call
@@ -91,7 +91,7 @@ cat(fun$get_call())
 `CallableFunction` can also depend on other R objects as the example function below depends on `ADSL`. The function can be executed in specific environment where we can copy objects needed to execute a call. To include objects in the function call, one has to use `$assign_to_env()` to copy the object and `$set_args(list(ADSL = as.name(ADSL)))` to link the object with function argument.
 
 ```{r}
-adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
 
 fun <- callable_function(fun = function(adsl) {
   adsl_2 <- adsl
@@ -120,7 +120,7 @@ A simpler version of the `Callable` class is `CallableCode`. Similar to `Callabl
 ```{r}
 code <- callable_code(
   "library(scda)
-  ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")
+  ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")
   ADTTE$x1 <- x1
   ADTTE <- dplyr::filter(ADTTE, PARAMCD %in% c('EFS', 'OS'))"
 )
@@ -145,12 +145,12 @@ Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed fo
 ```{r}
 library(magrittr)
 
-adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest") %>% head(3)
+adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest") %>% head(3)
 
 adsl_dataset <- cdisc_dataset(
   dataname = "ADSL",
   x = adsl_raw,
-  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\") %>% head(3)"
+  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\") %>% head(3)"
 )
 ```
 
@@ -181,7 +181,7 @@ adsl_dataset$get_keys()
 adsl_conn <- dataset_connector(
   dataname = "ADSL",
   pull_callable = callable_function("synthetic_cdisc_dataset") %>%
-    set_args(list(dataset_name = "adsl", name = "latest")),
+    set_args(list(dataset_name = "adsl", archive_name = "latest")),
   keys = get_cdisc_keys("ADSL"),
   label = "Subject-Level Analysis Dataset"
 )
@@ -286,15 +286,15 @@ This class combines multiple `TealDatasetConnector` (or `CDISCTealDatasetConnect
 adsl <- dataset_connector(
   dataname = "ADSL",
   pull_callable = callable_function("synthetic_cdisc_dataset") %>%
-    set_args(list(dataset_name = "adsl", name = "latest")),
+    set_args(list(dataset_name = "adsl", archive_name = "latest")),
   keys = get_cdisc_keys("ADSL"),
   label = "Subject-Level Analysis Dataset"
 )
 
 adsl_3 <- dataset_connector(
   dataname = "ADSL_3",
-  pull_callable = callable_function(fun = function(ADSL, name, n = 5) { # nolint
-    print(paste("slicing data from", name))
+  pull_callable = callable_function(fun = function(ADSL, archive_name, n = 5) { # nolint
+    print(paste("slicing data from", archive_name))
     ADSL_3 <- head(ADSL, n) # nolint
   }) %>%
     set_args(list(ADSL = as.name("ADSL"))),
@@ -323,13 +323,13 @@ data <- teal.data:::TealDataConnector$new(
 )
 ```
 
-The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(name = "latest"))`, this argument will be set for all connectors. In case when any connector contains a `CallableFunction` which doesn't have `name` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
+The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(archive_name = "latest"))`, this argument will be set for all connectors. In case when any connector contains a `CallableFunction` which doesn't have `archive_name` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
 
 ```{r}
 cat(get_code(data))
 
 # pull ADSL and ADSL_3
-data$set_pull_args(args = list(name = "latest"))
+data$set_pull_args(args = list(archive_name = "latest"))
 data$pull()
 ```
 
@@ -380,7 +380,7 @@ data$set_server(
         }
         for (connector in connectors) {
           # set_args before to return them in the code (fixed args)
-          set_args(connector, args = list(name = input$name))
+          set_args(connector, args = list(archive_name = input$name))
           # pull each dataset
           connector$get_server()(id = connector$get_dataname())
           if (connector$is_failed()) {
@@ -409,13 +409,13 @@ if (interactive()) {
 data <- cdisc_data(
   cdisc_dataset(
     dataname = "ADSL",
-    synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest"),
-    code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
+    synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"),
+    code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
   ),
   cdisc_dataset(
     dataname = "ADTTE",
-    synthetic_cdisc_dataset(dataset_name = "adtte", name = "latest"),
-    code = "ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\")"
+    synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
+    code = "ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
   )
 )
 ```
@@ -479,8 +479,8 @@ To modify a single dataset one should use `mutate_dataset` by specifying `code` 
 ```{r}
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest"),
-  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
+  synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"),
+  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
 ) %>%
   mutate_dataset(code = "ADSL$x1 <- 1")
 
