@@ -12,7 +12,7 @@ Get dataset attributes in form of named list."><!-- mathjax --><script src="http
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9014</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,12 +43,6 @@ Get dataset attributes in form of named list."><!-- mathjax --><script src="http
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -112,16 +106,19 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "COUNTRY"             "DTHFL"               "INVID"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "INVNAM"              "ARM"                 "ARMCD"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ACTARM"              "ACTARMCD"            "TRT01P"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "REGION1"             "STRATA1"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "STRATA2"             "BMRKR1"              "BMRKR2"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "ITTFL"               "SAFFL"               "BMEASIFL"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "BEP01FL"             "AEWITHFL"            "RANDDT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "TRTSDTM"             "TRTEDTM"             "EOSSTT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "EOTSTT"              "EOSDT"               "EOSDY"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "DCSREAS"             "DTHDT"               "DTHCAUS"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "DTHCAT"              "LDDTHELD"            "LDDTHGR1"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "LSTALVDT"            "DTHADY"              "ADTHAUT"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "study_duration_secs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "TRT02P"              "TRT02A"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "REGION1"             "STRATA1"             "STRATA2"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "BMRKR1"              "BMRKR2"              "ITTFL"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "SAFFL"               "BMEASIFL"            "BEP01FL"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "AEWITHFL"            "RANDDT"              "TRTSDTM"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "TRTEDTM"             "TRT01SDTM"           "TRT01EDTM"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TRT02SDTM"           "TRT02EDTM"           "AP01SDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "AP01EDTM"            "AP02SDTM"            "AP02EDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "EOSSTT"              "EOTSTT"              "EOSDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "EOSDY"               "DCSREAS"             "DTHDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "DTHCAUS"             "DTHCAT"              "LDDTHELD"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [52] "LDDTHGR1"            "LSTALVDT"            "DTHADY"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "ADTHAUT"             "study_duration_secs"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row.names</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18</span>
@@ -155,101 +152,121 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Subject Level Analysis Dataset"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`creation date`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-13"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-30"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $column_labels</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STUDYID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Study Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   USUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Unique Subject Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        "Subject Identifier for the Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SITEID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Study Site Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       AGE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Age" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      AGEU </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Age Units" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       SEX </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Sex" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      RACE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Race" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ETHNIC </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Ethnicity" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   COUNTRY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                 "Country" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Subject Death Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     INVID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Investigator Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    INVNAM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Investigator Name" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       ARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              "Description of Planned Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Planned Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ACTARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Description of Actual Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  ACTARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Actual Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01P </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Planned Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01A </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          "Actual Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   REGION1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Geographic Region 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            "Continuous Level Biomarker 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           "Categorical Level Biomarker 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ITTFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Intent-To-Treat Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     SAFFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Safety Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  BMEASIFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "Response Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   BEP01FL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "Biomarker Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  AEWITHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "AE Leading to Drug Withdrawal Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    RANDDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date of Randomization" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTSDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTEDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOSSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "End of Study Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOTSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "End of Treatment Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "End of Study Date" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "End of Study Relative Day" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DCSREAS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   "Reason for Discontinuation from Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Date of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DTHCAUS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          "Cause of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHCAT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Cause of Death Category" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHELD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    "Elapsed Days from Last Dose to Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHGR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Last Dose to Death - Days Elapsed Grp 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LSTALVDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date Last Known Alive" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHADY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Relative Day of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   ADTHAUT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Autopsy Performed" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       study_duration_secs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "NOT A STANDARD BUT NEEDED FOR RCD" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STUDYID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Study Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                USUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Unique Subject Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Subject Identifier for the Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SITEID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Study Site Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    AGE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Age" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   AGEU </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Age Units" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    SEX </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Sex" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   RACE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 "Race" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ETHNIC </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Ethnicity" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                COUNTRY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              "Country" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   "Subject Death Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  INVID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Investigator Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 INVNAM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Investigator Name" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    ARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Description of Planned Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Planned Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ACTARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Description of Actual Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               ACTARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      "Actual Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                REGION1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "Geographic Region 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Continuous Level Biomarker 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Categorical Level Biomarker 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ITTFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Intent-To-Treat Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  SAFFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Safety Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               BMEASIFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Response Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                BEP01FL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Biomarker Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AEWITHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "AE Leading to Drug Withdrawal Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 RANDDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date of Randomization" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTSDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Datetime of First Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTEDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 01 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 01 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 02 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 02 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOSSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "End of Study Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOTSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "End of Treatment Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "End of Study Date" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "End of Study Relative Day" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DCSREAS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                "Reason for Discontinuation from Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                        "Date of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DTHCAUS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                       "Cause of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHCAT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Cause of Death Category" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHELD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Elapsed Days from Last Dose to Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHGR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Last Dose to Death - Days Elapsed Grp 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LSTALVDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date Last Known Alive" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHADY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Relative Day of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                ADTHAUT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Autopsy Performed" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    study_duration_secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    "NOT A STANDARD BUT NEEDED FOR RCD" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row_labels</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
@@ -278,16 +295,19 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "COUNTRY"             "DTHFL"               "INVID"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "INVNAM"              "ARM"                 "ARMCD"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ACTARM"              "ACTARMCD"            "TRT01P"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "REGION1"             "STRATA1"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "STRATA2"             "BMRKR1"              "BMRKR2"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "ITTFL"               "SAFFL"               "BMEASIFL"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "BEP01FL"             "AEWITHFL"            "RANDDT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "TRTSDTM"             "TRTEDTM"             "EOSSTT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "EOTSTT"              "EOSDT"               "EOSDY"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "DCSREAS"             "DTHDT"               "DTHCAUS"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "DTHCAT"              "LDDTHELD"            "LDDTHGR1"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "LSTALVDT"            "DTHADY"              "ADTHAUT"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "study_duration_secs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "TRT02P"              "TRT02A"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "REGION1"             "STRATA1"             "STRATA2"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "BMRKR1"              "BMRKR2"              "ITTFL"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "SAFFL"               "BMEASIFL"            "BEP01FL"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "AEWITHFL"            "RANDDT"              "TRTSDTM"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "TRTEDTM"             "TRT01SDTM"           "TRT01EDTM"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TRT02SDTM"           "TRT02EDTM"           "AP01SDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "AP01EDTM"            "AP02SDTM"            "AP02EDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "EOSSTT"              "EOTSTT"              "EOSDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "EOSDY"               "DCSREAS"             "DTHDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "DTHCAUS"             "DTHCAT"              "LDDTHELD"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [52] "LDDTHGR1"            "LSTALVDT"            "DTHADY"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "ADTHAUT"             "study_duration_secs"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row.names</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18</span>
@@ -321,101 +341,121 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Subject Level Analysis Dataset"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`creation date`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-13"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-30"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $column_labels</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STUDYID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Study Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   USUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Unique Subject Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        "Subject Identifier for the Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SITEID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Study Site Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       AGE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Age" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      AGEU </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Age Units" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       SEX </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Sex" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      RACE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Race" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ETHNIC </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Ethnicity" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   COUNTRY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                 "Country" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Subject Death Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     INVID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Investigator Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    INVNAM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Investigator Name" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       ARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              "Description of Planned Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Planned Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ACTARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Description of Actual Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  ACTARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Actual Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01P </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Planned Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01A </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          "Actual Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   REGION1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Geographic Region 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            "Continuous Level Biomarker 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           "Categorical Level Biomarker 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ITTFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Intent-To-Treat Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     SAFFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Safety Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  BMEASIFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "Response Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   BEP01FL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "Biomarker Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  AEWITHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "AE Leading to Drug Withdrawal Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    RANDDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date of Randomization" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTSDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTEDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOSSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "End of Study Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOTSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "End of Treatment Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "End of Study Date" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "End of Study Relative Day" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DCSREAS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   "Reason for Discontinuation from Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Date of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DTHCAUS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          "Cause of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHCAT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Cause of Death Category" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHELD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    "Elapsed Days from Last Dose to Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHGR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Last Dose to Death - Days Elapsed Grp 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LSTALVDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date Last Known Alive" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHADY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Relative Day of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   ADTHAUT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Autopsy Performed" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       study_duration_secs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "NOT A STANDARD BUT NEEDED FOR RCD" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STUDYID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Study Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                USUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Unique Subject Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Subject Identifier for the Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SITEID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Study Site Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    AGE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Age" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   AGEU </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Age Units" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    SEX </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Sex" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   RACE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 "Race" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ETHNIC </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Ethnicity" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                COUNTRY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              "Country" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   "Subject Death Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  INVID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Investigator Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 INVNAM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Investigator Name" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    ARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Description of Planned Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Planned Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ACTARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Description of Actual Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               ACTARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      "Actual Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                REGION1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "Geographic Region 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Continuous Level Biomarker 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Categorical Level Biomarker 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ITTFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Intent-To-Treat Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  SAFFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Safety Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               BMEASIFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Response Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                BEP01FL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Biomarker Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AEWITHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "AE Leading to Drug Withdrawal Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 RANDDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date of Randomization" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTSDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Datetime of First Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTEDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 01 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 01 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 02 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 02 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOSSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "End of Study Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOTSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "End of Treatment Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "End of Study Date" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "End of Study Relative Day" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DCSREAS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                "Reason for Discontinuation from Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                        "Date of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DTHCAUS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                       "Cause of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHCAT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Cause of Death Category" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHELD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Elapsed Days from Last Dose to Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHGR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Last Dose to Death - Days Elapsed Grp 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LSTALVDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date Last Known Alive" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHADY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Relative Day of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                ADTHAUT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Autopsy Performed" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    study_duration_secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    "NOT A STANDARD BUT NEEDED FOR RCD" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row_labels</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
@@ -448,16 +488,19 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "COUNTRY"             "DTHFL"               "INVID"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "INVNAM"              "ARM"                 "ARMCD"              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "ACTARM"              "ACTARMCD"            "TRT01P"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "REGION1"             "STRATA1"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "STRATA2"             "BMRKR1"              "BMRKR2"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "ITTFL"               "SAFFL"               "BMEASIFL"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "BEP01FL"             "AEWITHFL"            "RANDDT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "TRTSDTM"             "TRTEDTM"             "EOSSTT"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "EOTSTT"              "EOSDT"               "EOSDY"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "DCSREAS"             "DTHDT"               "DTHCAUS"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "DTHCAT"              "LDDTHELD"            "LDDTHGR1"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "LSTALVDT"            "DTHADY"              "ADTHAUT"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "study_duration_secs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "TRT01A"              "TRT02P"              "TRT02A"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [22] "REGION1"             "STRATA1"             "STRATA2"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "BMRKR1"              "BMRKR2"              "ITTFL"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28] "SAFFL"               "BMEASIFL"            "BEP01FL"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [31] "AEWITHFL"            "RANDDT"              "TRTSDTM"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [34] "TRTEDTM"             "TRT01SDTM"           "TRT01EDTM"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [37] "TRT02SDTM"           "TRT02EDTM"           "AP01SDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [40] "AP01EDTM"            "AP02SDTM"            "AP02EDTM"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [43] "EOSSTT"              "EOTSTT"              "EOSDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [46] "EOSDY"               "DCSREAS"             "DTHDT"              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [49] "DTHCAUS"             "DTHCAT"              "LDDTHELD"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [52] "LDDTHGR1"            "LSTALVDT"            "DTHADY"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [55] "ADTHAUT"             "study_duration_secs"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row.names</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18</span>
@@ -491,101 +534,121 @@ Get dataset attributes in form of named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Subject Level Analysis Dataset"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`creation date`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-13"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2022-09-30"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $column_labels</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STUDYID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Study Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   USUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Unique Subject Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SUBJID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        "Subject Identifier for the Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    SITEID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Study Site Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       AGE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Age" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      AGEU </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Age Units" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       SEX </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Sex" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      RACE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Race" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ETHNIC </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Ethnicity" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   COUNTRY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                 "Country" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Subject Death Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     INVID </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Investigator Identifier" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    INVNAM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Investigator Name" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       ARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              "Description of Planned Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Planned Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    ACTARM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "Description of Actual Arm" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  ACTARMCD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Actual Arm Code" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01P </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Planned Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    TRT01A </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          "Actual Treatment for Period 01" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   REGION1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Geographic Region 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   STRATA2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Stratification Factor 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            "Continuous Level Biomarker 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    BMRKR2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           "Categorical Level Biomarker 2" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     ITTFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Intent-To-Treat Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     SAFFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Safety Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  BMEASIFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "Response Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   BEP01FL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "Biomarker Evaluable Population Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  AEWITHFL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      "AE Leading to Drug Withdrawal Flag" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    RANDDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date of Randomization" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTSDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   TRTEDTM </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOSSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     "End of Study Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    EOTSTT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "End of Treatment Status" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "End of Study Date" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     EOSDY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               "End of Study Relative Day" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DCSREAS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   "Reason for Discontinuation from Study" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     DTHDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Date of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   DTHCAUS </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                          "Cause of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHCAT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Cause of Death Category" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHELD </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    "Elapsed Days from Last Dose to Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LDDTHGR1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Last Dose to Death - Days Elapsed Grp 1" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  LSTALVDT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Date Last Known Alive" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                    DTHADY </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Relative Day of Death" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                   ADTHAUT </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Autopsy Performed" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                       study_duration_secs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       "NOT A STANDARD BUT NEEDED FOR RCD" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STUDYID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Study Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                USUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Unique Subject Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SUBJID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     "Subject Identifier for the Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 SITEID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Study Site Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    AGE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Age" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   AGEU </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Age Units" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    SEX </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  "Sex" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                   RACE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 "Race" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ETHNIC </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                            "Ethnicity" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                COUNTRY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              "Country" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                   "Subject Death Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  INVID </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Investigator Identifier" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 INVNAM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Investigator Name" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                    ARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           "Description of Planned Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     "Planned Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 ACTARM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "Description of Actual Arm" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               ACTARMCD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      "Actual Arm Code" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT01A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02P </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Planned Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 TRT02A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                       "Actual Treatment for Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                REGION1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "Geographic Region 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                STRATA2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Stratification Factor 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         "Continuous Level Biomarker 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 BMRKR2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        "Categorical Level Biomarker 2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  ITTFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      "Intent-To-Treat Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  SAFFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Safety Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               BMEASIFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "Response Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                BEP01FL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  "Biomarker Evaluable Population Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AEWITHFL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   "AE Leading to Drug Withdrawal Flag" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 RANDDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date of Randomization" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTSDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Datetime of First Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                TRTEDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure to Treatment" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               "Datetime of Last Exposure in Period 01" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Datetime of First Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                              TRT02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "Datetime of Last Exposure to Treatment in Period 02" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 01 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP01EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 01 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02SDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             "Period 02 Start Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               AP02EDTM </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               "Period 02 End Datetime" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOSSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  "End of Study Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 EOTSTT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "End of Treatment Status" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "End of Study Date" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  EOSDY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            "End of Study Relative Day" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DCSREAS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                "Reason for Discontinuation from Study" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                  DTHDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                        "Date of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                DTHCAUS </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                       "Cause of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHCAT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              "Cause of Death Category" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHELD </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 "Elapsed Days from Last Dose to Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LDDTHGR1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              "Last Dose to Death - Days Elapsed Grp 1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               LSTALVDT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Date Last Known Alive" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                 DTHADY </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                "Relative Day of Death" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                ADTHAUT </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    "Autopsy Performed" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    study_duration_secs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    "NOT A STANDARD BUT NEEDED FOR RCD" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $row_labels</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
