@@ -125,11 +125,11 @@ testthat::test_that("scda_dataset_connector", {
   testthat::expect_identical(x$get_dataname(), "ADSL")
   testthat::expect_equal(
     x$get_code(),
-    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")"
+    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
   )
 
   testthat::expect_silent(load_dataset(x))
-  testthat::expect_identical(x$get_raw_data(), synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest"))
+  testthat::expect_identical(x$get_raw_data(), synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"))
   testthat::expect_equal(x$get_dataset()$get_metadata(), list(type = "scda", version = "latest"))
 })
 
@@ -178,7 +178,7 @@ testthat::test_that("csv_dataset_connector not expected input", {
 # test with cdisc data input
 testthat::test_that("csv_dataset_connector scda", {
   # create csv file
-  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
   temp_file_csv <- tempfile(fileext = ".csv")
   write.csv(adsl, file = temp_file_csv, row.names = FALSE)
 
@@ -250,7 +250,7 @@ testthat::test_that("csv_dataset_connector scda", {
 
 # non-standard dataset
 testthat::test_that("csv_dataset_connector non-standard datasets multi/space character delim", {
-  test_adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+  test_adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
   test_adsl_ns <- data.frame(
     STUDYID = "A",
     USUBJID = paste0("A", 1:3),
@@ -326,7 +326,7 @@ testthat::test_that("csv_dataset_connector attritubes", {
 # test csv_cdisc_dataset_connector
 testthat::test_that("csv_cdisc_dataset_connector scda", {
   # create csv file
-  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
   temp_file_csv <- tempfile(fileext = ".csv")
   write.csv(adsl, file = temp_file_csv, row.names = FALSE)
 
@@ -368,7 +368,7 @@ testthat::test_that("script_dataset_connector", {
     text = c(
       "
     library(scda)
-    ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")
+    ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")
     ADSL"
     ),
     con = file_example
@@ -401,7 +401,7 @@ testthat::test_that("script_cdisc_dataset_connector", {
     text = c(
       "
     library(scda)
-    ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")
+    ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")
     ADSL"
     ),
     con = file_example
@@ -461,13 +461,13 @@ testthat::test_that("fun_cdisc_dataset_connector", {
   fun_direct <- fun_cdisc_dataset_connector(
     dataname = "ADSL",
     fun = synthetic_cdisc_dataset,
-    fun_args = list(dataset_name = "adsl", name = "latest")
+    fun_args = list(dataset_name = "adsl", archive_name = "latest")
   )
 
   fun_direct2 <- fun_cdisc_dataset_connector(
     dataname = "ADSL",
     fun = scda::synthetic_cdisc_dataset,
-    fun_args = list(dataset_name = "adsl", name = "latest")
+    fun_args = list(dataset_name = "adsl", archive_name = "latest")
   )
   fun_direct$pull()
 
@@ -482,11 +482,11 @@ testthat::test_that("fun_cdisc_dataset_connector", {
 })
 
 testthat::test_that("code_dataset_connector - Test various inputs", {
-  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
 
   file_example <- tempfile(fileext = ".R")
   writeLines(
-    text = c("ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")\nADSL"),
+    text = c("ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL"),
     con = file_example
   )
 
@@ -494,11 +494,11 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
 
   expect_equal(
     from_file$get_code(),
-    "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")\nADSL <- ADSL"
+    "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL <- ADSL"
   )
   expect_identical(from_file$pull()$get_raw_data(), adsl)
 
-  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+  adsl <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
 
   file_example <- tempfile(fileext = ".R")
   writeLines(
@@ -506,10 +506,10 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
       "mtcars
       # code ADSL>
       library(scda)
-      ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")
+      ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")
       ADSL
       # <ADSL code
-      ADAE <- synthetic_cdisc_dataset(dataset_name = \"adae\", name = \"latest\")"
+      ADAE <- synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
     ),
     con = file_example
   )
@@ -525,7 +525,7 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
 
   expect_equal(
     get_code_file$get_code(),
-    "library(scda)\nADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")\nADSL <- ADSL"
+    "library(scda)\nADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL <- ADSL"
   )
   expect_identical(get_code_file$pull()$get_raw_data(), adsl)
 })
@@ -533,9 +533,9 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
 testthat::test_that("code_dataset_connector - Modify vars", {
   adsl <- cdisc_dataset(
     dataname = "ADSL",
-    x = synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest"),
+    x = synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"),
     keys = get_cdisc_keys("ADSL"),
-    code = "synthetic_cdisc_dataset(dataset_name = \"adsl\", name = \"latest\")",
+    code = "synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")",
     label = "ADSL dataset"
   )
 
@@ -568,7 +568,7 @@ testthat::test_that("code_dataset_connector - library calls", {
   adsl <- dataset_connector(
     dataname = "ADSL",
     pull_callable = callable_function(synthetic_cdisc_dataset) %>%
-      set_args(args = list(dataset_name = "adsl", name = "latest")),
+      set_args(args = list(dataset_name = "adsl", archive_name = "latest")),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL dataset"
   )
@@ -577,7 +577,7 @@ testthat::test_that("code_dataset_connector - library calls", {
     dataname = "ADTTE",
     pull_callable = callable_code(
       "library(dplyr)
-      synthetic_cdisc_dataset(dataset_name = \"adtte\", name = \"latest\") %>%
+      synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\") %>%
         filter(SEX == 'F')"
     ),
     keys = get_cdisc_keys("ADTTE"),
@@ -588,7 +588,7 @@ testthat::test_that("code_dataset_connector - library calls", {
     dataname = "ADRS",
     pull_callable = callable_code(
       "library(dplyr)
-      synthetic_cdisc_dataset(dataset_name = \"adrs\", name = \"latest\") %>%
+      synthetic_cdisc_dataset(dataset_name = \"adrs\", archive_name = \"latest\") %>%
         filter(SEX == 'F')"
     ),
     keys = get_cdisc_keys("ADRS"),
@@ -606,7 +606,7 @@ testthat::test_that("code_dataset_connector - library calls", {
   datasets <- get_datasets(data)
   expect_identical(
     datasets[[1]]$get_raw_data(),
-    synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")
+    synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
   )
 
   expect_identical(

@@ -33,7 +33,7 @@ testthat::test_that("Single scda dataset connector", {
   # check reproducible code
   testthat::expect_equal(
     adsl$get_code(),
-    'ADSL <- scda::synthetic_cdisc_dataset(dataset_name = "adsl", name = "latest")'
+    'ADSL <- scda::synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")'
   )
 })
 
