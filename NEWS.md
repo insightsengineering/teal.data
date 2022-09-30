@@ -1,4 +1,4 @@
-# teal.data 0.1.1.9014
+# teal.data 0.1.1.9015
 
 * Exported `validate_metadata` function.
 * Updated uses of `synthetic_cdisc_dataset` function to updated version, with argument `name` replaced by `archive_name`.
