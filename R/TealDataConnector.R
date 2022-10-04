@@ -376,6 +376,7 @@ TealDataConnector <- R6::R6Class( # nolint
       shinyApp(
         ui = fluidPage(
           include_js_files(),
+          theme = get_teal_bs_theme(),
           fluidRow(
             column(
               width = 8,
