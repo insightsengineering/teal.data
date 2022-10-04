@@ -1,7 +1,14 @@
 # teal.data 0.1.1.9015
 
+### Enhancements
+* Updated the vignettes and the README content.
+
+### Miscellaneous
 * Exported `validate_metadata` function.
-* Updated uses of `synthetic_cdisc_dataset` function to updated version, with argument `name` replaced by `archive_name`.
+* Replaced argument `name` by `archive_name` to comply with the latest version of the `synthetic_cdisc_dataset` function.
+
+### Bug fixes
+* Fixed `get_raw_data` examples.
 
 # teal.data 0.1.1
 
