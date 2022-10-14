@@ -1,4 +1,4 @@
-# teal.data 0.1.1.9018
+# teal.data 0.1.2
 
 ### Enhancements
 * Updated the vignettes and the README content.
