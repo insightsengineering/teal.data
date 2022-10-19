@@ -1,3 +1,9 @@
+# teal.data 0.1.3
+
+### Enhancements
+
+* Updated to 2022 synthetic CDISC data.
+
 # teal.data 0.1.2
 
 ### Enhancements
