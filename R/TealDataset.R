@@ -125,8 +125,7 @@ TealDataset <- R6::R6Class( # nolint
       ))
       print(head(as.data.frame(self$get_raw_data())))
       if (self$get_nrow() > 6) {
-        cat("\n...\n")
-        print(tail(self$get_raw_data()))
+        cat("...\n")
       }
       invisible(self)
     },
