@@ -1,4 +1,4 @@
-# teal.data 0.1.2.9001
+# teal.data 0.1.2.9002
 
 * Examples now use `scda.2022` instead of `scda.2021`.
 
