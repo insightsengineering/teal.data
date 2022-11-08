@@ -1,5 +1,9 @@
 # teal.data
 
+<!-- start badges -->
+[![Code Coverage](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/badge.svg)](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/coverage.xml)
+<!-- end badges -->
+
 This package is used to create the data needed for `teal` applications. This data can be:
 
 - Independent data frames
