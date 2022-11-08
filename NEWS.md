@@ -1,4 +1,4 @@
-# teal.data 0.1.2.9002
+# teal.data 0.1.2.9003
 
 * Examples now use `scda.2022` instead of `scda.2021`.
 * Modified `teal.Dataset$print` method for a less cluttered output.
