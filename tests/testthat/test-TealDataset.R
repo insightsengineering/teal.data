@@ -813,12 +813,12 @@ testthat::test_that("dataset$print prints out all rows when less than 6", {
   )
 })
 
-testthat::test_that("dataset$print prints out both head and tail when more than 6 rows", {
+testthat::test_that("dataset$print truncates output after 6 rows", {
   x <- head(iris, 7)
   test_ds <- dataset(
     dataname = "x",
     x = x,
-    code = "data.frame(x = c(1, 2), y = c('a', 'b'), stringsAsFactors = FALSE)"
+    code = "head(iris, 7)"
   )
 
   testthat::expect_equal(
@@ -832,15 +832,7 @@ testthat::test_that("dataset$print prints out both head and tail when more than 
       "4          4.6         3.1          1.5         0.2  setosa",
       "5          5.0         3.6          1.4         0.2  setosa",
       "6          5.4         3.9          1.7         0.4  setosa",
-      "",
-      "...",
-      "  Sepal.Length Sepal.Width Petal.Length Petal.Width Species",
-      "2          4.9         3.0          1.4         0.2  setosa",
-      "3          4.7         3.2          1.3         0.2  setosa",
-      "4          4.6         3.1          1.5         0.2  setosa",
-      "5          5.0         3.6          1.4         0.2  setosa",
-      "6          5.4         3.9          1.7         0.4  setosa",
-      "7          4.6         3.4          1.4         0.3  setosa"
+      "..."
     )
   )
 })
