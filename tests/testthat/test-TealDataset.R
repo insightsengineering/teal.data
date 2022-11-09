@@ -445,12 +445,6 @@ testthat::test_that("TealDataset$check returns FALSE if the passed code creates 
   testthat::expect_false(test_ds0$check())
 })
 
-testthat::test_that("get_hash returns the hash of the object passed to the constructor", {
-  iris_hash <- digest::digest(iris, algo = "md5")
-  ds <- TealDataset$new("iris", iris)
-  testthat::expect_equal(ds$get_hash(), iris_hash)
-})
-
 testthat::test_that("get_code_class returns the correct CodeClass object", {
   cc1 <- CodeClass$new(code = "iris <- head(iris)", dataname = "iris")
   cc2 <- CodeClass$new(code = "mtcars <- head(mtcars)", dataname = "mtcars", deps = "iris")
@@ -756,14 +750,6 @@ test_that("mutate_dataset with vars argument", {
   expect_silent(
     mutate_dataset(x = t, code = "test$zz <- var", vars = list(var = var1))
   )
-})
-
-testthat::test_that("get_hash returns the correct hash after mutating the TealDataset object", {
-  mutated_iris <- iris
-  mutated_iris$test <- 1
-  mutated_iris_hash <- digest::digest(mutated_iris, algo = "md5")
-  ds <- TealDataset$new("iris", iris) %>% mutate_dataset("iris$test <- 1")
-  testthat::expect_equal(ds$get_hash(), mutated_iris_hash)
 })
 
 testthat::test_that("dataset$merge_join_keys does not throw on basic input", {

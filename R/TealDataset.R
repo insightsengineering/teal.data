@@ -73,7 +73,6 @@ TealDataset <- R6::R6Class( # nolint
       self$set_vars(vars)
       self$set_dataset_label(label)
       self$set_keys(keys)
-      private$calculate_hash()
 
       # needed if recreating dataset - we need to preserve code order and uniqueness
       private$code <- CodeClass$new()
@@ -254,12 +253,6 @@ TealDataset <- R6::R6Class( # nolint
         private$join_keys <- join_keys()
       }
       private$join_keys
-    },
-    #' @description
-    #' Returns the string representation of the raw data hashed with the MD5 hash algorithm.
-    #' @return `character` the hash of the raw data
-    get_hash = function() {
-      private$data_hash
     },
     #' @description
     #' Get the list of dependencies that are `TealDataset` or `TealDatasetConnector` objects
@@ -596,7 +589,6 @@ TealDataset <- R6::R6Class( # nolint
     .keys = character(0),
     mutate_code = list(),
     mutate_vars = list(),
-    data_hash = character(0),
     join_keys = NULL,
 
     ## __Private Methods ====
@@ -786,13 +778,6 @@ TealDataset <- R6::R6Class( # nolint
       new_set <- execution_environment[[self$get_dataname()]]
 
       return(new_set)
-    },
-
-    # Calculates the MD5 hash of the raw data stored in this TealDataset.
-    # @return NULL
-    calculate_hash = function() {
-      private$data_hash <- digest::digest(self$get_raw_data(), algo = "md5")
-      NULL
     },
 
     # Set the name for the dataset
