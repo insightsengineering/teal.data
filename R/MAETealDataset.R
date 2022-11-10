@@ -95,7 +95,9 @@ MAETealDataset <- R6::R6Class( # nolint
     #' `TRUE` if the dataset generated from evaluating the
     #' `get_code()` code is identical to the raw data, else `FALSE`.
     check = function() {
-      logger::log_trace("TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }...")
+      logger::log_trace(
+        "TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }..."
+      )
       if (!checkmate::test_character(self$get_code(), len = 1, pattern = "\\w+")) {
         stop(
           sprintf(

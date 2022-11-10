@@ -296,7 +296,9 @@ TealDataset <- R6::R6Class( # nolint
       common_mutate_vars <- intersect(names(datasets), names(private$mutate_vars))
       private$mutate_vars[common_mutate_vars] <- datasets[common_mutate_vars]
 
-      logger::log_trace("TealDataset$reassign_datasets_vars reassigned vars for dataset: { deparse1(self$get_dataname()) }.")
+      logger::log_trace(
+        "TealDataset$reassign_datasets_vars reassigned vars for dataset: { deparse1(self$get_dataname()) }."
+      )
       invisible(NULL)
     },
     #' @description
@@ -309,7 +311,9 @@ TealDataset <- R6::R6Class( # nolint
       checkmate::assert_character(label, max.len = 1, any.missing = FALSE)
       private$dataset_label <- label
 
-      logger::log_trace("TealDataset$set_dataset_label dataset_label set for dataset: { deparse1(self$get_dataname()) }.")
+      logger::log_trace(
+        "TealDataset$set_dataset_label dataset_label set for dataset: { deparse1(self$get_dataname()) }."
+      )
       return(invisible(self))
     },
     #' @description
@@ -353,7 +357,10 @@ TealDataset <- R6::R6Class( # nolint
     mutate_join_keys = function(dataset, val) {
       self$get_join_keys()$mutate(private$dataname, dataset, val)
       logger::log_trace(
-        "TealDatasetConnector$mutate_join_keys join_keys modified keys of { deparse1(self$get_dataname()) } against { dataset }."
+        paste0(
+          "TealDatasetConnector$mutate_join_keys join_keys modified keys",
+          "of { deparse1(self$get_dataname()) } against { dataset }."
+        )
       )
       return(invisible(self))
     },
@@ -516,7 +523,9 @@ TealDataset <- R6::R6Class( # nolint
     #' `TRUE` if the dataset generated from evaluating the
     #' `get_code()` code is identical to the raw data, else `FALSE`.
     check = function() {
-      logger::log_trace("TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }...")
+      logger::log_trace(
+        "TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }..."
+      )
       if (!checkmate::test_character(self$get_code(), len = 1, pattern = "\\w+")) {
         stop(
           sprintf(
@@ -606,7 +615,9 @@ TealDataset <- R6::R6Class( # nolint
       return(invisible(self))
     },
     mutate_eager = function() {
-      logger::log_trace("TealDatasetConnector$mutate_eager executing mutate code for dataset: { deparse1(self$get_dataname()) }...")
+      logger::log_trace(
+        "TealDatasetConnector$mutate_eager executing mutate code for dataset: { deparse1(self$get_dataname()) }..."
+      )
       new_df <- private$execute_code(
         code = private$mutate_list_to_code_class(),
         vars = c(
@@ -634,7 +645,9 @@ TealDataset <- R6::R6Class( # nolint
         vars = list()
       )
 
-      logger::log_trace("TealDatasetConnector$mutate_eager executed mutate code for dataset: { deparse1(self$get_dataname()) }.")
+      logger::log_trace(
+        "TealDatasetConnector$mutate_eager executed mutate code for dataset: { deparse1(self$get_dataname()) }."
+      )
 
       new_self
     },
