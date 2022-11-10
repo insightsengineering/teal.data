@@ -631,7 +631,7 @@ TealDataset <- R6::R6Class( # nolint
 
       # code set after successful evaluation
       # otherwise code != dataset
-      # private$code$append(private$mutate_code)
+      # private$code$append(private$mutate_code) # styler: off
       private$append_mutate_code()
       self$set_vars(private$mutate_vars)
       private$mutate_code <- list()
