@@ -147,16 +147,6 @@ test_that("deep clone", {
   expect_false(rlang::is_reference(x$get_join_keys(), x_copy$get_join_keys()))
 })
 
-testthat::test_that("The hashes of TealDatasets objects are correct after mutating the TealData object", {
-  mutated_iris <- iris
-  mutated_iris$test <- 1
-  mutated_iris_hash <- digest::digest(mutated_iris, algo = "md5")
-  rd <- teal_data(dataset("iris", iris))
-  mutate_data(rd, code = "iris$test <- 1")
-  rd$execute_mutate()
-  testthat::expect_equal(rd$get_dataset("iris")$get_hash(), mutated_iris_hash)
-})
-
 testthat::test_that("execute_mutate returns current datasets if no mutate_code", {
   pull_fun <- callable_function(data.frame)
   pull_fun$set_args(args = list(head_letters = head(letters)))

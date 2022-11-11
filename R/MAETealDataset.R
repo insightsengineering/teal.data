@@ -75,7 +75,6 @@ MAETealDataset <- R6::R6Class( # nolint
       self$set_vars(vars)
       self$set_dataset_label(label)
       self$set_keys(keys)
-      private$calculate_hash()
 
       # needed if recreating dataset - we need to preserve code order and uniqueness
       private$code <- CodeClass$new()
@@ -96,7 +95,9 @@ MAETealDataset <- R6::R6Class( # nolint
     #' `TRUE` if the dataset generated from evaluating the
     #' `get_code()` code is identical to the raw data, else `FALSE`.
     check = function() {
-      logger::log_trace("TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }...")
+      logger::log_trace(
+        "TealDataset$check executing the code to reproduce dataset: { deparse1(self$get_dataname()) }..."
+      )
       if (!checkmate::test_character(self$get_code(), len = 1, pattern = "\\w+")) {
         stop(
           sprintf(
@@ -274,7 +275,7 @@ MAETealDataset <- R6::R6Class( # nolint
 #' mae_d$get_code()
 #' mae_d$get_raw_data()
 #' @export
-dataset.MultiAssayExperiment <- function(dataname,
+dataset.MultiAssayExperiment <- function(dataname, # nolint
                                          x,
                                          keys = character(0),
                                          label = data_label(x),

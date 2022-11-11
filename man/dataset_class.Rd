@@ -61,7 +61,6 @@ test_dataset$reassign_datasets_vars(
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_dataset'><code>teal.data::TealDataset$get_dataset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_dataset_label"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_dataset_label'><code>teal.data::TealDataset$get_dataset_label()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_factor_colnames"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_factor_colnames'><code>teal.data::TealDataset$get_factor_colnames()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_hash"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_hash'><code>teal.data::TealDataset$get_hash()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_join_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_join_keys'><code>teal.data::TealDataset$get_join_keys()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_keys"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_keys'><code>teal.data::TealDataset$get_keys()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataset" data-id="get_metadata"><a href='../../teal.data/html/TealDataset.html#method-TealDataset-get_metadata'><code>teal.data::TealDataset$get_metadata()</code></a></span></li>
@@ -314,7 +313,6 @@ The objects of this class are cloneable with this method.
 \item \href{#method-TealDataset-get_keys}{\code{TealDataset$get_keys()}}
 \item \href{#method-TealDataset-get_metadata}{\code{TealDataset$get_metadata()}}
 \item \href{#method-TealDataset-get_join_keys}{\code{TealDataset$get_join_keys()}}
-\item \href{#method-TealDataset-get_hash}{\code{TealDataset$get_hash()}}
 \item \href{#method-TealDataset-get_var_r6}{\code{TealDataset$get_var_r6()}}
 \item \href{#method-TealDataset-reassign_datasets_vars}{\code{TealDataset$reassign_datasets_vars()}}
 \item \href{#method-TealDataset-set_dataset_label}{\code{TealDataset$set_dataset_label()}}
@@ -698,19 +696,6 @@ Get \code{JoinKeys} object with keys used for joining.
 
 \subsection{Returns}{
 (\code{JoinKeys})
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDataset-get_hash"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDataset-get_hash}{}}}
-\subsection{Method \code{get_hash()}}{
-Returns the string representation of the raw data hashed with the MD5 hash algorithm.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDataset$get_hash()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-\code{character} the hash of the raw data
 }
 }
 \if{html}{\out{<hr>}}
