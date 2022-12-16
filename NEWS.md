@@ -3,6 +3,7 @@
 * Examples now use `scda.2022` instead of `scda.2021`.
 * Modified `teal.Dataset$print` method for a less cluttered output.
 * Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
+* Improved error message in `get_cdisc_keys`. 
 
 # teal.data 0.1.2
 
