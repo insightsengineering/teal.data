@@ -58,8 +58,8 @@ get_cdisc_keys <- function(dataname) {
     stop(sprintf(
       "get_cdisc_keys does not support datasets called %s\n Please specify the keys directly For example:
       cdisc_dataset(dataname = \"%s\", keys = c(\"STUDYID\", \"USUBJID\", ...), parent = \"ADSL\", ...)",
-      dataname, dataname)
-    )
+      dataname, dataname
+    ))
   } else {
     cdisc_keys <- default_cdisc_keys[[dataname]]$primary
 
