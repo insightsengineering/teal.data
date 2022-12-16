@@ -56,9 +56,10 @@ get_cdisc_keys <- function(dataname) {
 
   if (!(dataname %in% names(default_cdisc_keys))) {
     stop(sprintf(
-      "There is no dataset called: %s \n  List of supported cdisc_datasets:\n   %s",
-      dataname, paste(names(default_cdisc_keys), collapse = ", ")
-    ))
+      "get_cdisc_keys does not support datasets called %s\n Please specify the keys directly For example:
+      cdisc_dataset(dataname = \"%s\", keys = c(\"STUDYID\", \"USUBJID\", ...), parent = \"ADSL\", ...)",
+      dataname, dataname)
+    )
   } else {
     cdisc_keys <- default_cdisc_keys[[dataname]]$primary
 
