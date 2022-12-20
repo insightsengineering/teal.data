@@ -4,6 +4,7 @@
 * Examples now use `scda.2022` instead of `scda.2021`.
 * Modified `teal.Dataset$print` method for a less cluttered output.
 * Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
+* Fixed help files for `TealDataset` and `MAETealDataset`.
 
 # teal.data 0.1.2
 
