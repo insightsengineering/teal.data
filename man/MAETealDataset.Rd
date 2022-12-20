@@ -9,6 +9,9 @@ Any \code{MultiAssayExperiment} object can be stored inside this \code{MAETealDa
 Some attributes like colnames, dimension or column names for a specific type will
 be automatically derived.
 }
+\seealso{
+\code{\link{TealDataset}}
+}
 \section{Super class}{
 \code{\link[teal.data:TealDataset]{teal.data::TealDataset}} -> \code{MAETealDataset}
 }

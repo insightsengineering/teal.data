@@ -31,6 +31,9 @@
 #' @param metadata (named `list` or `NULL`) \cr
 #'        Field containing metadata about the dataset. Each element of the list
 #'        should be atomic and length one.
+#'
+#' @seealso [`MAETealDataset`]
+#'
 TealDataset <- R6::R6Class( # nolint
   "TealDataset",
 

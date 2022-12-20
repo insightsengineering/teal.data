@@ -25,6 +25,9 @@ test_dataset$reassign_datasets_vars(
 )
 
 }
+\seealso{
+\code{\link{MAETealDataset}}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
