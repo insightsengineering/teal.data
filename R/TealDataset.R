@@ -15,8 +15,8 @@
 #'        Vector with primary keys
 #' @param code (`character`)\cr
 #'        A character string defining the code needed to produce the data set in `x`.
-#'        `initialize()` and `recreate()` accept code as `CodeClass` also
-#'        which is needed to preserve the code uniqueness and correct order.
+#'        `initialize()` and `recreate()` accept code as `CodeClass`
+#'        which is also needed to preserve the code uniqueness and correct order.
 #' @param label (`character`)\cr
 #'        Label to describe the dataset
 #' @param vars (named `list`)) \cr
@@ -24,13 +24,13 @@
 #'        other constant value, this/these object(s) should be included as named
 #'        element(s) of the list. For example if this object code needs `ADSL`
 #'        object we should specify `vars = list(ADSL = <adsl object>)`.
-#'        It's recommended to include `TealDataset` or `TealDatasetConnector` objects to
+#'        It is recommended to include `TealDataset` or `TealDatasetConnector` objects to
 #'        the `vars` list to preserve reproducibility. Please note that `vars`
 #'        are included to this object as local `vars` and they cannot be modified
 #'        within another dataset.
 #' @param metadata (named `list` or `NULL`) \cr
 #'        Field containing metadata about the dataset. Each element of the list
-#'        should be atomic and length one.
+#'        should be atomic and of length one.
 #'
 #' @seealso [`MAETealDataset`]
 #'

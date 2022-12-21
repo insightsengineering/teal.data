@@ -97,8 +97,8 @@ A vector of primary keys}
 
 \item{\code{code}}{(\code{character} or \code{CodeClass})\cr
 A character string defining the code needed to produce the data set in \code{x}.
-initialize()\code{and}recreate()\verb{accept code as}CodeClass` also
-which is needed to preserve the code uniqueness and correct order.}
+initialize()\code{and}recreate()\verb{accept code as}CodeClass`
+which is also needed to preserve the code uniqueness and correct order.}
 
 \item{\code{label}}{(\code{character})\cr
 Label to describe the dataset}
@@ -108,14 +108,14 @@ In case when this object code depends on other \code{TealDataset} object(s) or
 other constant value, this/these object(s) should be included as named
 element(s) of the list. For example if this object code needs \code{ADSL}
 object we should specify \verb{vars = list(ADSL = <adsl object>)}.
-It's recommended to include \code{TealDataset} or \code{TealDatasetConnector} objects to
+It is recommended to include \code{TealDataset} or \code{TealDatasetConnector} objects to
 the \code{vars} list to preserve reproducibility. Please note that \code{vars}
 are included to this object as local \code{vars} and they cannot be modified
 within another dataset.}
 
 \item{\code{metadata}}{(named \code{list} or \code{NULL}) \cr
 Field containing metadata about the dataset. Each element of the list
-should be atomic and length one.}
+should be atomic and of length one.}
 }
 \if{html}{\out{</div>}}
 }
