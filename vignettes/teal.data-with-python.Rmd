@@ -34,9 +34,18 @@ For this example we require a python environment with `pandas` installed. See [h
 
 We first load the packages:
 
-```{r, message=FALSE}
+```{r check_reticulate, include = FALSE}
+reticulate_available <- requireNamespace("reticulate", quietly = TRUE)
+```
+
+
+```{r, message=FALSE, eval = reticulate_available}
 library(reticulate) # may need to be installed if not available
 # reticulate function to call to install the pandas package if not installed: py_install("pandas")
+```
+
+
+```{r, message=FALSE}
 library(teal.data)
 ```
 
@@ -44,14 +53,14 @@ Next we define the python code which we want to use to create the dataset.
 In this example, for demonstration purposes we create a trivial dataset which could easily be done directly in R.
 Note we use a variable `num_rows` which needs to be passed to the python code from R. 
 
-```{r}
+```{r, eval = reticulate_available}
 python_code <- "import pandas as pd
 data = pd.DataFrame({\"id\" : range(r.num_rows), \"val\" : range(r.num_rows)})"
 ```
 
 Next we create a `python_dataset_connector` object. 
 
-```{r}
+```{r, eval = reticulate_available}
 x <- python_dataset_connector(
   dataname = "DATA", # the teal dataset name
   code = python_code, # the code used to generate the dataset

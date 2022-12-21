@@ -5,6 +5,8 @@
 * Modified `teal.Dataset$print` method for a less cluttered output.
 * Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
 * Improved error message in `get_cdisc_keys`. 
+* Fixed help files for `TealDataset` and `MAETealDataset`.
+* Added backstop for missing `reticulate` package in _teal.data with Python_ vignette.
 
 # teal.data 0.1.2
 

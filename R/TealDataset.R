@@ -8,37 +8,32 @@
 #' Some attributes like colnames, dimension or column names for a specific type will
 #' be automatically derived.
 #'
-#' @rdname dataset_class
-#'
 #' @param dataname (`character`)\cr
-#'  A given name for the dataset it may not contain spaces
-#'
+#'        A given name for the dataset it may not contain spaces
 #' @param x (`data.frame`)\cr
-#'
 #' @param keys optional, (`character`)\cr
-#'   Vector with primary keys
-#'
+#'        Vector with primary keys
 #' @param code (`character`)\cr
-#'   A character string defining the code needed to produce the data set in `x`.
-#'   `initialize()` and `recreate()` accept code as `CodeClass` also
-#'   which is needed to preserve the code uniqueness and correct order.
-#'
+#'        A character string defining the code needed to produce the data set in `x`.
+#'        `initialize()` and `recreate()` accept code as `CodeClass`
+#'        which is also needed to preserve the code uniqueness and correct order.
 #' @param label (`character`)\cr
-#'   Label to describe the dataset
-#'
+#'        Label to describe the dataset
 #' @param vars (named `list`)) \cr
-#'   In case when this object code depends on other `TealDataset` object(s) or
-#'   other constant value, this/these object(s) should be included as named
-#'   element(s) of the list. For example if this object code needs `ADSL`
-#'   object we should specify `vars = list(ADSL = <adsl object>)`.
-#'   It's recommended to include `TealDataset` or `TealDatasetConnector` objects to
-#'   the `vars` list to preserve reproducibility. Please note that `vars`
-#'   are included to this object as local `vars` and they cannot be modified
-#'   within another dataset.
-#'
+#'        In case when this object code depends on other `TealDataset` object(s) or
+#'        other constant value, this/these object(s) should be included as named
+#'        element(s) of the list. For example if this object code needs `ADSL`
+#'        object we should specify `vars = list(ADSL = <adsl object>)`.
+#'        It is recommended to include `TealDataset` or `TealDatasetConnector` objects to
+#'        the `vars` list to preserve reproducibility. Please note that `vars`
+#'        are included to this object as local `vars` and they cannot be modified
+#'        within another dataset.
 #' @param metadata (named `list` or `NULL`) \cr
-#'   Field containing metadata about the dataset. Each element of the list
-#'   should be atomic and length one.
+#'        Field containing metadata about the dataset. Each element of the list
+#'        should be atomic and of length one.
+#'
+#' @seealso [`MAETealDataset`]
+#'
 TealDataset <- R6::R6Class( # nolint
   "TealDataset",
 
