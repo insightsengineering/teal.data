@@ -55,9 +55,13 @@ get_cdisc_keys <- function(dataname) {
   checkmate::assert_string(dataname)
 
   if (!(dataname %in% names(default_cdisc_keys))) {
-    stop(sprintf(
-      "There is no dataset called: %s \n  List of supported cdisc_datasets:\n   %s",
-      dataname, paste(names(default_cdisc_keys), collapse = ", ")
+    stop(paste(sprintf("get_cdisc_keys does not support datasets called %s", dataname),
+      "  Please specify the keys directly, for example:",
+      sprintf(
+        "  cdisc_dataset(dataname = \"%s\", keys = c(\"STUDYID\", \"USUBJID\", ...), parent = \"ADSL\", ...)",
+        dataname
+      ),
+      sep = "\n"
     ))
   } else {
     cdisc_keys <- default_cdisc_keys[[dataname]]$primary
