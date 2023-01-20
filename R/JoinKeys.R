@@ -165,11 +165,91 @@ JoinKeys <- R6::R6Class( # nolint
         cat("An empty JoinKeys object.")
       }
       invisible(self)
+    },
+
+    set_parents = function(named_list) {
+      for (dataset in names(named_list)) {
+        if (is.null(self$get_parent(dataset))) {
+          private$parents[[dataset]] <- named_list[[dataset]]
+        }
+      }
+
+      #if join_keys$private$parent["dataname"] is NULL set it to parents["dataname"]
+      #private$parents <- named_list
+    },
+
+    get_parents = function() {
+      private$parents
+    },
+
+    # get_parent
+    get_parent = function(dataname) {
+      private$parents[[dataname]]
+    },
+
+    update_keys_given_parents = function() {
+      datanames <- names(self$get())
+      duplicate_pairs <- list()
+      for (d1 in datanames) {
+        d1_pk <- self$get(d1, d1)
+        d1_parent <- self$get_parent(d1)
+        for (d2 in datanames) {
+          if (paste(d2, d1) %in% duplicate_pairs) {
+            next
+          }
+          if (length(self$get(d1, d2)) == 0) {
+            d2_parent <- self$get_parent(d2)
+            d2_pk <- self$get(d2, d2)
+
+            fk <- if (identical(d1, d2_parent)) {
+              # first is parent of second -> parent keys -> first keys
+              d1_pk
+            } else if (identical(d1_parent, d2)) {
+              # second is parent of first -> parent keys -> second keys
+              d2_pk
+            } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
+              # both has the same parent -> parent keys
+              self$get(d1_parent, d1_parent)
+            } else {
+              # cant find connection - leave empty
+              next
+            }
+
+            self$mutate(d1, d2, fk)
+            duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
+          }
+        }
+      }
+    },
+     check_keys = function() {
+       if (!is.null(self$get_parents())) {
+         parents <- self$get_parents()
+         for (idx1 in seq_along(parents)) {
+           name_from <- names(parents)[[idx1]]
+           for (idx2 in seq_along(parents[[idx1]])) {
+             name_to <- parents[[idx1]][[idx2]]
+             keys_from <- self$get(name_from, name_to)
+             keys_to <- self$get(name_to, name_from)
+
+             if (length(keys_from) == 0 && length(keys_to) == 0) {
+               stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
+             }
+             if (length(keys_from) == 0) {
+               stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
+             }
+             if (length(keys_to) == 0) {
+               stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
+             }
+           }
+         }
+       }
     }
   ),
   ## __Private Fields ====
   private = list(
     .keys = list(),
+    primary_keys = list(),
+    parents = list(),
     join_pair = function(join_key) {
       dataset_1 <- join_key$dataset_1
       dataset_2 <- join_key$dataset_2
@@ -256,13 +336,19 @@ JoinKeys <- R6::R6Class( # nolint
 #' )
 join_keys <- function(...) {
   x <- list(...)
+  # parents_index <- which(grepl("parents", names(x)))
+  # parents <- if (length(parents_index) > 0) x[[which(grepl("parents", names(x)))]]
+  # x <- x[!grepl("parents", names(x))]
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
   }
+  #parents <- lapply(x, function(i) i$parent)
+  #names(parents) <- sapply(x, function(i) i$dataset_1)
+
+  #res$set_parents(parents)
   res
 }
-
 
 # wrappers ====
 #' Mutate `JoinKeys` with a new values
@@ -280,23 +366,6 @@ join_keys <- function(...) {
 #' @export
 mutate_join_keys <- function(x, dataset_1, dataset_2, val) {
   UseMethod("mutate_join_keys")
-}
-
-#' @rdname mutate_join_keys
-#' @export
-#' @examples
-#' # JoinKeys ----
-#'
-#' x <- join_keys(
-#'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
-#'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
-#' )
-#' x$get("dataset_A", "dataset_B")
-#'
-#' mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
-#' x$get("dataset_A", "dataset_B")
-mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
-  x$mutate(dataset_1, dataset_2, val)
 }
 
 #' @rdname mutate_join_keys
@@ -337,7 +406,7 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' @seealso [join_keys()]
 #'
 #' @export
-join_key <- function(dataset_1, dataset_2, keys) {
+join_key <- function(dataset_1, dataset_2, keys, parent = character(0)) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
@@ -364,7 +433,8 @@ join_key <- function(dataset_1, dataset_2, keys) {
     list(
       dataset_1 = dataset_1,
       dataset_2 = dataset_2,
-      keys = keys
+      keys = keys,
+      parent = parent
     ),
     class = "JoinKeySet"
   )
