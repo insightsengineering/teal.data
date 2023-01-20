@@ -2,13 +2,10 @@
 % Please edit documentation in R/JoinKeys.R
 \name{mutate_join_keys}
 \alias{mutate_join_keys}
-\alias{mutate_join_keys.JoinKeys}
 \alias{mutate_join_keys.TealData}
 \title{Mutate \code{JoinKeys} with a new values}
 \usage{
 mutate_join_keys(x, dataset_1, dataset_2, val)
-
-\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, val)
 
 \method{mutate_join_keys}{TealData}(x, dataset_1, dataset_2, val)
 }
@@ -29,16 +26,6 @@ modified \code{JoinKeys} object
 Mutate \code{JoinKeys} with a new values
 }
 \examples{
-# JoinKeys ----
-
-x <- join_keys(
-  join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
-  join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
-)
-x$get("dataset_A", "dataset_B")
-
-mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
-x$get("dataset_A", "dataset_B")
 # TealData ----
 
 library(scda)

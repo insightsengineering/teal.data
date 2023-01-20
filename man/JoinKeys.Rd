@@ -32,6 +32,11 @@ x$get("dataset_A", "dataset_B")
 \item \href{#method-JoinKeys-mutate}{\code{JoinKeys$mutate()}}
 \item \href{#method-JoinKeys-set}{\code{JoinKeys$set()}}
 \item \href{#method-JoinKeys-print}{\code{JoinKeys$print()}}
+\item \href{#method-JoinKeys-set_parents}{\code{JoinKeys$set_parents()}}
+\item \href{#method-JoinKeys-get_parents}{\code{JoinKeys$get_parents()}}
+\item \href{#method-JoinKeys-get_parent}{\code{JoinKeys$get_parent()}}
+\item \href{#method-JoinKeys-update_keys_given_parents}{\code{JoinKeys$update_keys_given_parents()}}
+\item \href{#method-JoinKeys-check_keys}{\code{JoinKeys$check_keys()}}
 \item \href{#method-JoinKeys-clone}{\code{JoinKeys$clone()}}
 }
 }
@@ -180,6 +185,51 @@ Prints this \code{JoinKeys}.
 \subsection{Returns}{
 invisibly self
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JoinKeys-set_parents"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-set_parents}{}}}
+\subsection{Method \code{set_parents()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JoinKeys$set_parents(named_list)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JoinKeys-get_parents"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-get_parents}{}}}
+\subsection{Method \code{get_parents()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JoinKeys$get_parents()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JoinKeys-get_parent"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-get_parent}{}}}
+\subsection{Method \code{get_parent()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JoinKeys$get_parent(dataname)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JoinKeys-update_keys_given_parents"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-update_keys_given_parents}{}}}
+\subsection{Method \code{update_keys_given_parents()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JoinKeys$update_keys_given_parents()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-JoinKeys-check_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-JoinKeys-check_keys}{}}}
+\subsection{Method \code{check_keys()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{JoinKeys$check_keys()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-JoinKeys-clone"></a>}}

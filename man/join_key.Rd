@@ -4,7 +4,7 @@
 \alias{join_key}
 \title{Create a relationship between a pair of datasets}
 \usage{
-join_key(dataset_1, dataset_2, keys)
+join_key(dataset_1, dataset_2, keys, parent = character(0))
 }
 \arguments{
 \item{dataset_1}{(\code{character}) one dataset name}
