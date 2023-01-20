@@ -135,16 +135,6 @@ TealDatasetConnector <- R6::R6Class( # nolint
       return(private$keys)
     },
     #' @description
-    #' Get `JoinKeys` object with keys used for joining.
-    #' @return (`JoinKeys`)
-    get_join_keys = function() {
-      if (is.null(private$join_keys)) {
-        private$join_keys <- join_keys()
-      }
-      private$join_keys
-    },
-
-    #' @description
     #' Get code to get data
     #'
     #' @param deparse (`logical`)\cr
@@ -189,7 +179,6 @@ TealDatasetConnector <- R6::R6Class( # nolint
           call. = FALSE
         )
       }
-      private$dataset$merge_join_keys(self$get_join_keys())
       private$dataset$get_dataset()
       return(private$dataset)
     },
@@ -282,35 +271,6 @@ TealDatasetConnector <- R6::R6Class( # nolint
       }
       private$keys <- keys
       logger::log_trace("TealDatasetConnector$set_keys keys set for dataset: { deparse1(self$get_dataname()) }.")
-
-      return(invisible(self))
-    },
-    #' @description
-    #' set join_keys for a given dataset and self
-    #' @param x `list` of `JoinKeySet` objects (which are created using the `join_key` function)
-    #' or single `JoinKeySet` objects
-    #' @return (`self`) invisibly for chaining
-    set_join_keys = function(x) {
-      self$get_join_keys()$set(x)
-      logger::log_trace(paste(
-        "TealDatasetConnector$set_join_keys join_keys set for dataset:",
-        "{ deparse1(self$get_dataname()) }."
-      ))
-
-      return(invisible(self))
-    },
-
-    #' @description
-    #' mutate the join_keys for a given dataset and self
-    #' @param dataset (`character`) dataset for which join_keys are to be set against self
-    #' @param val (named `character`) column names used to join
-    #' @return (`self`) invisibly for chaining
-    mutate_join_keys = function(dataset, val) {
-      self$get_join_keys()$mutate(private$dataname, dataset, val)
-      logger::log_trace(
-        "TealDatasetConnector$mutate_join_keys join_keys modified keys of
-        { deparse1(self$get_dataname()) } against { dataset }."
-      )
 
       return(invisible(self))
     },
@@ -547,7 +507,6 @@ TealDatasetConnector <- R6::R6Class( # nolint
     var_r6 = list(),
     ui_input = NULL, # NULL or list
     is_pulled_flag = FALSE,
-    join_keys = NULL,
 
     ## __Private Methods ====
     ui = function(id) {

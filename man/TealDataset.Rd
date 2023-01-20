@@ -62,14 +62,10 @@ test_dataset$reassign_datasets_vars(
 \item \href{#method-TealDataset-get_dataset_label}{\code{TealDataset$get_dataset_label()}}
 \item \href{#method-TealDataset-get_keys}{\code{TealDataset$get_keys()}}
 \item \href{#method-TealDataset-get_metadata}{\code{TealDataset$get_metadata()}}
-\item \href{#method-TealDataset-get_join_keys}{\code{TealDataset$get_join_keys()}}
 \item \href{#method-TealDataset-get_var_r6}{\code{TealDataset$get_var_r6()}}
 \item \href{#method-TealDataset-reassign_datasets_vars}{\code{TealDataset$reassign_datasets_vars()}}
 \item \href{#method-TealDataset-set_dataset_label}{\code{TealDataset$set_dataset_label()}}
 \item \href{#method-TealDataset-set_keys}{\code{TealDataset$set_keys()}}
-\item \href{#method-TealDataset-set_join_keys}{\code{TealDataset$set_join_keys()}}
-\item \href{#method-TealDataset-merge_join_keys}{\code{TealDataset$merge_join_keys()}}
-\item \href{#method-TealDataset-mutate_join_keys}{\code{TealDataset$mutate_join_keys()}}
 \item \href{#method-TealDataset-set_vars}{\code{TealDataset$set_vars()}}
 \item \href{#method-TealDataset-set_code}{\code{TealDataset$set_code()}}
 \item \href{#method-TealDataset-get_code}{\code{TealDataset$get_code()}}
@@ -436,19 +432,6 @@ Get metadata of dataset
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDataset-get_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDataset-get_join_keys}{}}}
-\subsection{Method \code{get_join_keys()}}{
-Get \code{JoinKeys} object with keys used for joining.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDataset$get_join_keys()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{JoinKeys})
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TealDataset-get_var_r6"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDataset-get_var_r6}{}}}
 \subsection{Method \code{get_var_r6()}}{
@@ -547,69 +530,6 @@ Vector with primary keys}
 }
 \subsection{Returns}{
 (\code{self}) invisibly for chaining.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDataset-set_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDataset-set_join_keys}{}}}
-\subsection{Method \code{set_join_keys()}}{
-set join_keys for a given dataset and object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDataset$set_join_keys(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{\code{list} of \code{JoinKeySet} objects (which are created using the \code{join_key} function)
-or single \code{JoinKeySet} objects}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(\code{self}) invisibly for chaining
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDataset-merge_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDataset-merge_join_keys}{}}}
-\subsection{Method \code{merge_join_keys()}}{
-merge input join key with join key inside of object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDataset$merge_join_keys(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{\code{list} of \code{JoinKeys} objects or single \code{JoinKeys} object}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(\code{self}) invisibly for chaining
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDataset-mutate_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDataset-mutate_join_keys}{}}}
-\subsection{Method \code{mutate_join_keys()}}{
-mutate the join_keys for a given dataset and object
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDataset$mutate_join_keys(dataset, val)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dataset}}{(\code{character}) dataset for which join_keys are to be set against self}
-
-\item{\code{val}}{(named \code{character}) column names used to join}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(\code{self}) invisibly for chaining
 }
 }
 \if{html}{\out{<hr>}}

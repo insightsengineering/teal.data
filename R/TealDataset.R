@@ -241,15 +241,6 @@ TealDataset <- R6::R6Class( # nolint
       private$metadata
     },
     #' @description
-    #' Get `JoinKeys` object with keys used for joining.
-    #' @return (`JoinKeys`)
-    get_join_keys = function() {
-      if (is.null(private$join_keys)) {
-        private$join_keys <- join_keys()
-      }
-      private$join_keys
-    },
-    #' @description
     #' Get the list of dependencies that are `TealDataset` or `TealDatasetConnector` objects
     #'
     #' @return `list`
@@ -324,41 +315,7 @@ TealDataset <- R6::R6Class( # nolint
       ))
       return(invisible(self))
     },
-    #' @description
-    #' set join_keys for a given dataset and object
-    #' @param x `list` of `JoinKeySet` objects (which are created using the `join_key` function)
-    #' or single `JoinKeySet` objects
-    #' @return (`self`) invisibly for chaining
-    set_join_keys = function(x) {
-      self$get_join_keys()$set(x)
-      logger::log_trace("TealDataset$set_join_keys join_keys set for dataset: { deparse1(self$get_dataname()) }.")
-      return(invisible(self))
-    },
-    #' @description
-    #' merge input join key with join key inside of object
-    #' @param x `list` of `JoinKeys` objects or single `JoinKeys` object
-    #' @return (`self`) invisibly for chaining
-    merge_join_keys = function(x) {
-      self$get_join_keys()$merge(x)
-      logger::log_trace("TealDataset$merge_join_keys join_keys merged for dataset: { deparse1(self$get_dataname()) }.")
 
-      return(invisible(self))
-    },
-    #' @description
-    #' mutate the join_keys for a given dataset and object
-    #' @param dataset (`character`) dataset for which join_keys are to be set against self
-    #' @param val (named `character`) column names used to join
-    #' @return (`self`) invisibly for chaining
-    mutate_join_keys = function(dataset, val) {
-      self$get_join_keys()$mutate(private$dataname, dataset, val)
-      logger::log_trace(
-        paste0(
-          "TealDatasetConnector$mutate_join_keys join_keys modified keys",
-          "of { deparse1(self$get_dataname()) } against { dataset }."
-        )
-      )
-      return(invisible(self))
-    },
     #' @description
     #' Adds variables which code depends on
     #'
@@ -593,7 +550,6 @@ TealDataset <- R6::R6Class( # nolint
     .keys = character(0),
     mutate_code = list(),
     mutate_vars = list(),
-    join_keys = NULL,
 
     ## __Private Methods ====
     mutate_delayed = function(code, vars) {
