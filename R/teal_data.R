@@ -32,24 +32,30 @@
 #'
 #' teal_data(x1, x2)
 teal_data <- function(...,
-                      join_keys,
+                      join_keys = teal.data::join_keys(),
                       code = "",
                       check = FALSE) {
   data_objects <- list(...)
-
-  is_cdisc <- vapply(
-    X = data_objects,
-    FUN.VALUE = logical(1),
-    FUN = function(x) {
-      inherits(x, "CDISCTealDataConnector") || inherits(x, "CDISCTealDatasetConnector") || inherits(x, "CDISCTealDataset")
-    }
+  checkmate::assert_list(
+    data_objects,
+    types = c("TealDataset", "TealDatasetConnector", "TealDataConnector")
   )
-
-  x <- if (any(is_cdisc)) {
-    CDISCTealData$new(..., check = check, join_keys = join_keys)
-  } else {
-    TealData$new(..., check = check, join_keys = join_keys)
+  if (inherits(join_keys, "JoinKeySet")) {
+    join_keys <- teal.data::join_keys(join_keys)
   }
+
+
+  join_keys_sets <- lapply(data_objects, function(obj) {
+    join_key(
+      obj$get_dataname(),
+      obj$get_dataname(),
+      obj$get_keys()
+    )
+  })
+  #update set function to warn if overwriting th ejoin keys with something different
+  if (length(join_keys$get()) == 0) join_keys$set(join_keys_sets)
+
+  x <- TealData$new(..., check = check, join_keys = join_keys)
 
   if (length(code) > 0 && !identical(code, "")) {
     x$set_pull_code(code = code)
