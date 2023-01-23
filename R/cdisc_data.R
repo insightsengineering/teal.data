@@ -78,61 +78,64 @@ cdisc_data <- function(...,
   if (inherits(join_keys, "JoinKeySet")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
-# browser()
-#   # set join_keys if they are not passed by the user
-#   join_keys_sets <- lapply(data_objects, function(obj) {
-#     join_key(
-#       obj$get_dataname(),
-#       obj$get_dataname(),
-#       obj$get_keys()
-#     )
-#   })
 
-    # join_keys_sets <- lapply(data_objects, function(obj) {
-    #   load_datasets(obj)
-    #   lapply(obj$get_datanames(), function(sub_obj) {
-    #
-    #     print(obj$get_dataset(sub_obj))
-    #     join_key(
-    #       sub_obj,
-    #       sub_obj,
-    #       obj$get_dataset[[sub_obj]]$get_keys()
-    #     )
-    #   })
-    # })
-
-  #same check in set
-  if (length(join_keys$get()) == 0) join_keys$set(join_keys_sets)
-
-  # set parents
-  retrieve_parents <- function(x) {
-    tryCatch(
-      parents <- x$get_parent(),
-    error = function(cond) rep(character(0), length(x$get_datanames()))
-  )}
-  new_parents <- lapply(data_objects, retrieve_parents)
-  names(new_parents) <- sapply(data_objects, function(x) x$get_datanames())
-
-  if (is_dag(new_parents)) {
-    stop("Cycle detected in a parent and child dataset graph.")
+  if (length(join_keys$get()) == 0) {
+    join_keys_sets <- unlist(
+      lapply(data_objects, function(obj) {
+        if (inherits(obj, "TealDataConnector")) {
+          sub_objs <- obj$get_items()
+          lapply(names(sub_objs), function(dataname) {
+            sub_obj <- sub_objs[[dataname]]
+            join_key(
+              dataname,
+              dataname,
+              sub_obj$get_keys()
+            )
+          })
+        } else {
+          list(join_key(
+            obj$get_dataname(),
+            obj$get_dataname(),
+            obj$get_keys()
+          ))
+        }
+      }),
+      recursive = FALSE
+    )
+    join_keys$set(join_keys_sets)
   }
-  join_keys$set_parents(new_parents)
-  join_keys$update_keys_given_parents()
+
+  if (length(join_keys$get_parents()) == 0) {
+    # set parents
+    retrieve_parents <- function(x) {
+      tryCatch(
+        x$get_parent(),
+        error = function(cond) rep(character(0), length(x$get_datanames()))
+      )
+    }
+
+    new_parents <- unlist(
+      lapply(data_objects, function(x) {
+        if (inherits(x, "TealDataConnector")) {
+          retrieve_parents(x)
+        } else {
+          list(retrieve_parents(x))
+        }
+      }),
+      recursive = FALSE
+    )
+
+    names(new_parents) <- sapply(data_objects, function(x) x$get_datanames())
+
+    if (is_dag(new_parents)) {
+      stop("Cycle detected in a parent and child dataset graph.")
+    }
+    join_keys$set_parents(new_parents)
+    join_keys$update_keys_given_parents()
+  }
 
   # initialize TealData
   x <- TealData$new(..., check = check, join_keys = join_keys)
-
-  # set parents if they are not passed by the user
-  # if (is.null(join_keys$get_parents())) {
-  #   new_parent <- create_parents(data_objects)
-  #   if (is_dag(new_parent)) {
-  #     stop("Cycle detected in a parent and child dataset graph.")
-  #   }
-  #   join_keys$set_parents(new_parent)
-  #
-  #   # set up join keys as parent keys
-  #   #join_keys$update_keys_given_parents(x)
-  # }
 
   if (length(code) > 0 && !identical(code, "")) {
     x$set_pull_code(code = code)
@@ -180,37 +183,3 @@ cdisc_data_file <- function(path, code = get_code(path)) {
   object$mutate(code)
   return(object)
 }
-
-##
-# create_parents = function(data_objects) {
-#   new_parent <- list()
-#   for (x in data_objects) {
-#     if (inherits(x, "TealDataset") ||
-#         inherits(x, "TealDatasetConnector")) {
-#       x_dataname <- x$get_dataname()
-#       new_parent[[x_dataname]] <-
-#         if (inherits(x, "CDISCTealDataset") ||
-#             inherits(x, "CDISCTealDatasetConnector")) {
-#           x$get_parent()
-#         } else {
-#           character(0L)
-#         }
-#     } else if (inherits(x, "TealDataConnector")) {
-#       added_parent <- if (inherits(x, "CDISCTealDataConnector")) {
-#         x$get_parent()
-#       } else {
-#         sapply(x$get_datanames(), function(i)
-#           character(0), USE.NAMES = TRUE, simplify = FALSE)
-#       }
-#       new_parent <- c(new_parent, added_parent)
-#     } else {
-#       stop(
-#         paste(
-#           "The child elements of CDISCTealData should be only of TealDataset or TealDatasetConnector or",
-#           "TealDataConnector class."
-#         )
-#       )
-#     }
-#   }
-#   new_parent
-# }

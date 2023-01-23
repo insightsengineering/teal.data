@@ -217,11 +217,15 @@ JoinKeys <- R6::R6Class( # nolint
 
             self$mutate(d1, d2, fk)
             duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
+
+
           }
         }
       }
+      # check
+      #self$check_parent_child()
     },
-     check_keys = function() {
+     check_parent_child = function() {
        if (!is.null(self$get_parents())) {
          parents <- self$get_parents()
          for (idx1 in seq_along(parents)) {
