@@ -45,15 +45,31 @@ teal_data <- function(...,
   }
 
 
-  join_keys_sets <- lapply(data_objects, function(obj) {
-    join_key(
-      obj$get_dataname(),
-      obj$get_dataname(),
-      obj$get_keys()
+  if (length(join_keys$get()) == 0) {
+    join_keys_sets <- unlist(
+      lapply(data_objects, function(obj) {
+        if (inherits(obj, "TealDataConnector")) {
+          sub_objs <- obj$get_items()
+          lapply(names(sub_objs), function(dataname) {
+            sub_obj <- sub_objs[[dataname]]
+            join_key(
+              dataname,
+              dataname,
+              sub_obj$get_keys()
+            )
+          })
+        } else {
+          list(join_key(
+            obj$get_dataname(),
+            obj$get_dataname(),
+            obj$get_keys()
+          ))
+        }
+      }),
+      recursive = FALSE
     )
-  })
-  #update set function to warn if overwriting th ejoin keys with something different
-  if (length(join_keys$get()) == 0) join_keys$set(join_keys_sets)
+    join_keys$set(join_keys_sets)
+  }
 
   x <- TealData$new(..., check = check, join_keys = join_keys)
 
