@@ -94,3 +94,13 @@ ADQLQC:
   primary: ["STUDYID", "USUBJID", "PARCAT1N", "PARAMCD", "BASETYPE", "AVISITN", "ATPTN", "ADTM", "QSSEQ"]
   foreign: ["STUDYID", "USUBJID"]
   parent: "ADSL"
+
+ADCSSRS:
+  primary: ["STUDYID", "USUBJID", "PARAMCD", "BASETYPE", "AVISITN", "DTYPE", "ADTM"]
+  foreign: ["STUDYID", "USUBJID"]
+  parent: "ADSL"
+
+ADEQ5D5L:
+  primary: ["STUDYID", "USUBJID", "PARCAT1N", "PARAMCD", "BASETYPE", "AVISITN", "ATPTN", "ADTM", "QSSEQ"]
+  foreign: ["STUDYID", "USUBJID"]
+  parent: "ADSL"
