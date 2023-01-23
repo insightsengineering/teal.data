@@ -113,7 +113,7 @@ as provided in arguments. Check is run only if flag is true and preprocessing co
 
 \item{\code{join_keys}}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with dataset column relationships used for joining.
-If empty then no joins between pairs of objects}
+If empty then an empty \code{JoinKeys} object is passed by default.}
 }
 \if{html}{\out{</div>}}
 }
@@ -211,27 +211,38 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 \if{html}{\out{<a id="method-TealData-get_join_keys"></a>}}
 \if{latex}{\out{\hypertarget{method-TealData-get_join_keys}{}}}
 \subsection{Method \code{get_join_keys()}}{
-get_join_keys
+Get join keys between two datasets.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataname1, dataname2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1, dataset_2)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_1}}{(\code{character}) name of first dataset.}
+
+\item{\code{dataset_2}}{(\code{character}) name of second dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(\code{character}) named character vector x with names(x) the
+columns of \code{dataset_1} and the values of \code{(x)} the corresponding join
+keys in \code{dataset_2} or \code{character(0)} if no relationship
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TealData-get_parents"></a>}}
 \if{latex}{\out{\hypertarget{method-TealData-get_parents}{}}}
 \subsection{Method \code{get_parents()}}{
-get_parents
-#' @description
-#' Get all datasets parent names
-#' @return (named \code{list}) with dataset name and its corresponding parent dataset name
-get_parent = function() {
-private$parent
-},
+returns the parents list of the datasets.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealData$get_parents()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+named (\code{list}) of the parents of all datasets.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TealData-get_ui"></a>}}

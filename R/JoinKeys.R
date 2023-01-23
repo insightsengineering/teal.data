@@ -166,27 +166,39 @@ JoinKeys <- R6::R6Class( # nolint
       }
       invisible(self)
     },
-
+    #' @description
+    #' Sets the parents of the datasets.
+    #'
+    #' @param named_list Named (`list`) of the parents datasets.
+    #'
+    #' @return (`self`) invisibly for chaining
     set_parents = function(named_list) {
       for (dataset in names(named_list)) {
         if (is.null(self$get_parent(dataset))) {
           private$parents[[dataset]] <- named_list[[dataset]]
         }
       }
-
-      #if join_keys$private$parent["dataname"] is NULL set it to parents["dataname"]
-      #private$parents <- named_list
+      invisible(self)
     },
-
-    get_parents = function() {
-      private$parents
-    },
-
-    # get_parent
+    #' @description
+    #' Gets the parent of the desired dataset.
+    #'
+    #' @param dataname (`character`) name of the dataset.
+    #' @return (`character`) the parent of the desired dataset
     get_parent = function(dataname) {
       private$parents[[dataname]]
     },
-
+    #' @description
+    #' Gets the parents of the datasets.
+    #'
+    #' @return (`list`) A named list of the parents of all datasets
+    get_parents = function() {
+      private$parents
+    },
+    #' @description
+    #' Updates the keys of the datasets based on the parents.
+    #'
+    #' @return (`self`) invisibly for chaining
     update_keys_given_parents = function() {
       datanames <- names(self$get())
       duplicate_pairs <- list()
@@ -214,39 +226,15 @@ JoinKeys <- R6::R6Class( # nolint
               # cant find connection - leave empty
               next
             }
-
             self$mutate(d1, d2, fk)
             duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
-
-
           }
         }
       }
-      # check
-      #self$check_parent_child()
-    },
-     check_parent_child = function() {
-       if (!is.null(self$get_parents())) {
-         parents <- self$get_parents()
-         for (idx1 in seq_along(parents)) {
-           name_from <- names(parents)[[idx1]]
-           for (idx2 in seq_along(parents[[idx1]])) {
-             name_to <- parents[[idx1]][[idx2]]
-             keys_from <- self$get(name_from, name_to)
-             keys_to <- self$get(name_to, name_from)
+      # check parent child relation
+      private$check_parent_child()
 
-             if (length(keys_from) == 0 && length(keys_to) == 0) {
-               stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
-             }
-             if (length(keys_from) == 0) {
-               stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
-             }
-             if (length(keys_to) == 0) {
-               stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
-             }
-           }
-         }
-       }
+      invisible(self)
     }
   ),
   ## __Private Fields ====
@@ -297,7 +285,6 @@ JoinKeys <- R6::R6Class( # nolint
       # and the first dataset of join_key_2 must match second dataset of join_key_1
       # and keys must contain the same elements but with names and values swapped
       if (join_key_1$dataset_1 == join_key_2$dataset_2 && join_key_1$dataset_2 == join_key_2$dataset_1) {
-
         # have to handle empty case differently as names(character(0)) is NULL
         if (length(join_key_1$keys) == 0 && length(join_key_2$keys) == 0) {
           return(TRUE)
@@ -311,6 +298,29 @@ JoinKeys <- R6::R6Class( # nolint
 
       # otherwise they are compatible
       return(TRUE)
+    },
+    # checks the parent child relations are valid
+    check_parent_child = function() {
+      if (!is.null(self$get_parents())) {
+        parents <- self$get_parents()
+        for (idx1 in seq_along(parents)) {
+          name_from <- names(parents)[[idx1]]
+          for (idx2 in seq_along(parents[[idx1]])) {
+            name_to <- parents[[idx1]][[idx2]]
+            keys_from <- self$get(name_from, name_to)
+            keys_to <- self$get(name_to, name_from)
+            if (length(keys_from) == 0 && length(keys_to) == 0) {
+              stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
+            }
+            if (length(keys_from) == 0) {
+              stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
+            }
+            if (length(keys_to) == 0) {
+              stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
+            }
+          }
+        }
+      }
     }
   )
 )
@@ -340,17 +350,12 @@ JoinKeys <- R6::R6Class( # nolint
 #' )
 join_keys <- function(...) {
   x <- list(...)
-  # parents_index <- which(grepl("parents", names(x)))
-  # parents <- if (length(parents_index) > 0) x[[which(grepl("parents", names(x)))]]
-  # x <- x[!grepl("parents", names(x))]
+
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
   }
-  #parents <- lapply(x, function(i) i$parent)
-  #names(parents) <- sapply(x, function(i) i$dataset_1)
 
-  #res$set_parents(parents)
   res
 }
 

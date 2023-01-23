@@ -10,7 +10,7 @@
 #'   objects
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
-#'   If empty then no joins between pairs of objects
+#'   If empty then an empty `JoinKeys` object is passed by default.
 #' @param check (`logical`) reproducibility check - whether evaluated preprocessing code gives the same objects
 #'   as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.
 #'
@@ -180,27 +180,28 @@ TealData <- R6::R6Class( # nolint
     },
 
     #' @description
-    #' get_join_keys
-    get_join_keys = function(dataname1, dataname2) {
-      if (missing(dataname1) && missing(dataname2)) {
+    #' Get join keys between two datasets.
+    #'
+    #' @param dataset_1 (`character`) name of first dataset.
+    #' @param dataset_2 (`character`) name of second dataset.
+    #' @return (`character`) named character vector x with names(x) the
+    #' columns of `dataset_1` and the values of `(x)` the corresponding join
+    #' keys in `dataset_2` or `character(0)` if no relationship
+    get_join_keys = function(dataset_1, dataset_2) {
+      if (missing(dataset_1) && missing(dataset_2)) {
         private$join_keys
       } else {
-        private$join_keys$get(dataname1, dataname2)
+        private$join_keys$get(dataset_1, dataset_2)
       }
     },
 
     #' @description
-    #' get_parents
+    #' returns the parents list of the datasets.
+    #'
+    #' @return named (`list`) of the parents of all datasets.
     get_parents = function() {
       private$join_keys$get_parents()
     },
-
-    #' #' @description
-    #' #' Get all datasets parent names
-    #' #' @return (named `list`) with dataset name and its corresponding parent dataset name
-    #' get_parent = function() {
-    #'   private$parent
-    #' },
 
     # ___ shiny ====
 
