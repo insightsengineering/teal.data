@@ -44,32 +44,7 @@ teal_data <- function(...,
     join_keys <- teal.data::join_keys(join_keys)
   }
 
-
-  if (length(join_keys$get()) == 0) {
-    join_keys_sets <- unlist(
-      lapply(data_objects, function(obj) {
-        if (inherits(obj, "TealDataConnector")) {
-          sub_objs <- obj$get_items()
-          lapply(names(sub_objs), function(dataname) {
-            sub_obj <- sub_objs[[dataname]]
-            join_key(
-              dataname,
-              dataname,
-              sub_obj$get_keys()
-            )
-          })
-        } else {
-          list(join_key(
-            obj$get_dataname(),
-            obj$get_dataname(),
-            obj$get_keys()
-          ))
-        }
-      }),
-      recursive = FALSE
-    )
-    join_keys$set(join_keys_sets)
-  }
+  get_primary_keys(data_objects, join_keys)
 
   x <- TealData$new(..., check = check, join_keys = join_keys)
 
@@ -123,4 +98,35 @@ teal_data_file <- function(path, code = get_code(path)) {
   object <- object_file(path, "TealData")
   object$mutate(code)
   return(object)
+}
+
+#' Add primary keys as join_keys to a dataset self
+#'
+#' @param data_objects (`list`) of TealDataset, TealDatasetConnector or TealDataConnector objects
+#' @param join_keys (`JoinKeys`) object
+#'
+get_primary_keys <- function(data_objects, join_keys) {
+  lapply(data_objects, function(obj) {
+    if (inherits(obj, "TealDataConnector")) {
+      sub_objs <- obj$get_items()
+      lapply(names(sub_objs), function(dataname) {
+        if (length(join_keys$get(dataname, dataname)) == 0) {
+          join_keys$mutate(
+            dataname,
+            dataname,
+            sub_objs[[dataname]]$get_keys()
+          )
+        }
+      })
+    } else {
+      dataname <- obj$get_dataname()
+      if (length(join_keys$get(dataname, dataname)) == 0) {
+        join_keys$mutate(
+          dataname,
+          dataname,
+          obj$get_keys()
+        )
+      }
+    }
+  })
 }

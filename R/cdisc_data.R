@@ -73,37 +73,13 @@ cdisc_data <- function(...,
   data_objects <- list(...)
   checkmate::assert_list(
     data_objects,
-    types = c("CDISCTealDataset", "CDISCTealDatasetConnector", "CDISCTealDataConnector")
+    types = c("TealDataset", "TealDatasetConnector", "TealDataConnector")
   )
   if (inherits(join_keys, "JoinKeySet")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
 
-  if (length(join_keys$get()) == 0) {
-    join_keys_sets <- unlist(
-      lapply(data_objects, function(obj) {
-        if (inherits(obj, "TealDataConnector")) {
-          sub_objs <- obj$get_items()
-          lapply(names(sub_objs), function(dataname) {
-            sub_obj <- sub_objs[[dataname]]
-            join_key(
-              dataname,
-              dataname,
-              sub_obj$get_keys()
-            )
-          })
-        } else {
-          list(join_key(
-            obj$get_dataname(),
-            obj$get_dataname(),
-            obj$get_keys()
-          ))
-        }
-      }),
-      recursive = FALSE
-    )
-    join_keys$set(join_keys_sets)
-  }
+  get_primary_keys(data_objects, join_keys)
 
   if (length(join_keys$get_parents()) == 0) {
     # set parents
@@ -117,7 +93,7 @@ cdisc_data <- function(...,
     new_parents <- unlist(
       lapply(data_objects, function(x) {
         if (inherits(x, "TealDataConnector")) {
-          retrieve_parents(x)
+          lapply(x$get_items(), function(z) z$get_parent())
         } else {
           list(retrieve_parents(x))
         }
@@ -125,7 +101,13 @@ cdisc_data <- function(...,
       recursive = FALSE
     )
 
-    names(new_parents) <- sapply(data_objects, function(x) x$get_datanames())
+    names(new_parents) <- unlist(lapply(data_objects, function(x) {
+      if (inherits(x, "TealDataConnector")) {
+        lapply(x$get_items(), function(z) z$get_dataname())
+      } else {
+        x$get_datanames()
+      }
+    }))
 
     if (is_dag(new_parents)) {
       stop("Cycle detected in a parent and child dataset graph.")
