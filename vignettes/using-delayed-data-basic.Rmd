@@ -52,13 +52,13 @@ adsl_adae <- relational_data_connector(
 )
 ```
 
-* The `teal_data` function takes a set of **`TealDataConnector`**, **`TealDatasetConnector`** and / or `cdisc_datasets` (non-delayed datasets) to create the **`TealData`** object which is used to create `teal` applications.
+* The `cdisc_data` function takes a set of **`TealDataConnector`**, **`TealDatasetConnector`** and / or `cdisc_datasets` (non-delayed datasets) to create the **`TealData`** object which is used to create `teal` applications.
 
 ```{r}
 # create a TealDatasetConnector for ADVS
 advs <- scda_cdisc_dataset_connector(dataname = "ADVS", scda_dataname = "advs")
 # use cdisc_data() to create a `DDL` object
-delayed_data <- teal_data(adsl_adae, advs)
+delayed_data <- cdisc_data(adsl_adae, advs)
 ```
 
 ### Constructors
