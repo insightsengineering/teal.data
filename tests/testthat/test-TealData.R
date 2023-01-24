@@ -477,7 +477,7 @@ testthat::test_that("TealData$print prints out expected output on basic input", 
   testthat::expect_equal(
     out,
     c(
-      "A CDISCTealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):",
+      "A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):",
       "--> Element 1:",
       "A CDISCTealDataset object containing the following data.frame (3 rows and 2 columns):",
       "  STUDYID USUBJID",
@@ -632,17 +632,24 @@ testthat::test_that("TealData$new throws if passed two datasets with the same na
   testthat::expect_error(TealData$new(mtcars_ds, mtcars_ds2), "TealDatasets names should be unique")
 })
 
-testthat::test_that("TealData$new sets join_keys datasets based on the primary keys", {
+testthat::test_that("TealData$new sets join_keys datasets based on the passed join_keys input otherwise empty", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
 
   df1 <- dataset("df1", df1, keys = "id")
   df2 <- dataset("df2", df2, keys = "df2_id")
 
-  data <- TealData$new(df1, df2)
+  join_keys1 <- join_keys(join_key("df1", "df1", "id"), join_key("df2", "df2", "df2_id"))
+  data <- TealData$new(df1, df2, join_keys = join_keys1)
   testthat::expect_equal(
     data$get_join_keys(),
-    join_keys(join_key("df1", "df1", "id"), join_key("df2", "df2", "df2_id"))
+    join_keys1
+  )
+
+  data2 <- TealData$new(df1, df2)
+  testthat::expect_equal(
+    data2$get_join_keys(),
+    join_keys()
   )
 })
 
@@ -697,8 +704,8 @@ testthat::test_that("TealData$mutate_join_keys changes keys for both datasets (s
     data$get_join_keys(),
     join_keys(
       join_key("df1", "df1", "id"),
-      join_key("df1", "df2", "id"),
-      join_key("df2", "df2", "df2_id")
+      join_key("df2", "df2", "df2_id"),
+      join_key("df1", "df2", "id")
     )
   )
 })
@@ -715,9 +722,8 @@ testthat::test_that("TealData$new sets passes JoinKeys to datasets correctly whe
     data$get_join_keys(),
     join_keys(
       join_key("df1", "df1", "id"),
-      join_key("df1", "df2", c(id = "fk", id2 = "fk2")),
       join_key("df2", "df2", "df2_id"),
-      join_key("df2", "df1", c(fk = "id", fk2 = "id2"))
+      join_key("df1", "df2", c(id = "fk", id2 = "fk2"))
     )
   )
 })

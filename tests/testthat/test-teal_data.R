@@ -12,7 +12,7 @@ testthat::test_that("teal_data returns CDISCTealData object rather than TealData
   mae <- MAETealDataset$new("MAE", dummy_mae)
 
   mixed_data <- teal_data(mae, adsl, adtte, ds2)
-  testthat::expect_equal(class(mixed_data), c("CDISCTealData", "TealData", "TealDataAbstract", "R6"))
+  testthat::expect_equal(class(mixed_data), c("TealData", "TealDataAbstract", "R6"))
 
   mae_only <- teal_data(mae)
   testthat::expect_equal(class(mae_only), c("TealData", "TealDataAbstract", "R6"))
@@ -24,7 +24,7 @@ testthat::test_that("teal_data returns CDISCTealData object rather than TealData
   testthat::expect_equal(class(mae_and_dataset), c("TealData", "TealDataAbstract", "R6"))
 
   cdisc_only <- teal_data(adsl, adtte)
-  testthat::expect_equal(class(cdisc_only), c("CDISCTealData", "TealData", "TealDataAbstract", "R6"))
+  testthat::expect_equal(class(cdisc_only), c("TealData", "TealDataAbstract", "R6"))
 
   testthat::expect_error(
     teal_data()

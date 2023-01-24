@@ -508,69 +508,6 @@ testthat::test_that("TealDataset$is_mutate_delayed stays FALSE if the TealDatase
   testthat::expect_false(dataset1$is_mutate_delayed())
 })
 
-testthat::test_that("TealDataset$get_join_keys returns an empty JoinKeys object", {
-  dataset1 <- TealDataset$new("iris", head(iris))
-  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
-  testthat::expect_equal(length(dataset1$get_join_keys()$get()), 0)
-})
-
-testthat::test_that("TealDataset$set_join_keys works independently", {
-  dataset1 <- TealDataset$new("iris", head(iris))
-  testthat::expect_silent(
-    dataset1$set_join_keys(join_key("iris", "other_dataset", c("Species" = "some_col")))
-  )
-  testthat::expect_error(
-    dataset1$set_join_keys(join_key("iris", "other_dataset", c("Sepal.Length" = "some_col2")))
-  )
-  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
-  testthat::expect_equal(length(dataset1$get_join_keys()$get()), 2)
-})
-
-testthat::test_that("TealDataset$mutate_join_keys works independently", {
-  dataset1 <- TealDataset$new("iris", head(iris))
-  testthat::expect_silent(
-    dataset1$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_col2"))
-  )
-  testthat::expect_true(inherits(dataset1$get_join_keys(), "JoinKeys"))
-  testthat::expect_equal(length(dataset1$get_join_keys()$get()), 2)
-
-  dataset2 <- TealDataset$new("iris", head(iris))
-  testthat::expect_silent(
-    dataset2$mutate_join_keys("other_dataset", c("Sepal.Length"))
-  )
-  testthat::expect_true(inherits(dataset2$get_join_keys(), "JoinKeys"))
-  testthat::expect_equal(length(dataset2$get_join_keys()$get()), 2)
-})
-
-testthat::test_that("TealDataset$set_join_keys works with TealDataset$mutate_join_keys", {
-  dataset1 <- TealDataset$new("iris", head(iris))
-  testthat::expect_silent(
-    dataset1$set_join_keys(join_key("iris", "other_dataset", c("Species" = "some_col")))
-  )
-  testthat::expect_identical(
-    dataset1$get_join_keys()$get()$iris$other_dataset, c("Species" = "some_col")
-  )
-  testthat::expect_silent(
-    dataset1$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_col2"))
-  )
-  dataset1$mutate(code = "iris$unique_id <- 1:2")
-  testthat::expect_silent(
-    dataset1$mutate_join_keys("iris", "unique_id")
-  )
-  testthat::expect_silent(
-    join_keys_list <- dataset1$get_join_keys()$get()
-  )
-  testthat::expect_identical(
-    dataset1$get_join_keys()$get()$iris$other_dataset, c("Sepal.Length" = "some_col2")
-  )
-  testthat::expect_identical(
-    dataset1$get_join_keys()$get()$iris$iris, c("unique_id" = "unique_id")
-  )
-  testthat::expect_identical(
-    dataset1$get_join_keys()$get()$other_dataset$iris, c("some_col2" = "Sepal.Length")
-  )
-})
-
 testthat::test_that("Dupliated mutation code is shown via get_code()", {
   dataset <- TealDataset$new("iris", head(iris))
   dataset$mutate("7")
@@ -750,22 +687,6 @@ test_that("mutate_dataset with vars argument", {
   expect_silent(
     mutate_dataset(x = t, code = "test$zz <- var", vars = list(var = var1))
   )
-})
-
-testthat::test_that("dataset$merge_join_keys does not throw on basic input", {
-  dataset1 <- TealDataset$new("iris", head(iris))
-  dataset1$set_join_keys(join_key("iris", "other_dataset", c("Species" = "some_col")))
-
-  dataset2 <- TealDataset$new("iris", head(iris))
-  dataset2$set_join_keys(join_key("iris", "other_dataset_2", c("Sepal.Length" = "some_col2")))
-
-  before_merge <- dataset1$get_join_keys()$get()
-  after_merge <- dataset1$merge_join_keys(dataset2$get_join_keys())$get_join_keys()$get()
-
-
-  testthat::expect_true(all(names(before_merge) %in% names(after_merge)))
-  testthat::expect_true(length(before_merge) < length(after_merge))
-  testthat::expect_equal(names(after_merge), c("iris", "other_dataset", "other_dataset_2"))
 })
 
 testthat::test_that("dataset$print warns of superfluous arguments", {
