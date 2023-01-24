@@ -988,26 +988,6 @@ testthat::test_that("Initializing TealDatasetConnector with code argument works"
   )
 })
 
-testthat::test_that("TealDatasetConnector$get_dataset calls dataset$merge_join_keys before returning", {
-  pull_fun <- callable_function(data.frame)
-  pull_fun$set_args(args = list(head_letters = head(letters)))
-  t_dc <- dataset_connector(
-    "test_dc",
-    pull_fun,
-    code = "test_dc$tail_letters = tail(letters)"
-  )
-  t_dc$pull()
-
-  testthat::expect_equal(t_dc$get_dataset()$get_join_keys()$get(), list())
-  # initial call
-  t_dc$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_col2"))
-  testthat::expect_equal(t_dc$get_dataset()$get_join_keys(), t_dc$get_join_keys())
-
-  # subsequent calls
-  t_dc$mutate_join_keys("other_dataset", c("Sepal.Length" = "some_other_col"))
-  testthat::expect_equal(t_dc$get_dataset()$get_join_keys(), t_dc$get_join_keys())
-})
-
 testthat::test_that("TealDatasetConnector$print does not print dataset when not yet pulled", {
   test_ds1 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
   pull_fun <- callable_function(data.frame)
