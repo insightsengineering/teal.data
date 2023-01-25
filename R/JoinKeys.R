@@ -409,6 +409,7 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' with relationship to columns of `dataset_2` given by the elements in `keys`.
 #' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
 #' and `dataset_2`.
+#' @param parent (`character`) parent dataset
 #'
 #' @return object of class `JoinKeySet` to be passed into `join_keys` function.
 #'

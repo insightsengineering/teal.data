@@ -15,6 +15,8 @@ join_key(dataset_1, dataset_2, keys, parent = character(0))
 with relationship to columns of \code{dataset_2} given by the elements in \code{keys}.
 If \code{names(keys)} is \code{NULL} then the same column names are used for both \code{dataset_1}
 and \code{dataset_2}.}
+
+\item{parent}{(\code{character}) parent dataset}
 }
 \value{
 object of class \code{JoinKeySet} to be passed into \code{join_keys} function.

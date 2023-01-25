@@ -7,7 +7,7 @@
 get_primary_keys(data_objects, join_keys)
 }
 \arguments{
-\item{data_objects}{(\code{list}) of TealDataset, TealDatasetConnector or TealDataConnector objects}
+\item{data_objects}{(\code{list}) of \code{TealDataset}, \code{TealDatasetConnector} or \code{TealDataConnector} objects}
 
 \item{join_keys}{(\code{JoinKeys}) object}
 }

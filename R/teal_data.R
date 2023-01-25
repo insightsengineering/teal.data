@@ -102,7 +102,7 @@ teal_data_file <- function(path, code = get_code(path)) {
 
 #' Add primary keys as join_keys to a dataset self
 #'
-#' @param data_objects (`list`) of TealDataset, TealDatasetConnector or TealDataConnector objects
+#' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
 #' @param join_keys (`JoinKeys`) object
 #'
 get_primary_keys <- function(data_objects, join_keys) {
