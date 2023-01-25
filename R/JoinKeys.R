@@ -174,6 +174,15 @@ JoinKeys <- R6::R6Class( # nolint
     #' @return (`self`) invisibly for chaining
     set_parents = function(named_list) {
       for (dataset in names(named_list)) {
+        checkmate::assert(
+          checkmate::check_null(self$get_parent(dataset)),
+          checkmate::check_true(
+            length(self$get_parent(dataset)) == 0 &&
+              length(named_list[[dataset]]) == 0
+          ),
+          checkmate::check_true(self$get_parent(dataset) == named_list[[dataset]]),
+          "Please check the difference between provided datasets parents and provided join_keys parents."
+        )
         if (is.null(self$get_parent(dataset))) {
           private$parents[[dataset]] <- named_list[[dataset]]
         }

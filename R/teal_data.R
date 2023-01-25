@@ -105,6 +105,7 @@ teal_data_file <- function(path, code = get_code(path)) {
 #' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
 #' @param join_keys (`JoinKeys`) object
 #'
+#' @keywords internal
 update_join_keys_to_primary <- function(data_objects, join_keys) {
   lapply(data_objects, function(obj) {
     if (inherits(obj, "TealDataConnector")) {
