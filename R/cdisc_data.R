@@ -1,7 +1,7 @@
 #' Data input for teal app
 #'
 #' @description `r lifecycle::badge("stable")`
-#' Function takes datasets and creates `CDISCTealData` object which can be used in `teal` applications.
+#' Function takes datasets and creates `TealData` object which can be used in `teal` applications.
 #'
 #' @note This function does not automatically assign keys to `TealDataset`
 #' and `TealDatasetConnector` objects passed to it. If the keys are needed
@@ -24,7 +24,7 @@
 #'   (optional) object with datasets column names used for joining.
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys
 #'
-#' @return a `CDISCTealData` object
+#' @return a `TealData` object
 #'
 #' @details This function checks if there were keys added to all data sets
 #'
@@ -79,41 +79,40 @@ cdisc_data <- function(...,
     join_keys <- teal.data::join_keys(join_keys)
   }
 
-  get_primary_keys(data_objects, join_keys)
+  update_join_keys_to_primary(data_objects, join_keys)
 
-  if (length(join_keys$get_parents()) == 0) {
-    retrieve_parents <- function(x) {
-      tryCatch(
-        x$get_parent(),
-        error = function(cond) rep(character(0), length(x$get_datanames()))
-      )
-    }
-
-    new_parents <- unlist(
-      lapply(data_objects, function(x) {
-        if (inherits(x, "TealDataConnector")) {
-          lapply(x$get_items(), function(z) z$get_parent())
-        } else {
-          list(retrieve_parents(x))
-        }
-      }),
-      recursive = FALSE
+  retrieve_parents <- function(x) {
+    tryCatch(
+      x$get_parent(),
+      error = function(cond) rep(character(0), length(x$get_datanames()))
     )
-
-    names(new_parents) <- unlist(lapply(data_objects, function(x) {
-      if (inherits(x, "TealDataConnector")) {
-        lapply(x$get_items(), function(z) z$get_dataname())
-      } else {
-        x$get_datanames()
-      }
-    }))
-
-    if (is_dag(new_parents)) {
-      stop("Cycle detected in a parent and child dataset graph.")
-    }
-    join_keys$set_parents(new_parents)
-    join_keys$update_keys_given_parents()
   }
+
+  new_parents_fun <- function(data_objects) {
+    lapply(data_objects, function(x) {
+      if (inherits(x, "TealDataConnector")) {
+        unlist(new_parents_fun(x$get_items()), recursive = FALSE)
+      } else {
+        list(retrieve_parents(x))
+      }
+    })
+  }
+
+  new_parents <- unlist(new_parents_fun(data_objects), recursive = FALSE)
+
+  names(new_parents) <- unlist(lapply(data_objects, function(x) {
+    if (inherits(x, "TealDataConnector")) {
+      lapply(x$get_items(), function(z) z$get_dataname())
+    } else {
+      x$get_datanames()
+    }
+  }))
+
+  if (is_dag(new_parents)) {
+    stop("Cycle detected in a parent and child dataset graph.")
+  }
+  join_keys$set_parents(new_parents)
+  join_keys$update_keys_given_parents()
 
   x <- TealData$new(..., check = check, join_keys = join_keys)
 
@@ -124,4 +123,43 @@ cdisc_data <- function(...,
   x$check_reproducibility()
   x$check_metadata()
   return(x)
+}
+
+#' Load `TealData` object from a file
+#'
+#' @description `r lifecycle::badge("deprecated")`
+#'
+#' @inheritParams teal_data_file
+#'
+#' @return `TealData` object
+#'
+#' @export
+#'
+#' @examples
+#' file_example <- tempfile(fileext = ".R")
+#' writeLines(
+#'   text = c(
+#'     "library(scda)
+#'
+#'      # code>
+#'      ADSL <- synthetic_cdisc_data('latest')$adsl
+#'      ADTTE <- synthetic_cdisc_data('latest')$adtte
+#'
+#'      cdisc_data(
+#'           cdisc_dataset(\"ADSL\", ADSL), cdisc_dataset(\"ADTTE\", ADTTE),
+#'           code = \"ADSL <- synthetic_cdisc_data('latest')$adsl
+#'                   ADTTE <- synthetic_cdisc_data('latest')$adtte\",
+#'           check = FALSE
+#'      )
+#'      # <code"
+#'   ),
+#'   con = file_example
+#' )
+#'
+#' cdisc_data_file(file_example)
+cdisc_data_file <- function(path, code = get_code(path)) {
+  lifecycle::deprecate_warn(when = "0.1.3", what = "cdisc_data_file()", with = "teal_data_file()")
+  object <- object_file(path, "TealData")
+  object$mutate(code)
+  return(object)
 }

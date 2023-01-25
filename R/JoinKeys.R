@@ -240,7 +240,6 @@ JoinKeys <- R6::R6Class( # nolint
   ## __Private Fields ====
   private = list(
     .keys = list(),
-    primary_keys = list(),
     parents = list(),
     join_pair = function(join_key) {
       dataset_1 <- join_key$dataset_1
@@ -409,14 +408,13 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' with relationship to columns of `dataset_2` given by the elements in `keys`.
 #' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
 #' and `dataset_2`.
-#' @param parent (`character`) parent dataset
 #'
 #' @return object of class `JoinKeySet` to be passed into `join_keys` function.
 #'
 #' @seealso [join_keys()]
 #'
 #' @export
-join_key <- function(dataset_1, dataset_2, keys, parent = character(0)) {
+join_key <- function(dataset_1, dataset_2, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
@@ -443,8 +441,7 @@ join_key <- function(dataset_1, dataset_2, keys, parent = character(0)) {
     list(
       dataset_1 = dataset_1,
       dataset_2 = dataset_2,
-      keys = keys,
-      parent = parent
+      keys = keys
     ),
     class = "JoinKeySet"
   )

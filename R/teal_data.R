@@ -44,7 +44,7 @@ teal_data <- function(...,
     join_keys <- teal.data::join_keys(join_keys)
   }
 
-  get_primary_keys(data_objects, join_keys)
+  update_join_keys_to_primary(data_objects, join_keys)
 
   x <- TealData$new(..., check = check, join_keys = join_keys)
 
@@ -105,19 +105,10 @@ teal_data_file <- function(path, code = get_code(path)) {
 #' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
 #' @param join_keys (`JoinKeys`) object
 #'
-get_primary_keys <- function(data_objects, join_keys) {
+update_join_keys_to_primary <- function(data_objects, join_keys) {
   lapply(data_objects, function(obj) {
     if (inherits(obj, "TealDataConnector")) {
-      sub_objs <- obj$get_items()
-      lapply(names(sub_objs), function(dataname) {
-        if (length(join_keys$get(dataname, dataname)) == 0) {
-          join_keys$mutate(
-            dataname,
-            dataname,
-            sub_objs[[dataname]]$get_keys()
-          )
-        }
-      })
+      update_join_keys_to_primary(obj$get_items(), join_keys)
     } else {
       dataname <- obj$get_dataname()
       if (length(join_keys$get(dataname, dataname)) == 0) {

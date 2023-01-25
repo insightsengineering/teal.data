@@ -21,11 +21,11 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-a \code{CDISCTealData} object
+a \code{TealData} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-Function takes datasets and creates \code{CDISCTealData} object which can be used in \code{teal} applications.
+Function takes datasets and creates \code{TealData} object which can be used in \code{teal} applications.
 }
 \details{
 This function checks if there were keys added to all data sets
