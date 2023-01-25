@@ -60,7 +60,6 @@ reference:
     desc: For creating delayed data objects.
     contents:
       - cdisc_data
-      - cdisc_data_file
       - teal_data
       - teal_data_file
       - to_relational_data

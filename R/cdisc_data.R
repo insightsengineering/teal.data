@@ -82,7 +82,6 @@ cdisc_data <- function(...,
   get_primary_keys(data_objects, join_keys)
 
   if (length(join_keys$get_parents()) == 0) {
-    # set parents
     retrieve_parents <- function(x) {
       tryCatch(
         x$get_parent(),
