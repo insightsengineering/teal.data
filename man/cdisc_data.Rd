@@ -57,8 +57,8 @@ ADTTE <- latest_data$adtte
 cdisc_data(
   cdisc_dataset("ADSL", ADSL),
   cdisc_dataset("ADTTE", ADTTE),
-  code = 'ADSL <- synthetic_cdisc_data("latest")$adsl
-          ADTTE <- synthetic_cdisc_data("latest")$adtte',
+  code = "ADSL <- synthetic_cdisc_data("latest")$adsl
+          ADTTE <- synthetic_cdisc_data("latest")$adtte",
   check = TRUE
 )
 
@@ -78,8 +78,8 @@ cdisc_data(
       c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
     )
   ),
-  code = 'ADSL <- synthetic_cdisc_data("latest")$adsl
-          ADTTE <- synthetic_cdisc_data("latest")$adtte',
+  code = "ADSL <- synthetic_cdisc_data("latest")$adsl
+          ADTTE <- synthetic_cdisc_data("latest")$adtte",
   check = TRUE
 )
 }
