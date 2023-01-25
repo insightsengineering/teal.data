@@ -7,15 +7,15 @@
 #' and `TealDatasetConnector` objects passed to it. If the keys are needed
 #' they should be assigned before calling `cdisc_data`. See example:
 #' ```
-# library(scda)
-# test_dataset <- dataset("ADAE", synthetic_cdisc_data("latest")$adae) # does not have keys
-# test_adsl <- cdisc_dataset("ADSL", synthetic_cdisc_data("latest")$adsl)
-# test_data <- cdisc_data(test_dataset, test_adsl)
-# get_keys(test_data, "ADAE") # returns character(0)
-#
-# test_dataset <- cdisc_dataset("ADAE", synthetic_cdisc_data("latest")$adae)
-# test_data <- cdisc_data(test_dataset, test_adsl)
-# get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
+#' library(scda)
+#' test_dataset <- dataset("ADAE", synthetic_cdisc_data("latest")$adae) # does not have keys
+#' test_adsl <- cdisc_dataset("ADSL", synthetic_cdisc_data("latest")$adsl)
+#' test_data <- cdisc_data(test_dataset, test_adsl)
+#' get_keys(test_data, "ADAE") # returns character(0)
+#'
+#' test_dataset <- cdisc_dataset("ADAE", synthetic_cdisc_data("latest")$adae)
+#' test_data <- cdisc_data(test_dataset, test_adsl)
+#' get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
 #' ```
 #' @inheritParams teal_data
 #' @param ... (`TealDataConnector`, `TealDataset` or

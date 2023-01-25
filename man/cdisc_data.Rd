@@ -35,7 +35,16 @@ This function does not automatically assign keys to \code{TealDataset}
 and \code{TealDatasetConnector} objects passed to it. If the keys are needed
 they should be assigned before calling \code{cdisc_data}. See example:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(scda)
+test_dataset <- dataset("ADAE", synthetic_cdisc_data("latest")$adae) # does not have keys
+test_adsl <- cdisc_dataset("ADSL", synthetic_cdisc_data("latest")$adsl)
+test_data <- cdisc_data(test_dataset, test_adsl)
+get_keys(test_data, "ADAE") # returns character(0)
+
+test_dataset <- cdisc_dataset("ADAE", synthetic_cdisc_data("latest")$adae)
+test_data <- cdisc_data(test_dataset, test_adsl)
+get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
+}\if{html}{\out{</div>}}
 }
 \examples{
 library(scda)
