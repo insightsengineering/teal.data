@@ -106,7 +106,6 @@ reference:
     contents:
       - CallableCode
       - CallablePythonCode
-      - CDISCTealData
       - CDISCTealDataConnector
       - CDISCTealDataset
       - CDISCTealDatasetConnector
