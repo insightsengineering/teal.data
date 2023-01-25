@@ -115,7 +115,6 @@ cdisc_data <- function(...,
     join_keys$update_keys_given_parents()
   }
 
-  # initialize TealData
   x <- TealData$new(..., check = check, join_keys = join_keys)
 
   if (length(code) > 0 && !identical(code, "")) {
