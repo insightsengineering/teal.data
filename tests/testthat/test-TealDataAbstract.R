@@ -17,7 +17,7 @@ adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE
 load_dataset(adsl)
 load_dataset(adtte)
 
-tealData_mixed_call <- function(check = TRUE) {
+tealdata_mixed_call <- function(check = TRUE) {
   TealData$new(adsl, adtte, check = check)
 }
 
@@ -44,12 +44,12 @@ testthat::test_that("TealDataAbstract$check returns FALSE if the code provided i
 })
 
 testthat::test_that("TealDataAbstract$check returns TRUE if the code is reproducible", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_true(data$check())
 })
 
 testthat::test_that("TealDataAbstract$check_reproducibility returns NULL if the reproducibility check passes", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_silent(data$check_reproducibility())
 })
 
@@ -74,25 +74,25 @@ testthat::test_that("execute_mutate returns current datasets if no mutate_code",
 })
 
 testthat::test_that("get_check_result method returns NULL if check was set to FALSE", {
-  data <- tealData_mixed_call(FALSE)
+  data <- tealdata_mixed_call(FALSE)
   testthat::expect_null(data$get_check_result())
 })
 
 testthat::test_that("get_check_result method returns TRUE if check passed", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_true(data$check())
   testthat::expect_true(data$get_check_result())
 })
 
 testthat::test_that("get_check_result method returns NULL if check is set to FALSE", {
-  data <- tealData_mixed_call(FALSE)
+  data <- tealdata_mixed_call(FALSE)
 
   testthat::expect_silent(data$check())
   testthat::expect_null(data$get_check_result())
 })
 
 testthat::test_that("get_code returns the code of the datasets when no input is specified", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   testthat::expect_identical(
     data$get_code(),
@@ -104,7 +104,7 @@ testthat::test_that("get_code returns the code of the datasets when no input is 
 })
 
 testthat::test_that("get_code returns the code of the dataset specifed", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   testthat::expect_identical(
     data$get_code("ADTTE"),
@@ -113,7 +113,7 @@ testthat::test_that("get_code returns the code of the dataset specifed", {
 })
 
 testthat::test_that("get_code returns the non deparsed code when deparse is set to FALSE", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   testthat::expect_identical(
     data$get_code("ADSL", deparse = FALSE),
@@ -125,7 +125,7 @@ testthat::test_that("get_code returns the non deparsed code when deparse is set 
 })
 
 testthat::test_that("get_code throws error if dataname is not character or deparse is not logical", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   testthat::expect_error(
     data$get_code(1),
@@ -139,7 +139,7 @@ testthat::test_that("get_code throws error if dataname is not character or depar
 })
 
 testthat::test_that("get_code_class with TRUE returns code without mutate code", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   # MUTATE
     data <- data %>%
@@ -159,7 +159,7 @@ testthat::test_that("get_code_class with TRUE returns code without mutate code",
 })
 
 testthat::test_that("get_code_class with FALSE returns code with mutate code", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   # MUTATE
   data <- data %>%
@@ -182,22 +182,22 @@ testthat::test_that("get_code_class with FALSE returns code with mutate code", {
 })
 
 testthat::test_that("get_datanames returns a vector of characters", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE"))
 })
 
 testthat::test_that("get_datanames throws error if an argument is passed", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(data$get_datanames("ADSL"), "unused argument")
 })
 
 testthat::test_that("get_dataset throws an error if no dataset is found with the passed name", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(data$get_dataset("iris"), "dataset iris not found")
 })
 
 testthat::test_that("get_dataset returns the dataset with the passed name", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
 
   testthat::expect_equal(
     data$get_dataset("ADSL"),
@@ -210,27 +210,27 @@ testthat::test_that("get_dataset returns the dataset with the passed name", {
 })
 
 testthat::test_that("TealDataAbstract$get_dataset returns a list of all datasets if passed NULL", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_dataset(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
 testthat::test_that("TealDataAbstract$get_datasets returns a list of all datasets if passed NULL", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_datasets(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
 testthat::test_that("TealDataAbstract$get_items returns a list of all datasets if passed NULL", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_items(), list(ADSL = adsl, ADTTE = adtte))
 })
 
 testthat::test_that("TealDataAbstract$get_items returns the dataset passed in the input", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_items("ADSL"), adsl)
 })
 
 testthat::test_that("TealDataAbstract$get_items throws error when the name of the dataset is not found", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(data$get_items("ADSL2"), "dataset ADSL2 not found")
 })
 
@@ -246,20 +246,20 @@ testthat::test_that("TealData keeps references to the objects passed to the cons
 })
 
 testthat::test_that("TealDataAbstract$get_check returns the check status", {
-  data <- tealData_mixed_call(check = TRUE)
+  data <- tealdata_mixed_call(check = TRUE)
   testthat::expect_true(data$get_check())
 
-  data <- tealData_mixed_call(check = FALSE)
+  data <- tealdata_mixed_call(check = FALSE)
   testthat::expect_false(data$get_check())
 })
 
 testthat::test_that("TealDataAbstract$is_pulled returns if the datasets are pulled", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_true(data$is_pulled())
 })
 
 testthat::test_that("TealDataAbstract$mutate updates the code", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   data$mutate("ADSL$new_column <- 1")
   testthat::expect_equal(
     data$get_code(),
@@ -271,7 +271,7 @@ testthat::test_that("TealDataAbstract$mutate updates the code", {
 })
 
 testthat::test_that("TealDataAbstract$mutate_dataset updates the code of the dataset", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   data$mutate_dataset("ADSL", "ADSL$new_column <- 1")
   testthat::expect_equal(
     data$get_code("ADSL"),
@@ -282,7 +282,7 @@ testthat::test_that("TealDataAbstract$mutate_dataset updates the code of the dat
 })
 
 testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the dataname is not found", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(
     data$mutate_dataset("ADSL2", "ADSL$new_column <- 1"),
     "all\\(dataname %in% self\\$get_datanames\\(\\)\\) is not TRUE"
@@ -290,7 +290,7 @@ testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the data
 })
 
 testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the dataname is not character", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(
     data$mutate_dataset(dataname = 1, "ADSL$new_column <- 1"),
     "Must be of type 'character', not 'double'."
@@ -298,13 +298,13 @@ testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the data
 })
 
 testthat::test_that("TealDataAbstract$set_check sets the reproducibility check", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_silent(data$set_check(FALSE))
   testthat::expect_false(data$get_check())
 })
 
 testthat::test_that("TealDataAbstract$set_check accepts only logical input", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(data$set_check("FALSE"), "Must be of type 'logical flag', not 'character'.")
 })
 
@@ -331,7 +331,7 @@ testthat::test_that("TealDataAbstract$set_pull_code throws error if code is not 
 })
 
 testthat::test_that("TealDataAbstract$set_pull_code throws error if code is specified on data and dataset levels", {
-  data <- tealData_mixed_call()
+  data <- tealdata_mixed_call()
   testthat::expect_error(
     data$set_pull_code("Add code here"),
     "'code' argument should be specified only in the 'cdisc_data' or in 'cdisc_dataset' but not in both"
@@ -540,4 +540,3 @@ testthat::test_that("Cannot create TealData if arguments include TealData object
   testthat::expect_error(cdisc_data(c_data))
   testthat::expect_error(cdisc_data(cdisc_dataset("ADSL", adsl_raw), c_data))
 })
-
