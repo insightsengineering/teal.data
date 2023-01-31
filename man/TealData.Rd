@@ -59,7 +59,6 @@ get_raw_data(tc)
 \item \href{#method-TealData-new}{\code{TealData$new()}}
 \item \href{#method-TealData-copy}{\code{TealData$copy()}}
 \item \href{#method-TealData-print}{\code{TealData$print()}}
-\item \href{#method-TealData-get_datanames}{\code{TealData$get_datanames()}}
 \item \href{#method-TealData-get_connectors}{\code{TealData$get_connectors()}}
 \item \href{#method-TealData-get_items}{\code{TealData$get_items()}}
 \item \href{#method-TealData-get_join_keys}{\code{TealData$get_join_keys()}}
@@ -82,6 +81,7 @@ get_raw_data(tc)
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_check_result"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_check_result'><code>teal.data::TealDataAbstract$get_check_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_code'><code>teal.data::TealDataAbstract$get_code()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code_class"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_code_class'><code>teal.data::TealDataAbstract$get_code_class()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datanames"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_datanames'><code>teal.data::TealDataAbstract$get_datanames()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_dataset"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_dataset'><code>teal.data::TealDataAbstract$get_dataset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datasets"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_datasets'><code>teal.data::TealDataAbstract$get_datasets()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="is_pulled"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-is_pulled'><code>teal.data::TealDataAbstract$is_pulled()</code></a></span></li>
@@ -158,19 +158,6 @@ Prints this \code{TealData}.
 }
 \subsection{Returns}{
 invisibly self
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealData-get_datanames"></a>}}
-\if{latex}{\out{\hypertarget{method-TealData-get_datanames}{}}}
-\subsection{Method \code{get_datanames()}}{
-Derive the names of all datasets
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_datanames()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{character} vector) with names
 }
 }
 \if{html}{\out{<hr>}}

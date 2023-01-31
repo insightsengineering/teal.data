@@ -81,7 +81,6 @@ TealDataAbstract <- R6::R6Class( # nolint
         return(res)
       }
 
-
       if (inherits(private$mutate_code, "PythonCodeClass")) {
         items <- lapply(self$get_items(), get_raw_data)
         datasets <- stats::setNames(items, vapply(self$get_items(), get_dataname, character(1)))

@@ -127,16 +127,6 @@ TealData <- R6::R6Class( # nolint
     },
     # ___ getters ====
     #' @description
-    #'
-    #' Derive the names of all datasets
-    #' @return (`character` vector) with names
-    get_datanames = function() {
-      datasets_names <- unlist(lapply(private$datasets, get_dataname))
-
-      return(datasets_names)
-    },
-
-    #' @description
     #' Get data connectors.
     #'
     #' @return (`list`) with all `TealDatasetConnector` or `TealDataConnector` objects.
