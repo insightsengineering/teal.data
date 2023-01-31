@@ -41,3 +41,15 @@ testthat::test_that("get_labels' column_labels is a named vector of the labels o
   attr(test[[2]], "label") <- test_labels[2]
   testthat::expect_equal(get_labels(test)$column_labels, stats::setNames(object = test_labels, nm = colnames(test)))
 })
+
+testthat::test_that("get_cdisc_keys returns column names present in the cached datasets", {
+  scda_data <- scda::synthetic_cdisc_data("latest")
+
+  testthat::expect_true(all(get_cdisc_keys("ADSL") %in% names(scda_data$adsl)))
+  testthat::expect_true(all(get_cdisc_keys("ADAE") %in% names(scda_data$adae)))
+  testthat::expect_true(all(get_cdisc_keys("ADTTE") %in% names(scda_data$adtte)))
+  testthat::expect_true(all(get_cdisc_keys("ADCM") %in% names(scda_data$adcm)))
+  testthat::expect_true(all(get_cdisc_keys("ADLB") %in% names(scda_data$adlb)))
+  testthat::expect_true(all(get_cdisc_keys("ADRS") %in% names(scda_data$adrs)))
+  testthat::expect_true(all(get_cdisc_keys("ADVS") %in% names(scda_data$advs)))
+})

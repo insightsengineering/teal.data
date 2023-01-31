@@ -1,9 +1,284 @@
+testthat::test_that("TealData$new throws if data is not valid", {
+  testthat::expect_error(
+    TealData$new("mtcars"),
+    "All elements should be of TealDataset\\(Connector\\) or TealDataConnector class"
+  )
+})
+
+testthat::test_that("TealData$new sets join_keys datasets based on the passed join_keys input otherwise empty", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  join_keys1 <- join_keys(join_key("df1", "df1", "id"), join_key("df2", "df2", "df2_id"))
+  data <- TealData$new(df1, df2, join_keys = join_keys1)
+  # primary keys are not taken from datasets when calling TealData$new(), these are only added if using wrappers
+  testthat::expect_equal(
+    data$get_join_keys(),
+    join_keys1
+  )
+
+  data2 <- TealData$new(df1, df2)
+  testthat::expect_equal(
+    data2$get_join_keys(),
+    join_keys()
+  )
+})
+
+testthat::test_that("copy(deep = TRUE) deep copies self and the items", {
+  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
+  test_ds1 <- TealDatasetConnector$new(
+    dataname = "test_ds1",
+    pull_callable = CallableFunction$new(data.frame),
+    vars = list(test_ds0 = test_ds0)
+  )
+  data <- TealData$new(test_ds0, test_ds1)
+  data_cloned <- data$copy(deep = TRUE)
+  testthat::expect_false(identical(data, data_cloned))
+  testthat::expect_false(identical(data_cloned$get_items()$test_ds0, test_ds0))
+})
+
+testthat::test_that("copy(deep = TRUE) keeps valid references between items", {
+  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
+  test_ds1 <- TealDatasetConnector$new(
+    dataname = "test_ds1",
+    pull_callable = CallableFunction$new(data.frame),
+    vars = list(test_ds0 = test_ds0)
+  )
+  data <- TealData$new(test_ds0, test_ds1)
+  data_cloned <- data$copy(deep = TRUE)
+  new_test_ds0 <- data_cloned$get_items()$test_ds0
+  new_test_ds1 <- data_cloned$get_items()$test_ds1
+  testthat::expect_identical(
+    new_test_ds1$get_var_r6()$test_ds0,
+    new_test_ds0
+  )
+})
+
+testthat::test_that("clone(deep = TRUE) deep copies self and the items", {
+  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
+  test_ds1 <- TealDatasetConnector$new(
+    dataname = "test_ds1",
+    pull_callable = CallableFunction$new(data.frame),
+    vars = list(test_ds0 = test_ds0)
+  )
+  data <- TealData$new(test_ds0, test_ds1)
+  data_cloned <- data$clone(deep = TRUE)
+  testthat::expect_false(identical(data, data_cloned))
+  testthat::expect_false(identical(data_cloned$get_items()$test_ds0, test_ds0))
+})
+
+testthat::test_that("TealData$print prints out expected output on basic input", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"), object = list(1:3, letters[1:3]))))
+  adsl <- cdisc_dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))"
+  )
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adtte <- cdisc_dataset(
+    dataname = "ADTTE",
+    x = adtte_raw,
+    code = "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))"
+  )
+  data <- TealData$new(adsl, adtte, check = TRUE)
+
+  out <- capture.output(print(data))
+  testthat::expect_equal(
+    out,
+    c(
+      "A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):",
+      "--> Element 1:",
+      "A CDISCTealDataset object containing the following data.frame (3 rows and 2 columns):",
+      "  STUDYID USUBJID",
+      "1       1       a",
+      "2       2       b",
+      "3       3       c",
+      "--> Element 2:",
+      "A CDISCTealDataset object containing the following data.frame (1 rows and 3 columns):",
+      "  STUDYID USUBJID PARAMCD",
+      "1 STUDYID USUBJID PARAMCD"
+    )
+  )
+})
+
+testthat::test_that("TealData$get_connectors returns an empty list if no connectors are provided", {
+  mtcars_ds1 <- TealDataset$new("cars1", head(mtcars), code = "cars1 <- head(mtcars)")
+  data <- TealData$new(mtcars_ds1, check = TRUE)
+  testthat::expect_identical(data$get_connectors(), list())
+})
+
+testthat::test_that("TealData$get_connectors returns a list with the numbers of connectors provided", {
+  example_data_connector <- function(...) {
+    connectors <- list(...)
+    open_fun <- callable_function(library)
+    open_fun$set_args(list(package = "teal.data"))
+    con <- TealDataConnection$new(open_fun = open_fun)
+    TealDataConnector$new(connection = con, connectors = connectors)
+  }
+
+  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl_data <- example_data_connector(adsl)
+  mtcars_ds1 <- TealDataset$new("cars1", head(mtcars), code = "cars1 <- head(mtcars)")
+  data <- TealData$new(adsl_data, mtcars_ds1, check = TRUE)
+  testthat::expect_identical(length(data$get_connectors()), 1L)
+})
+
+testthat::test_that("TealData$get_items returns a dataset of the passed TealDataset name", {
+  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
+  data <- TealData$new(mtcars_ds, check = TRUE)
+  testthat::expect_identical(data$get_items("cars"), mtcars_ds)
+})
+
+testthat::test_that("TealData$get_items returns the content of the passed TealDataConnector name", {
+  example_data_connector <- function(...) {
+    connectors <- list(...)
+    open_fun <- callable_function(library)
+    open_fun$set_args(list(package = "teal.data"))
+    con <- TealDataConnection$new(open_fun = open_fun)
+    TealDataConnector$new(connection = con, connectors = connectors)
+  }
+
+  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl_data <- example_data_connector(adsl)
+  data <- TealData$new(adsl_data, check = TRUE)
+  testthat::expect_identical(data$get_items("ADSL"), adsl_data$get_items()$ADSL)
+})
+
+testthat::test_that("TealData$get_items returns all a list of the contents if no dataname is defined", {
+  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
+  data <- TealData$new(mtcars_ds, check = TRUE)
+  testthat::expect_identical(data$get_items(), list(cars = mtcars_ds))
+})
+
+testthat::test_that("TealData$get_items throws an error if there is no dataset found with the passed name", {
+  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
+  data <- TealData$new(mtcars_ds, check = TRUE)
+  testthat::expect_error(data$get_items("iris"), "dataset iris not found")
+})
+
+testthat::test_that("TealData$get_join_keys returns an empty joinKeys if no join_keys are passed", {
+  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
+  data <- TealData$new(mtcars_ds, check = TRUE)
+  testthat::expect_equal(data$get_join_keys(), join_keys())
+})
+
+testthat::test_that("TealData$get_join_keys returns all join_keys when no input datanmes is specified", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jk <- join_keys(join_key("df1", "df2", "id"))
+  data <- TealData$new(df1, df2, join_keys = jk, check = FALSE)
+
+  testthat::expect_equal(
+    data$get_join_keys(),
+    join_keys(
+      join_key("df1", "df2", "id"),
+      join_key("df2", "df1", "id")
+    )
+  )
+})
+
+testthat::test_that("TealData$get_join_keys returns all join_keys of the single dataname specified", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jk <- join_keys(join_key("df1", "df2", "id"))
+  data <- TealData$new(df1, df2, join_keys = jk, check = FALSE)
+
+  testthat::expect_equal(
+    data$get_join_keys("df1"),
+    list(df2 = setNames("id", "id"))
+  )
+})
+
+testthat::test_that("TealData$get_join_keys returns the join_keys of the specified datanames", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jk <- join_keys(join_key("df1", "df2", "id"))
+  data <- TealData$new(df1, df2, join_keys = jk, check = FALSE)
+
+  testthat::expect_equal(
+    data$get_join_keys("df1", "df2"),
+    setNames("id", "id")
+  )
+})
+
+testthat::test_that("TealData$get_parents returns an empty list even when parents are specified", {
+  # parent specified - this information is passed on the wrappers level
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df1 <- CDISCTealDataset$new("df1", df1, keys = "id", parent = "parent")
+  data <- TealData$new(df1, check = FALSE)
+  testthat::expect_equal(data$get_parents(), list())
+})
+
+testthat::test_that("TealData$mutate_join_keys returns a JoinKeys object with the updated join_keys", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jk <- join_keys(join_key("df1", "df2", "id"))
+  data <- TealData$new(df1, df2, join_keys = jk, check = FALSE)
+
+  data$mutate_join_keys("df1", "df2", "id2")
+  updated_jks <- data$get_join_keys()
+  testthat::expect_equal(
+    updated_jks,
+    join_keys(join_key("df1", "df2", "id2"))
+  )
+})
+
+test_that("check_metadata fails if inconsistent join_keys for given datasets", {
+  df_1 <- data.frame(x = 1:10, y = 1:10)
+  df_2 <- data.frame(u = 1:10, v = 1:10)
+
+  constructor_wrapper <- function(join_keys) {
+    data <- TealData$new(
+      dataset("df_1", df_1),
+      dataset("df_2", df_2),
+      join_keys = join_keys
+    )
+  }
+
+  expect_error(
+    constructor_wrapper(
+      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "w")))
+    )$check_metadata()
+  )
+
+  expect_error(
+    constructor_wrapper(
+      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "y", "v" = "v")))
+    )$check_metadata()
+  )
+
+  expect_error(
+    constructor_wrapper(
+      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "x")))
+    )$check_metadata()
+  )
+})
+
 test_that("check_metadata does not produce error if join_keys are consistent for given datasets", {
   df_1 <- data.frame(x = 1:10, y = 1:10)
   df_2 <- data.frame(u = 1:10, v = 1:10)
 
   constructor_wrapper <- function(join_keys) {
-    data <- teal_data(
+    data <- TealData$new(
       dataset("df_1", df_1),
       dataset("df_2", df_2),
       join_keys = join_keys
@@ -35,204 +310,19 @@ test_that("check_metadata does not produce error if join_keys are consistent for
   )
 })
 
-test_that("check_metadata fails if inconsistent join_keys for given datasets", {
-  df_1 <- data.frame(x = 1:10, y = 1:10)
-  df_2 <- data.frame(u = 1:10, v = 1:10)
+testthat::test_that("TealData$check_metadata returns error when ", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
 
-  constructor_wrapper <- function(join_keys) {
-    data <- teal_data(
-      dataset("df_1", df_1),
-      dataset("df_2", df_2),
-      join_keys = join_keys
-    )
-  }
+  df1 <- dataset("df1", df1, keys = "id6")
+  df2 <- dataset("df2", df2, keys = "df2_id")
 
-  expect_error(
-    constructor_wrapper(
-      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "w")))
-    )$check_metadata()
-  )
+  jk <- join_keys(join_key("df1", "df2", "id"))
+  data <- TealData$new(df1, df2, join_keys = jk, check = FALSE)
 
-  expect_error(
-    constructor_wrapper(
-      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "y", "v" = "v")))
-    )$check_metadata()
-  )
-
-  expect_error(
-    constructor_wrapper(
-      join_keys = join_keys(join_key("df_1", "df_2", c("x" = "x")))
-    )$check_metadata()
-  )
-})
-
-test_that("get_check method is default FALSE", {
-  data <- teal_data(dataset("df_1", data.frame(x = 1:10, y = 1:10)))
-  expect_false(data$get_check())
-})
-
-test_that("get_check_result method returns true if object created with check = TRUE", {
-  data <- teal_data(
-    dataset("df_1", data.frame(x = 1:10, y = 1:10)),
-    code = "df_1 <- data.frame(x = 1:10, y = 1:10)", check = TRUE
-  )
-  expect_true(data$get_check())
-})
-
-test_that("deep clone", {
-  ## TealDatasetConnector
-  expect_silent({
-    x_c <- CallableFunction$new(data.frame)
-    x_c$set_args(list(c1 = seq_len(10)))
-    x <- dataset_connector("x", x_c)
-  })
-
-  expect_silent({
-    x_copy <- x$clone(deep = TRUE)
-  })
-
-  expect_silent({
-    load_dataset(x)
-  })
-
-  expect_true(is_pulled(x))
-  expect_false(is_pulled(x_copy))
-
-  # check one of the private fields of R6 class
-  expect_false(rlang::is_reference(x$get_pull_callable(), x_copy$get_pull_callable()))
-
-  ## TealData
-  expect_silent({
-    x1 <- dataset("x1", data.frame(col1 = seq_len(10)))
-    x2 <- dataset("x2", data.frame(col2 = seq_len(10)))
-    x <- TealData$new(x1, x2)
-  })
-
-  expect_silent({
-    x_copy <- x$clone(deep = TRUE)
-  })
-
-  # check one of the private fields of list of R6 class object
-  expect_false(rlang::is_reference(x$get_items()[[1]], x_copy$get_items()[[1]]))
-  # check one of the private fields of R6 class
-  expect_false(rlang::is_reference(x$get_join_keys(), x_copy$get_join_keys()))
-
-  ## TealDataConnector
-  expect_silent({
-    x1_c <- CallableFunction$new(data.frame)
-    x1_c$set_args(list(n = seq_len(10)))
-    x1 <- dataset_connector("x1", x1_c)
-
-    x2_c <- CallableFunction$new(data.frame)
-    x2_c$set_args(list(n = seq_len(20)))
-    x2 <- dataset_connector("x2", x2_c)
-
-    x <- teal.data:::TealData$new(x1, x2)
-  })
-
-  expect_silent({
-    x_copy <- x$clone(deep = TRUE)
-  })
-
-  expect_silent({
-    lapply(x$get_items(), load_dataset)
-  })
-
-  expect_true(is_pulled(x))
-  expect_false(is_pulled(x_copy))
-
-  # check one of the private fields of list of R6 class object
-  expect_false(rlang::is_reference(x$get_items()[[1]], x_copy$get_items()[[1]]))
-  # check one of the private fields of R6 class
-  expect_false(rlang::is_reference(x$get_join_keys(), x_copy$get_join_keys()))
-})
-
-testthat::test_that("execute_mutate returns current datasets if no mutate_code", {
-  pull_fun <- callable_function(data.frame)
-  pull_fun$set_args(args = list(head_letters = head(letters)))
-  t_dc <- dataset_connector("test_dc", pull_fun)
-  t_ds <- dataset("head_rock", head(rock), code = "head_rock <- head(rock)") %>%
-    mutate_dataset("head_rock$head_letters <- test_dc$head_letters", vars = list(test_dc = t_dc))
-  data <- teal_data(t_dc, t_ds)
-  testthat::expect_identical(
-    data$execute_mutate(),
-    list(head_rock = t_ds)
-  )
-})
-
-# Multiple connectors ----
-testthat::test_that("Multiple connectors wrapped in cdisc_data", {
-  example_data_connector <- function(...) {
-    connectors <- list(...)
-    open_fun <- callable_function(library)
-    open_fun$set_args(list(package = "teal"))
-    con <- TealDataConnection$new(open_fun = open_fun)
-    TealDataConnector$new(connection = con, connectors = connectors)
-  }
-
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
-  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
-  advs <- scda_cdisc_dataset_connector("ADVS", "advs")
-  adsl_2 <- code_cdisc_dataset_connector("ADSL_2",
-    code = "ADSL",
-    keys = get_cdisc_keys("ADSL"), ADSL = adsl
-  )
-  adsl_adae <- example_data_connector(adsl, adae)
-  advs_adsl_2 <- example_data_connector(advs, adsl_2)
-  data <- cdisc_data(adsl_adae, advs_adsl_2)
-
-  items <- data$get_items()
-  testthat::expect_true(inherits(data, "TealData"))
-  testthat::expect_true(all(vapply(items, inherits, logical(1), "TealDatasetConnector")))
-  testthat::expect_true(all(vapply(data$get_connectors(), inherits, logical(1), "TealDataConnector")))
-
-  testthat::expect_equal(unname(get_dataname(data)), c("ADSL", "ADAE", "ADVS", "ADSL_2"))
-
-  testthat::expect_equal(
-    items$ADSL$get_code(),
-    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
-  )
-  testthat::expect_equal(
-    items$ADAE$get_code(),
-    "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
-  )
-  testthat::expect_equal(
-    items$ADVS$get_code(),
-    "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")"
-  )
-  testthat::expect_equal(
-    items$ADSL_2$get_code(),
-    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL_2 <- ADSL"
-  )
-
-  testthat::expect_equal(
-    data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")" # nolint
-  )
-  testthat::expect_equal(
-    data$get_code("ADAE"),
-    "library(package = \"teal\")\nADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")" # nolint
-  )
-  testthat::expect_equal(
-    data$get_code("ADVS"),
-    "library(package = \"teal\")\nADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")" # nolint
-  )
-  testthat::expect_equal(
-    data$get_code("ADSL_2"),
-    paste0(
-      "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADSL_2 <- ADSL"
-    )
-  )
-  testthat::expect_equal(
-    data$get_code(),
-    paste0(
-      "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")\n",
-      "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")\nADSL_2 <- ADSL"
-    )
+  testthat::expect_error(
+    data$check_metadata(),
+    "The primary keys specification requires dataset df1 to contain the following columns: id6"
   )
 })
 
@@ -255,36 +345,22 @@ testthat::test_that("TealData with single dataset and connector", {
     code = "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
   )
 
-  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
-  adae$set_ui_input(function(ns) {
-    list(
-      textInput(inputId = ns("name"), label = "scda name", value = "latest")
-    )
-  })
-
-  data <- cdisc_data(adsl_data, adtte, adae)
+  data <- TealData$new(adsl_data, adtte)
   items <- data$get_items()
-  testthat::expect_length(items, 3)
+  testthat::expect_length(items, 2)
   testthat::expect_true(inherits(data, "TealData"))
   testthat::expect_true(inherits(items$ADSL, "TealDatasetConnector"))
   testthat::expect_true(inherits(items$ADTTE, "TealDataset"))
-  testthat::expect_true(inherits(items$ADAE, "TealDatasetConnector"))
 
   connectors <- data$get_connectors()
-  testthat::expect_length(connectors, 2)
-  testthat::expect_true(
-    inherits(connectors[[1]], "TealDataConnector") &&
-      inherits(connectors[[2]], "TealDatasetConnector")
-  )
+  testthat::expect_length(connectors, 1)
+  testthat::expect_true(inherits(connectors[[1]], "TealDataConnector"))
 
   testthat::expect_equal(
     items$ADSL$get_pull_callable()$get_call(),
     "scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
   )
-  testthat::expect_equal(
-    items$ADAE$get_pull_callable()$get_call(),
-    "scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
-  )
+
   testthat::expect_identical(adtte$get_raw_data(), items$ADTTE$get_raw_data())
 
   # simulate pull with a click of the submit button
@@ -306,20 +382,13 @@ testthat::test_that("TealData with single dataset and connector", {
       "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
     )
   )
-  testthat::expect_equal(
-    data$get_code("ADAE"),
-    paste0(
-      "library(package = \"teal.data\")\n",
-      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
-    )
-  )
+
   testthat::expect_equal(
     data$get_code(),
     paste0(
       "library(package = \"teal.data\")\n",
       "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")\n",
-      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
+      "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
     )
   )
 })
@@ -397,7 +466,7 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     ADVS = advs
   )
 
-  data <- cdisc_data(adsl_data, adtte, adsl_2, advs_adlb_data, adrs, adsamp)
+  data <- TealData$new(adsl_data, adtte, adsl_2, advs_adlb_data, adrs, adsamp)
 
   testthat::expect_true(inherits(data, "TealData"))
   items <- data$get_items()
@@ -458,272 +527,94 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
   )
 })
 
-testthat::test_that("TealData$print prints out expected output on basic input", {
-  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"), object = list(1:3, letters[1:3]))))
-  adsl <- cdisc_dataset(
-    dataname = "ADSL",
-    x = adsl_raw,
-    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))"
-  )
-  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-  adtte <- cdisc_dataset(
-    dataname = "ADTTE",
-    x = adtte_raw,
-    code = "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))"
-  )
-  data <- cdisc_data(adsl, adtte, check = TRUE)
-
-  out <- capture.output(print(data))
-  testthat::expect_equal(
-    out,
-    c(
-      "A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):",
-      "--> Element 1:",
-      "A CDISCTealDataset object containing the following data.frame (3 rows and 2 columns):",
-      "  STUDYID USUBJID",
-      "1       1       a",
-      "2       2       b",
-      "3       3       c",
-      "--> Element 2:",
-      "A CDISCTealDataset object containing the following data.frame (1 rows and 3 columns):",
-      "  STUDYID USUBJID PARAMCD",
-      "1 STUDYID USUBJID PARAMCD"
-    )
-  )
-})
-
-testthat::test_that("clone(deep = TRUE) deep copies self and the items", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-  data_cloned <- data$clone(deep = TRUE)
-  testthat::expect_false(identical(data, data_cloned))
-  testthat::expect_false(identical(data_cloned$get_items()$test_ds0, test_ds0))
-})
-
-testthat::test_that("copy(deep = TRUE) deep copies self and the items", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-  data_cloned <- data$copy(deep = TRUE)
-  testthat::expect_false(identical(data, data_cloned))
-  testthat::expect_false(identical(data_cloned$get_items()$test_ds0, test_ds0))
-})
-
-testthat::test_that("copy(deep = TRUE) keeps valid references between items", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-  data_cloned <- data$copy(deep = TRUE)
-  new_test_ds0 <- data_cloned$get_items()$test_ds0
-  new_test_ds1 <- data_cloned$get_items()$test_ds1
-  testthat::expect_identical(
-    new_test_ds1$get_var_r6()$test_ds0,
-    new_test_ds0
-  )
-})
-
-testthat::test_that("TealData keeps references to the objects passed to the constructor", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-  testthat::expect_identical(data$get_items(), list(test_ds0 = test_ds0, test_ds1 = test_ds1))
-})
-
-testthat::test_that("reassign_datasets_vars updates the references of vars in items according
-                    to items addresses", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-
-  # after reassignment vars_r6, vars and muatate_vars match new reference
-  data_cloned <- data$clone(deep = TRUE)
-  cloned_items <- data$get_items()
-  data$reassign_datasets_vars()
-
-  testthat::expect_identical(
-    data$get_items()$test_ds1$get_var_r6()$test_ds0,
-    cloned_items$test_ds0
-  )
-})
-
-testthat::test_that("TealData$check returns NULL if the check parameter is false", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = FALSE)
-  testthat::expect_null(data$check())
-})
-
-testthat::test_that("TealData$check throws an error when one of the passed datasets has empty code", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars))
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_error(data$check(), "code is empty")
-})
-
-testthat::test_that("TealData$check returns FALSE if the code provided in datasets does not reproduce them", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(iris)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_false(data$check())
-})
-
-testthat::test_that("TealData$check returns TRUE if the code is reproducible", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_true(data$check())
-})
-
-testthat::test_that("TealData$get_dataset throws an error if no dataset is found with the passed name", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_error(data$get_dataset("iris"), "dataset iris not found")
-})
-
-testthat::test_that("TealData$get_dataset returns the dataset with the passed name", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_identical(data$get_dataset("cars"), mtcars_ds)
-})
-
-testthat::test_that("TealData$get_dataset returns a list of all datasets if passed NULL", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  iris_ds <- TealDataset$new("iris", head(iris), code = "iris <- head(iris)")
-  data <- TealData$new(cars = mtcars_ds, iris = iris_ds, check = TRUE)
-  testthat::expect_equal(data$get_dataset(), list(cars = mtcars_ds, iris = iris_ds))
-})
-
-testthat::test_that("TealData$get_items returns a dataset with the passed name", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_identical(data$get_items("cars"), mtcars_ds)
-})
-
-testthat::test_that("TealData$get_items throws an error if there is no dataset found with the passed name", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
-  data <- TealData$new(mtcars_ds, check = TRUE)
-  testthat::expect_error(data$get_items("iris"), "dataset iris not found")
-})
-
-testthat::test_that("TealData$new throws if dataname is set to invalid R object name", {
-  testthat::expect_error(TealDataset$new("", head(mtcars)), "name '' must only contain alphanumeric characters")
-})
-
-testthat::test_that("TealData$new throws if passed two datasets with the same name", {
-  mtcars_ds <- TealDataset$new("cars", head(mtcars))
-  mtcars_ds2 <- TealDataset$new("cars", head(mtcars))
-  testthat::expect_error(TealData$new(mtcars_ds, mtcars_ds2), "TealDatasets names should be unique")
-})
-
-testthat::test_that("TealData$new sets join_keys datasets based on the passed join_keys input otherwise empty", {
-  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
-  df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
-
-  df1 <- dataset("df1", df1, keys = "id")
-  df2 <- dataset("df2", df2, keys = "df2_id")
-
-  join_keys1 <- join_keys(join_key("df1", "df1", "id"), join_key("df2", "df2", "df2_id"))
-  data <- TealData$new(df1, df2, join_keys = join_keys1)
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys1
-  )
-
-  data2 <- TealData$new(df1, df2)
-  testthat::expect_equal(
-    data2$get_join_keys(),
-    join_keys()
-  )
-})
-
-testthat::test_that("TealData$new sets passed join_keys to datasets correctly", {
-  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
-  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
-
-  df1 <- dataset("df1", df1, keys = "id")
-  df2 <- dataset("df2", df2, keys = "df2_id")
-
-  jk <- join_keys(join_key("df1", "df2", "id"))
-  data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
-
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df2", "id"),
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df2", "df2_id")
-    )
-  )
-})
-
-testthat::test_that("TealData$new sets passed JoinKeys to datasets correctly when key names differ", {
-  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
-  df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
-  df1 <- dataset("df1", df1, keys = "id")
-  df2 <- dataset("df2", df2, keys = "df2_id")
-  jk <- join_keys(join_key("df1", "df2", c(id = "fk")))
-  data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
-
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df2", c(id = "fk")),
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df1", c(fk = "id")),
-      join_key("df2", "df2", "df2_id")
-    )
-  )
-})
-
 testthat::test_that("TealData$mutate_join_keys changes keys for both datasets (same key in both)", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
   df1 <- dataset("df1", df1, keys = "id")
   df2 <- dataset("df2", df2, keys = "df2_id")
-  data <- teal_data(df1, df2, check = FALSE)
+  data <- TealData$new(df1, df2, check = FALSE)
   data$mutate_join_keys("df1", "df2", "id")
 
   testthat::expect_equal(
     data$get_join_keys(),
     join_keys(
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df2", "df2_id"),
       join_key("df1", "df2", "id")
     )
   )
 })
 
-testthat::test_that("TealData$new sets passes JoinKeys to datasets correctly when key names differ (multiple keys)", {
-  df1 <- data.frame(id = c("A", "B"), id2 = c("A", "B"), a = c(1L, 2L))
-  df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), fk2 = c("A", "B"), b = c(1L, 2L))
-  df1 <- dataset("df1", df1, keys = "id")
-  df2 <- dataset("df2", df2, keys = "df2_id")
-  data <- teal_data(df1, df2, check = FALSE)
-  data$mutate_join_keys("df1", "df2", c(id = "fk", id2 = "fk2"))
+# Multiple connectors ----
+testthat::test_that("Multiple connectors", {
+  example_data_connector <- function(...) {
+    connectors <- list(...)
+    open_fun <- callable_function(library)
+    open_fun$set_args(list(package = "teal"))
+    con <- TealDataConnection$new(open_fun = open_fun)
+    TealDataConnector$new(connection = con, connectors = connectors)
+  }
+
+  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
+  advs <- scda_cdisc_dataset_connector("ADVS", "advs")
+  adsl_2 <- code_cdisc_dataset_connector("ADSL_2",
+    code = "ADSL",
+    keys = get_cdisc_keys("ADSL"), ADSL = adsl
+  )
+  adsl_adae <- example_data_connector(adsl, adae)
+  advs_adsl_2 <- example_data_connector(advs, adsl_2)
+  data <- TealData$new(adsl_adae, advs_adsl_2)
+
+  items <- data$get_items()
+  testthat::expect_true(inherits(data, "TealData"))
+  testthat::expect_true(all(vapply(items, inherits, logical(1), "TealDatasetConnector")))
+  testthat::expect_true(all(vapply(data$get_connectors(), inherits, logical(1), "TealDataConnector")))
+
+  testthat::expect_equal(names(items), c("ADSL", "ADAE", "ADVS", "ADSL_2"))
 
   testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df2", "df2_id"),
-      join_key("df1", "df2", c(id = "fk", id2 = "fk2"))
+    items$ADSL$get_code(),
+    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+  )
+  testthat::expect_equal(
+    items$ADAE$get_code(),
+    "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
+  )
+  testthat::expect_equal(
+    items$ADVS$get_code(),
+    "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")"
+  )
+  testthat::expect_equal(
+    items$ADSL_2$get_code(),
+    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL_2 <- ADSL"
+  )
+
+  testthat::expect_equal(
+    data$get_code("ADSL"),
+    "library(package = \"teal\")\nADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")" # nolint
+  )
+  testthat::expect_equal(
+    data$get_code("ADAE"),
+    "library(package = \"teal\")\nADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")" # nolint
+  )
+  testthat::expect_equal(
+    data$get_code("ADVS"),
+    "library(package = \"teal\")\nADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")" # nolint
+  )
+  testthat::expect_equal(
+    data$get_code("ADSL_2"),
+    paste0(
+      "library(package = \"teal\")\n",
+      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
+      "ADSL_2 <- ADSL"
+    )
+  )
+  testthat::expect_equal(
+    data$get_code(),
+    paste0(
+      "library(package = \"teal\")\n",
+      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
+      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")\n",
+      "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")\nADSL_2 <- ADSL"
     )
   )
 })
