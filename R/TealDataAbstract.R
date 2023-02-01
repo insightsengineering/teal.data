@@ -442,7 +442,7 @@ TealDataAbstract <- R6::R6Class( # nolint
       res$append(private$pull_code)
       return(res)
     },
-    set_mutate_code = function(code, dataname = self$get_datanames(), deps = names(private_mutate_vars)) {
+    set_mutate_code = function(code, dataname = self$get_datanames(), deps = names(private$mutate_vars)) {
       checkmate::assert(
         checkmate::check_character(code, max.len = 1, any.missing = FALSE),
         checkmate::check_class(code, "PythonCodeClass")

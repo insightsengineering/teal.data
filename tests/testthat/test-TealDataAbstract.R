@@ -3,7 +3,7 @@ adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
 adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
 adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
 
-adsl <- cdisc_dataset(
+adsl <- dataset(
   dataname = "ADSL",
   x = adsl_raw,
   code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
@@ -13,7 +13,7 @@ adtte_cf <- callable_function(
     as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
   }
 )
-adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
 load_dataset(adsl)
 load_dataset(adtte)
 
@@ -25,19 +25,19 @@ testthat::test_that("TealDataAbstract cannot be instantiated", {
   testthat::expect_error(TealDataAbstract$new(), "Pure virtual method")
 })
 
-testthat::test_that("TealDataAbstract$check returns NULL if the check parameter is false", {
+testthat::test_that("check returns NULL if the check parameter is false", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
   data <- TealData$new(mtcars_ds, check = FALSE)
   testthat::expect_null(data$check())
 })
 
-testthat::test_that("TealDataAbstract$check throws an error when one of the passed datasets have empty code", {
+testthat::test_that("check throws an error when one of the passed datasets has empty code", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars))
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_error(data$check(), "code is empty")
 })
 
-testthat::test_that("TealDataAbstract$check returns FALSE if the code provided in datasets does not reproduce them", {
+testthat::test_that("check returns FALSE if the code provided in datasets does not reproduce them", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(iris)")
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_false(data$check())
@@ -48,18 +48,17 @@ testthat::test_that("TealDataAbstract$check returns TRUE if the code is reproduc
   testthat::expect_true(data$check())
 })
 
-testthat::test_that("TealDataAbstract$check_reproducibility returns NULL if the reproducibility check passes", {
+testthat::test_that("check_reproducibility passes if the reproducibility check passes", {
   data <- tealdata_mixed_call()
   testthat::expect_silent(data$check_reproducibility())
 })
 
-testthat::test_that("TealDataAbstract$check throws error if reproducibility check does not pass", {
+testthat::test_that("check_reproducibility throws error if reproducibility check does not pass", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(iris)")
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_error(data$check_reproducibility(), "Reproducibility check failed.")
 })
 
-# more tests required for execute_mutate
 testthat::test_that("execute_mutate returns current datasets if no mutate_code", {
   pull_fun <- callable_function(data.frame)
   pull_fun$set_args(args = list(head_letters = head(letters)))
@@ -73,10 +72,17 @@ testthat::test_that("execute_mutate returns current datasets if no mutate_code",
   )
 })
 
-testthat::test_that("get_check_result method returns NULL if check was set to FALSE", {
-  data <- tealdata_mixed_call(FALSE)
-  testthat::expect_null(data$get_check_result())
-})
+# testthat::test_that("execute_mutate accepts python code", {
+#   t_ds <- dataset("iris", head(iris), code = "iris <- head(iris)") %>%
+#     mutate_dataset(python_code("import pandas as pd
+# r.iris = pd.DataFrame({'x': [1]})"))
+#
+#   data <- TealData$new(t_ds)
+#   testthat::expect_identical(
+#     data$execute_mutate(),
+#     list(iris = t_ds)
+#   )
+# })
 
 testthat::test_that("get_check_result method returns TRUE if check passed", {
   data <- tealdata_mixed_call()
@@ -142,11 +148,10 @@ testthat::test_that("get_code_class with TRUE returns code without mutate code",
   data <- tealdata_mixed_call()
 
   # MUTATE
-    data <- data %>%
-      mutate_data(code = "ADSL <- dplyr::filter(ADSL, USUBJID == 'a')") %>%
-      mutate_dataset(dataname = "ADTTE", code = "ADTTE <- dplyr::filter(ADTTE, USUBJID %in% ADSL$USUBJID)") %>%
-      mutate_dataset(dataname = "ADSL", code = "ADSL$x <- 1")
-
+  data <- data %>%
+    mutate_data(code = "ADSL <- dplyr::filter(ADSL, USUBJID == 'a')") %>%
+    mutate_dataset(dataname = "ADTTE", code = "ADTTE <- dplyr::filter(ADTTE, USUBJID %in% ADSL$USUBJID)") %>%
+    mutate_dataset(dataname = "ADSL", code = "ADSL$x <- 1")
 
   testthat::expect_identical(
     data$get_code_class(TRUE)$get_code(),
@@ -196,12 +201,17 @@ testthat::test_that("get_dataset throws an error if no dataset is found with the
   testthat::expect_error(data$get_dataset("iris"), "dataset iris not found")
 })
 
+testthat::test_that("get_dataset throws an error if passed name is not character", {
+  data <- tealdata_mixed_call()
+  testthat::expect_error(data$get_dataset(iris), "ust be of type 'string'")
+})
+
 testthat::test_that("get_dataset returns the dataset with the passed name", {
   data <- tealdata_mixed_call()
 
   testthat::expect_equal(
     data$get_dataset("ADSL"),
-    cdisc_dataset(
+    dataset(
       dataname = "ADSL",
       x = adsl_raw,
       code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
@@ -209,43 +219,28 @@ testthat::test_that("get_dataset returns the dataset with the passed name", {
   )
 })
 
-testthat::test_that("TealDataAbstract$get_dataset returns a list of all datasets if passed NULL", {
+testthat::test_that("get_dataset returns a list of all datasets if passed NULL", {
   data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_dataset(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
-testthat::test_that("TealDataAbstract$get_datasets returns a list of all datasets if passed NULL", {
+testthat::test_that("get_datasets returns a list of all datasets if passed NULL", {
   data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_datasets(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
-testthat::test_that("TealDataAbstract$get_items returns a list of all datasets if passed NULL", {
-  data <- tealdata_mixed_call()
-  testthat::expect_equal(data$get_items(), list(ADSL = adsl, ADTTE = adtte))
-})
-
-testthat::test_that("TealDataAbstract$get_items returns the dataset passed in the input", {
-  data <- tealdata_mixed_call()
-  testthat::expect_equal(data$get_items("ADSL"), adsl)
-})
-
-testthat::test_that("TealDataAbstract$get_items throws error when the name of the dataset is not found", {
-  data <- tealdata_mixed_call()
-  testthat::expect_error(data$get_items("ADSL2"), "dataset ADSL2 not found")
-})
-
-testthat::test_that("TealData keeps references to the objects passed to the constructor", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
+testthat::test_that("get_datasets throws an error is a dataset is not pulled yet", {
+  adtte_cf2 <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
   )
-  data <- TealData$new(test_ds0, test_ds1)
-  testthat::expect_identical(data$get_items(), list(test_ds0 = test_ds0, test_ds1 = test_ds1))
+  adtte2 <- dataset_connector("ADTTE", adtte_cf2, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+  data <- TealData$new(adtte2)
+  testthat::expect_error(data$get_datasets(), "Not all datasets have been pulled yet.")
 })
 
-testthat::test_that("TealDataAbstract$get_check returns the check status", {
+testthat::test_that("get_check returns the check status", {
   data <- tealdata_mixed_call(check = TRUE)
   testthat::expect_true(data$get_check())
 
@@ -253,12 +248,12 @@ testthat::test_that("TealDataAbstract$get_check returns the check status", {
   testthat::expect_false(data$get_check())
 })
 
-testthat::test_that("TealDataAbstract$is_pulled returns if the datasets are pulled", {
+testthat::test_that("is_pulled returns if the datasets are pulled", {
   data <- tealdata_mixed_call()
   testthat::expect_true(data$is_pulled())
 })
 
-testthat::test_that("TealDataAbstract$mutate updates the code", {
+testthat::test_that("mutate updates the code", {
   data <- tealdata_mixed_call()
   data$mutate("ADSL$new_column <- 1")
   testthat::expect_equal(
@@ -270,7 +265,7 @@ testthat::test_that("TealDataAbstract$mutate updates the code", {
   ))
 })
 
-testthat::test_that("TealDataAbstract$mutate_dataset updates the code of the dataset", {
+testthat::test_that("mutate_dataset updates the code of the dataset", {
   data <- tealdata_mixed_call()
   data$mutate_dataset("ADSL", "ADSL$new_column <- 1")
   testthat::expect_equal(
@@ -281,7 +276,7 @@ testthat::test_that("TealDataAbstract$mutate_dataset updates the code of the dat
     ))
 })
 
-testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the dataname is not found", {
+testthat::test_that("mutate_dataset throws an error if the dataname is not found", {
   data <- tealdata_mixed_call()
   testthat::expect_error(
     data$mutate_dataset("ADSL2", "ADSL$new_column <- 1"),
@@ -289,7 +284,7 @@ testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the data
   )
 })
 
-testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the dataname is not character", {
+testthat::test_that("mutate_dataset throws an error if the dataname is not character", {
   data <- tealdata_mixed_call()
   testthat::expect_error(
     data$mutate_dataset(dataname = 1, "ADSL$new_column <- 1"),
@@ -297,18 +292,18 @@ testthat::test_that("TealDataAbstract$mutate_dataset throws an error if the data
   )
 })
 
-testthat::test_that("TealDataAbstract$set_check sets the reproducibility check", {
+testthat::test_that("set_check sets the reproducibility check", {
   data <- tealdata_mixed_call()
   testthat::expect_silent(data$set_check(FALSE))
   testthat::expect_false(data$get_check())
 })
 
-testthat::test_that("TealDataAbstract$set_check accepts only logical input", {
+testthat::test_that("set_check accepts only logical input", {
   data <- tealdata_mixed_call()
   testthat::expect_error(data$set_check("FALSE"), "Must be of type 'logical flag', not 'character'.")
 })
 
-testthat::test_that("TealDataAbstract$set_pull_code sets code correctly", {
+testthat::test_that("set_pull_code sets code correctly", {
   data <- data <- TealData$new(
     cdisc_dataset(
       dataname = "ADSL",
@@ -322,7 +317,7 @@ testthat::test_that("TealDataAbstract$set_pull_code sets code correctly", {
   testthat::expect_identical(data$get_code(), "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))")
 })
 
-testthat::test_that("TealDataAbstract$set_pull_code throws error if code is not character", {
+testthat::test_that("set_pull_code throws error if code is not character", {
   data <- TealData$new(adtte, check = TRUE)
   testthat::expect_error(
     data$set_pull_code(111),
@@ -330,7 +325,7 @@ testthat::test_that("TealDataAbstract$set_pull_code throws error if code is not 
   )
 })
 
-testthat::test_that("TealDataAbstract$set_pull_code throws error if code is specified on data and dataset levels", {
+testthat::test_that("set_pull_code throws error if code is specified on data and dataset levels", {
   data <- tealdata_mixed_call()
   testthat::expect_error(
     data$set_pull_code("Add code here"),
@@ -338,7 +333,7 @@ testthat::test_that("TealDataAbstract$set_pull_code throws error if code is spec
   )
 })
 
-testthat::test_that("TealDataAbstract$set_pull_code throws error if TealDataAbstract has only connectors", {
+testthat::test_that("set_pull_code throws error if TealDataAbstract has only connectors", {
   data <- TealData$new(adtte, check = TRUE)
   testthat::expect_error(
     data$set_pull_code("Add code here"),
@@ -366,177 +361,73 @@ testthat::test_that("reassign_datasets_vars updates the references of vars in it
 })
 
 # private methods
-testthat::test_that("TealDataAbstract$check_names throws if passed two datasets with the same name", {
+testthat::test_that("check_combined_code returns TRUE when the code is reproducible", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+  iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
+  data <- TealData$new(mtcars_ds, iris_ds)
+  testthat::expect_true(data$.__enclos_env__$private$check_combined_code())
+})
+
+testthat::test_that("check_combined_code returns error when the code is not reproducible", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- mtcars")
+  iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- iris")
+  data <- TealData$new(mtcars_ds, iris_ds)
+  testthat::expect_false(data$.__enclos_env__$private$check_combined_code())
+})
+
+testthat::test_that("check_combined_code returns error when the code is not supplied", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars))
+  iris_ds <- TealDataset$new("head_iris", head(iris))
+  data <- TealData$new(mtcars_ds, iris_ds)
+  testthat::expect_error(data$.__enclos_env__$private$check_combined_code())
+})
+
+testthat::test_that("get_datasets_code_class returns an empty CodeClass object when no code is passed", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars))
+  iris_ds <- TealDataset$new("head_iris", head(iris))
+  data <- TealData$new(mtcars_ds, iris_ds)
+  code_class <- data$.__enclos_env__$private$get_datasets_code_class()
+  testthat::expect_s3_class(code_class, "CodeClass")
+  testthat::expect_identical(code_class$get_code(), "")
+})
+
+testthat::test_that("get_datasets_code_class returns a CodeClass object with the code passed", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+  iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
+  data <- TealData$new(mtcars_ds, iris_ds)
+  code_class <- data$.__enclos_env__$private$get_datasets_code_class()
+  testthat::expect_s3_class(code_class, "CodeClass")
+  testthat::expect_identical(code_class$get_code(), "head_mtcars <- head(mtcars)\nhead_iris <- head(iris)")
+})
+
+testthat::test_that("set_mutate_vars appends the new mutate_vars", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+  iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
+  data <- TealData$new(mtcars_ds, iris_ds)
+  testthat::expect_silent(data$.__enclos_env__$private$set_mutate_vars(list("A" = "A")))
+  testthat::expect_identical(
+    data$.__enclos_env__$private$mutate_vars,
+    list("A" = "A")
+  )
+})
+
+testthat::test_that("set_mutate_vars accepts a unique names list, throws error otherwise", {
+  mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+  iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
+  data <- TealData$new(mtcars_ds, iris_ds)
+  testthat::expect_silent(data$.__enclos_env__$private$set_mutate_vars(list("A" = "A")))
+  testthat::expect_error(
+    data$.__enclos_env__$private$set_mutate_vars(c("A" = "A")),
+    "Must be of type 'list', not 'character'."
+  )
+  testthat::expect_error(
+    data$.__enclos_env__$private$set_mutate_vars(list("A" = "A", "A" = "B")),
+    "Must have unique names, but element 2 is duplicated."
+  )
+})
+
+testthat::test_that("check_names throws if passed two datasets with the same name", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars))
   mtcars_ds2 <- TealDataset$new("cars", head(mtcars))
   testthat::expect_error(TealData$new(mtcars_ds, mtcars_ds2), "TealDatasets names should be unique")
-})
-####
-
-
-
-
-
-
-
-
-
-
-
-# 3. two datasets / global code -------------------------------
-testthat::test_that("two datasets / datasets code", {
-  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"), object = list(1:3, letters[1:3]))))
-  adsl <- cdisc_dataset(
-    dataname = "ADSL",
-    x = adsl_raw,
-    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))"
-  )
-
-  adtte <- cdisc_dataset(
-    dataname = "ADTTE",
-    x = adtte_raw,
-    code = "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))"
-  )
-
-  testthat::expect_error(
-    cdisc_data(
-      adsl,
-      adtte,
-      code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADTTE <- synthetic_cdisc_data(\"latest\")$adtte", # nolint
-      check = TRUE
-    )
-  )
-
-  testthat::expect_silent(
-    data <- cdisc_data(
-      cdisc_dataset("ADSL", adsl_raw),
-      cdisc_dataset("ADTTE", adtte_raw),
-      code = paste(
-        "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-        "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-        sep = "\n"
-      ),
-      check = TRUE
-    )
-  )
-
-  testthat::expect_identical(
-    data$get_code(),
-    paste(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-      "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-      sep = "\n"
-    )
-  )
-
-  testthat::expect_identical(
-    data$get_code("ADSL"),
-    data$get_code(),
-  )
-  testthat::expect_identical(
-    data$get_code("ADTTE"),
-    data$get_code()
-  )
-  testthat::expect_error(cdisc_dataset("ADSL", adsl_raw)$check(), "code is empty")
-  testthat::expect_error(cdisc_dataset("ADTTE", adtte_raw)$check(), "code is empty")
-  testthat::expect_true(data$check())
-
-  # MUTATE
-  adsl <- cdisc_dataset(dataname = "ADSL", x = adsl_raw)
-  adtte <- cdisc_dataset(dataname = "ADTTE", x = adtte_raw)
-
-  testthat::expect_silent(
-    data <- cdisc_data(
-      cdisc_dataset("ADSL", adsl_raw),
-      cdisc_dataset("ADTTE", adtte_raw),
-      code = paste(
-        "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-        "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-        sep = "\n"
-      ),
-      check = TRUE
-    ) %>%
-      mutate_data(code = "ADSL <- dplyr::filter(ADSL, USUBJID == 'a')") %>%
-      mutate_dataset(dataname = "ADTTE", code = "ADTTE <- dplyr::filter(ADTTE, USUBJID %in% ADSL$USUBJID)") %>%
-      mutate_dataset(dataname = "ADSL", code = "ADSL$x <- 1")
-  )
-
-
-  testthat::expect_error(adsl$check(), "code is empty")
-  testthat::expect_error(adtte$check(), "code is empty")
-  testthat::expect_true(data$check())
-
-  testthat::expect_identical(
-    data$get_code_class(TRUE)$get_code(),
-    paste(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-      "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-      sep = "\n"
-    )
-  )
-
-  testthat::expect_identical(
-    data$get_code(),
-    paste(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-      "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-      "ADSL <- dplyr::filter(ADSL, USUBJID == \"a\")",
-      "ADTTE <- dplyr::filter(ADTTE, USUBJID %in% ADSL$USUBJID)",
-      "ADSL$x <- 1",
-      sep = "\n"
-    )
-  )
-
-  testthat::expect_identical(
-    data$get_code("ADTTE"),
-    paste(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-      "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-      "ADSL <- dplyr::filter(ADSL, USUBJID == \"a\")",
-      "ADTTE <- dplyr::filter(ADTTE, USUBJID %in% ADSL$USUBJID)",
-      sep = "\n"
-    )
-  )
-  testthat::expect_identical(
-    data$get_code("ADSL"),
-    paste(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))",
-      "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))",
-      "ADSL <- dplyr::filter(ADSL, USUBJID == \"a\")",
-      "ADSL$x <- 1",
-      sep = "\n"
-    )
-  )
-
-  testthat::expect_reference(
-    data$get_dataset("ADSL")$get_raw_data(),
-    adsl_raw
-  )
-  testthat::expect_reference(
-    data$get_dataset("ADTTE")$get_raw_data(),
-    adtte_raw
-  )
-  data$execute_mutate()
-
-  new_env <- new.env()
-  eval(parse(text = data$get_code(), keep.source = FALSE), envir = new_env)
-  testthat::expect_identical(
-    get(x = "ADSL", envir = new_env),
-    data$get_dataset("ADSL")$get_raw_data()
-  )
-  testthat::expect_identical(
-    get(x = "ADTTE", envir = new_env),
-    data$get_dataset("ADTTE")$get_raw_data()
-  )
-})
-
-
-# 7. invalid arguments -----
-testthat::test_that("Cannot create TealData if arguments include TealData object", {
-  c_data <- cdisc_data(
-    cdisc_dataset("ADSL", adsl_raw)
-  )
-
-  testthat::expect_error(cdisc_data(c_data))
-  testthat::expect_error(cdisc_data(cdisc_dataset("ADSL", adsl_raw), c_data))
 })
