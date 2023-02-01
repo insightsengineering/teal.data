@@ -57,19 +57,6 @@ testthat::test_that("copy(deep = TRUE) keeps valid references between items", {
   )
 })
 
-testthat::test_that("clone(deep = TRUE) deep copies self and the items", {
-  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_ds1",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
-  data <- TealData$new(test_ds0, test_ds1)
-  data_cloned <- data$clone(deep = TRUE)
-  testthat::expect_false(identical(data, data_cloned))
-  testthat::expect_false(identical(data_cloned$get_items()$test_ds0, test_ds0))
-})
-
 testthat::test_that("TealData$print prints out expected output on basic input", {
   adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"), object = list(1:3, letters[1:3]))))
   adsl <- cdisc_dataset(
@@ -126,7 +113,7 @@ testthat::test_that("TealData$get_connectors returns a list with the numbers of 
   testthat::expect_identical(length(data$get_connectors()), 1L)
 })
 
-testthat::test_that("TealData$get_items returns a dataset of the passed TealDataset name", {
+testthat::test_that("TealData$get_items returns a dataset of the passed dataset name", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_identical(data$get_items("cars"), mtcars_ds)
@@ -147,16 +134,27 @@ testthat::test_that("TealData$get_items returns the content of the passed TealDa
   testthat::expect_identical(data$get_items("ADSL"), adsl_data$get_items()$ADSL)
 })
 
-testthat::test_that("TealData$get_items returns all a list of the contents if no dataname is defined", {
+testthat::test_that("TealData$get_items returns a list of the contents if no dataname is defined", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_identical(data$get_items(), list(cars = mtcars_ds))
 })
 
-testthat::test_that("TealData$get_items throws an error if there is no dataset found with the passed name", {
+testthat::test_that("TealData$get_items throws an error if the desired dataset is not found", {
   mtcars_ds <- TealDataset$new("cars", head(mtcars), code = "cars <- head(mtcars)")
   data <- TealData$new(mtcars_ds, check = TRUE)
   testthat::expect_error(data$get_items("iris"), "dataset iris not found")
+})
+
+testthat::test_that("TealData keeps references to the objects passed to the constructor", {
+  test_ds0 <- TealDataset$new("test_ds0", head(mtcars), code = "test_ds0 <- head(mtcars)")
+  test_ds1 <- TealDatasetConnector$new(
+    dataname = "test_ds1",
+    pull_callable = CallableFunction$new(data.frame),
+    vars = list(test_ds0 = test_ds0)
+  )
+  data <- TealData$new(test_ds0, test_ds1)
+  testthat::expect_identical(data$get_items(), list(test_ds0 = test_ds0, test_ds1 = test_ds1))
 })
 
 testthat::test_that("TealData$get_join_keys returns an empty joinKeys if no join_keys are passed", {
@@ -165,7 +163,7 @@ testthat::test_that("TealData$get_join_keys returns an empty joinKeys if no join
   testthat::expect_equal(data$get_join_keys(), join_keys())
 })
 
-testthat::test_that("TealData$get_join_keys returns all join_keys when no input datanmes is specified", {
+testthat::test_that("TealData$get_join_keys returns all join_keys when no input datanme is specified", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
 
@@ -242,7 +240,23 @@ testthat::test_that("TealData$mutate_join_keys returns a JoinKeys object with th
   )
 })
 
-test_that("check_metadata fails if inconsistent join_keys for given datasets", {
+testthat::test_that("TealData$mutate_join_keys changes keys for both datasets (same key in both)", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+  data <- TealData$new(df1, df2, check = FALSE)
+  data$mutate_join_keys("df1", "df2", "id")
+
+  testthat::expect_equal(
+    data$get_join_keys(),
+    join_keys(
+      join_key("df1", "df2", "id")
+    )
+  )
+})
+
+test_that("TealData$check_metadata fails if inconsistent join_keys for given datasets", {
   df_1 <- data.frame(x = 1:10, y = 1:10)
   df_2 <- data.frame(u = 1:10, v = 1:10)
 
@@ -273,7 +287,7 @@ test_that("check_metadata fails if inconsistent join_keys for given datasets", {
   )
 })
 
-test_that("check_metadata does not produce error if join_keys are consistent for given datasets", {
+test_that("TealData$check_metadata does not produce error if join_keys are consistent for given datasets", {
   df_1 <- data.frame(x = 1:10, y = 1:10)
   df_2 <- data.frame(u = 1:10, v = 1:10)
 
@@ -310,7 +324,7 @@ test_that("check_metadata does not produce error if join_keys are consistent for
   )
 })
 
-testthat::test_that("TealData$check_metadata returns error when ", {
+testthat::test_that("TealData$check_metadata returns error when a column in th ekeys is not found", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
 
@@ -524,22 +538,6 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
   testthat::expect_equal(
     data$get_code("ADTTE"),
     "library(package = \"teal\")\nADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")" # nolint
-  )
-})
-
-testthat::test_that("TealData$mutate_join_keys changes keys for both datasets (same key in both)", {
-  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
-  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
-  df1 <- dataset("df1", df1, keys = "id")
-  df2 <- dataset("df2", df2, keys = "df2_id")
-  data <- TealData$new(df1, df2, check = FALSE)
-  data$mutate_join_keys("df1", "df2", "id")
-
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df2", "id")
-    )
   )
 })
 
