@@ -72,18 +72,6 @@ testthat::test_that("execute_mutate returns current datasets if no mutate_code",
   )
 })
 
-# testthat::test_that("execute_mutate accepts python code", {
-#   t_ds <- dataset("iris", head(iris), code = "iris <- head(iris)") %>%
-#     mutate_dataset(python_code("import pandas as pd
-# r.iris = pd.DataFrame({'x': [1]})"))
-#
-#   data <- TealData$new(t_ds)
-#   testthat::expect_identical(
-#     data$execute_mutate(),
-#     list(iris = t_ds)
-#   )
-# })
-
 testthat::test_that("get_check_result method returns TRUE if check passed", {
   data <- tealdata_mixed_call()
   testthat::expect_true(data$check())
