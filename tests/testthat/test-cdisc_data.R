@@ -213,3 +213,55 @@ testthat::test_that("List values", {
 
   test_relational_data_equal(result, result_to_compare)
 })
+
+testthat::test_that("cdisc_data_file loads the TealData object", {
+  tmp_file <- tempfile(fileext = ".R")
+  writeLines(text = c(
+    "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
+    adsl <- cdisc_dataset(
+      dataname = 'ADSL',
+      x = adsl_raw,
+      code = 'ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))'
+    )
+    teal_data(adsl)
+    "
+  ),
+  con = tmp_file
+  )
+  tdf <- cdisc_data_file(tmp_file)
+  file.remove(tmp_file)
+  testthat::expect_s3_class(tdf, "TealData")
+  testthat::expect_identical(
+    tdf$get_code(),
+    paste0(
+      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
+      "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
+      "adsl <- cdisc_dataset(dataname = \"ADSL\", x = adsl_raw, ",
+      "code = \"ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\\\"ADSL\\\"))))\")\n",
+      "teal_data(adsl)"
+    )
+  )
+})
+
+testthat::test_that("cdisc_data_file uses the code input to mutate the code of the loaded TealData object", {
+  tmp_file <- tempfile(fileext = ".R")
+  writeLines(text = c(
+    "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
+    adsl <- cdisc_dataset(
+      dataname = 'ADSL',
+      x = adsl_raw,
+      code = 'ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))'
+    )
+    teal_data(adsl)
+    "
+  ),
+  con = tmp_file
+  )
+  tdf <- cdisc_data_file(tmp_file, "# MUTATE code")
+  file.remove(tmp_file)
+  testthat::expect_s3_class(tdf, "TealData")
+  testthat::expect_identical(
+    tdf$get_code(),
+    "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n# MUTATE code"
+  )
+})
