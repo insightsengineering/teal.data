@@ -7,6 +7,10 @@
 * Improved error message in `get_cdisc_keys`. 
 * Fixed help files for `TealDataset` and `MAETealDataset`.
 * Added backstop for missing `reticulate` package in _teal.data with Python_ vignette.
+* Removed `CDISCTealData` class and updated `TealData` to account for the removed functionality.
+* Added datasets parents information to `JoinKeys` class.
+* Updated `cdisc_data` and `teal_data` wrappers to handle join_keys creation and updating instead of `CDISCTealData` and `TealData`.
+* Removed join_keys methods from `TealDataset`, `TealDatasetConnector`.
 
 # teal.data 0.1.2
 
