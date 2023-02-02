@@ -31,7 +31,7 @@ load_dataset(df2_dc)
 load_dataset(df3_cdc)
 
 teal_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
-  teal_data(df1_ds, df2_dc, df3_cdc, check = check, join_keys = join_keys1)
+  teal_data(df1_ds, df2_dc, df3_rdc, check = check, join_keys = join_keys1)
 }
 
 testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
@@ -132,5 +132,106 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
 
   testthat::expect_error(
     teal_data()
+  )
+})
+
+testthat::test_that("teal_data_file loads the TealData object", {
+  tmp_file <- tempfile(fileext = ".R")
+  writeLines(text = c(
+    "df <- data.frame(A = c(1, 2, 3))
+    df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
+    teal_data(df1_ds)
+    "
+  ),
+  con = tmp_file
+  )
+  tdf <- teal_data_file(tmp_file)
+  file.remove(tmp_file)
+  testthat::expect_s3_class(tdf, "TealData")
+  testthat::expect_identical(
+    tdf$get_code(),
+    paste0(
+      "df <- data.frame(A = c(1, 2, 3))\n",
+      "df1_ds <- dataset(\"df\", df, code = \"df <- data.frame(A = c(1, 2, 3))\")\n",
+      "teal_data(df1_ds)"
+    )
+  )
+})
+
+testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded TealData object", {
+  tmp_file <- tempfile(fileext = ".R")
+  writeLines(text = c(
+    "df <- data.frame(A = c(1, 2, 3))
+    df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
+    teal_data(df1_ds)
+    "
+    ),
+    con = tmp_file
+  )
+  tdf <- teal_data_file(tmp_file, "# MUTATE code")
+  file.remove(tmp_file)
+  testthat::expect_identical(tdf$get_code(), "df <- data.frame(A = c(1, 2, 3))\n# MUTATE code")
+})
+
+testthat::test_that("update_join_keys_to_primary updates the join_keys", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jks <- join_keys(join_key("df1", "df2", "id"))
+  data_objects <- list(df1, df2)
+
+  update_join_keys_to_primary(data_objects, jks)
+  testthat::expect_equal(
+    jks,
+    join_keys(
+      join_key("df1", "df2", "id"),
+      join_key("df1", "df1", "id"),
+      join_key("df2", "df2", "df2_id")
+    )
+  )
+})
+
+testthat::test_that("update_join_keys_to_primary updates the join_keys when primary keys exist", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  jks <- join_keys(join_key("df1", "df2", "id"))
+  data_objects <- list(df1, df2)
+
+  update_join_keys_to_primary(data_objects, jks)
+  testthat::expect_equal(
+    jks,
+    join_keys(
+      join_key("df1", "df2", "id"),
+      join_key("df1", "df1", "id"),
+      join_key("df2", "df2", "df2_id")
+    )
+  )
+})
+
+testthat::test_that("update_join_keys_to_primary updates join_keys with character(0) when no primary keys exist", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1)
+  df2 <- dataset("df2", df2)
+
+  jks <- join_keys(join_key("df1", "df2", "id"))
+  data_objects <- list(df1, df2)
+
+  update_join_keys_to_primary(data_objects, jks)
+  testthat::expect_equal(
+    jks,
+    join_keys(
+      join_key("df1", "df2", "id"),
+      join_key("df1", "df1", character(0)),
+      join_key("df2", "df2", character(0))
+    )
   )
 })
