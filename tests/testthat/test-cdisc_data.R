@@ -13,16 +13,28 @@ adtte_cf <- callable_function(
   }
 )
 adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+adae_cf <- callable_function(
+  function() {
+    as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
+  }
+)
+adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
+adae_rdc <- cdisc_data_connector(
+  connection = data_connection(open_fun = callable_function(function() "open function")),
+  connectors = list(adae_cdc)
+)
+
 load_dataset(adsl)
 load_dataset(adtte)
+load_dataset(adae_cdc)
 
 cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
-  cdisc_data(adsl, adtte, check = check, join_keys = join_keys1)
+  cdisc_data(adsl, adtte, adae_rdc, check = check, join_keys = join_keys1)
 }
 
 testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
   testthat::expect_silent(data <- cdisc_data_mixed_call())
-  testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE"))
+  testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE", "ADAE"))
 })
 
 testthat::test_that("cdisc_data throws error if it receives undesired objects", {
@@ -38,9 +50,12 @@ testthat::test_that("cdisc_data sets the join_keys internally", {
   jks <- join_keys(
     join_key("ADSL", "ADSL", c("STUDYID", "USUBJID")),
     join_key("ADTTE", "ADTTE", c("STUDYID", "USUBJID", "PARAMCD")),
-    join_key("ADSL", "ADTTE", c("STUDYID", "USUBJID"))
+    join_key("ADAE", "ADAE", c("STUDYID", "USUBJID", "ASTDTM", "AETERM", "AESEQ")),
+    join_key("ADSL", "ADTTE", c("STUDYID", "USUBJID")),
+    join_key("ADSL", "ADAE", c("STUDYID", "USUBJID")),
+    join_key("ADTTE", "ADAE", c("STUDYID", "USUBJID"))
   )
-  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL"))
+  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
   testthat::expect_equal(data$get_join_keys(), jks)
 })
 
@@ -50,11 +65,14 @@ testthat::test_that(
   data <- cdisc_data_mixed_call(join_keys1 = jks)
 
   jks <- join_keys(
-    join_key("ADSL", "ADSL", "STUDYID"),
+    join_key("ADSL", "ADSL", c("STUDYID")),
     join_key("ADTTE", "ADTTE", c("STUDYID", "USUBJID", "PARAMCD")),
-    join_key("ADSL", "ADTTE", "STUDYID")
+    join_key("ADAE", "ADAE", c("STUDYID", "USUBJID", "ASTDTM", "AETERM", "AESEQ")),
+    join_key("ADSL", "ADTTE", c("STUDYID")),
+    join_key("ADSL", "ADAE", c("STUDYID")),
+    join_key("ADTTE", "ADAE", c("STUDYID"))
   )
-  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL"))
+  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
   testthat::expect_equal(
     data$get_join_keys(),
     jks
@@ -91,7 +109,6 @@ testthat::test_that("cdisc_data throws error when a parent/child graph is not co
   )
 })
 
-###
 testthat::test_that("Basic example - without code and check", {
   testthat::expect_silent(cdisc_data(cdisc_dataset("ADSL", adsl_raw), code = "", check = FALSE))
   testthat::expect_silent(cdisc_data(cdisc_dataset("ADSL", adsl_raw),
