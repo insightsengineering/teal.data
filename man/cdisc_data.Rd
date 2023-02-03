@@ -8,7 +8,7 @@ cdisc_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
 }
 \arguments{
 \item{...}{(\code{TealDataConnector}, \code{TealDataset} or
-\code{TealDatasetConnector}) elements to include where \code{ADSL} data is mandatory.}
+\code{TealDatasetConnector}) elements to include.}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with datasets column names used for joining.
