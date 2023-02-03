@@ -14,7 +14,8 @@ testthat::test_that("TealData$new sets join_keys datasets based on the passed jo
 
   join_keys1 <- join_keys(join_key("df1", "df1", "id"), join_key("df2", "df2", "df2_id"))
   data <- TealData$new(df1, df2, join_keys = join_keys1)
-  # primary keys are not taken from datasets when calling TealData$new(), these are only added if using wrappers
+  # primary keys are not taken from datasets when calling TealData$new(),
+  # these are only added if using wrappers e.g. teal_data or cdisc_data
   testthat::expect_equal(
     data$get_join_keys(),
     join_keys1
@@ -58,19 +59,13 @@ testthat::test_that("copy(deep = TRUE) keeps valid references between items", {
 })
 
 testthat::test_that("TealData$print prints out expected output on basic input", {
-  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"), object = list(1:3, letters[1:3]))))
-  adsl <- cdisc_dataset(
-    dataname = "ADSL",
-    x = adsl_raw,
-    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"), object = list(1:3, letters[1:3]))))"
-  )
-  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-  adtte <- cdisc_dataset(
-    dataname = "ADTTE",
-    x = adtte_raw,
-    code = "ADTTE <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))"
-  )
-  data <- TealData$new(adsl, adtte, check = TRUE)
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
+
+  df1 <- dataset("df1", df1, keys = "id")
+  df2 <- dataset("df2", df2, keys = "df2_id")
+
+  data <- TealData$new(df1, df2)
 
   out <- capture.output(print(data))
   testthat::expect_equal(
@@ -78,15 +73,15 @@ testthat::test_that("TealData$print prints out expected output on basic input", 
     c(
       "A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):",
       "--> Element 1:",
-      "A CDISCTealDataset object containing the following data.frame (3 rows and 2 columns):",
-      "  STUDYID USUBJID",
-      "1       1       a",
-      "2       2       b",
-      "3       3       c",
+      "A TealDataset object containing the following data.frame (2 rows and 2 columns):",
+      "  id a",
+      "1  A 1",
+      "2  B 2",
       "--> Element 2:",
-      "A CDISCTealDataset object containing the following data.frame (1 rows and 3 columns):",
-      "  STUDYID USUBJID PARAMCD",
-      "1 STUDYID USUBJID PARAMCD"
+      "A TealDataset object containing the following data.frame (2 rows and 3 columns):",
+      "  df2_id fk b",
+      "1      A  A 1",
+      "2      B  B 2"
     )
   )
 })
@@ -106,7 +101,7 @@ testthat::test_that("TealData$get_connectors returns a list with the numbers of 
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl <- scda_dataset_connector("ADSL", "adsl")
   adsl_data <- example_data_connector(adsl)
   mtcars_ds1 <- TealDataset$new("cars1", head(mtcars), code = "cars1 <- head(mtcars)")
   data <- TealData$new(adsl_data, mtcars_ds1, check = TRUE)
@@ -128,7 +123,7 @@ testthat::test_that("TealData$get_items returns the content of the passed TealDa
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl <- scda_dataset_connector("ADSL", "adsl")
   adsl_data <- example_data_connector(adsl)
   data <- TealData$new(adsl_data, check = TRUE)
   testthat::expect_identical(data$get_items("ADSL"), adsl_data$get_items()$ADSL)
@@ -215,7 +210,8 @@ testthat::test_that("TealData$get_join_keys returns the join_keys of the specifi
 })
 
 testthat::test_that("TealData$get_parents returns an empty list even when parents are specified", {
-  # parent specified - this information is passed on the wrappers level
+  # Parent information is passed through the join_keys argument - this test does not create
+  # TealData with such a join_keys object set (it is only set for you if you call teal_data/cdisc_data)
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df1 <- CDISCTealDataset$new("df1", df1, keys = "id", parent = "parent")
   data <- TealData$new(df1, check = FALSE)
@@ -324,7 +320,7 @@ test_that("TealData$check_metadata does not produce error if join_keys are consi
   )
 })
 
-testthat::test_that("TealData$check_metadata returns error when a column in th ekeys is not found", {
+testthat::test_that("TealData$check_metadata returns error when a column in the keys is not found", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
 
@@ -350,10 +346,10 @@ testthat::test_that("TealData with single dataset and connector", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl <- scda_dataset_connector("ADSL", "adsl")
   adsl_data <- example_data_connector(adsl)
 
-  adtte <- cdisc_dataset(
+  adtte <- dataset(
     dataname = "ADTTE",
     x = synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
     code = "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
@@ -440,16 +436,16 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     return(x)
   }
 
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  adsl <- scda_dataset_connector("ADSL", "adsl")
   adsl_data <- example_data_connector(adsl)
 
-  adtte <- cdisc_dataset(
+  adtte <- dataset(
     dataname = "ADTTE",
     x = synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
     code = "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
   )
 
-  adsl_2 <- code_cdisc_dataset_connector("ADSL_2", "ADSL", keys = get_cdisc_keys("ADSL"), ADSL = adsl)
+  adsl_2 <- code_dataset_connector("ADSL_2", "ADSL", keys = get_cdisc_keys("ADSL"), ADSL = adsl)
   # add custom input
   adsl_2$set_ui_input(function(ns) {
     list(
@@ -457,22 +453,22 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     )
   })
 
-  advs <- scda_cdisc_dataset_connector("ADVS", "advs")
+  advs <- scda_dataset_connector("ADVS", "advs")
   advs$set_ui_input(function(ns) {
     list(
       numericInput(inputId = ns("seed"), label = "Example UI", min = 0, value = 4)
     )
   })
 
-  adlb <- scda_cdisc_dataset_connector("ADLB", "adlb")
+  adlb <- scda_dataset_connector("ADLB", "adlb")
 
   advs_adlb_data <- example_data_connector(advs, adlb)
 
   temp_file <- tempfile()
   saveRDS(synthetic_cdisc_dataset(dataset_name = "adrs", archive_name = "latest"), file = temp_file)
-  adrs <- rds_cdisc_dataset_connector(dataname = "ADRS", file = temp_file)
+  adrs <- rds_dataset_connector(dataname = "ADRS", file = temp_file)
 
-  adsamp <- script_cdisc_dataset_connector(
+  adsamp <- script_dataset_connector(
     dataname = "ADSAMP",
     keys = get_cdisc_keys("ADVS"),
     file = "delayed_data_script/asdamp_with_adsl.R",
@@ -551,10 +547,10 @@ testthat::test_that("Multiple connectors", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
-  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
-  advs <- scda_cdisc_dataset_connector("ADVS", "advs")
-  adsl_2 <- code_cdisc_dataset_connector("ADSL_2",
+  adsl <- scda_dataset_connector("ADSL", "adsl")
+  adae <- scda_dataset_connector("ADAE", "adae")
+  advs <- scda_dataset_connector("ADVS", "advs")
+  adsl_2 <- code_dataset_connector("ADSL_2",
     code = "ADSL",
     keys = get_cdisc_keys("ADSL"), ADSL = adsl
   )

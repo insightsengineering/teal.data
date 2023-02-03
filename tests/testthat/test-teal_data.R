@@ -1,36 +1,36 @@
-df1 <- data.frame(AA = c(1, 2, 3), BB = c("A", "B", "C"))
-df2 <- data.frame(AA = c(4, 5, 6), BB = c("A", "B", "C"))
-df3 <- data.frame(AA = c(7, 8, 9), BB = c("A", "B", "C"))
-
-df1_ds <- dataset(
-  dataname = "df1",
-  x = df1,
-  code = "df1 <- data.frame(AA = c(1,2,3), BB = c(\"A\", \"B\", \"C\"))"
-)
-
-df2_cf <- callable_function(
-  function() {
-    data.frame(A = c(4, 5, 6), BB = c("A", "B", "C"))
-  }
-)
-df2_dc <- dataset_connector("df2", df2_cf)
-
-df3_cf <- callable_function(
-  function() {
-    data.frame(AA = c(7, 8, 9), BB = c("A", "B", "C"))
-  }
-)
-df3_cdc <- dataset_connector("df3", df3_cf)
-df3_rdc <- relational_data_connector(
-  connection = data_connection(open_fun = callable_function(function() "open function")),
-  connectors = list(df3_cdc)
-)
-
-load_dataset(df1_ds)
-load_dataset(df2_dc)
-load_dataset(df3_cdc)
-
 teal_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
+  df1 <- data.frame(AA = c(1, 2, 3), BB = c("A", "B", "C"))
+  df2 <- data.frame(AA = c(4, 5, 6), BB = c("A", "B", "C"))
+  df3 <- data.frame(AA = c(7, 8, 9), BB = c("A", "B", "C"))
+
+  df1_ds <- dataset(
+    dataname = "df1",
+    x = df1,
+    code = "df1 <- data.frame(AA = c(1,2,3), BB = c(\"A\", \"B\", \"C\"))"
+  )
+
+  df2_cf <- callable_function(
+    function() {
+      data.frame(A = c(4, 5, 6), BB = c("A", "B", "C"))
+    }
+  )
+  df2_dc <- dataset_connector("df2", df2_cf)
+
+  df3_cf <- callable_function(
+    function() {
+      data.frame(AA = c(7, 8, 9), BB = c("A", "B", "C"))
+    }
+  )
+  df3_cdc <- dataset_connector("df3", df3_cf)
+  df3_rdc <- relational_data_connector(
+    connection = data_connection(open_fun = callable_function(function() "open function")),
+    connectors = list(df3_cdc)
+  )
+
+  load_dataset(df1_ds)
+  load_dataset(df2_dc)
+  load_dataset(df3_cdc)
+
   teal_data(df1_ds, df2_dc, df3_rdc, check = check, join_keys = join_keys1)
 }
 
@@ -40,6 +40,8 @@ testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDa
 })
 
 testthat::test_that("teal_data throws error if it receives undesired objects", {
+  df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+
   testthat::expect_error(
     teal_data(df1, check = TRUE),
     "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"

@@ -1,34 +1,34 @@
-adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
-adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
-
-adsl <- cdisc_dataset(
-  dataname = "ADSL",
-  x = adsl_raw,
-  code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
-)
-adtte_cf <- callable_function(
-  function() {
-    as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-  }
-)
-adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
-adae_cf <- callable_function(
-  function() {
-    as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
-  }
-)
-adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
-adae_rdc <- cdisc_data_connector(
-  connection = data_connection(open_fun = callable_function(function() "open function")),
-  connectors = list(adae_cdc)
-)
-
-load_dataset(adsl)
-load_dataset(adtte)
-load_dataset(adae_cdc)
-
 cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
+
+  adsl <- cdisc_dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+  adae_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
+    }
+  )
+  adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
+  adae_rdc <- cdisc_data_connector(
+    connection = data_connection(open_fun = callable_function(function() "open function")),
+    connectors = list(adae_cdc)
+  )
+
+  load_dataset(adsl)
+  load_dataset(adtte)
+  load_dataset(adae_cdc)
+
   cdisc_data(adsl, adtte, adae_rdc, check = check, join_keys = join_keys1)
 }
 
@@ -38,6 +38,7 @@ testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealD
 })
 
 testthat::test_that("cdisc_data throws error if it receives undesired objects", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   testthat::expect_error(
     teal_data(adsl_raw, check = TRUE),
     "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
@@ -110,6 +111,8 @@ testthat::test_that("cdisc_data throws error when a parent/child graph is not co
 })
 
 testthat::test_that("Basic example - without code and check", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+
   testthat::expect_silent(cdisc_data(cdisc_dataset("ADSL", adsl_raw), code = "", check = FALSE))
   testthat::expect_silent(cdisc_data(cdisc_dataset("ADSL", adsl_raw),
     cdisc_dataset("ARG1", adsl_raw, keys = get_cdisc_keys("ADSL")),
@@ -119,6 +122,8 @@ testthat::test_that("Basic example - without code and check", {
 })
 
 testthat::test_that("Basic example - check overall code", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+
   testthat::expect_silent(
     cdisc_data(
       cdisc_dataset("ADSL", adsl_raw),
@@ -170,6 +175,9 @@ testthat::test_that("Basic example - check overall code", {
 })
 
 testthat::test_that("List values", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+
   test_relational_data_equal <- function(data1, data2) {
     testthat::expect_equal(data1$get_items(), data2$get_items())
     testthat::expect_equal(data1$get_join_keys(), data2$get_join_keys())
@@ -215,6 +223,8 @@ testthat::test_that("List values", {
 })
 
 testthat::test_that("cdisc_data_file loads the TealData object", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   tmp_file <- tempfile(fileext = ".R")
   writeLines(text = c(
     "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
@@ -223,7 +233,7 @@ testthat::test_that("cdisc_data_file loads the TealData object", {
       x = adsl_raw,
       code = 'ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))'
     )
-    teal_data(adsl)
+    cdisc_data(adsl)
     "
   ),
   con = tmp_file
@@ -238,12 +248,14 @@ testthat::test_that("cdisc_data_file loads the TealData object", {
       "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
       "adsl <- cdisc_dataset(dataname = \"ADSL\", x = adsl_raw, ",
       "code = \"ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\\\"ADSL\\\"))))\")\n",
-      "teal_data(adsl)"
+      "cdisc_data(adsl)"
     )
   )
 })
 
 testthat::test_that("cdisc_data_file uses the code input to mutate the code of the loaded TealData object", {
+  rlang::local_options(lifecycle_verbosity = "quiet")
+
   tmp_file <- tempfile(fileext = ".R")
   writeLines(text = c(
     "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
@@ -252,7 +264,7 @@ testthat::test_that("cdisc_data_file uses the code input to mutate the code of t
       x = adsl_raw,
       code = 'ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))'
     )
-    teal_data(adsl)
+    cdisc_data(adsl)
     "
   ),
   con = tmp_file

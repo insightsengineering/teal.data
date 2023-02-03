@@ -19,7 +19,7 @@
 #' ```
 #' @inheritParams teal_data
 #' @param ... (`TealDataConnector`, `TealDataset` or
-#'   `TealDatasetConnector`) elements to include where `ADSL` data is mandatory.
+#'   `TealDatasetConnector`) elements to include.
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with datasets column names used for joining.
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys

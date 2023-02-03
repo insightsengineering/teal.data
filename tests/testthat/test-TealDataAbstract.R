@@ -1,22 +1,22 @@
 # All TealDataAbstract tests are run using TealData objects
-adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
-adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-
-adsl <- dataset(
-  dataname = "ADSL",
-  x = adsl_raw,
-  code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
-)
-adtte_cf <- callable_function(
-  function() {
-    as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-  }
-)
-adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
-load_dataset(adsl)
-load_dataset(adtte)
-
 tealdata_mixed_call <- function(check = TRUE) {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   TealData$new(adsl, adtte, check = check)
 }
 
@@ -181,6 +181,7 @@ testthat::test_that("get_dataset throws an error if passed name is not character
 })
 
 testthat::test_that("get_dataset returns the dataset with the passed name", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   data <- tealdata_mixed_call()
 
   testthat::expect_equal(
@@ -194,34 +195,99 @@ testthat::test_that("get_dataset returns the dataset with the passed name", {
 })
 
 testthat::test_that("get_dataset returns a list of all datasets if passed NULL", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_dataset(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
 testthat::test_that("get_datasets returns a list of all datasets if passed NULL", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   data <- tealdata_mixed_call()
   testthat::expect_equal(data$get_datasets(), list(ADSL = adsl, ADTTE = adtte$get_dataset()))
 })
 
 testthat::test_that("get_datasets throws an error is a dataset is not pulled yet", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+
   adtte_cf2 <- callable_function(
     function() {
       as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
     }
   )
   adtte2 <- dataset_connector("ADTTE", adtte_cf2, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+
   data <- TealData$new(adtte2)
   testthat::expect_error(data$get_datasets(), "Not all datasets have been pulled yet.")
 })
 
 testthat::test_that("get_items returns all items in TealDataAbstract object when no input dataname is specified", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   data <- tealdata_mixed_call(check = TRUE)
-  testthat::expect_identical(data$get_items(), list(ADSL = adsl, ADTTE = adtte))
+  testthat::expect_equal(data$get_items(), list(ADSL = adsl, ADTTE = adtte))
 })
 
 testthat::test_that("get_items returns the item of the specified input dataname", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+
+  load_dataset(adsl)
   data <- tealdata_mixed_call(check = TRUE)
-  testthat::expect_identical(data$get_items("ADSL"), adsl)
+  testthat::expect_equal(data$get_items("ADSL"), adsl)
 })
 
 testthat::test_that("get_items throws error if dataname is not found", {
@@ -293,6 +359,7 @@ testthat::test_that("set_check accepts only logical input", {
 })
 
 testthat::test_that("set_pull_code sets code correctly", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   data <- data <- TealData$new(
     cdisc_dataset(
       dataname = "ADSL",
@@ -307,6 +374,23 @@ testthat::test_that("set_pull_code sets code correctly", {
 })
 
 testthat::test_that("set_pull_code throws error if code is not character", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   data <- TealData$new(adtte, check = TRUE)
   testthat::expect_error(
     data$set_pull_code(111),
@@ -323,6 +407,23 @@ testthat::test_that("set_pull_code throws error if code is specified on data and
 })
 
 testthat::test_that("set_pull_code throws error if TealDataAbstract has only connectors", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
+  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+  adsl <- dataset(
+    dataname = "ADSL",
+    x = adsl_raw,
+    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
+  )
+  adtte_cf <- callable_function(
+    function() {
+      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
+    }
+  )
+  adtte <- dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
+
+  load_dataset(adsl)
+  load_dataset(adtte)
+
   data <- TealData$new(adtte, check = TRUE)
   testthat::expect_error(
     data$set_pull_code("Add code here"),
@@ -390,6 +491,7 @@ testthat::test_that("get_datasets_code_class returns a CodeClass object with the
 })
 
 testthat::test_that("get_pull_code_class gets code correctly", {
+  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   data <- data <- TealData$new(
     cdisc_dataset(
       dataname = "ADSL",
