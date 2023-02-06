@@ -65,7 +65,7 @@ x$set_server(
         connection$get_open_server()(id = "open_connection", connection = connection)
         if (connection$is_opened()) {
           for (connector in connectors) {
-            set_args(connector, args = list(name = input$name))
+            set_args(connector, args = list(archive_name = input$name))
             # pull each dataset
             connector$get_server()(id = connector$get_dataname())
             if (connector$is_failed()) {
