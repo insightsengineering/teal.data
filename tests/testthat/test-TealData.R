@@ -3,6 +3,11 @@ testthat::test_that("TealData$new throws if data is not valid", {
     TealData$new("mtcars"),
     "All elements should be of TealDataset\\(Connector\\) or TealDataConnector class"
   )
+
+  testthat::expect_error(
+    TealData$new(mtcars),
+    "All elements should be of TealDataset\\(Connector\\) or TealDataConnector class"
+  )
 })
 
 testthat::test_that("TealData$new sets join_keys datasets based on the passed join_keys input otherwise empty", {
@@ -26,6 +31,26 @@ testthat::test_that("TealData$new sets join_keys datasets based on the passed jo
     data2$get_join_keys(),
     join_keys()
   )
+})
+
+testthat::test_that("TealData$new sets pull and mutate code as empty CodeClass", {
+  TestTealData <- R6::R6Class(
+    classname = "TestTealData",
+    inherit = TealData,
+    public = list(
+      get_mutate_code = function() private$mutate_code,
+      get_pull_code = function() private$pull_code
+    )
+  )
+  data <- TestTealData$new(dataset("mtcars", mtcars))
+  mutate_code <- data$get_mutate_code()
+  pull_code <- data$get_pull_code()
+
+  testthat::expect_s3_class(mutate_code, "CodeClass")
+  testthat::expect_equal(mutate_code$get_code(), "")
+
+  testthat::expect_s3_class(pull_code, "CodeClass")
+  testthat::expect_equal(pull_code$get_code(), "")
 })
 
 testthat::test_that("copy(deep = TRUE) deep copies self and the items", {
