@@ -164,16 +164,13 @@ invisibly self
 \if{html}{\out{<a id="method-TealData-get_connectors"></a>}}
 \if{latex}{\out{\hypertarget{method-TealData-get_connectors}{}}}
 \subsection{Method \code{get_connectors()}}{
-Derive the names of all datasets
-
-
 Get data connectors.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealData$get_connectors()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-(\code{character} vector) with names
+(\code{list}) with all \code{TealDatasetConnector} or \code{TealDataConnector} objects.
 }
 }
 \if{html}{\out{<hr>}}
