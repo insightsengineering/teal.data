@@ -357,7 +357,7 @@ testthat::test_that("TealData$check_metadata returns error when a column in the 
 
   testthat::expect_error(
     data$check_metadata(),
-    "The primary keys specification requires dataset df1 to contain the following columns: id6"
+    "Primary keys specifed for df1 do not exist in the data."
   )
 })
 

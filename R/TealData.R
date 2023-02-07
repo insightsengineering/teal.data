@@ -326,7 +326,7 @@ TealData <- R6::R6Class( # nolint
         }
 
         # check if primary keys in dataset
-        primary_key_cols <- get_keys(dataset)
+        primary_key_cols <- self$get_join_keys(dataname, dataname)
         if (!is.null(primary_key_cols) && !all(primary_key_cols %in% dataset_colnames)) {
           stop(
             paste(

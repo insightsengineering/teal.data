@@ -164,7 +164,7 @@ TealDataAbstract <- R6::R6Class( # nolint
     #'
     #' @return `character` vector with names of all datasets.
     get_datanames = function() {
-      datasets_names <- unlist(lapply(private$datasets, get_dataname))
+      datasets_names <- unname(unlist(lapply(private$datasets, get_dataname)))
 
       return(datasets_names)
     },
