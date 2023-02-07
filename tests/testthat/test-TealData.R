@@ -34,7 +34,7 @@ testthat::test_that("TealData$new sets join_keys datasets based on the passed jo
 })
 
 testthat::test_that("TealData$new sets pull and mutate code as empty CodeClass", {
-  TestTealData <- R6::R6Class(
+  TestTealData <- R6::R6Class( # nolint
     classname = "TestTealData",
     inherit = TealData,
     public = list(
