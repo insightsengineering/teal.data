@@ -22,7 +22,7 @@ Pulled data inherits from the class TealDataset"><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9010</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,14 +53,6 @@ Pulled data inherits from the class TealDataset"><!-- mathjax --><script src="ht
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -105,7 +97,6 @@ Pulled data inherits from the class <code><a href="TealDataset.html">TealDataset
 <li><p><a href="#method-TealDatasetConnector-get_datanames"><code>TealDatasetConnector$get_datanames()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-get_dataset_label"><code>TealDatasetConnector$get_dataset_label()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-get_keys"><code>TealDatasetConnector$get_keys()</code></a></p></li>
-<li><p><a href="#method-TealDatasetConnector-get_join_keys"><code>TealDatasetConnector$get_join_keys()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-get_code"><code>TealDatasetConnector$get_code()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-get_code_class"><code>TealDatasetConnector$get_code_class()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-get_pull_args"><code>TealDatasetConnector$get_pull_args()</code></a></p></li>
@@ -117,8 +108,6 @@ Pulled data inherits from the class <code><a href="TealDataset.html">TealDataset
 <li><p><a href="#method-TealDatasetConnector-reassign_datasets_vars"><code>TealDatasetConnector$reassign_datasets_vars()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-set_dataset_label"><code>TealDatasetConnector$set_dataset_label()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-set_keys"><code>TealDatasetConnector$set_keys()</code></a></p></li>
-<li><p><a href="#method-TealDatasetConnector-set_join_keys"><code>TealDatasetConnector$set_join_keys()</code></a></p></li>
-<li><p><a href="#method-TealDatasetConnector-mutate_join_keys"><code>TealDatasetConnector$mutate_join_keys()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-pull"><code>TealDatasetConnector$pull()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-set_args"><code>TealDatasetConnector$set_args()</code></a></p></li>
 <li><p><a href="#method-TealDatasetConnector-mutate"><code>TealDatasetConnector$mutate()</code></a></p></li>
@@ -269,22 +258,10 @@ converted to a list with <code>as.list</code>.</p></dd>
 <p><code>character</code> vector with dataset primary keys</p>
 </div>
 
-</div><p></p><hr><a id="method-TealDatasetConnector-get_join_keys"></a><div class="section">
-<h3 id="method-get-join-keys-">Method <code>get_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-get-join-keys-"></a></h3>
-<p>Get <code>JoinKeys</code> object with keys used for joining.</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_join_keys</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
-<p>(<code>JoinKeys</code>)</p>
-</div>
-
 </div><p></p><hr><a id="method-TealDatasetConnector-get_code"></a><div class="section">
 <h3 id="method-get-code-">Method <code><a href="get_code.html">get_code()</a></code><a class="anchor" aria-label="anchor" href="#method-get-code-"></a></h3>
 <p>Get code to get data</p><div class="section">
-<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_code</span><span class="op">(</span>deparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -298,55 +275,55 @@ whether return deparsed form of a call</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
 <p>optionally deparsed <code>call</code> object</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_code_class"></a><div class="section">
 <h3 id="method-get-code-class-">Method <code>get_code_class()</code><a class="anchor" aria-label="anchor" href="#method-get-code-class-"></a></h3>
 <p>Get internal <code>CodeClass</code> object</p><div class="section">
-<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
+<h4 id="usage-7">Usage<a class="anchor" aria-label="anchor" href="#usage-7"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_code_class</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
+<h4 id="returns-6">Returns<a class="anchor" aria-label="anchor" href="#returns-6"></a></h4>
 <p><code>CodeClass</code></p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_pull_args"></a><div class="section">
 <h3 id="method-get-pull-args-">Method <code>get_pull_args()</code><a class="anchor" aria-label="anchor" href="#method-get-pull-args-"></a></h3>
 <p>Derive the arguments this connector will pull with</p><div class="section">
-<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
+<h4 id="usage-8">Usage<a class="anchor" aria-label="anchor" href="#usage-8"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_pull_args</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
+<h4 id="returns-7">Returns<a class="anchor" aria-label="anchor" href="#returns-7"></a></h4>
 <p><code>list</code> of pull function fixed arguments</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_dataset"></a><div class="section">
 <h3 id="method-get-dataset-">Method <code><a href="get_dataset.html">get_dataset()</a></code><a class="anchor" aria-label="anchor" href="#method-get-dataset-"></a></h3>
 <p>Get dataset</p><div class="section">
-<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
+<h4 id="usage-9">Usage<a class="anchor" aria-label="anchor" href="#usage-9"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_dataset</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
+<h4 id="returns-8">Returns<a class="anchor" aria-label="anchor" href="#returns-8"></a></h4>
 <p>dataset (<code>TealDataset</code>)</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_error_message"></a><div class="section">
 <h3 id="method-get-error-message-">Method <code>get_error_message()</code><a class="anchor" aria-label="anchor" href="#method-get-error-message-"></a></h3>
 <p>Get error message from last pull</p><div class="section">
-<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
+<h4 id="usage-10">Usage<a class="anchor" aria-label="anchor" href="#usage-10"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_error_message</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
+<h4 id="returns-9">Returns<a class="anchor" aria-label="anchor" href="#returns-9"></a></h4>
 <p><code>character</code> object with error message or <code>character(0)</code> if last
 pull was successful.</p>
 </div>
@@ -354,36 +331,36 @@ pull was successful.</p>
 </div><p></p><hr><a id="method-TealDatasetConnector-get_pull_callable"></a><div class="section">
 <h3 id="method-get-pull-callable-">Method <code>get_pull_callable()</code><a class="anchor" aria-label="anchor" href="#method-get-pull-callable-"></a></h3>
 <p>Get pull function</p><div class="section">
-<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
+<h4 id="usage-11">Usage<a class="anchor" aria-label="anchor" href="#usage-11"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_pull_callable</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
+<h4 id="returns-10">Returns<a class="anchor" aria-label="anchor" href="#returns-10"></a></h4>
 <p><code>CallableFunction</code></p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_raw_data"></a><div class="section">
 <h3 id="method-get-raw-data-">Method <code><a href="get_raw_data.html">get_raw_data()</a></code><a class="anchor" aria-label="anchor" href="#method-get-raw-data-"></a></h3>
 <p>Get raw data from dataset</p><div class="section">
-<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
+<h4 id="usage-12">Usage<a class="anchor" aria-label="anchor" href="#usage-12"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_raw_data</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
+<h4 id="returns-11">Returns<a class="anchor" aria-label="anchor" href="#returns-11"></a></h4>
 <p><code>data.frame</code> or <code>MultiAssayExperiment</code> data</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_var_r6"></a><div class="section">
 <h3 id="method-get-var-r-">Method <code>get_var_r6()</code><a class="anchor" aria-label="anchor" href="#method-get-var-r-"></a></h3>
 <p>Get the list of dependencies that are <code>TealDataset</code> or <code>TealDatasetConnector</code> objects</p><div class="section">
-<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
+<h4 id="usage-13">Usage<a class="anchor" aria-label="anchor" href="#usage-13"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_var_r6</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
+<h4 id="returns-12">Returns<a class="anchor" aria-label="anchor" href="#returns-12"></a></h4>
 <p><code>list</code></p>
 </div>
 
@@ -392,7 +369,7 @@ pull was successful.</p>
 <p>Reassign <code>vars</code> in this object to keep references up to date after deep clone.
 Update is done based on the objects passed in <code>datasets</code> argument. Reassignment
 refers only to the provided <code>datasets</code>, other <code>vars</code> remains the same.</p><div class="section">
-<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
+<h4 id="usage-14">Usage<a class="anchor" aria-label="anchor" href="#usage-14"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">reassign_datasets_vars</span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -406,14 +383,14 @@ objects with valid pointers.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
+<h4 id="returns-13">Returns<a class="anchor" aria-label="anchor" href="#returns-13"></a></h4>
 <p>NULL invisible</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-set_dataset_label"></a><div class="section">
 <h3 id="method-set-dataset-label-">Method <code>set_dataset_label()</code><a class="anchor" aria-label="anchor" href="#method-set-dataset-label-"></a></h3>
 <p>Set label of the <code>dataset</code> object</p><div class="section">
-<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
+<h4 id="usage-15">Usage<a class="anchor" aria-label="anchor" href="#usage-15"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">set_dataset_label</span><span class="op">(</span><span class="va">label</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -427,14 +404,14 @@ Label to describe the dataset.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
+<h4 id="returns-14">Returns<a class="anchor" aria-label="anchor" href="#returns-14"></a></h4>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-set_keys"></a><div class="section">
 <h3 id="method-set-keys-">Method <code><a href="set_keys.html">set_keys()</a></code><a class="anchor" aria-label="anchor" href="#method-set-keys-"></a></h3>
 <p>Set new keys</p><div class="section">
-<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
+<h4 id="usage-16">Usage<a class="anchor" aria-label="anchor" href="#usage-16"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">set_keys</span><span class="op">(</span><span class="va">keys</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -448,65 +425,20 @@ vector of dataset primary keys column names</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
+<h4 id="returns-15">Returns<a class="anchor" aria-label="anchor" href="#returns-15"></a></h4>
 <p>(<code>self</code>) invisibly for chaining.</p>
-</div>
-
-</div><p></p><hr><a id="method-TealDatasetConnector-set_join_keys"></a><div class="section">
-<h3 id="method-set-join-keys-">Method <code>set_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-set-join-keys-"></a></h3>
-<p>set join_keys for a given dataset and self</p><div class="section">
-<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">set_join_keys</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>x</code></dt>
-<dd><p><code>list</code> of <code>JoinKeySet</code> objects (which are created using the <code>join_key</code> function)
-or single <code>JoinKeySet</code> objects</p></dd>
-
-
-</dl><p></p></div>
-</div>
-<div class="section">
-<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
-<p>(<code>self</code>) invisibly for chaining</p>
-</div>
-
-</div><p></p><hr><a id="method-TealDatasetConnector-mutate_join_keys"></a><div class="section">
-<h3 id="method-mutate-join-keys-">Method <code><a href="mutate_join_keys.html">mutate_join_keys()</a></code><a class="anchor" aria-label="anchor" href="#method-mutate-join-keys-"></a></h3>
-<p>mutate the join_keys for a given dataset and self</p><div class="section">
-<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">mutate_join_keys</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">val</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
-<p></p><div class="arguments"><dl><dt><code>dataset</code></dt>
-<dd><p>(<code>character</code>) dataset for which join_keys are to be set against self</p></dd>
-
-
-<dt><code>val</code></dt>
-<dd><p>(named <code>character</code>) column names used to join</p></dd>
-
-
-</dl><p></p></div>
-</div>
-<div class="section">
-<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
-<p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-pull"></a><div class="section">
 <h3 id="method-pull-">Method <code>pull()</code><a class="anchor" aria-label="anchor" href="#method-pull-"></a></h3>
 <p>Pull the data (and metadata if it is a <code>Callable</code>)</p>
 <p>Read or create data using <code>pull_callable</code> specified in the constructor.</p><div class="section">
-<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
+<h4 id="usage-17">Usage<a class="anchor" aria-label="anchor" href="#usage-17"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span>args <span class="op">=</span> <span class="cn">NULL</span>, try <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>args</code></dt>
 <dd><p>(<code>NULL</code> or named <code>list</code>)<br>
 additional dynamic arguments for pull function. <code>args</code> can be omitted if <code>pull_callable</code>
@@ -524,19 +456,19 @@ whether perform function evaluation inside <code>try</code> clause</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
+<h4 id="returns-16">Returns<a class="anchor" aria-label="anchor" href="#returns-16"></a></h4>
 <p>(<code>self</code>) if successful.</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-set_args"></a><div class="section">
 <h3 id="method-set-args-">Method <code><a href="set_args.html">set_args()</a></code><a class="anchor" aria-label="anchor" href="#method-set-args-"></a></h3>
 <p>Set arguments to the pulling function</p><div class="section">
-<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
+<h4 id="usage-18">Usage<a class="anchor" aria-label="anchor" href="#usage-18"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">set_args</span><span class="op">(</span><span class="va">args</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>args</code></dt>
 <dd><p>(<code>NULL</code> or named <code>list</code>) dynamic arguments to function</p></dd>
 
@@ -544,7 +476,7 @@ whether perform function evaluation inside <code>try</code> clause</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
+<h4 id="returns-17">Returns<a class="anchor" aria-label="anchor" href="#returns-17"></a></h4>
 <p>(<code>self</code>) invisibly for chaining</p>
 </div>
 
@@ -552,12 +484,12 @@ whether perform function evaluation inside <code>try</code> clause</p></dd>
 <h3 id="method-mutate-">Method <code>mutate()</code><a class="anchor" aria-label="anchor" href="#method-mutate-"></a></h3>
 <p>Dispatcher for either eager or delayed mutate methods</p>
 <p>Either code or script must be provided, but not both.</p><div class="section">
-<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
+<h4 id="usage-19">Usage<a class="anchor" aria-label="anchor" href="#usage-19"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">mutate</span><span class="op">(</span><span class="va">code</span>, vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
+<h4 id="arguments-8">Arguments<a class="anchor" aria-label="anchor" href="#arguments-8"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>code</code></dt>
 <dd><p>(<code>character</code>)<br>
 A character string defining code to modify <code>raw_data</code> from this dataset. To modify
@@ -581,43 +513,43 @@ within another dataset.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
+<h4 id="returns-18">Returns<a class="anchor" aria-label="anchor" href="#returns-18"></a></h4>
 <p>(<code>self</code>) invisibly for chaining.</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-is_failed"></a><div class="section">
 <h3 id="method-is-failed-">Method <code>is_failed()</code><a class="anchor" aria-label="anchor" href="#method-is-failed-"></a></h3>
 <p>Check if pull has not failed.</p><div class="section">
-<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
+<h4 id="usage-20">Usage<a class="anchor" aria-label="anchor" href="#usage-20"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">is_failed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-22">Returns<a class="anchor" aria-label="anchor" href="#returns-22"></a></h4>
+<h4 id="returns-19">Returns<a class="anchor" aria-label="anchor" href="#returns-19"></a></h4>
 <p><code>TRUE</code> if pull failed, else <code>FALSE</code></p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-is_pulled"></a><div class="section">
 <h3 id="method-is-pulled-">Method <code><a href="is_pulled.html">is_pulled()</a></code><a class="anchor" aria-label="anchor" href="#method-is-pulled-"></a></h3>
 <p>Check if dataset has already been pulled.</p><div class="section">
-<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
+<h4 id="usage-21">Usage<a class="anchor" aria-label="anchor" href="#usage-21"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">is_pulled</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
+<h4 id="returns-20">Returns<a class="anchor" aria-label="anchor" href="#returns-20"></a></h4>
 <p><code>TRUE</code> if connector has been already pulled, else <code>FALSE</code></p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-is_mutate_delayed"></a><div class="section">
 <h3 id="method-is-mutate-delayed-">Method <code>is_mutate_delayed()</code><a class="anchor" aria-label="anchor" href="#method-is-mutate-delayed-"></a></h3>
 <p>Check if dataset has mutations that are delayed</p><div class="section">
-<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
+<h4 id="usage-22">Usage<a class="anchor" aria-label="anchor" href="#usage-22"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">is_mutate_delayed</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-24">Returns<a class="anchor" aria-label="anchor" href="#returns-24"></a></h4>
+<h4 id="returns-21">Returns<a class="anchor" aria-label="anchor" href="#returns-21"></a></h4>
 <p><code>logical</code></p>
 </div>
 
@@ -625,12 +557,12 @@ within another dataset.</p></dd>
 <h3 id="method-check-">Method <code>check()</code><a class="anchor" aria-label="anchor" href="#method-check-"></a></h3>
 <p>Check to determine if the raw data is reproducible from the
 <code><a href="get_code.html">get_code()</a></code> code.</p><div class="section">
-<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
+<h4 id="usage-23">Usage<a class="anchor" aria-label="anchor" href="#usage-23"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-25">Returns<a class="anchor" aria-label="anchor" href="#returns-25"></a></h4>
+<h4 id="returns-22">Returns<a class="anchor" aria-label="anchor" href="#returns-22"></a></h4>
 <p><code>TRUE</code> always for all connectors to avoid evaluating the same code multiple times.</p>
 </div>
 
@@ -638,12 +570,12 @@ within another dataset.</p></dd>
 <h3 id="method-set-ui-input-">Method <code>set_ui_input()</code><a class="anchor" aria-label="anchor" href="#method-set-ui-input-"></a></h3>
 <p>Sets the shiny UI according to the given inputs.
 Inputs must provide only scalar (length of 1) variables.</p><div class="section">
-<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
+<h4 id="usage-24">Usage<a class="anchor" aria-label="anchor" href="#usage-24"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">set_ui_input</span><span class="op">(</span>inputs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
+<h4 id="arguments-9">Arguments<a class="anchor" aria-label="anchor" href="#arguments-9"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>inputs</code></dt>
 <dd><p>(<code>function</code>) A shiny module UI function with single argument <code>ns</code>.
 This function needs to return a list of shiny inputs with their <code>inputId</code> wrapped
@@ -655,7 +587,7 @@ Nested lists are not allowed.</p></dd>
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-26">Returns<a class="anchor" aria-label="anchor" href="#returns-26"></a></h4>
+<h4 id="returns-23">Returns<a class="anchor" aria-label="anchor" href="#returns-23"></a></h4>
 <p>(<code>self</code>) invisibly for chaining.</p>
 </div>
 <div class="section">
@@ -677,12 +609,12 @@ ds$launch()
 </div><p></p><hr><a id="method-TealDatasetConnector-get_ui"></a><div class="section">
 <h3 id="method-get-ui-">Method <code>get_ui()</code><a class="anchor" aria-label="anchor" href="#method-get-ui-"></a></h3>
 <p>Get shiny ui function</p><div class="section">
-<h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
+<h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_ui</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-12">Arguments<a class="anchor" aria-label="anchor" href="#arguments-12"></a></h4>
+<h4 id="arguments-10">Arguments<a class="anchor" aria-label="anchor" href="#arguments-10"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>(<code>character</code>) namespace id</p></dd>
 
@@ -690,31 +622,31 @@ ds$launch()
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-27">Returns<a class="anchor" aria-label="anchor" href="#returns-27"></a></h4>
+<h4 id="returns-24">Returns<a class="anchor" aria-label="anchor" href="#returns-24"></a></h4>
 <p>shiny UI in given namespace id</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_server"></a><div class="section">
 <h3 id="method-get-server-">Method <code>get_server()</code><a class="anchor" aria-label="anchor" href="#method-get-server-"></a></h3>
 <p>Get shiny server function</p><div class="section">
-<h4 id="usage-29">Usage<a class="anchor" aria-label="anchor" href="#usage-29"></a></h4>
+<h4 id="usage-26">Usage<a class="anchor" aria-label="anchor" href="#usage-26"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_server</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-28">Returns<a class="anchor" aria-label="anchor" href="#returns-28"></a></h4>
+<h4 id="returns-25">Returns<a class="anchor" aria-label="anchor" href="#returns-25"></a></h4>
 <p>shiny server function</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-launch"></a><div class="section">
 <h3 id="method-launch-">Method <code>launch()</code><a class="anchor" aria-label="anchor" href="#method-launch-"></a></h3>
 <p>Launches a shiny app.</p><div class="section">
-<h4 id="usage-30">Usage<a class="anchor" aria-label="anchor" href="#usage-30"></a></h4>
+<h4 id="usage-27">Usage<a class="anchor" aria-label="anchor" href="#usage-27"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">launch</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-29">Returns<a class="anchor" aria-label="anchor" href="#returns-29"></a></h4>
+<h4 id="returns-26">Returns<a class="anchor" aria-label="anchor" href="#returns-26"></a></h4>
 <p>Shiny app</p>
 </div>
 <div class="section">
@@ -736,12 +668,12 @@ ds$launch()
 </div><p></p><hr><a id="method-TealDatasetConnector-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
-<h4 id="usage-31">Usage<a class="anchor" aria-label="anchor" href="#usage-31"></a></h4>
+<h4 id="usage-28">Usage<a class="anchor" aria-label="anchor" href="#usage-28"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="arguments-13">Arguments<a class="anchor" aria-label="anchor" href="#arguments-13"></a></h4>
+<h4 id="arguments-11">Arguments<a class="anchor" aria-label="anchor" href="#arguments-11"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 

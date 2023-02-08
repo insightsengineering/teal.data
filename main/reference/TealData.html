@@ -16,7 +16,7 @@ Class also decides whether to launch app before initialize teal application."><!
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.9010</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,14 +47,6 @@ Class also decides whether to launch app before initialize teal application."><!
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -97,10 +89,10 @@ Class also decides whether to launch app before initialize teal application.</p>
 <ul><li><p><a href="#method-TealData-new"><code>TealData$new()</code></a></p></li>
 <li><p><a href="#method-TealData-copy"><code>TealData$copy()</code></a></p></li>
 <li><p><a href="#method-TealData-print"><code>TealData$print()</code></a></p></li>
-<li><p><a href="#method-TealData-get_datanames"><code>TealData$get_datanames()</code></a></p></li>
-<li><p><a href="#method-TealData-get_join_keys"><code>TealData$get_join_keys()</code></a></p></li>
 <li><p><a href="#method-TealData-get_connectors"><code>TealData$get_connectors()</code></a></p></li>
 <li><p><a href="#method-TealData-get_items"><code>TealData$get_items()</code></a></p></li>
+<li><p><a href="#method-TealData-get_join_keys"><code>TealData$get_join_keys()</code></a></p></li>
+<li><p><a href="#method-TealData-get_parents"><code>TealData$get_parents()</code></a></p></li>
 <li><p><a href="#method-TealData-get_ui"><code>TealData$get_ui()</code></a></p></li>
 <li><p><a href="#method-TealData-get_server"><code>TealData$get_server()</code></a></p></li>
 <li><p><a href="#method-TealData-launch"><code>TealData$launch()</code></a></p></li>
@@ -114,6 +106,7 @@ Class also decides whether to launch app before initialize teal application.</p>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_check_result"><a href="TealDataAbstract.html#method-get_check_result"><code>teal.data::TealDataAbstract$get_check_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code"><a href="TealDataAbstract.html#method-get_code"><code>teal.data::TealDataAbstract$get_code()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code_class"><a href="TealDataAbstract.html#method-get_code_class"><code>teal.data::TealDataAbstract$get_code_class()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datanames"><a href="TealDataAbstract.html#method-get_datanames"><code>teal.data::TealDataAbstract$get_datanames()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_dataset"><a href="TealDataAbstract.html#method-get_dataset"><code>teal.data::TealDataAbstract$get_dataset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datasets"><a href="TealDataAbstract.html#method-get_datasets"><code>teal.data::TealDataAbstract$get_datasets()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="is_pulled"><a href="TealDataAbstract.html#method-is_pulled"><code>teal.data::TealDataAbstract$is_pulled()</code></a></span></li>
@@ -126,7 +119,7 @@ Class also decides whether to launch app before initialize teal application.</p>
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 <p>Create a new object of <code>TealData</code> class</p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/TealData.html">TealData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">...</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">join_keys</span><span class="op">)</span></span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/TealData.html">TealData</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">...</span>, check <span class="op">=</span> <span class="cn">FALSE</span>, join_keys <span class="op">=</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/join_keys.html">join_keys</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -144,7 +137,7 @@ as provided in arguments. Check is run only if flag is true and preprocessing co
 <dt><code>join_keys</code></dt>
 <dd><p>(<code>JoinKeys</code>) or a single (<code>JoinKeySet</code>)<br>
 (optional) object with dataset column relationships used for joining.
-If empty then no joins between pairs of objects</p></dd>
+If empty then an empty <code>JoinKeys</code> object is passed by default.</p></dd>
 
 
 </dl><p></p></div>
@@ -192,46 +185,22 @@ argument passed to <code>clone</code> method. If <code>TRUE</code> deep copy is 
 <p>invisibly self</p>
 </div>
 
-</div><p></p><hr><a id="method-TealData-get_datanames"></a><div class="section">
-<h3 id="method-get-datanames-">Method <code>get_datanames()</code><a class="anchor" aria-label="anchor" href="#method-get-datanames-"></a></h3>
-<p>Derive the names of all datasets</p><div class="section">
-<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_datanames</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
-<p>(<code>character</code> vector) with names</p>
-</div>
-
-</div><p></p><hr><a id="method-TealData-get_join_keys"></a><div class="section">
-<h3 id="method-get-join-keys-">Method <code>get_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-get-join-keys-"></a></h3>
-<p>Get <code>JoinKeys</code> object with keys used for joining.</p><div class="section">
-<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_join_keys</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
-<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
-<p>(<code>JoinKeys</code>)</p>
-</div>
-
 </div><p></p><hr><a id="method-TealData-get_connectors"></a><div class="section">
 <h3 id="method-get-connectors-">Method <code>get_connectors()</code><a class="anchor" aria-label="anchor" href="#method-get-connectors-"></a></h3>
 <p>Get data connectors.</p><div class="section">
-<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_connectors</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
-<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
 <p>(<code>list</code>) with all <code>TealDatasetConnector</code> or <code>TealDataConnector</code> objects.</p>
 </div>
 
 </div><p></p><hr><a id="method-TealData-get_items"></a><div class="section">
 <h3 id="method-get-items-">Method <code>get_items()</code><a class="anchor" aria-label="anchor" href="#method-get-items-"></a></h3>
 <p>Get all datasets and all dataset connectors</p><div class="section">
-<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_items</span><span class="op">(</span>dataname <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
@@ -245,8 +214,46 @@ name of dataset connector to be returned. If <code>NULL</code>, all connectors a
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
 <p><code>list</code> with all datasets and all connectors</p>
+</div>
+
+</div><p></p><hr><a id="method-TealData-get_join_keys"></a><div class="section">
+<h3 id="method-get-join-keys-">Method <code>get_join_keys()</code><a class="anchor" aria-label="anchor" href="#method-get-join-keys-"></a></h3>
+<p>Get join keys between two datasets.</p><div class="section">
+<h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_join_keys</span><span class="op">(</span><span class="va">dataset_1</span>, <span class="va">dataset_2</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<p></p><div class="arguments"><dl><dt><code>dataset_1</code></dt>
+<dd><p>(<code>character</code>) name of first dataset.</p></dd>
+
+
+<dt><code>dataset_2</code></dt>
+<dd><p>(<code>character</code>) name of second dataset.</p></dd>
+
+
+</dl><p></p></div>
+</div>
+<div class="section">
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
+<p>(<code>character</code>) named character vector x with names(x) the
+columns of <code>dataset_1</code> and the values of <code>(x)</code> the corresponding join
+keys in <code>dataset_2</code> or <code>character(0)</code> if no relationship</p>
+</div>
+
+</div><p></p><hr><a id="method-TealData-get_parents"></a><div class="section">
+<h3 id="method-get-parents-">Method <code>get_parents()</code><a class="anchor" aria-label="anchor" href="#method-get-parents-"></a></h3>
+<p>returns the parents list of the datasets.</p><div class="section">
+<h4 id="usage-6">Usage<a class="anchor" aria-label="anchor" href="#usage-6"></a></h4>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealData</span><span class="op">$</span><span class="fu">get_parents</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
+</div>
+
+<div class="section">
+<h4 id="returns-5">Returns<a class="anchor" aria-label="anchor" href="#returns-5"></a></h4>
+<p>named (<code>list</code>) of the parents of all datasets.</p>
 </div>
 
 </div><p></p><hr><a id="method-TealData-get_ui"></a><div class="section">
@@ -258,7 +265,7 @@ derive <code>TealDataConnector</code> object's data</p><div class="section">
 </div>
 
 <div class="section">
-<h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
+<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>id</code></dt>
 <dd><p>(<code>character</code>) item ID for the shiny module</p></dd>
 
@@ -301,7 +308,7 @@ derive <code>TealDataConnector</code> object's data</p><div class="section">
 </div>
 
 <div class="section">
-<h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
+<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>dataset_1, dataset_2</code></dt>
 <dd><p>(<code>character</code>) datasets for which join_keys are to be returned</p></dd>
 
@@ -337,7 +344,7 @@ derive <code>TealDataConnector</code> object's data</p><div class="section">
 </div>
 
 <div class="section">
-<h4 id="arguments-6">Arguments<a class="anchor" aria-label="anchor" href="#arguments-6"></a></h4>
+<h4 id="arguments-7">Arguments<a class="anchor" aria-label="anchor" href="#arguments-7"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
 

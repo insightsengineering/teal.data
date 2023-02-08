@@ -58,9 +58,6 @@
     <loc>https://insightsengineering.github.io/teal.data/main/pull_request_template.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/main/reference/CDISCTealData.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/CDISCTealDataConnector.html</loc>
   </url>
   <url>
@@ -329,6 +326,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/topological_sort.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/update_join_keys_to_primary.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/validate_metadata.html</loc>
