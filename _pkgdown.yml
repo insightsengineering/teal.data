@@ -10,18 +10,18 @@ navbar:
       href: https://github.com/insightsengineering/teal.data
 
 articles:
-- title: Articles
-  navbar: ~
-  contents:
-  - teal-data
-  - preprocessing-data
-  - preprocessing-delayed-data
-  - reproducibility
-  - join-keys
-  - using-delayed-data-basic
-  - using-delayed-data-advanced
-  - testing-delayed-data
-  - teal.data-with-python
+  - title: Articles
+    navbar: ~
+    contents:
+      - teal-data
+      - preprocessing-data
+      - preprocessing-delayed-data
+      - reproducibility
+      - join-keys
+      - using-delayed-data-basic
+      - using-delayed-data-advanced
+      - testing-delayed-data
+      - teal.data-with-python
 
 reference:
   - title: Delayed Dataset Constructors
@@ -107,7 +107,6 @@ reference:
     contents:
       - CallableCode
       - CallablePythonCode
-      - CDISCTealData
       - CDISCTealDataConnector
       - CDISCTealDataset
       - CDISCTealDatasetConnector

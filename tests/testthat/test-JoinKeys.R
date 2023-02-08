@@ -1,5 +1,4 @@
 test_that("join_key throws error with invalid keys arguments", {
-
   # invalid types
   expect_error(join_key("d1", "d2", keys = NULL))
   expect_error(join_key("d1", "d2", keys = 1:10))
@@ -35,7 +34,6 @@ test_that("key empty name is changed to the key value", {
 })
 
 test_that("join_key throws error with invalid dataset arguments", {
-
   # missing
   expect_error(join_key("d1", as.character(NA), keys = c("A" = "B", "C" = "D")))
   # invalid type
@@ -46,7 +44,6 @@ test_that("join_key throws error with invalid dataset arguments", {
 
 
 test_that("join_key does not throw error with valid arguments", {
-
   # keys of length 0
   expect_silent(join_key("d1", "d2", keys = character(0)))
   # keys of length 1
@@ -59,7 +56,6 @@ test_that("join_key does not throw error with valid arguments", {
 
 
 test_that("cannot set join_keys with incompatible keys", {
-
   # different keys
   expect_error(
     join_keys(
@@ -98,7 +94,6 @@ test_that("cannot set join_keys with incompatible keys", {
 })
 
 test_that("can create join_keys with compatible information", {
-
   # different datasets
   expect_silent(
     join_keys(
@@ -149,7 +144,6 @@ test_that("can create join_keys with compatible information", {
 
 
 test_that("cannot create JoinKeys with invalid arguments", {
-
   # not using join_key
   expect_error(join_keys("d1", "d2", "A"))
   # key sets with the same pair of datasets but different values
@@ -545,5 +539,109 @@ testthat::test_that("JoinKeys$print for a non-empty set", {
   testthat::expect_output(
     print(jk),
     "A JoinKeys object containing foreign keys between 2 datasets:"
+  )
+})
+
+testthat::test_that("JoinKeys$set_parents sets the parents of datasets when they are empty", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "fk"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_identical(
+    ss <- jk$get_parents(),
+    list(df1 = character(0), df2 = "df1")
+  )
+})
+
+testthat::test_that("JoinKeys$set_parents throws error when overwriting the parent value with a different value", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_error(jk$set_parents(list(df1 = character(0), df2 = "df5")))
+})
+
+testthat::test_that("JoinKeys$set_parents works when overwriting the parent value with the same value", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+})
+
+testthat::test_that("JoinKeys$get_parent returns the parent name of the dataset", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_identical(jk$get_parent("df1"), character(0))
+  testthat::expect_identical(jk$get_parent("df2"), "df1")
+})
+
+testthat::test_that("JoinKeys$get_parent returns NULL when dataset is not found or not passed", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_null(jk$get_parent())
+  testthat::expect_null(jk$get_parent("df3"))
+})
+
+testthat::test_that("JoinKeys$get_parents returns a list of all parents", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  testthat::expect_identical(jk$get_parents(), list(df1 = character(0), df2 = "df1"))
+})
+
+testthat::test_that("JoinKeys$get_parents returns an empty list when no parents are present", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_identical(jk$get_parents(), list())
+})
+
+testthat::test_that("JoinKeys$get_parents throws error when dataname input is provided", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  testthat::expect_error(jk$get_parents("df1"), "unused argument \\(\"df1\"\\)")
+})
+
+testthat::test_that("JoinKeys$update_keys_given_parents does not update the join_keys when no presents are present", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
+  jk$update_keys_given_parents()
+  testthat::expect_equal(jk, join_keys(join_key("df1", "df2", c("id" = "id"))))
+})
+
+testthat::test_that("JoinKeys$update_keys_given_parents updates the join_keys when presents are present", {
+  jk <- JoinKeys$new()
+  jk$set(list(
+    join_key("df1", "df1", c("id", "id2")),
+    join_key("df1", "df2", c("id" = "id")),
+    join_key("df1", "df3", c("id" = "id"))
+  ))
+  jk$set_parents(list(df1 = character(0), df2 = "df1", df3 = "df1"))
+  jk$update_keys_given_parents()
+  expected_jk <- join_keys(
+    join_key("df1", "df1", c("id", "id2")),
+    join_key("df1", "df2", c("id" = "id")),
+    join_key("df1", "df3", c("id" = "id")),
+    join_key("df2", "df2", c("id", "id2")),
+    join_key("df2", "df3", c("id", "id2")),
+    join_key("df3", "df3", c("id", "id2"))
+  )
+  expected_jk$set_parents(list(df1 = character(0), df2 = "df1", df3 = "df1"))
+  testthat::expect_equal(jk, expected_jk)
+})
+
+testthat::test_that("JoinKeys$check_parent_child does nothing if no parents are present", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df1", c("id" = "id"))))
+  testthat::expect_identical(jk$get_parents(), list())
+  testthat::expect_silent(jk$.__enclos_env__$private$check_parent_child())
+})
+
+testthat::test_that("JoinKeys$check_parent_child throws error if no join_keys exist for chuld-parent", {
+  jk <- JoinKeys$new()
+  jk$set(list(join_key("df1", "df1", c("id" = "id"))))
+  jk$set_parents(list(df1 = character(0), df2 = "df1", df3 = "df1"))
+  testthat::expect_error(
+    jk$.__enclos_env__$private$check_parent_child(),
+    "No join keys from df2 to its parent \\(df1\\) and vice versa"
   )
 })

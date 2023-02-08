@@ -53,7 +53,6 @@ ds$launch()
 \item \href{#method-TealDatasetConnector-get_datanames}{\code{TealDatasetConnector$get_datanames()}}
 \item \href{#method-TealDatasetConnector-get_dataset_label}{\code{TealDatasetConnector$get_dataset_label()}}
 \item \href{#method-TealDatasetConnector-get_keys}{\code{TealDatasetConnector$get_keys()}}
-\item \href{#method-TealDatasetConnector-get_join_keys}{\code{TealDatasetConnector$get_join_keys()}}
 \item \href{#method-TealDatasetConnector-get_code}{\code{TealDatasetConnector$get_code()}}
 \item \href{#method-TealDatasetConnector-get_code_class}{\code{TealDatasetConnector$get_code_class()}}
 \item \href{#method-TealDatasetConnector-get_pull_args}{\code{TealDatasetConnector$get_pull_args()}}
@@ -65,8 +64,6 @@ ds$launch()
 \item \href{#method-TealDatasetConnector-reassign_datasets_vars}{\code{TealDatasetConnector$reassign_datasets_vars()}}
 \item \href{#method-TealDatasetConnector-set_dataset_label}{\code{TealDatasetConnector$set_dataset_label()}}
 \item \href{#method-TealDatasetConnector-set_keys}{\code{TealDatasetConnector$set_keys()}}
-\item \href{#method-TealDatasetConnector-set_join_keys}{\code{TealDatasetConnector$set_join_keys()}}
-\item \href{#method-TealDatasetConnector-mutate_join_keys}{\code{TealDatasetConnector$mutate_join_keys()}}
 \item \href{#method-TealDatasetConnector-pull}{\code{TealDatasetConnector$pull()}}
 \item \href{#method-TealDatasetConnector-set_args}{\code{TealDatasetConnector$set_args()}}
 \item \href{#method-TealDatasetConnector-mutate}{\code{TealDatasetConnector$mutate()}}
@@ -210,19 +207,6 @@ Get primary keys of dataset
 
 \subsection{Returns}{
 \code{character} vector with dataset primary keys
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDatasetConnector-get_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_join_keys}{}}}
-\subsection{Method \code{get_join_keys()}}{
-Get \code{JoinKeys} object with keys used for joining.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$get_join_keys()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{JoinKeys})
 }
 }
 \if{html}{\out{<hr>}}
@@ -401,49 +385,6 @@ vector of dataset primary keys column names}
 }
 \subsection{Returns}{
 (\code{self}) invisibly for chaining.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDatasetConnector-set_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDatasetConnector-set_join_keys}{}}}
-\subsection{Method \code{set_join_keys()}}{
-set join_keys for a given dataset and self
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$set_join_keys(x)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{\code{list} of \code{JoinKeySet} objects (which are created using the \code{join_key} function)
-or single \code{JoinKeySet} objects}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(\code{self}) invisibly for chaining
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealDatasetConnector-mutate_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealDatasetConnector-mutate_join_keys}{}}}
-\subsection{Method \code{mutate_join_keys()}}{
-mutate the join_keys for a given dataset and self
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$mutate_join_keys(dataset, val)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{dataset}}{(\code{character}) dataset for which join_keys are to be set against self}
-
-\item{\code{val}}{(named \code{character}) column names used to join}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(\code{self}) invisibly for chaining
 }
 }
 \if{html}{\out{<hr>}}

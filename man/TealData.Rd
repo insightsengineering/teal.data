@@ -59,10 +59,10 @@ get_raw_data(tc)
 \item \href{#method-TealData-new}{\code{TealData$new()}}
 \item \href{#method-TealData-copy}{\code{TealData$copy()}}
 \item \href{#method-TealData-print}{\code{TealData$print()}}
-\item \href{#method-TealData-get_datanames}{\code{TealData$get_datanames()}}
-\item \href{#method-TealData-get_join_keys}{\code{TealData$get_join_keys()}}
 \item \href{#method-TealData-get_connectors}{\code{TealData$get_connectors()}}
 \item \href{#method-TealData-get_items}{\code{TealData$get_items()}}
+\item \href{#method-TealData-get_join_keys}{\code{TealData$get_join_keys()}}
+\item \href{#method-TealData-get_parents}{\code{TealData$get_parents()}}
 \item \href{#method-TealData-get_ui}{\code{TealData$get_ui()}}
 \item \href{#method-TealData-get_server}{\code{TealData$get_server()}}
 \item \href{#method-TealData-launch}{\code{TealData$launch()}}
@@ -81,6 +81,7 @@ get_raw_data(tc)
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_check_result"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_check_result'><code>teal.data::TealDataAbstract$get_check_result()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_code'><code>teal.data::TealDataAbstract$get_code()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_code_class"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_code_class'><code>teal.data::TealDataAbstract$get_code_class()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datanames"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_datanames'><code>teal.data::TealDataAbstract$get_datanames()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_dataset"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_dataset'><code>teal.data::TealDataAbstract$get_dataset()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="get_datasets"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-get_datasets'><code>teal.data::TealDataAbstract$get_datasets()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="teal.data" data-topic="TealDataAbstract" data-id="is_pulled"><a href='../../teal.data/html/TealDataAbstract.html#method-TealDataAbstract-is_pulled'><code>teal.data::TealDataAbstract$is_pulled()</code></a></span></li>
@@ -98,7 +99,7 @@ get_raw_data(tc)
 \subsection{Method \code{new()}}{
 Create a new object of \code{TealData} class
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$new(..., check = FALSE, join_keys)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TealData$new(..., check = FALSE, join_keys = teal.data::join_keys())}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -112,7 +113,7 @@ as provided in arguments. Check is run only if flag is true and preprocessing co
 
 \item{\code{join_keys}}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with dataset column relationships used for joining.
-If empty then no joins between pairs of objects}
+If empty then an empty \code{JoinKeys} object is passed by default.}
 }
 \if{html}{\out{</div>}}
 }
@@ -160,32 +161,6 @@ invisibly self
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealData-get_datanames"></a>}}
-\if{latex}{\out{\hypertarget{method-TealData-get_datanames}{}}}
-\subsection{Method \code{get_datanames()}}{
-Derive the names of all datasets
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_datanames()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{character} vector) with names
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-TealData-get_join_keys"></a>}}
-\if{latex}{\out{\hypertarget{method-TealData-get_join_keys}{}}}
-\subsection{Method \code{get_join_keys()}}{
-Get \code{JoinKeys} object with keys used for joining.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{JoinKeys})
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TealData-get_connectors"></a>}}
 \if{latex}{\out{\hypertarget{method-TealData-get_connectors}{}}}
 \subsection{Method \code{get_connectors()}}{
@@ -217,6 +192,43 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 }
 \subsection{Returns}{
 \code{list} with all datasets and all connectors
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TealData-get_join_keys"></a>}}
+\if{latex}{\out{\hypertarget{method-TealData-get_join_keys}{}}}
+\subsection{Method \code{get_join_keys()}}{
+Get join keys between two datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1, dataset_2)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_1}}{(\code{character}) name of first dataset.}
+
+\item{\code{dataset_2}}{(\code{character}) name of second dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(\code{character}) named character vector x with names(x) the
+columns of \code{dataset_1} and the values of \code{(x)} the corresponding join
+keys in \code{dataset_2} or \code{character(0)} if no relationship
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TealData-get_parents"></a>}}
+\if{latex}{\out{\hypertarget{method-TealData-get_parents}{}}}
+\subsection{Method \code{get_parents()}}{
+returns the parents list of the datasets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_parents()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+named (\code{list}) of the parents of all datasets.
 }
 }
 \if{html}{\out{<hr>}}

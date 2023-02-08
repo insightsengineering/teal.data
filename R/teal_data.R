@@ -32,24 +32,21 @@
 #'
 #' teal_data(x1, x2)
 teal_data <- function(...,
-                      join_keys,
+                      join_keys = teal.data::join_keys(),
                       code = "",
                       check = FALSE) {
   data_objects <- list(...)
-
-  is_cdisc <- vapply(
-    X = data_objects,
-    FUN.VALUE = logical(1),
-    FUN = function(x) {
-      inherits(x, "CDISCTealDataConnector") || inherits(x, "CDISCTealDatasetConnector") || inherits(x, "CDISCTealDataset")
-    }
+  checkmate::assert_list(
+    data_objects,
+    types = c("TealDataset", "TealDatasetConnector", "TealDataConnector")
   )
-
-  x <- if (any(is_cdisc)) {
-    CDISCTealData$new(..., check = check, join_keys = join_keys)
-  } else {
-    TealData$new(..., check = check, join_keys = join_keys)
+  if (inherits(join_keys, "JoinKeySet")) {
+    join_keys <- teal.data::join_keys(join_keys)
   }
+
+  update_join_keys_to_primary(data_objects, join_keys)
+
+  x <- TealData$new(..., check = check, join_keys = join_keys)
 
   if (length(code) > 0 && !identical(code, "")) {
     x$set_pull_code(code = code)
@@ -101,4 +98,27 @@ teal_data_file <- function(path, code = get_code(path)) {
   object <- object_file(path, "TealData")
   object$mutate(code)
   return(object)
+}
+
+#' Add primary keys as join_keys to a dataset self
+#'
+#' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
+#' @param join_keys (`JoinKeys`) object
+#'
+#' @keywords internal
+update_join_keys_to_primary <- function(data_objects, join_keys) {
+  lapply(data_objects, function(obj) {
+    if (inherits(obj, "TealDataConnector")) {
+      update_join_keys_to_primary(obj$get_items(), join_keys)
+    } else {
+      dataname <- obj$get_dataname()
+      if (length(join_keys$get(dataname, dataname)) == 0) {
+        join_keys$mutate(
+          dataname,
+          dataname,
+          obj$get_keys()
+        )
+      }
+    }
+  })
 }

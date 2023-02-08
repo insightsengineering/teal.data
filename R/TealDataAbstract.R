@@ -81,7 +81,6 @@ TealDataAbstract <- R6::R6Class( # nolint
         return(res)
       }
 
-
       if (inherits(private$mutate_code, "PythonCodeClass")) {
         items <- lapply(self$get_items(), get_raw_data)
         datasets <- stats::setNames(items, vapply(self$get_items(), get_dataname, character(1)))
@@ -165,7 +164,9 @@ TealDataAbstract <- R6::R6Class( # nolint
     #'
     #' @return `character` vector with names of all datasets.
     get_datanames = function() {
-      vapply(private$datasets, get_dataname, character(1))
+      datasets_names <- unname(unlist(lapply(private$datasets, get_dataname)))
+
+      return(datasets_names)
     },
     #' @description
     #' Get `TealDataset` object.
@@ -443,7 +444,7 @@ TealDataAbstract <- R6::R6Class( # nolint
       res$append(private$pull_code)
       return(res)
     },
-    set_mutate_code = function(code, dataname = self$get_datanames(), deps = names(private_mutate_vars)) {
+    set_mutate_code = function(code, dataname = self$get_datanames(), deps = names(private$mutate_vars)) {
       checkmate::assert(
         checkmate::check_character(code, max.len = 1, any.missing = FALSE),
         checkmate::check_class(code, "PythonCodeClass")

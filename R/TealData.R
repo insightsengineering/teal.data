@@ -10,7 +10,7 @@
 #'   objects
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
-#'   If empty then no joins between pairs of objects
+#'   If empty then an empty `JoinKeys` object is passed by default.
 #' @param check (`logical`) reproducibility check - whether evaluated preprocessing code gives the same objects
 #'   as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.
 #'
@@ -61,7 +61,9 @@ TealData <- R6::R6Class( # nolint
   public = list(
     #' @description
     #' Create a new object of `TealData` class
-    initialize = function(..., check = FALSE, join_keys) {
+    initialize = function(..., check = FALSE, join_keys = teal.data::join_keys()) {
+      checkmate::assert_class(join_keys, "JoinKeys")
+
       dot_args <- list(...)
       is_teal_data <- checkmate::test_list(
         dot_args,
@@ -81,36 +83,8 @@ TealData <- R6::R6Class( # nolint
       private$pull_code <- CodeClass$new()
       private$mutate_code <- CodeClass$new()
 
-      if (missing(join_keys)) {
-        join_keys <- teal.data::join_keys()
-      } else if (inherits(join_keys, "JoinKeySet")) {
-        join_keys <- teal.data::join_keys(join_keys)
-      }
-      checkmate::assert_class(join_keys, "JoinKeys")
+      private$join_keys <- join_keys
 
-      duplicate_pairs <- list()
-      for (i in seq_along(join_keys$get())) {
-        # setting A->B and B->A is a duplicate as mutate_join_keys sets keys mutually
-        for (j in seq(i, length(join_keys$get()))) {
-          dataset_1 <- names(join_keys$get())[[i]]
-          dataset_2 <- names(join_keys$get())[[j]]
-
-          if (paste(dataset_2, dataset_1) %in% duplicate_pairs) {
-            next
-          }
-
-          keys <- join_keys$get()[[dataset_1]][[dataset_2]]
-          if (!is.null(keys)) {
-            self$mutate_join_keys(dataset_1, dataset_2, keys)
-            duplicate_pairs <- append(duplicate_pairs, paste(dataset_1, dataset_2))
-          }
-        }
-      }
-      for (dat_name in names(self$get_items())) {
-        if (length(join_keys$get(dat_name, dat_name)) == 0) {
-          self$mutate_join_keys(dat_name, dat_name, get_keys(self$get_items(dat_name)))
-        }
-      }
       self$id <- sample.int(1e11, 1, useHash = TRUE)
 
       logger::log_trace(
@@ -153,33 +127,6 @@ TealData <- R6::R6Class( # nolint
     },
     # ___ getters ====
     #' @description
-    #'
-    #' Derive the names of all datasets
-    #' @return (`character` vector) with names
-    get_datanames = function() {
-      datasets_names <- unlist(lapply(private$datasets, get_dataname))
-
-      return(datasets_names)
-    },
-    #' @description
-    #' Get `JoinKeys` object with keys used for joining.
-    #' @return (`JoinKeys`)
-    get_join_keys = function() {
-      res <- join_keys()
-      duplicate_pairs <- list()
-      for (dat_obj in self$get_items()) {
-        list_keys <- dat_obj$get_join_keys()$get()[[1]]
-        for (dat_name in names(list_keys)) {
-          if (paste(dat_name, dat_obj$get_dataname()) %in% duplicate_pairs) {
-            next
-          }
-          res$mutate(dat_obj$get_dataname(), dat_name, list_keys[[dat_name]])
-          duplicate_pairs <- append(duplicate_pairs, paste(dat_obj$get_dataname(), dat_name))
-        }
-      }
-      return(res)
-    },
-    #' @description
     #' Get data connectors.
     #'
     #' @return (`list`) with all `TealDatasetConnector` or `TealDataConnector` objects.
@@ -220,6 +167,30 @@ TealData <- R6::R6Class( # nolint
       } else {
         return(sets)
       }
+    },
+
+    #' @description
+    #' Get join keys between two datasets.
+    #'
+    #' @param dataset_1 (`character`) name of first dataset.
+    #' @param dataset_2 (`character`) name of second dataset.
+    #' @return (`character`) named character vector x with names(x) the
+    #' columns of `dataset_1` and the values of `(x)` the corresponding join
+    #' keys in `dataset_2` or `character(0)` if no relationship
+    get_join_keys = function(dataset_1, dataset_2) {
+      if (missing(dataset_1) && missing(dataset_2)) {
+        private$join_keys
+      } else {
+        private$join_keys$get(dataset_1, dataset_2)
+      }
+    },
+
+    #' @description
+    #' returns the parents list of the datasets.
+    #'
+    #' @return named (`list`) of the parents of all datasets.
+    get_parents = function() {
+      private$join_keys$get_parents()
     },
 
     # ___ shiny ====
@@ -324,34 +295,7 @@ TealData <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate_join_keys = function(dataset_1, dataset_2, val) {
-      checkmate::assert_string(dataset_1)
-      checkmate::assert_string(dataset_2)
-
-      if (!dataset_1 %in% names(self$get_items())) {
-        stop(sprintf("%s is not a name to any dataset stored in object.", dataset_1))
-      }
-      if (!dataset_2 %in% names(self$get_items())) {
-        stop(sprintf("%s is not a name to any dataset stored in object.", dataset_2))
-      }
-
-      data_obj_1 <- self$get_items()[[dataset_1]]
-      data_obj_1$mutate_join_keys(dataset_2, val)
-
-      if (dataset_1 != dataset_2) {
-        data_obj_2 <- self$get_items()[[dataset_2]]
-        contrary_keys <- if (!is.null(names(val))) {
-          # swap names with values to obtain data1 <- data2 relation
-          setNames(names(val), unname(val))
-        } else {
-          setNames(val, val)
-        }
-        data_obj_2$mutate_join_keys(dataset_1, contrary_keys)
-      }
-
-      logger::log_trace(
-        "TealData$mutate_join_keys modified the join keys between { dataset_1 } and { dataset_2 }"
-      )
-      return(invisible(self))
+      private$join_keys$mutate(dataset_1, dataset_2, val)
     },
 
     # ___ check ====
@@ -364,15 +308,12 @@ TealData <- R6::R6Class( # nolint
         return(invisible(TRUE))
       }
 
-      # for performance, get_join_keys should be called once outside of any loop
-      join_keys <- self$get_join_keys()
-
       for (dataset in self$get_datasets()) {
         dataname <- get_dataname(dataset)
         dataset_colnames <- dataset$get_colnames()
 
         # expected columns in this dataset from JoinKeys specification
-        join_key_cols <- unique(unlist(lapply(join_keys$get(dataname), names)))
+        join_key_cols <- unique(unlist(lapply(self$get_join_keys(dataname), names)))
         if (!is.null(join_key_cols) && !all(join_key_cols %in% dataset_colnames)) {
           stop(
             paste(
@@ -385,7 +326,7 @@ TealData <- R6::R6Class( # nolint
         }
 
         # check if primary keys in dataset
-        primary_key_cols <- get_keys(dataset)
+        primary_key_cols <- self$get_join_keys(dataname, dataname)
         if (!is.null(primary_key_cols) && !all(primary_key_cols %in% dataset_colnames)) {
           stop(
             paste(
@@ -398,6 +339,7 @@ TealData <- R6::R6Class( # nolint
         }
         dataset$check_keys()
       }
+
       logger::log_trace("TealData$check_metadata metadata check passed.")
 
       return(invisible(TRUE))
@@ -406,6 +348,7 @@ TealData <- R6::R6Class( # nolint
 
   ## __Private Fields ====
   private = list(
+    join_keys = NULL,
     ui = function(id) {
       ns <- NS(id)
 
