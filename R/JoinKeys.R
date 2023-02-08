@@ -388,6 +388,23 @@ mutate_join_keys <- function(x, dataset_1, dataset_2, val) {
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
+#' # JoinKeys ----
+#'
+#' x <- join_keys(
+#'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
+#'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
+#' )
+#' x$get("dataset_A", "dataset_B")
+#'
+#' mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
+#' x$get("dataset_A", "dataset_B")
+mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
+  x$mutate(dataset_1, dataset_2, val)
+}
+
+#' @rdname mutate_join_keys
+#' @export
+#' @examples
 #' # TealData ----
 #'
 #' library(scda)
