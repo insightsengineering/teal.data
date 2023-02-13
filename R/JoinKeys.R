@@ -195,6 +195,9 @@ JoinKeys <- R6::R6Class( # nolint
     #' @param dataname (`character`) name of the dataset.
     #' @return (`character`) the parent of the desired dataset
     get_parent = function(dataname) {
+      if (missing(dataname)) {
+        return(NULL)
+      }
       private$parents[[dataname]]
     },
     #' @description
