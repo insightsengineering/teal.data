@@ -117,7 +117,7 @@ tdata2env <- function(data) { # nolint
 #' @export
 get_code.tdata <- function(x, ...) { # nolint
   # note teal.data which teal depends on defines the get_code method
-  attr(x, "code")()#$get_code()
+  attr(x, "code")() # $get_code()
 }
 
 
