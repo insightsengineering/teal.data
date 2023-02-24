@@ -193,6 +193,28 @@ TealData <- R6::R6Class( # nolint
       private$join_keys$get_parents()
     },
 
+    #' @description
+    #' returns the tdata object.
+    #'
+    #' @return (`tdata`) object of the datasets.
+    get_tdata = function() {
+      datanames <- self$get_datanames()
+      df_list <- lapply(datanames, function(x) self$get_dataset(x)$get_raw_data())
+      names(df_list) <- datanames
+      md_list <- lapply(datanames, function(x) self$get_dataset(x)$get_metadata())
+      names(md_list) <- datanames
+      labels_list <- lapply(datanames, function(x) self$get_dataset(x)$get_dataset_label())
+      names(md_list) <- datanames
+
+      teal.data::new_tdata(
+        data = df_list,
+        join_keys = self$get_join_keys(),
+        code = self$get_code_class(),
+        metadata = md_list,
+        check = self$get_check(),
+        label = labels_list
+      )
+    },
     # ___ shiny ====
 
     #' @description
