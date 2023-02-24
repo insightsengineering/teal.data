@@ -63,6 +63,7 @@ get_raw_data(tc)
 \item \href{#method-TealData-get_items}{\code{TealData$get_items()}}
 \item \href{#method-TealData-get_join_keys}{\code{TealData$get_join_keys()}}
 \item \href{#method-TealData-get_parents}{\code{TealData$get_parents()}}
+\item \href{#method-TealData-get_tdata}{\code{TealData$get_tdata()}}
 \item \href{#method-TealData-get_ui}{\code{TealData$get_ui()}}
 \item \href{#method-TealData-get_server}{\code{TealData$get_server()}}
 \item \href{#method-TealData-launch}{\code{TealData$launch()}}
@@ -229,6 +230,19 @@ returns the parents list of the datasets.
 
 \subsection{Returns}{
 named (\code{list}) of the parents of all datasets.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-TealData-get_tdata"></a>}}
+\if{latex}{\out{\hypertarget{method-TealData-get_tdata}{}}}
+\subsection{Method \code{get_tdata()}}{
+returns the tdata object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_tdata()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+(\code{tdata}) object of the datasets.
 }
 }
 \if{html}{\out{<hr>}}
