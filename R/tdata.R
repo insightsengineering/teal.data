@@ -71,6 +71,7 @@ new_tdata <- function(data, code = "", join_keys = NULL, metadata = NULL, check 
     }
   }
 
+
   # code
   # code <- if (is.reactive(code) && is.character(code())) {
   #   CodeClass$new(code())
