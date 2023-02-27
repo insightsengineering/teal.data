@@ -19,22 +19,27 @@
 #'   datasets.
 #' @param metadata A `named list` each element contains a list of metadata about the named data.frame
 #' Each element of these list should be atomic and length one.
+#' @param check (`logical`) value whether reproducibility check is requested or not.
+#' @param label named (`list`) of datasets labels.
+#'
 #' @return A `tdata` object
 #' @examples
 #'
 #' data <- new_tdata(
-#'   data = list(iris = iris, mtcars = reactive(mtcars), dd = data.frame(x = 1:10)),
+#'   data = list(iris = iris, mtcars = reactive(mtcars), ds1 = data.frame(x = 1:10)),
 #'   code = "iris <- iris
 #'     mtcars <- mtcars
 #'     dd <- data.frame(x = 1:10)",
-#'   metadata = list(dd = list(author = "NEST"), iris = list(version = 1))
+#'   metadata = list(ds1 = list(author = "NEST"), iris = list(version = 1)),
+#'   check = TRUE,
+#'   label = list(iris = "iris", mtcars = "mtcars", ds1 = "ds1")
 #' )
 #'
 #' # Extract a data.frame
 #' isolate(data[["iris"]]())
 #'
 #' # Get code
-#' isolate(get_code(data))
+#' isolate(get_code_tdata(data))
 #'
 #' # Get metadata
 #' get_metadata(data, "iris")
@@ -71,16 +76,15 @@ new_tdata <- function(data, code = "", join_keys = NULL, metadata = NULL, check 
     }
   }
 
-
-  # code
-  # code <- if (is.reactive(code) && is.character(code())) {
-  #   CodeClass$new(code())
-  # } else if (is.character(code)) {
-  #   CodeClass$new(code)
-  # }
+  # code #nolint
+  # code <- if (is.reactive(code) && is.character(code())) { #nolint
+  #   CodeClass$new(code()) #nolint
+  # } else if (is.character(code)) { #nolint
+  #   CodeClass$new(code) #nolint
+  # } #nolint
 
   # set attributes
-  attr(data, "code") <- code
+  attr(data, "code") <- if (is.reactive(code)) code else reactive(code)
   attr(data, "join_keys") <- join_keys
   attr(data, "metadata") <- metadata
   attr(data, "check") <- check
@@ -118,7 +122,7 @@ tdata2env <- function(data) { # nolint
 #' @export
 get_code.tdata <- function(x, ...) { # nolint
   # note teal.data which teal depends on defines the get_code method
-  attr(x, "code")() # $get_code()
+  attr(x, "code")()
 }
 
 
@@ -131,7 +135,7 @@ get_code.tdata <- function(x, ...) { # nolint
 #' @export
 get_code_tdata <- function(data) {
   checkmate::assert_class(data, "tdata")
-  get_code(data)
+  get_code.tdata(data)
 }
 
 

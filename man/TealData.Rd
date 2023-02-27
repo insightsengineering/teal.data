@@ -236,7 +236,7 @@ named (\code{list}) of the parents of all datasets.
 \if{html}{\out{<a id="method-TealData-get_tdata"></a>}}
 \if{latex}{\out{\hypertarget{method-TealData-get_tdata}{}}}
 \subsection{Method \code{get_tdata()}}{
-returns the tdata object.
+returns the \code{tdata} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealData$get_tdata()}\if{html}{\out{</div>}}
 }

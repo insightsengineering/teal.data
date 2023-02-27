@@ -33,6 +33,10 @@ datasets.}
 \item{metadata}{A \verb{named list} each element contains a list of metadata about the named data.frame
 Each element of these list should be atomic and length one.}
 
+\item{check}{(\code{logical}) value whether reproducibility check is requested or not.}
+
+\item{label}{named (\code{list}) of datasets labels.}
+
 \item{x}{a \code{tdata} object}
 
 \item{...}{additional arguments for the generic}
@@ -52,18 +56,20 @@ Create a new object called \code{tdata} which contains \code{data}, a \code{reac
 \examples{
 
 data <- new_tdata(
-  data = list(iris = iris, mtcars = reactive(mtcars), dd = data.frame(x = 1:10)),
+  data = list(iris = iris, mtcars = reactive(mtcars), ds1 = data.frame(x = 1:10)),
   code = "iris <- iris
     mtcars <- mtcars
     dd <- data.frame(x = 1:10)",
-  metadata = list(dd = list(author = "NEST"), iris = list(version = 1))
+  metadata = list(ds1 = list(author = "NEST"), iris = list(version = 1)),
+  check = TRUE,
+  label = list(iris = "iris", mtcars = "mtcars", ds1 = "ds1")
 )
 
 # Extract a data.frame
 isolate(data[["iris"]]())
 
 # Get code
-isolate(get_code(data))
+isolate(get_code_tdata(data))
 
 # Get metadata
 get_metadata(data, "iris")

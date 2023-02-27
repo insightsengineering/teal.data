@@ -194,7 +194,7 @@ TealData <- R6::R6Class( # nolint
     },
 
     #' @description
-    #' returns the tdata object.
+    #' returns the `tdata` object.
     #'
     #' @return (`tdata`) object of the datasets.
     get_tdata = function() {
