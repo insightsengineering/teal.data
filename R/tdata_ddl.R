@@ -1,7 +1,7 @@
 #' @export
 tdata_ddl <- function(code,
                       tdata_function,
-                      offline_args = username_password_args,
+                      offline_args = username_password_args(),
                       ui = username_password_ui,
                       server = username_password_server) {
   structure(
@@ -44,6 +44,7 @@ foo <- function(offline_args, code, tdata_function, input) {
 create_processing_environment <- function(code, args) {
   tryCatch( # at the moment the try catch is around everything - should be around the eval only
     expr = {
+
       # extract arguments from the UI
       # create the call by replacing {username} with the value from the ui
       call_str <- glue99(code, args)
@@ -52,12 +53,15 @@ create_processing_environment <- function(code, args) {
       e <- new.env(parent = parent.env(.GlobalEnv))
 
       # evaluate the code
-      eval(parse(text = paste(call_str)), envir = e)
+      eval(parse(text = call_str), envir = e)
 
       # return a list
       as.list(e)
     },
-    error = function(cond) NULL
+    error = function(cond) {
+      showNotification("Invalid credentials", type = "error")
+      NULL
+    }
   )
 }
 
@@ -65,7 +69,7 @@ create_processing_environment <- function(code, args) {
 glue99 <- function(code, args) {
   args <- lapply(args, function(x) {
     if (is.character(x)) {
-      dQuote(x)
+      dQuote(x, q = FALSE)
     } else if (is.language(x)) {
       deparse1(x)
     } else {
@@ -74,5 +78,4 @@ glue99 <- function(code, args) {
   })
 
   glue::glue(code, .envir = args)
-
 }
