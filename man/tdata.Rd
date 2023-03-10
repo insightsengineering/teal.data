@@ -12,7 +12,7 @@ new_tdata(
   join_keys = NULL,
   metadata = NULL,
   check = FALSE,
-  label
+  label = NULL
 )
 
 \method{get_code}{tdata}(x, ...)

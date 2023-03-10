@@ -45,7 +45,7 @@
 #' get_metadata(data, "iris")
 #'
 #' @export
-new_tdata <- function(data, code = "", join_keys = NULL, metadata = NULL, check = FALSE, label) {
+new_tdata <- function(data, code = "", join_keys = NULL, metadata = NULL, check = FALSE, label = NULL) {
   checkmate::assert_list(
     data,
     any.missing = FALSE, names = "unique",
@@ -86,9 +86,10 @@ new_tdata <- function(data, code = "", join_keys = NULL, metadata = NULL, check 
   # set attributes
   attr(data, "code") <- if (is.reactive(code)) code else reactive(code)
   attr(data, "join_keys") <- join_keys
-  attr(data, "metadata") <- metadata
-  attr(data, "check") <- check
-  attr(data, "label") <- label
+
+  attr(data, "metadata") <- metadata # todo: remove later - replace with explicit attr call in the reproducible code
+  attr(data, "label") <- label  # todo: remove later - replace with explicit attr call in the reproducible code
+  attr(data, "check") <- check # todo: probably not needed
 
   # set class
   class(data) <- c("tdata", class(data))
