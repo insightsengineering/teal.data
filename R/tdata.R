@@ -126,6 +126,10 @@ get_code.tdata <- function(x, ...) { # nolint
   attr(x, "code")()
 }
 
+get_code.tdata2 <- function(x, ...) { # nolint
+  # note teal.data which teal depends on defines the get_code method
+  teal.code::get_code(x@qenv)
+}
 
 #' Wrapper for `get_code.tdata`
 #' This wrapper is to be used by downstream packages to extract the code of a `tdata` object

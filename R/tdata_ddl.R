@@ -27,11 +27,12 @@ foo <- function(offline_args, code, tdata_function, input) {
   }
 
   if (!is.null(env_list)) {
+    code <- glue99(code, args = new_offline_args)
     # create tdata object
     tdata_function(
       env_list,
       # {username} is converted to askpass here
-      code = glue99(code, args = new_offline_args)
+      code = unclass(code)
     ) # would need error handling here
   }
   else {

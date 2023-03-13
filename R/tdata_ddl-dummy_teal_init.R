@@ -41,11 +41,11 @@ dummy_teal_init <- function(object) {
       loaded_data <- object$server(id = "custom_ui", object$offline_args, object$code, object$tdata_function)
       output$rcode <- renderText({
         req(loaded_data())
-        get_code_tdata(loaded_data())
+        get_code(loaded_data())
       })
       output$data_ui <- renderPrint({
         req(loaded_data())
-        loaded_data()[[1]]()
+        loaded_data()
       })
     }
   )

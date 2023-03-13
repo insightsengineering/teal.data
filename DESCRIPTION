@@ -29,6 +29,7 @@ Imports:
     rlang,
     shinyjs,
     stats,
+    teal.code,
     teal.logger (>= 0.1.1),
     utils,
     yaml
