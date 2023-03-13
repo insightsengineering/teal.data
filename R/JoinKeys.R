@@ -475,3 +475,38 @@ join_key <- function(dataset_1, dataset_2, keys) {
     class = "JoinKeySet"
   )
 }
+
+#' @export
+default_cdisc_join_keys <- function(datanames) {
+  jk_list <- default_cdisc_keys[toupper(datanames)]
+  parents <- unlist(sapply(jk_list, function(x) x$parent))
+  primary_keys <- Filter(
+    Negate(is.null),
+    lapply(names(jk_list), function(i) {
+      join_key(
+        dataset_1 = i,
+        dataset_2 = i,
+        jk_list[[i]]$primary
+      )
+    })
+  )
+  foreign <- Filter(
+    Negate(is.null),
+    lapply(names(jk_list), function(i) {
+      if (!is.null(jk_list[[i]]$parent))
+        join_key(
+          dataset_1 = i,
+          dataset_2 = jk_list[[i]]$parent,
+          jk_list[[i]]$foreign
+        )
+    })
+  )
+
+  jk_obj <- do.call(join_keys, c(primary_keys, foreign))
+  jk_obj$set_parents(parents)
+  jk_obj
+}
+
+
+# todo: need a parent_join_key? join_key(dataset_1, dataset_2, keys, parent = TRUE)?
+#
