@@ -60,7 +60,7 @@ create_processing_environment <- function(code, args) {
       as.list(e)
     },
     error = function(cond) {
-      showNotification("Invalid credentials", type = "error")
+      showNotification(cond$message, type = "error")
       NULL
     }
   )

@@ -35,6 +35,7 @@ setMethod(
 #' @export
 setMethod("eval_code", signature = c("tdata2", "ANY"), function(object, code) {
   teal.code::eval_code(object@qenv, code = code)
+  object
 })
 
 #' @export
