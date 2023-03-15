@@ -5,7 +5,8 @@
 #'
 #' @param code (`character`)\cr
 #'   an R code to be evaluated or a `PythonCodeClass` created using [python_code].
-#' @inheritParams dataset_connector
+#' @param script (`character`)\cr
+#'   path of the script
 #' @return code (`character`)
 #' @keywords internal
 code_from_script <- function(code, script, dataname = NULL) {

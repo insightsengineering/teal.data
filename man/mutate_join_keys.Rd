@@ -3,14 +3,14 @@
 \name{mutate_join_keys}
 \alias{mutate_join_keys}
 \alias{mutate_join_keys.JoinKeys}
-\alias{mutate_join_keys.TealData}
+\alias{mutate_join_keys.tdata}
 \title{Mutate \code{JoinKeys} with a new values}
 \usage{
 mutate_join_keys(x, dataset_1, dataset_2, val)
 
 \method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, val)
 
-\method{mutate_join_keys}{TealData}(x, dataset_1, dataset_2, val)
+\method{mutate_join_keys}{tdata}(x, dataset_1, dataset_2, val)
 }
 \arguments{
 \item{x}{(\code{JoinKeys}) object to be modified}

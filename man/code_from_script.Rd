@@ -11,11 +11,7 @@ code_from_script(code, script, dataname = NULL)
 an R code to be evaluated or a \code{PythonCodeClass} created using \link{python_code}.}
 
 \item{script}{(\code{character})\cr
-Alternatively to \code{code} - location of the file containing modification code.
-Can't be used simultaneously with \code{script}.}
-
-\item{dataname}{(\code{character})\cr
-A given name for the dataset it may not contain spaces}
+path of the script}
 }
 \value{
 code (\code{character})

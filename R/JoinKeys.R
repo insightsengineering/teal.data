@@ -423,8 +423,8 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
 #'
 #' mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
 #' x$get_join_keys()$get("ADSL", "ADRS")
-mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
-  x$mutate_join_keys(dataset_1, dataset_2, val)
+mutate_join_keys.tdata <- function(x, dataset_1, dataset_2, val) { # nolint
+  x@join_keys$mutate_join_keys(dataset_1, dataset_2, val)
 }
 
 
@@ -506,6 +506,8 @@ default_cdisc_join_keys <- function(datanames) {
   jk_obj$set_parents(parents)
   jk_obj
 }
+
+
 
 
 # todo: need a parent_join_key? join_key(dataset_1, dataset_2, keys, parent = TRUE)?

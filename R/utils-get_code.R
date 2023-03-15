@@ -34,75 +34,13 @@
 #' @param ... not used, only for support of S3
 #' @export
 #' @return (`character`) code of import and preparation of data for teal application.
-get_code <- function(x, ...) {
-  UseMethod("get_code")
-}
-
-
-# Getting code from R6 ====
-
-#' @export
-#' @rdname get_code
-get_code.TealDatasetConnector <- function(x, deparse = TRUE, ...) {
-  check_ellipsis(...)
-  x$get_code(deparse = deparse)
-}
-
-#' @export
-#' @rdname get_code
-get_code.TealDataset <- function(x, deparse = TRUE, ...) {
-  check_ellipsis(...)
-  x$get_code(deparse = deparse)
-}
-
-
-#' @rdname get_code
-#' @export
-#' @examples
-#' x1 <- dataset(
-#'   x = data.frame(x = c(1, 2), y = c("a", "b"), stringsAsFactors = FALSE),
-#'   keys = "y",
-#'   dataname = "XY",
-#'   code = "XY <- data.frame(x = c(1, 2), y = c('aa', 'bb'), stringsAsFactors = FALSE)",
-#'   label = character(0)
-#' )
-#'
-#' x2 <- dataset(
-#'   x = data.frame(x = c(1, 2), y = c("a", "b"), stringsAsFactors = FALSE),
-#'   keys = "y",
-#'   dataname = "XYZ",
-#'   code = "XYZ <- data.frame(x = c(1, 2), y = c('aa', 'bb'), stringsAsFactors = FALSE)",
-#'   label = character(0)
-#' )
-#'
-#' rd <- teal_data(x1, x2)
-#'
-#' get_code(rd)
-#' get_code(rd, "XY")
-#' get_code(rd, "XYZ")
-get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE, ...) { # nolint
-  check_ellipsis(...)
-  if (length(dataname) > 0) {
-    if (any(!(dataname %in% x$get_datanames()))) {
-      stop("The dataname provided does not exist")
-    }
-    x$get_code(dataname = dataname, deparse = deparse)
-  } else {
-    x$get_code(deparse = deparse)
-  }
-}
-
-# Getting code from files ====
-
-#' @rdname get_code
-#' @export
-get_code.default <- function(x,
-                             exclude_comments = TRUE,
-                             read_sources = TRUE,
-                             deparse = FALSE,
-                             files_path = NULL,
-                             dataname = NULL,
-                             ...) {
+get_preprocessing_code <- function(x,
+                                   exclude_comments = TRUE,
+                                   read_sources = TRUE,
+                                   deparse = FALSE,
+                                   files_path = NULL,
+                                   dataname = NULL,
+                                   ...) {
   if (!is.null(files_path)) {
     x <- files_path
   }
@@ -155,7 +93,7 @@ get_code.default <- function(x,
 #' Get code from specified file.
 #' @param file_path (`character`) path or URL address of the file to be parsed
 #' @param if_url (`logical`) (optional) TRUE when URL address is provided
-#' @inheritParams get_code
+#' @inheritParams get_preprocessing_code
 #'
 #' @return lines (`character`) of preprocessing code
 #' @keywords internal
@@ -282,7 +220,7 @@ enclosed_with_dataname <- function(lines, dataname = NULL) {
 #'
 #' Excludes lines from code. It is possible to exclude one line ended by `# nocode`
 #' @inheritParams enclosed_with
-#' @inheritParams get_code
+#' @inheritParams get_preprocessing_code
 #' @inheritParams get_code_single
 #' @keywords internal
 code_exclude <- function(lines, exclude_comments, file_path) {

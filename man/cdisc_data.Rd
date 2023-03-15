@@ -4,7 +4,12 @@
 \alias{cdisc_data}
 \title{Data input for teal app}
 \usage{
-cdisc_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
+cdisc_data(
+  ...,
+  join_keys = default_cdisc_join_keys(names(list(...))),
+  code = "",
+  check = FALSE
+)
 }
 \arguments{
 \item{...}{(\code{TealDataConnector}, \code{TealDataset} or
