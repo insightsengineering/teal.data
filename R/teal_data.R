@@ -3,8 +3,7 @@
 #' @description `r lifecycle::badge("stable")`
 #' Universal function to pass data to teal application
 #'
-#' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`)\cr
-#'   objects
+#' @param data (`list` named)
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
@@ -31,15 +30,14 @@
 #' )
 #'
 #' teal_data(x1, x2)
-teal_data <- function(...,
+teal_data <- function(data,
                       join_keys = teal.data::join_keys(),
                       code = "",
                       check = FALSE) {
-                         x$check_reproducibility()
   # check_reproducibility()
   # check_metadata
   new_tdata(
-    env = list(...),
+    env = data,
     code = code,
     join_keys = join_keys
   )

@@ -9,9 +9,9 @@
 \usage{
 new_tdata(env = new.env(), code = expression(), join_keys = join_keys())
 
-\S4method{new_tdata}{list,expression}(env, code)
+\S4method{new_tdata}{list,expression}(env = new.env(), code = expression(), join_keys = join_keys())
 
-\S4method{new_tdata}{list,language}(env, code)
+\S4method{new_tdata}{list,language}(env = new.env(), code = expression(), join_keys = join_keys())
 
 \S4method{new_tdata}{list,character}(env = new.env(), code = expression(), join_keys = join_keys())
 }

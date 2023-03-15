@@ -478,7 +478,7 @@ join_key <- function(dataset_1, dataset_2, keys) {
 
 #' @export
 default_cdisc_join_keys <- function(datanames) {
-  jk_list <- default_cdisc_keys[toupper(datanames)]
+  jk_list <- default_cdisc_keys[tolower(names(default_cdisc_keys)) %in% tolower(datanames)]
   parents <- unlist(sapply(jk_list, function(x) x$parent))
   primary_keys <- Filter(
     Negate(is.null),

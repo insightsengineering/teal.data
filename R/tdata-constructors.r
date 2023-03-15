@@ -47,7 +47,7 @@ setMethod(
       messages = rep("", length(code)),
       id = id,
       join_keys = join_keys,
-      datanames = union(names(env), names(join_keys))
+      datanames = union(names(env), names(join_keys$get()))
     )
   }
 )

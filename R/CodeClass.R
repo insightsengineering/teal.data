@@ -5,12 +5,12 @@
 #'
 #' @examples
 #' cc <- teal.data:::CodeClass$new()
-#' cc$set_code(c("foo <- function() {1}", "foo2 <- function() {2}"))
+#' cc$set_code(c("ddl_run <- function() {1}", "ddl_run2 <- function() {2}"))
 #' cc$get_code()
 #' cc$get_code(deparse = FALSE)
 #'
 #' cc$set_code(c("DF <- data.frame(x = 1:10)", "DF$y <- 1"), "DF")
-#' cc$set_code("DF$a <- foo()", "DF")
+#' cc$set_code("DF$a <- ddl_run()", "DF")
 #'
 #' # dependent dataset
 #' cc$set_code(c("DF2 <- data.frame(x2 = 1:10)", "DF2$y2 <- DF$y"), "DF2", deps = "DF")
@@ -48,7 +48,7 @@
 #' x$get_code("DF3")
 #'
 #' # mutation simulation
-#' x$set_code("DF3$x <- foo(DF$x)", "DF3", deps = "DF")
+#' x$set_code("DF3$x <- ddl_run(DF$x)", "DF3", deps = "DF")
 #' x$get_code("DF3")
 CodeClass <- R6::R6Class( # nolint
   "CodeClass",

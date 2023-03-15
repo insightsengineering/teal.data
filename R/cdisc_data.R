@@ -18,8 +18,7 @@
 #' get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
 #' ```
 #' @inheritParams teal_data
-#' @param ... (`TealDataConnector`, `TealDataset` or
-#'   `TealDatasetConnector`) elements to include.
+#' @param data (`list` named)
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with datasets column names used for joining.
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys
@@ -66,15 +65,15 @@
 #'           ADTTE <- synthetic_cdisc_data('latest')$adtte",
 #'   check = TRUE
 #' )
-cdisc_data <- function(...,
-                       join_keys = default_cdisc_join_keys(names(list(...))),
+cdisc_data <- function(data,
+                       join_keys = default_cdisc_join_keys(names(data)),
                        code = "",
                        check = FALSE) {
   join_keys$update_keys_given_parents()
   # check_reproducibility()
   # check_metadata()
   new_tdata(
-    env = list(...),
+    env = data,
     code = code,
     join_keys = join_keys
   )
