@@ -124,7 +124,17 @@ ddl_run <- function(offline_args, code, postprocess_fun, input) {
 }
 
 
-#' @export
+#' Substitute and evaluate ddl code
+#'
+#' @inheritParams ddl
+#' @param args (`list` named)\cr
+#'   Containing elements named after arguments in the code
+#'   enclosed in currly brackets ex. `{ arg_name }`
+#' @return `list` of objects being a result of the code evaluation
+#' @examples
+#' ddl_eval_substitute("x <- { arg }", list(arg = 1))
+#' ddl_eval_substitute("x <- { arg }", list(arg = "a"))
+#' ddl_eval_substitute("a <- 1; x <- { arg } + 1", list(arg = quote(a)))
 ddl_eval_substitute <- function(code, args) {
   tryCatch( # at the moment the try catch is around everything - should be around the eval only
     expr = {
@@ -149,7 +159,24 @@ ddl_eval_substitute <- function(code, args) {
   )
 }
 
-#
+#' Substitute ddl code args
+#'
+#' Substitutes code arguments with `args`. Parts of the code
+#' wrapped in curly brackets ex. `{ arg_name }` are replaced
+#' with corresponding list elements
+#' @inheritsParams ddl_eval_substitute
+#' @return `character`
+#' @examples
+#' glue_code("x <- { arg }", list(arg = 1))
+#' glue_code("x <- { arg }", list(arg = "a"))
+#' glue_code("a <- 1; x <- { arg } + 1", list(arg = quote(a)))
+#' glue_code(
+#'   "a <- connect(login = { login }, password = { pass})",
+#'   list(
+#'     login = quote(askpass::askpass()),
+#'     password = quote(askpass::askpass())
+#'   )
+#' )
 glue_code <- function(code, args) {
   args <- lapply(args, function(x) {
     if (is.character(x)) {
@@ -160,6 +187,5 @@ glue_code <- function(code, args) {
       x
     }
   })
-
   glue::glue(code, .envir = args)
 }
