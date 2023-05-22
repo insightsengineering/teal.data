@@ -1,4 +1,4 @@
-# teal.data 0.1.2.9014
+# teal.data 0.2.0
 
 ### Enhancements
 * Added `ADQLQC`, `ADCSSRS`, and `ADEQ5D5L` as supported data sets.
