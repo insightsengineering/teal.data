@@ -1,12 +1,15 @@
-# teal.data 0.1.2.9013
+# teal.data 0.2.0
 
-* Added `ADQLQC`, `ADCSSRS`, and `ADEQ5D5L` as supported data sets. 
+### Enhancements
+* Added `ADQLQC`, `ADCSSRS`, and `ADEQ5D5L` as supported data sets.
+* Improved error message in `get_cdisc_keys`.
 * Examples now use `scda.2022` instead of `scda.2021`.
-* Modified `teal.Dataset$print` method for a less cluttered output.
-* Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
-* Improved error message in `get_cdisc_keys`. 
 * Fixed help files for `TealDataset` and `MAETealDataset`.
 * Added backstop for missing `reticulate` package in _teal.data with Python_ vignette.
+
+### Miscellaneous
+* Modified `teal.Dataset$print` method for a less cluttered output.
+* Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
 * Removed `CDISCTealData` class and updated `TealData` to account for the removed functionality.
 * Added datasets parents information to `JoinKeys` class.
 * Updated `cdisc_data` and `teal_data` wrappers to handle join_keys creation and updating instead of `CDISCTealData` and `TealData`.
