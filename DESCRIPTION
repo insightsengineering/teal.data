@@ -19,7 +19,7 @@ Depends:
     R (>= 4.0),
     shiny
 Imports:
-    checkmate,
+    checkmate (>= 2.0.0),
     digest,
     formatters (>= 0.3.1),
     lifecycle,
@@ -54,6 +54,31 @@ Remotes:
     insightsengineering/scda.2022@*release,
     insightsengineering/scda@*release,
     insightsengineering/teal.logger@*release
+Config/Needs/verdepcheck:
+    rstudio/shiny,
+    mllg/checkmate,
+    eddelbuettel/digest,
+    insightsengineering/formatters,
+    r-lib/lifecycle,
+    daroczig/logger,
+    r-lib/R6,
+    r-lib/rlang,
+    daattali/shinyjs,
+    insightsengineering/teal.logger,
+    yaml=vubiostat/r-yaml,
+    rstudio/bslib,
+    tidyverse/dplyr,
+    yihui/knitr,
+    tidyverse/magrittr,
+    bioc::MultiAssayExperiment,
+    tidyverse/readr,
+    rstudio/reticulate,
+    rstudio/rmarkdown,
+    insightsengineering/scda,
+    insightsengineering/scda.2022,
+    bioc::SummarizedExperiment,
+    r-lib/testthat,
+    r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US
