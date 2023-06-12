@@ -156,7 +156,6 @@ testthat::test_that("rds_dataset_connector", {
 
 # test with unexpected input
 testthat::test_that("csv_dataset_connector not expected input", {
-
   # check error if csv file doesn't exist
   testthat::expect_error(csv_dataset_connector("ADSL", file = "not_exists.csv", keys = get_cdisc_keys("ADSL")))
 

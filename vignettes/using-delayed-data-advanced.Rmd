@@ -76,7 +76,6 @@ cat(fun$get_call())
 It's also possible to execute the `fun$run()` function with arguments added on the fly in a named `list`. Dynamic arguments won't be reflected in the reproducible code, which will have consequences in other places - we will get back to this in later stages of the documentation.
 
 ```{r}
-
 # initialize object
 fun <- callable_function(fun = synthetic_cdisc_dataset)
 
