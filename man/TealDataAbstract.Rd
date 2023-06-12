@@ -116,7 +116,7 @@ Get code for all datasets.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataname}}{(\code{character}) dataname or \code{NULL} for all datasets}
+\item{\code{dataname}}{(\code{character}) \code{dataname} or \code{NULL} for all datasets}
 
 \item{\code{deparse}}{(\code{logical}) whether to return the deparsed form of a call}
 }
@@ -293,7 +293,7 @@ Execution of \code{mutate_code} is delayed after datasets are pulled
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataname}}{(\code{character}) Dataname to be mutated}
+\item{\code{dataname}}{(\code{character}) \code{Dataname} to be mutated}
 
 \item{\code{code}}{(\code{character}) Code to mutate the dataset. Must contain the
 \code{dataset$dataname}}

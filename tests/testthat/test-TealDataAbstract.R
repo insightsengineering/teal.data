@@ -80,7 +80,8 @@ testthat::test_that("get_code returns the code of the datasets when no input is 
       "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
       "x <- ADSL\n",
       "ADTTE <- (function() {\n    as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))\n})()"
-  ))
+    )
+  )
 })
 
 testthat::test_that("get_code returns the code of the dataset specifed", {
@@ -317,7 +318,8 @@ testthat::test_that("mutate updates the code", {
       "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\nx <- ADSL\n",
       "ADTTE <- (function() {\n    as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADTTE\"))))\n})()\n",
       "ADSL$new_column <- 1"
-  ))
+    )
+  )
 })
 
 testthat::test_that("mutate_dataset updates the code of the dataset", {
@@ -328,7 +330,8 @@ testthat::test_that("mutate_dataset updates the code of the dataset", {
     paste0(
       "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\nx <- ADSL\n",
       "ADSL$new_column <- 1"
-    ))
+    )
+  )
 })
 
 testthat::test_that("mutate_dataset throws an error if the dataname is not found", {
@@ -472,7 +475,7 @@ testthat::test_that("check_combined_code returns error when the code is not supp
   testthat::expect_error(data$.__enclos_env__$private$check_combined_code())
 })
 
-testthat::test_that("get_datasets_code_class returns an empty CodeClass object when no code is passed", {
+testthat::test_that("get_datasets_code_class returns an empty `CodeClass` object when no code is passed", {
   mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars))
   iris_ds <- TealDataset$new("head_iris", head(iris))
   data <- TealData$new(mtcars_ds, iris_ds)
@@ -481,7 +484,7 @@ testthat::test_that("get_datasets_code_class returns an empty CodeClass object w
   testthat::expect_identical(code_class$get_code(), "")
 })
 
-testthat::test_that("get_datasets_code_class returns a CodeClass object with the code passed", {
+testthat::test_that("get_datasets_code_class returns a `CodeClass` object with the code passed", {
   mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
   iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
   data <- TealData$new(mtcars_ds, iris_ds)
@@ -514,9 +517,10 @@ testthat::test_that("set_mutate_code updates the object code", {
 
   testthat::expect_identical(
     data$get_code(),
-    paste0("ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
-           "x <- ADSL\nADTTE <- (function() {\n    as.data.frame(as.list(setNames(",
-           "nm = get_cdisc_keys(\"ADTTE\"))))\n})()\nADSL$new <- 1"
+    paste0(
+      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
+      "x <- ADSL\nADTTE <- (function() {\n    as.data.frame(as.list(setNames(",
+      "nm = get_cdisc_keys(\"ADTTE\"))))\n})()\nADSL$new <- 1"
     )
   )
 })
@@ -574,9 +578,10 @@ testthat::test_that("execute_mutate returns updated datasets", {
   testthat::expect_silent(data$execute_mutate())
   testthat::expect_identical(
     data$get_code(),
-    paste0("ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
-           "x <- ADSL\nADTTE <- (function() {\n    as.data.frame(as.list(setNames(",
-           "nm = get_cdisc_keys(\"ADTTE\"))))\n})()\nADSL$new <- 1"
+    paste0(
+      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
+      "x <- ADSL\nADTTE <- (function() {\n    as.data.frame(as.list(setNames(",
+      "nm = get_cdisc_keys(\"ADTTE\"))))\n})()\nADSL$new <- 1"
     )
   )
   testthat::expect_identical(data$get_dataset("ADSL")$data$new, 1)

@@ -21,7 +21,7 @@
 # teal.data 0.1.2
 
 ### Enhancements
-* Updated the vignettes and the README content.
+* Updated the vignettes and the `README` content.
 
 ### Miscellaneous
 * Exported `validate_metadata` function.

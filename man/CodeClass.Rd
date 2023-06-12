@@ -93,10 +93,10 @@ x$get_code("DF3")
 \describe{
 \item{\code{code}}{(\code{character}) vector of code text to be set}
 
-\item{\code{dataname}}{optional, (\code{character}) vector of datanames to assign code to. If empty then the code
+\item{\code{dataname}}{optional, (\code{character}) vector of \code{datanames} to assign code to. If empty then the code
 is considered to be "global"}
 
-\item{\code{deps}}{optional, (\code{character}) vector of datanames that given code depends on}
+\item{\code{deps}}{optional, (\code{character}) vector of \code{datanames} that given code depends on}
 }
 \if{html}{\out{</div>}}
 }
@@ -138,10 +138,10 @@ Set code in form of character
 \describe{
 \item{\code{code}}{(\code{character}) vector of code text to be set}
 
-\item{\code{dataname}}{optional, (\code{character}) vector of datanames to assign code to. If empty then the code
-is considered to be "global"}
+\item{\code{deps}}{optional, (\code{character}) vector of \code{datanames} that given code depends on}
 
-\item{\code{deps}}{optional, (\code{character}) vector of datanames that given code depends on}
+\item{\code{`dataname`}}{optional, (\code{character}) vector of \code{datanames} to assign code to. If empty then the code
+is considered to be "global"}
 }
 \if{html}{\out{</div>}}
 }
@@ -161,10 +161,10 @@ Get the code for a given data names
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{dataname}}{optional, (\code{character}) vector of datanames for which the code is extracted.
-If \code{NULL} then get the code for all data names}
-
 \item{\code{deparse}}{optional, (\code{logical}) whether to return the deparsed form of a call}
+
+\item{\code{`dataname`}}{optional, (\code{character}) vector of \code{datanames} for which the code is extracted.
+If \code{NULL} then get the code for all data names}
 }
 \if{html}{\out{</div>}}
 }

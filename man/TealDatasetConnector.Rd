@@ -161,26 +161,26 @@ invisibly self
 \if{html}{\out{<a id="method-TealDatasetConnector-get_dataname"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_dataname}{}}}
 \subsection{Method \code{get_dataname()}}{
-Get dataname of dataset
+Get \code{dataname} of dataset
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$get_dataname()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-dataname of the dataset
+\code{dataname} of the dataset
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-TealDatasetConnector-get_datanames"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_datanames}{}}}
 \subsection{Method \code{get_datanames()}}{
-Get dataname of dataset
+Get \code{dataname} of dataset
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$get_datanames()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-\code{character} dataname of the dataset
+\code{character} \code{dataname} of the dataset
 }
 }
 \if{html}{\out{<hr>}}
@@ -572,7 +572,7 @@ ds$launch()
 \if{html}{\out{<a id="method-TealDatasetConnector-get_ui"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_ui}{}}}
 \subsection{Method \code{get_ui()}}{
-Get shiny ui function
+Get shiny \code{ui} function
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$get_ui(id)}\if{html}{\out{</div>}}
 }

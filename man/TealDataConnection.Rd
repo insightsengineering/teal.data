@@ -279,7 +279,7 @@ Get Shiny module with inputs to open connection
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-(\code{function}) shiny ui to set arguments to open connection function.
+(\code{function}) shiny UI to set arguments to open connection function.
 }
 }
 \if{html}{\out{<hr>}}

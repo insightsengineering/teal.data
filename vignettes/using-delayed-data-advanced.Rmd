@@ -45,7 +45,7 @@ The following are general descriptions for the main classes of the `teal.data` p
 
 5. `TealData` contains arbitrary many `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects.
 
-With the exception of `TealDataConnection`, all of the above classes have their CDISC equivalent, e.g. `TealData` -> `CDISCTealData`.
+With the exception of `TealDataConnection`, all of the above classes have their `CDISC` equivalent, e.g. `TealData` -> `CDISCTealData`.
 
 ## Creating an app
 
@@ -76,7 +76,6 @@ cat(fun$get_call())
 It's also possible to execute the `fun$run()` function with arguments added on the fly in a named `list`. Dynamic arguments won't be reflected in the reproducible code, which will have consequences in other places - we will get back to this in later stages of the documentation.
 
 ```{r}
-
 # initialize object
 fun <- callable_function(fun = synthetic_cdisc_dataset)
 
@@ -140,7 +139,7 @@ head(df$x1, 2)
 
 `TealDataset` is an R6 class which keeps a `data.frame` in its `raw_data` slot. One can create a `TealDataset` by including `data.frame` and setting data attributes. In the example below we first create `adsl` and then put this `data.frame` into the `cdisc_dataset` function. Together with `data.frame` one should also provide a `dataname` and optional `code` to reproduce the data if reproducibility is required.
 
-Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed for CDISC analysis.
+Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed for `CDISC` analysis.
 
 ```{r}
 library(magrittr)
@@ -230,7 +229,7 @@ adsl_2 <- dataset_connector(
 load_dataset(adsl_2)
 ```
 
-`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing ui module function, with `ns` argument (`shiny` namespace ID object). In the example below, the `callable_function` object contains two arguments, `ADSL` and `n`. `ADSL` is given while `n` is entered from a shiny app after the `launch` method is called.
+`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing UI module function, with `ns` argument (`shiny` namespace ID object). In the example below, the `callable_function` object contains two arguments, `ADSL` and `n`. `ADSL` is given while `n` is entered from a shiny app after the `launch` method is called.
 
 ```{r}
 adsl_3 <- dataset_connector(
@@ -403,7 +402,7 @@ if (interactive()) {
 
 ### `TealData` (base class which `CDISCTealData` inherits from)
 
-`TealData` manages `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects. `CDISCTealData` is the equivalent object when creating apps to analyze CDISC data. These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects are passed as the `data` argument into `init`.
+`TealData` manages `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects. `CDISCTealData` is the equivalent object when creating apps to analyze `CDISC` data. These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects are passed as the `data` argument into `init`.
 
 ```{r}
 data <- cdisc_data(
@@ -528,7 +527,7 @@ cat(get_code(data, "ADSL"))
 cat(get_code(data, "ADTTE"))
 ```
 
-Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as ADTTE depends on ADSL below, `get_code` will return everything we need to be executed to reproduce this dataset.
+Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as `ADTTE` depends on `ADSL` below, `get_code` will return everything we need to be executed to reproduce this dataset.
 
 ```{r}
 data <- mutate_dataset(

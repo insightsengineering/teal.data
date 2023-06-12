@@ -59,7 +59,7 @@ are included to this object as local \code{vars} and they cannot be modified
 within another dataset.}
 
 \item{dataname}{(\code{character})\cr
-Dataname to be mutated.}
+\code{Dataname} to be mutated.}
 }
 \value{
 modified \code{x} object

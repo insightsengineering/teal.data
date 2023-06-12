@@ -156,7 +156,6 @@ testthat::test_that("rds_dataset_connector", {
 
 # test with unexpected input
 testthat::test_that("csv_dataset_connector not expected input", {
-
   # check error if csv file doesn't exist
   testthat::expect_error(csv_dataset_connector("ADSL", file = "not_exists.csv", keys = get_cdisc_keys("ADSL")))
 
@@ -801,7 +800,7 @@ testthat::test_that("TealDatasetConnector mutate method edge cases", {
   testthat::expect_equal(t_dc$get_raw_data()$new_var, c(4, 4, 1, 1, 2, 1))
 })
 
-testthat::test_that("get_code_class returns the correct CodeClass object", {
+testthat::test_that("get_code_class returns the correct `CodeClass` object", {
   cc1 <- CodeClass$new(code = "iris <- (function() head(iris))()", dataname = "iris")
   cf1 <- CallableFunction$new(function() head(iris))
   dc1 <- TealDatasetConnector$new("iris", cf1)
@@ -818,7 +817,7 @@ testthat::test_that("Pulled TealDatasetConnector returns the same CodeClass as b
   testthat::expect_equal(post_pull_cc, pre_pull_cc)
 })
 
-testthat::test_that("Pulled dependent TealDatasetConnector returns the same CodeClass as before pulling", {
+testthat::test_that("Pulled dependent TealDatasetConnector returns the same `CodeClass` as before pulling", {
   ds <- TealDataset$new("iris", head(iris), code = "iris <- head(iris)")
   cf <- CallableFunction$new(function() head(mtcars))
   dc <- TealDatasetConnector$new("mtcars", cf, vars = list(iris = ds))
@@ -828,7 +827,7 @@ testthat::test_that("Pulled dependent TealDatasetConnector returns the same Code
   testthat::expect_equal(post_pull_code_class, pre_pull_code_class)
 })
 
-testthat::test_that("Pulling twice doesn't change the returned TealDatasetConnector's CodeClass", {
+testthat::test_that("Pulling twice doesn't change the returned TealDatasetConnector's `CodeClass`", {
   ds <- TealDataset$new("iris", head(iris), code = "iris <- head(iris)")
   cf <- CallableFunction$new(function() head(mtcars))
   dc <- TealDatasetConnector$new("mtcars", cf, vars = list(iris = ds))

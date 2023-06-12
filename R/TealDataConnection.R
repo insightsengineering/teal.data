@@ -272,7 +272,7 @@ TealDataConnection <- R6::R6Class( # nolint
     #'
     #' @param id `character` shiny element id
     #'
-    #' @return (`function`) shiny ui to set arguments to open connection function.
+    #' @return (`function`) shiny UI to set arguments to open connection function.
     get_open_ui = function(id) {
       return(private$open_ui(id))
     },

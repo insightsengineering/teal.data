@@ -128,7 +128,7 @@ Get parent dataset name
 }
 
 \subsection{Returns}{
-(\code{character}) indicating parent dataname
+(\code{character}) indicating parent \code{dataname}
 }
 }
 \if{html}{\out{<hr>}}
