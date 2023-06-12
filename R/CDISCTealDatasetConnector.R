@@ -82,7 +82,7 @@ CDISCTealDatasetConnector <- R6::R6Class( # nolint
     },
     #' @description
     #' Get parent dataset name
-    #' @return (`character`) indicating parent dataname
+    #' @return (`character`) indicating parent `dataname`
     get_parent = function() {
       private$parent
     },

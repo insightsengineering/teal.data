@@ -108,16 +108,16 @@ TealDatasetConnector <- R6::R6Class( # nolint
 
     # ___ getters ====
     #' @description
-    #' Get dataname of dataset
+    #' Get `dataname` of dataset
     #'
-    #' @return dataname of the dataset
+    #' @return `dataname` of the dataset
     get_dataname = function() {
       return(private$dataname)
     },
     #' @description
-    #' Get dataname of dataset
+    #' Get `dataname` of dataset
     #'
-    #' @return `character` dataname of the dataset
+    #' @return `character` `dataname` of the dataset
     get_datanames = function() {
       return(private$dataname)
     },

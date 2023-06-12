@@ -383,7 +383,7 @@ Derive the \code{name} which was formerly called \code{dataname}
 \if{html}{\out{<a id="method-TealDataset-get_datanames"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDataset-get_datanames}{}}}
 \subsection{Method \code{get_datanames()}}{
-Derive the dataname
+Derive the \code{dataname}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDataset$get_datanames()}\if{html}{\out{</div>}}
 }

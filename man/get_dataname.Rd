@@ -5,7 +5,7 @@
 \alias{get_dataname.TealDataAbstract}
 \alias{get_dataname.TealDatasetConnector}
 \alias{get_dataname.TealDataset}
-\title{S3 method for getting a dataname(s) of
+\title{S3 method for getting a \code{dataname(s)} of
 (\code{TealDataAbstract}, (\code{TealDatasetConnector} or
 \code{TealDataset}) R6 object}
 \usage{
@@ -22,7 +22,7 @@ get_dataname(x)
 \code{TealDataset}) object}
 }
 \value{
-dataname (\code{character}) A given name for the dataset(s)
+\code{dataname} (\code{character}) A given name for the dataset(s)
 it may not contain spaces
 }
 \description{

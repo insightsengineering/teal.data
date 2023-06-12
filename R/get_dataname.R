@@ -1,4 +1,4 @@
-#' S3 method for getting a dataname(s) of
+#' S3 method for getting a `dataname(s)` of
 #' (`TealDataAbstract`, (`TealDatasetConnector` or
 #' `TealDataset`) R6 object
 #'
@@ -7,7 +7,7 @@
 #' @param x (`TealDataAbstract`, `TealDatasetConnector` or
 #' `TealDataset`) object
 #'
-#' @return dataname (`character`) A given name for the dataset(s)
+#' @return `dataname` (`character`) A given name for the dataset(s)
 #'   it may not contain spaces
 #' @export
 get_dataname <- function(x) {

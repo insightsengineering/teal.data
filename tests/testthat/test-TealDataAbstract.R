@@ -472,7 +472,7 @@ testthat::test_that("check_combined_code returns error when the code is not supp
   testthat::expect_error(data$.__enclos_env__$private$check_combined_code())
 })
 
-testthat::test_that("get_datasets_code_class returns an empty CodeClass object when no code is passed", {
+testthat::test_that("get_datasets_code_class returns an empty `CodeClass` object when no code is passed", {
   mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars))
   iris_ds <- TealDataset$new("head_iris", head(iris))
   data <- TealData$new(mtcars_ds, iris_ds)
@@ -481,7 +481,7 @@ testthat::test_that("get_datasets_code_class returns an empty CodeClass object w
   testthat::expect_identical(code_class$get_code(), "")
 })
 
-testthat::test_that("get_datasets_code_class returns a CodeClass object with the code passed", {
+testthat::test_that("get_datasets_code_class returns a `CodeClass` object with the code passed", {
   mtcars_ds <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
   iris_ds <- TealDataset$new("head_iris", head(iris), code = "head_iris <- head(iris)")
   data <- TealData$new(mtcars_ds, iris_ds)

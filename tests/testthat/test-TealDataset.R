@@ -445,7 +445,7 @@ testthat::test_that("TealDataset$check returns FALSE if the passed code creates 
   testthat::expect_false(test_ds0$check())
 })
 
-testthat::test_that("get_code_class returns the correct CodeClass object", {
+testthat::test_that("get_code_class returns the correct `CodeClass` object", {
   cc1 <- CodeClass$new(code = "iris <- head(iris)", dataname = "iris")
   cc2 <- CodeClass$new(code = "mtcars <- head(mtcars)", dataname = "mtcars", deps = "iris")
   ds1 <- TealDataset$new("iris", head(iris), code = "iris <- head(iris)")
@@ -454,7 +454,7 @@ testthat::test_that("get_code_class returns the correct CodeClass object", {
   testthat::expect_equal(ds2$get_code_class(), cc1$append(cc2))
 })
 
-testthat::test_that("get_code_class returns the correct CodeClass after mutating with another TealDataset", {
+testthat::test_that("get_code_class returns the correct `CodeClass` after mutating with another TealDataset", {
   ds1 <- TealDataset$new("iris", head(iris), code = "iris <- head(iris)")
   ds2 <- TealDataset$new("mtcars", head(mtcars), code = "mtcars <- head(mtcars)")
   cc1 <- CodeClass$new(code = "mtcars <- head(mtcars)", dataname = "mtcars")

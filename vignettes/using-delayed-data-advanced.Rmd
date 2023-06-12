@@ -45,7 +45,7 @@ The following are general descriptions for the main classes of the `teal.data` p
 
 5. `TealData` contains arbitrary many `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects.
 
-With the exception of `TealDataConnection`, all of the above classes have their CDISC equivalent, e.g. `TealData` -> `CDISCTealData`.
+With the exception of `TealDataConnection`, all of the above classes have their `CDISC` equivalent, e.g. `TealData` -> `CDISCTealData`.
 
 ## Creating an app
 
@@ -140,7 +140,7 @@ head(df$x1, 2)
 
 `TealDataset` is an R6 class which keeps a `data.frame` in its `raw_data` slot. One can create a `TealDataset` by including `data.frame` and setting data attributes. In the example below we first create `adsl` and then put this `data.frame` into the `cdisc_dataset` function. Together with `data.frame` one should also provide a `dataname` and optional `code` to reproduce the data if reproducibility is required.
 
-Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed for CDISC analysis.
+Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed for `CDISC` analysis.
 
 ```{r}
 library(magrittr)
@@ -403,7 +403,7 @@ if (interactive()) {
 
 ### `TealData` (base class which `CDISCTealData` inherits from)
 
-`TealData` manages `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects. `CDISCTealData` is the equivalent object when creating apps to analyze CDISC data. These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects are passed as the `data` argument into `init`.
+`TealData` manages `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector` objects. `CDISCTealData` is the equivalent object when creating apps to analyze `CDISC` data. These objects are created using `teal_data` and `cdisc_data` respectively. When using the `teal` package these objects are passed as the `data` argument into `init`.
 
 ```{r}
 data <- cdisc_data(
@@ -528,7 +528,7 @@ cat(get_code(data, "ADSL"))
 cat(get_code(data, "ADTTE"))
 ```
 
-Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as ADTTE depends on ADSL below, `get_code` will return everything we need to be executed to reproduce this dataset.
+Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as `ADTTE` depends on `ADSL` below, `get_code` will return everything we need to be executed to reproduce this dataset.
 
 ```{r}
 data <- mutate_dataset(

@@ -116,13 +116,13 @@ CDISCTealDataset <- R6::R6Class( # nolint
     },
     #' @description
     #' Get parent dataset name
-    #' @return (`character`) indicating parent dataname
+    #' @return (`character`) indicating parent `dataname`
     get_parent = function() {
       return(private$parent)
     },
     #' @description
     #' Set parent dataset name
-    #' @param parent (`character`) indicating parent dataname
+    #' @param parent (`character`) indicating parent `dataname`
     #' @return (`self`) invisibly for chaining
     set_parent = function(parent) {
       checkmate::assert_character(parent, max.len = 1, any.missing = FALSE)

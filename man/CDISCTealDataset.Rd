@@ -218,7 +218,7 @@ Get parent dataset name
 }
 
 \subsection{Returns}{
-(\code{character}) indicating parent dataname
+(\code{character}) indicating parent \code{dataname}
 }
 }
 \if{html}{\out{<hr>}}
@@ -233,7 +233,7 @@ Set parent dataset name
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{parent}}{(\code{character}) indicating parent dataname}
+\item{\code{parent}}{(\code{character}) indicating parent \code{dataname}}
 }
 \if{html}{\out{</div>}}
 }
