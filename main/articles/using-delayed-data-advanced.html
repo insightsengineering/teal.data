@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9001</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,15 +59,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -158,8 +149,8 @@ a single <code>TealDataset</code> object.</p></li>
 <code>TealDataConnector</code> objects.</p></li>
 </ol>
 <p>With the exception of <code>TealDataConnection</code>, all of the
-above classes have their CDISC equivalent, e.g. <code>TealData</code>
--&gt; <code>CDISCTealData</code>.</p>
+above classes have their <code>CDISC</code> equivalent,
+e.g. <code>TealData</code> -&gt; <code>CDISCTealData</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="creating-an-app">Creating an app<a class="anchor" aria-label="anchor" href="#creating-an-app"></a>
@@ -233,8 +224,7 @@ arguments won’t be reflected in the reproducible code, which will have
 consequences in other places - we will get back to this in later stages
 of the documentation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># initialize object</span></span>
+<code class="sourceCode R"><span><span class="co"># initialize object</span></span>
 <span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">synthetic_cdisc_dataset</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># add arguments on the fly</span></span>
@@ -403,7 +393,8 @@ and setting data attributes. In the example below we first create
 and optional <code>code</code> to reproduce the data if reproducibility
 is required.</p>
 <p>Note <code>cdisc_dataset</code> returns an object of
-<code>CDISCTealDataset</code>, which is needed for CDISC analysis.</p>
+<code>CDISCTealDataset</code>, which is needed for <code>CDISC</code>
+analysis.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span></span>
@@ -547,7 +538,7 @@ using shiny application. This function can be used to check if the
 objects are specified correctly and to investigate potential mistakes.
 By default the shiny app won’t render any inputs for datasets until we
 specify them. To set inputs we should use <code>$set_ui_input()</code>,
-by passing ui module function, with <code>ns</code> argument
+by passing UI module function, with <code>ns</code> argument
 (<code>shiny</code> namespace ID object). In the example below, the
 <code>callable_function</code> object contains two arguments,
 <code>ADSL</code> and <code>n</code>. <code>ADSL</code> is given while
@@ -770,8 +761,8 @@ inherits from)<a class="anchor" aria-label="anchor" href="#tealdata-base-class-w
 <p><code>TealData</code> manages <code>TealDataset</code>,
 <code>TealDatasetConnector</code> and / or
 <code>TealDataConnector</code> objects. <code>CDISCTealData</code> is
-the equivalent object when creating apps to analyze CDISC data. These
-objects are created using <code>teal_data</code> and
+the equivalent object when creating apps to analyze <code>CDISC</code>
+data. These objects are created using <code>teal_data</code> and
 <code>cdisc_data</code> respectively. When using the <code>teal</code>
 package these objects are passed as the <code>data</code> argument into
 <code>init</code>.</p>
@@ -919,9 +910,9 @@ on different datasets.</p>
 <span><span class="co">#&gt; ADTTE$x4 &lt;- 4</span></span></code></pre></div>
 <p>Sometimes code of one object can depend on another, in this case we
 can link them in the same way we link <code>TealDatasetConnector</code>
-objects. If object code is dependent on another, as ADTTE depends on
-ADSL below, <code>get_code</code> will return everything we need to be
-executed to reproduce this dataset.</p>
+objects. If object code is dependent on another, as <code>ADTTE</code>
+depends on <code>ADSL</code> below, <code>get_code</code> will return
+everything we need to be executed to reproduce this dataset.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
@@ -1028,7 +1019,7 @@ code of all datasets is returned.</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Listening on http://127.0.0.1:5350</span></span></code></pre></div>
+<span><span class="co">#&gt; Listening on http://127.0.0.1:6763</span></span></code></pre></div>
 <p><img src="using-delayed-data-advanced_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 </div>
 </div>
