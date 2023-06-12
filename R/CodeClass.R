@@ -199,7 +199,6 @@ CodeClass <- R6::R6Class( # nolint
           ) &&
             length(code_entry) > 0
         ) {
-
           # append to index of code we want
           res <- c(idx, res)
 
