@@ -128,7 +128,7 @@ TealDataAbstract <- R6::R6Class( # nolint
     },
     #' @description
     #' Get code for all datasets.
-    #' @param dataname (`character`) dataname or `NULL` for all datasets
+    #' @param dataname (`character`) `dataname` or `NULL` for all datasets
     #' @param deparse (`logical`) whether to return the deparsed form of a call
     #' @return (`character`) vector of code to generate datasets.
     get_code = function(dataname = NULL, deparse = TRUE) {
@@ -279,7 +279,7 @@ TealDataAbstract <- R6::R6Class( # nolint
     #' Execution of `mutate_code` is delayed after datasets are pulled
     #' (`isTRUE(is_pulled)`).
     #'
-    #' @param dataname (`character`) Dataname to be mutated
+    #' @param dataname (`character`) `Dataname` to be mutated
     #' @param code (`character`) Code to mutate the dataset. Must contain the
     #'  `dataset$dataname`
     #' @param vars (named `list`)) \cr

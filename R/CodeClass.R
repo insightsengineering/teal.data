@@ -57,9 +57,9 @@ CodeClass <- R6::R6Class( # nolint
     #' @description
     #' `CodeClass` constructor
     #' @param code (`character`) vector of code text to be set
-    #' @param dataname optional, (`character`) vector of datanames to assign code to. If empty then the code
+    #' @param `dataname` optional, (`character`) vector of `datanames` to assign code to. If empty then the code
     #' is considered to be "global"
-    #' @param deps optional, (`character`) vector of datanames that given code depends on
+    #' @param deps optional, (`character`) vector of `datanames` that given code depends on
     #' @return object of class `CodeClass`
     initialize = function(code = character(0), dataname = character(0), deps = character(0)) {
       if (length(code) > 0) {
@@ -86,9 +86,9 @@ CodeClass <- R6::R6Class( # nolint
     #' @description
     #' Set code in form of character
     #' @param code (`character`) vector of code text to be set
-    #' @param dataname optional, (`character`) vector of datanames to assign code to. If empty then the code
+    #' @param `dataname` optional, (`character`) vector of `datanames` to assign code to. If empty then the code
     #' is considered to be "global"
-    #' @param deps optional, (`character`) vector of datanames that given code depends on
+    #' @param deps optional, (`character`) vector of `datanames` that given code depends on
     #'
     #' @return changed `CodeClass` object
     set_code = function(code, dataname = character(0), deps = character(0)) {
@@ -106,7 +106,7 @@ CodeClass <- R6::R6Class( # nolint
     },
     #' @description
     #' Get the code for a given data names
-    #' @param dataname optional, (`character`) vector of datanames for which the code is extracted.
+    #' @param `dataname` optional, (`character`) vector of `datanames` for which the code is extracted.
     #' If `NULL` then get the code for all data names
     #' @param deparse optional, (`logical`) whether to return the deparsed form of a call
     #' @return `character` or `list` of calls
@@ -157,7 +157,7 @@ CodeClass <- R6::R6Class( # nolint
       if (is.null(dataname)) dataname <- character(0)
       if (is.null(deps)) deps <- character(0)
       if (is.null(id)) id <- digest::digest(c(private$.code, code))
-      # Line shouldn't be added when it contains the same code and the same dataname
+      # Line shouldn't be added when it contains the same code and the same `dataname`
       # as a line already present in an object of `CodeClass`
       if (
         !id %in% unlist(lapply(private$.code, "attr", "id")) ||
@@ -181,7 +181,7 @@ CodeClass <- R6::R6Class( # nolint
     get_code_dataname = function(dataname, deparse) {
       # the lines of code we need for the dataname
       res <- integer(0)
-      # the set of datanames we want code for code for intially just dataname
+      # the set of datanames we want code for code for initially just dataname
       datanames <- dataname
 
       # loop backwards along code

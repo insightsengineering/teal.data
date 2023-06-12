@@ -217,7 +217,7 @@ TealDataset <- R6::R6Class( # nolint
       private$dataname
     },
     #' @description
-    #' Derive the dataname
+    #' Derive the `dataname`
     #' @return `character` name of the dataset
     get_datanames = function() {
       private$dataname
@@ -745,7 +745,7 @@ TealDataset <- R6::R6Class( # nolint
     },
 
     # Set the name for the dataset
-    # @param dataname (`character`) the new name
+    # @param `dataname` (`character`) the new name
     # @return self invisibly for chaining
     set_dataname = function(dataname) {
       check_simple_name(dataname)

@@ -93,7 +93,7 @@ A vector of primary keys}
 
 \item{\code{code}}{(\code{character} or \code{CodeClass})\cr
 A character string defining the code needed to produce the data set in \code{x}.
-initialize()\code{and}recreate()\verb{accept code as}CodeClass`
+\code{initialize()} and \code{recreate()} accept code as \code{CodeClass}
 which is also needed to preserve the code uniqueness and correct order.}
 
 \item{\code{label}}{(\code{character})\cr

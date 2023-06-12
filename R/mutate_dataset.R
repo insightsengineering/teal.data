@@ -5,7 +5,7 @@
 #' @param x (`TealDataset`)\cr
 #'    object.
 #' @param dataname (`character`)\cr
-#'   Dataname to be mutated.
+#'   `Dataname` to be mutated.
 #' @param code (`character`)\cr
 #'   Code to mutate the dataset. Must contain the `dataset$dataname`. Or can also be an object
 #'   of class `PythonCodeClass` returned by [`python_code`].

@@ -15,7 +15,7 @@
 #'        A vector of primary keys
 #' @param code (`character` or `CodeClass`)\cr
 #'        A character string defining the code needed to produce the data set in `x`.
-#'        initialize()` and `recreate()` accept code as `CodeClass`
+#'        `initialize()` and `recreate()` accept code as `CodeClass`
 #'        which is also needed to preserve the code uniqueness and correct order.
 #' @param label (`character`)\cr
 #'        Label to describe the dataset

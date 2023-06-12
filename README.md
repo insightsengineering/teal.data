@@ -6,7 +6,7 @@
 [![Code Coverage 📔](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/badge.svg)](https://insightsengineering.github.io/teal.data/main/coverage-report/)
 
 ![GitHub forks](https://img.shields.io/github/forks/insightsengineering/teal.data?style=social)
-![GitHub Repo stars](https://img.shields.io/github/stars/insightsengineering/teal.data?style=social)
+![GitHub repo stars](https://img.shields.io/github/stars/insightsengineering/teal.data?style=social)
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/insightsengineering/teal.data)
 ![GitHub contributors](https://img.shields.io/github/contributors/insightsengineering/teal.data)
@@ -22,7 +22,7 @@
 This package is used to create the data needed for `teal` applications. This data can be:
 
 - Independent data frames
-- CDISC data (for clinical trial reporting)
+- `CDISC` data (for clinical trial reporting)
 - Relational data
 - `MultiAssayExperiment` objects
 
