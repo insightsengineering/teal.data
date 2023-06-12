@@ -230,7 +230,7 @@ adsl_2 <- dataset_connector(
 load_dataset(adsl_2)
 ```
 
-`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing ui module function, with `ns` argument (`shiny` namespace ID object). In the example below, the `callable_function` object contains two arguments, `ADSL` and `n`. `ADSL` is given while `n` is entered from a shiny app after the `launch` method is called.
+`TealDatasetConnector` like the other delayed data objects contains a `launch` method which can be used to obtain data using shiny application. This function can be used to check if the objects are specified correctly and to investigate potential mistakes. By default the shiny app won't render any inputs for datasets until we specify them. To set inputs we should use `$set_ui_input()`, by passing UI module function, with `ns` argument (`shiny` namespace ID object). In the example below, the `callable_function` object contains two arguments, `ADSL` and `n`. `ADSL` is given while `n` is entered from a shiny app after the `launch` method is called.
 
 ```{r}
 adsl_3 <- dataset_connector(

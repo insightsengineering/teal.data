@@ -440,7 +440,7 @@ TealDatasetConnector <- R6::R6Class( # nolint
       return(invisible(self))
     },
     #' @description
-    #' Get shiny ui function
+    #' Get shiny `ui` function
     #' @param id (`character`) namespace id
     #' @return shiny UI in given namespace id
     get_ui = function(id) {

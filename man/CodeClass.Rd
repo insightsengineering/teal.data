@@ -93,10 +93,10 @@ x$get_code("DF3")
 \describe{
 \item{\code{code}}{(\code{character}) vector of code text to be set}
 
-\item{\code{deps}}{optional, (\code{character}) vector of \code{datanames} that given code depends on}
-
-\item{\code{`dataname`}}{optional, (\code{character}) vector of \code{datanames} to assign code to. If empty then the code
+\item{\code{dataname}}{optional, (\code{character}) vector of \code{datanames} to assign code to. If empty then the code
 is considered to be "global"}
+
+\item{\code{deps}}{optional, (\code{character}) vector of \code{datanames} that given code depends on}
 }
 \if{html}{\out{</div>}}
 }

@@ -572,7 +572,7 @@ ds$launch()
 \if{html}{\out{<a id="method-TealDatasetConnector-get_ui"></a>}}
 \if{latex}{\out{\hypertarget{method-TealDatasetConnector-get_ui}{}}}
 \subsection{Method \code{get_ui()}}{
-Get shiny ui function
+Get shiny \code{ui} function
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TealDatasetConnector$get_ui(id)}\if{html}{\out{</div>}}
 }

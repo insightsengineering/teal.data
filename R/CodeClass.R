@@ -57,7 +57,7 @@ CodeClass <- R6::R6Class( # nolint
     #' @description
     #' `CodeClass` constructor
     #' @param code (`character`) vector of code text to be set
-    #' @param `dataname` optional, (`character`) vector of `datanames` to assign code to. If empty then the code
+    #' @param dataname optional, (`character`) vector of `datanames` to assign code to. If empty then the code
     #' is considered to be "global"
     #' @param deps optional, (`character`) vector of `datanames` that given code depends on
     #' @return object of class `CodeClass`
