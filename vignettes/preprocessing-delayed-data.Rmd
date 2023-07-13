@@ -20,7 +20,7 @@ library(scda)
 library(teal.data)
 library(magrittr)
 
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -29,7 +29,7 @@ adsl <- cdisc_dataset_connector(
   mutate_dataset("ADSL$SEX <- as.factor(ADSL$SEX)")
 
 
-adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae_cf <- callable_function(function() example_cdisc_data("ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -67,7 +67,7 @@ get_code(adsl)
 
 pull_fun_adae <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adae
+    example_cdisc_data("ADAE")
   }
 )
 adae <- dataset_connector(
@@ -84,7 +84,7 @@ It's also possible to supply these additional variables after creating your obje
 ```{r}
 last_run <- Sys.Date() # constant value stored as a variable in the current session
 
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -95,7 +95,7 @@ adsl <- cdisc_dataset_connector(
 cat(get_code(adsl))
 
 # compared to evaluating the variable at the time of loading
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -111,8 +111,8 @@ adsl %>%
 This is also required when creating the object depends on another delayed data object:
 
 ```{r}
-adsl <- synthetic_cdisc_data("latest")$adsl
-adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adsl <- example_cdisc_data("ADSL")
+adae_cf <- callable_function(function() example_cdisc_data("ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -122,13 +122,13 @@ adae <- cdisc_dataset_connector(
 
 cat(get_code(adae)) # the code returned by `adae` is not sufficient to reproduce `adae`
 
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
   keys = get_cdisc_keys("ADSL")
 )
-adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae_cf <- callable_function(function() example_cdisc_data("ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -185,7 +185,7 @@ Related to this idea, the delayed data object needs to be supplied with the code
 Below is a comparison of these two approaches:
 
 ```{r}
-adsl <- synthetic_cdisc_data("latest")$adsl
+adsl <- example_cdisc_data("ADSL")
 cdisc_dataset("ADSL", adsl) %>% get_code() # no reproducible code
 
 # provide the code to reproduce the data:
@@ -195,7 +195,7 @@ cdisc_dataset("ADSL", adsl,
   get_code()
 
 # it's possible to supply the code at the `Data` level:
-adae <- synthetic_cdisc_data("latest")$adae
+adae <- example_cdisc_data("ADAE")
 adsl_adae <- cdisc_data(
   cdisc_dataset("ADSL", adsl),
   cdisc_dataset("ADAE", adae),

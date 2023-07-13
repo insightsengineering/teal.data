@@ -32,16 +32,15 @@ mutate_dataset <- function(x, ...) {
 
 #' @rdname mutate_dataset
 #' @examples
-#' library(scda)
 #' library(magrittr)
 #'
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #'
 #' ADSL_dataset <- dataset(
 #'   dataname = "ADSL",
 #'   x = ADSL,
 #'   label = "AdAM subject-level dataset",
-#'   code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+#'   code = "ADSL <- teal.data::rADSL"
 #' )
 #' ADSL_mutated <- ADSL_dataset %>%
 #'   mutate_dataset(code = "ADSL$new_variable <- 1")

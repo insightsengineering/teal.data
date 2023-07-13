@@ -413,7 +413,7 @@ data <- cdisc_data(
   ),
   cdisc_dataset(
     dataname = "ADTTE",
-    synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
+    example_cdisc_data("ADTTE"),
     code = "ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
   )
 )

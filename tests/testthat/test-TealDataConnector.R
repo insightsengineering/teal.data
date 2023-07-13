@@ -1,4 +1,3 @@
-library(scda)
 
 adsl_cf <- CallableFunction$new(function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL")))))
 adae_cf <- CallableFunction$new(function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE")))))
@@ -19,24 +18,24 @@ testthat::test_that("TealDataConnector with TealDataConnection", {
   code <- "ADSL$x <- 1"
   check <- TRUE
 
-  adsl_cf <- callable_function(function(scda_name) synthetic_cdisc_data(scda_name)$adsl)
-  adlb_cf <- callable_function(function(scda_name) synthetic_cdisc_data(scda_name)$adlb)
+  adsl_cf <- callable_function(function(n) head(example_cdisc_data("ADSL"), n))
+  adlb_cf <- callable_function(function(n) head(example_cdisc_data("ADLB"), n))
 
-  scda1 <- cdisc_dataset_connector(dataname = "ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))
-  scda2 <- cdisc_dataset_connector(dataname = "ADLB", adlb_cf, keys = get_cdisc_keys("ADLB"))
+  connector1 <- cdisc_dataset_connector(dataname = "ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))
+  connector2 <- cdisc_dataset_connector(dataname = "ADLB", adlb_cf, keys = get_cdisc_keys("ADLB"))
 
-  x <- TealDataConnector$new(connection = con, connectors = list(scda1, scda2))
+  x <- TealDataConnector$new(connection = con, connectors = list(connector1, connector2))
   testthat::expect_true(inherits(x, "TealDataConnector"))
 
   x$set_ui(function(id, ...) {
     ns <- NS(id)
     tagList(
-      textInput(ns("scda_name"), label = "Example", value = "latest")
+      numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1),
     )
   })
   x$set_server(function(id, connectors, connection) {
     lapply(connectors, function(connector) {
-      set_args(connector, args = list(scda_name = input$scda_name))
+      set_args(connector, args = list(n = input$n))
       connector$pull(try = TRUE)
     })
   })

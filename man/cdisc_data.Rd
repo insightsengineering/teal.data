@@ -35,30 +35,27 @@ This function does not automatically assign keys to \code{TealDataset}
 and \code{TealDatasetConnector} objects passed to it. If the keys are needed
 they should be assigned before calling \code{cdisc_data}. See example:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{library(scda)
-test_dataset <- dataset("ADAE", synthetic_cdisc_data("latest")$adae) # does not have keys
-test_adsl <- cdisc_dataset("ADSL", synthetic_cdisc_data("latest")$adsl)
+\if{html}{\out{<div class="sourceCode">}}\preformatted{test_dataset <- dataset("ADAE", example_cdisc_data("ADAE")) # does not have keys
+test_adsl <- cdisc_dataset("ADSL", example_cdisc_data("ADSL"))
 test_data <- cdisc_data(test_dataset, test_adsl)
 get_keys(test_data, "ADAE") # returns character(0)
 
-test_dataset <- cdisc_dataset("ADAE", synthetic_cdisc_data("latest")$adae)
+test_dataset <- cdisc_dataset("ADAE", example_cdisc_data("ADAE"))
 test_data <- cdisc_data(test_dataset, test_adsl)
 get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
 }\if{html}{\out{</div>}}
 }
 \examples{
-library(scda)
 
-latest_data <- synthetic_cdisc_data("latest")
-ADSL <- latest_data$adsl
-ADTTE <- latest_data$adtte
+ADSL <- example_cdisc_data("ADSL")
+ADTTE <- example_cdisc_data("ADTTE")
 
 # basic example
 cdisc_data(
   cdisc_dataset("ADSL", ADSL),
   cdisc_dataset("ADTTE", ADTTE),
-  code = "ADSL <- synthetic_cdisc_data('latest')$adsl
-          ADTTE <- synthetic_cdisc_data('latest')$adtte",
+  code = "ADSL <- teal.data::rADSL
+          ADTTE <- teal.data::rADTTE",
   check = TRUE
 )
 
@@ -78,8 +75,8 @@ cdisc_data(
       c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
     )
   ),
-  code = "ADSL <- synthetic_cdisc_data('latest')$adsl
-          ADTTE <- synthetic_cdisc_data('latest')$adtte",
+  code = "ADSL <- teal.data::rADSL
+          ADTTE <- teal.data::rADTTE",
   check = TRUE
 )
 }

@@ -1,6 +1,5 @@
 # code>
 library(teal) # nocode
-library(scda) # nolint
 require(magrittr)
 library(teal)
 set.seed(1)

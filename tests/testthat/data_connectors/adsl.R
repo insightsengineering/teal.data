@@ -1,6 +1,4 @@
-library(scda)
-
-ADSL <- synthetic_cdisc_data("latest")$adsl # nolint
+ADSL <- example_cdisc_data("ADSL") # nolint
 ADSL$xxx <- "1" # nolint
 
 # instead of return

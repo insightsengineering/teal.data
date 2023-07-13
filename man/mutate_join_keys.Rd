@@ -41,10 +41,8 @@ mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
 x$get("dataset_A", "dataset_B")
 # TealData ----
 
-library(scda)
-
-ADSL <- synthetic_cdisc_data("latest")$adsl
-ADRS <- synthetic_cdisc_data("latest")$adrs
+ADSL <- teal.data::example_cdisc_data("adsl")
+ADRS <- teal.data::example_cdisc_data("adrs")
 
 x <- cdisc_data(
   cdisc_dataset("ADSL", ADSL),

@@ -32,8 +32,7 @@ x <- dataset_connector(
   label = "My custom label"
 )
 get_dataset_label(x)
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- example_cdisc_data("ADSL")
 ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL, label = "My custom label")
 get_dataset_label(ADSL_dataset)
 }

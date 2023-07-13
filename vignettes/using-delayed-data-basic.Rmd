@@ -36,7 +36,7 @@ adlb <- scda_dataset_connector(
 x <- code_dataset_connector(
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 ```
 

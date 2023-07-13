@@ -1,5 +1,3 @@
-library(scda)
-
 testthat::test_that("data connection", {
   open_fun <- callable_function(data.frame)
   open_fun$set_args(list(x = 1:5))

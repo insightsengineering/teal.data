@@ -20,7 +20,7 @@ For example, for the following example only `ADSL <- readRDS("<your data path>/a
 ```{r, message=FALSE}
 library(scda)
 library(teal.data)
-saveRDS(synthetic_cdisc_data("latest")$adsl, "adsl.rds")
+saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 
 ## preprocessing -------------------
 adsl <- readRDS("adsl.rds")
@@ -33,7 +33,7 @@ If you run the example above, the `get_code` function will return an empty strin
 
 ```{r, message=FALSE}
 library(scda)
-saveRDS(synthetic_cdisc_data("latest")$adsl, "adsl.rds")
+saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 
 ## preprocessing -------------------
 adsl <- readRDS("adsl.rds")

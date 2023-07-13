@@ -84,9 +84,8 @@ mae_d$get_raw_data()
 dataset("iris", iris)
 
 # Example with more arguments
-library(scda)
 \dontrun{
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- example_cdisc_data("ADSL")
 ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL)
 
 ADSL_dataset$get_dataname()
@@ -95,8 +94,7 @@ ADSL_dataset <- dataset(
   dataname = "ADSL",
   x = ADSL,
   label = "AdAM subject-level dataset",
-  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl",
-  metadata = list(type = "synthetic data")
+  code = "ADSL <- example_cdisc_data(\"ADSL\")"
 )
 ADSL_dataset$get_metadata()
 ADSL_dataset$get_dataset_label()

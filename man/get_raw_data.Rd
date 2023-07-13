@@ -33,17 +33,15 @@ if user doesn't specify \code{dataname} - (\code{get_raw_data} from all datasets
 \examples{
 
 # TealDataset ---------
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- example_cdisc_data("ADSL")
 
 x <- dataset(dataname = "ADSL", x = ADSL)
 get_raw_data(x)
 
 # TealDatasetConnector ---------
-library(scda)
 pull_fun_adsl <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 dc <- dataset_connector("ADSL", pull_fun_adsl)
@@ -51,30 +49,38 @@ load_dataset(dc)
 get_raw_data(dc)
 
 # TealData ----------------
-library(scda)
-latest_data <- synthetic_cdisc_data("latest")
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = latest_data$adsl,
-  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  x = example_cdisc_data("ADSL"),
+  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 
 adtte <- cdisc_dataset(
   dataname = "ADTTE",
-  x = latest_data$adtte,
-  code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adtte"
+  x = example_cdisc_data("ADTTE"),
+  code = "library(teal.data)\nADTTE <- example_cdisc_data(\"ADTTE\")"
 )
 
 rd <- teal.data:::TealData$new(adsl, adtte)
 get_raw_data(rd)
 
 # TealDataConnector --------
-library(scda)
-adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
-adlb <- scda_cdisc_dataset_connector(dataname = "ADLB", "adlb")
+pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
+adsl_connector <- dataset_connector(dataname = "ADSL",
+                                    pull_callable = callable_function(fun = pull_adsl) \%>\% # nolint
+                                      set_args(list(ADSL = as.name("ADSL"))),
+                                    keys = get_cdisc_keys("ADSL"),
+                                    label = "ADSL connector")
+
+pull_adlb <- function(ADLB, n) ADSL <- head(teal.data::rADLB, n)
+adlb_connector <- dataset_connector(dataname = "ADLB",
+                                    pull_callable = callable_function(fun = pull_adlb) \%>\% # nolint
+                                      set_args(list(ADLB = as.name("ADLB"))),
+                                    keys = get_cdisc_keys("ADLB"),
+                                    label = "ADLB connector")
 
 open_fun <- callable_function(library)
-open_fun$set_args(list(package = "scda"))
+open_fun$set_args(list(package = "teal.data"))
 
 con <- data_connection(open_fun = open_fun)
 con$set_open_server(
@@ -89,14 +95,14 @@ con$set_open_server(
   }
 )
 
-rdc <- relational_data_connector(connection = con, connectors = list(adsl, adlb))
+rdc <- relational_data_connector(connection = con, connectors = list(adsl_connector, adlb_connector))
 
 rdc$set_ui(
   function(id, connection, connectors) {
     ns <- NS(id)
     tagList(
       connection$get_open_ui(ns("open_connection")),
-      textInput(ns("name"), p("Choose", code("scda data version")), value = "latest"),
+      numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1),
       do.call(
         what = "tagList",
         args = lapply(
@@ -124,7 +130,7 @@ rdc$set_server(
         connection$get_open_server()(id = "open_connection", connection = connection)
         if (connection$is_opened()) {
           for (connector in connectors) {
-            set_args(connector, args = list(name = input$name))
+            set_args(connector, args = list(n = input$n))
             # pull each dataset
             connector$get_server()(id = connector$get_dataname())
             if (connector$is_failed()) {

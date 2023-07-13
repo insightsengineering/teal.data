@@ -23,3 +23,6 @@ usethis::use_data(rADTR)
 
 rADTTE <- synthetic_cdisc_data("latest")$adtte # nolint
 usethis::use_data(rADTTE)
+
+rADVS <- synthetic_cdisc_data("latest")$advs # nolint
+usethis::use_data(rADVS)

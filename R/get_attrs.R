@@ -18,8 +18,7 @@ get_attrs <- function(x) {
 #' @examples
 #' # TealDataset --------
 #'
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #'
 #' x1 <- dataset("ADSL", x = ADSL, label = "custom label")
 #' get_attrs(x1)
@@ -34,8 +33,7 @@ get_attrs <- function(x) {
 #'
 #' # CDISCTealDataset --------
 #'
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' x3 <- cdisc_dataset(
 #'   "ADSL",
 #'   x = ADSL,
