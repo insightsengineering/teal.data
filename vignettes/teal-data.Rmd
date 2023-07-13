@@ -34,7 +34,6 @@ my_data <- cdisc_data(
 For more general data use the `teal_data` and `dataset` functions:
 
 ```{r}
-
 my_general_data <- teal_data(
   dataset("iris", iris),
   dataset("mtcars", mtcars)

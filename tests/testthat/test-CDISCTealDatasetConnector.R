@@ -1,13 +1,14 @@
-
 # Single dataset connector ----
 testthat::test_that("Single dataset connector", {
   # create object
   pull_adsl <- function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n)
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = pull_adsl) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = pull_adsl) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   default_ui <- adsl$get_ui("main-app")
   adsl$set_ui_input(function(ns) {
     list(numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1))
@@ -37,7 +38,7 @@ testthat::test_that("Single dataset connector", {
   # check reproducible code
   testthat::expect_equal(
     adsl$get_code(),
-    'ADSL <- (function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)'
+    "ADSL <- (function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
   )
 })
 
@@ -67,4 +68,3 @@ testthat::test_that("TealDatasetConnector$print prints out expected output of cl
     )
   )
 })
-

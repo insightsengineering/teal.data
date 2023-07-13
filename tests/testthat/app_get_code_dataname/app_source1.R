@@ -1,4 +1,3 @@
-
 # code ADSL ADTTE>
 ADSL <- example_cdisc_data("ADSL") # nolint
 # <ADSL ADTTE code

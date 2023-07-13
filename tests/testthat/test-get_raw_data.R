@@ -1,4 +1,3 @@
-
 testthat::test_that("get_raw_data validates the argument dataname", {
   x <- dataset(dataname = "head_iris", x = head(iris))
 

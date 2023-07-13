@@ -101,7 +101,6 @@ get_datasets(delayed_data)
 Note that when a connector is loaded, the result is a dataset object:
 
 ```{r}
-
 # "CDISCTealDatasetConnector" "TealDatasetConnector" "R6"
 class(adsl)
 

@@ -126,11 +126,13 @@ testthat::test_that("TealData$get_connectors returns a list with the numbers of 
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
   mtcars_ds1 <- TealDataset$new("cars1", head(mtcars), code = "cars1 <- head(mtcars)")
   data <- TealData$new(adsl_data, mtcars_ds1, check = TRUE)
@@ -152,11 +154,13 @@ testthat::test_that("TealData$get_items returns the content of the passed TealDa
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
 
   adsl_data <- example_data_connector(adsl)
   data <- TealData$new(adsl_data, check = TRUE)
@@ -380,11 +384,13 @@ testthat::test_that("TealData with single dataset and connector", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
 
   adtte <- dataset(
@@ -474,11 +480,13 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     return(x)
   }
 
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
 
   adtte <- dataset(
@@ -495,22 +503,26 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     )
   })
 
-  advs <- dataset_connector(dataname = "ADVS",
-                            pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
-                              set_args(list(ADVS = as.name("ADVS"))),
-                            keys = get_cdisc_keys("ADVS"),
-                            label = "ADVS connector")
+  advs <- dataset_connector(
+    dataname = "ADVS",
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+      set_args(list(ADVS = as.name("ADVS"))),
+    keys = get_cdisc_keys("ADVS"),
+    label = "ADVS connector"
+  )
   advs$set_ui_input(function(ns) {
     list(
       numericInput(inputId = ns("seed"), label = "Example UI", min = 0, value = 4)
     )
   })
 
-  adlb <- dataset_connector(dataname = "ADLB",
-                            pull_callable = callable_function(fun = function(ADLB, n) ADLB <- head(teal.data::rADLB, n)) %>% # nolint
-                              set_args(list(ADLB = as.name("ADLB"))),
-                            keys = get_cdisc_keys("ADLB"),
-                            label = "ADLB connector")
+  adlb <- dataset_connector(
+    dataname = "ADLB",
+    pull_callable = callable_function(fun = function(ADLB, n) ADLB <- head(teal.data::rADLB, n)) %>% # nolint
+      set_args(list(ADLB = as.name("ADLB"))),
+    keys = get_cdisc_keys("ADLB"),
+    label = "ADLB connector"
+  )
 
   advs_adlb_data <- example_data_connector(advs, adlb)
 
@@ -597,23 +609,29 @@ testthat::test_that("Multiple connectors", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- dataset_connector(dataname = "ADSL",
-                            pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
-                              set_args(list(ADSL = as.name("ADSL"))),
-                            keys = get_cdisc_keys("ADSL"),
-                            label = "ADSL connector")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
 
-  adae <- dataset_connector(dataname = "ADAE",
-                            pull_callable = callable_function(fun = function(ADAE, n) ADAE <- head(teal.data::rADAE, n)) %>% # nolint
-                              set_args(list(ADAE = as.name("ADAE"))),
-                            keys = get_cdisc_keys("ADAE"),
-                            label = "ADAE connector")
+  adae <- dataset_connector(
+    dataname = "ADAE",
+    pull_callable = callable_function(fun = function(ADAE, n) ADAE <- head(teal.data::rADAE, n)) %>% # nolint
+      set_args(list(ADAE = as.name("ADAE"))),
+    keys = get_cdisc_keys("ADAE"),
+    label = "ADAE connector"
+  )
 
-  advs <- dataset_connector(dataname = "ADVS",
-                            pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
-                              set_args(list(ADVS = as.name("ADVS"))),
-                            keys = get_cdisc_keys("ADVS"),
-                            label = "ADVS connector")
+  advs <- dataset_connector(
+    dataname = "ADVS",
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+      set_args(list(ADVS = as.name("ADVS"))),
+    keys = get_cdisc_keys("ADVS"),
+    label = "ADVS connector"
+  )
 
   adsl_2 <- code_dataset_connector("ADSL_2",
     code = "ADSL",

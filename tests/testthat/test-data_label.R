@@ -47,6 +47,7 @@ testthat::test_that("get_cdisc_keys returns column names present in the cached d
 
   sapply(seq_along(datasets), function(x) {
     testthat::expect_true(
-      all(get_cdisc_keys(datasets[x]) %in% names(example_cdisc_data(datasets[x])))      )
+      all(get_cdisc_keys(datasets[x]) %in% names(example_cdisc_data(datasets[x])))
+    )
   })
 })
