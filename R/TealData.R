@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
-#' adlb_cf <- callable_function(function() example_cdisc_data("ADLB")))
+#' adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
 #' adrs_cf <- callable_function(function() example_cdisc_data("ADRS"))
 #' adtte_cf <- callable_function(function() example_cdisc_data("ADTTE"))
 #' x1 <- cdisc_dataset_connector("ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))

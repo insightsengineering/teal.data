@@ -410,8 +410,8 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
 #' @examples
 #' # TealData ----
 #'
-#' ADSL <- teal.data::example_cdisc_data("adsl")
-#' ADRS <- teal.data::example_cdisc_data("adrs")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
+#' ADRS <- teal.data::example_cdisc_data("ADRS")
 #'
 #' x <- cdisc_data(
 #'   cdisc_dataset("ADSL", ADSL),

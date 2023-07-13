@@ -30,7 +30,6 @@ Once your delayed data object has been created as described in [Delayed Data Obj
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
 
 ```{r, message=FALSE}
-library(scda)
 library(teal.data)
 
 adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
@@ -80,7 +79,7 @@ method:
 
 ```{r}
 adae$set_ui_input(function(ns) {
-  list(pickerInput("name", label = "Version of the dataset", choices = ls_synthetic_cdisc_data(), selected = "latest"))
+  list(numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 5))
 })
 ```
 
@@ -138,7 +137,6 @@ The examples above covered some basic piping, but there is a natural sequence to
 
 ```{r}
 library(teal.data)
-library(scda)
 library(magrittr)
 
 adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))

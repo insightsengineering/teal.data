@@ -16,7 +16,6 @@ When creating apps which do not use `DDL`, once the datasets are created there i
 * `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
 
 ```{r, message=FALSE}
-library(scda)
 library(teal.data)
 library(magrittr)
 
@@ -190,7 +189,7 @@ cdisc_dataset("ADSL", adsl) %>% get_code() # no reproducible code
 
 # provide the code to reproduce the data:
 cdisc_dataset("ADSL", adsl,
-  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  code = "ADSL <- example_cdisc_data(\"ADSL\")"
 ) %>%
   get_code()
 
@@ -199,7 +198,7 @@ adae <- example_cdisc_data("ADAE")
 adsl_adae <- cdisc_data(
   cdisc_dataset("ADSL", adsl),
   cdisc_dataset("ADAE", adae),
-  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADAE <- synthetic_cdisc_data(\"latest\")$adae"
+  code = "ADSL <- example_cdisc_data(\"ADSL\")\nADAE <- example_cdisc_data(\"ADAE\")"
 )
 
 adsl_adae %>%
@@ -213,8 +212,8 @@ adsl_adae %>%
 
 # this can be avoided by storing the code like so:
 adsl_adae <- cdisc_data(
-  cdisc_dataset("ADSL", adsl, code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"),
-  cdisc_dataset("ADAE", adae, code = "ADAE <- synthetic_cdisc_data(\"latest\")$adsl")
+  cdisc_dataset("ADSL", adsl, code = "ADSL <- example_cdisc_data(\"ADSL\")"),
+  cdisc_dataset("ADAE", adae, code = "ADAE <- example_cdisc_data(\"ADAE\")")
 )
 
 adsl_adae %>%

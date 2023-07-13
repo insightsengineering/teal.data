@@ -37,7 +37,7 @@ get_datasets <- function(x) {
 #'   pull_callable = adsl_cf,
 #'   keys = get_cdisc_keys("ADSL")
 #' )
-#' adlb_cf <- callable_function(function() example_cdisc_data("ADLB")))
+#' adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
 #' adlb <- cdisc_dataset_connector(
 #'   dataname = "ADLB",
 #'   pull_callable = adlb_cf,

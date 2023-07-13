@@ -10,15 +10,15 @@ open/close connection.
 }
 \examples{
 ###ask
+library(magrittr)
 pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
 adsl_connector <- dataset_connector(dataname = "ADSL",
                                     pull_callable = callable_function(fun = pull_adsl) \%>\% # nolint
                                       set_args(list(ADSL = as.name("ADSL"))),
                                     keys = get_cdisc_keys("ADSL"),
                                     label = "ADSL connector")
-)
 
-pull_adlb <- function(ADLB, n) ADSL <- head(teal.data::rADLB, n)
+pull_adlb <- function(ADLB, n) ADLB <- head(teal.data::rADLB, n)
 adlb_connector <- dataset_connector(dataname = "ADLB",
                                     pull_callable = callable_function(fun = pull_adlb) \%>\% # nolint
                                       set_args(list(ADLB = as.name("ADLB"))),
@@ -41,7 +41,8 @@ con$set_open_server(
   }
 )
 
-x <- teal.data:::TealDataConnector$new(connection = con, connectors = list(adsl_connector, adlb_connector))
+x <- teal.data:::TealDataConnector$new(connection = con,
+                                       connectors = list(adsl_connector, adlb_connector))
 
 x$set_ui(
   function(id, connection, connectors) {

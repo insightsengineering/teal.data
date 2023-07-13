@@ -1,13 +1,16 @@
 #' This function returns a dummy dataset for testing examples and should only be used within `teal.data`.
+#'
 #' It is not meant to retrieve the SCDA dataset, and the dataset itself is not maintained here.
+#'
 #' This function creates a copy of the SCDA data for testing purposes.
-
-#' Get dummy CDISC data
 #'
 #' CDISC data includes `ADSL`, `ADAE`, `ADLB`, `ADCM`, `ADEX`, `ADRS`, `ADTR` and `ADTTE`.
 #'
+#' @param dataname name of the `CDISC` dataset
+#'
 #' @return `cdisc_data`
-#' @keywords internal
+#'
+#' @export
 example_cdisc_data <- function(dataname) {
   # Define the available datasets
   datasets <- c("ADSL", "ADAE", "ADLB", "ADCM", "ADEX", "ADRS", "ADTR", "ADTTE", "ADVS")

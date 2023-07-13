@@ -64,7 +64,6 @@ reference:
       - rds_dataset_connector
       - relational_data_connector
       - cdisc_dataset_connector
-      - scda_dataset_connector
       - script_cdisc_dataset_connector
       - script_dataset_connector
   - title: Delayed Data Constructors

@@ -18,7 +18,6 @@ Including the preprocessing code is an important step that is handled by `teal.d
 
 For example, for the following example only `ADSL <- readRDS("<your data path>/adsl.rds")` is considered as preprocessing code:
 ```{r, message=FALSE}
-library(scda)
 library(teal.data)
 saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 
@@ -32,7 +31,7 @@ data$get_code()
 If you run the example above, the `get_code` function will return an empty string reflecting that "Preprocessing is empty". In order to show the preprocessing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the above example this would be:
 
 ```{r, message=FALSE}
-library(scda)
+library(teal.data)
 saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 
 ## preprocessing -------------------

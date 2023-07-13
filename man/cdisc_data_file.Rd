@@ -24,7 +24,7 @@ file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
 
-     # code>
+     "# code>
      ADSL <- example_cdisc_data('ADSL')
      ADTTE <- example_cdisc_data('ADTTE')
 

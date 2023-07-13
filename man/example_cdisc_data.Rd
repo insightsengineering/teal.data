@@ -2,17 +2,21 @@
 % Please edit documentation in R/dummy_function.R
 \name{example_cdisc_data}
 \alias{example_cdisc_data}
-\title{This function returns a dummy dataset for testing examples and should only be used within \code{teal.data}.
-It is not meant to retrieve the SCDA dataset, and the dataset itself is not maintained here.
-This function creates a copy of the SCDA data for testing purposes.
-Get dummy CDISC data}
+\title{This function returns a dummy dataset for testing examples and should only be used within \code{teal.data}.}
 \usage{
 example_cdisc_data(dataname)
+}
+\arguments{
+\item{dataname}{name of the \code{CDISC} dataset}
 }
 \value{
 \code{cdisc_data}
 }
 \description{
+It is not meant to retrieve the SCDA dataset, and the dataset itself is not maintained here.
+}
+\details{
+This function creates a copy of the SCDA data for testing purposes.
+
 CDISC data includes \code{ADSL}, \code{ADAE}, \code{ADLB}, \code{ADCM}, \code{ADEX}, \code{ADRS}, \code{ADTR} and \code{ADTTE}.
 }
-\keyword{internal}

@@ -18,7 +18,7 @@ set_args <- function(x, args) {
 #' @examples
 #' ## Using CallableFunction
 #' fun <- callable_function(example_cdisc_data)
-#' set_args(fun, list(df = "adsl"))
+#' set_args(fun, list(dataname = "ADSL"))
 set_args.CallableFunction <- function(x, args) {
   x$set_args(args)
   return(invisible(x))

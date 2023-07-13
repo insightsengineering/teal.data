@@ -30,7 +30,7 @@ Set arguments of a \code{CallableFunction}
 \examples{
 ## Using CallableFunction
 fun <- callable_function(example_cdisc_data)
-set_args(fun, list(df = "adsl"))
+set_args(fun, list(dataname = "ADSL"))
 ## Using CallableCode
 code <- callable_code("example_cdisc_data()")
 set_args(code, list(df = "adsl"))

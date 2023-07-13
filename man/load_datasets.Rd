@@ -103,7 +103,7 @@ adsl <- cdisc_dataset_connector(
 )
 adlb_cf <- callable_function(
   function() {
-    example_cdisc_data("ADLB"))
+    example_cdisc_data("ADLB")
   }
 )
 adlb <- cdisc_dataset_connector(

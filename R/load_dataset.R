@@ -185,7 +185,7 @@ load_datasets.TealDataConnector <- function(x, ...) { # nolint
 #' )
 #' adlb_cf <- callable_function(
 #'   function() {
-#'     example_cdisc_data("ADLB"))
+#'     example_cdisc_data("ADLB")
 #'   }
 #' )
 #' adlb <- cdisc_dataset_connector(

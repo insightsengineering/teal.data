@@ -146,7 +146,7 @@ testthat::test_that("csv_dataset_connector not expected input", {
 })
 
 # test with cdisc data input
-testthat::test_that("csv_dataset_connector scda", {
+testthat::test_that("csv_dataset_connector", {
   # create csv file
   adsl <- example_cdisc_data("ADSL")
   temp_file_csv <- tempfile(fileext = ".csv")
@@ -294,7 +294,7 @@ testthat::test_that("csv_dataset_connector attritubes", {
 })
 
 # test csv_cdisc_dataset_connector
-testthat::test_that("csv_cdisc_dataset_connector scda", {
+testthat::test_that("csv_cdisc_dataset_connector", {
   # create csv file
   adsl <- example_cdisc_data("ADSL")
   temp_file_csv <- tempfile(fileext = ".csv")

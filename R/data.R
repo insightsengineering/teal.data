@@ -101,3 +101,16 @@
 #' @source internal
 #' @name rADTTE
 "rADTTE"
+
+#' Random data `rADVS`
+#'
+#' @description Random data `rADVS`
+#' @docType data
+#'
+#' @usage rADVS
+#'
+#' @keywords datasets internal
+#'
+#' @source internal
+#' @name rADVS
+"rADVS"
