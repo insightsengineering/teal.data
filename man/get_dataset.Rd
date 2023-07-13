@@ -62,13 +62,13 @@ get_dataset(x)
 # TealData  (not containing connectors) --------
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = example_cdisc_data('ADSL'),
+  x = example_cdisc_data("ADSL"),
   code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 
 adae <- cdisc_dataset(
   dataname = "ADAE",
-  x = example_cdisc_data('ADAE'),
+  x = example_cdisc_data("ADAE"),
   code = "library(teal.data)\nADAE <- example_cdisc_data(\"ADAE\")"
 )
 
