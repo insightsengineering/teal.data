@@ -21,8 +21,7 @@ load_dataset <- function(x, ...) {
 #' @examples
 #'
 #' # TealDataset --------
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' ADSL_dataset <- dataset("ADSL", x = ADSL)
 #'
 #' load_dataset(ADSL_dataset)
@@ -36,10 +35,9 @@ load_dataset.TealDataset <- function(x, ...) { # nolint
 #' @examples
 #'
 #' # TealDatasetConnector --------
-#' library(scda)
 #' pull_fun_adsl <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' adsl <- dataset_connector("ADSL", pull_fun_adsl)
@@ -48,7 +46,7 @@ load_dataset.TealDataset <- function(x, ...) { # nolint
 #'
 #' pull_fun_adae <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adae
+#'     example_cdisc_data("ADAE")
 #'   }
 #' )
 #' adae <- dataset_connector("ADAE", pull_fun_adae)
@@ -93,8 +91,7 @@ load_datasets <- function(x, ...) {
 #' @examples
 #'
 #' # TealDataset ------
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' x <- dataset("ADSL", x = ADSL)
 #'
 #' load_datasets(x)
@@ -108,10 +105,9 @@ load_datasets.TealDataset <- function(x, ...) { # nolint
 #' @examples
 #'
 #' # TealDatasetConnector ------
-#' library(scda)
 #' pull_fun_adsl <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' adsl <- dataset_connector("ADSL", pull_fun_adsl)
@@ -120,7 +116,7 @@ load_datasets.TealDataset <- function(x, ...) { # nolint
 #'
 #' pull_fun_adae <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adae
+#'     example_cdisc_data("ADAE")
 #'   }
 #' )
 #' adae <- dataset_connector("ADAE", pull_fun_adae)
@@ -138,10 +134,9 @@ load_datasets.TealDatasetConnector <- function(x, args = NULL, try = FALSE, ...)
 #' @examples
 #'
 #' # TealDataConnector --------
-#' library(scda)
 #' adsl_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' adsl <- cdisc_dataset_connector(
@@ -151,7 +146,7 @@ load_datasets.TealDatasetConnector <- function(x, args = NULL, try = FALSE, ...)
 #' )
 #' adrs_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adrs
+#'     example_cdisc_data("ADRS")
 #'   }
 #' )
 #' adrs <- cdisc_dataset_connector(
@@ -178,10 +173,9 @@ load_datasets.TealDataConnector <- function(x, ...) { # nolint
 #' @examples
 #'
 #' # TealData --------
-#' library(scda)
 #' adsl_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' adsl <- cdisc_dataset_connector(
@@ -191,7 +185,7 @@ load_datasets.TealDataConnector <- function(x, ...) { # nolint
 #' )
 #' adlb_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adlb
+#'     example_cdisc_data("ADLB")
 #'   }
 #' )
 #' adlb <- cdisc_dataset_connector(
@@ -201,7 +195,7 @@ load_datasets.TealDataConnector <- function(x, ...) { # nolint
 #' )
 #' adrs_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adrs
+#'     example_cdisc_data("ADRS")
 #'   }
 #' )
 #' adrs <- cdisc_dataset_connector(

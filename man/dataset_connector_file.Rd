@@ -35,9 +35,8 @@ file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "library(teal.data)
-     library(scda)
 
-     pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+     pull_callable <- callable_function(function() {teal.data::rADSL})
      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example
@@ -49,9 +48,8 @@ file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "library(teal.data)
-     library(scda)
 
-     pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+     pull_callable <- callable_function(function() {teal.data::rADSL})
      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example

@@ -9,8 +9,7 @@
 #' @export
 #'
 #' @examples
-#' library(scda)
-#' data_label(synthetic_cdisc_data("latest")$adsl)
+#' data_label(example_cdisc_data("ADSL"))
 data_label <- function(data) {
   attr(data, "label")
 }
@@ -27,8 +26,7 @@ data_label <- function(data) {
 #' @export
 #'
 #' @examples
-#' library(scda)
-#' x <- synthetic_cdisc_data("latest")$adsl
+#' x <- example_cdisc_data("ADSL")
 #' data_label(x) <- "My custom label"
 #' data_label(x)
 `data_label<-` <- function(x, value) { # nolint

@@ -20,13 +20,23 @@ list with dataset connectors}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
+library(magrittr)
+pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
+adsl_connector <- dataset_connector(dataname = "ADSL",
+                                    pull_callable = callable_function(fun = pull_adsl) \%>\% # nolint
+                                      set_args(list(ADSL = as.name("ADSL"))),
+                                    keys = get_cdisc_keys("ADSL"),
+                                    label = "ADSL connector")
 
-library(scda)
-adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
-adlb <- scda_cdisc_dataset_connector(dataname = "ADLB", "adlb")
+pull_adlb <- function(ADLB, n) ADLB <- head(teal.data::rADLB, n)
+adlb_connector <- dataset_connector(dataname = "ADLB",
+                                    pull_callable = callable_function(fun = pull_adlb) \%>\% # nolint
+                                      set_args(list(ADLB = as.name("ADLB"))),
+                                    keys = get_cdisc_keys("ADLB"),
+                                    label = "ADLB connector")
 
 open_fun <- callable_function(library)
-open_fun$set_args(list(package = "scda"))
+open_fun$set_args(list(package = "teal.data"))
 
 con <- data_connection(open_fun = open_fun)
 con$set_open_server(
@@ -41,14 +51,14 @@ con$set_open_server(
   }
 )
 
-x <- relational_data_connector(connection = con, connectors = list(adsl, adlb))
+x <- relational_data_connector(connection = con, connectors = list(adsl_connector, adlb_connector))
 
 x$set_ui(
   function(id, connection, connectors) {
     ns <- NS(id)
     tagList(
       connection$get_open_ui(ns("open_connection")),
-      textInput(ns("name"), p("Choose", code("scda data version")), value = "latest"),
+      numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1),
       do.call(
         what = "tagList",
         args = lapply(
@@ -76,7 +86,7 @@ x$set_server(
         connection$get_open_server()(id = "open_connection", connection = connection)
         if (connection$is_opened()) {
           for (connector in connectors) {
-            set_args(connector, args = list(archive_name = input$name))
+            set_args(connector, args = list(n = input$n))
             # pull each dataset
             connector$get_server()(id = connector$get_dataname())
             if (connector$is_failed()) {

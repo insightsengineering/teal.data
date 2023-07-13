@@ -43,13 +43,10 @@ testthat::test_that("get_labels' column_labels is a named vector of the labels o
 })
 
 testthat::test_that("get_cdisc_keys returns column names present in the cached datasets", {
-  scda_data <- scda::synthetic_cdisc_data("latest")
-
-  datasets <- c("ADSL", "ADAE", "ADTTE", "ADCM", "ADLB", "ADRS", "ADVS")
-  datasets_small <- c("adsl", "adae", "adtte", "adcm", "adlb", "adrs", "advs")
+  datasets <- c("ADSL", "ADAE", "ADTTE", "ADLB", "ADRS", "ADVS")
 
   sapply(seq_along(datasets), function(x) {
     testthat::expect_true(
-      all(get_cdisc_keys(datasets[x]) %in% names(scda_data[[datasets_small[x]]])))
+      all(get_cdisc_keys(datasets[x]) %in% names(example_cdisc_data(datasets[x])))      )
   })
 })

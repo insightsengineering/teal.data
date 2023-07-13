@@ -40,17 +40,15 @@ shiny application - it returns shiny server module.
 \examples{
 
 # TealDataset ------
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- example_cdisc_data("ADSL")
 x <- dataset("ADSL", x = ADSL)
 
 load_datasets(x)
 
 # TealDatasetConnector ------
-library(scda)
 pull_fun_adsl <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 adsl <- dataset_connector("ADSL", pull_fun_adsl)
@@ -59,17 +57,16 @@ get_dataset(adsl)
 
 pull_fun_adae <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adae
+    example_cdisc_data("ADAE")
   }
 )
 adae <- dataset_connector("ADAE", pull_fun_adae)
 load_datasets(adae)
 
 # TealDataConnector --------
-library(scda)
 adsl_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 adsl <- cdisc_dataset_connector(
@@ -79,7 +76,7 @@ adsl <- cdisc_dataset_connector(
 )
 adrs_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adrs
+    example_cdisc_data("ADRS")
   }
 )
 adrs <- cdisc_dataset_connector(
@@ -94,10 +91,9 @@ load_datasets(rdc)
 }
 
 # TealData --------
-library(scda)
 adsl_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 adsl <- cdisc_dataset_connector(
@@ -107,7 +103,7 @@ adsl <- cdisc_dataset_connector(
 )
 adlb_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adlb
+    example_cdisc_data("ADLB")
   }
 )
 adlb <- cdisc_dataset_connector(
@@ -117,7 +113,7 @@ adlb <- cdisc_dataset_connector(
 )
 adrs_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adrs
+    example_cdisc_data("ADRS")
   }
 )
 adrs <- cdisc_dataset_connector(

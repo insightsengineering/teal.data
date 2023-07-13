@@ -1,5 +1,3 @@
-library(scda)
-
 cc <- CodeClass$new()
 
 test_that("Basic example CodeClass", {
@@ -15,7 +13,7 @@ test_that("Basic example CodeClass", {
   )
 })
 
-cc$set_code(c("ADSL <- synthetic_cdisc_data(\"latest\")$adsl", "ADSL$var <- 1"), "ADSL")
+cc$set_code(c("ADSL <- example_cdisc_data(\"ADSL\")", "ADSL$var <- 1"), "ADSL")
 cc$set_code("ADSL$a <- foo()", "ADSL")
 
 cc$set_code("ADSL_2 <- head(ADSL, 5)", "ADSL_2", deps = "ADSL")
@@ -29,7 +27,7 @@ test_that("example datasets", {
     cc$get_code("ADSL"),
     paste0(
       "foo <- function() {\n    1\n}\nfoo2 <- function() {\n    2\n}\n",
-      "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADSL$var <- 1\nADSL$a <- foo()"
+      "ADSL <- example_cdisc_data(\"ADSL\")\nADSL$var <- 1\nADSL$a <- foo()"
     )
   )
 })
@@ -53,7 +51,7 @@ test_that("example datasets deps", {
 #########################################
 
 x1 <- CodeClass$new()
-x1$set_code("ADSL <- synthetic_cdisc_data(\"latest\")$adsl", "ADSL")
+x1$set_code("ADSL <- example_cdisc_data(\"ADSL\")", "ADSL")
 
 x2 <- CodeClass$new()
 x2$set_code("ADSL_2 <- head(ADSL, 5)", "ADSL_2", "ADSL")
@@ -73,7 +71,7 @@ test_that("CodeClass append", {
 
 
 x3 <- CodeClass$new()
-x3$set_code("ADRS <- synthetic_cdisc_data(\"latest\")$adrs", "ADRS")
+x3$set_code("ADRS <- example_cdisc_data(\"ADRS\")", "ADRS")
 x$append(x3)
 
 
@@ -81,8 +79,8 @@ test_that("CodeClass append deps", {
   expect_identical(
     x$get_code(),
     paste0(
-      "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADSL_2 <- head(ADSL, 5)\n",
-      "ADRS <- synthetic_cdisc_data(\"latest\")$adrs"
+      "ADSL <- example_cdisc_data(\"ADSL\")\nADSL_2 <- head(ADSL, 5)\n",
+      "ADRS <- example_cdisc_data(\"ADRS\")"
     )
   )
 })
@@ -94,18 +92,18 @@ test_that("CodeClass append deps", {
   expect_identical(
     x$get_code("ADRS"),
     paste0(
-      "ADSL <- synthetic_cdisc_data(\"latest\")$adsl\nADRS <- synthetic_cdisc_data(\"latest\")$adrs\n",
+      "ADSL <- example_cdisc_data(\"ADSL\")\nADRS <- example_cdisc_data(\"ADRS\")\n",
       "ADRS$x <- foo(ADSL$x)\n"
     )
   )
   expect_equal(x$get_code("ADRS", deparse = FALSE), list(
-    rlang::expr(ADSL <- synthetic_cdisc_data("latest")$adsl), # nolint
-    rlang::expr(ADRS <- synthetic_cdisc_data("latest")$adrs), # nolint
+    rlang::expr(ADSL <- example_cdisc_data("ADSL")), # nolint
+    rlang::expr(ADRS <- example_cdisc_data("ADRS")), # nolint
     rlang::expr(ADRS$x <- foo(ADSL$x)) # nolint
   ))
   expect_identical(
     x$get_code("ADSL"),
-    "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+    "ADSL <- example_cdisc_data(\"ADSL\")"
   )
 })
 
@@ -147,10 +145,26 @@ test_that("Exception handling with dataname of *xyz", {
 
 
 test_that("CodeClass list_to_code_class", {
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
-  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
+  pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
+  adsl <- dataset_connector(dataname = "ADSL",
+                            pull_callable = callable_function(fun = pull_adsl) %>% # nolint
+                              set_args(list(ADSL = as.name("ADSL"))),
+                            keys = get_cdisc_keys("ADSL"),
+                            label = "ADSL connector")
+
+  pull_adae <- function(ADAE, n) ADSL <- head(teal.data::rADAE, n)
+  adae <- dataset_connector(dataname = "ADAE",
+                            pull_callable = callable_function(fun = pull_adae) %>% # nolint
+                              set_args(list(ADAE = as.name("ADAE"))),
+                            keys = get_cdisc_keys("ADAE"),
+                            label = "ADAE connector")
+
   adaem <- adae %>% mutate_dataset("ADAE$vv=nrow(ADSL); attr(ADSL$vv, 'label') <- 'vv'", vars = list(ADSL = adsl))
-  adae <- scda_cdisc_dataset_connector("ADAE", "adae")
+  adae <- dataset_connector(dataname = "ADAE",
+                            pull_callable = callable_function(fun = pull_adae) %>% # nolint
+                              set_args(list(ADAE = as.name("ADAE"))),
+                            keys = get_cdisc_keys("ADAE"),
+                            label = "ADAE connector")
   adaem2 <- adae %>% mutate_dataset("ADAE$vv=nrow(ADSL); attr(ADSL$vv, 'label') <- 'vv'", vars = list(ADSL = ""))
   expect_true(inherits(adaem$get_code_class(), "CodeClass"))
   expect_true(inherits(adaem2$get_code_class(), "CodeClass"))

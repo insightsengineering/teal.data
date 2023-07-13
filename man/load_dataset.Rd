@@ -35,17 +35,15 @@ Load data from connection. Function used on \code{\link{TealDatasetConnector}} a
 \examples{
 
 # TealDataset --------
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- example_cdisc_data("ADSL")
 ADSL_dataset <- dataset("ADSL", x = ADSL)
 
 load_dataset(ADSL_dataset)
 
 # TealDatasetConnector --------
-library(scda)
 pull_fun_adsl <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 adsl <- dataset_connector("ADSL", pull_fun_adsl)
@@ -54,7 +52,7 @@ get_dataset(adsl)
 
 pull_fun_adae <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adae
+    example_cdisc_data("ADAE")
   }
 )
 adae <- dataset_connector("ADAE", pull_fun_adae)

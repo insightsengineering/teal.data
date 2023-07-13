@@ -19,13 +19,12 @@ get_keys <- function(x, ...) {
 #' @examples
 #' # TealDataset --------
 #'
-#' library(scda)
 #' get_keys(
 #'   dataset(
 #'     "ADSL",
-#'     synthetic_cdisc_data("latest")$adsl,
+#'     example_cdisc_data("ADSL"),
 #'     keys = get_cdisc_keys("ADSL"),
-#'     code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+#'     code = "ADSL <- teal.data::rADSL"
 #'   )
 #' )
 get_keys.TealDataset <- function(x, ...) {
@@ -38,10 +37,9 @@ get_keys.TealDataset <- function(x, ...) {
 #' @examples
 #' # TealDatasetConnector --------
 #'
-#' library(scda)
 #' pull_fun_adsl <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' get_keys(

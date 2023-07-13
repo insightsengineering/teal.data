@@ -27,15 +27,17 @@ Used to mutate dataset connector objects with python code. See
 }
 \examples{
 \dontrun{
-library(scda)
 library(reticulate)
 library(magrittr)
 
 # mutate dataset object
 
-ADSL <- synthetic_cdisc_data("latest")$adsl
-
-x <- scda_cdisc_dataset_connector("ADSL", "adsl")
+ADSL <- teal.data::rADSL
+pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
+x <- dataset_connector(dataname = "ADSL",
+                       pull_callable = callable_function(fun = pull_adsl),
+                       keys = get_cdisc_keys("ADSL"),
+                       label = "Example label")
 
 x \%>\% mutate_dataset(python_code("import pandas as pd
 r.ADSL = pd.DataFrame({'x': [1]})"))
@@ -47,9 +49,22 @@ x$get_raw_data()
 # mutate data object
 
 y <- 8
+ADLB <- teal.data::rADLB
+pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
+adsl_connector <- dataset_connector(dataname = "ADSL",
+                                    pull_callable = callable_function(fun = pull_adsl) \%>\% # nolint
+                                      set_args(list(ADSL = as.name("ADSL"))),,
+                                    keys = get_cdisc_keys("ADSL"),
+                                    label = "ADSL connector")
+pull_adlb <- function(ADLB) ADLB <- teal.data::rADLB
+adlb_connector <- dataset_connector(dataname = "ADLB",
+                                    pull_callable = callable_function(fun = pull_adlb) \%>\% # nolint
+                                      set_args(list(ADLB = as.name("ADLB"))),
+                                    keys = get_cdisc_keys("ADLB"),
+                                    label = "ADLB connector")
 tc <- cdisc_data(
-  scda_cdisc_dataset_connector("ADSL", "adsl"),
-  scda_cdisc_dataset_connector("ADLB", "adlb")
+  adsl_connector,
+  adlb_connector
 )
 
 tc \%>\% mutate_data(python_code("import pandas as pd

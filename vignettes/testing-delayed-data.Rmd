@@ -30,10 +30,9 @@ Once your delayed data object has been created as described in [Delayed Data Obj
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
 
 ```{r, message=FALSE}
-library(scda)
 library(teal.data)
 
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -41,7 +40,7 @@ adsl <- cdisc_dataset_connector(
 )
 get_dataname(adsl) # "ADSL"
 
-adae_cf <- callable_function(function() synthetic_cdisc_data("latest")$adae)
+adae_cf <- callable_function(function() example_cdisc_data("ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -80,7 +79,7 @@ method:
 
 ```{r}
 adae$set_ui_input(function(ns) {
-  list(pickerInput("name", label = "Version of the dataset", choices = ls_synthetic_cdisc_data(), selected = "latest"))
+  list(numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 5))
 })
 ```
 
@@ -138,10 +137,9 @@ The examples above covered some basic piping, but there is a natural sequence to
 
 ```{r}
 library(teal.data)
-library(scda)
 library(magrittr)
 
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,

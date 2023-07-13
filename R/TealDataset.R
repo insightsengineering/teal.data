@@ -333,7 +333,6 @@ TealDataset <- R6::R6Class( # nolint
     #' @return (`self`) invisibly for chaining
     set_code = function(code) {
       checkmate::assert_character(code, max.len = 1, any.missing = FALSE)
-
       if (length(code) > 0 && code != "") {
         private$code$set_code(
           code = code,
@@ -829,9 +828,8 @@ TealDataset <- R6::R6Class( # nolint
 #' dataset("iris", iris)
 #'
 #' # Example with more arguments
-#' library(scda)
 #' \dontrun{
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL)
 #'
 #' ADSL_dataset$get_dataname()
@@ -840,8 +838,7 @@ TealDataset <- R6::R6Class( # nolint
 #'   dataname = "ADSL",
 #'   x = ADSL,
 #'   label = "AdAM subject-level dataset",
-#'   code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl",
-#'   metadata = list(type = "synthetic data")
+#'   code = "ADSL <- example_cdisc_data(\"ADSL\")"
 #' )
 #' ADSL_dataset$get_metadata()
 #' ADSL_dataset$get_dataset_label()

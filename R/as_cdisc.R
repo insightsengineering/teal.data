@@ -25,21 +25,20 @@ as_cdisc <- function(x, parent = `if`(identical(get_dataname(x), "ADSL"), charac
 #' @examples
 #' # TealDataset --------
 #'
-#' library(scda)
 #' as_cdisc(
 #'   dataset(
 #'     "ADSL",
-#'     synthetic_cdisc_data("latest")$adsl,
+#'     example_cdisc_data("ADSL"),
 #'     keys = get_cdisc_keys("ADSL"),
-#'     code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+#'     code = "ADSL <- teal.data::rADSL"
 #'   )
 #' )
 #' as_cdisc(
 #'   dataset(
 #'     "ADAE",
-#'     synthetic_cdisc_data("latest")$adae,
+#'     example_cdisc_data("ADAE"),
 #'     keys = get_cdisc_keys("ADAE"),
-#'     code = "ADAE <- synthetic_cdisc_data(\"latest\")$adae"
+#'     code = "ADAE <- teal.data::rADAE"
 #'   ),
 #'   parent = "ADSL"
 #' )
@@ -71,10 +70,9 @@ as_cdisc.TealDataset <- function(x, parent = `if`(identical(get_dataname(x), "AD
 #' @examples
 #' # TealDatasetConnector --------
 #'
-#' library(scda)
 #' pull_fun_adsl <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' as_cdisc(
@@ -87,7 +85,7 @@ as_cdisc.TealDataset <- function(x, parent = `if`(identical(get_dataname(x), "AD
 #'
 #' pull_fun_adae <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adae
+#'     example_cdisc_data("ADAE")
 #'   }
 #' )
 #' as_cdisc(
