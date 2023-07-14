@@ -596,13 +596,14 @@ as.character(adsl_code) == as.character(adtte_code)
 ### `teal.data` in a shiny app
 
 ```{r}
+# nolint start
 library(teal.data)
 library(magrittr)
 
 pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
 adsl <- dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(fun = pull_adsl) %>% # nolint
+  pull_callable = callable_function(fun = pull_adsl) %>%
     set_args(list(ADSL = as.name("ADSL"))),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
@@ -611,7 +612,7 @@ adsl <- dataset_connector(
 pull_adrs <- function(ADRS, n) ADRS <- head(teal.data::rADRS, n)
 adrs <- dataset_connector(
   dataname = "ADRS",
-  pull_callable = callable_function(fun = pull_adrs) %>% # nolint
+  pull_callable = callable_function(fun = pull_adrs) %>%
     set_args(list(ADRS = as.name("ADRS"))),
   keys = get_cdisc_keys("ADRS"),
   label = "ADRS connector"
@@ -647,4 +648,5 @@ shinyApp(
     })
   }
 )
+# nolint end
 ```
