@@ -145,7 +145,7 @@ test_that("Exception handling with dataname of *xyz", {
 
 
 test_that("CodeClass list_to_code_class", {
-  pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
+  pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n) # nolint
   adsl <- dataset_connector(
     dataname = "ADSL",
     pull_callable = callable_function(fun = pull_adsl) %>% # nolint
@@ -154,7 +154,7 @@ test_that("CodeClass list_to_code_class", {
     label = "ADSL connector"
   )
 
-  pull_adae <- function(ADAE, n) ADSL <- head(teal.data::rADAE, n)
+  pull_adae <- function(ADAE, n) ADSL <- head(teal.data::rADAE, n) # nolint
   adae <- dataset_connector(
     dataname = "ADAE",
     pull_callable = callable_function(fun = pull_adae) %>% # nolint
