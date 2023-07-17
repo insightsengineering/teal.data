@@ -188,7 +188,7 @@ PythonCodeClass <- R6::R6Class( # nolint
 #'     fun_args = list(dataname = dataname),
 #'   )
 #' }
-#' x  <- random_data_connector(dataname = "ADSL")
+#' x <- random_data_connector(dataname = "ADSL")
 #'
 #' x %>% mutate_dataset(python_code("import pandas as pd
 #' r.ADSL = pd.DataFrame({'x': [1]})"))

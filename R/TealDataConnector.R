@@ -41,8 +41,10 @@
 #'
 #' x <- teal.data:::TealDataConnector$new(
 #'   connection = con,
-#'   connectors = list(random_data_connector(dataname = "ADSL"),
-#'                     random_data_connector(dataname = "ADLB"))
+#'   connectors = list(
+#'     random_data_connector(dataname = "ADSL"),
+#'     random_data_connector(dataname = "ADLB")
+#'   )
 #' )
 #'
 #' x$set_ui(
@@ -522,10 +524,13 @@ TealDataConnector <- R6::R6Class( # nolint
 #'   }
 #' )
 #'
-#' x <- relational_data_connector(connection = con,
-#'                                connectors = list(
-#'                                  random_data_connector(dataname = "ADSL"),
-#'                                  random_data_connector(dataname = "ADLB")))
+#' x <- relational_data_connector(
+#'   connection = con,
+#'   connectors = list(
+#'     random_data_connector(dataname = "ADSL"),
+#'     random_data_connector(dataname = "ADLB")
+#'   )
+#' )
 #'
 #' x$set_ui(
 #'   function(id, connection, connectors) {
