@@ -45,10 +45,13 @@ con$set_open_server(
   }
 )
 
-x <- relational_data_connector(connection = con,
-                               connectors = list(
-                                 random_data_connector(dataname = "ADSL"),
-                                 random_data_connector(dataname = "ADLB")))
+x <- relational_data_connector(
+  connection = con,
+  connectors = list(
+    random_data_connector(dataname = "ADSL"),
+    random_data_connector(dataname = "ADLB")
+  )
+)
 
 x$set_ui(
   function(id, connection, connectors) {

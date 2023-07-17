@@ -38,8 +38,10 @@ con$set_open_server(
 
 x <- teal.data:::TealDataConnector$new(
   connection = con,
-  connectors = list(random_data_connector(dataname = "ADSL"),
-                    random_data_connector(dataname = "ADLB"))
+  connectors = list(
+    random_data_connector(dataname = "ADSL"),
+    random_data_connector(dataname = "ADLB")
+  )
 )
 
 x$set_ui(
