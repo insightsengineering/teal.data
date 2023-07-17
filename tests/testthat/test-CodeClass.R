@@ -145,32 +145,20 @@ test_that("Exception handling with dataname of *xyz", {
 
 
 test_that("CodeClass list_to_code_class", {
-  pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n) # nolint
-  adsl <- dataset_connector(
-    dataname = "ADSL",
-    pull_callable = callable_function(fun = pull_adsl) %>% # nolint
-      set_args(list(ADSL = as.name("ADSL"))),
-    keys = get_cdisc_keys("ADSL"),
-    label = "ADSL connector"
-  )
+  random_data_connector <- function(dataname) {
+    fun_dataset_connector(
+      dataname = dataname,
+      fun = example_cdisc_data,
+      fun_args = list(dataname = dataname),
+    )
+  }
 
-  pull_adae <- function(ADAE, n) ADSL <- head(teal.data::rADAE, n) # nolint
-  adae <- dataset_connector(
-    dataname = "ADAE",
-    pull_callable = callable_function(fun = pull_adae) %>% # nolint
-      set_args(list(ADAE = as.name("ADAE"))),
-    keys = get_cdisc_keys("ADAE"),
-    label = "ADAE connector"
-  )
+  adsl <- random_data_connector(dataname = "ADSL")
+  adae <- random_data_connector(dataname = "ADAE")
 
   adaem <- adae %>% mutate_dataset("ADAE$vv=nrow(ADSL); attr(ADSL$vv, 'label') <- 'vv'", vars = list(ADSL = adsl))
-  adae <- dataset_connector(
-    dataname = "ADAE",
-    pull_callable = callable_function(fun = pull_adae) %>% # nolint
-      set_args(list(ADAE = as.name("ADAE"))),
-    keys = get_cdisc_keys("ADAE"),
-    label = "ADAE connector"
-  )
+  adae <- random_data_connector(dataname = "ADAE")
+
   adaem2 <- adae %>% mutate_dataset("ADAE$vv=nrow(ADSL); attr(ADSL$vv, 'label') <- 'vv'", vars = list(ADSL = ""))
   expect_true(inherits(adaem$get_code_class(), "CodeClass"))
   expect_true(inherits(adaem2$get_code_class(), "CodeClass"))

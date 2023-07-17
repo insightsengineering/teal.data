@@ -44,6 +44,14 @@ rd <- cdisc_data(adsl, adae)
 get_datasets(rd)
 
 # TealDataConnector --------
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
 adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",

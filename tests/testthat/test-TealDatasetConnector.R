@@ -11,7 +11,6 @@ testthat::test_that("TealDatasetConnector", {
     )
   )
 
-
   testthat::expect_identical(
     x1$get_code(deparse = TRUE),
     "ADSL <- (function() example_cdisc_data(\"ADSL\"))()"

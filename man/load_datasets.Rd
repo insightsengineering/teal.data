@@ -46,44 +46,33 @@ x <- dataset("ADSL", x = ADSL)
 load_datasets(x)
 
 # TealDatasetConnector ------
-pull_fun_adsl <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
-adsl <- dataset_connector("ADSL", pull_fun_adsl)
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
+adsl <- random_data_connector(dataname = "ADSL")
 load_datasets(adsl)
 get_dataset(adsl)
 
-pull_fun_adae <- callable_function(
-  function() {
-    example_cdisc_data("ADAE")
-  }
-)
-adae <- dataset_connector("ADAE", pull_fun_adae)
+adae <- random_data_connector(dataname = "ADAE")
 load_datasets(adae)
+get_dataset(adae)
 
 # TealDataConnector --------
-adsl_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
-adsl <- cdisc_dataset_connector(
-  dataname = "ADSL",
-  pull_callable = adsl_cf,
-  keys = get_cdisc_keys("ADSL")
-)
-adrs_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADRS")
-  }
-)
-adrs <- cdisc_dataset_connector(
-  dataname = "ADRS",
-  pull_callable = adrs_cf,
-  keys = get_cdisc_keys("ADRS")
-)
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
+adsl <- random_data_connector(dataname = "ADSL")
+adrs <- random_data_connector(dataname = "ADRS")
 
 rdc <- cdisc_data(adsl, adrs)
 \dontrun{
@@ -91,36 +80,17 @@ load_datasets(rdc)
 }
 
 # TealData --------
-adsl_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
-adsl <- cdisc_dataset_connector(
-  dataname = "ADSL",
-  pull_callable = adsl_cf,
-  keys = get_cdisc_keys("ADSL")
-)
-adlb_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADLB")
-  }
-)
-adlb <- cdisc_dataset_connector(
-  dataname = "ADLB",
-  pull_callable = adlb_cf,
-  keys = get_cdisc_keys("ADLB")
-)
-adrs_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADRS")
-  }
-)
-adrs <- cdisc_dataset_connector(
-  dataname = "ADRS",
-  pull_callable = adrs_cf,
-  keys = get_cdisc_keys("ADRS")
-)
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
+adsl <- random_data_connector(dataname = "ADSL")
+adlb <- random_data_connector(dataname = "ADLB")
+adrs <- random_data_connector(dataname = "ADRS")
 
 tc <- cdisc_data(adsl, adlb, adrs)
 \dontrun{

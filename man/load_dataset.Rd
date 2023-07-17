@@ -41,20 +41,20 @@ ADSL_dataset <- dataset("ADSL", x = ADSL)
 load_dataset(ADSL_dataset)
 
 # TealDatasetConnector --------
-pull_fun_adsl <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
-adsl <- dataset_connector("ADSL", pull_fun_adsl)
+
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
+adsl <- random_data_connector(dataname = "ADSL")
 load_dataset(adsl)
 get_dataset(adsl)
 
-pull_fun_adae <- callable_function(
-  function() {
-    example_cdisc_data("ADAE")
-  }
-)
-adae <- dataset_connector("ADAE", pull_fun_adae)
+adae <- random_data_connector(dataname = "ADAE")
 load_dataset(adae)
+get_dataset(adae)
 }
