@@ -1,12 +1,17 @@
-library(scda)
-
-# Single scda dataset connector ----
-testthat::test_that("Single scda dataset connector", {
+# Single dataset connector ----
+testthat::test_that("Single dataset connector", {
   # create object
-  adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
+  pull_adsl <- function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n) # nolint
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = pull_adsl) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   default_ui <- adsl$get_ui("main-app")
   adsl$set_ui_input(function(ns) {
-    list(textInput(inputId = ns("name"), label = "scda name", value = "latest"))
+    list(numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1))
   })
   set_ui <- adsl$get_ui("main-app")
   testthat::expect_false(isTRUE(all.equal(default_ui, set_ui)))
@@ -19,7 +24,7 @@ testthat::test_that("Single scda dataset connector", {
         tags$div(
           id = "main-app-inputs",
           h4("TealDataset Connector for ", code("ADSL")),
-          textInput(inputId = "main-app-name", label = "scda name", value = "latest")
+          numericInput(inputId = "main-app-n", label = "Choose number of records", min = 0, value = 1)
         )
       )
     )
@@ -33,7 +38,7 @@ testthat::test_that("Single scda dataset connector", {
   # check reproducible code
   testthat::expect_equal(
     adsl$get_code(),
-    'ADSL <- scda::synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")'
+    "ADSL <- (function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
   )
 })
 

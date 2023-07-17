@@ -1,6 +1,5 @@
 # code>
 library(teal) # nocode
-library(scda) # nolint
 require(magrittr)
 set.seed(1)
 source("app_source1.R")

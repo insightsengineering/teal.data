@@ -22,43 +22,69 @@ The main difference between a `DDL` object and a non-`DDL` object is that data i
 * A **`TealDatasetConnector`** is an object used to pull a single delayed data set into a `teal` app. Connectors to pull data from proprietary data storage are not included in this package.
 
 ```{r, message=FALSE}
+# nolint start
 library(teal.data)
-library(scda)
-
-# specialized function to create delayed data using scda (could also set keys when using cdisc_dataset_connector)
-adlb <- scda_dataset_connector(
-  "ADLB",
-  "adlb",
-  keys = get_cdisc_keys("ADLB")
-)
 
 # generalized function to create delayed data from code - see package help for other connectors
 x <- code_dataset_connector(
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
+# nolint end
 ```
 
 * A **`TealDataConnector`** is an object used to pull a set of delayed data sets into a `teal` app which all share a common connection (see [Delayed Data Loading](delayed-data-loading.html) for the definition of a connection object).
 
 ```{r}
-# using scda
-adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", scda_dataname = "adsl")
-adae <- scda_cdisc_dataset_connector(dataname = "ADAE", scda_dataname = "adae")
+# nolint start
+library(teal.data)
+library(magrittr)
+
+pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
+adsl <- dataset_connector(
+  dataname = "ADSL",
+  pull_callable = callable_function(fun = pull_adsl) %>%
+    set_args(list(ADSL = as.name("ADSL"))),
+  keys = get_cdisc_keys("ADSL"),
+  label = "ADSL connector"
+)
+
+pull_adae <- function(ADAE) ADSL <- teal.data::rADAE
+adae <- dataset_connector(
+  dataname = "ADAE",
+  pull_callable = callable_function(fun = pull_adae) %>%
+    set_args(list(ADAE = as.name("ADAE"))),
+  keys = get_cdisc_keys("ADAE"),
+  label = "ADAE connector"
+)
+
 adsl_adae <- relational_data_connector(
   connection = data_connection(),
   connectors = list(adsl, adae)
 )
+# nolint end
 ```
 
 * The `cdisc_data` function takes a set of **`TealDataConnector`**, **`TealDatasetConnector`** and / or `cdisc_datasets` (non-delayed datasets) to create the **`TealData`** object which is used to create `teal` applications.
 
 ```{r}
+# nolint start
 # create a TealDatasetConnector for ADVS
-advs <- scda_cdisc_dataset_connector(dataname = "ADVS", scda_dataname = "advs")
+library(teal.data)
+library(magrittr)
+
+pull_advs <- function(ADVS) ADVS <- teal.data::rADVS
+advs <- dataset_connector(
+  dataname = "ADVS",
+  pull_callable = callable_function(fun = pull_advs) %>%
+    set_args(list(ADVS = as.name("ADVS"))),
+  keys = get_cdisc_keys("ADVS"),
+  label = "ADVS connector"
+)
 # use cdisc_data() to create a `DDL` object
 delayed_data <- cdisc_data(adsl_adae, advs)
+# nolint end
 ```
 
 ### Constructors
@@ -82,7 +108,19 @@ Notes:
 The datasets passed into `teal_data` and `cdisc_data` are pulled in the order they are inputted. So if datasets depend on other datasets being available they should be placed later in the argument list:
 
 ```{r}
-adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
+# nolint start
+library(teal.data)
+library(magrittr)
+
+pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
+adsl <- dataset_connector(
+  dataname = "ADSL",
+  pull_callable = callable_function(fun = pull_adsl) %>%
+    set_args(list(ADSL = as.name("ADSL"))),
+  keys = get_cdisc_keys("ADSL"),
+  label = "ADSL connector"
+)
+
 adsl_2 <- code_cdisc_dataset_connector("ADSL_2",
   code = "head(ADSL, 5)",
   keys = get_cdisc_keys("ADSL"), ADSL = adsl
@@ -93,6 +131,7 @@ cdisc_data(adsl, adsl_2)
 
 # launch method will not be able to load the data as adae is pulled first but it depends on adsl
 cdisc_data(adsl_2, adsl)
+# nolint end
 ```
 
 ## Suggested development workflow

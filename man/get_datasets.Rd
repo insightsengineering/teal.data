@@ -28,31 +28,37 @@ object containing datasets.}
 \examples{
 
 # TealData --------
-library(scda)
-latest_data <- synthetic_cdisc_data("latest")
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = latest_data$adsl,
-  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  x = example_cdisc_data("ADSL"), ,
+  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 
 adae <- cdisc_dataset(
   dataname = "ADAE",
-  x = latest_data$adae,
-  code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adae"
+  x = example_cdisc_data("ADAE"),
+  code = "library(teal.data)\nADAE <- example_cdisc_data(\"ADAE\")"
 )
 
 rd <- cdisc_data(adsl, adae)
 get_datasets(rd)
 
 # TealDataConnector --------
-adsl_cf <- callable_function(function() synthetic_cdisc_data("latest")$adsl)
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+
+adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
   keys = get_cdisc_keys("ADSL")
 )
-adlb_cf <- callable_function(function() synthetic_cdisc_data("latest")$adlb)
+adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
 adlb <- cdisc_dataset_connector(
   dataname = "ADLB",
   pull_callable = adlb_cf,
@@ -95,10 +101,9 @@ get_datasets(drc)
 }
 
 # TealDatasetConnector --------
-library(scda)
 adsl_cf <- callable_function(
   function() {
-    synthetic_cdisc_data("latest")$adsl
+    example_cdisc_data("ADSL")
   }
 )
 rdc <- cdisc_dataset_connector("ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))
@@ -108,11 +113,10 @@ get_datasets(rdc)
 }
 
 # TealDataset --------
-library(scda)
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = synthetic_cdisc_data("latest")$adsl,
-  code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+  x = example_cdisc_data("ADSL"),
+  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 
 get_datasets(adsl)

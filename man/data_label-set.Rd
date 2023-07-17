@@ -18,8 +18,7 @@ modified \code{x} object
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
-library(scda)
-x <- synthetic_cdisc_data("latest")$adsl
+x <- example_cdisc_data("ADSL")
 data_label(x) <- "My custom label"
 data_label(x)
 }

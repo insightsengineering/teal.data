@@ -16,10 +16,9 @@ is_pulled <- function(x) {
 #'
 #' @examples
 #' # TealDatasetConnector --------
-#' library(scda)
 #' pull_fun_adsl <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' x <- dataset_connector("ADSL", pull_fun_adsl)
@@ -55,20 +54,19 @@ is_pulled.TealDataset <- function(x) {
 #'
 #' @examples
 #' # TealData --------
-#' library(scda)
 #' x1 <- dataset(
-#'   x = synthetic_cdisc_data("latest")$adsl,
+#'   x = example_cdisc_data("ADSL"),
 #'   dataname = "ADSL",
 #'   keys = get_cdisc_keys("ADSL"),
-#'   code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl",
+#'   code = "ADSL <- teal.data::rADSL",
 #'   label = "ADTTE dataset"
 #' )
 #'
 #' x2 <- dataset(
-#'   x = synthetic_cdisc_data("latest")$adtte,
+#'   x = example_cdisc_data("ADTTE"),
 #'   dataname = "ADTTE",
 #'   keys = get_cdisc_keys("ADTTE"),
-#'   code = "ADTTE <- synthetic_cdisc_data(\"latest\")$adtte",
+#'   code = "ADTTE <- teal.data::rADTTE",
 #'   label = "ADTTE dataset"
 #' )
 #'
@@ -76,10 +74,9 @@ is_pulled.TealDataset <- function(x) {
 #' is_pulled(rd)
 #'
 #' # TealDataConnector --------
-#' library(scda)
 #' adsl_cf <- callable_function(
 #'   function() {
-#'     synthetic_cdisc_data("latest")$adsl
+#'     example_cdisc_data("ADSL")
 #'   }
 #' )
 #' adsl <- cdisc_dataset_connector(

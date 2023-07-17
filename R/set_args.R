@@ -17,12 +17,8 @@ set_args <- function(x, args) {
 #' @export
 #' @examples
 #' ## Using CallableFunction
-#' library(scda)
-#' f <- function(df) {
-#'   synthetic_cdisc_data("latest")[[df]]
-#' }
-#' fun <- callable_function(f)
-#' set_args(fun, list(df = "adsl"))
+#' fun <- callable_function(example_cdisc_data)
+#' set_args(fun, list(dataname = "ADSL"))
 set_args.CallableFunction <- function(x, args) {
   x$set_args(args)
   return(invisible(x))
@@ -32,11 +28,7 @@ set_args.CallableFunction <- function(x, args) {
 #' @export
 #' @examples
 #' ## Using CallableCode
-#' library(scda)
-#' f <- function(df) {
-#'   synthetic_cdisc_data("latest")[[df]]
-#' }
-#' code <- callable_code("f()")
+#' code <- callable_code("example_cdisc_data()")
 #' set_args(code, list(df = "adsl"))
 set_args.CallableCode <- function(x, args) {
   warning(

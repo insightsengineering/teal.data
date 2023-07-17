@@ -163,9 +163,8 @@ cdisc_dataset_connector <- function(dataname,
 #' writeLines(
 #'   text = c(
 #'     "library(teal.data)
-#'      library(scda)
 #'
-#'      pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+#'      pull_callable <- callable_function(function() {teal.data::rADSL})
 #'      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example
@@ -198,9 +197,8 @@ dataset_connector_file <- function(path) { # nolint
 #' writeLines(
 #'   text = c(
 #'     "library(teal.data)
-#'      library(scda)
 #'
-#'      pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+#'      pull_callable <- callable_function(function() {teal.data::rADSL})
 #'      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example
@@ -211,110 +209,6 @@ cdisc_dataset_connector_file <- function(path) { # nolint
   object <- object_file(path, "CDISCTealDatasetConnector")
   return(object)
 }
-
-
-# SCDA ====
-#' `scda` `TealDatasetConnector`
-#'
-#' `r lifecycle::badge("stable")`
-#'
-#' Create a `TealDatasetConnector` for dataset in `scda`
-#'
-#' @inheritParams dataset_connector
-#' @inheritParams fun_dataset_connector
-#' @param scda_dataname (`character`) which `scda` dataset to use (e.g. `adsl`).
-#' @param scda_name (`character`) which version of `scda` data to take, default "latest".
-#' @rdname scda_dataset_connector
-#'
-#' @export
-#'
-#' @examples
-#' library(scda)
-#' x <- scda_dataset_connector(
-#'   dataname = "ADSL", scda_dataname = "adsl",
-#' )
-#' x$get_code()
-#' load_dataset(x)
-#' get_dataset(x)
-#' get_dataset(x)$get_metadata()
-#' x$get_raw_data()
-#'
-#' metadata_fun <- callable_function(function(a) list(type = a))
-#' metadata_fun$set_args(args = list(a = "scda"))
-#' y <- scda_dataset_connector(
-#'   dataname = "ADSL", scda_dataname = "adsl",
-#'   metadata = metadata_fun
-#' )
-#' load_dataset(y)
-#' get_dataset(y)$get_metadata()
-scda_dataset_connector <- function(dataname,
-                                   scda_dataname = tolower(dataname),
-                                   scda_name = "latest",
-                                   keys = character(0),
-                                   label = character(0),
-                                   code = character(0),
-                                   script = character(0),
-                                   metadata = list(type = "scda", version = scda_name)) {
-  check_pkg_quietly("scda", "scda package not available.")
-  checkmate::assert_string(scda_dataname)
-  checkmate::assert_string(scda_name)
-  if (scda_dataname == "latest") {
-    stop("scda_dataname should be a dataset name e.g 'adsl' not 'latest'")
-  }
-
-  x <- fun_dataset_connector(
-    dataname = dataname,
-    fun = scda::synthetic_cdisc_dataset,
-    fun_args = list(dataset_name = scda_dataname, archive_name = scda_name),
-    keys = keys,
-    label = label,
-    code = code_from_script(code, script),
-    metadata = metadata
-  )
-
-  return(x)
-}
-
-#' `SCDA` `CDISCTealDatasetConnector`
-#'
-#' `r lifecycle::badge("stable")`
-#'
-#' Create a `CDISCTealDatasetConnector` from `scda` data
-#'
-#' @inheritParams scda_dataset_connector
-#' @inheritParams cdisc_dataset_connector
-#'
-#' @rdname scda_dataset_connector
-#'
-#' @export
-scda_cdisc_dataset_connector <- function(dataname,
-                                         scda_dataname = tolower(dataname),
-                                         scda_name = "latest",
-                                         keys = get_cdisc_keys(dataname),
-                                         parent = `if`(identical(dataname, "ADSL"), character(0L), "ADSL"),
-                                         label = character(0),
-                                         code = character(0),
-                                         script = character(0),
-                                         metadata = list(type = "scda", version = scda_name)) {
-  x <- scda_dataset_connector(
-    dataname = dataname,
-    scda_dataname = scda_dataname,
-    scda_name = scda_name,
-    keys = keys,
-    code = code,
-    script = script,
-    label = label,
-    metadata = metadata
-  )
-
-  res <- as_cdisc(
-    x,
-    parent = parent
-  )
-
-  return(res)
-}
-
 
 # RDS ====
 #' `RDS` `TealDatasetConnector`
@@ -540,11 +434,10 @@ script_cdisc_dataset_connector <- function(dataname,
 #' @rdname code_dataset_connector
 #'
 #' @examples
-#' library(scda)
 #' x <- code_dataset_connector(
 #'   dataname = "ADSL",
 #'   keys = get_cdisc_keys("ADSL"),
-#'   code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl; ADSL"
+#'   code = "ADSL <- teal.data::rADSL; ADSL"
 #' )
 #'
 #' x$get_code()

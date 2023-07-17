@@ -126,7 +126,13 @@ testthat::test_that("TealData$get_connectors returns a list with the numbers of 
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_dataset_connector("ADSL", "adsl")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
   mtcars_ds1 <- TealDataset$new("cars1", head(mtcars), code = "cars1 <- head(mtcars)")
   data <- TealData$new(adsl_data, mtcars_ds1, check = TRUE)
@@ -148,7 +154,14 @@ testthat::test_that("TealData$get_items returns the content of the passed TealDa
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_dataset_connector("ADSL", "adsl")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
+
   adsl_data <- example_data_connector(adsl)
   data <- TealData$new(adsl_data, check = TRUE)
   testthat::expect_identical(data$get_items("ADSL"), adsl_data$get_items()$ADSL)
@@ -371,13 +384,19 @@ testthat::test_that("TealData with single dataset and connector", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_dataset_connector("ADSL", "adsl")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
 
   adtte <- dataset(
     dataname = "ADTTE",
-    x = synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
-    code = "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
+    x = example_cdisc_data("ADTTE"),
+    code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
   )
 
   data <- TealData$new(adsl_data, adtte)
@@ -393,7 +412,7 @@ testthat::test_that("TealData with single dataset and connector", {
 
   testthat::expect_equal(
     items$ADSL$get_pull_callable()$get_call(),
-    "scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+    "(function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
   )
 
   testthat::expect_identical(adtte$get_raw_data(), items$ADTTE$get_raw_data())
@@ -407,14 +426,14 @@ testthat::test_that("TealData with single dataset and connector", {
     data$get_code("ADSL"),
     paste0(
       "library(package = \"teal.data\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
     )
   )
   testthat::expect_equal(
     data$get_code("ADTTE"),
     paste0(
       "library(package = \"teal.data\")\n",
-      "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
+      "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
     )
   )
 
@@ -422,8 +441,8 @@ testthat::test_that("TealData with single dataset and connector", {
     data$get_code(),
     paste0(
       "library(package = \"teal.data\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
+      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
     )
   )
 })
@@ -461,13 +480,19 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     return(x)
   }
 
-  adsl <- scda_dataset_connector("ADSL", "adsl")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
   adsl_data <- example_data_connector(adsl)
 
   adtte <- dataset(
     dataname = "ADTTE",
-    x = synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
-    code = "ADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
+    x = example_cdisc_data("ADTTE"),
+    code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
   )
 
   adsl_2 <- code_dataset_connector("ADSL_2", "ADSL", keys = get_cdisc_keys("ADSL"), ADSL = adsl)
@@ -478,19 +503,31 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
     )
   })
 
-  advs <- scda_dataset_connector("ADVS", "advs")
+  advs <- dataset_connector(
+    dataname = "ADVS",
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+      set_args(list(ADVS = as.name("ADVS"))),
+    keys = get_cdisc_keys("ADVS"),
+    label = "ADVS connector"
+  )
   advs$set_ui_input(function(ns) {
     list(
       numericInput(inputId = ns("seed"), label = "Example UI", min = 0, value = 4)
     )
   })
 
-  adlb <- scda_dataset_connector("ADLB", "adlb")
+  adlb <- dataset_connector(
+    dataname = "ADLB",
+    pull_callable = callable_function(fun = function(ADLB, n) ADLB <- head(teal.data::rADLB, n)) %>% # nolint
+      set_args(list(ADLB = as.name("ADLB"))),
+    keys = get_cdisc_keys("ADLB"),
+    label = "ADLB connector"
+  )
 
   advs_adlb_data <- example_data_connector(advs, adlb)
 
   temp_file <- tempfile()
-  saveRDS(synthetic_cdisc_dataset(dataset_name = "adrs", archive_name = "latest"), file = temp_file)
+  saveRDS(rADRS, file = temp_file)
   adrs <- rds_dataset_connector(dataname = "ADRS", file = temp_file)
 
   adsamp <- script_dataset_connector(
@@ -510,16 +547,16 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   testthat::expect_equal(
     items$ADSL$get_pull_callable()$get_call(),
-    "scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+    "(function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
   )
   testthat::expect_equal(items$ADSL_2$get_pull_callable()$get_call(), "ADSL")
   testthat::expect_equal(
     items$ADVS$get_pull_callable()$get_call(),
-    "scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")"
+    "(function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)"
   )
   testthat::expect_equal(
     items$ADLB$get_pull_callable()$get_call(),
-    "scda::synthetic_cdisc_dataset(dataset_name = \"adlb\", archive_name = \"latest\")"
+    "(function(ADLB, n) ADLB <- head(teal.data::rADLB, n))(ADLB = ADLB)"
   )
   testthat::expect_equal(
     items$ADSAMP$get_pull_callable()$get_call(),
@@ -529,36 +566,36 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   testthat::expect_equal(
     data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSL_2"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
       "ADSL_2 <- ADSL"
     )
   )
   testthat::expect_equal(
     data$get_code("ADVS"),
-    "library(package = \"teal\")\nADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADLB"),
-    "library(package = \"teal\")\nADLB <- scda::synthetic_cdisc_dataset(dataset_name = \"adlb\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADLB <- (function(ADLB, n) ADLB <- head(teal.data::rADLB, n))(ADLB = ADLB)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSAMP"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)\n",
       "ADSAMP <- source(file = \"delayed_data_script/asdamp_with_adsl.R\", local = TRUE)$value"
     )
   )
   testthat::expect_equal(
     data$get_code("ADTTE"),
-    "library(package = \"teal\")\nADTTE <- scda::synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADTTE <- teal.data::example_cdisc_data(\"ADTTE\")" # nolint
   )
 })
 
@@ -572,9 +609,30 @@ testthat::test_that("Multiple connectors", {
     TealDataConnector$new(connection = con, connectors = connectors)
   }
 
-  adsl <- scda_dataset_connector("ADSL", "adsl")
-  adae <- scda_dataset_connector("ADAE", "adae")
-  advs <- scda_dataset_connector("ADVS", "advs")
+  adsl <- dataset_connector(
+    dataname = "ADSL",
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+      set_args(list(ADSL = as.name("ADSL"))),
+    keys = get_cdisc_keys("ADSL"),
+    label = "ADSL connector"
+  )
+
+  adae <- dataset_connector(
+    dataname = "ADAE",
+    pull_callable = callable_function(fun = function(ADAE, n) ADAE <- head(teal.data::rADAE, n)) %>% # nolint
+      set_args(list(ADAE = as.name("ADAE"))),
+    keys = get_cdisc_keys("ADAE"),
+    label = "ADAE connector"
+  )
+
+  advs <- dataset_connector(
+    dataname = "ADVS",
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+      set_args(list(ADVS = as.name("ADVS"))),
+    keys = get_cdisc_keys("ADVS"),
+    label = "ADVS connector"
+  )
+
   adsl_2 <- code_dataset_connector("ADSL_2",
     code = "ADSL",
     keys = get_cdisc_keys("ADSL"), ADSL = adsl
@@ -592,38 +650,38 @@ testthat::test_that("Multiple connectors", {
 
   testthat::expect_equal(
     items$ADSL$get_code(),
-    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
   )
   testthat::expect_equal(
     items$ADAE$get_code(),
-    "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")"
+    "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)"
   )
   testthat::expect_equal(
     items$ADVS$get_code(),
-    "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")"
+    "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)"
   )
   testthat::expect_equal(
     items$ADSL_2$get_code(),
-    "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\nADSL_2 <- ADSL"
+    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\nADSL_2 <- ADSL"
   )
 
   testthat::expect_equal(
     data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADAE"),
-    "library(package = \"teal\")\nADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADVS"),
-    "library(package = \"teal\")\nADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")" # nolint
+    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSL_2"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
       "ADSL_2 <- ADSL"
     )
   )
@@ -631,9 +689,10 @@ testthat::test_that("Multiple connectors", {
     data$get_code(),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- scda::synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")\n",
-      "ADAE <- scda::synthetic_cdisc_dataset(dataset_name = \"adae\", archive_name = \"latest\")\n",
-      "ADVS <- scda::synthetic_cdisc_dataset(dataset_name = \"advs\", archive_name = \"latest\")\nADSL_2 <- ADSL"
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)\n",
+      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)\n",
+      "ADSL_2 <- ADSL"
     )
   )
 })
