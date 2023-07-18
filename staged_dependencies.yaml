@@ -12,9 +12,6 @@ upstream_repos:
   insightsengineering/scda.2022:
     repo: insightsengineering/scda.2022
     host: https://github.com
-  insightsengineering/formatters:
-    repo: insightsengineering/formatters
-    host: https://github.com
 downstream_repos:
   insightsengineering/teal.slice:
     repo: insightsengineering/teal.slice

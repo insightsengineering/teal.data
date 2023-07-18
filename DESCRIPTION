@@ -21,7 +21,6 @@ Depends:
 Imports:
     checkmate,
     digest,
-    formatters (>= 0.3.1),
     lifecycle,
     logger (>= 0.2.0),
     methods,
