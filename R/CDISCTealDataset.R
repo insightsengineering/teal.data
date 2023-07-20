@@ -152,7 +152,7 @@ CDISCTealDataset <- R6::R6Class( # nolint
 #' @export
 #'
 #' @examples
-#' ADSL <- teal.data::rADSL
+#' ADSL <- example_cdisc_data("ADSL")
 #'
 #' cdisc_dataset("ADSL", ADSL, metadata = list(type = "teal.data"))
 cdisc_dataset <- function(dataname,
@@ -193,8 +193,8 @@ cdisc_dataset <- function(dataname,
 #'   text = c(
 #'     "library(teal.data)
 #'      cdisc_dataset(dataname = \"ADSL\",
-#'                    x = teal.data::rADSL,
-#'                    code = \"ADSL <- teal.data::rADSL\")"
+#'                    x = teal.data::example_cdisc_data(\"ADSL\"),
+#'                    code = \"ADSL <- teal.data::example_cdisc_data('ADSL')\")"
 #'   ),
 #'   con = file_example
 #' )

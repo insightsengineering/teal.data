@@ -37,7 +37,7 @@ get_keys(
     "ADSL",
     example_cdisc_data("ADSL"),
     keys = get_cdisc_keys("ADSL"),
-    code = "ADSL <- teal.data::rADSL"
+    code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
   )
 )
 # TealDatasetConnector --------

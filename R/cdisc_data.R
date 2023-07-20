@@ -38,8 +38,8 @@
 #' cdisc_data(
 #'   cdisc_dataset("ADSL", ADSL),
 #'   cdisc_dataset("ADTTE", ADTTE),
-#'   code = "ADSL <- teal.data::rADSL
-#'           ADTTE <- teal.data::rADTTE",
+#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
+#'           ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
 #'   check = TRUE
 #' )
 #'
@@ -59,8 +59,8 @@
 #'       c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
 #'     )
 #'   ),
-#'   code = "ADSL <- teal.data::rADSL
-#'           ADTTE <- teal.data::rADTTE",
+#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
+#'           ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
 #'   check = TRUE
 #' )
 cdisc_data <- function(...,

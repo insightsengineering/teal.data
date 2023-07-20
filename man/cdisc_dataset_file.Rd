@@ -25,8 +25,8 @@ writeLines(
   text = c(
     "library(teal.data)
      cdisc_dataset(dataname = \"ADSL\",
-                   x = teal.data::rADSL,
-                   code = \"ADSL <- teal.data::rADSL\")"
+                   x = teal.data::example_cdisc_data(\"ADSL\"),
+                   code = \"ADSL <- teal.data::example_cdisc_data('ADSL')\")"
   ),
   con = file_example
 )

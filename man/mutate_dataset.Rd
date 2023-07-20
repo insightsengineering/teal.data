@@ -76,7 +76,7 @@ ADSL_dataset <- dataset(
   dataname = "ADSL",
   x = ADSL,
   label = "AdAM subject-level dataset",
-  code = "ADSL <- teal.data::rADSL"
+  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 )
 ADSL_mutated <- ADSL_dataset \%>\%
   mutate_dataset(code = "ADSL$new_variable <- 1")

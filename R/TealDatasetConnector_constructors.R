@@ -164,7 +164,7 @@ cdisc_dataset_connector <- function(dataname,
 #'   text = c(
 #'     "library(teal.data)
 #'
-#'      pull_callable <- callable_function(function() {teal.data::rADSL})
+#'      pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
 #'      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example
@@ -198,7 +198,7 @@ dataset_connector_file <- function(path) { # nolint
 #'   text = c(
 #'     "library(teal.data)
 #'
-#'      pull_callable <- callable_function(function() {teal.data::rADSL})
+#'      pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
 #'      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example
@@ -437,7 +437,7 @@ script_cdisc_dataset_connector <- function(dataname,
 #' x <- code_dataset_connector(
 #'   dataname = "ADSL",
 #'   keys = get_cdisc_keys("ADSL"),
-#'   code = "ADSL <- teal.data::rADSL; ADSL"
+#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\"); ADSL"
 #' )
 #'
 #' x$get_code()

@@ -36,7 +36,7 @@ writeLines(
   text = c(
     "library(teal.data)
 
-     pull_callable <- callable_function(function() {teal.data::rADSL})
+     pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example
@@ -49,7 +49,7 @@ writeLines(
   text = c(
     "library(teal.data)
 
-     pull_callable <- callable_function(function() {teal.data::rADSL})
+     pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example

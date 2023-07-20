@@ -58,7 +58,7 @@ is_pulled.TealDataset <- function(x) {
 #'   x = example_cdisc_data("ADSL"),
 #'   dataname = "ADSL",
 #'   keys = get_cdisc_keys("ADSL"),
-#'   code = "ADSL <- teal.data::rADSL",
+#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")",
 #'   label = "ADTTE dataset"
 #' )
 #'
@@ -66,7 +66,7 @@ is_pulled.TealDataset <- function(x) {
 #'   x = example_cdisc_data("ADTTE"),
 #'   dataname = "ADTTE",
 #'   keys = get_cdisc_keys("ADTTE"),
-#'   code = "ADTTE <- teal.data::rADTTE",
+#'   code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
 #'   label = "ADTTE dataset"
 #' )
 #'

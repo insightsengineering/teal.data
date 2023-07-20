@@ -24,7 +24,7 @@ get_keys <- function(x, ...) {
 #'     "ADSL",
 #'     example_cdisc_data("ADSL"),
 #'     keys = get_cdisc_keys("ADSL"),
-#'     code = "ADSL <- teal.data::rADSL"
+#'     code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #'   )
 #' )
 get_keys.TealDataset <- function(x, ...) {

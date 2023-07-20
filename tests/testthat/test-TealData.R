@@ -128,7 +128,7 @@ testthat::test_that("TealData$get_connectors returns a list with the numbers of 
 
   adsl <- dataset_connector(
     dataname = "ADSL",
-    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n)) %>% # nolint
       set_args(list(ADSL = as.name("ADSL"))),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL connector"
@@ -156,7 +156,7 @@ testthat::test_that("TealData$get_items returns the content of the passed TealDa
 
   adsl <- dataset_connector(
     dataname = "ADSL",
-    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n)) %>% # nolint
       set_args(list(ADSL = as.name("ADSL"))),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL connector"
@@ -386,7 +386,7 @@ testthat::test_that("TealData with single dataset and connector", {
 
   adsl <- dataset_connector(
     dataname = "ADSL",
-    pull_callable = callable_function(fun = function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADSL, n = 5) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n)) %>% # nolint
       set_args(list(ADSL = as.name("ADSL"))),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL connector"
@@ -412,7 +412,7 @@ testthat::test_that("TealData with single dataset and connector", {
 
   testthat::expect_equal(
     items$ADSL$get_pull_callable()$get_call(),
-    "(function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
+    "(function(ADSL, n = 5) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)"
   )
 
   testthat::expect_identical(adtte$get_raw_data(), items$ADTTE$get_raw_data())
@@ -426,7 +426,7 @@ testthat::test_that("TealData with single dataset and connector", {
     data$get_code("ADSL"),
     paste0(
       "library(package = \"teal.data\")\n",
-      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
+      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)"
     )
   )
   testthat::expect_equal(
@@ -441,7 +441,7 @@ testthat::test_that("TealData with single dataset and connector", {
     data$get_code(),
     paste0(
       "library(package = \"teal.data\")\n",
-      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADSL <- (function(ADSL, n = 5) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\n",
       "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
     )
   )
@@ -482,7 +482,7 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   adsl <- dataset_connector(
     dataname = "ADSL",
-    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n)) %>% # nolint
       set_args(list(ADSL = as.name("ADSL"))),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL connector"
@@ -505,7 +505,7 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   advs <- dataset_connector(
     dataname = "ADVS",
-    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data("ADVS"), n)) %>% # nolint
       set_args(list(ADVS = as.name("ADVS"))),
     keys = get_cdisc_keys("ADVS"),
     label = "ADVS connector"
@@ -518,7 +518,7 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   adlb <- dataset_connector(
     dataname = "ADLB",
-    pull_callable = callable_function(fun = function(ADLB, n) ADLB <- head(teal.data::rADLB, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADLB, n) ADLB <- head(teal.data::example_cdisc_data("ADLB"), n)) %>% # nolint
       set_args(list(ADLB = as.name("ADLB"))),
     keys = get_cdisc_keys("ADLB"),
     label = "ADLB connector"
@@ -547,16 +547,16 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   testthat::expect_equal(
     items$ADSL$get_pull_callable()$get_call(),
-    "(function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
+    "(function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)"
   )
   testthat::expect_equal(items$ADSL_2$get_pull_callable()$get_call(), "ADSL")
   testthat::expect_equal(
     items$ADVS$get_pull_callable()$get_call(),
-    "(function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)"
+    "(function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)"
   )
   testthat::expect_equal(
     items$ADLB$get_pull_callable()$get_call(),
-    "(function(ADLB, n) ADLB <- head(teal.data::rADLB, n))(ADLB = ADLB)"
+    "(function(ADLB, n) ADLB <- head(teal.data::example_cdisc_data(\"ADLB\"), n))(ADLB = ADLB)"
   )
   testthat::expect_equal(
     items$ADSAMP$get_pull_callable()$get_call(),
@@ -566,30 +566,30 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   testthat::expect_equal(
     data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
+    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSL_2"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\n",
       "ADSL_2 <- ADSL"
     )
   )
   testthat::expect_equal(
     data$get_code("ADVS"),
-    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)" # nolint
+    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADLB"),
-    "library(package = \"teal\")\nADLB <- (function(ADLB, n) ADLB <- head(teal.data::rADLB, n))(ADLB = ADLB)" # nolint
+    "library(package = \"teal\")\nADLB <- (function(ADLB, n) ADLB <- head(teal.data::example_cdisc_data(\"ADLB\"), n))(ADLB = ADLB)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSAMP"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
-      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\n",
+      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)\n",
       "ADSAMP <- source(file = \"delayed_data_script/asdamp_with_adsl.R\", local = TRUE)$value"
     )
   )
@@ -611,7 +611,7 @@ testthat::test_that("Multiple connectors", {
 
   adsl <- dataset_connector(
     dataname = "ADSL",
-    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::rADSL, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n)) %>% # nolint
       set_args(list(ADSL = as.name("ADSL"))),
     keys = get_cdisc_keys("ADSL"),
     label = "ADSL connector"
@@ -619,7 +619,7 @@ testthat::test_that("Multiple connectors", {
 
   adae <- dataset_connector(
     dataname = "ADAE",
-    pull_callable = callable_function(fun = function(ADAE, n) ADAE <- head(teal.data::rADAE, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADAE, n) ADAE <- head(teal.data::example_cdisc_data("ADAE"), n)) %>% # nolint
       set_args(list(ADAE = as.name("ADAE"))),
     keys = get_cdisc_keys("ADAE"),
     label = "ADAE connector"
@@ -627,7 +627,7 @@ testthat::test_that("Multiple connectors", {
 
   advs <- dataset_connector(
     dataname = "ADVS",
-    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::rADVS, n)) %>% # nolint
+    pull_callable = callable_function(fun = function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data("ADVS"), n)) %>% # nolint
       set_args(list(ADVS = as.name("ADVS"))),
     keys = get_cdisc_keys("ADVS"),
     label = "ADVS connector"
@@ -650,38 +650,38 @@ testthat::test_that("Multiple connectors", {
 
   testthat::expect_equal(
     items$ADSL$get_code(),
-    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)"
+    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)"
   )
   testthat::expect_equal(
     items$ADAE$get_code(),
-    "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)"
+    "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::example_cdisc_data(\"ADAE\"), n))(ADAE = ADAE)"
   )
   testthat::expect_equal(
     items$ADVS$get_code(),
-    "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)"
+    "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)"
   )
   testthat::expect_equal(
     items$ADSL_2$get_code(),
-    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\nADSL_2 <- ADSL"
+    "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\nADSL_2 <- ADSL"
   )
 
   testthat::expect_equal(
     data$get_code("ADSL"),
-    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
+    "library(package = \"teal\")\nADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADAE"),
-    "library(package = \"teal\")\nADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)" # nolint
+    "library(package = \"teal\")\nADAE <- (function(ADAE, n) ADAE <- head(teal.data::example_cdisc_data(\"ADAE\"), n))(ADAE = ADAE)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADVS"),
-    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)" # nolint
+    "library(package = \"teal\")\nADVS <- (function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)" # nolint
   )
   testthat::expect_equal(
     data$get_code("ADSL_2"),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\n",
       "ADSL_2 <- ADSL"
     )
   )
@@ -689,9 +689,9 @@ testthat::test_that("Multiple connectors", {
     data$get_code(),
     paste0(
       "library(package = \"teal\")\n",
-      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)\n",
-      "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::rADAE, n))(ADAE = ADAE)\n",
-      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::rADVS, n))(ADVS = ADVS)\n",
+      "ADSL <- (function(ADSL, n) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)\n",
+      "ADAE <- (function(ADAE, n) ADAE <- head(teal.data::example_cdisc_data(\"ADAE\"), n))(ADAE = ADAE)\n",
+      "ADVS <- (function(ADVS, n) ADVS <- head(teal.data::example_cdisc_data(\"ADVS\"), n))(ADVS = ADVS)\n",
       "ADSL_2 <- ADSL"
     )
   )

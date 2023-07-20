@@ -430,24 +430,28 @@ One can combine multiple delayed data objects using `[teal|cdisc]_data` function
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = callable_function(function() example_cdisc_data("ADSL")),
+  keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )
 
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = callable_function(function() example_cdisc_data("ADAE")),
+  keys = get_cdisc_keys("ADAE"),
   label = "ADAE connector"
 )
 
 advs <- cdisc_dataset_connector(
   dataname = "ADVS",
   pull_callable = callable_function(function() example_cdisc_data("ADVS")),
+  keys = get_cdisc_keys("ADVS"),
   label = "ADVS connector"
 )
 
-adtte <- dataset_connector(
+adtte <- cdisc_dataset_connector(
   dataname = "ADTTE",
   pull_callable = callable_function(function() example_cdisc_data("ADTTE")),
+  keys = get_cdisc_keys("ADTTE"),
   label = "ADTTE connector"
 )
 
@@ -588,20 +592,21 @@ as.character(adsl_code) == as.character(adtte_code)
 library(teal.data)
 library(magrittr)
 
-pull_adsl <- function(ADSL, n) ADSL <- head(teal.data::rADSL, n)
-adsl <- dataset_connector(
+slice_example_cdisc_data <- function(dataname, n) {
+  example_cdisc_data(dataname) %>%
+    head(n)
+}
+
+adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(fun = pull_adsl) %>%
-    set_args(list(ADSL = as.name("ADSL"))),
+  pull_callable = callable_function(function() slice_example_cdisc_data("ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )
 
-pull_adrs <- function(ADRS, n) ADRS <- head(teal.data::rADRS, n)
-adrs <- dataset_connector(
+adrs <- cdisc_dataset_connector(
   dataname = "ADRS",
-  pull_callable = callable_function(fun = pull_adrs) %>%
-    set_args(list(ADRS = as.name("ADRS"))),
+  pull_callable = callable_function(function() slice_example_cdisc_data("ADRS")),
   keys = get_cdisc_keys("ADRS"),
   label = "ADRS connector"
 )

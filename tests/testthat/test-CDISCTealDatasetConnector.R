@@ -1,7 +1,7 @@
 # Single dataset connector ----
 testthat::test_that("Single dataset connector", {
   # create object
-  pull_adsl <- function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n) # nolint
+  pull_adsl <- function(ADSL, n = 1) ADSL <- head(teal.data::example_cdisc_data("ADSL"), n) # nolint
   adsl <- dataset_connector(
     dataname = "ADSL",
     pull_callable = callable_function(fun = pull_adsl) %>% # nolint
@@ -38,7 +38,7 @@ testthat::test_that("Single dataset connector", {
   # check reproducible code
   testthat::expect_equal(
     adsl$get_code(),
-    "ADSL <- (function(ADSL, n = 1) ADSL <- head(teal.data::rADSL, n))(ADSL = ADSL)" # nolint
+    "ADSL <- (function(ADSL, n = 1) ADSL <- head(teal.data::example_cdisc_data(\"ADSL\"), n))(ADSL = ADSL)" # nolint
   )
 })
 

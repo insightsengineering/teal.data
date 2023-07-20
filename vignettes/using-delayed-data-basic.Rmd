@@ -41,21 +41,17 @@ x <- code_dataset_connector(
 library(teal.data)
 library(magrittr)
 
-pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
-adsl <- dataset_connector(
+adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(fun = pull_adsl) %>%
-    set_args(list(ADSL = as.name("ADSL"))),
+  pull_callable = callable_function(function() example_cdisc_data("ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )
 
-pull_adae <- function(ADAE) ADSL <- teal.data::rADAE
-adae <- dataset_connector(
+adae <- cdisc_dataset_connector(
   dataname = "ADAE",
-  pull_callable = callable_function(fun = pull_adae) %>%
-    set_args(list(ADAE = as.name("ADAE"))),
-  keys = get_cdisc_keys("ADAE"),
+  pull_callable = callable_function(function() example_cdisc_data("ADAE")),
+  keys = get_cdisc_keys("ADSL"),
   label = "ADAE connector"
 )
 
@@ -74,14 +70,13 @@ adsl_adae <- relational_data_connector(
 library(teal.data)
 library(magrittr)
 
-pull_advs <- function(ADVS) ADVS <- teal.data::rADVS
-advs <- dataset_connector(
+advs <- cdisc_dataset_connector(
   dataname = "ADVS",
-  pull_callable = callable_function(fun = pull_advs) %>%
-    set_args(list(ADVS = as.name("ADVS"))),
+  pull_callable = callable_function(function() example_cdisc_data("ADVS")),
   keys = get_cdisc_keys("ADVS"),
   label = "ADVS connector"
 )
+
 # use cdisc_data() to create a `DDL` object
 delayed_data <- cdisc_data(adsl_adae, advs)
 # nolint end
@@ -112,11 +107,9 @@ The datasets passed into `teal_data` and `cdisc_data` are pulled in the order th
 library(teal.data)
 library(magrittr)
 
-pull_adsl <- function(ADSL) ADSL <- teal.data::rADSL
-adsl <- dataset_connector(
+adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(fun = pull_adsl) %>%
-    set_args(list(ADSL = as.name("ADSL"))),
+  pull_callable = callable_function(function() example_cdisc_data("ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )

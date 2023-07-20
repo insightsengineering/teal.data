@@ -79,7 +79,7 @@ assigned automatically by \code{dataname}.
 x <- code_dataset_connector(
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "ADSL <- teal.data::rADSL; ADSL"
+  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\"); ADSL"
 )
 
 x$get_code()

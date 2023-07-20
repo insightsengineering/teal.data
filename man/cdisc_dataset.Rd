@@ -49,7 +49,7 @@ Each element of the list should be atomic and length one.}
 Function that creates \code{CDISCTealDataset} object
 }
 \examples{
-ADSL <- teal.data::rADSL
+ADSL <- example_cdisc_data("ADSL")
 
 cdisc_dataset("ADSL", ADSL, metadata = list(type = "teal.data"))
 }

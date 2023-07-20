@@ -30,7 +30,7 @@ as_cdisc <- function(x, parent = `if`(identical(get_dataname(x), "ADSL"), charac
 #'     "ADSL",
 #'     example_cdisc_data("ADSL"),
 #'     keys = get_cdisc_keys("ADSL"),
-#'     code = "ADSL <- teal.data::rADSL"
+#'     code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #'   )
 #' )
 #' as_cdisc(
@@ -38,7 +38,7 @@ as_cdisc <- function(x, parent = `if`(identical(get_dataname(x), "ADSL"), charac
 #'     "ADAE",
 #'     example_cdisc_data("ADAE"),
 #'     keys = get_cdisc_keys("ADAE"),
-#'     code = "ADAE <- teal.data::rADAE"
+#'     code = "ADAE <- teal.data::example_cdisc_data(\"ADAE\")"
 #'   ),
 #'   parent = "ADSL"
 #' )
