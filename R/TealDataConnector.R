@@ -12,7 +12,7 @@
 #' @param connectors (`list` of `TealDatasetConnector` elements)\cr
 #'   list with dataset connectors
 #'
-#' @examples ### ask
+#' @examples
 #' library(magrittr)
 #'
 #' random_data_connector <- function(dataname) {
