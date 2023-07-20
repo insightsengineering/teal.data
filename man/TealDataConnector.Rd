@@ -9,7 +9,6 @@ Class manages \code{TealDatasetConnector} to specify additional dynamic argument
 open/close connection.
 }
 \examples{
-### ask
 library(magrittr)
 
 random_data_connector <- function(dataname) {
