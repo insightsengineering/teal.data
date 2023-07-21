@@ -46,6 +46,7 @@ writeLines(
 x <- dataset_connector_file(file_example)
 get_code(x)
 # simple example
+library(magrittr)
 file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
