@@ -31,7 +31,7 @@ The most basic function `get_dataname` returns the name of the dataset or datase
 
 ```{r, message=FALSE}
 library(teal.data)
-library(magrittr) 
+library(magrittr)
 
 adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
     set_args(list(dataname = "ADSL"))
