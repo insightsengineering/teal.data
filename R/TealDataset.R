@@ -829,7 +829,7 @@ TealDataset <- R6::R6Class( # nolint
 #'
 #' # Example with more arguments
 #' \dontrun{
-#' ADSL <- example_cdisc_data("ADSL")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #' ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL)
 #'
 #' ADSL_dataset$get_dataname()
@@ -838,7 +838,7 @@ TealDataset <- R6::R6Class( # nolint
 #'   dataname = "ADSL",
 #'   x = ADSL,
 #'   label = "AdAM subject-level dataset",
-#'   code = "ADSL <- example_cdisc_data(\"ADSL\")"
+#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #' )
 #' ADSL_dataset$get_metadata()
 #' ADSL_dataset$get_dataset_label()

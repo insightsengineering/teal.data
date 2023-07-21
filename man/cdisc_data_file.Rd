@@ -24,13 +24,13 @@ file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "# code>
-     ADSL <- example_cdisc_data('ADSL')
-     ADTTE <- example_cdisc_data('ADTTE')
+     ADSL <- teal.data::example_cdisc_data('ADSL')
+     ADTTE <- teal.data::example_cdisc_data('ADTTE')
 
      cdisc_data(
           cdisc_dataset(\"ADSL\", ADSL), cdisc_dataset(\"ADTTE\", ADTTE),
-          code = \"ADSL <- example_cdisc_data('ADSL')
-                  ADTTE <- example_cdisc_data('ADTTE')\",
+          code = \"ADSL <- teal.data::example_cdisc_data('ADSL')
+                  ADTTE <- teal.data::example_cdisc_data('ADTTE')\",
           check = FALSE
      )
      # <code"

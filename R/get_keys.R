@@ -22,7 +22,7 @@ get_keys <- function(x, ...) {
 #' get_keys(
 #'   dataset(
 #'     "ADSL",
-#'     example_cdisc_data("ADSL"),
+#'     teal.data::example_cdisc_data("ADSL"),
 #'     keys = get_cdisc_keys("ADSL"),
 #'     code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #'   )
@@ -36,12 +36,9 @@ get_keys.TealDataset <- function(x, ...) {
 #' @export
 #' @examples
 #' # TealDatasetConnector --------
-#'
-#' pull_fun_adsl <- callable_function(
-#'   function() {
-#'     example_cdisc_data("ADSL")
-#'   }
-#' )
+#' library(magrittr)
+#' pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) %>%
+#'   set_args(list(dataname = "ADAE"))
 #' get_keys(
 #'   dataset_connector(
 #'     "ADSL",

@@ -40,7 +40,7 @@ shiny application - it returns shiny server module.
 \examples{
 
 # TealDataset ------
-ADSL <- example_cdisc_data("ADSL")
+ADSL <- teal.data::example_cdisc_data("ADSL")
 x <- dataset("ADSL", x = ADSL)
 
 load_datasets(x)
@@ -49,7 +49,7 @@ load_datasets(x)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }
@@ -66,7 +66,7 @@ get_dataset(adae)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }
@@ -83,7 +83,7 @@ load_datasets(rdc)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }

@@ -159,12 +159,14 @@ cdisc_dataset_connector <- function(dataname,
 #'
 #' @examples
 #' # simple example
+#' library(magrittr)
 #' file_example <- tempfile(fileext = ".R")
 #' writeLines(
 #'   text = c(
 #'     "library(teal.data)
 #'
-#'      pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
+#'      pull_callable <- callable_function(teal.data::example_cdisc_data) %>%
+#'        set_args(list(dataname = \"ADSL\"))
 #'      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example
@@ -193,12 +195,14 @@ dataset_connector_file <- function(path) { # nolint
 #'
 #' @examples
 #' # simple example
+#' library(magrittr)
 #' file_example <- tempfile(fileext = ".R")
 #' writeLines(
 #'   text = c(
 #'     "library(teal.data)
 #'
-#'      pull_callable <- callable_function(function() {teal.data::example_cdisc_data(\"ADSL\")})
+#'      pull_callable <- callable_function(teal.data::example_cdisc_data) %>%
+#'        set_args(list(dataname = \"ADSL\"))
 #'      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
 #'   ),
 #'   con = file_example

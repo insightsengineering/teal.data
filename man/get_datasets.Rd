@@ -30,14 +30,14 @@ object containing datasets.}
 # TealData --------
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = example_cdisc_data("ADSL"), ,
-  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
+  x = teal.data::example_cdisc_data("ADSL"), ,
+  code = "library(teal.data)\nADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 )
 
 adae <- cdisc_dataset(
   dataname = "ADAE",
-  x = example_cdisc_data("ADAE"),
-  code = "library(teal.data)\nADAE <- example_cdisc_data(\"ADAE\")"
+  x = teal.data::example_cdisc_data("ADAE"),
+  code = "library(teal.data)\nADAE <- teal.data::example_cdisc_data(\"ADAE\")"
 )
 
 rd <- cdisc_data(adsl, adae)
@@ -47,18 +47,20 @@ get_datasets(rd)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }
 
-adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
+adsl_cf <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
   keys = get_cdisc_keys("ADSL")
 )
-adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
+adlb_cf <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADLB"))
 adlb <- cdisc_dataset_connector(
   dataname = "ADLB",
   pull_callable = adlb_cf,
@@ -101,11 +103,8 @@ get_datasets(drc)
 }
 
 # TealDatasetConnector --------
-adsl_cf <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
+adsl_cf <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 rdc <- cdisc_dataset_connector("ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))
 \dontrun{
 load_datasets(rdc)
@@ -115,7 +114,7 @@ get_datasets(rdc)
 # TealDataset --------
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  x = example_cdisc_data("ADSL"),
+  x = teal.data::example_cdisc_data("ADSL"),
   code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 )
 

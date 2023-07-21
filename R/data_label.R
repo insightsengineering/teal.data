@@ -26,7 +26,7 @@ data_label <- function(data) {
 #' @export
 #'
 #' @examples
-#' x <- example_cdisc_data("ADSL")
+#' x <- teal.data::example_cdisc_data("ADSL")
 #' data_label(x) <- "My custom label"
 #' data_label(x)
 `data_label<-` <- function(x, value) { # nolint

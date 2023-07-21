@@ -7,12 +7,12 @@
 #' and `TealDatasetConnector` objects passed to it. If the keys are needed
 #' they should be assigned before calling `cdisc_data`. See example:
 #' ```
-#' test_dataset <- dataset("ADAE", example_cdisc_data("ADAE")) # does not have keys
-#' test_adsl <- cdisc_dataset("ADSL", example_cdisc_data("ADSL"))
+#' test_dataset <- dataset("ADAE", teal.data::example_cdisc_data("ADAE")) # does not have keys
+#' test_adsl <- cdisc_dataset("ADSL", teal.data::example_cdisc_data("ADSL"))
 #' test_data <- cdisc_data(test_dataset, test_adsl)
 #' get_keys(test_data, "ADAE") # returns character(0)
 #'
-#' test_dataset <- cdisc_dataset("ADAE", example_cdisc_data("ADAE"))
+#' test_dataset <- cdisc_dataset("ADAE", teal.data::example_cdisc_data("ADAE"))
 #' test_data <- cdisc_data(test_dataset, test_adsl)
 #' get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
 #' ```
@@ -31,8 +31,8 @@
 #'
 #' @examples
 #'
-#' ADSL <- example_cdisc_data("ADSL")
-#' ADTTE <- example_cdisc_data("ADTTE")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
+#' ADTTE <- teal.data::example_cdisc_data("ADTTE")
 #'
 #' # basic example
 #' cdisc_data(
@@ -137,13 +137,13 @@ cdisc_data <- function(...,
 #' writeLines(
 #'   text = c(
 #'     "# code>
-#'      ADSL <- example_cdisc_data('ADSL')
-#'      ADTTE <- example_cdisc_data('ADTTE')
+#'      ADSL <- teal.data::example_cdisc_data('ADSL')
+#'      ADTTE <- teal.data::example_cdisc_data('ADTTE')
 #'
 #'      cdisc_data(
 #'           cdisc_dataset(\"ADSL\", ADSL), cdisc_dataset(\"ADTTE\", ADTTE),
-#'           code = \"ADSL <- example_cdisc_data('ADSL')
-#'                   ADTTE <- example_cdisc_data('ADTTE')\",
+#'           code = \"ADSL <- teal.data::example_cdisc_data('ADSL')
+#'                   ADTTE <- teal.data::example_cdisc_data('ADTTE')\",
 #'           check = FALSE
 #'      )
 #'      # <code"

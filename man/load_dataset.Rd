@@ -35,7 +35,7 @@ Load data from connection. Function used on \code{\link{TealDatasetConnector}} a
 \examples{
 
 # TealDataset --------
-ADSL <- example_cdisc_data("ADSL")
+ADSL <- teal.data::example_cdisc_data("ADSL")
 ADSL_dataset <- dataset("ADSL", x = ADSL)
 
 load_dataset(ADSL_dataset)
@@ -45,7 +45,7 @@ load_dataset(ADSL_dataset)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }

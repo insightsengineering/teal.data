@@ -34,7 +34,7 @@ Raises an exception when this function cannot determine the primary key columns 
 }
 \examples{
 
-adsl <- example_cdisc_data("ADSL")
+adsl <- teal.data::example_cdisc_data("ADSL")
 # create a TealDataset with default keys
 rel_adsl <- cdisc_dataset("ADSL", adsl)
 get_key_duplicates(rel_adsl)

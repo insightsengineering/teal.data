@@ -21,7 +21,7 @@ load_dataset <- function(x, ...) {
 #' @examples
 #'
 #' # TealDataset --------
-#' ADSL <- example_cdisc_data("ADSL")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #' ADSL_dataset <- dataset("ADSL", x = ADSL)
 #'
 #' load_dataset(ADSL_dataset)
@@ -39,7 +39,7 @@ load_dataset.TealDataset <- function(x, ...) { # nolint
 #' random_data_connector <- function(dataname) {
 #'   fun_dataset_connector(
 #'     dataname = dataname,
-#'     fun = example_cdisc_data,
+#'     fun = teal.data::example_cdisc_data,
 #'     fun_args = list(dataname = dataname),
 #'   )
 #' }
@@ -91,7 +91,7 @@ load_datasets <- function(x, ...) {
 #' @examples
 #'
 #' # TealDataset ------
-#' ADSL <- example_cdisc_data("ADSL")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #' x <- dataset("ADSL", x = ADSL)
 #'
 #' load_datasets(x)
@@ -108,7 +108,7 @@ load_datasets.TealDataset <- function(x, ...) { # nolint
 #' random_data_connector <- function(dataname) {
 #'   fun_dataset_connector(
 #'     dataname = dataname,
-#'     fun = example_cdisc_data,
+#'     fun = teal.data::example_cdisc_data,
 #'     fun_args = list(dataname = dataname),
 #'   )
 #' }
@@ -136,7 +136,7 @@ load_datasets.TealDatasetConnector <- function(x, args = NULL, try = FALSE, ...)
 #' random_data_connector <- function(dataname) {
 #'   fun_dataset_connector(
 #'     dataname = dataname,
-#'     fun = example_cdisc_data,
+#'     fun = teal.data::example_cdisc_data,
 #'     fun_args = list(dataname = dataname),
 #'   )
 #' }
@@ -165,7 +165,7 @@ load_datasets.TealDataConnector <- function(x, ...) { # nolint
 #' random_data_connector <- function(dataname) {
 #'   fun_dataset_connector(
 #'     dataname = dataname,
-#'     fun = example_cdisc_data,
+#'     fun = teal.data::example_cdisc_data,
 #'     fun_args = list(dataname = dataname),
 #'   )
 #' }

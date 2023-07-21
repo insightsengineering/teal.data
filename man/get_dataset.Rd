@@ -34,13 +34,10 @@ See \code{help(TealDataConnector)} and \code{help(TealData)} for more complex ex
 \examples{
 
 # TealDatasetConnector --------
-pull_fun_adae <- callable_function(
-  function() {
-    example_cdisc_data("ADAE")
-  }
-)
+pull_fun_adae <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADAE"))
 
-ADSL <- example_cdisc_data("ADSL")
+ADSL <- teal.data::example_cdisc_data("ADSL")
 
 dc <- dataset_connector(
   dataname = "ADAE", pull_callable = pull_fun_adae,

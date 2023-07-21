@@ -31,8 +31,10 @@ The most basic function `get_dataname` returns the name of the dataset or datase
 
 ```{r, message=FALSE}
 library(teal.data)
+library(magrittr) 
 
-adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
+adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -40,7 +42,8 @@ adsl <- cdisc_dataset_connector(
 )
 get_dataname(adsl) # "ADSL"
 
-adae_cf <- callable_function(function() example_cdisc_data("ADAE"))
+adae_cf <- callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -138,7 +141,8 @@ The examples above covered some basic piping, but there is a natural sequence to
 library(teal.data)
 library(magrittr)
 
-adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
+adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL"))
 cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,

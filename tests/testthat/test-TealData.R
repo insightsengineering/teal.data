@@ -395,7 +395,7 @@ testthat::test_that("TealData with single dataset and connector", {
 
   adtte <- dataset(
     dataname = "ADTTE",
-    x = example_cdisc_data("ADTTE"),
+    x = teal.data::example_cdisc_data("ADTTE"),
     code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
   )
 
@@ -491,7 +491,7 @@ testthat::test_that("TealData with mutliple datasets and connectors", {
 
   adtte <- dataset(
     dataname = "ADTTE",
-    x = example_cdisc_data("ADTTE"),
+    x = teal.data::example_cdisc_data("ADTTE"),
     code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
   )
 

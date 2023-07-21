@@ -34,7 +34,7 @@ mutate_dataset <- function(x, ...) {
 #' @examples
 #' library(magrittr)
 #'
-#' ADSL <- example_cdisc_data("ADSL")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #'
 #' ADSL_dataset <- dataset(
 #'   dataname = "ADSL",

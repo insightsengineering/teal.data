@@ -1,6 +1,6 @@
 # Test TealDatasetConnector ------
 testthat::test_that("TealDatasetConnector", {
-  fun <- callable_function(function() example_cdisc_data("ADSL"))
+  fun <- callable_function(function() teal.data::example_cdisc_data("ADSL"))
 
   testthat::expect_error(dataset_connector(pull_callable = fun), "dataname")
   testthat::expect_silent(
@@ -13,12 +13,12 @@ testthat::test_that("TealDatasetConnector", {
 
   testthat::expect_identical(
     x1$get_code(deparse = TRUE),
-    "ADSL <- (function() example_cdisc_data(\"ADSL\"))()"
+    "ADSL <- (function() teal.data::example_cdisc_data(\"ADSL\"))()"
   )
 
   testthat::expect_equal(
     x1$get_code(deparse = FALSE),
-    as.list(as.call(parse(text = 'ADSL <- (function() example_cdisc_data("ADSL"))()')))
+    as.list(as.call(parse(text = 'ADSL <- (function() teal.data::example_cdisc_data("ADSL"))()')))
   )
 
   testthat::expect_error(x1$get_dataset(), "'ADSL' has not been pulled yet")
@@ -33,7 +33,7 @@ testthat::test_that("TealDatasetConnector", {
 
   testthat::expect_identical(
     x1$get_raw_data(),
-    example_cdisc_data("ADSL")
+    teal.data::example_cdisc_data("ADSL")
   )
 
   testthat::expect_silent(
@@ -147,7 +147,7 @@ testthat::test_that("csv_dataset_connector not expected input", {
 # test with cdisc data input
 testthat::test_that("csv_dataset_connector", {
   # create csv file
-  adsl <- example_cdisc_data("ADSL")
+  adsl <- teal.data::example_cdisc_data("ADSL")
   temp_file_csv <- tempfile(fileext = ".csv")
   write.csv(adsl, file = temp_file_csv, row.names = FALSE)
 
@@ -219,7 +219,7 @@ testthat::test_that("csv_dataset_connector", {
 
 # non-standard dataset
 testthat::test_that("csv_dataset_connector non-standard datasets multi/space character delim", {
-  test_adsl <- example_cdisc_data("ADSL")
+  test_adsl <- teal.data::example_cdisc_data("ADSL")
   test_adsl_ns <- data.frame(
     STUDYID = "A",
     USUBJID = paste0("A", 1:3),
@@ -295,7 +295,7 @@ testthat::test_that("csv_dataset_connector attritubes", {
 # test csv_cdisc_dataset_connector
 testthat::test_that("csv_cdisc_dataset_connector", {
   # create csv file
-  adsl <- example_cdisc_data("ADSL")
+  adsl <- teal.data::example_cdisc_data("ADSL")
   temp_file_csv <- tempfile(fileext = ".csv")
   write.csv(adsl, file = temp_file_csv, row.names = FALSE)
 
@@ -429,7 +429,7 @@ testthat::test_that("fun_cdisc_dataset_connector", {
 
   fun_direct <- fun_cdisc_dataset_connector(
     dataname = "ADSL",
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = "ADSL")
   )
 
@@ -451,11 +451,11 @@ testthat::test_that("fun_cdisc_dataset_connector", {
 })
 
 testthat::test_that("code_dataset_connector - Test various inputs", {
-  adsl <- example_cdisc_data("ADSL")
+  adsl <- teal.data::example_cdisc_data("ADSL")
 
   file_example <- tempfile(fileext = ".R")
   writeLines(
-    text = c("ADSL <- example_cdisc_data(\"ADSL\")\nADSL"),
+    text = c("ADSL <- teal.data::example_cdisc_data(\"ADSL\")\nADSL"),
     con = file_example
   )
 
@@ -463,11 +463,11 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
 
   expect_equal(
     from_file$get_code(),
-    "ADSL <- example_cdisc_data(\"ADSL\")\nADSL <- ADSL"
+    "ADSL <- teal.data::example_cdisc_data(\"ADSL\")\nADSL <- ADSL"
   )
   expect_identical(from_file$pull()$get_raw_data(), adsl)
 
-  adsl <- example_cdisc_data("ADSL")
+  adsl <- teal.data::example_cdisc_data("ADSL")
 
   file_example <- tempfile(fileext = ".R")
   writeLines(
@@ -502,7 +502,7 @@ testthat::test_that("code_dataset_connector - Test various inputs", {
 testthat::test_that("code_dataset_connector - Modify vars", {
   adsl <- cdisc_dataset(
     dataname = "ADSL",
-    x = example_cdisc_data("ADSL"),
+    x = teal.data::example_cdisc_data("ADSL"),
     keys = get_cdisc_keys("ADSL"),
     code = "example_cdisc_data(\"ADSL\")",
     label = "ADSL dataset"
@@ -546,7 +546,7 @@ testthat::test_that("code_dataset_connector - library calls", {
     dataname = "ADTTE",
     pull_callable = callable_code(
       "library(dplyr)
-      example_cdisc_data(\"ADTTE\") %>%
+      teal.data::example_cdisc_data(\"ADTTE\") %>%
        filter(SEX == 'F')"
     ),
     keys = get_cdisc_keys("ADTTE"),
@@ -557,7 +557,7 @@ testthat::test_that("code_dataset_connector - library calls", {
     dataname = "ADRS",
     pull_callable = callable_code(
       "library(dplyr)
-      example_cdisc_data(\"ADRS\") %>%
+      teal.data::example_cdisc_data(\"ADRS\") %>%
         filter(SEX == 'F')"
     ),
     keys = get_cdisc_keys("ADRS"),
@@ -575,7 +575,7 @@ testthat::test_that("code_dataset_connector - library calls", {
   datasets <- get_datasets(data)
   expect_identical(
     datasets[[1]]$get_raw_data(),
-    example_cdisc_data("ADSL")
+    teal.data::example_cdisc_data("ADSL")
   )
 
   expect_identical(

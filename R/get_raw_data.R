@@ -22,7 +22,7 @@ get_raw_data <- function(x, dataname = NULL) {
 #' @examples
 #'
 #' # TealDataset ---------
-#' ADSL <- example_cdisc_data("ADSL")
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #'
 #' x <- dataset(dataname = "ADSL", x = ADSL)
 #' get_raw_data(x)
@@ -38,11 +38,9 @@ get_raw_data.TealDataset <- function(x, dataname = NULL) {
 #' @examples
 #'
 #' # TealDatasetConnector ---------
-#' pull_fun_adsl <- callable_function(
-#'   function() {
-#'     example_cdisc_data("ADSL")
-#'   }
-#' )
+#' library(magrittr)
+#' pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) %>%
+#'   set_args(list(dataname = "ADSL"))
 #' dc <- dataset_connector("ADSL", pull_fun_adsl)
 #' load_dataset(dc)
 #' get_raw_data(dc)
@@ -60,14 +58,14 @@ get_raw_data.TealDatasetConnector <- function(x, dataname = NULL) { # nolint
 #' # TealData ----------------
 #' adsl <- cdisc_dataset(
 #'   dataname = "ADSL",
-#'   x = example_cdisc_data("ADSL"),
-#'   code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
+#'   x = teal.data::example_cdisc_data("ADSL"),
+#'   code = "library(teal.data)\nADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #' )
 #'
 #' adtte <- cdisc_dataset(
 #'   dataname = "ADTTE",
-#'   x = example_cdisc_data("ADTTE"),
-#'   code = "library(teal.data)\nADTTE <- example_cdisc_data(\"ADTTE\")"
+#'   x = teal.data::example_cdisc_data("ADTTE"),
+#'   code = "library(teal.data)\nADTTE <- teal.data::example_cdisc_data(\"ADTTE\")"
 #' )
 #'
 #' rd <- teal.data:::TealData$new(adsl, adtte)

@@ -29,7 +29,7 @@ library(teal.data)
 x <- code_dataset_connector(
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
+  code = "library(teal.data)\nADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 )
 # nolint end
 ```
@@ -43,14 +43,16 @@ library(magrittr)
 
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(function() example_cdisc_data("ADSL")),
+  pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )
 
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
-  pull_callable = callable_function(function() example_cdisc_data("ADAE")),
+  pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADAE")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADAE connector"
 )
@@ -72,7 +74,8 @@ library(magrittr)
 
 advs <- cdisc_dataset_connector(
   dataname = "ADVS",
-  pull_callable = callable_function(function() example_cdisc_data("ADVS")),
+  pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADVS")),
   keys = get_cdisc_keys("ADVS"),
   label = "ADVS connector"
 )
@@ -109,7 +112,8 @@ library(magrittr)
 
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function(function() example_cdisc_data("ADSL")),
+  pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "ADSL connector"
 )

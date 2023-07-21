@@ -17,13 +17,12 @@ get_dataset <- function(x, dataname) {
 #' @examples
 #'
 #' # TealDatasetConnector --------
-#' pull_fun_adae <- callable_function(
-#'   function() {
-#'     example_cdisc_data("ADAE")
-#'   }
-#' )
+#' library(magrittr)
 #'
-#' ADSL <- example_cdisc_data("ADSL")
+#' pull_fun_adae <- callable_function(teal.data::example_cdisc_data) %>%
+#'   set_args(list(dataname = "ADAE"))
+#'
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #'
 #' dc <- dataset_connector(
 #'   dataname = "ADAE", pull_callable = pull_fun_adae,

@@ -88,14 +88,14 @@ testthat::test_that(
 testthat::test_that(
   "get_raw_data.TealDataAbstract returns dataset objects verbatim when input is TealDataConnector or CDISCTealData",
   code = {
-    adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
+    adsl_cf <- callable_function(function() teal.data::example_cdisc_data("ADSL"))
     adsl <- cdisc_dataset_connector(
       dataname = "ADSL",
       pull_callable = adsl_cf,
       keys = get_cdisc_keys("ADSL")
     )
     load_dataset(adsl)
-    adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
+    adlb_cf <- callable_function(function() teal.data::example_cdisc_data("ADLB"))
     adlb <- cdisc_dataset_connector(
       dataname = "ADLB",
       pull_callable = adlb_cf,
@@ -112,8 +112,8 @@ testthat::test_that(
 
     testthat::expect_equal(length(out), 2)
 
-    adsl <- example_cdisc_data("ADSL")
-    adlb <- example_cdisc_data("ADLB")
+    adsl <- teal.data::example_cdisc_data("ADSL")
+    adlb <- teal.data::example_cdisc_data("ADLB")
     testthat::expect_identical(out$ADSL, adsl)
     testthat::expect_identical(out$ADLB, adlb)
 

@@ -44,7 +44,7 @@ If passed a \code{CDISC}-flavored object it returns the unmodified object.
 as_cdisc(
   dataset(
     "ADSL",
-    example_cdisc_data("ADSL"),
+    teal.data::example_cdisc_data("ADSL"),
     keys = get_cdisc_keys("ADSL"),
     code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
   )
@@ -52,19 +52,16 @@ as_cdisc(
 as_cdisc(
   dataset(
     "ADAE",
-    example_cdisc_data("ADAE"),
+    teal.data::example_cdisc_data("ADAE"),
     keys = get_cdisc_keys("ADAE"),
     code = "ADAE <- teal.data::example_cdisc_data(\"ADAE\")"
   ),
   parent = "ADSL"
 )
 # TealDatasetConnector --------
-
-pull_fun_adsl <- callable_function(
-  function() {
-    example_cdisc_data("ADSL")
-  }
-)
+library(magrittr)
+pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 as_cdisc(
   dataset_connector(
     "ADSL",
@@ -73,11 +70,8 @@ as_cdisc(
   )
 )
 
-pull_fun_adae <- callable_function(
-  function() {
-    example_cdisc_data("ADAE")
-  }
-)
+pull_fun_adae <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADAE"))
 as_cdisc(
   dataset_connector(
     "ADAE",

@@ -24,7 +24,7 @@ library(magrittr)
 random_data_connector <- function(dataname) {
   fun_dataset_connector(
     dataname = dataname,
-    fun = example_cdisc_data,
+    fun = teal.data::example_cdisc_data,
     fun_args = list(dataname = dataname),
   )
 }

@@ -13,7 +13,7 @@ test_that("Basic example CodeClass", {
   )
 })
 
-cc$set_code(c("ADSL <- example_cdisc_data(\"ADSL\")", "ADSL$var <- 1"), "ADSL")
+cc$set_code(c("ADSL <- teal.data::example_cdisc_data(\"ADSL\")", "ADSL$var <- 1"), "ADSL")
 cc$set_code("ADSL$a <- foo()", "ADSL")
 
 cc$set_code("ADSL_2 <- head(ADSL, 5)", "ADSL_2", deps = "ADSL")
@@ -27,7 +27,7 @@ test_that("example datasets", {
     cc$get_code("ADSL"),
     paste0(
       "foo <- function() {\n    1\n}\nfoo2 <- function() {\n    2\n}\n",
-      "ADSL <- example_cdisc_data(\"ADSL\")\nADSL$var <- 1\nADSL$a <- foo()"
+      "ADSL <- teal.data::example_cdisc_data(\"ADSL\")\nADSL$var <- 1\nADSL$a <- foo()"
     )
   )
 })
@@ -51,7 +51,7 @@ test_that("example datasets deps", {
 #########################################
 
 x1 <- CodeClass$new()
-x1$set_code("ADSL <- example_cdisc_data(\"ADSL\")", "ADSL")
+x1$set_code("ADSL <- teal.data::example_cdisc_data(\"ADSL\")", "ADSL")
 
 x2 <- CodeClass$new()
 x2$set_code("ADSL_2 <- head(ADSL, 5)", "ADSL_2", "ADSL")
@@ -71,7 +71,7 @@ test_that("CodeClass append", {
 
 
 x3 <- CodeClass$new()
-x3$set_code("ADRS <- example_cdisc_data(\"ADRS\")", "ADRS")
+x3$set_code("ADRS <- teal.data::example_cdisc_data(\"ADRS\")", "ADRS")
 x$append(x3)
 
 
@@ -79,8 +79,8 @@ test_that("CodeClass append deps", {
   expect_identical(
     x$get_code(),
     paste0(
-      "ADSL <- example_cdisc_data(\"ADSL\")\nADSL_2 <- head(ADSL, 5)\n",
-      "ADRS <- example_cdisc_data(\"ADRS\")"
+      "ADSL <- teal.data::example_cdisc_data(\"ADSL\")\nADSL_2 <- head(ADSL, 5)\n",
+      "ADRS <- teal.data::example_cdisc_data(\"ADRS\")"
     )
   )
 })
@@ -92,18 +92,18 @@ test_that("CodeClass append deps", {
   expect_identical(
     x$get_code("ADRS"),
     paste0(
-      "ADSL <- example_cdisc_data(\"ADSL\")\nADRS <- example_cdisc_data(\"ADRS\")\n",
+      "ADSL <- teal.data::example_cdisc_data(\"ADSL\")\nADRS <- teal.data::example_cdisc_data(\"ADRS\")\n",
       "ADRS$x <- foo(ADSL$x)\n"
     )
   )
   expect_equal(x$get_code("ADRS", deparse = FALSE), list(
-    rlang::expr(ADSL <- example_cdisc_data("ADSL")), # nolint
-    rlang::expr(ADRS <- example_cdisc_data("ADRS")), # nolint
+    rlang::expr(ADSL <- teal.data::example_cdisc_data("ADSL")), # nolint
+    rlang::expr(ADRS <- teal.data::example_cdisc_data("ADRS")), # nolint
     rlang::expr(ADRS$x <- foo(ADSL$x)) # nolint
   ))
   expect_identical(
     x$get_code("ADSL"),
-    "ADSL <- example_cdisc_data(\"ADSL\")"
+    "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
   )
 })
 
@@ -148,7 +148,7 @@ test_that("CodeClass list_to_code_class", {
   random_data_connector <- function(dataname) {
     fun_dataset_connector(
       dataname = dataname,
-      fun = example_cdisc_data,
+      fun = teal.data::example_cdisc_data,
       fun_args = list(dataname = dataname),
     )
   }

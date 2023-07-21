@@ -22,8 +22,8 @@ For creating `ADaM` clinical trial data please use the `cdisc_data` and `cdisc_d
 library(teal.data)
 
 # create some dummy data
-adsl <- example_cdisc_data("ADSL")
-adtte <- example_cdisc_data("ADTTE")
+adsl <- teal.data::example_cdisc_data("ADSL")
+adtte <- teal.data::example_cdisc_data("ADTTE")
 
 my_data <- cdisc_data(
   cdisc_dataset("ADSL", adsl),

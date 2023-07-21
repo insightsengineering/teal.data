@@ -15,16 +15,16 @@
 #'   as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.
 #'
 #' @examples
-#' adsl_cf <- callable_function(function() example_cdisc_data("ADSL"))
-#' adlb_cf <- callable_function(function() example_cdisc_data("ADLB"))
-#' adrs_cf <- callable_function(function() example_cdisc_data("ADRS"))
-#' adtte_cf <- callable_function(function() example_cdisc_data("ADTTE"))
+#' adsl_cf <- callable_function(teal.data::example_cdisc_data)$set_args(list(dataname = "ADSL"))
+#' adlb_cf <- callable_function(teal.data::example_cdisc_data)$set_args(list(dataname = "ADLB"))
+#' adrs_cf <- callable_function(teal.data::example_cdisc_data)$set_args(list(dataname = "ADRS"))
+#' adtte_cf <- callable_function(teal.data::example_cdisc_data)$set_args(list(dataname = "ADTTE"))
 #' x1 <- cdisc_dataset_connector("ADSL", adsl_cf, keys = get_cdisc_keys("ADSL"))
 #' x2 <- cdisc_dataset_connector("ADRS", adrs_cf, keys = get_cdisc_keys("ADRS"))
 #' x3 <- cdisc_dataset(
 #'   dataname = "ADAE",
-#'   x = example_cdisc_data("ADAE"),
-#'   code = "library(teal.data)\nADAE <- example_cdisc_data(\"ADAE\")"
+#'   x = teal.data::example_cdisc_data("ADAE"),
+#'   code = "library(teal.data)\nADAE <- teal.data::example_cdisc_data(\"ADAE\")"
 #' )
 #' x4 <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"))
 #' tc <- teal.data:::TealData$new(x1, x2, x3, x4)
@@ -38,8 +38,8 @@
 #'
 #' x <- cdisc_dataset(
 #'   dataname = "ADSL",
-#'   x = example_cdisc_data("ADSL"),
-#'   code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
+#'   x = teal.data::example_cdisc_data("ADSL"),
+#'   code = "library(teal.data)\nADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 #' )
 #'
 #' x2 <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"))
