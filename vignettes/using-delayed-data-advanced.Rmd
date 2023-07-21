@@ -431,7 +431,7 @@ example_cdisc_dataset_connector <- function(dataname) {
   cdisc_dataset_connector(
     dataname = dataname,
     pull_callable = callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = dataname)),
+      set_args(list(dataname = dataname)),
     keys = get_cdisc_keys(dataname),
     label = sprintf("%s connector", dataname)
   )

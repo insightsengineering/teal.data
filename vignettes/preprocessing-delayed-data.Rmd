@@ -20,7 +20,7 @@ library(teal.data)
 library(magrittr)
 
 adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADSL"))
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -30,7 +30,7 @@ adsl <- cdisc_dataset_connector(
 
 
 adae_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADAE"))
+  set_args(list(dataname = "ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -67,7 +67,7 @@ For this, when creating your delayed data object it's possible to supply the add
 get_code(adsl)
 
 pull_fun_adae <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADAE"))
+  set_args(list(dataname = "ADAE"))
 adae <- dataset_connector(
   dataname = "ADAE",
   pull_callable = pull_fun_adae,
@@ -83,7 +83,7 @@ It's also possible to supply these additional variables after creating your obje
 last_run <- Sys.Date() # constant value stored as a variable in the current session
 
 adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADSL"))
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -95,7 +95,7 @@ cat(get_code(adsl))
 
 # compared to evaluating the variable at the time of loading
 adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADSL"))
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
@@ -113,7 +113,7 @@ This is also required when creating the object depends on another delayed data o
 ```{r}
 adsl <- teal.data::example_cdisc_data("ADSL")
 adae_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADAE"))
+  set_args(list(dataname = "ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
@@ -124,14 +124,14 @@ adae <- cdisc_dataset_connector(
 cat(get_code(adae)) # the code returned by `adae` is not sufficient to reproduce `adae`
 
 adsl_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADSL"))
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,
   keys = get_cdisc_keys("ADSL")
 )
 adae_cf <- callable_function(teal.data::example_cdisc_data) %>%
-    set_args(list(dataname = "ADAE"))
+  set_args(list(dataname = "ADAE"))
 adae <- cdisc_dataset_connector(
   dataname = "ADAE",
   pull_callable = adae_cf,
