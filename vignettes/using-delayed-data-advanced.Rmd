@@ -427,33 +427,18 @@ One can combine multiple delayed data objects using `[teal|cdisc]_data` function
 
 ```{r}
 # nolint start
-adsl <- cdisc_dataset_connector(
-  dataname = "ADSL",
-  pull_callable = callable_function(function() example_cdisc_data("ADSL")),
-  keys = get_cdisc_keys("ADSL"),
-  label = "ADSL connector"
-)
-
-adae <- cdisc_dataset_connector(
-  dataname = "ADAE",
-  pull_callable = callable_function(function() example_cdisc_data("ADAE")),
-  keys = get_cdisc_keys("ADAE"),
-  label = "ADAE connector"
-)
-
-advs <- cdisc_dataset_connector(
-  dataname = "ADVS",
-  pull_callable = callable_function(function() example_cdisc_data("ADVS")),
-  keys = get_cdisc_keys("ADVS"),
-  label = "ADVS connector"
-)
-
-adtte <- cdisc_dataset_connector(
-  dataname = "ADTTE",
-  pull_callable = callable_function(function() example_cdisc_data("ADTTE")),
-  keys = get_cdisc_keys("ADTTE"),
-  label = "ADTTE connector"
-)
+example_cdisc_dataset_connector <- function(dataname) {
+  example_cdisc_dataset_connector(
+    dataname = dataname,
+    pull_callable = callable_function(function() example_cdisc_data(dataname)),
+    keys = get_cdisc_keys(dataname),
+    label = sprintf("%s connector")
+  )
+}
+adsl <- example_cdisc_dataset_connector("ADSL")
+adae <- example_cdisc_dataset_connector("ADAE")
+advs <- example_cdisc_dataset_connector("ADVS")
+adtte <- example_cdisc_dataset_connector("ADTTE")
 
 data <- cdisc_data(adsl, adae, advs, adtte)
 # nolint end
