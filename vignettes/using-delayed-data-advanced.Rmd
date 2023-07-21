@@ -428,7 +428,7 @@ One can combine multiple delayed data objects using `[teal|cdisc]_data` function
 ```{r}
 # nolint start
 example_cdisc_dataset_connector <- function(dataname) {
-  example_cdisc_dataset_connector(
+  cdisc_dataset_connector(
     dataname = dataname,
     pull_callable = callable_function(function() example_cdisc_data(dataname)),
     keys = get_cdisc_keys(dataname),
