@@ -41,32 +41,27 @@ If passed a \code{CDISC}-flavored object it returns the unmodified object.
 \examples{
 # TealDataset --------
 
-library(scda)
 as_cdisc(
   dataset(
     "ADSL",
-    synthetic_cdisc_data("latest")$adsl,
+    teal.data::example_cdisc_data("ADSL"),
     keys = get_cdisc_keys("ADSL"),
-    code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+    code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
   )
 )
 as_cdisc(
   dataset(
     "ADAE",
-    synthetic_cdisc_data("latest")$adae,
+    teal.data::example_cdisc_data("ADAE"),
     keys = get_cdisc_keys("ADAE"),
-    code = "ADAE <- synthetic_cdisc_data(\"latest\")$adae"
+    code = "ADAE <- teal.data::example_cdisc_data(\"ADAE\")"
   ),
   parent = "ADSL"
 )
 # TealDatasetConnector --------
-
-library(scda)
-pull_fun_adsl <- callable_function(
-  function() {
-    synthetic_cdisc_data("latest")$adsl
-  }
-)
+library(magrittr)
+pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 as_cdisc(
   dataset_connector(
     "ADSL",
@@ -75,11 +70,8 @@ as_cdisc(
   )
 )
 
-pull_fun_adae <- callable_function(
-  function() {
-    synthetic_cdisc_data("latest")$adae
-  }
-)
+pull_fun_adae <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADAE"))
 as_cdisc(
   dataset_connector(
     "ADAE",

@@ -76,11 +76,10 @@ Create a \code{CDISCTealDatasetConnector} from a string of code with keys
 assigned automatically by \code{dataname}.
 }
 \examples{
-library(scda)
 x <- code_dataset_connector(
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl; ADSL"
+  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\"); ADSL"
 )
 
 x$get_code()
