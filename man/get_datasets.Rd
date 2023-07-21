@@ -27,6 +27,8 @@ object containing datasets.}
 }
 \examples{
 
+library(magrittr)
+
 # TealData --------
 adsl <- cdisc_dataset(
   dataname = "ADSL",

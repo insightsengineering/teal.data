@@ -34,6 +34,8 @@ See \code{help(TealDataConnector)} and \code{help(TealData)} for more complex ex
 \examples{
 
 # TealDatasetConnector --------
+library(magrittr)
+
 pull_fun_adae <- callable_function(teal.data::example_cdisc_data) \%>\%
   set_args(list(dataname = "ADAE"))
 

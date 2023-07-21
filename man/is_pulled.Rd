@@ -46,6 +46,9 @@ x <- dataset(
 )
 
 is_pulled(x)
+
+library(magrittr)
+
 # TealData --------
 x1 <- dataset(
   x = teal.data::example_cdisc_data("ADSL"),
