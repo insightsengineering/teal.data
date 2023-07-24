@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,15 +59,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -135,22 +126,16 @@ Connectors to pull data from proprietary data storage are not included
 in this package.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># specialized function to create delayed data using scda (could also set keys when using cdisc_dataset_connector)</span></span>
-<span><span class="va">adlb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_dataset_connector</a></span><span class="op">(</span></span>
-<span>  <span class="st">"ADLB"</span>,</span>
-<span>  <span class="st">"adlb"</span>,</span>
-<span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADLB"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># nolint start</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># generalized function to create delayed data from code - see package help for other connectors</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/code_dataset_connector.html">code_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
 <span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,</span>
-<span>  code <span class="op">=</span> <span class="st">"library(scda)\nADSL &lt;- synthetic_cdisc_data(\"latest\")$adsl"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  code <span class="op">=</span> <span class="st">"library(teal.data)\nADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># nolint end</span></span></code></pre></div>
 <ul>
 <li>A <strong><code>TealDataConnector</code></strong> is an object used
 to pull a set of delayed data sets into a <code>teal</code> app which
@@ -158,13 +143,31 @@ all share a common connection (see <a href="delayed-data-loading.html">Delayed D
 definition of a connection object).</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># using scda</span></span>
-<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span>, scda_dataname <span class="op">=</span> <span class="st">"adsl"</span><span class="op">)</span></span>
-<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span>, scda_dataname <span class="op">=</span> <span class="st">"adae"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># nolint start</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
+<span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
+<span>  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"ADSL connector"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
+<span>  dataname <span class="op">=</span> <span class="st">"ADAE"</span>,</span>
+<span>  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"ADAE connector"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/relational_data_connector.html">relational_data_connector</a></span><span class="op">(</span></span>
 <span>  connection <span class="op">=</span> <span class="fu"><a href="../reference/data_connection.html">data_connection</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  connectors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">adsl</span>, <span class="va">adae</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co"># nolint end</span></span></code></pre></div>
 <ul>
 <li>The <code>cdisc_data</code> function takes a set of
 <strong><code>TealDataConnector</code></strong>,
@@ -174,10 +177,22 @@ definition of a connection object).</li>
 <code>teal</code> applications.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># create a TealDatasetConnector for ADVS</span></span>
-<span><span class="va">advs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADVS"</span>, scda_dataname <span class="op">=</span> <span class="st">"advs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># nolint start</span></span>
+<span><span class="co"># create a TealDatasetConnector for ADVS</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">advs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
+<span>  dataname <span class="op">=</span> <span class="st">"ADVS"</span>,</span>
+<span>  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADVS"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADVS"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"ADVS connector"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># use cdisc_data() to create a `DDL` object</span></span>
-<span><span class="va">delayed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span><span class="va">adsl_adae</span>, <span class="va">advs</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">delayed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span><span class="va">adsl_adae</span>, <span class="va">advs</span><span class="op">)</span></span>
+<span><span class="co"># nolint end</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="constructors">Constructors<a class="anchor" aria-label="anchor" href="#constructors"></a>
@@ -267,7 +282,18 @@ to allow arbitrary relational data to be used within teal apps.</li>
 datasets depend on other datasets being available they should be placed
 later in the argument list:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scda_dataset_connector.html">scda_cdisc_dataset_connector</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span>, <span class="st">"adsl"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># nolint start</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
+<span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
+<span>  pull_callable <span class="op">=</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"ADSL connector"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="va">adsl_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/code_dataset_connector.html">code_cdisc_dataset_connector</a></span><span class="op">(</span><span class="st">"ADSL_2"</span>,</span>
 <span>  code <span class="op">=</span> <span class="st">"head(ADSL, 5)"</span>,</span>
 <span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span>, ADSL <span class="op">=</span> <span class="va">adsl</span></span>
@@ -288,6 +314,8 @@ later in the argument list:</p>
 <span><span class="co">## A CDISCTealDatasetConnector object, named ADSL_2, containing a TealDataset object that has not been loaded/pulled</span></span>
 <span><span class="co">## --&gt; Element 2:</span></span>
 <span><span class="co">## A CDISCTealDatasetConnector object, named ADSL, containing a TealDataset object that has not been loaded/pulled</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># nolint end</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

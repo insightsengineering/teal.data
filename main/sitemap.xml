@@ -187,6 +187,9 @@
     <loc>https://insightsengineering.github.io/teal.data/main/reference/enclosed_with_dataname.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/example_cdisc_data.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/find_source_code.html</loc>
   </url>
   <url>
@@ -289,6 +292,33 @@
     <loc>https://insightsengineering.github.io/teal.data/main/reference/python_dataset_connector.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADAE.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADCM.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADEX.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADLB.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADRS.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADSL.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADTR.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADTTE.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/main/reference/rADVS.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/rds_dataset_connector.html</loc>
   </url>
   <url>
@@ -296,9 +326,6 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/relational_data_connector.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/main/reference/scda_dataset_connector.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/main/reference/script_dataset_connector.html</loc>

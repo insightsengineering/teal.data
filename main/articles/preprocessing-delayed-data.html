@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,15 +59,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -126,11 +117,11 @@ be maintained with <code>mutate_dataset</code>, all pre-processing code
 should modify one dataset at a time.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">teal.data</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adsl_cf</span>,</span>
@@ -139,7 +130,8 @@ should modify one dataset at a time.</li>
 <span>  <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="st">"ADSL$SEX &lt;- as.factor(ADSL$SEX)"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span><span class="op">)</span></span>
+<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADAE"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adae_cf</span>,</span>
@@ -259,13 +251,10 @@ supply the additional variables that are to be accessed during the data
 loading (pull) using additional arguments through <code>...</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "ADSL &lt;- (function() synthetic_cdisc_data(\"latest\")$adsl)()\nADSL$SEX &lt;- as.factor(ADSL$SEX)"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "ADSL &lt;- teal.data::example_cdisc_data(dataname = \"ADSL\")\nADSL$SEX &lt;- as.factor(ADSL$SEX)"</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pull_fun_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span></span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">pull_fun_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dataset_connector.html">dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADAE"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">pull_fun_adae</span>,</span>
@@ -273,13 +262,14 @@ loading (pull) using additional arguments through <code>...</code>:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "ADAE &lt;- (function() {\n    synthetic_cdisc_data(\"latest\")$adae\n})()"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "ADAE &lt;- teal.data::example_cdisc_data(dataname = \"ADAE\")"</span></span></code></pre>
 <p>It’s also possible to supply these additional variables after
 creating your object using the <code>mutate_dataset</code> function.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">last_run</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># constant value stored as a variable in the current session</span></span>
 <span></span>
-<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adsl_cf</span>,</span>
@@ -288,12 +278,13 @@ creating your object using the <code>mutate_dataset</code> function.</p>
 <span>  <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="st">"ADSL$last_run &lt;- last_run"</span>, vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>last_run <span class="op">=</span> <span class="va">last_run</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## last_run &lt;- structure(19537, class = "Date")</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## last_run &lt;- structure(19562, class = "Date")</span></span>
 <span><span class="co">## ADSL$last_run &lt;- last_run</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compared to evaluating the variable at the time of loading</span></span>
-<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span><span class="op">)</span></span>
+<span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adsl_cf</span>,</span>
@@ -304,14 +295,15 @@ creating your object using the <code>mutate_dataset</code> function.</p>
 <span><span class="va">adsl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
 <span><span class="co">## last_run &lt;- Sys.Date()</span></span>
 <span><span class="co">## ADSL$last_run &lt;- last_run</span></span></code></pre>
 <p>This is also required when creating the object depends on another
 delayed data object:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span></span>
-<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span>
+<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADAE"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adae_cf</span>,</span>
@@ -320,16 +312,18 @@ delayed data object:</p>
 <span>  <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="st">"ADAE$n &lt;- nrow(ADSL)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span><span class="op">)</span> <span class="co"># the code returned by `adae` is not sufficient to reproduce `adae`</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">adsl_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADSL"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adsl_cf</span>,</span>
 <span>  keys <span class="op">=</span> <span class="fu"><a href="../reference/get_cdisc_keys.html">get_cdisc_keys</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span><span class="op">)</span></span>
+<span><span class="va">adae_cf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/callable_function.html">callable_function</a></span><span class="op">(</span><span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_args.html">set_args</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_dataset_connector.html">cdisc_dataset_connector</a></span><span class="op">(</span></span>
 <span>  dataname <span class="op">=</span> <span class="st">"ADAE"</span>,</span>
 <span>  pull_callable <span class="op">=</span> <span class="va">adae_cf</span>,</span>
@@ -338,8 +332,8 @@ delayed data object:</p>
 <span>  <span class="fu"><a href="../reference/mutate_dataset.html">mutate_dataset</a></span><span class="op">(</span><span class="st">"ADAE$n &lt;- nrow(ADSL)"</span>, vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ADSL <span class="op">=</span> <span class="va">adsl</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span><span class="op">)</span> <span class="co"># this code can be run independently</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
-<span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
+<pre><code><span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
+<span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span></code></pre>
 <p>Related to this idea, it is possible to provide the code on a
 <code>Data</code> level. However, this will always return all the code
@@ -354,24 +348,24 @@ used to generate all the datasets in the object:</p>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span>
 <span><span class="co">## ADAE$avg_age &lt;- mean(ADAE$AGE)</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span>
 <span><span class="co">## ADAE$avg_age &lt;- mean(ADAE$AGE)</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span>
 <span><span class="co">## ADAE$avg_age &lt;- mean(ADAE$AGE)</span></span></code></pre>
 <p>The better approach would be to supply the code on a
@@ -386,70 +380,70 @@ dataset level only contains the snippets that pertains to itself:</p>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span>
 <span><span class="co">## ADAE$avg_age &lt;- mean(ADAE$AGE)</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="st">"ADAE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span>
-<span><span class="co">## ADAE &lt;- (function() synthetic_cdisc_data("latest")$adae)()</span></span>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span>
 <span><span class="co">## ADAE$avg_age &lt;- mean(ADAE$AGE)</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- (function() synthetic_cdisc_data("latest")$adsl)()</span></span></code></pre>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span></code></pre>
 <p>Related to this idea, the delayed data object needs to be supplied
 with the code needed to reproduce the data. This can be provided at the
 <code>Dataset</code> level or the <code>Data</code> level.</p>
 <p>Below is a comparison of these two approaches:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span></span>
+<code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no reproducible code</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] ""</span></span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># provide the code to reproduce the data:</span></span>
 <span><span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span>,</span>
-<span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- synthetic_cdisc_data(\"latest\")$adsl"</span></span>
+<span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "ADSL &lt;- synthetic_cdisc_data(\"latest\")$adsl"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span></span></code></pre>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># it's possible to supply the code at the `Data` level:</span></span>
-<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span></span>
+<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADAE"</span><span class="op">)</span></span>
 <span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="va">adae</span><span class="op">)</span>,</span>
-<span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- synthetic_cdisc_data(\"latest\")$adsl\nADAE &lt;- synthetic_cdisc_data(\"latest\")$adae"</span></span>
+<span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")\nADAE &lt;- teal.data::example_cdisc_data(\"ADAE\")"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- synthetic_cdisc_data("latest")$adsl</span></span>
-<span><span class="co">## ADAE &lt;- synthetic_cdisc_data("latest")$adae</span></span></code></pre>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data("ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data("ADAE")</span></span></code></pre>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># but it's not possible then to access the code at a `Dataset` level:</span></span>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- synthetic_cdisc_data("latest")$adsl</span></span>
-<span><span class="co">## ADAE &lt;- synthetic_cdisc_data("latest")$adae</span></span></code></pre>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data("ADSL")</span></span>
+<span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data("ADAE")</span></span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># this can be avoided by storing the code like so:</span></span>
 <span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span>, code <span class="op">=</span> <span class="st">"ADSL &lt;- synthetic_cdisc_data(\"latest\")$adsl"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="va">adae</span>, code <span class="op">=</span> <span class="st">"ADAE &lt;- synthetic_cdisc_data(\"latest\")$adsl"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span>, code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="va">adae</span>, code <span class="op">=</span> <span class="st">"ADAE &lt;- teal.data::example_cdisc_data(\"ADAE\")"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## ADSL &lt;- synthetic_cdisc_data("latest")$adsl</span></span></code></pre>
+<pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data("ADSL")</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

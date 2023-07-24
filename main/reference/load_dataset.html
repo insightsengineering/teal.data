@@ -14,7 +14,7 @@ TealDataset to obtain data from connection."><!-- mathjax --><script src="https:
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,15 +45,6 @@ TealDataset to obtain data from connection."><!-- mathjax --><script src="https:
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -133,20 +124,22 @@ additional dynamic arguments passed to function which loads the data.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># TealDataset --------</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ADSL_dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="dataset.html">dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, x <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">load_dataset</span><span class="op">(</span><span class="va">ADSL_dataset</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># TealDatasetConnector --------</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">pull_fun_adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="callable_function.html">callable_function</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adsl</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu"><a href="dataset_connector.html">dataset_connector</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">pull_fun_adsl</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">random_data_connector</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataname</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="fun_dataset_connector.html">fun_dataset_connector</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    dataname <span class="op">=</span> <span class="va">dataname</span>,</span></span>
+<span class="r-in"><span>    fun <span class="op">=</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="example_cdisc_data.html">example_cdisc_data</a></span>,</span></span>
+<span class="r-in"><span>    fun_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>dataname <span class="op">=</span> <span class="va">dataname</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">random_data_connector</span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADSL"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">load_dataset</span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A TealDataset object containing the following data.frame (400 rows and 55 columns):</span>
@@ -229,13 +222,123 @@ additional dynamic arguments passed to function which loads the data.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6     Yes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ...</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">pull_fun_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="callable_function.html">callable_function</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span><span class="op">$</span><span class="va">adae</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="dataset_connector.html">dataset_connector</a></span><span class="op">(</span><span class="st">"ADAE"</span>, <span class="va">pull_fun_adae</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">random_data_connector</span><span class="op">(</span>dataname <span class="op">=</span> <span class="st">"ADAE"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">load_dataset</span><span class="op">(</span><span class="va">adae</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="va">adae</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A TealDataset object containing the following data.frame (1934 rows and 92 columns):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID              USUBJID SUBJID SITEID AGE  AGEU SEX  RACE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 AB12345 AB12345-BRA-1-id-134 id-134  BRA-1  47 YEARS   M WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 AB12345 AB12345-BRA-1-id-141 id-141  BRA-1  35 YEARS   F WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 AB12345 AB12345-BRA-1-id-141 id-141  BRA-1  35 YEARS   F WHITE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   ETHNIC COUNTRY DTHFL        INVID        INVNAM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 NOT HISPANIC OR LATINO     BRA     Y INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 NOT HISPANIC OR LATINO     BRA     Y INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 NOT HISPANIC OR LATINO     BRA     Y INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 NOT HISPANIC OR LATINO     BRA     Y INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 NOT HISPANIC OR LATINO     BRA     N INV ID BRA-1 Dr. BRA-1 Doe</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              ARM ARMCD         ACTARM ACTARMCD         TRT01P         TRT01A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      A: Drug X ARM A      A: Drug X    ARM A      A: Drug X      A: Drug X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      A: Drug X ARM A      A: Drug X    ARM A      A: Drug X      A: Drug X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      A: Drug X ARM A      A: Drug X    ARM A      A: Drug X      A: Drug X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      A: Drug X ARM A      A: Drug X    ARM A      A: Drug X      A: Drug X</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 C: Combination ARM C C: Combination    ARM C C: Combination C: Combination</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 C: Combination ARM C C: Combination    ARM C C: Combination C: Combination</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           TRT02P         TRT02A       REGION1 STRATA1 STRATA2   BMRKR1 BMRKR2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     B: Placebo      A: Drug X South America       B      S2 6.462991    LOW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     B: Placebo      A: Drug X South America       B      S2 6.462991    LOW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     B: Placebo      A: Drug X South America       B      S2 6.462991    LOW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     B: Placebo      A: Drug X South America       B      S2 6.462991    LOW</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 C: Combination C: Combination South America       B      S1 7.516076   HIGH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 C: Combination C: Combination South America       B      S1 7.516076   HIGH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ITTFL SAFFL BMEASIFL BEP01FL AEWITHFL     RANDDT             TRTSDTM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Y     Y        Y       N        N 2020-11-03 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Y     Y        Y       N        N 2020-11-03 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Y     Y        Y       N        N 2020-11-03 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Y     Y        Y       N        N 2020-11-03 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Y     Y        Y       Y        N 2020-07-22 2020-07-25 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Y     Y        Y       Y        N 2020-07-22 2020-07-25 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               TRTEDTM           TRT01SDTM           TRT01EDTM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2022-02-20 03:33:55 2020-11-04 04:08:58 2021-02-19 21:33:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2022-02-20 03:33:55 2020-11-04 04:08:58 2021-02-19 21:33:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-02-20 03:33:55 2020-11-04 04:08:58 2021-02-19 21:33:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2022-02-20 03:33:55 2020-11-04 04:08:58 2021-02-19 21:33:55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2023-07-26 08:26:21 2020-07-25 14:26:21 2022-07-26 02:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023-07-26 08:26:21 2020-07-25 14:26:21 2022-07-26 02:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             TRT02SDTM           TRT02EDTM            AP01SDTM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-02-19 21:33:55 2022-02-20 03:33:55 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2021-02-19 21:33:55 2022-02-20 03:33:55 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2021-02-19 21:33:55 2022-02-20 03:33:55 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2021-02-19 21:33:55 2022-02-20 03:33:55 2020-11-04 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-07-26 02:26:21 2023-07-26 08:26:21 2020-07-25 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-07-26 02:26:21 2023-07-26 08:26:21 2020-07-25 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              AP01EDTM            AP02SDTM            AP02EDTM       EOSSTT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-02-19 21:33:55 2021-02-19 21:33:55 2022-02-20 03:33:55 DISCONTINUED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2021-02-19 21:33:55 2021-02-19 21:33:55 2022-02-20 03:33:55 DISCONTINUED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2021-02-19 21:33:55 2021-02-19 21:33:55 2022-02-20 03:33:55 DISCONTINUED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2021-02-19 21:33:55 2021-02-19 21:33:55 2022-02-20 03:33:55 DISCONTINUED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-07-26 02:26:21 2022-07-26 02:26:21 2023-07-26 08:26:21    COMPLETED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-07-26 02:26:21 2022-07-26 02:26:21 2023-07-26 08:26:21    COMPLETED</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         EOTSTT      EOSDT EOSDY DCSREAS      DTHDT       DTHCAUS        DTHCAT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 DISCONTINUED 2022-02-20   473   DEATH 2022-03-16 ADVERSE EVENT ADVERSE EVENT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 DISCONTINUED 2022-02-20   473   DEATH 2022-03-16 ADVERSE EVENT ADVERSE EVENT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 DISCONTINUED 2022-02-20   473   DEATH 2022-03-16 ADVERSE EVENT ADVERSE EVENT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 DISCONTINUED 2022-02-20   473   DEATH 2022-03-16 ADVERSE EVENT ADVERSE EVENT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    COMPLETED 2023-07-26  1096    &lt;NA&gt;       &lt;NA&gt;          &lt;NA&gt;          &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    COMPLETED 2023-07-26  1096    &lt;NA&gt;       &lt;NA&gt;          &lt;NA&gt;          &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   LDDTHELD LDDTHGR1   LSTALVDT DTHADY ADTHAUT ASEQ AESEQ        AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       24     &lt;=30 2022-03-16    496     Yes    1     1 trm B.2.1.2.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       24     &lt;=30 2022-03-16    496     Yes    2     2 trm D.1.1.4.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       24     &lt;=30 2022-03-16    496     Yes    3     3 trm A.1.1.1.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       24     &lt;=30 2022-03-16    496     Yes    4     4 trm A.1.1.1.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       NA     &lt;NA&gt; 2023-08-08     NA    &lt;NA&gt;    1     1 trm B.2.1.2.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       NA     &lt;NA&gt; 2023-08-08     NA    &lt;NA&gt;    2     2 trm D.2.1.5.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           AELLT       AEDECOD       AEHLT     AEHLGT AEBODSYS AESOC    AESEV</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 llt B.2.1.2.1 dcd B.2.1.2.1 hlt B.2.1.2 hlgt B.2.1   cl B.2  cl B MODERATE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 llt D.1.1.4.2 dcd D.1.1.4.2 hlt D.1.1.4 hlgt D.1.1   cl D.1  cl D MODERATE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 llt A.1.1.1.2 dcd A.1.1.1.2 hlt A.1.1.1 hlgt A.1.1   cl A.1  cl A MODERATE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 llt A.1.1.1.2 dcd A.1.1.1.2 hlt A.1.1.1 hlgt A.1.1   cl A.1  cl A MODERATE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 llt B.2.1.2.1 dcd B.2.1.2.1 hlt B.2.1.2 hlgt B.2.1   cl B.2  cl B MODERATE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 llt D.2.1.5.3 dcd D.2.1.5.3 hlt D.2.1.5 hlgt D.2.1   cl D.2  cl D     MILD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AESER            AEACN AEREL                AEOUT AESDTH AESCONG AESDISAB</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     N DOSE NOT CHANGED     N RECOVERING/RESOLVING      N       N        Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     N DOSE NOT CHANGED     N RECOVERING/RESOLVING      N       N        Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Y DOSE NOT CHANGED     N RECOVERING/RESOLVING      N       N        Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Y   DRUG WITHDRAWN     N RECOVERING/RESOLVING      N       Y        N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     N   DOSE INCREASED     N   RECOVERED/RESOLVED      N       N        N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     N   DOSE INCREASED     Y   RECOVERED/RESOLVED      N       N        Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AESHOSP AESLIFE AESMIE TRTEMFL AECONTRT              ASTDTM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       N       N      N       Y        Y 2021-04-15 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       N       N      N       Y        N 2021-05-19 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       N       N      N       Y        Y 2021-09-21 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       N       N      N       Y        N 2021-12-02 04:08:58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Y       N      N       Y        Y 2021-08-16 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       N       N      N       Y        N 2021-10-23 14:26:21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                AENDTM ASTDY AENDY            LDOSEDTM    LDRELTM AETOXGR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2021-10-04 04:08:58   162   334 2020-11-07 09:05:04 228663.896       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2021-10-31 04:08:58   196   361 2021-05-17 07:21:09   2687.814       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2022-02-16 04:08:58   321   469 2021-05-23 15:14:37 173574.345       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2022-01-13 04:08:58   393   435 2021-03-19 08:52:05 371236.878       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2021-08-26 14:26:21   387   397 2021-07-22 06:04:04  36502.291       3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023-07-12 14:26:21   455  1082 2021-07-16 21:30:39 142135.710       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SMQ01NAM SMQ02NAM SMQ01SC SMQ02SC                  CQ01NAM ANL01FL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;                     &lt;NA&gt;       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;                     &lt;NA&gt;       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;                     &lt;NA&gt;       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;                     &lt;NA&gt;       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;                     &lt;NA&gt;       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     &lt;NA&gt;     &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt; D.2.1.5.3/A.1.1.1.1 AESI       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             AERELNST                        AEACNOTH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               NONE               PROCEDURE/SURGERY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 CONCURRENT ILLNESS                      MEDICATION</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 CONCURRENT ILLNESS SUBJECT DISCONTINUED FROM STUDY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 CONCURRENT ILLNESS SUBJECT DISCONTINUED FROM STUDY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 CONCURRENT ILLNESS               PROCEDURE/SURGERY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 CONCURRENT ILLNESS                      MEDICATION</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ...</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

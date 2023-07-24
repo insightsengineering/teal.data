@@ -12,7 +12,7 @@ Function takes datasets and creates TealData object which can be used in teal ap
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,15 +43,6 @@ Function takes datasets and creates TealData object which can be used in teal ap
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -128,31 +119,28 @@ If <code>check</code> is true and preprocessing code is empty an error will be t
     <p>This function does not automatically assign keys to <code>TealDataset</code>
 and <code>TealDatasetConnector</code> objects passed to it. If the keys are needed
 they should be assigned before calling <code>cdisc_data</code>. See example:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(scda)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>test_dataset <span class="ot">&lt;-</span> <span class="fu">dataset</span>(<span class="st">"ADAE"</span>, <span class="fu">synthetic_cdisc_data</span>(<span class="st">"latest"</span>)<span class="sc">$</span>adae) <span class="co"># does not have keys</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>test_adsl <span class="ot">&lt;-</span> <span class="fu">cdisc_dataset</span>(<span class="st">"ADSL"</span>, <span class="fu">synthetic_cdisc_data</span>(<span class="st">"latest"</span>)<span class="sc">$</span>adsl)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">cdisc_data</span>(test_dataset, test_adsl)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">get_keys</span>(test_data, <span class="st">"ADAE"</span>) <span class="co"># returns character(0)</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>test_dataset <span class="ot">&lt;-</span> <span class="fu">cdisc_dataset</span>(<span class="st">"ADAE"</span>, <span class="fu">synthetic_cdisc_data</span>(<span class="st">"latest"</span>)<span class="sc">$</span>adae)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">cdisc_data</span>(test_dataset, test_adsl)</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">get_keys</span>(test_data, <span class="st">"ADAE"</span>) <span class="co"># returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>test_dataset <span class="ot">&lt;-</span> <span class="fu">dataset</span>(<span class="st">"ADAE"</span>, teal.data<span class="sc">::</span><span class="fu">example_cdisc_data</span>(<span class="st">"ADAE"</span>)) <span class="co"># does not have keys</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>test_adsl <span class="ot">&lt;-</span> <span class="fu">cdisc_dataset</span>(<span class="st">"ADSL"</span>, teal.data<span class="sc">::</span><span class="fu">example_cdisc_data</span>(<span class="st">"ADSL"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">cdisc_data</span>(test_dataset, test_adsl)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">get_keys</span>(test_data, <span class="st">"ADAE"</span>) <span class="co"># returns character(0)</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>test_dataset <span class="ot">&lt;-</span> <span class="fu">cdisc_dataset</span>(<span class="st">"ADAE"</span>, teal.data<span class="sc">::</span><span class="fu">example_cdisc_data</span>(<span class="st">"ADAE"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">cdisc_data</span>(test_dataset, test_adsl)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">get_keys</span>(test_data, <span class="st">"ADAE"</span>) <span class="co"># returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"</span></span></code></pre><p></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scda</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">latest_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scda/man/synthetic_cdisc_data.html" class="external-link">synthetic_cdisc_data</a></span><span class="op">(</span><span class="st">"latest"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="va">latest_data</span><span class="op">$</span><span class="va">adsl</span></span></span>
-<span class="r-in"><span><span class="va">ADTTE</span> <span class="op">&lt;-</span> <span class="va">latest_data</span><span class="op">$</span><span class="va">adtte</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ADTTE</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADTTE"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># basic example</span></span></span>
 <span class="r-in"><span><span class="fu">cdisc_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">ADSL</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADTTE"</span>, <span class="va">ADTTE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- synthetic_cdisc_data('latest')$adsl</span></span></span>
-<span class="r-in"><span><span class="st">          ADTTE &lt;- synthetic_cdisc_data('latest')$adtte"</span>,</span></span>
+<span class="r-in"><span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")</span></span></span>
+<span class="r-in"><span><span class="st">          ADTTE &lt;- teal.data::example_cdisc_data(\"ADTTE\")"</span>,</span></span>
 <span class="r-in"><span>  check <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):</span>
@@ -340,8 +328,8 @@ they should be assigned before calling <code>cdisc_data</code>. See example:</p>
 <span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"STUDYID"</span> <span class="op">=</span> <span class="st">"STUDYID"</span>, <span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- synthetic_cdisc_data('latest')$adsl</span></span></span>
-<span class="r-in"><span><span class="st">          ADTTE &lt;- synthetic_cdisc_data('latest')$adtte"</span>,</span></span>
+<span class="r-in"><span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")</span></span></span>
+<span class="r-in"><span><span class="st">          ADTTE &lt;- teal.data::example_cdisc_data(\"ADTTE\")"</span>,</span></span>
 <span class="r-in"><span>  check <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A TealData object containing 2 TealDataset/TealDatasetConnector object(s) as element(s):</span>
