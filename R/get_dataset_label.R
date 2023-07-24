@@ -30,8 +30,7 @@ get_dataset_label.TealDatasetConnector <- function(x) { # nolint
 #' @rdname get_dataset_label
 #' @export
 #' @examples
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' ADSL_dataset <- dataset(dataname = "ADSL", x = ADSL, label = "My custom label")
 #' get_dataset_label(ADSL_dataset)
 get_dataset_label.TealDataset <- function(x) {

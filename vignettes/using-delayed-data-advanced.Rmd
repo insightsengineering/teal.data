@@ -9,6 +9,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
   chunk_output_type: console
+runtime: shiny
 ---
 
 ```{r setup, include = FALSE, echo=FALSE}
@@ -53,17 +54,16 @@ With the exception of `TealDataConnection`, all of the above classes have their 
 
 #### `CallableFunction`
 
-This class won't be used often by the developers but it's essential for all connectors to store and execute R functions with the feature to get the code to reproduce the function calls. In the example below an object of class `CallableFunction` is created which runs `synthetic_cdisc_dataset` function with arguments specified by the user.
+This class won't be used often by the developers but it's essential for all connectors to store and execute R functions with the feature to get the code to reproduce the function calls. In the example below an object of class `CallableFunction` is created which runs `example_cdisc_data` function with arguments specified by the user.
 
 ```{r}
 library(teal.data)
-library(scda)
 
 # initialize object
-fun <- callable_function(fun = synthetic_cdisc_dataset)
+fun <- callable_function(fun = teal.data::example_cdisc_data)
 
 # set arguments to function
-fun$set_args(list(dataset_name = "adsl", archive_name = "latest"))
+fun$set_args(list(dataname = "ADSL"))
 
 # execute function with arguments set
 df <- fun$run()
@@ -77,10 +77,10 @@ It's also possible to execute the `fun$run()` function with arguments added on t
 
 ```{r}
 # initialize object
-fun <- callable_function(fun = synthetic_cdisc_dataset)
+fun <- callable_function(fun = teal.data::example_cdisc_data)
 
 # add arguments on the fly
-df <- fun$run(args = list(dataset_name = "adae", archive_name = "latest"))
+df <- fun$run(args = list(dataname = "ADAE"))
 head(df, 2)
 
 # dynamic arguments not reflected in the call
@@ -90,7 +90,7 @@ cat(fun$get_call())
 `CallableFunction` can also depend on other R objects as the example function below depends on `ADSL`. The function can be executed in specific environment where we can copy objects needed to execute a call. To include objects in the function call, one has to use `$assign_to_env()` to copy the object and `$set_args(list(ADSL = as.name(ADSL)))` to link the object with function argument.
 
 ```{r}
-adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest")
+adsl_raw <- teal.data::example_cdisc_data(dataname = "ADSL")
 
 fun <- callable_function(fun = function(adsl) {
   adsl_2 <- adsl
@@ -118,8 +118,8 @@ A simpler version of the `Callable` class is `CallableCode`. Similar to `Callabl
 
 ```{r}
 code <- callable_code(
-  "library(scda)
-  ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")
+  "library(teal.data)
+  ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")
   ADTTE$x1 <- x1
   ADTTE <- dplyr::filter(ADTTE, PARAMCD %in% c('EFS', 'OS'))"
 )
@@ -144,12 +144,12 @@ Note `cdisc_dataset` returns an object of `CDISCTealDataset`, which is needed fo
 ```{r}
 library(magrittr)
 
-adsl_raw <- synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest") %>% head(3)
+adsl_raw <- teal.data::example_cdisc_data("ADSL") %>% head(3)
 
 adsl_dataset <- cdisc_dataset(
   dataname = "ADSL",
   x = adsl_raw,
-  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\") %>% head(3)"
+  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\") %>% head(3)"
 )
 ```
 
@@ -174,13 +174,13 @@ adsl_dataset$get_keys()
 
 ### `TealDatasetConnector` (base class which `CDISCTealDatasetConnector` inherits from)
 
-`TealDatasetConnector` contains a `Callable` object to obtain a single `TealDataset` object. In the code chunk below, a connector is created based on the `synthetic_cdisc_dataset` function.
+`TealDatasetConnector` contains a `Callable` object to obtain a single `TealDataset` object. In the code chunk below, a connector is created based on the `example_cdisc_data` function.
 
 ```{r}
 adsl_conn <- dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function("synthetic_cdisc_dataset") %>%
-    set_args(list(dataset_name = "adsl", archive_name = "latest")),
+  pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "Subject-Level Analysis Dataset"
 )
@@ -282,18 +282,22 @@ This class combines multiple `TealDatasetConnector` (or `CDISCTealDatasetConnect
 
 ```{r}
 # create TealDatasetConnectors
+slice_example_cdisc_data <- function(dataname, n) {
+  teal.data::example_cdisc_data(dataname) %>%
+    head(n)
+}
+
 adsl <- dataset_connector(
   dataname = "ADSL",
-  pull_callable = callable_function("synthetic_cdisc_dataset") %>%
-    set_args(list(dataset_name = "adsl", archive_name = "latest")),
+  pull_callable = callable_function(slice_example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL")),
   keys = get_cdisc_keys("ADSL"),
   label = "Subject-Level Analysis Dataset"
 )
 
 adsl_3 <- dataset_connector(
   dataname = "ADSL_3",
-  pull_callable = callable_function(fun = function(ADSL, archive_name, n = 5) { # nolint
-    print(paste("slicing data from", archive_name))
+  pull_callable = callable_function(fun = function(ADSL, n = 5) { # nolint
     ADSL_3 <- head(ADSL, n) # nolint
   }) %>%
     set_args(list(ADSL = as.name("ADSL"))),
@@ -311,24 +315,24 @@ adsl_3$set_ui_input(function(ns) {
 connectors <- list(adsl, adsl_3)
 
 # create connection
-scda_open_fun <- callable_function(fun = library)
-scda_open_fun$set_args(list(package = "scda"))
-scda_conn <- teal.data:::TealDataConnection$new(open_fun = scda_open_fun) # nolint
+open_fun <- callable_function(fun = library)
+open_fun$set_args(list(package = "teal.data"))
+conn <- teal.data:::TealDataConnection$new(open_fun = open_fun) # nolint
 
 # create TealDataConnector
 data <- teal.data:::TealDataConnector$new(
-  connection = scda_conn,
+  connection = conn,
   connectors = connectors
 )
 ```
 
-The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(archive_name = "latest"))`, this argument will be set for all connectors. In case when any connector contains a `CallableFunction` which doesn't have `archive_name` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
+The object created above can be used to pull data and obtain the code. It combines code to pull the datasets preceded by any open connection code and followed by any close connection code. Please note that `TealDataConnector` doesn't limit what kind of connectors are set within, but one must be aware that it should rather contain similar connectors (i.e. calling functions which share some arguments). For example, if we execute `data$set_pull_args(args = list(n = 5))`, this argument will be set for all connectors. In case when any connector contains a `CallableFunction` which doesn't have `n` in its formals then it will fail. `CallableCode` can't hold any additional arguments as it's fixed and it will ignore every arguments set with `set_pull_args`.
 
 ```{r}
 cat(get_code(data))
 
 # pull ADSL and ADSL_3
-data$set_pull_args(args = list(archive_name = "latest"))
+data$set_pull_args(args = list(n = 5))
 data$pull()
 ```
 
@@ -337,7 +341,7 @@ the UI and server function themselves. The general rule for creating these modul
 from server to UI is not possible, because server module is executed after the submit
 button is clicked. But see `set_preopen_server` of `TealDataConnection` object for a slight
 relaxation of this rule. Below we extend the app interface by adding a text input which will be passed to the
-`scda` function. The UI is created from `scda_conn` and `connectors` object while the server module requires `connectors` and `connection` objects as additional arguments.
+`scda` function. The UI is created from `conn` and `connectors` object while the server module requires `connectors` and `connection` objects as additional arguments.
 
 
 ```{r}
@@ -345,7 +349,7 @@ data$set_ui(
   function(id, ...) {
     ns <- NS(id)
     tagList(
-      scda_conn$get_open_ui(ns("open_connection")),
+      conn$get_open_ui(ns("open_connection")),
       textInput(ns("name"), p("Choose", code("name")), value = "latest"),
       do.call(
         what = "tagList",
@@ -379,7 +383,7 @@ data$set_server(
         }
         for (connector in connectors) {
           # set_args before to return them in the code (fixed args)
-          set_args(connector, args = list(archive_name = input$name))
+          set_args(connector, args = list(n = input$n))
           # pull each dataset
           connector$get_server()(id = connector$get_dataname())
           if (connector$is_failed()) {
@@ -408,13 +412,13 @@ if (interactive()) {
 data <- cdisc_data(
   cdisc_dataset(
     dataname = "ADSL",
-    synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"),
-    code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+    teal.data::example_cdisc_data(dataname = "ADSL"),
+    code = "ADSL <- teal.data::example_cdisc_data(dataname = \"ADSL\")"
   ),
   cdisc_dataset(
     dataname = "ADTTE",
-    synthetic_cdisc_dataset(dataset_name = "adtte", archive_name = "latest"),
-    code = "ADTTE <- synthetic_cdisc_dataset(dataset_name = \"adtte\", archive_name = \"latest\")"
+    teal.data::example_cdisc_data("ADTTE"),
+    code = "ADTTE <- teal.data::example_cdisc_data(dataname = \"ADTTE\")"
   )
 )
 ```
@@ -422,12 +426,23 @@ data <- cdisc_data(
 One can combine multiple delayed data objects using `[teal|cdisc]_data` functions and include them in a shiny application. `TealData` gathers all objects and sets combined UI with shiny inputs from all objects. In the code chunk below we specified four dataset connectors, but it works with arbitrary many objects of any combination of the classes `TealDataset`, `TealDatasetConnector` and / or `TealDataConnector`.
 
 ```{r}
-adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
-adae <- scda_cdisc_dataset_connector("ADAE", "adae")
-advs <- scda_cdisc_dataset_connector("ADVS", "advs")
-adtte <- scda_cdisc_dataset_connector("ADTTE", "adtte")
+# nolint start
+example_cdisc_dataset_connector <- function(dataname) {
+  cdisc_dataset_connector(
+    dataname = dataname,
+    pull_callable = callable_function(teal.data::example_cdisc_data) %>%
+      set_args(list(dataname = dataname)),
+    keys = get_cdisc_keys(dataname),
+    label = sprintf("%s connector", dataname)
+  )
+}
+adsl <- example_cdisc_dataset_connector("ADSL")
+adae <- example_cdisc_dataset_connector("ADAE")
+advs <- example_cdisc_dataset_connector("ADVS")
+adtte <- example_cdisc_dataset_connector("ADTTE")
 
 data <- cdisc_data(adsl, adae, advs, adtte)
+# nolint end
 ```
 
 `TealData` also contains a `launch()` method to investigate if data is set correctly. However, `TealData` lacks the `pull()` method.
@@ -478,23 +493,16 @@ To modify a single dataset one should use `mutate_dataset` by specifying `code` 
 ```{r}
 adsl <- cdisc_dataset(
   dataname = "ADSL",
-  synthetic_cdisc_dataset(dataset_name = "adsl", archive_name = "latest"),
-  code = "ADSL <- synthetic_cdisc_dataset(dataset_name = \"adsl\", archive_name = \"latest\")"
+  teal.data::example_cdisc_data(dataname = "ADSL"),
+  code = "ADSL <- teal.data::example_cdisc_data(dataname = \"ADSL\")"
 ) %>%
   mutate_dataset(code = "ADSL$x1 <- 1")
-
-
-adtte <- scda_cdisc_dataset_connector(
-  dataname = "ADTTE", "adtte"
-) %>%
-  mutate_dataset(code = "ADTTE$x2 <- 2")
 ```
 
 `get_code()` function returns loading code from `CallableFunction` and mutation code as provided in using `mutate_dataset`.
 
 ```{r}
 cat(get_code(adsl))
-cat(get_code(adtte))
 ```
 
 `mutate_dataset` can also be used on `TealData` objects which applies
@@ -566,8 +574,31 @@ as.character(adsl_code) == as.character(adtte_code)
 ### `teal.data` in a shiny app
 
 ```{r}
-adsl <- scda_cdisc_dataset_connector("ADSL", "adsl")
-adrs <- scda_cdisc_dataset_connector("ADRS", "adrs")
+# nolint start
+library(teal.data)
+library(magrittr)
+
+slice_example_cdisc_data <- function(dataname, n) {
+  teal.data::example_cdisc_data(dataname) %>%
+    head(n)
+}
+
+adsl <- cdisc_dataset_connector(
+  dataname = "ADSL",
+  pull_callable = callable_function(slice_example_cdisc_data) %>%
+    set_args(list(dataname = "ADSL")),
+  keys = get_cdisc_keys("ADSL"),
+  label = "ADSL connector"
+)
+
+adrs <- cdisc_dataset_connector(
+  dataname = "ADRS",
+  pull_callable = callable_function(slice_example_cdisc_data) %>%
+    set_args(list(dataname = "ADRS")),
+  keys = get_cdisc_keys("ADRS"),
+  label = "ADRS connector"
+)
+
 x <- dataset("x", data.frame(x = 1, b = 2), code = "x <- data.frame(x = 1, b = 2)")
 
 data <- teal_data(adsl, adrs, x)
@@ -598,4 +629,5 @@ shinyApp(
     })
   }
 )
+# nolint end
 ```

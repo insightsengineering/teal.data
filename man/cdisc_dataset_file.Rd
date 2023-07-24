@@ -24,11 +24,9 @@ file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "library(teal.data)
-     library(scda)
-
      cdisc_dataset(dataname = \"ADSL\",
-                   x = synthetic_cdisc_data('latest')$adsl,
-                   code = \"library(scda)\nADSL <- synthetic_cdisc_data('latest')$adsl\")"
+                   x = teal.data::example_cdisc_data(\"ADSL\"),
+                   code = \"ADSL <- teal.data::example_cdisc_data('ADSL')\")"
   ),
   con = file_example
 )

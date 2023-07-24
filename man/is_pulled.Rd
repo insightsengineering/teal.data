@@ -27,12 +27,9 @@ S3 method to determine if dataset is pulled (loaded).
 }
 \examples{
 # TealDatasetConnector --------
-library(scda)
-pull_fun_adsl <- callable_function(
-  function() {
-    synthetic_cdisc_data("latest")$adsl
-  }
-)
+library(magrittr)
+pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 x <- dataset_connector("ADSL", pull_fun_adsl)
 
 is_pulled(x)
@@ -49,21 +46,23 @@ x <- dataset(
 )
 
 is_pulled(x)
+
+library(magrittr)
+
 # TealData --------
-library(scda)
 x1 <- dataset(
-  x = synthetic_cdisc_data("latest")$adsl,
+  x = teal.data::example_cdisc_data("ADSL"),
   dataname = "ADSL",
   keys = get_cdisc_keys("ADSL"),
-  code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl",
+  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")",
   label = "ADTTE dataset"
 )
 
 x2 <- dataset(
-  x = synthetic_cdisc_data("latest")$adtte,
+  x = teal.data::example_cdisc_data("ADTTE"),
   dataname = "ADTTE",
   keys = get_cdisc_keys("ADTTE"),
-  code = "ADTTE <- synthetic_cdisc_data(\"latest\")$adtte",
+  code = "ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
   label = "ADTTE dataset"
 )
 
@@ -71,12 +70,8 @@ rd <- teal_data(x1, x2)
 is_pulled(rd)
 
 # TealDataConnector --------
-library(scda)
-adsl_cf <- callable_function(
-  function() {
-    synthetic_cdisc_data("latest")$adsl
-  }
-)
+adsl_cf <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADSL"))
 adsl <- cdisc_dataset_connector(
   dataname = "ADSL",
   pull_callable = adsl_cf,

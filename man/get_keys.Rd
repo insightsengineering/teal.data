@@ -32,23 +32,18 @@ Get dataset primary keys
 \examples{
 # TealDataset --------
 
-library(scda)
 get_keys(
   dataset(
     "ADSL",
-    synthetic_cdisc_data("latest")$adsl,
+    teal.data::example_cdisc_data("ADSL"),
     keys = get_cdisc_keys("ADSL"),
-    code = "ADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+    code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
   )
 )
 # TealDatasetConnector --------
-
-library(scda)
-pull_fun_adsl <- callable_function(
-  function() {
-    synthetic_cdisc_data("latest")$adsl
-  }
-)
+library(magrittr)
+pull_fun_adsl <- callable_function(teal.data::example_cdisc_data) \%>\%
+  set_args(list(dataname = "ADAE"))
 get_keys(
   dataset_connector(
     "ADSL",

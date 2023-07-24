@@ -16,6 +16,5 @@ data_label(data)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \examples{
-library(scda)
-data_label(synthetic_cdisc_data("latest")$adsl)
+data_label(example_cdisc_data("ADSL"))
 }
