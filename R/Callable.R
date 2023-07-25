@@ -21,7 +21,7 @@ Callable <- R6::R6Class( # nolint
       stopifnot(is.environment(env))
       private$env <- env
       logger::log_trace("Callable initialized.")
-      return(invisible(self))
+      invisible(self)
     },
     #' @description
     #' Assigns \code{x <- value} object to \code{env}. Assigned object can't
