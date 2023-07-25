@@ -2,6 +2,9 @@
 
 # teal.data 0.3.0
 
+### Miscellaneous
+* Specify minimal version of dependent packages.
+
 ### Enhancements
 * Removed `scda` package dependency from examples.
 * Added `col_labels` function and removed `formatters` dependency.
