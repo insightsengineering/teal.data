@@ -62,11 +62,11 @@ Config/Needs/verdepcheck:
     tidyverse/dplyr,
     yihui/knitr,
     tidyverse/magrittr,
-    bioc::MultiAssayExperiment,
+    MultiAssayExperiment,
     tidyverse/readr,
     rstudio/reticulate,
     rstudio/rmarkdown,
-    bioc::SummarizedExperiment,
+    SummarizedExperiment,
     r-lib/testthat,
     r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
