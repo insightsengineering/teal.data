@@ -1,12 +1,12 @@
 Type: Package
 Package: teal.data
 Title: Data Model for `teal` Applications
-Version: 0.2.0.9005
-Date: 2023-07-25
+Version: 0.2.0.9006
+Date: 2023-07-27
 Authors@R: c(
-    person("Dawid", "Kaledkowski", email = "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
-    person("Pawel", "Rucki", email = "pawel.rucki@roche.com", role = "aut"),
-    person("Mahmoud", "Hallal", email = "mahmoud.hallal@roche.com", role = "aut"),
+    person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
+    person("Pawel", "Rucki", , "pawel.rucki@roche.com", role = "aut"),
+    person("Mahmoud", "Hallal", , "mahmoud.hallal@roche.com", role = "aut"),
     person("Nikolas", "Burkoff", role = "aut"),
     person("Maciej", "Nasinski", role = "aut"),
     person("Konrad", "Pagacz", role = "aut"),
