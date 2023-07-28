@@ -1,8 +1,7 @@
-
 # code ADSL ADTTE>
-ADSL <- synthetic_cdisc_data("latest")$adsl # nolint
+ADSL <- teal.data::example_cdisc_data("ADSL") # nolint
 # <ADSL ADTTE code
 
 # code ADTTE>
-ADTTE <- synthetic_cdisc_data("latest")$adtte # nolint
+ADTTE <- teal.data::example_cdisc_data("ADTTE") # nolint
 # <ADTTE code

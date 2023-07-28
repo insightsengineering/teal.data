@@ -15,9 +15,8 @@
 #' @note Raises an exception when this function cannot determine the primary key columns of the tested object.
 #'
 #' @examples
-#' library(scda)
 #'
-#' adsl <- synthetic_cdisc_data("latest")$adsl
+#' adsl <- teal.data::example_cdisc_data("ADSL")
 #' # create a TealDataset with default keys
 #' rel_adsl <- cdisc_dataset("ADSL", adsl)
 #' get_key_duplicates(rel_adsl)

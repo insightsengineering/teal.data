@@ -22,8 +22,7 @@ Get dataset attributes in form of named list.
 \examples{
 # TealDataset --------
 
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- teal.data::example_cdisc_data("ADSL")
 
 x1 <- dataset("ADSL", x = ADSL, label = "custom label")
 get_attrs(x1)
@@ -38,8 +37,7 @@ get_attrs(x2)
 
 # CDISCTealDataset --------
 
-library(scda)
-ADSL <- synthetic_cdisc_data("latest")$adsl
+ADSL <- teal.data::example_cdisc_data("ADSL")
 x3 <- cdisc_dataset(
   "ADSL",
   x = ADSL,

@@ -31,13 +31,14 @@ be raised otherwise.
 }
 \examples{
 # simple example
+library(magrittr)
 file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "library(teal.data)
-     library(scda)
 
-     pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+     pull_callable <- callable_function(teal.data::example_cdisc_data) \%>\%
+       set_args(list(dataname = \"ADSL\"))
      dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example
@@ -45,13 +46,14 @@ writeLines(
 x <- dataset_connector_file(file_example)
 get_code(x)
 # simple example
+library(magrittr)
 file_example <- tempfile(fileext = ".R")
 writeLines(
   text = c(
     "library(teal.data)
-     library(scda)
 
-     pull_callable <- callable_function(function() {synthetic_cdisc_data('latest')$adsl})
+     pull_callable <- callable_function(teal.data::example_cdisc_data) \%>\%
+       set_args(list(dataname = \"ADSL\"))
      cdisc_dataset_connector(\"ADSL\", pull_callable, get_cdisc_keys(\"ADSL\"))"
   ),
   con = file_example

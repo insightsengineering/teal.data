@@ -27,15 +27,19 @@ Used to mutate dataset connector objects with python code. See
 }
 \examples{
 \dontrun{
-library(scda)
 library(reticulate)
 library(magrittr)
 
 # mutate dataset object
 
-ADSL <- synthetic_cdisc_data("latest")$adsl
-
-x <- scda_cdisc_dataset_connector("ADSL", "adsl")
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = teal.data::example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
+x <- random_data_connector(dataname = "ADSL")
 
 x \%>\% mutate_dataset(python_code("import pandas as pd
 r.ADSL = pd.DataFrame({'x': [1]})"))
@@ -48,8 +52,8 @@ x$get_raw_data()
 
 y <- 8
 tc <- cdisc_data(
-  scda_cdisc_dataset_connector("ADSL", "adsl"),
-  scda_cdisc_dataset_connector("ADLB", "adlb")
+  random_data_connector(dataname = "ADSL"),
+  random_data_connector(dataname = "ADLB")
 )
 
 tc \%>\% mutate_data(python_code("import pandas as pd

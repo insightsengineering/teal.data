@@ -29,18 +29,10 @@ Set arguments of a \code{CallableFunction}
 }
 \examples{
 ## Using CallableFunction
-library(scda)
-f <- function(df) {
-  synthetic_cdisc_data("latest")[[df]]
-}
-fun <- callable_function(f)
-set_args(fun, list(df = "adsl"))
+fun <- callable_function(example_cdisc_data)
+set_args(fun, list(dataname = "ADSL"))
 ## Using CallableCode
-library(scda)
-f <- function(df) {
-  synthetic_cdisc_data("latest")[[df]]
-}
-code <- callable_code("f()")
+code <- callable_code("example_cdisc_data()")
 set_args(code, list(df = "adsl"))
 ## Using TealDatasetConnector
 ds <- dataset_connector("x", pull_callable = callable_function(data.frame))

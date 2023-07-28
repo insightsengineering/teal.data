@@ -9,13 +9,18 @@ Class manages \code{TealDatasetConnector} to specify additional dynamic argument
 open/close connection.
 }
 \examples{
+library(magrittr)
 
-library(scda)
-adsl <- scda_cdisc_dataset_connector(dataname = "ADSL", "adsl")
-adlb <- scda_cdisc_dataset_connector(dataname = "ADLB", "adlb")
+random_data_connector <- function(dataname) {
+  fun_dataset_connector(
+    dataname = dataname,
+    fun = teal.data::example_cdisc_data,
+    fun_args = list(dataname = dataname),
+  )
+}
 
 open_fun <- callable_function(library)
-open_fun$set_args(list(package = "scda"))
+open_fun$set_args(list(package = "teal.data"))
 
 con <- data_connection(open_fun = open_fun)
 con$set_open_server(
@@ -30,14 +35,20 @@ con$set_open_server(
   }
 )
 
-x <- teal.data:::TealDataConnector$new(connection = con, connectors = list(adsl, adlb))
+x <- teal.data:::TealDataConnector$new(
+  connection = con,
+  connectors = list(
+    random_data_connector(dataname = "ADSL"),
+    random_data_connector(dataname = "ADLB")
+  )
+)
 
 x$set_ui(
   function(id, connection, connectors) {
     ns <- NS(id)
     tagList(
       connection$get_open_ui(ns("open_connection")),
-      textInput(ns("name"), p("Choose", code("scda data version")), value = "latest"),
+      numericInput(inputId = ns("n"), label = "Choose number of records", min = 0, value = 1),
       do.call(
         what = "tagList",
         args = lapply(
@@ -65,7 +76,7 @@ x$set_server(
         connection$get_open_server()(id = "open_connection", connection = connection)
         if (connection$is_opened()) {
           for (connector in connectors) {
-            set_args(connector, args = list(archive_name = input$name))
+            set_args(connector, args = list(n = input$n))
             # pull each dataset
             connector$get_server()(id = connector$get_dataname())
             if (connector$is_failed()) {

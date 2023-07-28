@@ -17,14 +17,12 @@ get_dataset <- function(x, dataname) {
 #' @examples
 #'
 #' # TealDatasetConnector --------
-#' library(scda)
-#' pull_fun_adae <- callable_function(
-#'   function() {
-#'     synthetic_cdisc_data("latest")$adae
-#'   }
-#' )
+#' library(magrittr)
 #'
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' pull_fun_adae <- callable_function(teal.data::example_cdisc_data) %>%
+#'   set_args(list(dataname = "ADAE"))
+#'
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
 #'
 #' dc <- dataset_connector(
 #'   dataname = "ADAE", pull_callable = pull_fun_adae,
@@ -48,8 +46,7 @@ get_dataset.TealDatasetConnector <- function(x, dataname = NULL) { # nolint
 #' @examples
 #'
 #' # TealDataset --------
-#' library(scda)
-#' ADSL <- synthetic_cdisc_data("latest")$adsl
+#' ADSL <- example_cdisc_data("ADSL")
 #' x <- dataset("ADSL", ADSL)
 #'
 #' get_dataset(x)
@@ -65,18 +62,16 @@ get_dataset.TealDataset <- function(x, dataname = NULL) { # nolint
 #' @examples
 #'
 #' # TealData  (not containing connectors) --------
-#' library(scda)
-#' latest_data <- synthetic_cdisc_data("latest")
 #' adsl <- cdisc_dataset(
 #'   dataname = "ADSL",
-#'   x = latest_data$adsl,
-#'   code = "library(scda)\nADSL <- synthetic_cdisc_data(\"latest\")$adsl"
+#'   x = example_cdisc_data("ADSL"),
+#'   code = "library(teal.data)\nADSL <- example_cdisc_data(\"ADSL\")"
 #' )
 #'
 #' adae <- cdisc_dataset(
 #'   dataname = "ADAE",
-#'   x = latest_data$adsl,
-#'   code = "library(scda)\nADTTE <- synthetic_cdisc_data(\"latest\")$adsl"
+#'   x = example_cdisc_data("ADAE"),
+#'   code = "library(teal.data)\nADAE <- example_cdisc_data(\"ADAE\")"
 #' )
 #'
 #' rd <- teal.data:::TealData$new(adsl, adae)

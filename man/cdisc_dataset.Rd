@@ -49,9 +49,7 @@ Each element of the list should be atomic and length one.}
 Function that creates \code{CDISCTealDataset} object
 }
 \examples{
-library(scda)
+ADSL <- example_cdisc_data("ADSL")
 
-ADSL <- synthetic_cdisc_data("latest")$adsl
-
-cdisc_dataset("ADSL", ADSL, metadata = list(type = "scda", date = "latest"))
+cdisc_dataset("ADSL", ADSL, metadata = list(type = "teal.data"))
 }
