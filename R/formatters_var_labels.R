@@ -68,7 +68,7 @@ col_labels <- function(x, fill = FALSE) {
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [col_labels()] [col_relabel()] [formatters_with_label()]
+#' @seealso [col_labels()] [col_relabel()]
 #'
 #' @return modifies the variable labels of \code{x}
 #'
