@@ -1,24 +1,3 @@
-#' Return an object with a label attribute
-#'
-#' @param x an object
-#' @param label label attribute to to attached to  \code{x}
-#'
-#' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
-#' the dependency tree.
-#'
-#' @seealso [formatters_var_labels()] [formatters_var_relabel()] [`formatters_var_labels<-`]
-#'
-#' @export
-#' @return \code{x} labeled by \code{label}. Note: the exact mechanism of labeling should be
-#' considered an internal implementation detail, but the label will always be retrieved via \code{obj_label}.
-#' @examples
-#' x <- formatters_with_label(c(1, 2, 3), label = "Test")
-#' obj_label(x)
-formatters_with_label <- function(x, label) {
-  obj_label(x) <- label
-  x
-}
 
 #' Get Label Attributes of Variables in a \code{data.frame}
 #'
