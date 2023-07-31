@@ -86,7 +86,7 @@ CodeClass <- R6::R6Class( # nolint
     #' @description
     #' Set code in form of character
     #' @param code (`character`) vector of code text to be set
-    #' @param `dataname` optional, (`character`) vector of `datanames` to assign code to. If empty then the code
+    #' @param dataname optional, (`character`) vector of `datanames` to assign code to. If empty then the code
     #' is considered to be "global"
     #' @param deps optional, (`character`) vector of `datanames` that given code depends on
     #'
@@ -106,7 +106,7 @@ CodeClass <- R6::R6Class( # nolint
     },
     #' @description
     #' Get the code for a given data names
-    #' @param `dataname` optional, (`character`) vector of `datanames` for which the code is extracted.
+    #' @param dataname optional, (`character`) vector of `datanames` for which the code is extracted.
     #' If `NULL` then get the code for all data names
     #' @param deparse optional, (`logical`) whether to return the deparsed form of a call
     #' @return `character` or `list` of calls
