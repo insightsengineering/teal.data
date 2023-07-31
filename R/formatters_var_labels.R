@@ -117,7 +117,7 @@ col_labels <- function(x, fill = FALSE) {
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [col_labels()] [formatters_with_label()] [`col_labels<-`]
+#' @seealso [col_labels()] [`col_labels<-`]
 #'
 #' @export
 #'

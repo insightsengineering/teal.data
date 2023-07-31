@@ -29,5 +29,5 @@ col_labels(x)
 
 }
 \seealso{
-\code{\link[=col_labels]{col_labels()}} \code{\link[=formatters_with_label]{formatters_with_label()}} \code{\link{col_labels<-}}
+\code{\link[=col_labels]{col_labels()}} \code{\link{col_labels<-}}
 }
