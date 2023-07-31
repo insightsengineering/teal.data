@@ -13,7 +13,7 @@
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [formatters_with_label()] [formatters_var_relabel()] [`formatters_var_labels<-`]
+#' @seealso [formatters_with_label()] [col_relabel()] [`col_labels<-`]
 #'
 #' @return a named character vector with the variable labels, the names
 #'   correspond to the variable names
@@ -22,10 +22,10 @@
 #'
 #' @examples
 #' x <- iris
-#' formatters_var_labels(x)
-#' formatters_var_labels(x) <- paste("label for", names(iris))
-#' formatters_var_labels(x)
-formatters_var_labels <- function(x, fill = FALSE) {
+#' col_labels(x)
+#' col_labels(x) <- paste("label for", names(iris))
+#' col_labels(x)
+col_labels <- function(x, fill = FALSE) {
   stopifnot(is.data.frame(x))
   if (NCOL(x) == 0) {
     return(character())
@@ -62,14 +62,14 @@ formatters_var_labels <- function(x, fill = FALSE) {
 #' Variable labels can be stored as a \code{label} attribute for each variable.
 #' This functions sets all non-missing (non-NA) variable labels in a \code{data.frame}
 #'
-#' @inheritParams formatters_var_labels
+#' @inheritParams col_labels
 #' @param value new variable labels, \code{NA} removes the variable label
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [formatters_var_labels()] [formatters_var_relabel()] [formatters_with_label()]
+#' @seealso [col_labels()] [col_relabel()] [formatters_with_label()]
 #'
 #' @return modifies the variable labels of \code{x}
 #'
@@ -77,14 +77,14 @@ formatters_var_labels <- function(x, fill = FALSE) {
 #'
 #' @examples
 #' x <- iris
-#' formatters_var_labels(x)
-#' formatters_var_labels(x) <- paste("label for", names(iris))
-#' formatters_var_labels(x)
+#' col_labels(x)
+#' col_labels(x) <- paste("label for", names(iris))
+#' col_labels(x)
 #'
 #' if (interactive()) {
 #'   View(x) # in RStudio data viewer labels are displayed
 #' }
-`formatters_var_labels<-` <- function(x, value) {
+`col_labels<-` <- function(x, value) {
   stopifnot(
     is.data.frame(x),
     is.character(value),
@@ -108,7 +108,7 @@ formatters_var_labels <- function(x, fill = FALSE) {
 #'
 #' Relabel a subset of the variables
 #'
-#' @inheritParams formatters_var_labels<-
+#' @inheritParams col_labels<-
 #' @param ... name-value pairs, where name corresponds to a variable name in
 #'   \code{x} and the value to the new variable label
 #'
@@ -118,15 +118,15 @@ formatters_var_labels <- function(x, fill = FALSE) {
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [formatters_var_labels()] [formatters_with_label()] [`formatters_var_labels<-`]
+#' @seealso [col_labels()] [formatters_with_label()] [`col_labels<-`]
 #'
 #' @export
 #'
 #' @examples
-#' x <- formatters_var_relabel(iris, Sepal.Length = "Sepal Length of iris flower")
-#' formatters_var_labels(x)
+#' x <- col_relabel(iris, Sepal.Length = "Sepal Length of iris flower")
+#' col_labels(x)
 #'
-formatters_var_relabel <- function(x, ...) {
+col_relabel <- function(x, ...) {
   # todo: make this function more readable / code easier
   stopifnot(is.data.frame(x))
   if (missing(...)) {
