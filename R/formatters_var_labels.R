@@ -1,4 +1,3 @@
-
 #' Get Label Attributes of Variables in a \code{data.frame}
 #'
 #' Variable labels can be stored as a \code{label} attribute for each variable.
