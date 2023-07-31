@@ -12,7 +12,7 @@
 #' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [formatters_with_label()] [col_relabel()] [`col_labels<-`]
+#' @seealso [col_relabel()] [`col_labels<-`]
 #'
 #' @return a named character vector with the variable labels, the names
 #'   correspond to the variable names
