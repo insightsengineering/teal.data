@@ -126,7 +126,6 @@ col_labels <- function(x, fill = FALSE) {
 #' col_labels(x)
 #'
 col_relabel <- function(x, ...) {
-  # todo: make this function more readable / code easier
   stopifnot(is.data.frame(x))
   if (missing(...)) {
     return(x)
