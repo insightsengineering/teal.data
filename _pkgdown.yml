@@ -100,6 +100,9 @@ reference:
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:
+      - col_labels
+      - col_labels<-
+      - col_relabel
       - data_label
       - data_label<-
       - example_cdisc_data
