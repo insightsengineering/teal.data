@@ -1,12 +1,18 @@
-# teal.data 0.2.0.9007
+# teal.data 0.3.0
 
+### Enhancements
+* Removed `scda` package dependency from examples.
+* Added `col_labels` function and removed `formatters` dependency.
+
+### Miscellaneous
+* Update installation instructions.
 
 # teal.data 0.2.0
 
 ### Enhancements
 * Added `ADQLQC`, `ADCSSRS`, and `ADEQ5D5L` as supported data sets.
 * Improved error message in `get_cdisc_keys`.
-* Removed `scda` package dependency from examples.
+* Examples now use `scda.2022` instead of `scda.2021`.
 * Fixed help files for `TealDataset` and `MAETealDataset`.
 * Added backstop for missing `reticulate` package in _teal.data with Python_ vignette.
 
