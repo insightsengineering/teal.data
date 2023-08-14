@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,15 +41,6 @@
 <li class="active nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -78,7 +69,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0.9006" id="tealdata-0209006">teal.data 0.2.0.9006<a class="anchor" aria-label="anchor" href="#tealdata-0209006"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.0" id="tealdata-030">teal.data 0.3.0<a class="anchor" aria-label="anchor" href="#tealdata-030"></a></h2>
+<div class="section level4">
+<h4 id="enhancements-0-3-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-0-3-0"></a></h4>
+<ul><li>Removed <code>scda</code> package dependency from examples.</li>
+<li>Added <code>col_labels</code> function and removed <code>formatters</code> dependency.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="miscellaneous-0-3-0">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous-0-3-0"></a></h4>
+<ul><li>Update installation instructions.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="tealdata-020">teal.data 0.2.0<a class="anchor" aria-label="anchor" href="#tealdata-020"></a></h2>
@@ -86,7 +86,7 @@
 <h4 id="enhancements-0-2-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-0-2-0"></a></h4>
 <ul><li>Added <code>ADQLQC</code>, <code>ADCSSRS</code>, and <code>ADEQ5D5L</code> as supported data sets.</li>
 <li>Improved error message in <code>get_cdisc_keys</code>.</li>
-<li>Removed <code>scda</code> package dependency from examples.</li>
+<li>Examples now use <code>scda.2022</code> instead of <code>scda.2021</code>.</li>
 <li>Fixed help files for <code>TealDataset</code> and <code>MAETealDataset</code>.</li>
 <li>Added backstop for missing <code>reticulate</code> package in <em>teal.data with Python</em> vignette.</li>
 </ul></div>
