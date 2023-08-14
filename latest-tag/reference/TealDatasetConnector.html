@@ -22,7 +22,7 @@ Pulled data inherits from the class TealDataset"><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,9 +59,17 @@ Pulled data inherits from the class TealDataset"><!-- mathjax --><script src="ht
           aria-expanded="false" aria-haspopup="true"
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
 <!-- end dropdown for versions -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-reports">
+    <a class="dropdown-item" href="../coverage-report/">Coverage report</a>
+    <a class="dropdown-item" href="../unit-test-report/">Unit test report</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -221,26 +229,26 @@ converted to a list with <code>as.list</code>.</p></dd>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_dataname"></a><div class="section">
 <h3 id="method-get-dataname-">Method <code><a href="get_dataname.html">get_dataname()</a></code><a class="anchor" aria-label="anchor" href="#method-get-dataname-"></a></h3>
-<p>Get dataname of dataset</p><div class="section">
+<p>Get <code>dataname</code> of dataset</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_dataname</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
-<p>dataname of the dataset</p>
+<p><code>dataname</code> of the dataset</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_datanames"></a><div class="section">
 <h3 id="method-get-datanames-">Method <code>get_datanames()</code><a class="anchor" aria-label="anchor" href="#method-get-datanames-"></a></h3>
-<p>Get dataname of dataset</p><div class="section">
+<p>Get <code>dataname</code> of dataset</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_datanames</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
 <h4 id="returns-2">Returns<a class="anchor" aria-label="anchor" href="#returns-2"></a></h4>
-<p><code>character</code> dataname of the dataset</p>
+<p><code>character</code> <code>dataname</code> of the dataset</p>
 </div>
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_dataset_label"></a><div class="section">
@@ -617,7 +625,7 @@ ds$launch()
 
 </div><p></p><hr><a id="method-TealDatasetConnector-get_ui"></a><div class="section">
 <h3 id="method-get-ui-">Method <code>get_ui()</code><a class="anchor" aria-label="anchor" href="#method-get-ui-"></a></h3>
-<p>Get shiny ui function</p><div class="section">
+<p>Get shiny <code>ui</code> function</p><div class="section">
 <h4 id="usage-25">Usage<a class="anchor" aria-label="anchor" href="#usage-25"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">TealDatasetConnector</span><span class="op">$</span><span class="fu">get_ui</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>

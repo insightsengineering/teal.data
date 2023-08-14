@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,9 +49,17 @@
           aria-expanded="false" aria-haspopup="true"
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
 <!-- end dropdown for versions -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-reports">
+    <a class="dropdown-item" href="../coverage-report/">Coverage report</a>
+    <a class="dropdown-item" href="../unit-test-report/">Unit test report</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -203,17 +211,17 @@ with keys and parent name assigned automatically by <code>dataname</code>.</p>
 <span class="r-in"><span><span class="va">y</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ID       var1        var2       var3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1 -1.7681890  1.93001016  1.7430793</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2 -0.7389704 -0.11146138  0.8467412</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3 -1.3963542  0.07890432 -0.3714166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4 -0.9939353  0.95577089  0.8405193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5 -1.0615356  1.47508710 -1.9871629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6 -1.0717556  0.65685093  1.0206713</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7 -0.3082984 -0.07144519 -0.4581102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8  0.5169985 -0.57321640  1.4439527</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9 -1.7021667 -0.25176784 -0.2921455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10 -2.0934496 -1.10389707  1.3176479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ID        var1        var2       var3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1  1.33688703  1.12543265 -1.6414705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2  0.24810936  1.95362701 -1.1255102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3  0.23476786 -1.53438736  0.2186028</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4 -0.20140951  0.26822920  1.9893804</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5  1.06215556 -0.44386048  2.0409593</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6 -0.07160729 -0.07871559  1.1312821</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7  0.19692422  1.28469553  0.8795931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8  1.54971803 -0.60809694 -1.2366147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9 -0.81507071  0.38842881 -1.1633791</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10 -0.07600720 -0.88033221 -0.7064529</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
