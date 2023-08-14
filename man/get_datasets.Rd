@@ -5,6 +5,7 @@
 \alias{get_datasets.TealDataAbstract}
 \alias{get_datasets.TealDatasetConnector}
 \alias{get_datasets.TealDataset}
+\alias{get_datasets.tdata}
 \title{Get a \code{\link{TealDataset}} objects.}
 \usage{
 get_datasets(x)
@@ -14,6 +15,8 @@ get_datasets(x)
 \method{get_datasets}{TealDatasetConnector}(x)
 
 \method{get_datasets}{TealDataset}(x)
+
+\method{get_datasets}{tdata}(x)
 }
 \arguments{
 \item{x}{(\code{\link{TealData}})\cr

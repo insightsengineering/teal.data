@@ -126,3 +126,9 @@ to_relational_data.MultiAssayExperiment <- function(data) { # nolint
 to_relational_data.TealData <- function(data) { # nolint
   data
 }
+
+#' @keywords internal
+#' @export
+to_relational_data.tdata <- function(data) {
+  data
+}
