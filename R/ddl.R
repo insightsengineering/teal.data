@@ -32,66 +32,6 @@
 #'   - code (`character`) `code` provided with resolved (substituted) args.
 #'
 #' @examples
-#'
-#' # simple example
-#'
-#' x <- ddl(
-#'   # code to be run when app user presses submit
-#'   code = "
-#'   ADSL <- scda::synthetic_cdisc_data({ version })$adsl
-#'   ADTTE <- scda::synthetic_cdisc_data({ version })$adtte
-#'   ADRS <- scda::synthetic_cdisc_data({ version })$adrs
-#'   ",
-#'
-#'   # ui they wish to use for the loading data
-#'   ui = function(id) {
-#'     ns <- NS(id)
-#'     tagList(
-#'       textInput(ns("version"), label = "SCDA version", value = "latest"),
-#'       actionButton(ns("submit"), label = "Submit")
-#'     )
-#'   },
-#'
-#'   server = function(id, offline_args, code, postprocess_fun) {
-#'     moduleServer(id, function(input, output, session) {
-#'       # run code
-#'       tdata <- eventReactive(input$submit, {
-#'       ddl_run(
-#'       offline_args = offline_args,
-#'       code = code,
-#'       postprocess_fun = postprocess_fun,
-#'       online_args = reactiveValuesToList(input)
-#'     )
-#'    })
-#'
-#'   # function returning data objects
-#'   postprocess_fun = function(env_list, code) {
-#'     do.call(teal.data::cdisc_data, args = c(env_list, code = code))
-#'   }
-#' )
-#'
-#' app <- shinyApp(
-#'   ui = fluidPage(
-#'     fluidRow(
-#'       column(3, h1("User Inputs"), x$ui(id = "custom_ui")),
-#'       column(9, h1("R code"), verbatimTextOutput("output"))
-#'     )
-#'   ),
-#'   server = function(input, output, session) {
-#'     loaded_data <- x$server(id = "custom_ui", x$offline_args, x$code, x$postprocess_fun)
-#'     output$output <- renderText({
-#'       req(loaded_data())
-#'       teal.code::get_code(loaded_data()) |> paste(collapse = "\n")
-#'     })
-#'   }
-#' )
-#'
-#' \dontrun{
-#' shiny::runApp(app)
-#' }
-#'
-#' # example with username and password
-#'
 #' @export
 ddl <- function(code,
                 postprocess_fun = function(env_list, code) {
