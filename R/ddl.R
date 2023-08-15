@@ -39,14 +39,18 @@ ddl <- function(code,
                 },
                 offline_args = list(),
                 ui = submit_button_ui,
-                server = submit_button_server) {
+                server = submit_button_server,
+                join_keys = teal.data::join_keys(),
+                datanames = NULL) {
   structure(
     list(
       code = code,
       ui = ui,
       server = server,
       offline_args = offline_args,
-      postprocess_fun = postprocess_fun
+      postprocess_fun = postprocess_fun,
+      datanames = datanames,
+      join_keys = join_keys
     ),
     class = "ddl"
   )
@@ -61,15 +65,17 @@ ddl <- function(code,
 #' @inheritParams ddl
 #'
 #' @export
-ddl_run <- function(code, offline_args, online_args, postprocess_fun) {
-  env_list <- ddl_eval_substitute(code = code, args = online_args)
-
-  for (i in names(offline_args)) {
-    online_args[[i]] <- offline_args[[i]]
+ddl_run <- function(ddl, online_args) {
+  env_list <- ddl_eval_substitute(code = ddl$code, args = online_args)
+  if (!is.null(ddl$datanames)) {
+    env_list <- env_list[ddl$datanames]
+  }
+  for (i in names(ddl$offline_args)) {
+    online_args[[i]] <- ddl$offline_args[[i]]
   }
 
   if (!is.null(env_list)) {
-    code <- glue_code(code, args = online_args)
+    code <- glue_code(ddl$code, args = online_args)
     # create tdata object
     postprocess_fun(
       env_list,

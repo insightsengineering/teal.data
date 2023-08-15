@@ -13,6 +13,12 @@ get_join_keys.tdata <- function(data) {
   data@join_keys
 }
 
+#' @rdname get_join_keys
+#' @export
+get_join_keys.ddl <- function(data) {
+  data$join_keys
+}
+
 
 #' @rdname get_join_keys
 #' @export
