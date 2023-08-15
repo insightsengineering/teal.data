@@ -31,17 +31,25 @@
 #'   - `env` (`environment`) returned as a result of the code evaluation
 #'   - code (`character`) `code` provided with resolved (substituted) args.
 #'
+#' @param datanames (`character`)\cr
+#'   Names of the objects to be created from the code evaluation.
+#'   If not specified (`character(0)`), all objects will be used to `teal_data` function
+#'   (via `env_list` in `postprocess_fun`).
+#'
+#' @inheritParams teal_data
+#'
+#'
 #' @examples
 #' @export
 ddl <- function(code,
-                postprocess_fun = function(env_list, code) {
-                  do.call(teal.data::teal_data, args = c(env_list, code = code))
-                },
-                offline_args = list(),
                 ui = submit_button_ui,
                 server = submit_button_server,
+                offline_args = list(),
+                postprocess_fun = function(env_list, code, join_keys) {
+                  do.call(teal.data::teal_data, args = c(env_list, code = code, join_keys))
+                },
                 join_keys = teal.data::join_keys(),
-                datanames = NULL) {
+                datanames = character(0)) {
   structure(
     list(
       code = code,
@@ -59,32 +67,48 @@ ddl <- function(code,
 #' Creates `tdata` object
 #'
 #' Resolves arguments and executes custom DDL `code`.
-#' Custom `code` and `data` created from code evaluation
-#' are passed to the `postprocess_fun`
+#' Custom `code` is substituted by `online_args` and evaluated. Then obtained code is
+#' substituted again by `offline_args` and passed to the `postprocess_fun`.
 #'
 #' @inheritParams ddl
+#' @param online_args (`list` named)\cr
+#'  Arguments to be substituted in the `code` and evaluated. Result of the evaluation
+#'  is based on the provided (dynamic) arguments.
+#'
+#' @return `tdata` containing objects created:
+#' - `env` created by the `code` substitution and evaluation using
+#' `online_args`, while the `code`.
+#' - `code` with substituted `offline_args.
+#' - `join_keys` specified in the `ddl` object.
 #'
 #' @export
-ddl_run <- function(ddl, online_args) {
+ddl_run <- function(ddl, online_args = list()) {
+  # substitute by online args and evaluate
   env_list <- ddl_eval_substitute(code = ddl$code, args = online_args)
-  if (!is.null(ddl$datanames)) {
+  if (is.null(env_list)) {
+    warning("DDL code returned NULL. Returning empty tdata object")
+  }
+
+  # to create tdata with limited number of objects
+  if (length(ddl$datanames)) {
     env_list <- env_list[ddl$datanames]
   }
+
+  # substitute by offline args
   for (i in names(ddl$offline_args)) {
     online_args[[i]] <- ddl$offline_args[[i]]
   }
-
-  if (!is.null(env_list)) {
-    code <- glue_code(ddl$code, args = online_args)
-    # create tdata object
-    postprocess_fun(
-      env_list,
-      # {username} is converted to askpass here
-      code = unclass(code)
-    ) # would need error handling here
-  } else {
-    NULL
+  code <- glue_code(ddl$code, args = online_args)
+  # create tdata object
+  obj <- ddl$postprocess_fun(
+    env_list,
+    code = unclass(code),
+    join_keys = ddl$join_keys
+  )
+  if (!inherits(obj, "tdata")) {
+    stop("postprocess_fun should return tdata object")
   }
+  obj
 }
 
 #' Substitute and evaluate ddl code
@@ -168,18 +192,27 @@ submit_button_ui <- function(id) {
 
 #' @rdname submit_button_module
 #' @export
-submit_button_server <- function(id, offline_args, code, postprocess_fun) {
+submit_button_server <- function(id, ddl) {
   moduleServer(id, function(input, output, session) {
     tdata <- eventReactive(input$submit, {
+      req(input$pass)
       ddl_run(
-        code = code,
-        offline_args = offline_args,
-        online_args = reactiveValuesToList(input),
-        postprocess_fun = postprocess_fun
+        ddl = ddl,
+        online_args = reactiveValuesToList(input)
       )
     })
 
     # would need to make sure we handle reactivity correctly here as teal::init expects not reactive tdata...
     return(tdata)
   })
+}
+
+
+# todo: to remove -------------
+open_conn <- function(username, password) {
+  if (password != "pass") stop("Invalid credentials. 'pass' is the password") else TRUE
+}
+close_conn <- function(conn) {
+  message("closed")
+  return(NULL)
 }
