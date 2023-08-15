@@ -32,3 +32,15 @@ get_dataname.TealDatasetConnector <- function(x) { # nolint
 get_dataname.TealDataset <- function(x) { # nolint
   return(x$get_dataname())
 }
+
+#' @rdname get_dataname
+#' @export
+get_dataname.tdata <- function(x) { # nolint
+  return(x@datanames)
+}
+
+#' @rdname get_dataname
+#' @export
+get_dataname.ddl <- function(x) {
+  x$datanames
+}

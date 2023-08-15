@@ -6,7 +6,6 @@
 #' @param x ([`TealDatasetConnector`], [`TealDataset`] or [`TealDataAbstract`])
 #'
 #' @return (`logical`) `TRUE` if connector has been already pulled, else `FALSE`.
-#' @export
 is_pulled <- function(x) {
   UseMethod("is_pulled")
 }

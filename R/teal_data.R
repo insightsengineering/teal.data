@@ -36,27 +36,41 @@ teal_data <- function(...,
                       code = "",
                       check = FALSE) {
   data_objects <- list(...)
-  checkmate::assert_list(
-    data_objects,
-    types = c("TealDataset", "TealDatasetConnector", "TealDataConnector")
-  )
   if (inherits(join_keys, "JoinKeySet")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
+  if (
+    checkmate::test_list(data_objects, types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
+  ) {
+    warning("Using TealDatasetConnector and TealDataset is deprecated, please just include data directly.")
+    update_join_keys_to_primary(data_objects, join_keys)
 
-  update_join_keys_to_primary(data_objects, join_keys)
+    x <- TealData$new(..., check = check, join_keys = join_keys)
+    if (length(code) > 0 && !identical(code, "")) {
+      x$set_pull_code(code = code)
+    }
+    x$check_reproducibility()
+    x$check_metadata()
 
-  x <- TealData$new(..., check = check, join_keys = join_keys)
-
-  if (length(code) > 0 && !identical(code, "")) {
-    x$set_pull_code(code = code)
+    if (is_pulled(x)) {
+      new_tdata(
+        env = lapply(x$get_datasets(), function(x) x$get_raw_data()),
+        code = x$get_code(),
+        keys = x$get_join_keys()
+      )
+    } else {
+      x
+    }
+  } else {
+    new_tdata(
+      env = data_objects,
+      code = code,
+      keys = join_keys
+    )
   }
-
-  x$check_reproducibility()
-  x$check_metadata()
-
-  return(x)
 }
+
+
 
 
 #' Load `TealData` object from a file
