@@ -46,10 +46,14 @@ ddl <- function(code,
                 server = submit_button_server,
                 offline_args = list(),
                 postprocess_fun = function(env_list, code, join_keys) {
-                  do.call(teal.data::teal_data, args = c(env_list, code = code, join_keys))
+                  do.call(teal.data::teal_data, args = c(env_list, code = code, join_keys = join_keys))
                 },
                 join_keys = teal.data::join_keys(),
-                datanames = character(0)) {
+                datanames) {
+  if (missing(datanames)) {
+    stop("`dataname` argument is required")
+  }
+
   structure(
     list(
       code = code,
@@ -82,32 +86,33 @@ ddl <- function(code,
 #' - `join_keys` specified in the `ddl` object.
 #'
 #' @export
-ddl_run <- function(ddl, online_args = list()) {
+ddl_run <- function(x, online_args = list()) {
+  checkmate::assert_class(x, "ddl")
   # substitute by online args and evaluate
-  env_list <- ddl_eval_substitute(code = ddl$code, args = online_args)
+  env_list <- ddl_eval_substitute(code = x$code, args = online_args)
   if (is.null(env_list)) {
     warning("DDL code returned NULL. Returning empty tdata object")
   }
 
-  # to create tdata with limited number of objects
-  if (length(ddl$datanames)) {
-    env_list <- env_list[ddl$datanames]
-  }
+  # don't pass non-dataset bindings further
+  # we don't want to initialize tdata with them
+  env_list <- env_list[x$datanames]
 
   # substitute by offline args
-  for (i in names(ddl$offline_args)) {
-    online_args[[i]] <- ddl$offline_args[[i]]
+  for (i in names(x$offline_args)) {
+    online_args[[i]] <- x$offline_args[[i]]
   }
-  code <- glue_code(ddl$code, args = online_args)
+  code <- glue_code(x$code, args = online_args)
   # create tdata object
-  obj <- ddl$postprocess_fun(
+  obj <- x$postprocess_fun(
     env_list,
     code = unclass(code),
-    join_keys = ddl$join_keys
+    join_keys = x$join_keys
   )
   if (!inherits(obj, "tdata")) {
     stop("postprocess_fun should return tdata object")
   }
+
   obj
 }
 
@@ -192,14 +197,10 @@ submit_button_ui <- function(id) {
 
 #' @rdname submit_button_module
 #' @export
-submit_button_server <- function(id, ddl) {
+submit_button_server <- function(id, x) {
   moduleServer(id, function(input, output, session) {
     tdata <- eventReactive(input$submit, {
-      req(input$pass)
-      ddl_run(
-        ddl = ddl,
-        online_args = reactiveValuesToList(input)
-      )
+      ddl_run(x = x, online_args = reactiveValuesToList(input))
     })
 
     # would need to make sure we handle reactivity correctly here as teal::init expects not reactive tdata...
