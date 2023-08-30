@@ -22,6 +22,7 @@ repos:
           - methods
           - R6
           - rlang
+          - shiny
           - shinyjs
           - stats
           - insightsengineering/teal.logger
