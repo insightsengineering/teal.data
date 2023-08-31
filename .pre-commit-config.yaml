@@ -17,22 +17,15 @@ repos:
         additional_dependencies:
           - checkmate
           - digest
-          - dplyr
-          - ggplot2
-          - glue
-          - grDevices
           - lifecycle
           - logger
-          - magrittr
           - methods
-          - bioc::MultiAssayExperiment
           - R6
           - rlang
-          - rtables
+          - shiny
           - shinyjs
-          - shinyWidgets
           - stats
-          - bioc::SummarizedExperiment
+          - insightsengineering/teal.logger
           - utils
           - yaml
       - id: spell-check
