@@ -1,9 +1,9 @@
 # teal.data 0.3.0.9002
 
-# teal.data 0.3.0
-
 ### Miscellaneous
 * Specify minimal version of dependent packages.
+
+# teal.data 0.3.0
 
 ### Enhancements
 * Removed `scda` package dependency from examples.

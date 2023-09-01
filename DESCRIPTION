@@ -34,12 +34,11 @@ Imports:
 Suggests:
     bslib,
     dplyr (>= 1.1.0),
-    knitr (>= 1.34),
+    knitr (>= 1.42),
     magrittr (>= 1.5),
     MultiAssayExperiment,
     readr,
     reticulate (>= 1.22),
-    rmarkdown (>= 2.19),
     SummarizedExperiment,
     testthat (>= 3.0.4),
     withr (>= 2.1.0)
@@ -65,7 +64,6 @@ Config/Needs/verdepcheck:
     MultiAssayExperiment,
     tidyverse/readr,
     rstudio/reticulate,
-    rstudio/rmarkdown,
     SummarizedExperiment,
     r-lib/testthat,
     r-lib/withr
