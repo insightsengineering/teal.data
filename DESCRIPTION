@@ -39,6 +39,7 @@ Suggests:
     MultiAssayExperiment,
     readr,
     reticulate (>= 1.22),
+    rmarkdown (>= 2.19),
     SummarizedExperiment,
     testthat (>= 3.0.4),
     withr (>= 2.1.0)
@@ -64,6 +65,7 @@ Config/Needs/verdepcheck:
     MultiAssayExperiment,
     tidyverse/readr,
     rstudio/reticulate,
+    rstudio/rmarkdown,
     SummarizedExperiment,
     r-lib/testthat,
     r-lib/withr
