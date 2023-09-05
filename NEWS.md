@@ -1,7 +1,7 @@
 # teal.data 0.3.0.9002
 
 ### Miscellaneous
-* Specify minimal version of dependent packages.
+* Specified minimal version of package dependencies.
 
 # teal.data 0.3.0
 
