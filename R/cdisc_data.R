@@ -77,11 +77,15 @@ cdisc_data <- function(...,
   if (
     checkmate::test_list(data_objects, types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
   ) {
-    warning("Using TealDatasetConnector and TealDataset is deprecated, please just include data directly.")
 
     update_join_keys_to_primary(data_objects, join_keys)
 
-    retrieve_parents <- function(x) {
+    retrieve_parents <- function(x) {lifecycle::deprecate_warn(
+      when = "0.3.1",
+      "cdisc_data(
+        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.'
+      )"
+    )
       tryCatch(
         x$get_parent(),
         error = function(cond) rep(character(0), length(x$get_datanames()))
@@ -133,6 +137,9 @@ cdisc_data <- function(...,
       x
     }
   } else {
+    if (!checkmate::test_names(names(data_objects), type = "named")) {
+      stop("Dot (`...`) arguments on `teal_data()` must be named.")
+    }
     new_tdata(env = data_objects, code = code, keys = join_keys)
   }
 }
