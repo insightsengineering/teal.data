@@ -6,6 +6,14 @@
 \usage{
 glue_code(code, args)
 }
+\arguments{
+\item{code}{(\code{character})\cr
+Code to be evaluated and returned to the \code{postprocess_fun}}
+
+\item{args}{(\code{list} named)\cr
+Containing elements named after arguments in the code
+enclosed in currly brackets ex. \code{{ arg_name }}}
+}
 \value{
 \code{character}
 }

@@ -38,8 +38,6 @@
 #'
 #' @inheritParams teal_data
 #'
-#'
-#' @examples
 #' @export
 ddl <- function(code,
                 ui = submit_button_ui,
@@ -156,7 +154,7 @@ ddl_eval_substitute <- function(code, args) {
 #' Substitutes code arguments with `args`. Parts of the code
 #' wrapped in curly brackets ex. `{ arg_name }` are replaced
 #' with corresponding list elements
-#' @inheritsParams ddl_eval_substitute
+#' @inheritParams ddl_eval_substitute
 #' @return `character`
 #' @examples
 #' glue_code("x <- { arg }", list(arg = 1))
