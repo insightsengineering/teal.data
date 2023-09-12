@@ -50,7 +50,7 @@ library(teal.data)
 ```
 
 Next we define the Python code which we want to use to create the dataset.
-In this example, for demonstrati    on purposes we create a trivial dataset which could easily be done directly in R.
+In this example, for demonstration purposes we create a trivial dataset which could easily be done directly in R.
 Note we use a variable `num_rows` which needs to be passed to the Python code from R. 
 
 ```{r, eval = reticulate_available}
