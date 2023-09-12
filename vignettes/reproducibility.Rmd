@@ -1,7 +1,6 @@
 ---
 title: "Reproducibility check"
 author: "NEST CoreDev"
-date: "2022-04-20"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Reproducibility check}

@@ -1,7 +1,6 @@
 ---
 title: "Pre-processing data"
 author: "NEST CoreDev"
-date: "2022-07-26"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Pre-processing data}

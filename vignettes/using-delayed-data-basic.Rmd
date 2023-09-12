@@ -1,7 +1,6 @@
 ---
 title: "Using Delayed Data Loading (Basic)"
 author: "Dawid Kałędkowski"
-date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Using Delayed Data Loading (Basic)}

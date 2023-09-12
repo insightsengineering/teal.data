@@ -1,6 +1,6 @@
 Type: Package
 Package: teal.data
-Title: Data Model for `teal` Applications
+Title: Data Model for 'teal' Applications
 Version: 0.3.0.9003
 Date: 2023-09-05
 Authors@R: c(
@@ -13,8 +13,11 @@ Authors@R: c(
     person("Junlue", "Zhao", role = "aut"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
-Description: Data Model for `teal` Applications.
-License: Apache License 2.0 | file LICENSE
+Description: Utilities for data transformations compatible with 'teal' applications.
+License: Apache License 2.0
+URL: https://insightsengineering.github.io/teal.data/,
+    https://github.com/insightsengineering/teal.data/
+BugReports: https://github.com/insightsengineering/teal.data/issues
 Depends:
     R (>= 4.0),
     shiny (>= 1.6.0)

@@ -1,7 +1,6 @@
 ---
 title: "teal.data with Python"
 author: "NEST CoreDev"
-date: "2022-05-10"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{teal.data with Python}
