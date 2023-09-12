@@ -191,8 +191,8 @@ Below is a comparison of these two approaches:
 adsl <- teal.data::example_cdisc_data("ADSL")
 
 # no reproducible code provided
-cdisc_dataset("ADSL", adsl) %>% 
-  get_code()%>%
+cdisc_dataset("ADSL", adsl) %>%
+  get_code() %>%
   cat()
 
 # provide the code to reproduce the data:
