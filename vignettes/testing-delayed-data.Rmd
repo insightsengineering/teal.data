@@ -13,19 +13,19 @@ editor_options:
 
 ## Overview
 
-Once your delayed data object has been created as described in [Delayed Data Objects](using-delayed-data-basic.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, i.e. the global environment. Below is an exhaustive list of all such functions:
+Once your delayed data object has been created as described in [Delayed Data Objects](using-delayed-data-basic.html), `teal.data` provides a useful set of functions to examine the object outside of a shiny application, _i.e._ the global environment. Below is an exhaustive list of all such functions:
 
-|                                             | `TealDataset`       | `TealDatasetConnector`       | `TealDataConnector` & `TealData`      |
-|---------------------------------------------|-------------------|----------------------------|------------------------------------------|
-| Get Reproducible Code (Optionally Deparsed) | `get_code`          | `get_code`                   | `get_code`                          |
-| Get data.frame                              | `get_raw_data`      | `get_raw_data`               | `get_raw_data`                      |
-| Get Dataset Name                            | `get_dataname`      | `get_dataname`               | `get_dataname`                      |
-| Get Single Dataset Object                   | `get_dataset`       | `get_dataset`                | `get_dataset`                       |
-| Get All Dataset Objects                     | -                 | -                          | `get_datasets`                      |
-| Load Data                                   | -                 | `load_dataset`               | `load_datasets`                     |
-| Check if Loaded                             | -                 | `is_pulled`                  | `is_pulled`                         |
-| Mutate Single Dataset                       | `mutate_dataset`    | `mutate_dataset`             | `mutate_dataset`                    |
-| Mutate All Datasets                         | -                 | -                          | `mutate_data`                       |
+|                                               | `TealDataset`       | `TealDatasetConnector`     | `TealDataConnector` & `TealData`  |
+|-----------------------------------------------|---------------------|----------------------------|-----------------------------------|
+| Get Reproducible Code _(Optionally Deparsed)_ | `get_code`          | `get_code`                 | `get_code`                        |
+| Get data.frame                                | `get_raw_data`      | `get_raw_data`             | `get_raw_data`                    |
+| Get Dataset Name                              | `get_dataname`      | `get_dataname`             | `get_dataname`                    |
+| Get Single Dataset Object                     | `get_dataset`       | `get_dataset`              | `get_dataset`                     |
+| Get All Dataset Objects                       | -                   | -                          | `get_datasets`                    |
+| Load Data                                     | -                   | `load_dataset`             | `load_datasets`                   |
+| Check if Loaded                               | -                   | `is_pulled`                | `is_pulled`                       |
+| Mutate Single Dataset                         | `mutate_dataset`    | `mutate_dataset`           | `mutate_dataset`                  |
+| Mutate All Datasets                           | -                   | -                          | `mutate_data`                     |
 
 The most basic function `get_dataname` returns the name of the dataset or datasets in your delayed data object:
 
@@ -77,8 +77,7 @@ is_pulled(delayed_data)
 
 #### Aside: Loading page UI
 
-It is possible to set default values of the boxes on the loading page using the `set_ui_input`
-method:
+It is possible to set default values of the boxes on the loading page using the `set_ui_input` method:
 
 ```{r}
 adae$set_ui_input(function(ns) {
