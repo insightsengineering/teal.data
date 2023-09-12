@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,30 +45,25 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>Getting Started</h6>
     <a class="dropdown-item" href="../articles/teal-data.html">Introduction to teal.data</a>
     <a class="dropdown-item" href="../articles/preprocessing-data.html">Pre-processing data</a>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
     <a class="dropdown-item" href="../articles/join-keys.html">Join Keys</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Delayed Data Loading</h6>
+    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/using-delayed-data-basic.html">Using Delayed Data Loading (Basic)</a>
     <a class="dropdown-item" href="../articles/using-delayed-data-advanced.html">Creating Delayed Data Classes (Advanced)</a>
     <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Other Dataset Connectors</h6>
     <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -112,16 +107,17 @@ Kałędkowski</h4>
 
     
     
-<p>When creating apps which do not use <code>DDL</code>, once the
-datasets are created there is often some pre-processing required before
-initializing the teal app. Similarly, in the case of delayed data
-additional code instructions to pre-process data can be added to
-<code>DDL</code> objects which will be run after the data is loaded,
-which may happen after the launching of the shiny app or when the
-<code><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull()</a></code> method is called.</p>
+<p>When creating apps that do not use Delayed data loading
+(<code>DDL</code>), there is often some pre-processing required after
+the datasets are created, but before initializing the <code>teal</code>
+app. Similarly, in the case of delayed data, additional code
+instructions to pre-process the data can be added to <code>DDL</code>
+objects that will be executed after the data is loaded, which may happen
+after the launching of the shiny app or when the <code><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull()</a></code>
+method is called.</p>
 <ul>
 <li>
-<code>mutate_dataset</code>: Individual datasets can be processed
+<code><a href="../reference/mutate_dataset.html">mutate_dataset()</a></code>: Individual datasets can be processed
 using the <code>mutate_dataset</code> function. For reproducibility to
 be maintained with <code>mutate_dataset</code>, all pre-processing code
 should modify one dataset at a time.</li>
@@ -289,7 +285,7 @@ creating your object using the <code>mutate_dataset</code> function.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="va">adsl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
-<span><span class="co">## last_run &lt;- structure(19605, class = "Date")</span></span>
+<span><span class="co">## last_run &lt;- structure(19612, class = "Date")</span></span>
 <span><span class="co">## ADSL$last_run &lt;- last_run</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># compared to evaluating the variable at the time of loading</span></span>
@@ -345,9 +341,9 @@ delayed data object:</p>
 <pre><code><span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data(dataname = "ADAE")</span></span>
 <span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data(dataname = "ADSL")</span></span>
 <span><span class="co">## ADAE$n &lt;- nrow(ADSL)</span></span></code></pre>
-<p>Related to this idea, it is possible to provide the code on a
-<code>Data</code> level. However, this will always return all the code
-used to generate all the datasets in the object:</p>
+<p>It is possible to provide the code on a <code>Data</code> level.
+However, this will always return all the code used to generate all the
+datasets in the object:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">adsl</span>,</span>
@@ -413,16 +409,19 @@ with the code needed to reproduce the data. This can be provided at the
 <p>Below is a comparison of these two approaches:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no reproducible code</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] ""</span></span></code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># provide the code to reproduce the data:</span></span>
+<span></span>
+<span><span class="co"># no reproducible code provided</span></span>
+<span><span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># provide the code to reproduce the data:</span></span>
 <span><span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span>,</span>
 <span>  code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span></span></code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># it's possible to supply the code at the `Data` level:</span></span>
 <span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADAE"</span><span class="op">)</span></span>
 <span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
@@ -436,14 +435,14 @@ with the code needed to reproduce the data. This can be provided at the
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data("ADSL")</span></span>
 <span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data("ADAE")</span></span></code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># but it's not possible then to access the code at a `Dataset` level:</span></span>
 <span><span class="va">adsl_adae</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/get_code.html">get_code</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ADSL &lt;- teal.data::example_cdisc_data("ADSL")</span></span>
 <span><span class="co">## ADAE &lt;- teal.data::example_cdisc_data("ADAE")</span></span></code></pre>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># this can be avoided by storing the code like so:</span></span>
 <span><span class="va">adsl_adae</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/cdisc_dataset.html">cdisc_dataset</a></span><span class="op">(</span><span class="st">"ADSL"</span>, <span class="va">adsl</span>, code <span class="op">=</span> <span class="st">"ADSL &lt;- teal.data::example_cdisc_data(\"ADSL\")"</span><span class="op">)</span>,</span>

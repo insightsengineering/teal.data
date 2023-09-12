@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,30 +29,25 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>Getting Started</h6>
     <a class="dropdown-item" href="../articles/teal-data.html">Introduction to teal.data</a>
     <a class="dropdown-item" href="../articles/preprocessing-data.html">Pre-processing data</a>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
     <a class="dropdown-item" href="../articles/join-keys.html">Join Keys</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Delayed Data Loading</h6>
+    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
     <a class="dropdown-item" href="../articles/using-delayed-data-basic.html">Using Delayed Data Loading (Basic)</a>
     <a class="dropdown-item" href="../articles/using-delayed-data-advanced.html">Creating Delayed Data Classes (Advanced)</a>
     <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Other Dataset Connectors</h6>
     <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -211,17 +206,17 @@ with keys and parent name assigned automatically by <code>dataname</code>.</p>
 <span class="r-in"><span><span class="va">y</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ID       var1       var2       var3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1  1.4854401 -0.2492000  1.4466598</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2  0.6395072  2.2906040 -0.4007729</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3 -1.0823231  0.2859049 -0.4584893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4 -0.4663655  2.0375314  0.9519311</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5 -0.7238432 -2.0984241  0.8113861</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6 -0.2100813 -1.8360599 -0.1207308</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7 -0.2059040 -0.9367192 -0.5432646</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8  0.4900144  0.1838197 -0.1398203</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9 -0.9635302 -0.5177151  1.3703798</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10  1.9095336  1.4909508  0.8288903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ID        var1        var2       var3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1  0.98113200  0.77347604  0.1250538</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2  1.44524399  0.53436841 -0.6823057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3  0.41460293 -1.15998314 -0.6717510</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4 -0.45881450 -0.88125336  0.8356291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5 -0.05339078 -0.66073694 -0.1845025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6  0.70442013  1.18744996 -1.6882909</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7  0.75134204  0.34210881 -0.4296716</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8  0.00450287 -0.04918807  0.8601884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9 -0.34653535  0.26992218 -0.4390931</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10  0.33886597  0.65868461  2.0877218</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
