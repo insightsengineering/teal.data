@@ -14,7 +14,7 @@ vignette: >
 Each table can have a set of keys that inform its structure and relation to other tables by specifying:
 
 - columns consisting the primary key
-- merge keys, a concept similar to `SQL`s foreign key.
+- merge keys, a concept similar to `SQL`'s foreign key.
 
 Usually, an application developer needs to specify the keys manually, but in case of datasets named according
 to the `ADaM` standard, `teal` can assign the keys on its own. 
@@ -22,8 +22,8 @@ Refer to `vignette("including-adam-data-in-teal", package = "teal")` for more in
 
 ### Primary key
 
-Using the `keys` argument to the `dataset` (or for `DDL` a `dataset_connector`) function, we can specify column(s) of the
-dataset which together uniquely identify rows in the dataset. 
+Using the `keys` argument to the `dataset` function (or for `DDL` a `dataset_connector`), we can specify the column(s) 
+of the dataset that (together) uniquely identify rows in the dataset. 
 
 ```{r, message=FALSE}
 library(teal.data)
