@@ -5,7 +5,7 @@
 \title{Copy and Change Variable Labels of a \code{data.frame}}
 \source{
 This function was taken 1-1 from
-\href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
+\href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 the dependency tree.
 }
 \usage{
