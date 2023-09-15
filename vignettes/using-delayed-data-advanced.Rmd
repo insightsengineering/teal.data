@@ -1,7 +1,6 @@
 ---
 title: "Creating Delayed Data Classes (Advanced)"
 author: "Dawid Kałędkowski"
-date: "15.05.2022"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Creating Delayed Data Classes (Advanced)}

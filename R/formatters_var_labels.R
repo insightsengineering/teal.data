@@ -9,7 +9,7 @@
 #'   \code{TRUE} the variable names is returned, otherwise \code{NA}
 #'
 #' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
+#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
 #' @seealso [col_relabel()] [`col_labels<-`]
@@ -65,7 +65,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @param value new variable labels, \code{NA} removes the variable label
 #'
 #' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
+#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
 #' @seealso [col_labels()] [col_relabel()]
@@ -114,7 +114,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @return a copy of \code{x} with changed labels according to \code{...}
 #'
 #' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/web/packages/formatters/index.html}{formatters} package, to reduce the complexity of
+#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
 #' @seealso [col_labels()] [`col_labels<-`]
