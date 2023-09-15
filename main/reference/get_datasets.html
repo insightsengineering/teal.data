@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9004</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,16 +46,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -80,7 +70,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Get a <code><a href="TealDataset.html">TealDataset</a></code> objects.</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/teal.data/blob/HEAD/R/get_datasets.R" class="external-link"><code>R/get_datasets.R</code></a></small>
       <div class="d-none name"><code>get_datasets.Rd</code></div>
     </div>
 
@@ -363,10 +353,10 @@ object containing datasets.</p></dd>
 <span class="r-in"><span>  connectors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">adsl</span>, <span class="va">adlb</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rdc</span><span class="op">$</span><span class="fu">set_ui</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">id</span>, <span class="va">connection</span>, <span class="va">connectors</span><span class="op">)</span> <span class="fu">p</span><span class="op">(</span><span class="st">"Example UI"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rdc</span><span class="op">$</span><span class="fu">set_ui</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">id</span>, <span class="va">connection</span>, <span class="va">connectors</span><span class="op">)</span> <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Example UI"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rdc</span><span class="op">$</span><span class="fu">set_server</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="kw">function</span><span class="op">(</span><span class="va">id</span>, <span class="va">connection</span>, <span class="va">connectors</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="fu">moduleServer</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/moduleServer.html" class="external-link">moduleServer</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      id <span class="op">=</span> <span class="va">id</span>,</span></span>
 <span class="r-in"><span>      module <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>        <span class="co"># Note this is simplified as we are not opening a real connection here</span></span></span>
