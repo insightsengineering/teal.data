@@ -112,13 +112,6 @@ input_template <- function(..., on_submit, mask) {
 }
 
 
-# cc <- list(
-#   quote(pullme("user", "pass", "versicolor")),
-#   quote(closeme())
-# )
-# arglist <- quote(list(password = askpass("big pas")))
-# mask_code(cc, list(pullme = arglist))
-
 #' wrap a function so that it returns its code in addition to the result
 #' @param fun a function
 #' @return A function that works just like `fun` but adds its body to the result as the `code_used` attribute.
