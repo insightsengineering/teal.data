@@ -5,24 +5,26 @@
 #' Define any inputs necessary to connect to a remote data source and produce data,
 #' as well as a function (`on_submit`) that will create the desired data sets.
 #'
-#' One of the inputs must be an action button (or action link) called "submit".
+#' One of the inputs must be an action button (or action link) called `"submit"`.
 #' When clicked, the `on_submit` function will be run.
 #'
 #' `on_submit` must take one argument called `inputs`,
 #' which will be a list of all input elements defined in the UI function except `"submit"`.
 #' The function body must contain all code necessary to obtain the desired data sets and nothing else.
-#' Do not include a return statement, simply assign your data sets to appropriate variables.
+#' Do not return values, just assign your data sets to appropriate variables (see examples).
 #'
-#' Clicking "submit" will run the function provided in `on_submit`.
+#' Clicking the `submit` button/link will run the function provided in `on_submit`.
 #' The obtained data sets will be packed into a `tdata` object.
 #' The body of `on_submit` will be recorded in the resulting `tdata`.
 #'
 #' The `mask` argument can be used to mask input values used as arguments in the recorded code.
+#' This should be a named list with names corresponding to input elements being masked,
+#' and elements containing masked values. The masked values may include quoted `call`s.
 #'
 #' Input elements will be put in a div of class `connector-input`.
 #'
 #' @param ... any number of `shiny.tag`s
-#' @param on_submit function to run after clicking the "submit" button, see `Details`
+#' @param on_submit function to run after clicking the `submit` button, see `Details`
 #' @param mask optional list specifying how to mask the code run by `on_submit`, see `Details`
 #' @return A`reactive` expression returning a `tdata` object.
 #'
@@ -112,9 +114,21 @@ input_template <- function(..., on_submit, mask) {
 }
 
 
-#' wrap a function so that it returns its code in addition to the result
-#' @param fun a function
-#' @return A function that works just like `fun` but adds its body to the result as the `code_used` attribute.
+#' wrapper for `on_submit` functions
+#'
+#' Wrap a function that makes some assignments in its body to return a `tdata` object with optionally masked code.
+#'
+#' Code found in the body of `fun` will be run in order to obtain the desired data sets.
+#' References to `input$<name>` will be substituted with input values of the accompanying `shiny` module
+#' for the purposes of code execution. If `mask` is provided, those references will be substituted with mask values
+#' for the purposes of storing code.
+#'
+#' @param fun a function that takes exactly one argument, `input`, which is a named list
+#' @param mask optional named list to specify code masking; see `input_template` for details
+#'
+#' @return
+#' A `tdata` object containing variables that were created in the body of `fun`
+#' and the entirety of the body of `fun` in the `@code` slot.
 #'
 #' @keywords internal
 with_substitution <- function(fun, mask) {
