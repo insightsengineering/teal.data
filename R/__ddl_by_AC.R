@@ -59,7 +59,7 @@
 #' }
 #' if (interactive()) shinyApp(ui, server)
 #'
-input_template <- function(..., on_submit, mask) {
+input_template <- function(..., on_submit, mask, datanames, join_keys) {
   args <- list(...)
   checkmate::assert_list(args, types = "shiny.tag")
 
@@ -95,8 +95,10 @@ input_template <- function(..., on_submit, mask) {
     )
   }
 
+  checkmate::assert_character(datanames)
   if (missing(mask)) mask <- list()
-  tracked_request <- with_substitution(on_submit, mask)
+  if (missing(join_keys)) join_keys <- teal.data::join_keys()
+  tracked_request <- with_substitution(on_submit, mask, join_keys)
   server <- function(id) {
     moduleServer(id, function(input, output, session) {
       result <- eventReactive(input[["submit"]], {
@@ -112,7 +114,9 @@ input_template <- function(..., on_submit, mask) {
 
   ans <- list(
     ui = ui,
-    server = server
+    server = server,
+    datanames = datanames,
+    join_keys = join_keys
   )
   class(ans) <- c("ddl", class(ans))
   ans
