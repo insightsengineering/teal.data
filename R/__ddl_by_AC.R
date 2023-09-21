@@ -110,10 +110,12 @@ input_template <- function(..., on_submit, mask) {
     })
   }
 
-  list(
+  ans <- list(
     ui = ui,
     server = server
   )
+  class(ans) <- c("ddl", class(ans))
+  ans
 }
 
 
