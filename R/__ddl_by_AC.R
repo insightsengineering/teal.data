@@ -101,7 +101,10 @@ input_template <- function(..., on_submit, mask) {
     moduleServer(id, function(input, output, session) {
       result <- eventReactive(input[["submit"]], {
         inputs <- sapply(setdiff(inputIds, "submit"), function(x) input[[x]], simplify = FALSE)
-        do.call(tracked_request, list(inputs))
+        tryCatch(
+          do.call(tracked_request, list(inputs)),
+          error = function(e) validate(need(FALSE, sprintf("Error: %s", e$message)))
+        )
       })
       result
     })
