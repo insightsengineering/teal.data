@@ -26,6 +26,8 @@
 #' @param ... any number of `shiny.tag`s
 #' @param on_submit function to run after clicking the `submit` button, see `Details`
 #' @param mask optional list specifying how to mask the code run by `on_submit`, see `Details`
+#' @param datanames character vector of names of data sets created; required for compatibility with `teal` apps
+#' @param join_keys `join_keys` object specifying relationships between data sets; defaults to `teal.data::join_keys()`
 #' @return A`reactive` expression returning a `tdata` object.
 #'
 #' #' @examples
@@ -134,6 +136,7 @@ input_template <- function(..., on_submit, mask, datanames, join_keys) {
 #'
 #' @param fun a function that takes exactly one argument, `input`, which is a named list
 #' @param mask optional named list to specify code masking; see `input_template` for details
+#' @param join_keys optional `join_keys` object; see `input_template` for details
 #'
 #' @return
 #' A `tdata` object containing variables that were created in the body of `fun`
@@ -230,66 +233,66 @@ devtools::load_all("../teal.slice")
 devtools::load_all("../teal")
 devtools::load_all(".")
 
-ui <- fluidPage(
-  tagList(
-    module$ui("id"),
-    uiOutput("val")
-  )
-)
-server <- function(input, output, session) {
-  tdata <- module$server("id")
-  output[["value"]] <- renderPrint({
-    tdata()
-  })
-  output[["code"]] <- renderPrint({
-    cat(teal.code::get_code(tdata()), sep = "\n")
-  })
-  output[["val"]] <- renderUI({
-    req(tdata())
-    tagList(
-      verbatimTextOutput("value"),
-      verbatimTextOutput("code")
-    )
-  })
-}
-if (interactive()) shinyApp(ui, server)
-
-
-
-# funny_module <- function (label = "Filter states", datanames = "all") {
-#   checkmate::assert_string(label)
-#   module(
-#     label = label,
-#     datanames = datanames,
-#     ui = function(id, ...) {
-#       ns <- NS(id)
-#       div(
-#         h2("The following filter calls are generated:"),
-#         verbatimTextOutput(ns("filter_states")),
-#         verbatimTextOutput(ns("filter_calls")),
-#         actionButton(ns("reset"), "reset_to_default")
-#       )
-#     },
-#     server = function(input, output, session, data, filter_panel_api) {
-#       checkmate::assert_class(data, "tdata")
-#       observeEvent(input$reset, set_filter_state(filter_panel_api, default_filters))
-#       output$filter_states <-  renderPrint({
-#         logger::log_trace("rendering text1")
-#         filter_panel_api %>% get_filter_state()
-#       })
-#       output$filter_calls <- renderText({
-#         logger::log_trace("rendering text2")
-#         attr(data, "code")()
-#       })
-#     }
-#   )
-# }
-#
-# app <- init(
-#   data = module,
-#   modules = modules(
-#     funny_module("funny1"),
-#     funny_module("funny2", datanames = "adtte") # will limit datanames to ADTTE and ADSL (parent)
+# ui <- fluidPage(
+#   tagList(
+#     module$ui("id"),
+#     uiOutput("val")
 #   )
 # )
-# shinyApp(app$ui, app$server)
+# server <- function(input, output, session) {
+#   tdata <- module$server("id")
+#   output[["value"]] <- renderPrint({
+#     tdata()
+#   })
+#   output[["code"]] <- renderPrint({
+#     cat(teal.code::get_code(tdata()), sep = "\n")
+#   })
+#   output[["val"]] <- renderUI({
+#     req(tdata())
+#     tagList(
+#       verbatimTextOutput("value"),
+#       verbatimTextOutput("code")
+#     )
+#   })
+# }
+# if (interactive()) shinyApp(ui, server)
+
+
+
+funny_module <- function (label = "Filter states", datanames = "all") {
+  checkmate::assert_string(label)
+  module(
+    label = label,
+    datanames = datanames,
+    ui = function(id, ...) {
+      ns <- NS(id)
+      div(
+        h2("The following filter calls are generated:"),
+        verbatimTextOutput(ns("filter_states")),
+        verbatimTextOutput(ns("filter_calls")),
+        actionButton(ns("reset"), "reset_to_default")
+      )
+    },
+    server = function(input, output, session, data, filter_panel_api) {
+      checkmate::assert_class(data, "tdata")
+      observeEvent(input$reset, set_filter_state(filter_panel_api, default_filters))
+      output$filter_states <-  renderPrint({
+        logger::log_trace("rendering text1")
+        filter_panel_api %>% get_filter_state()
+      })
+      output$filter_calls <- renderText({
+        logger::log_trace("rendering text2")
+        attr(data, "code")()
+      })
+    }
+  )
+}
+
+app <- init(
+  data = module,
+  modules = modules(
+    funny_module("funny1"),
+    funny_module("funny2", datanames = "adtte") # will limit datanames to ADTTE and ADSL (parent)
+  )
+)
+shinyApp(app$ui, app$server)
