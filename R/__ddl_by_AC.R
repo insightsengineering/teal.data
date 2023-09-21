@@ -191,7 +191,6 @@ with_substitution <- function(fun, mask, join_keys) {
 
 
 library(shiny)
-devtools::load_all()
 
 # mock database connection
 pullme <- function(username, password) {
@@ -220,10 +219,17 @@ themask <- list(
 module <- input_template(
   on_submit = thefun,
   mask = themask,
+  datanames = c("adsl", "adtte"),
   textInput("user", "username", value = "user", placeholder = "who goes there?"),
   passwordInput("pass", "password", value = "pass", placeholder = "friend or foe?"),
   actionButton("submit", "get it")
 )
+
+
+devtools::load_all("../teal.slice")
+devtools::load_all("../teal")
+devtools::load_all(".")
+
 ui <- fluidPage(
   tagList(
     module$ui("id"),
@@ -247,3 +253,43 @@ server <- function(input, output, session) {
   })
 }
 if (interactive()) shinyApp(ui, server)
+
+
+
+# funny_module <- function (label = "Filter states", datanames = "all") {
+#   checkmate::assert_string(label)
+#   module(
+#     label = label,
+#     datanames = datanames,
+#     ui = function(id, ...) {
+#       ns <- NS(id)
+#       div(
+#         h2("The following filter calls are generated:"),
+#         verbatimTextOutput(ns("filter_states")),
+#         verbatimTextOutput(ns("filter_calls")),
+#         actionButton(ns("reset"), "reset_to_default")
+#       )
+#     },
+#     server = function(input, output, session, data, filter_panel_api) {
+#       checkmate::assert_class(data, "tdata")
+#       observeEvent(input$reset, set_filter_state(filter_panel_api, default_filters))
+#       output$filter_states <-  renderPrint({
+#         logger::log_trace("rendering text1")
+#         filter_panel_api %>% get_filter_state()
+#       })
+#       output$filter_calls <- renderText({
+#         logger::log_trace("rendering text2")
+#         attr(data, "code")()
+#       })
+#     }
+#   )
+# }
+#
+# app <- init(
+#   data = module,
+#   modules = modules(
+#     funny_module("funny1"),
+#     funny_module("funny2", datanames = "adtte") # will limit datanames to ADTTE and ADSL (parent)
+#   )
+# )
+# shinyApp(app$ui, app$server)
