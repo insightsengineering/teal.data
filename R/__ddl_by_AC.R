@@ -228,9 +228,10 @@ server <- function(input, output, session) {
     tdata()
   })
   output[["code"]] <- renderPrint({
-    teal.code::get_code(tdata()) %>% cat(sep = "\n")
+    cat(teal.code::get_code(tdata()), sep = "\n")
   })
   output[["val"]] <- renderUI({
+    req(tdata())
     tagList(
       verbatimTextOutput("value"),
       verbatimTextOutput("code")
