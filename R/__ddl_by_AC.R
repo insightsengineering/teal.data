@@ -136,12 +136,14 @@ input_template <- function(..., on_submit, mask) {
 #' and the entirety of the body of `fun` in the `@code` slot.
 #'
 #' @keywords internal
-with_substitution <- function(fun, mask) {
+with_substitution <- function(fun, mask, join_keys) {
   checkmate::assert_true(
     identical(names(formals(fun)), "input"),
     .var.name = "'on_submit' function only takes 'input' argument"
   )
   checkmate::assert_list(mask, names = "unique")
+  checkmate::assert_r6(join_keys, "JoinKeys")
+
   function(...) {
     # Get input values from call arguments.
     call_args <- as.list(match.call(fun))$input
@@ -179,7 +181,7 @@ with_substitution <- function(fun, mask) {
     env <- new.env()
     eval(as.expression(code_input), env)
     # Create `tdata` with masked code.
-    new_tdata(as.list(env), as.expression(code_masked))
+    new_tdata(as.list(env), code = as.expression(code_masked), keys = join_keys)
   }
 }
 
