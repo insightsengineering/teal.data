@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
-Title: Data Model for `teal` Applications
-Version: 0.3.0.9002
-Date: 2023-08-31
+Title: Data Model for 'teal' Applications
+Version: 0.3.0.9005
+Date: 2023-09-15
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
     person("Pawel", "Rucki", , "pawel.rucki@roche.com", role = "aut"),
@@ -13,41 +13,52 @@ Authors@R: c(
     person("Junlue", "Zhao", role = "aut"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
-Description: Data Model for `teal` Applications.
-License: Apache License 2.0 | file LICENSE
+Description: Utilities for data transformations compatible with 'teal'
+    applications.
+License: Apache License 2.0
+URL: https://insightsengineering.github.io/teal.data/,
+    https://github.com/insightsengineering/teal.data/
+BugReports: https://github.com/insightsengineering/teal.data/issues
 Depends:
     R (>= 4.0),
-    shiny
+    shiny (>= 1.6.0)
 Imports:
-    checkmate,
+    checkmate (>= 2.1.0),
     digest,
-    lifecycle,
+    lifecycle (>= 0.2.0),
     logger (>= 0.2.0),
     methods,
-    R6,
-    rlang,
+    R6 (>= 2.2.0),
+    rlang (>= 1.1.0),
     shinyjs,
     stats,
     teal.logger (>= 0.1.1),
     teal.code,
     utils,
-    yaml
+    yaml (>= 1.1.0)
 Suggests:
     bslib,
-    dplyr,
-    knitr,
-    magrittr,
+    dplyr (>= 1.1.0),
+    knitr (>= 1.42),
+    magrittr (>= 1.5),
     MultiAssayExperiment,
     readr,
     reticulate (>= 1.22),
-    rmarkdown,
+    rmarkdown (>= 2.19),
     SummarizedExperiment,
-    testthat (>= 2.0),
-    withr
+    testthat (>= 3.0.4),
+    withr (>= 2.1.0)
 VignetteBuilder:
     knitr
 RdMacros:
     lifecycle
+Config/Needs/verdepcheck: rstudio/shiny, mllg/checkmate,
+    eddelbuettel/digest, r-lib/lifecycle, daroczig/logger, r-lib/R6,
+    r-lib/rlang, daattali/shinyjs, insightsengineering/teal.logger,
+    yaml=vubiostat/r-yaml, rstudio/bslib, tidyverse/dplyr, yihui/knitr,
+    tidyverse/magrittr, MultiAssayExperiment, tidyverse/readr,
+    rstudio/reticulate, rstudio/rmarkdown, SummarizedExperiment,
+    r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US

@@ -11,6 +11,15 @@ stores the data with they relationships (keys) and reproducible
 code. Package offers also to load data from files, databases and
 it's easily extendable by another data sources.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://insightsengineering.github.io/teal.data/}
+  \item \url{https://github.com/insightsengineering/teal.data/}
+  \item Report bugs at \url{https://github.com/insightsengineering/teal.data/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Dawid Kaledkowski \email{dawid.kaledkowski@roche.com}
 

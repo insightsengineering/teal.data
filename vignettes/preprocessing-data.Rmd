@@ -1,7 +1,6 @@
 ---
 title: "Pre-processing data"
 author: "NEST CoreDev"
-date: "2022-07-26"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Pre-processing data}
@@ -9,14 +8,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-"Data" preprocessing refers to the code which contains:
+"Data" pre-processing refers to the code which contains:
 
 1. Data import calls
 2. Data modification
 
-Including the preprocessing code is an important step that is handled by `teal.data` functions.
+Including the pre-processing code is an important step that is handled by `teal.data` functions.
 
-For example, for the following example only `ADSL <- readRDS("<your data path>/adsl.rds")` is considered as preprocessing code:
+For example, for the following example only `ADSL <- readRDS("<your data path>/adsl.rds")` is considered as pre-processing code:
+
 ```{r, message=FALSE}
 library(teal.data)
 saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
@@ -28,10 +28,11 @@ data <- cdisc_data(cdisc_dataset("ADSL", adsl))
 data$get_code()
 ```
 
-If you run the example above, the `get_code` function will return an empty string reflecting that "Preprocessing is empty". In order to show the preprocessing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the above example this would be:
+When executing the example above, the `get_code` function will return an empty string reflecting that _"Pre-processing is empty"_. In order to show the pre-processing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the example above this would be:
 
 ```{r, message=FALSE}
 library(teal.data)
+library(magrittr)
 saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 
 ## preprocessing -------------------
@@ -44,9 +45,8 @@ data <- cdisc_data(
   cdisc_dataset("ADSL", adsl),
   code = 'ADSL <- readRDS("adsl.rds")'
 )
-data$get_code()
+data$get_code() %>% cat()
 ```
 
 The code used to get the `ADSL` dataset is returned as expected. This can be used as input to the `data` argument of `teal::init`
-to ensure reproducibility in teal apps.
-
+to ensure reproducibility in `teal` apps.
