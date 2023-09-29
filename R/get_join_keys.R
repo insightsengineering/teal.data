@@ -16,7 +16,7 @@ get_join_keys.tdata <- function(data) {
 #' @rdname get_join_keys
 #' @export
 get_join_keys.ddl <- function(data) {
-  data$join_keys
+  attr(data, "join_keys")
 }
 
 

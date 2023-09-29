@@ -42,5 +42,5 @@ get_dataname.tdata <- function(x) { # nolint
 #' @rdname get_dataname
 #' @export
 get_dataname.ddl <- function(x) {
-  x$datanames
+  attr(x, "datanames")
 }
