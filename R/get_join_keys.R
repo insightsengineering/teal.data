@@ -1,5 +1,5 @@
-#' Function to get join keys from a `tdata` object
-#' @param data `tdata` - object to extract the join keys
+#' Function to get join keys from a `` object
+#' @param data `` - object to extract the join keys
 #' @return Either `JoinKeys` object or `NULL` if no join keys
 #' @export
 get_join_keys <- function(data) {
@@ -9,7 +9,7 @@ get_join_keys <- function(data) {
 
 #' @rdname get_join_keys
 #' @export
-get_join_keys.tdata <- function(data) {
+get_join_keys.teal_data <- function(data) {
   data@join_keys
 }
 

@@ -20,7 +20,7 @@
 #'   `code` and return a reactive data containing necessary data. To handle
 #'   evaluation and code masking process it is recommended to use `ddl_run`.
 #'   Package provides universal `username_password_server` which
-#'   runs [ddl_run] function, which returns `tdata` object.
+#'   runs [ddl_run] function, which returns `` object.
 #'   Details in the the example
 #'
 #' @param mask_args (`list` named)\cr
@@ -69,7 +69,7 @@ ddl <- function(expr,
   }
 
 
-  # function creates tdata object from the code, input and mask_args
+  # function creates  object from the code, input and mask_args
   # function defined here to have access to the arguments
   ddl_run <- function(online_args = list()) {
     # substitute by online args and evaluate
@@ -77,11 +77,11 @@ ddl <- function(expr,
     eval(code, envir = env)
 
     if (identical(ls(env), character(0))) {
-      warning("DDL code returned NULL. Returning empty tdata object")
+      warning("DDL code returned NULL. Returning empty  object")
     }
 
     # don't pass non-dataset bindings further
-    # we don't want to initialize tdata with them
+    # we don't want to initialize  with them
     env_list <- as.list(env)[datanames]
 
     # substitute by offline args
@@ -90,11 +90,11 @@ ddl <- function(expr,
     }
     code <- .substitute_inputs(code, args = online_args)
 
-    # create tdata object
-    obj <- teal.data::new_tdata(env = env_list, code = as.expression(code), keys = join_keys)
+    # create  object
+    obj <- teal.data::new_teal_data(env = env_list, code = as.expression(code), keys = join_keys)
 
-    if (!inherits(obj, "tdata")) {
-      stop("postprocess_fun should return tdata object")
+    if (!inherits(obj, "teal_data")) {
+      stop("postprocess_fun should return `teal_data` object")
     }
 
     obj
@@ -134,7 +134,7 @@ submit_button_server <- function(id, x) {
       ddl_run(online_args = reactiveValuesToList(input))
     })
 
-    # would need to make sure we handle reactivity correctly here as teal::init expects not reactive tdata...
+    # would need to make sure we handle reactivity correctly here as teal::init expects not reactive teal_data...
     return(tdata)
   })
 }

@@ -129,6 +129,6 @@ to_relational_data.TealData <- function(data) { # nolint
 
 #' @keywords internal
 #' @export
-to_relational_data.tdata <- function(data) {
+to_relational_data.teal_data <- function(data) {
   data
 }

@@ -65,7 +65,7 @@ input_template <- function(..., on_submit, mask, datanames, join_keys) {
   args <- list(...)
   checkmate::assert_list(args, types = "shiny.tag")
 
-  args  <- as.list(substitute(list(...)))[-1L]
+  args <- as.list(substitute(list(...)))[-1L]
   inputIds <- vapply(args, function(x) match.call(eval(x[[1L]]), x)[["inputId"]], character(1L))
 
   checkmate::assert_true(
@@ -188,7 +188,7 @@ with_substitution <- function(fun, mask, join_keys) {
     env <- new.env()
     eval(as.expression(code_input), env)
     # Create `tdata` with masked code.
-    new_tdata(as.list(env), code = as.expression(code_masked), keys = join_keys)
+    new_teal_data(as.list(env), code = as.expression(code_masked), keys = join_keys)
   }
 }
 
@@ -211,8 +211,8 @@ closeme <- function() {
 thefun <- function(input) {
   on.exit(try(closeme()))
   pullme(username = input$user, password = input$pass)
-  adsl <- scda::synthetic_cdisc_data('latest')$adsl
-  adtte <- scda::synthetic_cdisc_data('latest')$adtte
+  adsl <- scda::synthetic_cdisc_data("latest")$adsl
+  adtte <- scda::synthetic_cdisc_data("latest")$adtte
 }
 themask <- list(
   user = quote(askpass("who are you?")),
@@ -259,7 +259,7 @@ devtools::load_all(".")
 
 
 
-funny_module <- function (label = "Filter states", datanames = "all") {
+funny_module <- function(label = "Filter states", datanames = "all") {
   checkmate::assert_string(label)
   module(
     label = label,
@@ -276,7 +276,7 @@ funny_module <- function (label = "Filter states", datanames = "all") {
     server = function(input, output, session, data, filter_panel_api) {
       checkmate::assert_class(data, "tdata")
       observeEvent(input$reset, set_filter_state(filter_panel_api, default_filters))
-      output$filter_states <-  renderPrint({
+      output$filter_states <- renderPrint({
         logger::log_trace("rendering text1")
         filter_panel_api %>% get_filter_state()
       })

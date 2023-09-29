@@ -136,6 +136,6 @@ get_datasets.TealDataset <- function(x) {
 
 #' @rdname get_datasets
 #' @export
-get_datasets.tdata <- function(x) {
+get_datasets.teal_data <- function(x) {
   as.list(x@env)[teal.data::get_dataname(x)]
 }
