@@ -2,21 +2,27 @@
 #'
 #' Object to execute custom DDL code in the shiny session
 #'
-#' @param code (`character`)\cr
-#'   Code to be evaluated and returned to the `postprocess_fun`
+#' @expr (`expression`)\cr
+#'  Syntatically valid R code to be executed in the shiny session.
+#'  shouldn't be specified when `code` is specified.
+#'
+#' @param code (`character`, `language`)\cr
+#'  Object containing code to be evaluated to load data. Shouldn't be specified when `expr`
+#'  is specified.
+#'
 #'
 #' @param ui (`shiny.tag`)\cr
 #'   `shiny` ui module containing inputs which `id` correspond to the
 #'   args in the `code`.
 #'
-#' @param server (`function(id, offline_args, code, postprocess_fun)`)\cr
+#' @param server (`function(id, mask_args, code, postprocess_fun)`)\cr
 #'   `shiny` server module returning data. This server suppose to execute
 #'   DDL code and return a reactive data containing necessary data.
 #'   Package provides universal `username_password_server` which
 #'   runs [ddl_run] function, which returns `tdata` object.
 #'   Details in the the example
 #'
-#' @param offline_args (`list` named)\cr
+#' @param mask_args (`list` named)\cr
 #'   arguments to be substituted in the `code`. These
 #'   argument are going to replace arguments set through
 #'   `ui` and `server`. Example use case is when app user
@@ -39,15 +45,23 @@
 #' @inheritParams teal_data
 #'
 #' @export
-ddl <- function(code,
+ddl <- function(expr,
+                code,
                 ui = submit_button_ui,
                 server = submit_button_server,
-                offline_args = list(),
+                mask_args = list(),
                 postprocess_fun = function(env_list, code, join_keys) {
-                  do.call(teal.data::teal_data, args = c(env_list, code = code, join_keys = join_keys))
+                  NULL
                 },
                 join_keys = teal.data::join_keys(),
                 datanames) {
+  if (!missing(expr) && !missing(code)) {
+    stop("Only one of `expr` or `code` should be specified")
+  }
+  if (!missing(expr)) {
+    code <- substitute(expr)
+  }
+
   if (missing(datanames)) {
     stop("`dataname` argument is required")
   }
@@ -57,7 +71,7 @@ ddl <- function(code,
       code = code,
       ui = ui,
       server = server,
-      offline_args = offline_args,
+      mask_args = mask_args,
       postprocess_fun = postprocess_fun,
       datanames = datanames,
       join_keys = join_keys
@@ -70,7 +84,7 @@ ddl <- function(code,
 #'
 #' Resolves arguments and executes custom DDL `code`.
 #' Custom `code` is substituted by `online_args` and evaluated. Then obtained code is
-#' substituted again by `offline_args` and passed to the `postprocess_fun`.
+#' substituted again by `mask_args` and passed to the `postprocess_fun`.
 #'
 #' @inheritParams ddl
 #' @param online_args (`list` named)\cr
@@ -80,33 +94,37 @@ ddl <- function(code,
 #' @return `tdata` containing objects created:
 #' - `env` created by the `code` substitution and evaluation using
 #' `online_args`, while the `code`.
-#' - `code` with substituted `offline_args.
+#' - `code` with substituted `mask_args.
 #' - `join_keys` specified in the `ddl` object.
 #'
 #' @export
 ddl_run <- function(x, online_args = list()) {
   checkmate::assert_class(x, "ddl")
   # substitute by online args and evaluate
-  env_list <- ddl_eval_substitute(code = x$code, args = online_args)
-  if (is.null(env_list)) {
+  env <- list2env(list(input = online_args))
+  eval(x$code, envir = env)
+
+  if (identical(ls(env), character(0))) {
     warning("DDL code returned NULL. Returning empty tdata object")
   }
 
   # don't pass non-dataset bindings further
   # we don't want to initialize tdata with them
-  env_list <- env_list[x$datanames]
+  env_list <- as.list(env)[x$datanames]
 
   # substitute by offline args
-  for (i in names(x$offline_args)) {
-    online_args[[i]] <- x$offline_args[[i]]
+  for (i in names(x$mask_args)) {
+    online_args[[i]] <- x$mask_args[[i]]
   }
-  code <- glue_code(x$code, args = online_args)
+  code <- .substitute_inputs(x$code, args = online_args)
+
   # create tdata object
-  obj <- x$postprocess_fun(
-    env_list,
-    code = unclass(code),
-    join_keys = x$join_keys
+  obj <- teal.data::new_tdata(
+    env = env_list,
+    code = as.expression(code),
+    keys = join_keys
   )
+
   if (!inherits(obj, "tdata")) {
     stop("postprocess_fun should return tdata object")
   }
@@ -214,4 +232,17 @@ open_conn <- function(username, password) {
 close_conn <- function(conn) {
   message("closed")
   return(NULL)
+}
+
+.substitute_inputs <- function(code, args) {
+  code <- if (identical(as.list(code)[[1L]], as.symbol("{"))) {
+    as.list(code)[-1L]
+  } else {
+    list(code)
+  }
+  code_strings <- vapply(code, deparse1, character(1L))
+  code_strings <- gsub("(input\\$)(\\w+)", "\\.(\\2\\)", code_strings)
+  code_strings <- gsub("(input\\[\\[\")(\\w+)(\"\\]\\])", "\\.(\\2\\)", code_strings)
+  # Use bquote to obtain code with input values and masking values.
+  lapply(code_strings, function(x) do.call(bquote, list(str2lang(x), args)))
 }
