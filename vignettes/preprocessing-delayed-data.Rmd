@@ -11,9 +11,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-When creating apps which do not use `DDL`, once the datasets are created there is often some pre-processing required before initializing the teal app. Similarly, in the case of delayed data additional code instructions to pre-process data can be added to `DDL` objects which will be run after the data is loaded, which may happen after the launching of the shiny app or when the `pull()` method is called.
+When creating apps that do not use Delayed data loading (`DDL`), there is often some pre-processing required after the datasets are created, but before initializing the `teal` app. Similarly, in the case of delayed data, additional code instructions to pre-process the data can be added to `DDL` objects that will be executed after the data is loaded, which may happen after the launching of the shiny app or when the `pull()` method is called.
 
-* `mutate_dataset`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
+* `mutate_dataset()`: Individual datasets can be processed using the `mutate_dataset` function. For reproducibility to be maintained with `mutate_dataset`, all pre-processing code should modify one dataset at a time.
 
 ```{r, message=FALSE}
 library(teal.data)
@@ -142,7 +142,7 @@ adae <- cdisc_dataset_connector(
 cat(get_code(adae)) # this code can be run independently
 ```
 
-Related to this idea, it is possible to provide the code on a `Data` level. However, this will always return all the code used to generate all the datasets in the object:
+It is possible to provide the code on a `Data` level. However, this will always return all the code used to generate all the datasets in the object:
 
 ```{r}
 adsl_adae <- cdisc_data(
@@ -189,7 +189,11 @@ Below is a comparison of these two approaches:
 
 ```{r}
 adsl <- teal.data::example_cdisc_data("ADSL")
-cdisc_dataset("ADSL", adsl) %>% get_code() # no reproducible code
+
+# no reproducible code provided
+cdisc_dataset("ADSL", adsl) %>%
+  get_code() %>%
+  cat()
 
 # provide the code to reproduce the data:
 cdisc_dataset("ADSL", adsl,

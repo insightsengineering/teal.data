@@ -12,26 +12,32 @@ navbar:
     reports:
       text: Reports
       menu:
-      - text: Coverage report
-        href: coverage-report/
-      - text: Unit test report
-        href: unit-test-report/
+        - text: Coverage report
+          href: coverage-report/
+        - text: Unit test report
+          href: unit-test-report/
     github:
       icon: fa-github
       href: https://github.com/insightsengineering/teal.data
 
 articles:
-  - title: Articles
-    navbar: ~
+  - title: Getting Started
+    navbar: Getting Started
     contents:
       - teal-data
       - preprocessing-data
-      - preprocessing-delayed-data
       - reproducibility
       - join-keys
+  - title: Delayed Data Loading
+    navbar: Delayed Data Loading
+    contents:
+      - preprocessing-delayed-data
       - using-delayed-data-basic
       - using-delayed-data-advanced
       - testing-delayed-data
+  - title: Other Dataset Connectors
+    navbar: Other Dataset Connectors
+    contents:
       - teal.data-with-python
 
 reference:

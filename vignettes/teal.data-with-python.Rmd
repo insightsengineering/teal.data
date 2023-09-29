@@ -1,7 +1,6 @@
 ---
 title: "teal.data with Python"
 author: "NEST CoreDev"
-date: "2022-05-10"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{teal.data with Python}
@@ -20,17 +19,17 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-It is possible to use python code (via the `reticulate` package) to create a `teal` dataset. 
-Therefore if a python package is required to access/create your data, it can still be used in a `teal` application.
+It is possible to use Python code (via the `reticulate` package) to create a `teal` dataset.
+The `python_dataset_connector` allows for a seamless integration of a `teal` application with Python if a package(s) is required to access/create the data.
 
 We recommend having a thorough understanding of the `reticulate` package (see [here](https://rstudio.github.io/reticulate/))
-before using the python functionality described below. 
+before using the Python functionality described below. 
 
 ## Example
 
-In this section we show a simple example of how python code can be used to create a `teal` dataset.
+In this section we show a simple example of how Python code can be used to create a `teal` dataset.
 
-For this example we require a python environment with `pandas` installed. See [here](https://rstudio.github.io/reticulate/articles/python_packages.html) for further details.
+For this example we require a Python environment with `pandas` installed. See [here](https://rstudio.github.io/reticulate/articles/python_packages.html) for further details on how to install Python packages.
 
 We first load the packages:
 
@@ -49,9 +48,9 @@ library(reticulate) # may need to be installed if not available
 library(teal.data)
 ```
 
-Next we define the python code which we want to use to create the dataset.
+Next we define the Python code which we want to use to create the dataset.
 In this example, for demonstration purposes we create a trivial dataset which could easily be done directly in R.
-Note we use a variable `num_rows` which needs to be passed to the python code from R. 
+Note we use a variable `num_rows` which needs to be passed to the Python code from R. 
 
 ```{r, eval = reticulate_available}
 python_code <- "import pandas as pd
@@ -64,9 +63,9 @@ Next we create a `python_dataset_connector` object.
 x <- python_dataset_connector(
   dataname = "DATA", # the teal dataset name
   code = python_code, # the code used to generate the dataset
-  object = "data", # the object in the python code to be converted to a data.frame for the teal dataset
+  object = "data", # the object in the Python code to be converted to a data.frame for the teal dataset
   keys = "id", # the key for teal dataset object
-  vars = list(num_rows = 5L) # any variables passed from R into python (note this could be an R variable)
+  vars = list(num_rows = 5L) # any variables passed from R into Python (note this could be an R variable)
 )
 ```
 
@@ -81,11 +80,11 @@ print(x)
 
 ### Reproducibility
 
-In order to ensure reproducibility when generating `teal` datasets using python it is necessary to use a reproducible
-python environment (for example using `virtualenv` or `conda`) see [here](https://rstudio.github.io/reticulate/articles/versions.html)
+In order to ensure reproducibility when generating `teal` datasets using Python it is necessary to use a reproducible
+Python environment (for example using `virtualenv` or `conda`) see [here](https://rstudio.github.io/reticulate/articles/versions.html)
 for more details.
 
 ### Deployment
 
-A python interpreter (or the python environment described above) will need to be available when deploying your app.
+A Python interpreter (or the Python environment described above) will need to be available when deploying your app.
 We recommend following the example [here](https://github.com/ranikay/shiny-reticulate-app) to see how this can be done.
