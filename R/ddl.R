@@ -2,7 +2,7 @@
 #'
 #' Object to execute custom DDL code in the shiny session
 #'
-#' @expr (`expression`)\cr
+#' @param expr (`expression`)\cr
 #'  Syntatically valid R code to be executed in the shiny session.
 #'  shouldn't be specified when `code` is specified.
 #'
@@ -15,15 +15,15 @@
 #'   `shiny` ui module containing inputs which `id` correspond to the
 #'   args in the `code`.
 #'
-#' @param server (`function(id, mask_args, code, postprocess_fun)`)\cr
+#' @param server (`function`)\cr
 #'   `shiny` server module returning data. This server should execute
 #'   `code` and return a reactive data containing necessary data. To handle
 #'   evaluation and code masking process it is recommended to use `ddl_run`.
 #'   Package provides universal `username_password_server` which
-#'   runs [ddl_run] function, which returns `` object.
+#'   runs [ddl_run] function, which returns `teal_data` object.
 #'   Details in the the example
 #'
-#' @param mask_args (`list` named)\cr
+#' @param input_mask (`list` named)\cr
 #'   arguments to be substituted in the `code`. These
 #'   argument are going to replace arguments set through
 #'   `ui` and `server`. Example use case is when app user
@@ -31,12 +31,6 @@
 #'   input in the reproducible code. Typically users password
 #'   is substituted with `askpass::askpass()` call, so the
 #'   returned code is still executable but secure.
-#'
-#' @param postprocess_fun (`function(env, code)`)\cr
-#'   Function to be run after code is run. This function suppose
-#'   has two arguments:
-#'   - `env` (`environment`) returned as a result of the code evaluation
-#'   - code (`character`) `code` provided with resolved (substituted) args.
 #'
 #' @param datanames (`character`)\cr
 #'   Names of the objects to be created from the code evaluation.
@@ -50,7 +44,7 @@
 ddl <- function(expr,
                 code,
                 ui = submit_button_ui,
-                mask_args = list(),
+                input_mask = list(),
                 server = submit_button_server,
                 join_keys = teal.data::join_keys(),
                 datanames) {
@@ -69,7 +63,7 @@ ddl <- function(expr,
   }
 
 
-  # function creates  object from the code, input and mask_args
+  # function creates  object from the code, input and input_mask
   # function defined here to have access to the arguments
   ddl_run <- function(online_args = list()) {
     # substitute by online args and evaluate
@@ -85,8 +79,8 @@ ddl <- function(expr,
     env_list <- as.list(env)[datanames]
 
     # substitute by offline args
-    for (i in names(mask_args)) {
-      online_args[[i]] <- mask_args[[i]]
+    for (i in names(input_mask)) {
+      online_args[[i]] <- input_mask[[i]]
     }
     code <- .substitute_inputs(code, args = online_args)
 
