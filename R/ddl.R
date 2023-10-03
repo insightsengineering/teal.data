@@ -65,9 +65,10 @@ ddl <- function(expr,
 
   # function creates  object from the code, input and input_mask
   # function defined here to have access to the arguments
-  ddl_run <- function(online_args = list()) {
+  ddl_run <- function(input = list()) {
+    checkmate::assert_list(input)
+    env <- list2env(list(input = input))
     # substitute by online args and evaluate
-    env <- list2env(list(input = online_args))
     eval(code, envir = env)
 
     if (identical(ls(env), character(0))) {
@@ -80,9 +81,9 @@ ddl <- function(expr,
 
     # substitute by offline args
     for (i in names(input_mask)) {
-      online_args[[i]] <- input_mask[[i]]
+      input[[i]] <- input_mask[[i]]
     }
-    code <- .substitute_inputs(code, args = online_args)
+    code <- .substitute_inputs(code, args = input)
 
     # create  object
     obj <- teal.data::new_teal_data(env = env_list, code = as.expression(code), keys = join_keys)
@@ -125,7 +126,7 @@ submit_button_ui <- function(id) {
 submit_button_server <- function(id, x) {
   moduleServer(id, function(input, output, session) {
     tdata <- eventReactive(input$submit, {
-      ddl_run(online_args = reactiveValuesToList(input))
+      ddl_run(input = input)
     })
 
     # would need to make sure we handle reactivity correctly here as teal::init expects not reactive teal_data...
