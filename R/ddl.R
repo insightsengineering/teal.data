@@ -67,6 +67,9 @@ ddl <- function(expr,
   # function defined here to have access to the arguments
   ddl_run <- function(input = list()) {
     checkmate::assert_list(input)
+    if (inherits(input, "reactivevalues")) {
+      input <- reactiveValuesToList(input)
+    }
     env <- list2env(list(input = input))
     # substitute by online args and evaluate
     eval(code, envir = env)
