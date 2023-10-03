@@ -117,8 +117,8 @@ teal_data <- function(...,
 #' )
 #' teal_data_file(file_example, code = character(0))
 teal_data_file <- function(path, code = get_code(path)) {
-  object <- object_file(path, "TealData")
-  object$mutate(code)
+  object <- object_file(path, "teal_data")
+  object <- eval_code(object, code)
   return(object)
 }
 

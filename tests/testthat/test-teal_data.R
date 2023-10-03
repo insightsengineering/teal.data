@@ -36,7 +36,7 @@ teal_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
 
 testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
   testthat::expect_silent(data <- teal_data_mixed_call())
-  testthat::expect_identical(data$get_datanames(), c("df1", "df2", "df3"))
+  testthat::expect_identical(data@datanames, c("df1", "df2", "df3"))
 })
 
 testthat::test_that("teal_data throws error if it receives undesired objects", {
@@ -59,7 +59,7 @@ testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
   data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
 
   testthat::expect_equal(
-    data$get_join_keys(),
+    data@join_keys,
     join_keys(
       join_key("df1", "df2", "id"),
       join_key("df1", "df1", "id"),
@@ -77,7 +77,7 @@ testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when k
   data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
 
   testthat::expect_equal(
-    data$get_join_keys(),
+    data@join_keys,
     join_keys(
       join_key("df1", "df2", c(id = "fk")),
       join_key("df1", "df1", "id"),
@@ -93,10 +93,10 @@ testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when k
   df1 <- dataset("df1", df1, keys = "id")
   df2 <- dataset("df2", df2, keys = "df2_id")
   data <- teal_data(df1, df2, check = FALSE)
-  data$mutate_join_keys("df1", "df2", c(id = "fk", id2 = "fk2"))
+  data@join_keys$mutate("df1", "df2", c(id = "fk", id2 = "fk2"))
 
   testthat::expect_equal(
-    data$get_join_keys(),
+    data@join_keys,
     join_keys(
       join_key("df1", "df1", "id"),
       join_key("df2", "df2", "df2_id"),
@@ -118,61 +118,72 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
   mae <- MAETealDataset$new("MAE", dummy_mae)
 
   mixed_data <- teal_data(mae, adsl, adtte, ds2)
-  testthat::expect_equal(class(mixed_data), c("TealData", "TealDataAbstract", "R6"))
+  testthat::expect_s4_class(mixed_data, "teal_data")
 
   mae_only <- teal_data(mae)
-  testthat::expect_equal(class(mae_only), c("TealData", "TealDataAbstract", "R6"))
+  testthat::expect_s4_class(mae_only, "teal_data")
 
   dataset_only <- teal_data(ds2)
-  testthat::expect_equal(class(dataset_only), c("TealData", "TealDataAbstract", "R6"))
+  testthat::expect_s4_class(dataset_only, "teal_data")
 
   mae_and_dataset <- teal_data(mae, ds2)
-  testthat::expect_equal(class(mae_and_dataset), c("TealData", "TealDataAbstract", "R6"))
+  testthat::expect_s4_class(mae_and_dataset, "teal_data")
 
   cdisc_only <- teal_data(adsl, adtte)
-  testthat::expect_equal(class(cdisc_only), c("TealData", "TealDataAbstract", "R6"))
+  testthat::expect_s4_class(cdisc_only, "teal_data")
 
   testthat::expect_error(
     teal_data()
   )
 })
 
-testthat::test_that("teal_data_file loads the TealData object", {
+testthat::test_that("teal_data_file loads the teal_data object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
-    df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
-    teal_data(df1_ds)
-    "
-  ),
-  con = tmp_file
-  )
-  tdf <- teal_data_file(tmp_file)
-  file.remove(tmp_file)
-  testthat::expect_s3_class(tdf, "TealData")
-  testthat::expect_identical(
-    tdf$get_code(),
-    paste0(
-      "df <- data.frame(A = c(1, 2, 3))\n",
-      "df1_ds <- dataset(\"df\", df, code = \"df <- data.frame(A = c(1, 2, 3))\")\n",
-      "teal_data(df1_ds)"
-    )
-  )
-})
-
-testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded TealData object", {
-  tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
     ),
     con = tmp_file
   )
-  tdf <- teal_data_file(tmp_file, "# MUTATE code")
+  tdf <- teal_data_file(tmp_file)
   file.remove(tmp_file)
-  testthat::expect_identical(tdf$get_code(), "df <- data.frame(A = c(1, 2, 3))\n# MUTATE code")
+  testthat::expect_s4_class(tdf, "teal_data")
+  expected_code <- expression(
+    df <- data.frame(A = c(1, 2, 3)),
+    df <- data.frame(A = c(1, 2, 3)),
+    df1_ds <- dataset("df", df, code = "df <- data.frame(A = c(1, 2, 3))"),
+    teal_data(df1_ds)
+  )
+  testthat::expect_identical(
+    deparse(tdf@code),
+    deparse(expected_code)
+  )
+})
+
+testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded teal_data object", {
+  tmp_file <- tempfile(fileext = ".R")
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
+    df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
+    teal_data(df1_ds)
+    "
+    ),
+    con = tmp_file
+  )
+  tdf <- teal_data_file(tmp_file, "df2 <- df")
+  file.remove(tmp_file)
+  expected_code <- expression(
+    df <- data.frame(A = c(1, 2, 3)),
+    df2 <- df
+  )
+  testthat::expect_identical(
+    deparse(tdf@code),
+    deparse(expected_code)
+  )
 })
 
 testthat::test_that("update_join_keys_to_primary updates the join_keys", {

@@ -34,7 +34,7 @@ cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
 
 testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
   testthat::expect_silent(data <- cdisc_data_mixed_call())
-  testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE", "ADAE"))
+  testthat::expect_identical(data@datanames, c("ADSL", "ADTTE", "ADAE"))
 })
 
 testthat::test_that("cdisc_data throws error if it receives undesired objects", {
@@ -57,28 +57,30 @@ testthat::test_that("cdisc_data sets the join_keys internally", {
     join_key("ADTTE", "ADAE", c("STUDYID", "USUBJID"))
   )
   jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  testthat::expect_equal(data@join_keys, jks)
 })
 
 testthat::test_that(
-  "cdisc_data sets the join_keys internally based on parents relations when primary keys are altered", {
-  jks <- join_keys(join_key("ADSL", "ADSL", c("STUDYID")))
-  data <- cdisc_data_mixed_call(join_keys1 = jks)
+  "cdisc_data sets the join_keys internally based on parents relations when primary keys are altered",
+  {
+    jks <- join_keys(join_key("ADSL", "ADSL", c("STUDYID")))
+    data <- cdisc_data_mixed_call(join_keys1 = jks)
 
-  jks <- join_keys(
-    join_key("ADSL", "ADSL", c("STUDYID")),
-    join_key("ADTTE", "ADTTE", c("STUDYID", "USUBJID", "PARAMCD")),
-    join_key("ADAE", "ADAE", c("STUDYID", "USUBJID", "ASTDTM", "AETERM", "AESEQ")),
-    join_key("ADSL", "ADTTE", c("STUDYID")),
-    join_key("ADSL", "ADAE", c("STUDYID")),
-    join_key("ADTTE", "ADAE", c("STUDYID"))
-  )
-  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
-  testthat::expect_equal(
-    data$get_join_keys(),
-    jks
-  )
-})
+    jks <- join_keys(
+      join_key("ADSL", "ADSL", c("STUDYID")),
+      join_key("ADTTE", "ADTTE", c("STUDYID", "USUBJID", "PARAMCD")),
+      join_key("ADAE", "ADAE", c("STUDYID", "USUBJID", "ASTDTM", "AETERM", "AESEQ")),
+      join_key("ADSL", "ADTTE", c("STUDYID")),
+      join_key("ADSL", "ADAE", c("STUDYID")),
+      join_key("ADTTE", "ADAE", c("STUDYID"))
+    )
+    jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
+    testthat::expect_equal(
+      data@join_keys,
+      jks
+    )
+  }
+)
 
 testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys are present", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
@@ -94,7 +96,7 @@ testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys
     join_key("df2", "df2", "df2_id")
   )
   jks$set_parents(list(df1 = character(0), df2 = character(0)))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  testthat::expect_equal(data@join_keys, jks)
 })
 
 testthat::test_that("cdisc_data throws error when a parent/child graph is not correct", {
@@ -179,9 +181,8 @@ testthat::test_that("List values", {
   adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
 
   test_relational_data_equal <- function(data1, data2) {
-    testthat::expect_equal(data1$get_items(), data2$get_items())
-    testthat::expect_equal(data1$get_join_keys(), data2$get_join_keys())
-    mapply(testthat::expect_equal, data1$get_ui("test"), data2$get_ui("test"))
+    testthat::expect_equal(data1@datanames, data2@datanames)
+    testthat::expect_equal(data1@join_keys, data2@join_keys)
   }
 
   result <- cdisc_data(cdisc_dataset("ADSL", adsl_raw, label = "test_label"))
@@ -222,12 +223,13 @@ testthat::test_that("List values", {
   test_relational_data_equal(result, result_to_compare)
 })
 
-testthat::test_that("cdisc_data_file loads the TealData object", {
+testthat::test_that("cdisc_data_file loads the teal_data object", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
+  writeLines(
+    text = c(
+      "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
     adsl <- cdisc_dataset(
       dataname = 'ADSL',
       x = adsl_raw,
@@ -235,30 +237,31 @@ testthat::test_that("cdisc_data_file loads the TealData object", {
     )
     cdisc_data(adsl)
     "
-  ),
-  con = tmp_file
+    ),
+    con = tmp_file
   )
   tdf <- cdisc_data_file(tmp_file)
   file.remove(tmp_file)
-  testthat::expect_s3_class(tdf, "TealData")
+  testthat::expect_s4_class(tdf, "teal_data")
+  expected_code <- expression(
+    ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL")))),
+    adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL")))),
+    adsl <- cdisc_dataset(dataname = "ADSL", x = adsl_raw, code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"), # nolint
+    cdisc_data(adsl)
+  )
   testthat::expect_identical(
-    tdf$get_code(),
-    paste0(
-      "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
-      "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n",
-      "adsl <- cdisc_dataset(dataname = \"ADSL\", x = adsl_raw, ",
-      "code = \"ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\\\"ADSL\\\"))))\")\n",
-      "cdisc_data(adsl)"
-    )
+    deparse(tdf@code),
+    deparse(expected_code)
   )
 })
 
-testthat::test_that("cdisc_data_file uses the code input to mutate the code of the loaded TealData object", {
+testthat::test_that("cdisc_data_file uses the code input to mutate the code of the loaded teal_data object", {
   rlang::local_options(lifecycle_verbosity = "quiet")
 
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
+  writeLines(
+    text = c(
+      "adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys('ADSL'))))
     adsl <- cdisc_dataset(
       dataname = 'ADSL',
       x = adsl_raw,
@@ -266,14 +269,18 @@ testthat::test_that("cdisc_data_file uses the code input to mutate the code of t
     )
     cdisc_data(adsl)
     "
-  ),
-  con = tmp_file
+    ),
+    con = tmp_file
   )
-  tdf <- cdisc_data_file(tmp_file, "# MUTATE code")
+  tdf <- cdisc_data_file(tmp_file, "ADSL2 <- ADSL")
   file.remove(tmp_file)
-  testthat::expect_s3_class(tdf, "TealData")
+  testthat::expect_s4_class(tdf, "teal_data")
+  expected_code <- expression(
+    ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL")))),
+    ADSL2 <- ADSL
+  )
   testthat::expect_identical(
-    tdf$get_code(),
-    "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))\n# MUTATE code"
+    deparse(tdf@code),
+    deparse(expected_code)
   )
 })
