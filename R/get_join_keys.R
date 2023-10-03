@@ -15,13 +15,6 @@ get_join_keys.teal_data <- function(data) {
 
 #' @rdname get_join_keys
 #' @export
-get_join_keys.ddl <- function(data) {
-  attr(data, "join_keys")
-}
-
-
-#' @rdname get_join_keys
-#' @export
 get_join_keys.TealData <- function(data) {
   data$get_join_keys()
 }

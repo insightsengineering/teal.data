@@ -38,9 +38,3 @@ get_dataname.TealDataset <- function(x) { # nolint
 get_dataname.teal_data <- function(x) { # nolint
   return(x@datanames)
 }
-
-#' @rdname get_dataname
-#' @export
-get_dataname.ddl <- function(x) {
-  attr(x, "datanames")
-}
