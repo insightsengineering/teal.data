@@ -68,7 +68,7 @@ ddl <- function(expr,
   ddl_run <- function(input = list()) {
     checkmate::assert_list(input)
     if (inherits(input, "reactivevalues")) {
-      input <- reactiveValuesToList(input)
+      input <- shiny::reactiveValuesToList(input)
     }
     env <- list2env(list(input = input))
     # substitute by online args and evaluate
@@ -78,9 +78,10 @@ ddl <- function(expr,
       warning("DDL code returned NULL. Returning empty  object")
     }
 
-    # don't pass non-dataset bindings further
-    # we don't want to initialize  with them
-    env_list <- as.list(env)[datanames]
+    # don't keep input further we don't want to keep input in the @env of teal_data
+    # but we want to keep other non-dataset objects created in the code
+    env_list <- as.list(env)
+    env_list <- env_list[!names(env_list) != "input"]
 
     # substitute by offline args
     for (i in names(input_mask)) {
@@ -89,7 +90,12 @@ ddl <- function(expr,
     code <- .substitute_inputs(code, args = input)
 
     # create  object
-    obj <- teal.data::new_teal_data(env = env_list, code = as.expression(code), keys = join_keys)
+    obj <- teal.data::new_teal_data(
+      env = env_list,
+      code = as.expression(code),
+      keys = join_keys,
+      datanames = datanames
+    )
 
     if (!inherits(obj, "teal_data")) {
       stop("postprocess_fun should return `teal_data` object")
