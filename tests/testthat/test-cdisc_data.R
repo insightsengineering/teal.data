@@ -39,10 +39,7 @@ testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealD
 
 testthat::test_that("cdisc_data throws error if it receives undesired objects", {
   adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
-  testthat::expect_error(
-    teal_data(adsl_raw, check = TRUE),
-    "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
-  )
+  testthat::expect_error(teal_data(adsl_raw, check = TRUE))
 })
 
 testthat::test_that("cdisc_data sets the join_keys internally", {

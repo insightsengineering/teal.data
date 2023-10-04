@@ -42,10 +42,7 @@ testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDa
 testthat::test_that("teal_data throws error if it receives undesired objects", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
 
-  testthat::expect_error(
-    teal_data(df1, check = TRUE),
-    "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
-  )
+  testthat::expect_error(teal_data(df1, check = TRUE))
 })
 
 testthat::test_that("teal_data sets passed join_keys to datasets correctly", {

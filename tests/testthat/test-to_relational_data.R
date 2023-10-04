@@ -65,6 +65,7 @@ test_that("to_relational_data accepts a complete named list of data.frame as inp
 test_that("to_relational_data accepts a mixed named list of objects as input", {
   dataset_22 <- dataset("iris22", head(iris))
   dsc1 <- dataset_connector("dsc1", callable_function(function() head(iris)))
+  load_dataset(dsc1)
 
   output_dataset_list <- to_relational_data_wrapper(list(AA = head(iris), dataset_22))
   testthat::expect_s4_class(output_dataset_list, "teal_data")
