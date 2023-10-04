@@ -50,7 +50,7 @@ setMethod(
       messages = rep("", length(code)),
       id = id,
       join_keys = keys,
-      datanames = as.character(union(names(env), names(keys$get())))
+      datanames = datanames
     )
   }
 )
