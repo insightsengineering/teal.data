@@ -1,5 +1,10 @@
 # teal.data 0.3.0.9005
 
+### Breaking changes
+
+* Introduced new data class (`teal_data`) which replaces deprecated `TealData`. New data class becomes a standard input for whole `teal` framework.
+* Deprecated `teal_data` constructor when `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects are provided. New delayed data loading functions introduced in `teal` package.
+
 ### Miscellaneous
 * Specified minimal version of package dependencies.
 
