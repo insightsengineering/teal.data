@@ -2,25 +2,22 @@
 % Please edit documentation in R/get_join_keys.R
 \name{get_join_keys}
 \alias{get_join_keys}
-\alias{get_join_keys.tdata}
-\alias{get_join_keys.ddl}
+\alias{get_join_keys.teal_data}
 \alias{get_join_keys.TealData}
-\title{Function to get join keys from a \code{tdata} object}
+\title{Function to get join keys from a `` object}
 \usage{
 get_join_keys(data)
 
-\method{get_join_keys}{tdata}(data)
-
-\method{get_join_keys}{ddl}(data)
+\method{get_join_keys}{teal_data}(data)
 
 \method{get_join_keys}{TealData}(data)
 }
 \arguments{
-\item{data}{\code{tdata} - object to extract the join keys}
+\item{data}{`` - object to extract the join keys}
 }
 \value{
 Either \code{JoinKeys} object or \code{NULL} if no join keys
 }
 \description{
-Function to get join keys from a \code{tdata} object
+Function to get join keys from a `` object
 }
