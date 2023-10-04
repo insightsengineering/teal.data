@@ -104,7 +104,10 @@ testthat::test_that(
     load_dataset(adlb)
 
     rdc <- relational_data_connector(
-      connection = data_connection(),
+      connection = data_connection(open_fun = {
+        open_fun <- callable_function(print) # define opening function
+        open_fun$set_args(list(x = "connection open"))
+      }),
       connectors = list(adsl, adlb)
     )
 
