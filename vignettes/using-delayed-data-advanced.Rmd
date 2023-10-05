@@ -514,13 +514,13 @@ extract reproducible code from data which affects this particular `dataname`.
 
 ```{r}
 data <- cdisc_data(adsl, adtte) %>%
-  mutate_dataset(code = "ADSL$x3 <- 3", dataname = "ADSL")
+  mutate_dataset(code = "ADSL$x3 <- 3")
 
 # get reproducible code of all datasets
-cat(get_code(data))
+cat(teal.code::get_code(data))
 
 # get ADSL reproducible code
-cat(get_code(data, dataname = "ADSL"))
+cat(teal.code::get_code(data, dataname = "ADSL"))
 ```
 
 One can also pipe multiple `mutate_dataset` calls applied on different datasets.
@@ -529,9 +529,9 @@ One can also pipe multiple `mutate_dataset` calls applied on different datasets.
 data <- mutate_dataset(data, code = "ADTTE$x4 <- 4", dataname = "ADTTE") %>%
   mutate_dataset(code = "ADSL <- dplyr::filter(ADSL, SEX == 'F')", dataname = "ADSL")
 
-cat(get_code(data, "ADSL"))
+cat(teal.data::get_code(data, "ADSL"))
 # note that the code for ADTTE below does not contain any mention of ADSL
-cat(get_code(data, "ADTTE"))
+cat(teal.data::get_code(data, "ADTTE"))
 ```
 
 Sometimes code of one object can depend on another, in this case we can link them in the same way we link `TealDatasetConnector` objects. If object code is dependent on another, as `ADTTE` depends on `ADSL` below, `get_code` will return everything we need to be executed to reproduce this dataset.
@@ -546,7 +546,7 @@ data <- mutate_dataset(
   mutate_dataset("ADSL$var_created_after <- NA", dataname = "ADSL")
 
 # note that the code that defines ADSL is now part of the code of ADTTE below
-cat(get_code(data, dataname = "ADTTE"))
+cat(teal.data::get_code(data, dataname = "ADTTE"))
 
 # moreover, note that the code inserted to the mutate_dataset after the pipe was not included.
 ```
