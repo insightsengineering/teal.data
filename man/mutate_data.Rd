@@ -3,11 +3,14 @@
 \name{mutate_data}
 \alias{mutate_data}
 \alias{mutate_data.TealDataAbstract}
+\alias{mutate_data.teal_data}
 \title{Mutate data by code}
 \usage{
 mutate_data(x, code = character(0), script = character(0), vars = list())
 
 \method{mutate_data}{TealDataAbstract}(x, code = character(0), script = character(0), vars = list())
+
+\method{mutate_data}{teal_data}(x, code = character(0), script = character(0), vars = list())
 }
 \arguments{
 \item{x}{(\code{TealDataAbstract})\cr
