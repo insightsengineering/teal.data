@@ -210,12 +210,12 @@ adsl_adae <- cdisc_data(
 )
 
 adsl_adae %>%
-  get_code() %>%
+  teal.code::get_code() %>%
   cat()
 
 # but it's not possible then to access the code at a `Dataset` level:
 adsl_adae %>%
-  get_code("ADSL") %>%
+  teal.code::get_code("ADSL") %>%
   cat()
 
 # this can be avoided by storing the code like so:
@@ -225,6 +225,6 @@ adsl_adae <- cdisc_data(
 )
 
 adsl_adae %>%
-  get_code("ADSL") %>%
+  teal.code::get_code("ADSL") %>%
   cat()
 ```
