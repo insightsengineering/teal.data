@@ -56,16 +56,7 @@ teal_data <- function(...,
     }
     x$check_reproducibility()
     x$check_metadata()
-
-    if (is_pulled(x)) {
-      new_teal_data(
-        env = lapply(x$get_datasets(), function(x) x$get_raw_data()),
-        code = x$get_code(),
-        keys = x$get_join_keys()
-      )
-    } else {
-      x
-    }
+    x
   } else {
     if (!checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
@@ -117,8 +108,8 @@ teal_data <- function(...,
 #' )
 #' teal_data_file(file_example, code = character(0))
 teal_data_file <- function(path, code = get_code(path)) {
-  object <- object_file(path, "teal_data")
-  object <- eval_code(object, code)
+  object <- object_file(path, "TealData")
+  object$mutate(code)
   return(object)
 }
 

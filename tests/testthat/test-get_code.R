@@ -101,7 +101,7 @@ testthat::test_that("get_code.TealDataAbstract returns identical code to TealDat
     label = character(0)
   )
 
-  rd <- teal.data:::TealData$new(x1, x2)
+  rd <- teal_data(x1, x2)
 
   testthat::expect_identical(get_code(rd, deparse = TRUE), rd$get_code(deparse = TRUE))
   testthat::expect_identical(get_code(rd, deparse = FALSE), rd$get_code(deparse = FALSE))

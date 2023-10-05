@@ -86,7 +86,7 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "get_raw_data.TealDataAbstract and teal_data@env returns dataset objects verbatim when input is TealDataConnector or CDISCTealData", # nolint
+  "get_raw_data.TealDataAbstract returns dataset objects verbatim when input is TealDataConnector or CDISCTealData",
   code = {
     adsl_cf <- callable_function(function() teal.data::example_cdisc_data("ADSL"))
     adsl <- cdisc_dataset_connector(
@@ -104,10 +104,7 @@ testthat::test_that(
     load_dataset(adlb)
 
     rdc <- relational_data_connector(
-      connection = data_connection(open_fun = {
-        open_fun <- callable_function(print) # define opening function
-        open_fun$set_args(list(x = "connection open"))
-      }),
+      connection = data_connection(),
       connectors = list(adsl, adlb)
     )
 
@@ -121,8 +118,9 @@ testthat::test_that(
     testthat::expect_identical(out$ADLB, adlb)
 
     drc <- cdisc_data(rdc)
+    out_cdisc <- get_raw_data(drc)
 
-    testthat::expect_identical(drc@env$ADSL, adsl)
-    testthat::expect_identical(drc@env$ADLB, adlb)
+    testthat::expect_identical(out_cdisc$ADSL, adsl)
+    testthat::expect_identical(out_cdisc$ADLB, adlb)
   }
 )

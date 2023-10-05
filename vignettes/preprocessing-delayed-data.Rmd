@@ -173,13 +173,13 @@ adsl_adae <- cdisc_data(
 )
 
 adsl_adae %>%
-  teal.code::get_code() %>%
+  get_code() %>%
   cat()
 adsl_adae %>%
-  teal.code::get_code("ADAE") %>%
+  get_code("ADAE") %>%
   cat()
 adsl_adae %>%
-  teal.code::get_code("ADSL") %>%
+  get_code("ADSL") %>%
   cat()
 ```
 
@@ -192,14 +192,14 @@ adsl <- teal.data::example_cdisc_data("ADSL")
 
 # no reproducible code provided
 cdisc_dataset("ADSL", adsl) %>%
-  teal.code::get_code() %>%
+  get_code() %>%
   cat()
 
 # provide the code to reproduce the data:
 cdisc_dataset("ADSL", adsl,
   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")"
 ) %>%
-  teal.code::get_code()
+  get_code()
 
 # it's possible to supply the code at the `Data` level:
 adae <- teal.data::example_cdisc_data("ADAE")
@@ -210,12 +210,12 @@ adsl_adae <- cdisc_data(
 )
 
 adsl_adae %>%
-  teal.code::get_code() %>%
+  get_code() %>%
   cat()
 
 # but it's not possible then to access the code at a `Dataset` level:
 adsl_adae %>%
-  teal.code::get_code("ADSL") %>%
+  get_code("ADSL") %>%
   cat()
 
 # this can be avoided by storing the code like so:
@@ -225,6 +225,6 @@ adsl_adae <- cdisc_data(
 )
 
 adsl_adae %>%
-  teal.code::get_code("ADSL") %>%
+  get_code("ADSL") %>%
   cat()
 ```

@@ -77,15 +77,15 @@ cdisc_data <- function(...,
   if (
     checkmate::test_list(data_objects, types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
   ) {
+    lifecycle::deprecate_warn(
+      when = "0.3.1",
+      "cdisc_data(
+        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.'
+      )"
+    )
     update_join_keys_to_primary(data_objects, join_keys)
 
     retrieve_parents <- function(x) {
-      lifecycle::deprecate_warn(
-        when = "0.3.1",
-        "cdisc_data(
-        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.'
-      )"
-      )
       tryCatch(
         x$get_parent(),
         error = function(cond) rep(character(0), length(x$get_datanames()))
@@ -126,16 +126,7 @@ cdisc_data <- function(...,
 
     x$check_reproducibility()
     x$check_metadata()
-
-    if (is_pulled(x)) {
-      new_teal_data(
-        env = lapply(x$get_datasets(), function(x) x$get_raw_data()),
-        code = x$get_code(),
-        keys = x$get_join_keys()
-      )
-    } else {
-      x
-    }
+    x
   } else {
     if (!checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
@@ -176,7 +167,7 @@ cdisc_data <- function(...,
 #' cdisc_data_file(file_example)
 cdisc_data_file <- function(path, code = get_code(path)) {
   lifecycle::deprecate_warn(when = "0.1.3", what = "cdisc_data_file()", with = "teal_data_file()")
-  object <- object_file(path, "teal_data")
-  object <- eval_code(object, code)
+  object <- object_file(path, "TealData")
+  object$mutate(code)
   return(object)
 }
