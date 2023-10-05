@@ -176,7 +176,7 @@ cdisc_data <- function(...,
 #' cdisc_data_file(file_example)
 cdisc_data_file <- function(path, code = get_code(path)) {
   lifecycle::deprecate_warn(when = "0.1.3", what = "cdisc_data_file()", with = "teal_data_file()")
-  object <- object_file(path, "TealData")
-  object$mutate(code)
+  object <- object_file(path, "teal_data")
+  object <- eval_code(object, code)
   return(object)
 }
