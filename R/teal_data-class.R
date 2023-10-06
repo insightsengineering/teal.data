@@ -35,18 +35,18 @@ setClass(
 #' @name new_teal_data
 #'
 #' @param code (`character(1)` or `language`) code to evaluate. Accepts and stores comments also.
-#' @param env (`list`) List of data.
+#' @param data (`named list`) List of data.
 #' @param keys (`JoinKeys`) object
-#' @param datanames (`character`) names of datasets in `env`. Needed when non-dataset
-#'   objects are needed in the `env` slot.
+#' @param datanames (`character`) names of datasets in passed to `data`.
+#'   Needed when non-dataset objects are needed in the `env` slot.
 #'
 #' @examples
-#' new_teal_data(env = list(a = 1), code = quote(a <- 1))
-#' new_teal_data(env = list(a = 1), code = parse(text = "a <- 1"))
-#' new_teal_data(env = list(a = 1), code = "a <- 1")
+#' new_teal_data(data = list(a = 1), code = quote(a <- 1))
+#' new_teal_data(data = list(a = 1), code = parse(text = "a <- 1"))
+#' new_teal_data(data = list(a = 1), code = "a <- 1")
 #'
 #' @export
-setGeneric("new_teal_data", function(env = new.env(), code = expression(), keys = join_keys(), datanames = character()) {
+setGeneric("new_teal_data", function(data = list(), code = expression(), keys = join_keys(), datanames = character()) {
   standardGeneric("new_teal_data")
 })
 
@@ -54,9 +54,9 @@ setGeneric("new_teal_data", function(env = new.env(), code = expression(), keys 
 #' @export
 setMethod(
   "new_teal_data",
-  signature = c(env = "list", code = "expression", keys = "ANY"),
-  function(env, code, keys = join_keys(), datanames = names(env)) {
-    new_env <- rlang::env_clone(list2env(env), parent = parent.env(.GlobalEnv))
+  signature = c(data = "list", code = "expression", keys = "ANY"),
+  function(data, code, keys = join_keys(), datanames = names(data)) {
+    new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
     lockEnvironment(new_env, bindings = TRUE)
     id <- sample.int(.Machine$integer.max, size = length(code))
     methods::new(
@@ -76,10 +76,10 @@ setMethod(
 #' @export
 setMethod(
   "new_teal_data",
-  signature = c(env = "list", code = "language", keys = "ANY"),
-  function(env, code, keys = join_keys(), datanames = names(env)) {
+  signature = c(data = "list", code = "language", keys = "ANY"),
+  function(data, code, keys = join_keys(), datanames = names(data)) {
     code_expr <- as.expression(code)
-    new_teal_data(env = env, code = code_expr, keys = keys, datanames = datanames)
+    new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
   }
 )
 
@@ -87,9 +87,9 @@ setMethod(
 #' @export
 setMethod(
   "new_teal_data",
-  signature = c(env = "list", code = "character", keys = "ANY"),
-  function(env, code, keys = join_keys(), datanames = names(env)) {
+  signature = c(data = "list", code = "character", keys = "ANY"),
+  function(data, code, keys = join_keys(), datanames = names(data)) {
     code_expr <- parse(text = code)
-    new_teal_data(env = env, code = code_expr, keys = keys, datanames = datanames)
+    new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
   }
 )

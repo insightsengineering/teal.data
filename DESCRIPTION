@@ -33,7 +33,7 @@ Imports:
     shinyjs,
     stats,
     teal.logger (>= 0.1.1),
-    teal.code,
+    teal.code (>= 0.3.0),
     utils,
     yaml (>= 1.1.0)
 Suggests:

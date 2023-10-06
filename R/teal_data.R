@@ -62,7 +62,7 @@ teal_data <- function(...,
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
     new_teal_data(
-      env = data_objects,
+      data = data_objects,
       code = code,
       keys = join_keys
     )

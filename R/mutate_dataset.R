@@ -149,16 +149,3 @@ mutate_data.TealDataAbstract <- function(x,
   x$mutate(code = code, vars = vars)
   return(invisible(x))
 }
-
-#' @rdname mutate_data
-#' @export
-mutate_data.teal_data <- function(x,
-                                  code = character(0),
-                                  script = character(0),
-                                  vars = list()) {
-  checkmate::assert_list(vars, min.len = 0, names = "unique")
-
-  code <- code_from_script(code, script)
-  teal.code::eval_code(x, code = code)
-  return(invisible(x))
-}

@@ -8,49 +8,49 @@
 \title{Initialize \code{teal_data} object}
 \usage{
 new_teal_data(
-  env = new.env(),
+  data = list(),
   code = expression(),
   keys = join_keys(),
   datanames = character()
 )
 
 \S4method{new_teal_data}{list,expression}(
-  env = new.env(),
+  data = list(),
   code = expression(),
   keys = join_keys(),
-  datanames = names(env)
+  datanames = names(data)
 )
 
 \S4method{new_teal_data}{list,language}(
-  env = new.env(),
+  data = list(),
   code = expression(),
   keys = join_keys(),
-  datanames = names(env)
+  datanames = names(data)
 )
 
 \S4method{new_teal_data}{list,character}(
-  env = new.env(),
+  data = list(),
   code = expression(),
   keys = join_keys(),
-  datanames = names(env)
+  datanames = names(data)
 )
 }
 \arguments{
-\item{env}{(\code{list}) List of data.}
+\item{data}{(\verb{named list}) List of data.}
 
 \item{code}{(\code{character(1)} or \code{language}) code to evaluate. Accepts and stores comments also.}
 
 \item{keys}{(\code{JoinKeys}) object}
 
-\item{datanames}{(\code{character}) names of datasets in \code{env}. Needed when non-dataset
-objects are needed in the \code{env} slot.}
+\item{datanames}{(\code{character}) names of datasets in passed to \code{data}.
+Needed when non-dataset objects are needed in the \code{env} slot.}
 }
 \description{
 Initialize \code{teal_data} object.
 }
 \examples{
-new_teal_data(env = list(a = 1), code = quote(a <- 1))
-new_teal_data(env = list(a = 1), code = parse(text = "a <- 1"))
-new_teal_data(env = list(a = 1), code = "a <- 1")
+new_teal_data(data = list(a = 1), code = quote(a <- 1))
+new_teal_data(data = list(a = 1), code = parse(text = "a <- 1"))
+new_teal_data(data = list(a = 1), code = "a <- 1")
 
 }

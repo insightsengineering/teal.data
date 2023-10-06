@@ -131,7 +131,7 @@ cdisc_data <- function(...,
     if (!checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
-    new_teal_data(env = data_objects, code = code, keys = join_keys)
+    new_teal_data(data = data_objects, code = code, keys = join_keys)
   }
 }
 
