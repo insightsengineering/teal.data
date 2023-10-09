@@ -46,7 +46,7 @@ setClass(
 #' new_teal_data(data = list(a = 1), code = "a <- 1")
 #'
 #' @export
-setGeneric("new_teal_data", function(data = list(), code = expression(), keys = join_keys(), datanames = character()) {
+setGeneric("new_teal_data", function(data = list(), code = character(), keys = join_keys(), datanames = character()) {
   standardGeneric("new_teal_data")
 })
 
@@ -54,7 +54,7 @@ setGeneric("new_teal_data", function(data = list(), code = expression(), keys = 
 #' @export
 setMethod(
   "new_teal_data",
-  signature = c(data = "list", code = "expression", keys = "ANY"),
+  signature = c(data = "list", code = "character", keys = "ANY"),
   function(data, code, keys = join_keys(), datanames = names(data)) {
     new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
     lockEnvironment(new_env, bindings = TRUE)
@@ -87,9 +87,9 @@ setMethod(
 #' @export
 setMethod(
   "new_teal_data",
-  signature = c(data = "list", code = "character", keys = "ANY"),
+  signature = c(data = "list", code = "expression", keys = "ANY"),
   function(data, code, keys = join_keys(), datanames = names(data)) {
-    code_expr <- parse(text = code)
+    code_expr <- deparse1(code)
     new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
   }
 )
