@@ -2,35 +2,35 @@
 % Please edit documentation in R/teal_data-class.R
 \name{new_teal_data}
 \alias{new_teal_data}
-\alias{new_teal_data,list,expression-method}
-\alias{new_teal_data,list,language-method}
 \alias{new_teal_data,list,character-method}
+\alias{new_teal_data,list,language-method}
+\alias{new_teal_data,list,expression-method}
 \title{Initialize \code{teal_data} object}
 \usage{
 new_teal_data(
   data = list(),
-  code = expression(),
+  code = character(),
   keys = join_keys(),
   datanames = character()
 )
 
-\S4method{new_teal_data}{list,expression}(
+\S4method{new_teal_data}{list,character}(
   data = list(),
-  code = expression(),
+  code = character(),
   keys = join_keys(),
   datanames = names(data)
 )
 
 \S4method{new_teal_data}{list,language}(
   data = list(),
-  code = expression(),
+  code = character(),
   keys = join_keys(),
   datanames = names(data)
 )
 
-\S4method{new_teal_data}{list,character}(
+\S4method{new_teal_data}{list,expression}(
   data = list(),
-  code = expression(),
+  code = character(),
   keys = join_keys(),
   datanames = names(data)
 )
