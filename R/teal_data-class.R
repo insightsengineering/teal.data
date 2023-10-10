@@ -37,7 +37,7 @@ setClass(
 #' @param code (`character(1)` or `language`) code to evaluate. Accepts and stores comments also.
 #' @param data (`named list`) List of data.
 #' @param keys (`JoinKeys`) object
-#' @param datanames (`character`) names of datasets in passed to `data`.
+#' @param datanames (`character`) names of datasets passed to `data`.
 #'   Needed when non-dataset objects are needed in the `env` slot.
 #'
 #' @examples
@@ -58,13 +58,14 @@ setMethod(
   function(data, code, keys = join_keys(), datanames = names(data)) {
     new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
     lockEnvironment(new_env, bindings = TRUE)
-    id <- sample.int(.Machine$integer.max, size = length(code))
+    if (length(code) > 1) code <- paste(code, collapse = "\n")
+    id <- sample.int(.Machine$integer.max, size = 1L)
     methods::new(
       "teal_data",
       env = new_env,
       code = code,
-      warnings = rep("", length(code)),
-      messages = rep("", length(code)),
+      warnings = "",
+      messages = "",
       id = id,
       join_keys = keys,
       datanames = datanames
@@ -89,7 +90,7 @@ setMethod(
   "new_teal_data",
   signature = c(data = "list", code = "expression", keys = "ANY"),
   function(data, code, keys = join_keys(), datanames = names(data)) {
-    code_expr <- deparse1(code)
+    code_expr <- as.character(code)
     new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
   }
 )
