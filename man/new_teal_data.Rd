@@ -42,7 +42,7 @@ new_teal_data(
 
 \item{keys}{(\code{JoinKeys}) object}
 
-\item{datanames}{(\code{character}) names of datasets in passed to \code{data}.
+\item{datanames}{(\code{character}) names of datasets passed to \code{data}.
 Needed when non-dataset objects are needed in the \code{env} slot.}
 }
 \description{
