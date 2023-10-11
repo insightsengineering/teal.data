@@ -1,4 +1,4 @@
-# teal.data 0.3.0.9005
+# teal.data 0.3.0.9006
 
 ### Miscellaneous
 * Specified minimal version of package dependencies.
