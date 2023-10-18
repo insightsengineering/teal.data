@@ -5,7 +5,7 @@
 \alias{teal_data-class}
 \title{Reproducible data class.}
 \description{
-Reproducible data class basing on \code{teal.data::qenv} class.
+Reproducible data class basing on \linkS4class{qenv}.
 }
 \section{Slots}{
 

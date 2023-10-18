@@ -2,7 +2,7 @@ setOldClass("JoinKeys")
 
 #' Reproducible data class.
 #'
-#' Reproducible data class basing on `teal.data::qenv` class.
+#' Reproducible data class basing on [teal.data::qenv-class].
 #' @name teal_data-class
 #' @rdname teal_data-class
 #'
