@@ -69,9 +69,6 @@ teal_data <- function(...,
   }
 }
 
-
-
-
 #' Load `TealData` object from a file
 #'
 #' @description `r lifecycle::badge("experimental")`
