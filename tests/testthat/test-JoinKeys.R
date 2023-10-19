@@ -271,33 +271,35 @@ testthat::test_that("JoinKeys$split method returns a named list of JoinKeys obje
   testthat::expect_equal(names(res$Y$get()), c("Y", "Z"))
 })
 
-testthat::test_that("JoinKeys$split method returns an updated list after
-  the state of the object is modified by JoinKeys$mutate()", {
-  x <- JoinKeys$new()
-  x$set(
-    list(
-      join_key("A", "B", c("a" = "b")),
-      join_key("A", "C", c("a" = "c", "aa" = "cc")),
-      join_key("Z", "Y", c("z" = "y"))
+testthat::test_that(
+  "JoinKeys$split method returns an updated list after the state of the object is modified by JoinKeys$mutate()",
+  {
+    x <- JoinKeys$new()
+    x$set(
+      list(
+        join_key("A", "B", c("a" = "b")),
+        join_key("A", "C", c("a" = "c", "aa" = "cc")),
+        join_key("Z", "Y", c("z" = "y"))
+      )
     )
-  )
-  res <- x$split()
+    res <- x$split()
 
-  x$mutate("A", "B", c("a" = "b", "aa" = "bb"))
-  res2 <- x$split()
+    x$mutate("A", "B", c("a" = "b", "aa" = "bb"))
+    res2 <- x$split()
 
-  testthat::expect_false(identical(res, res2))
-  testthat::expect_identical(res2$A$get()$A$B, c("a" = "b", "aa" = "bb"))
+    testthat::expect_false(identical(res, res2))
+    testthat::expect_identical(res2$A$get()$A$B, c("a" = "b", "aa" = "bb"))
 
-  # adding new datasets
-  x$mutate("D", "G", c("d" = "g"))
-  res3 <- x$split()
-  testthat::expect_false(identical(res, res3))
-  testthat::expect_false(identical(res2, res3))
-  testthat::expect_identical(res3$D$get()$D$G, c("d" = "g"))
-  testthat::expect_identical(res3$D$get()$G$D, c("g" = "d"))
-  testthat::expect_identical(names(res3$D$get()), c("D", "G"))
-})
+    # adding new datasets
+    x$mutate("D", "G", c("d" = "g"))
+    res3 <- x$split()
+    testthat::expect_false(identical(res, res3))
+    testthat::expect_false(identical(res2, res3))
+    testthat::expect_identical(res3$D$get()$D$G, c("d" = "g"))
+    testthat::expect_identical(res3$D$get()$G$D, c("g" = "d"))
+    testthat::expect_identical(names(res3$D$get()), c("D", "G"))
+  }
+)
 
 testthat::test_that("JoinKeys$split method does not modify self", {
   x <- JoinKeys$new()
@@ -361,35 +363,37 @@ testthat::test_that("JoinKeys$merge can handle edge case: argument is a list of 
   testthat::expect_identical(previous_output, y$get())
 })
 
-testthat::test_that("JoinKeys$merge throws error when improper argument is
-  passed in without modifying the caller", {
-  y <- JoinKeys$new()
-  y$set(
-    list(
-      join_key("A", "B", c("a" = "b")),
-      join_key("A", "C", c("a" = "c", "aa" = "cc")),
-      join_key("Z", "Y", c("z" = "y"))
+testthat::test_that(
+  "JoinKeys$merge throws error when improper argument is passed in without modifying the caller",
+  {
+    y <- JoinKeys$new()
+    y$set(
+      list(
+        join_key("A", "B", c("a" = "b")),
+        join_key("A", "C", c("a" = "c", "aa" = "cc")),
+        join_key("Z", "Y", c("z" = "y"))
+      )
     )
-  )
-  previous_output <- y$get()
-  testthat::expect_error(y$merge())
-  testthat::expect_identical(previous_output, y$get())
+    previous_output <- y$get()
+    testthat::expect_error(y$merge())
+    testthat::expect_identical(previous_output, y$get())
 
-  testthat::expect_error(y$merge(1))
-  testthat::expect_identical(previous_output, y$get())
+    testthat::expect_error(y$merge(1))
+    testthat::expect_identical(previous_output, y$get())
 
-  testthat::expect_error(y$merge("A"))
-  testthat::expect_identical(previous_output, y$get())
+    testthat::expect_error(y$merge("A"))
+    testthat::expect_identical(previous_output, y$get())
 
-  testthat::expect_error(y$merge(list()))
-  testthat::expect_identical(previous_output, y$get())
+    testthat::expect_error(y$merge(list()))
+    testthat::expect_identical(previous_output, y$get())
 
-  testthat::expect_error(y$merge(list(1)))
-  testthat::expect_identical(previous_output, y$get())
+    testthat::expect_error(y$merge(list(1)))
+    testthat::expect_identical(previous_output, y$get())
 
-  testthat::expect_error(y$merge(list("A")))
-  testthat::expect_identical(previous_output, y$get())
-})
+    testthat::expect_error(y$merge(list("A")))
+    testthat::expect_identical(previous_output, y$get())
+  }
+)
 
 testthat::test_that("JoinKeys$merge does nothing when argument is a JoinKeys object with identical data", {
   x <- JoinKeys$new()

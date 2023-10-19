@@ -302,7 +302,7 @@ JoinKeys <- R6::R6Class( # nolint
         }
 
         if (xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-          !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
+              !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
           error_message(join_key_1$dataset_1, join_key_1$dataset_2)
         }
       }
@@ -490,8 +490,8 @@ join_key <- function(dataset_1, dataset_2 = NULL, keys) {
 #'
 primary_key <- function(dataset_1, keys) {
   if (checkmate::test_character(keys) &&
-    !checkmate::test_names(names(keys), type = "unnamed")) {
-    stop("Primary keys must match exactly: keys = c('A' = 'B') are not allowed")
+        !checkmate::test_names(names(keys), type = "unnamed")) {
+    stop("Primary keys parameter must be a unamed character vector: keys = c('A' = 'A') are not allowed")
   }
   join_key(dataset_1 = dataset_1, dataset_2 = dataset_1, keys = keys)
 }
