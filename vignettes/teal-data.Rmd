@@ -25,8 +25,8 @@ adsl <- teal.data::example_cdisc_data("ADSL")
 adtte <- teal.data::example_cdisc_data("ADTTE")
 
 my_data <- cdisc_data(
-  cdisc_dataset("ADSL", adsl),
-  cdisc_dataset("ADTTE", adtte)
+  ADSL = adsl,
+  ADTTE = adtte
 )
 ```
 
@@ -34,8 +34,8 @@ For more general data use the `teal_data` and `dataset` functions:
 
 ```{r}
 my_general_data <- teal_data(
-  dataset("iris", iris),
-  dataset("mtcars", mtcars)
+  iris = iris,
+  mtcars = mtcars
 )
 ```
 

@@ -1,29 +1,16 @@
 #' Data input for teal app
 #'
 #' @description `r lifecycle::badge("stable")`
-#' Function takes datasets and creates `TealData` object which can be used in `teal` applications.
+#' Function is a wrapper around [teal_data()] and guesses `join_keys`
+#' for given datasets which names matche ADAM datasets names.
 #'
-#' @note This function does not automatically assign keys to `TealDataset`
-#' and `TealDatasetConnector` objects passed to it. If the keys are needed
-#' they should be assigned before calling `cdisc_data`. See example:
-#' ```
-#' test_dataset <- dataset("ADAE", teal.data::example_cdisc_data("ADAE")) # does not have keys
-#' test_adsl <- cdisc_dataset("ADSL", teal.data::example_cdisc_data("ADSL"))
-#' test_data <- cdisc_data(test_dataset, test_adsl)
-#' get_keys(test_data, "ADAE") # returns character(0)
-#'
-#' test_dataset <- cdisc_dataset("ADAE", teal.data::example_cdisc_data("ADAE"))
-#' test_data <- cdisc_data(test_dataset, test_adsl)
-#' get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
-#' ```
 #' @inheritParams teal_data
-#' @param ... (`TealDataConnector`, `TealDataset` or
-#'   `TealDatasetConnector`) elements to include.
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with datasets column names used for joining.
-#'   If empty then it would be automatically derived basing on intersection of datasets primary keys
+#'   If empty then it would be automatically derived basing on intersection of datasets primary keys.
+#'   For ADAM datasets it would be automatically derived.
 #'
-#' @return a `TealData` object
+#' @return a `TealData` or `teal_data` object
 #'
 #' @details This function checks if there were keys added to all data sets
 #'
@@ -34,34 +21,16 @@
 #' ADSL <- teal.data::example_cdisc_data("ADSL")
 #' ADTTE <- teal.data::example_cdisc_data("ADTTE")
 #'
-#' # basic example
 #' cdisc_data(
-#'   cdisc_dataset("ADSL", ADSL),
-#'   cdisc_dataset("ADTTE", ADTTE),
-#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-#'           ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-#'   check = TRUE
-#' )
-#'
-#' # Example with keys
-#' cdisc_data(
-#'   cdisc_dataset("ADSL", ADSL,
-#'     keys = c("STUDYID", "USUBJID")
-#'   ),
-#'   cdisc_dataset("ADTTE", ADTTE,
-#'     keys = c("STUDYID", "USUBJID", "PARAMCD"),
-#'     parent = "ADSL"
-#'   ),
+#'   ADSL = ADSL,
+#'   ADTTE = ADTTE,
+#'   code = quote({
+#'     ADSL <- teal.data::example_cdisc_data("ADSL")
+#'     ADTTE <- teal.data::example_cdisc_data("ADTTE")
+#'   }),
 #'   join_keys = join_keys(
-#'     join_key(
-#'       "ADSL",
-#'       "ADTTE",
-#'       c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
-#'     )
-#'   ),
-#'   code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-#'           ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-#'   check = TRUE
+#'     join_key("ADSL", "ADTTE", c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
+#'   )
 #' )
 cdisc_data <- function(...,
                        join_keys = teal.data::join_keys(),
@@ -85,19 +54,17 @@ cdisc_data <- function(...,
     )
     update_join_keys_to_primary(data_objects, join_keys)
 
-    retrieve_parents <- function(x) {
-      tryCatch(
-        x$get_parent(),
-        error = function(cond) rep(character(0), length(x$get_datanames()))
-      )
-    }
-
     new_parents_fun <- function(data_objects) {
       lapply(data_objects, function(x) {
         if (inherits(x, "TealDataConnector")) {
           unlist(new_parents_fun(x$get_items()), recursive = FALSE)
         } else {
-          list(retrieve_parents(x))
+          list(
+            tryCatch(
+              x$get_parent(),
+              error = function(cond) rep(character(0), length(x$get_datanames()))
+            )
+          )
         }
       })
     }

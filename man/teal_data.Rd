@@ -7,8 +7,14 @@
 teal_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector})\cr
-objects}
+\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
+\itemize{
+\item When one of the \verb{Teal*} objects are provided, then function returns \code{TealData} object.
+This way of specifying data is deprecated and will be removed in the next release.
+\item From version 0.4.0, one can provide any object as a named argument and function will
+return \code{teal_data} object. Objects provided in \code{...} will be stored in \code{teal_data} environment
+under the same name as the argument name.
+}}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with dataset column relationships used for joining.
@@ -21,24 +27,20 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-(\code{TealData})
+(\code{TealData} or \code{teal_data}) object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 Universal function to pass data to teal application
 }
 \examples{
-x1 <- dataset(
-  "x1",
-  iris,
-  code = "x1 <- iris"
-)
 
-x2 <- dataset(
-  "x2",
-  mtcars,
-  code = "x2 <- mtcars"
+teal_data(
+  x1 = iris,
+  x2 = mtcars,
+  code = quote({
+    x1 <- iris
+    x2 <- mtcars
+  })
 )
-
-teal_data(x1, x2)
 }
