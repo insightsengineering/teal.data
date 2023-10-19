@@ -425,12 +425,16 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
   x$mutate_join_keys(dataset_1, dataset_2, val)
 }
 
-
 #' Create a relationship between a pair of datasets
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
+#' @details `join_key()` will create a relationship for the variables on a pair
+#' of datasets.
+#'
 #' @inheritParams mutate_join_keys
+#' @param dataset_2 (`character`) other dataset name. In case it is omitted, then it
+#' will create a primary key for `dataset_1`.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
 #' with relationship to columns of `dataset_2` given by the elements in `keys`.
 #' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
@@ -441,10 +445,12 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' @seealso [join_keys()]
 #'
 #' @export
-join_key <- function(dataset_1, dataset_2, keys) {
+join_key <- function(dataset_1, dataset_2 = NULL, keys) {
   checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2)
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
   checkmate::assert_character(keys, any.missing = FALSE)
+
+  dataset_2 <- rlang::`%||%`(dataset_2, dataset_1)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
@@ -472,4 +478,20 @@ join_key <- function(dataset_1, dataset_2, keys) {
     ),
     class = "JoinKeySet"
   )
+}
+
+#' @rdname join_key
+#' @export
+#'
+#' @details
+#' `primary_key()` will create a primary key for a dataset. It is equivalent to
+#' `join_key(...)` and omitting `dataset_2` argument or giving it the same name
+#' `dataset_1`.
+#'
+primary_key <- function(dataset_1, keys) {
+  if (checkmate::test_character(keys) &&
+    !checkmate::test_names(names(keys), type = "unnamed")) {
+    stop("Primary keys must match exactly: keys = c('A' = 'B') are not allowed")
+  }
+  join_key(dataset_1 = dataset_1, dataset_2 = dataset_1, keys = keys)
 }

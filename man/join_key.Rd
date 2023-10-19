@@ -2,14 +2,18 @@
 % Please edit documentation in R/JoinKeys.R
 \name{join_key}
 \alias{join_key}
+\alias{primary_key}
 \title{Create a relationship between a pair of datasets}
 \usage{
-join_key(dataset_1, dataset_2, keys)
+join_key(dataset_1, dataset_2 = NULL, keys)
+
+primary_key(dataset_1, keys)
 }
 \arguments{
 \item{dataset_1}{(\code{character}) one dataset name}
 
-\item{dataset_2}{(\code{character}) other dataset name}
+\item{dataset_2}{(\code{character}) other dataset name. In case it is omitted, then it
+will create a primary key for \code{dataset_1}.}
 
 \item{keys}{(optionally named \code{character}) where \code{names(keys)} are columns in \code{dataset_1}
 with relationship to columns of \code{dataset_2} given by the elements in \code{keys}.
@@ -21,6 +25,14 @@ object of class \code{JoinKeySet} to be passed into \code{join_keys} function.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+}
+\details{
+\code{join_key()} will create a relationship for the variables on a pair
+of datasets.
+
+\code{primary_key()} will create a primary key for a dataset. It is equivalent to
+\code{join_key(...)} and omitting \code{dataset_2} argument or giving it the same name
+\code{dataset_1}.
 }
 \seealso{
 \code{\link[=join_keys]{join_keys()}}
