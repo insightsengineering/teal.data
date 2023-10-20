@@ -42,9 +42,9 @@ testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDa
 testthat::test_that("teal_data throws error if it receives undesired objects", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
 
-  testthat::expect_error(
-    teal_data(df1, check = TRUE),
-    "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
+  testthat::expect_s4_class(
+    teal_data(df1 = df1, check = TRUE),
+    "teal_data"
   )
 })
 
@@ -139,13 +139,14 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
 
 testthat::test_that("teal_data_file loads the TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
-  ),
-  con = tmp_file
+    ),
+    con = tmp_file
   )
   tdf <- teal_data_file(tmp_file)
   file.remove(tmp_file)
@@ -162,8 +163,9 @@ testthat::test_that("teal_data_file loads the TealData object", {
 
 testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
