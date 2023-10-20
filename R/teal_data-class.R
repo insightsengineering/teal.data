@@ -55,7 +55,7 @@ new_teal_data <- function(data, code = character(0), keys = join_keys(), datanam
 
   if (is.language(code)) {
     code <- as.character(code)
-  } else  if (!is.character(code)) {
+  } else if (!is.character(code)) {
     stop("`code` must be a character or language object.")
   }
   if (length(code) > 1) {
