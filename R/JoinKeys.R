@@ -381,7 +381,6 @@ join_keys <- function(...) {
 #'
 join_keys_cdisc <- function(...) {
   x <- list(...)
-  res <- JoinKeys$new()
 
   x_parsed <- lapply(seq_along(x), function(ix) {
     item <- x[[ix]]
@@ -406,11 +405,7 @@ join_keys_cdisc <- function(...) {
   })
   x_parsed <- do.call(c, x_parsed)
 
-  if (length(x_parsed) > 0) {
-    res$set(x_parsed)
-  }
-
-  res
+  do.call(join_keys, x_parsed)
 }
 
 # wrappers ====
