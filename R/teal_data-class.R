@@ -50,19 +50,28 @@ setClass(
 #' @keywords internal
 new_teal_data <- function(data, code = character(0), keys = join_keys(), datanames = names(data)) {
   checkmate::assert_list(data)
-  checkmate::assert_character(code)
+  checkmate::assert_class(keys, "JoinKeys")
+  checkmate::assert_character(datanames)
+
+  if (is.language(code)) {
+    code <- as.character(code)
+  } else  if (!is.character(code)) {
+    stop("`code` must be a character or language object.")
+  }
+  if (length(code) > 1) {
+    code <- paste(code, collapse = "\n")
+  }
 
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
-  if (length(code) > 1) code <- paste(code, collapse = "\n")
-  id <- sample.int(.Machine$integer.max, size = 1L)
+
   methods::new(
     "teal_data",
     env = new_env,
     code = code,
     warnings = "",
     messages = "",
-    id = id,
+    id = sample.int(.Machine$integer.max, size = 1L),
     join_keys = keys,
     datanames = datanames
   )
