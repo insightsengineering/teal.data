@@ -33,7 +33,7 @@
 #'   )
 #' )
 cdisc_data <- function(...,
-                       join_keys = teal.data::join_keys(),
+                       join_keys = teal.data::join_keys_cdisc(...),
                        code = "",
                        check = FALSE) {
   data_objects <- list(...)

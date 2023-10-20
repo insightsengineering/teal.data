@@ -302,7 +302,7 @@ JoinKeys <- R6::R6Class( # nolint
         }
 
         if (xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-              !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
+          !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
           error_message(join_key_1$dataset_1, join_key_1$dataset_2)
         }
       }
@@ -361,10 +361,53 @@ JoinKeys <- R6::R6Class( # nolint
 #' )
 join_keys <- function(...) {
   x <- list(...)
-
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
+  }
+
+  res
+}
+
+#' @rdname join_keys
+#' @details
+#' `join_keys_cdisc` treat non-`JoinKeySet` arguments as possible CDISC datasets.
+#' The `dataname` is extrapolated from the name  (or fallback to the value itself if
+#' it's a `character(1)`).
+#'
+#' @export
+#' @examples
+#' join_keys_cdisc(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
+#'
+join_keys_cdisc <- function(...) {
+  x <- list(...)
+  res <- JoinKeys$new()
+
+  x_parsed <- lapply(seq_along(x), function(ix) {
+    item <- x[[ix]]
+
+    name <- rlang::`%||%`(names(x)[ix], item) # fallback to value if names are not set
+    if (
+      checkmate::test_class(item, "JoinKeySet") ||
+        !checkmate::test_string(name, min.chars = 1) ||
+        !name %in% names(default_cdisc_keys)) {
+      return(list(item))
+    }
+
+    # Add primary key
+    result <- list(primary_key(name, keys = get_cdisc_keys(name)))
+    keys_list <- default_cdisc_keys[[name]]
+
+    if (is.null(keys_list) || is.null(keys_list$parent) || is.null(keys_list$foreign)) {
+      return(result)
+    }
+    # Add JoinKey with parent dataset (if exists)
+    append(result, list(join_key(name, keys_list$parent, keys = keys_list$foreign)))
+  })
+  x_parsed <- do.call(c, x_parsed)
+
+  if (length(x_parsed) > 0) {
+    res$set(x_parsed)
   }
 
   res
@@ -490,7 +533,7 @@ join_key <- function(dataset_1, dataset_2 = NULL, keys) {
 #'
 primary_key <- function(dataset_1, keys) {
   if (checkmate::test_character(keys) &&
-        !checkmate::test_names(names(keys), type = "unnamed")) {
+    !checkmate::test_names(names(keys), type = "unnamed")) {
     stop("Primary keys parameter must be a unamed character vector: keys = c('A' = 'A') are not allowed")
   }
   join_key(dataset_1 = dataset_1, dataset_2 = dataset_1, keys = keys)

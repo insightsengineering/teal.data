@@ -2,9 +2,12 @@
 % Please edit documentation in R/JoinKeys.R
 \name{join_keys}
 \alias{join_keys}
+\alias{join_keys_cdisc}
 \title{Create a \code{JoinKeys} out of a list of \code{JoinKeySet} objects}
 \usage{
 join_keys(...)
+
+join_keys_cdisc(...)
 }
 \arguments{
 \item{...}{optional, a \code{JoinKeySet} objects created using the \code{join_key} function.}
@@ -18,6 +21,10 @@ join_keys(...)
 \details{
 Note that join keys are symmetric although the relationship only needs
 to be specified once.
+
+\code{join_keys_cdisc} treat non-\code{JoinKeySet} arguments as possible CDISC datasets.
+The \code{dataname} is extrapolated from the name  (or fallback to the value itself if
+it's a \code{character(1)}).
 }
 \examples{
 join_keys()
@@ -28,4 +35,6 @@ join_keys(
 join_keys(
   join_key("dataset_A", "dataset_B", c("col_1" = "col_a"))
 )
+join_keys_cdisc(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
+
 }
