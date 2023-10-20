@@ -2,7 +2,7 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #' Function is a wrapper around [teal_data()] and guesses `join_keys`
-#' for given datasets which names matche ADAM datasets names.
+#' for given datasets which names match ADAM datasets names.
 #'
 #' @inheritParams teal_data
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
