@@ -41,63 +41,29 @@ setClass(
 #' Initialize `teal_data` object.
 #' @name new_teal_data
 #'
-#' @param code (`character(1)` or `language`) code to evaluate. Accepts and stores comments also.
 #' @param data (`named list`) List of data.
+#' @param code (`character(1)` or `language`) code to evaluate. Accepts and stores comments also.
 #' @param keys (`JoinKeys`) object
 #' @param datanames (`character`) names of datasets passed to `data`.
 #'   Needed when non-dataset objects are needed in the `env` slot.
-#'
-#' @examples
-#' new_teal_data(data = list(a = 1), code = quote(a <- 1))
-#' new_teal_data(data = list(a = 1), code = parse(text = "a <- 1"))
-#' new_teal_data(data = list(a = 1), code = "a <- 1")
-#'
-#' @export
-setGeneric("new_teal_data", function(data = list(), code = character(), keys = join_keys(), datanames = character()) {
-  standardGeneric("new_teal_data")
-})
-
 #' @rdname new_teal_data
-#' @export
-setMethod(
-  "new_teal_data",
-  signature = c(data = "list", code = "character", keys = "ANY"),
-  function(data, code, keys = join_keys(), datanames = names(data)) {
-    new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
-    lockEnvironment(new_env, bindings = TRUE)
-    if (length(code) > 1) code <- paste(code, collapse = "\n")
-    id <- sample.int(.Machine$integer.max, size = 1L)
-    methods::new(
-      "teal_data",
-      env = new_env,
-      code = code,
-      warnings = "",
-      messages = "",
-      id = id,
-      join_keys = keys,
-      datanames = datanames
-    )
-  }
-)
+#' @keywords internal
+new_teal_data <- function(data, code = character(0), keys = join_keys(), datanames = names(data)) {
+  checkmate::assert_list(data)
+  checkmate::assert_character(code)
 
-#' @rdname new_teal_data
-#' @export
-setMethod(
-  "new_teal_data",
-  signature = c(data = "list", code = "language", keys = "ANY"),
-  function(data, code, keys = join_keys(), datanames = names(data)) {
-    code_expr <- as.expression(code)
-    new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
-  }
-)
-
-#' @rdname new_teal_data
-#' @export
-setMethod(
-  "new_teal_data",
-  signature = c(data = "list", code = "expression", keys = "ANY"),
-  function(data, code, keys = join_keys(), datanames = names(data)) {
-    code_expr <- as.character(code)
-    new_teal_data(data = data, code = code_expr, keys = keys, datanames = datanames)
-  }
-)
+  new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
+  lockEnvironment(new_env, bindings = TRUE)
+  if (length(code) > 1) code <- paste(code, collapse = "\n")
+  id <- sample.int(.Machine$integer.max, size = 1L)
+  methods::new(
+    "teal_data",
+    env = new_env,
+    code = code,
+    warnings = "",
+    messages = "",
+    id = id,
+    join_keys = keys,
+    datanames = datanames
+  )
+}

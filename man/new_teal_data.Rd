@@ -2,35 +2,11 @@
 % Please edit documentation in R/teal_data-class.R
 \name{new_teal_data}
 \alias{new_teal_data}
-\alias{new_teal_data,list,character-method}
-\alias{new_teal_data,list,language-method}
-\alias{new_teal_data,list,expression-method}
 \title{Initialize \code{teal_data} object}
 \usage{
 new_teal_data(
-  data = list(),
-  code = character(),
-  keys = join_keys(),
-  datanames = character()
-)
-
-\S4method{new_teal_data}{list,character}(
-  data = list(),
-  code = character(),
-  keys = join_keys(),
-  datanames = names(data)
-)
-
-\S4method{new_teal_data}{list,language}(
-  data = list(),
-  code = character(),
-  keys = join_keys(),
-  datanames = names(data)
-)
-
-\S4method{new_teal_data}{list,expression}(
-  data = list(),
-  code = character(),
+  data,
+  code = character(0),
   keys = join_keys(),
   datanames = names(data)
 )
@@ -48,9 +24,4 @@ Needed when non-dataset objects are needed in the \code{env} slot.}
 \description{
 Initialize \code{teal_data} object.
 }
-\examples{
-new_teal_data(data = list(a = 1), code = quote(a <- 1))
-new_teal_data(data = list(a = 1), code = parse(text = "a <- 1"))
-new_teal_data(data = list(a = 1), code = "a <- 1")
-
-}
+\keyword{internal}
