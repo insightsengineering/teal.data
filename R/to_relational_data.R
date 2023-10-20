@@ -30,8 +30,7 @@ to_relational_data <- function(data) {
 #' @export
 to_relational_data.data.frame <- function(data) { # nolint
   dataname <- deparse(substitute(data, parent.frame()), width.cutoff = 500L)
-
-  if (grepl("\\)$", dataname) && inherits(data, "data.frame")) {
+  if (grepl("\\)$", dataname)) {
     stop("Single data.frame shouldn't be provided as a result of a function call. Please name
          the object first or use a named list.")
   }
@@ -118,11 +117,10 @@ to_relational_data.list <- function(data) {
 #' @keywords internal
 #' @export
 to_relational_data.MultiAssayExperiment <- function(data) { # nolint
-  teal_data(dataset("MAE", data))
-}
-
-#' @keywords internal
-#' @export
-to_relational_data.TealData <- function(data) { # nolint
-  data
+  dataname <- deparse(substitute(data, parent.frame()), width.cutoff = 500L)
+  if (grepl("\\)$", dataname)) {
+    stop("Single data.frame shouldn't be provided as a result of a function call. Please name
+         the object first or use a named list.")
+  }
+  teal_data(dataset(dataname, data))
 }

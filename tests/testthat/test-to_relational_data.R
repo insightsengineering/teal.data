@@ -105,9 +105,9 @@ test_that("to_relational_data accepts a function returning a TealDataset as inpu
 test_that("to_relational_data accepts a MultiAssayExperiment as input", {
   utils::data(miniACC, package = "MultiAssayExperiment")
   mae <- miniACC
-  output_dataset <- to_relational_data(mae)
+  output_dataset <- to_relational_data_wrapper(mae)
   testthat::expect_is(output_dataset, "TealData")
-  testthat::expect_identical(output_dataset$get_datanames(), "MAE")
+  testthat::expect_identical(output_dataset$get_datanames(), "mae")
 })
 
 
