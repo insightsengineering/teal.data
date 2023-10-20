@@ -369,6 +369,27 @@ join_keys <- function(...) {
   res
 }
 
+#' @title Getter for JoinKeys that returns the relationship between pairs of datasets
+#' @export
+`[.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
+
+  dataset_2 <- dataset_2 %||% dataset_1
+  x$get(dataset_1, dataset_2)
+}
+
+#' @rdname sub-.JoinKeys
+#' @export
+`[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL, value) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
+
+  dataset_2 <- dataset_2 %||% dataset_1
+  x$mutate(dataset_1, dataset_2, value)
+  x
+}
+
 #' @rdname join_keys
 #' @details
 #' `join_keys_cdisc` treat non-`JoinKeySet` arguments as possible CDISC datasets.
@@ -385,7 +406,7 @@ join_keys_cdisc <- function(...) {
   x_parsed <- lapply(seq_along(x), function(ix) {
     item <- x[[ix]]
 
-    name <- rlang::`%||%`(names(x)[ix], item) # fallback to value if names are not set
+    name <- names(x)[ix] %||% item # fallback to value if names are not set
     if (
       checkmate::test_class(item, "JoinKeySet") ||
         !checkmate::test_string(name, min.chars = 1) ||
@@ -488,7 +509,7 @@ join_key <- function(dataset_1, dataset_2 = NULL, keys) {
   checkmate::assert_string(dataset_2, null.ok = TRUE)
   checkmate::assert_character(keys, any.missing = FALSE)
 
-  dataset_2 <- rlang::`%||%`(dataset_2, dataset_1)
+  dataset_2 <- dataset_2 %||% dataset_1
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
