@@ -4,6 +4,11 @@
 \alias{get_join_keys}
 \alias{get_join_keys.teal_data}
 \alias{get_join_keys.TealData}
+\alias{get_join_keys.JoinKeys}
+\alias{get_join_keys<-}
+\alias{get_join_keys<-.JoinKeys}
+\alias{get_join_keys<-.teal_data}
+\alias{get_join_keys<-.TealData}
 \title{Function to get join keys from a `` object}
 \usage{
 get_join_keys(data)
@@ -11,6 +16,16 @@ get_join_keys(data)
 \method{get_join_keys}{teal_data}(data)
 
 \method{get_join_keys}{TealData}(data)
+
+\method{get_join_keys}{JoinKeys}(data)
+
+get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
+
+\method{get_join_keys}{JoinKeys}(data, dataset_1, dataset_2 = NULL) <- value
+
+\method{get_join_keys}{teal_data}(data, dataset_1, dataset_2 = NULL) <- value
+
+\method{get_join_keys}{TealData}(data, dataset_1, dataset_2 = NULL) <- value
 }
 \arguments{
 \item{data}{`` - object to extract the join keys}
