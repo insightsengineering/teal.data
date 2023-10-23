@@ -73,7 +73,7 @@ cdisc_data <- function(...,
 
     names(new_parents) <- unlist(lapply(data_objects, function(x) {
       if (inherits(x, "TealDataConnector")) {
-        lapply(x$get_items(), function(z) z$get_dataname())
+        lapply(x$get_items(), function(y) y$get_dataname())
       } else {
         x$get_datanames()
       }
