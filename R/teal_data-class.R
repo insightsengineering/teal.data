@@ -42,7 +42,8 @@ setClass(
 #' @name new_teal_data
 #'
 #' @param data (`named list`) List of data.
-#' @param code (`character(1)` or `language`) code to evaluate. Accepts and stores comments also.
+#' @param code (`character` or `language`) code to reproduce the `data`.
+#'   Accepts and stores comments also.
 #' @param keys (`JoinKeys`) object
 #' @param datanames (`character`) names of datasets passed to `data`.
 #'   Needed when non-dataset objects are needed in the `env` slot.

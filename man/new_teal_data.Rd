@@ -14,7 +14,8 @@ new_teal_data(
 \arguments{
 \item{data}{(\verb{named list}) List of data.}
 
-\item{code}{(\code{character(1)} or \code{language}) code to evaluate. Accepts and stores comments also.}
+\item{code}{(\code{character} or \code{language}) code to reproduce the \code{data}.
+Accepts and stores comments also.}
 
 \item{keys}{(\code{JoinKeys}) object}
 
