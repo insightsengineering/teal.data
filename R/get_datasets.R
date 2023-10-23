@@ -133,3 +133,9 @@ get_datasets.TealDatasetConnector <- function(x) { # nolint
 get_datasets.TealDataset <- function(x) {
   x
 }
+
+#' @rdname get_datasets
+#' @export
+get_datasets.teal_data <- function(x) {
+  as.list(x@env)[teal.data::get_dataname(x)]
+}

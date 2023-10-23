@@ -7,12 +7,19 @@
 cdisc_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset} or
-\code{TealDatasetConnector}) elements to include.}
+\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
+\itemize{
+\item When one of the \verb{Teal*} objects are provided, then function returns \code{TealData} object.
+This way of specifying data is deprecated and will be removed in the next release.
+\item From version 0.4.0, one can provide any object as a named argument and function will
+return \code{teal_data} object. Objects provided in \code{...} will be stored in \code{teal_data} environment
+under the same name as the argument name.
+}}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with datasets column names used for joining.
-If empty then it would be automatically derived basing on intersection of datasets primary keys}
+If empty then it would be automatically derived basing on intersection of datasets primary keys.
+For ADAM datasets it would be automatically derived.}
 
 \item{code}{(\code{character}) code to reproduce the datasets.}
 
@@ -21,62 +28,30 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-a \code{TealData} object
+a \code{TealData} or \code{teal_data} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-Function takes datasets and creates \code{TealData} object which can be used in \code{teal} applications.
+Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
+for given datasets which names match ADAM datasets names.
 }
 \details{
 This function checks if there were keys added to all data sets
-}
-\note{
-This function does not automatically assign keys to \code{TealDataset}
-and \code{TealDatasetConnector} objects passed to it. If the keys are needed
-they should be assigned before calling \code{cdisc_data}. See example:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{test_dataset <- dataset("ADAE", teal.data::example_cdisc_data("ADAE")) # does not have keys
-test_adsl <- cdisc_dataset("ADSL", teal.data::example_cdisc_data("ADSL"))
-test_data <- cdisc_data(test_dataset, test_adsl)
-get_keys(test_data, "ADAE") # returns character(0)
-
-test_dataset <- cdisc_dataset("ADAE", teal.data::example_cdisc_data("ADAE"))
-test_data <- cdisc_data(test_dataset, test_adsl)
-get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
-}\if{html}{\out{</div>}}
 }
 \examples{
 
 ADSL <- teal.data::example_cdisc_data("ADSL")
 ADTTE <- teal.data::example_cdisc_data("ADTTE")
 
-# basic example
 cdisc_data(
-  cdisc_dataset("ADSL", ADSL),
-  cdisc_dataset("ADTTE", ADTTE),
-  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-          ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-  check = TRUE
-)
-
-# Example with keys
-cdisc_data(
-  cdisc_dataset("ADSL", ADSL,
-    keys = c("STUDYID", "USUBJID")
-  ),
-  cdisc_dataset("ADTTE", ADTTE,
-    keys = c("STUDYID", "USUBJID", "PARAMCD"),
-    parent = "ADSL"
-  ),
+  ADSL = ADSL,
+  ADTTE = ADTTE,
+  code = quote({
+    ADSL <- teal.data::example_cdisc_data("ADSL")
+    ADTTE <- teal.data::example_cdisc_data("ADTTE")
+  }),
   join_keys = join_keys(
-    join_key(
-      "ADSL",
-      "ADTTE",
-      c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
-    )
-  ),
-  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-          ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-  check = TRUE
+    join_key("ADSL", "ADTTE", c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
+  )
 )
 }

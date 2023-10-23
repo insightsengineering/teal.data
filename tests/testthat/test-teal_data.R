@@ -39,14 +39,48 @@ testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDa
   testthat::expect_identical(data$get_datanames(), c("df1", "df2", "df3"))
 })
 
-testthat::test_that("teal_data throws error if it receives undesired objects", {
+testthat::test_that("teal_data returns teal_data when data passed as named list", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  testthat::expect_s4_class(teal_data(df1 = df1), "teal_data")
+})
 
-  testthat::expect_error(
-    teal_data(df1, check = TRUE),
-    "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
+testthat::test_that("teal_data accepts any data provided as named list", {
+  df1 <- structure(1L, class = "anyclass")
+  testthat::expect_no_error(teal_data(df1 = df1))
+})
+
+testthat::test_that("teal_data accepts code as character", {
+  testthat::expect_no_error(
+    teal_data(
+      iris1 = iris,
+      code = 'iris1 <- iris'
+    )
   )
 })
+
+testthat::test_that("teal_data accepts code as language", {
+  testthat::expect_no_error(
+    teal_data(
+      iris1 = iris,
+      code = quote(iris1 <- iris)
+    )
+  )
+})
+
+testthat::test_that("teal_data code unfolds code-block wrapped in '{'", {
+  testthat::expect_identical(
+    teal_data(iris1 = iris, code = quote({iris1 <- iris}))@code,
+    "iris1 <- iris"
+  )
+})
+
+testthat::test_that("teal_data code is concatenated into single string", {
+  testthat::expect_identical(
+    teal_data(iris1 = iris, code = c("iris1 <- iris", "iris2 <- iris1"))@code,
+    "iris1 <- iris\niris2 <- iris1"
+  )
+})
+
 
 testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
@@ -139,13 +173,14 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
 
 testthat::test_that("teal_data_file loads the TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
-  ),
-  con = tmp_file
+    ),
+    con = tmp_file
   )
   tdf <- teal_data_file(tmp_file)
   file.remove(tmp_file)
@@ -162,8 +197,9 @@ testthat::test_that("teal_data_file loads the TealData object", {
 
 testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
