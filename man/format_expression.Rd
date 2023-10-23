@@ -17,3 +17,4 @@ format_expression(code)
 Format expression to string
 Convert any expression to a single character vector
 }
+\keyword{internal}

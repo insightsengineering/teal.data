@@ -155,8 +155,11 @@ get_teal_bs_theme <- function() {
 #' Convert any expression to a single character vector
 #' @param code (`language`, `expression`, `character`)
 #' @return `character(1)`
+#' @keywords internal
 format_expression <- function(code) {
-  code <- lang2calls(code)
+  if (is.language(code)) {
+    code <- lang2calls(code)
+  }
   paste(code, collapse = "\n")
 }
 
