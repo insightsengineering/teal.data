@@ -52,15 +52,10 @@ new_teal_data <- function(data, code = character(0), keys = join_keys(), datanam
   checkmate::assert_list(data)
   checkmate::assert_class(keys, "JoinKeys")
   checkmate::assert_character(datanames)
-
-  if (is.language(code)) {
-    code <- teal.code:::format_expression(code)
-  } else if (!is.character(code)) {
+  if (!any(is.language(code), is.character(code))) {
     stop("`code` must be a character or language object.")
   }
-  if (length(code) > 1) {
-    code <- paste(code, collapse = "\n")
-  }
+  code <- teal.code:::format_expression(code)
 
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
