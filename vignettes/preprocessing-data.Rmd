@@ -24,8 +24,8 @@ saveRDS(example_cdisc_data("ADSL"), "adsl.rds")
 ## preprocessing -------------------
 adsl <- readRDS("adsl.rds")
 ## -------------------
-data <- cdisc_data(cdisc_dataset("ADSL", adsl))
-data$get_code()
+data <- cdisc_data(ADSL = adsl)
+teal.code::get_code(data)
 ```
 
 When executing the example above, the `get_code` function will return an empty string reflecting that _"Pre-processing is empty"_. In order to show the pre-processing code correctly the `code` argument of the `cdisc_data` function needs to be specified. For the example above this would be:
@@ -42,10 +42,10 @@ unlink("adsl.rds")
 
 
 data <- cdisc_data(
-  cdisc_dataset("ADSL", adsl),
+  ADSL = adsl,
   code = 'ADSL <- readRDS("adsl.rds")'
 )
-data$get_code() %>% cat()
+teal.code::get_code(data)
 ```
 
 The code used to get the `ADSL` dataset is returned as expected. This can be used as input to the `data` argument of `teal::init`

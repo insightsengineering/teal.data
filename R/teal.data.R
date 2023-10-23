@@ -13,6 +13,6 @@
 #' @import shiny
 #' @importFrom digest digest
 #' @importFrom stats setNames
-#' @importFrom shinyjs show
+#' @importFrom shinyjs useShinyjs
 #' @importFrom logger log_trace
 NULL

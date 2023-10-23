@@ -150,3 +150,36 @@ get_teal_bs_theme <- function() {
     bs_theme
   }
 }
+
+#' Format expression to string
+#' Convert any expression to a single character vector
+#' @param code (`language`, `expression`, `character`)
+#' @return `character(1)`
+format_expression <- function(code) {
+  code <- lang2calls(code)
+  paste(code, collapse = "\n")
+}
+
+
+# convert language object or lists of language objects to list of simple calls
+# @param x `language` object or a list of thereof
+# @return
+# Given a `call`, an `expression`, a list of `call`s or a list of `expression`s,
+# returns a list of `calls`.
+# Symbols and atomic vectors (which may get mixed up in a list) are returned wrapped in list.
+#' @keywords internal
+lang2calls <- function(x) {
+  if (is.atomic(x) || is.symbol(x)) {
+    return(list(x))
+  }
+  if (is.call(x)) {
+    if (identical(as.list(x)[[1L]], as.symbol("{"))) {
+      as.list(x)[-1L]
+    } else {
+      list(x)
+    }
+  } else {
+    unlist(lapply(x, lang2calls), recursive = FALSE)
+  }
+}
+
