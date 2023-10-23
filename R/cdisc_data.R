@@ -37,25 +37,24 @@ cdisc_data <- function(...,
                        code = "",
                        check = FALSE) {
   data_objects <- list(...)
+  deprecated_join_keys_extract(data_objects, join_keys)
+  teal_data(..., join_keys = join_keys, code = code, check = check)
+}
 
-  # todo: is it really important? - to remove
-  if (inherits(join_keys, "JoinKeySet")) {
-    join_keys <- teal.data::join_keys(join_keys)
-  }
+#' Extrapolate parents from `TealData` classes
+#'
+#' note: This function will be removed once the following classes are defunct:
+#'  `TealDataConnector`, `TealDataset`, `TealDatasetConnector`
+#'
+#' @keywords internal
+deprecated_join_keys_extract <- function(data_objects, join_keys) {
+  # TODO: check if redundant with same call in teal_data body
+  update_join_keys_to_primary(data_objects, join_keys)
 
-  if (
-    checkmate::test_list(data_objects, types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
-  ) {
-    lifecycle::deprecate_warn(
-      when = "0.3.1",
-      "cdisc_data(
-        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.'
-      )"
-    )
-    update_join_keys_to_primary(data_objects, join_keys)
-
-    new_parents_fun <- function(data_objects) {
-      lapply(data_objects, function(x) {
+  new_parents_fun <- function(data_objects) {
+    lapply(
+      data_objects,
+      function(x) {
         if (inherits(x, "TealDataConnector")) {
           unlist(new_parents_fun(x$get_items()), recursive = FALSE)
         } else {
@@ -66,40 +65,27 @@ cdisc_data <- function(...,
             )
           )
         }
-      })
-    }
-
-    new_parents <- unlist(new_parents_fun(data_objects), recursive = FALSE)
-
-    names(new_parents) <- unlist(lapply(data_objects, function(x) {
-      if (inherits(x, "TealDataConnector")) {
-        lapply(x$get_items(), function(y) y$get_dataname())
-      } else {
-        x$get_datanames()
       }
-    }))
-
-    if (is_dag(new_parents)) {
-      stop("Cycle detected in a parent and child dataset graph.")
-    }
-    join_keys$set_parents(new_parents)
-    join_keys$update_keys_given_parents()
-
-    x <- TealData$new(..., check = check, join_keys = join_keys)
-
-    if (length(code) > 0 && !identical(code, "")) {
-      x$set_pull_code(code = code)
-    }
-
-    x$check_reproducibility()
-    x$check_metadata()
-    x
-  } else {
-    if (!checkmate::test_names(names(data_objects), type = "named")) {
-      stop("Dot (`...`) arguments on `teal_data()` must be named.")
-    }
-    new_teal_data(data = data_objects, code = code, keys = join_keys)
+    )
   }
+
+  new_parents <- unlist(new_parents_fun(data_objects), recursive = FALSE)
+
+  names(new_parents) <- unlist(lapply(data_objects, function(x) {
+    if (inherits(x, "TealDataConnector")) {
+      lapply(x$get_items(), function(y) y$get_dataname())
+    } else {
+      x$get_datanames()
+    }
+  }))
+
+  if (is_dag(new_parents)) {
+    stop("Cycle detected in a parent and child dataset graph.")
+  }
+  join_keys$set_parents(new_parents)
+  join_keys$update_keys_given_parents()
+
+  join_keys
 }
 
 #' Load `TealData` object from a file

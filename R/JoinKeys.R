@@ -401,13 +401,21 @@ join_keys <- function(...) {
 #' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 #'
 cdisc_join_keys <- function(...) {
-  x <- list(...)
+  data_objects <- list(...)
 
-  x_parsed <- lapply(seq_along(x), function(ix) {
-    item <- x[[ix]]
+  data_objects_parsed <- lapply(seq_along(data_objects), function(ix) {
+    item <- data_objects[[ix]]
+    name <- names(data_objects)[ix] %||% item # fallback to value if names are not set
 
-    name <- names(x)[ix] %||% item # fallback to value if names are not set
     if (
+      checkmate::test_r6(item) &&
+        checkmate::test_multi_class(
+          item,
+          classes = c("TealDataConnector", "TealDataset", "TealDatasetConnector")
+        )
+    ) {
+      return(NULL)
+    } else if (
       checkmate::test_class(item, "JoinKeySet") ||
         !checkmate::test_string(name, min.chars = 1) ||
         !name %in% names(default_cdisc_keys)) {
@@ -424,9 +432,10 @@ cdisc_join_keys <- function(...) {
     # Add JoinKey with parent dataset (if exists)
     append(result, list(join_key(name, keys_list$parent, keys = keys_list$foreign)))
   })
-  x_parsed <- do.call(c, x_parsed)
 
-  do.call(join_keys, x_parsed)
+  data_objects_parsed <- do.call(c, data_objects_parsed)
+
+  do.call(join_keys, as.list(data_objects_parsed[!is.null(data_objects_parsed)]))
 }
 
 # wrappers ====

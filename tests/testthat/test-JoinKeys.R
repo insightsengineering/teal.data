@@ -1,3 +1,34 @@
+test_that("[.JoinKeys returns the primary key if arguments only have 1 dataset", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_failure(expect_identical(jk$get("ds1"), jk["ds1"]))
+  checkmate::expect_character(jk["ds1"])
+})
+
+test_that("[.JoinKeys subsets relationship pair successfully", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_identical(jk$get("ds1", "ds1"), jk["ds1"])
+})
+
+test_that("[<-.JoinKeys assigns new relationship pair", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_length(jk$get("ds1", "ds2"), 0)
+
+  jk["ds1", "ds2"] <- c("id")
+  expect_identical(jk$get("ds1", "ds2"), c(id = "id"))
+  expect_identical(jk$get("ds1", "ds2"), jk["ds1", "ds2"])
+})
+
+test_that("[<-.JoinKeys modifies existing relationship pair", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  jk["ds1", "ds1"] <- c("Species")
+  expect_failure(expect_identical(jk$get("ds1", "ds1"), c(id = "id")))
+  expect_identical(jk$get("ds1", "ds1"), c(Species = "Species"))
+})
+
 test_that("join_key throws error with invalid keys arguments", {
   # invalid types
   expect_error(join_key("d1", "d2", keys = NULL))
