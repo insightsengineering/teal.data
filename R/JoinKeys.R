@@ -392,15 +392,15 @@ join_keys <- function(...) {
 
 #' @rdname join_keys
 #' @details
-#' `join_keys_cdisc` treat non-`JoinKeySet` arguments as possible CDISC datasets.
+#' `cdisc_join_keys` treat non-`JoinKeySet` arguments as possible CDISC datasets.
 #' The `dataname` is extrapolated from the name  (or fallback to the value itself if
 #' it's a `character(1)`).
 #'
 #' @export
 #' @examples
-#' join_keys_cdisc(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
+#' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 #'
-join_keys_cdisc <- function(...) {
+cdisc_join_keys <- function(...) {
   x <- list(...)
 
   x_parsed <- lapply(seq_along(x), function(ix) {
