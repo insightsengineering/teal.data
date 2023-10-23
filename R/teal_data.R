@@ -32,7 +32,7 @@
 #'   })
 #' )
 teal_data <- function(...,
-                      join_keys = NULL,
+                      join_keys = teal.data::join_keys(),
                       code = "",
                       check = FALSE) {
   data_objects <- list(...)
