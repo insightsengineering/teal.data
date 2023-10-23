@@ -40,7 +40,7 @@ ds <- dataset(
 ds$get_keys()
 ```
 
-Alternatively, the primary keys can be defined in the `join_keys` parameter by using the `primary_key` or `join_key` functions _(note: when using `join_key` to define a primary key the second dataset name needs to be omitted or have the same value as the first)_.
+Alternatively, the primary keys can be defined in the `join_keys` parameter by using the `join_key` functions by omitting the second dataset (or define it with the same value as the first.
 
 ```{r, message=FALSE}
 library(teal.data)
@@ -52,9 +52,8 @@ data <- teal_data(
   dataset("D1", data_1, code = "D1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)"),
   dataset("D2", data_2, code = "D2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))"),
   join_keys = join_keys(
-    primary_key("D1", c("X")),
-    primary_key("D2", c("V", "W"))
-    # join_key("D1", c("X"))             # equivalent to using primary_key
+    join_key("D1", c("X")),
+    join_key("D2", c("V", "W"))
     # join_key("D2", "D2", c("V", "W")), # equivalent to using primary_key
   )
 )

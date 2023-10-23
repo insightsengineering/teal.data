@@ -415,7 +415,7 @@ join_keys_cdisc <- function(...) {
     }
 
     # Add primary key
-    result <- list(primary_key(name, keys = get_cdisc_keys(name)))
+    result <- list(join_key(name, keys = get_cdisc_keys(name)))
     keys_list <- default_cdisc_keys[[name]]
 
     if (is.null(keys_list) || is.null(keys_list$parent) || is.null(keys_list$foreign)) {
@@ -537,20 +537,4 @@ join_key <- function(dataset_1, dataset_2 = NULL, keys) {
     ),
     class = "JoinKeySet"
   )
-}
-
-#' @rdname join_key
-#' @export
-#'
-#' @details
-#' `primary_key()` will create a primary key for a dataset. It is equivalent to
-#' `join_key(...)` and omitting `dataset_2` argument or giving it the same name
-#' `dataset_1`.
-#'
-primary_key <- function(dataset_1, keys) {
-  if (checkmate::test_character(keys) &&
-    !checkmate::test_names(names(keys), type = "unnamed")) {
-    stop("Primary keys parameter must be a unamed character vector: keys = c('A' = 'A') are not allowed")
-  }
-  join_key(dataset_1 = dataset_1, dataset_2 = dataset_1, keys = keys)
 }

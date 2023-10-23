@@ -56,19 +56,6 @@ test_that("join_key does not throw error with valid arguments", {
   expect_silent(join_key("d1", keys = c("A" = "A", "B" = "B")))
 })
 
-test_that("primary_key does not allow named keys", {
-  expect_error(primary_key("d2", keys = c("A" = "B")))
-})
-
-test_that("primary_key does not throw error with valid arguments", {
-  # keys of length 0
-  expect_silent(primary_key("d1", keys = character(0)))
-  # keys of length 1
-  expect_silent(primary_key("d2", keys = c("A")))
-  # keys of length > 1
-  expect_silent(primary_key("d1", keys = c("A", "B", "C", "D")))
-})
-
 test_that("cannot set join_keys with incompatible keys", {
   # different keys
   expect_error(

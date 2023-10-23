@@ -1,7 +1,7 @@
 # teal.data 0.3.0.9007
 
 ### Enhancements
-* Simplified `join_key` to better support primary keys. Added `primary_key` as a wrapper to `join_key`.
+* Simplified `join_key` to better support primary keys.
 
 ### Breaking changes
 

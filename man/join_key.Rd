@@ -2,12 +2,9 @@
 % Please edit documentation in R/JoinKeys.R
 \name{join_key}
 \alias{join_key}
-\alias{primary_key}
 \title{Create a relationship between a pair of datasets}
 \usage{
 join_key(dataset_1, dataset_2 = NULL, keys)
-
-primary_key(dataset_1, keys)
 }
 \arguments{
 \item{dataset_1}{(\code{character}) one dataset name}
@@ -29,10 +26,6 @@ object of class \code{JoinKeySet} to be passed into \code{join_keys} function.
 \details{
 \code{join_key()} will create a relationship for the variables on a pair
 of datasets.
-
-\code{primary_key()} will create a primary key for a dataset. It is equivalent to
-\code{join_key(...)} and omitting \code{dataset_2} argument or giving it the same name
-\code{dataset_1}.
 }
 \seealso{
 \code{\link[=join_keys]{join_keys()}}
