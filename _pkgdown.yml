@@ -35,6 +35,7 @@ articles:
       - using-delayed-data-basic
       - using-delayed-data-advanced
       - testing-delayed-data
+      - migrate-to-teal_data
   - title: Other Dataset Connectors
     navbar: Other Dataset Connectors
     contents:
@@ -114,6 +115,7 @@ reference:
       - data_label
       - data_label<-
       - example_cdisc_data
+      - format_expression
       - get_key_duplicates
       - get_key_duplicates.data.frame
       - get_key_duplicates.TealDataset
