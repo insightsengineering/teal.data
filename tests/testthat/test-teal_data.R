@@ -83,6 +83,12 @@ testthat::test_that("teal_data code is concatenated into single string", {
   )
 })
 
+testthat::test_that("teal_data@env is locked. Not able to modify, add or remove bindings", {
+  data <- teal_data(iris = iris)
+  testthat::expect_error(data@env$iris <- iris, "cannot change value of locked binding for 'iris'")
+  testthat::expect_error(data@env$iris2 <- iris, "cannot add bindings to a locked environment")
+  testthat::expect_error(rm("iris", envir = data@env), "cannot remove bindings from a locked environment")
+})
 
 testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
