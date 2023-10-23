@@ -53,7 +53,7 @@ testthat::test_that("teal_data accepts code as character", {
   testthat::expect_no_error(
     teal_data(
       iris1 = iris,
-      code = 'iris1 <- iris'
+      code = "iris1 <- iris"
     )
   )
 })
@@ -69,7 +69,9 @@ testthat::test_that("teal_data accepts code as language", {
 
 testthat::test_that("teal_data code unfolds code-block wrapped in '{'", {
   testthat::expect_identical(
-    teal_data(iris1 = iris, code = quote({iris1 <- iris}))@code,
+    teal_data(iris1 = iris, code = quote({
+      iris1 <- iris
+    }))@code,
     "iris1 <- iris"
   )
 })
