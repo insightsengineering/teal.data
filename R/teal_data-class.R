@@ -54,7 +54,7 @@ new_teal_data <- function(data, code = character(0), keys = join_keys(), datanam
   checkmate::assert_character(datanames)
 
   if (is.language(code)) {
-    code <- as.character(code)
+    code <- teal.code:::format_expression(code)
   } else if (!is.character(code)) {
     stop("`code` must be a character or language object.")
   }
