@@ -2,6 +2,7 @@
 
 ### Enhancements
 * Simplified `join_key` to better support primary keys.
+* Added subset and assignment to `JoinKeySet` class to manipulate relationship pair keys.
 
 ### Breaking changes
 
