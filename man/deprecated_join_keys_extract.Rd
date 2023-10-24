@@ -7,6 +7,9 @@
 deprecated_join_keys_extract(data_objects, join_keys)
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+}
+\details{
 note: This function will be removed once the following classes are defunct:
 \code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}
 }
