@@ -44,8 +44,9 @@ teal_data <- function(...,
   ) {
     lifecycle::deprecate_warn(
       when = "0.3.1",
-      "cdisc_data(
-        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.'
+      "teal_data(
+        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.
+        Find more information on https://github.com/insightsengineering/teal/discussions/945'
       )"
     )
     update_join_keys_to_primary(data_objects, join_keys)
