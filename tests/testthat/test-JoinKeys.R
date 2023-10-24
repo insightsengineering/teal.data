@@ -1,122 +1,3 @@
-test_that("cdisc_join_keys will generate JoinKeys for named list with non-named elements", {
-  new_dataset <- cdisc_join_keys("ADSL", ADTTE = rADTTE)
-  jk <- get_join_keys(new_dataset)
-
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
-
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
-})
-
-test_that("cdisc_join_keys will generate JoinKeys for character list", {
-  new_dataset <- cdisc_join_keys("ADSL", "ADTTE")
-  jk <- get_join_keys(new_dataset)
-
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
-
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
-})
-
-test_that("cdisc_join_keys will generate JoinKeys for named list", {
-  new_dataset <- cdisc_join_keys(ADSL = rADSL, ADTTE = rADTTE)
-  jk <- get_join_keys(new_dataset)
-
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
-
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
-})
-
-test_that("cdisc_join_keys will retrieve ADTTE primary and foreign keys", {
-  datasets <- names(default_cdisc_keys)
-
-  internal_keys <- default_cdisc_keys[["ADTTE"]]
-  jk <- cdisc_join_keys("ADTTE")
-  primary_keys <- unname(jk$get("ADTTE", "ADTTE"))
-
-  expect_equal(primary_keys, internal_keys$primary)
-
-  foreign_keys <- unname(jk$get("ADTTE", internal_keys$parent))
-  expect_equal(foreign_keys, internal_keys$foreign)
-})
-
-test_that("cdisc_join_keys will retrieve known primary and foreign keys", {
-  datasets <- names(default_cdisc_keys)
-
-  vapply(
-    datasets,
-    function(.x) {
-      internal_keys <- default_cdisc_keys[[.x]]
-      jk <- cdisc_join_keys(.x)
-      primary_keys <- unname(jk$get(.x, .x))
-      expect_equal(primary_keys, internal_keys$primary)
-      if (!is.null(internal_keys$foreign)) {
-        foreign_keys <- unname(jk$get(.x, internal_keys$parent))
-        expect_equal(foreign_keys, internal_keys$foreign)
-      }
-      character(0)
-    },
-    character(0)
-  )
-})
-
-test_that("cdisc_join_keys will retrieve known primary keys", {
-  datasets <- names(default_cdisc_keys)
-
-  vapply(
-    datasets,
-    function(.x) {
-      jk <- cdisc_join_keys(.x)
-      expect_equal(unname(jk[.x]), get_cdisc_keys(.x))
-      character(0)
-    },
-    character(0)
-  )
-})
-
-test_that("cdisc_join_keys does nothing with TealDataset", {
-  adae_cf <- callable_function(
-    function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
-  )
-  adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
-  expect_length(get_join_keys(cdisc_join_keys(adae_cdc))$get(), 0)
-})
-
-test_that("[.JoinKeys returns the primary key if arguments only have 1 dataset", {
-  jk <- join_keys(join_key("ds1", keys = c("id")))
-
-  expect_failure(expect_identical(jk$get("ds1"), jk["ds1"]))
-  checkmate::expect_character(jk["ds1"])
-})
-
-test_that("[.JoinKeys subsets relationship pair successfully", {
-  jk <- join_keys(join_key("ds1", keys = c("id")))
-
-  expect_identical(jk$get("ds1", "ds1"), jk["ds1"])
-})
-
-test_that("[<-.JoinKeys assigns new relationship pair", {
-  jk <- join_keys(join_key("ds1", keys = c("id")))
-
-  expect_length(jk$get("ds1", "ds2"), 0)
-
-  jk["ds1", "ds2"] <- c("id")
-  expect_identical(jk$get("ds1", "ds2"), c(id = "id"))
-  expect_identical(jk$get("ds1", "ds2"), jk["ds1", "ds2"])
-})
-
-test_that("[<-.JoinKeys modifies existing relationship pair", {
-  jk <- join_keys(join_key("ds1", keys = c("id")))
-
-  jk["ds1", "ds1"] <- c("Species")
-  expect_failure(expect_identical(jk$get("ds1", "ds1"), c(id = "id")))
-  expect_identical(jk$get("ds1", "ds1"), c(Species = "Species"))
-})
-
 test_that("join_key throws error with invalid keys arguments", {
   # invalid types
   expect_error(join_key("d1", "d2", keys = NULL))
@@ -768,4 +649,123 @@ testthat::test_that("JoinKeys$check_parent_child throws error if no join_keys ex
     jk$.__enclos_env__$private$check_parent_child(),
     "No join keys from df2 to its parent \\(df1\\) and vice versa"
   )
+})
+
+test_that("cdisc_join_keys will generate JoinKeys for named list with non-named elements", {
+  new_dataset <- cdisc_join_keys("ADSL", ADTTE = rADTTE)
+  jk <- get_join_keys(new_dataset)
+
+  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+
+  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+})
+
+test_that("cdisc_join_keys will generate JoinKeys for character list", {
+  new_dataset <- cdisc_join_keys("ADSL", "ADTTE")
+  jk <- get_join_keys(new_dataset)
+
+  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+
+  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+})
+
+test_that("cdisc_join_keys will generate JoinKeys for named list", {
+  new_dataset <- cdisc_join_keys(ADSL = rADSL, ADTTE = rADTTE)
+  jk <- get_join_keys(new_dataset)
+
+  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+
+  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+})
+
+test_that("cdisc_join_keys will retrieve ADTTE primary and foreign keys", {
+  datasets <- names(default_cdisc_keys)
+
+  internal_keys <- default_cdisc_keys[["ADTTE"]]
+  jk <- cdisc_join_keys("ADTTE")
+  primary_keys <- unname(jk$get("ADTTE", "ADTTE"))
+
+  expect_equal(primary_keys, internal_keys$primary)
+
+  foreign_keys <- unname(jk$get("ADTTE", internal_keys$parent))
+  expect_equal(foreign_keys, internal_keys$foreign)
+})
+
+test_that("cdisc_join_keys will retrieve known primary and foreign keys", {
+  datasets <- names(default_cdisc_keys)
+
+  vapply(
+    datasets,
+    function(.x) {
+      internal_keys <- default_cdisc_keys[[.x]]
+      jk <- cdisc_join_keys(.x)
+      primary_keys <- unname(jk$get(.x, .x))
+      expect_equal(primary_keys, internal_keys$primary)
+      if (!is.null(internal_keys$foreign)) {
+        foreign_keys <- unname(jk$get(.x, internal_keys$parent))
+        expect_equal(foreign_keys, internal_keys$foreign)
+      }
+      character(0)
+    },
+    character(0)
+  )
+})
+
+test_that("cdisc_join_keys will retrieve known primary keys", {
+  datasets <- names(default_cdisc_keys)
+
+  vapply(
+    datasets,
+    function(.x) {
+      jk <- cdisc_join_keys(.x)
+      expect_equal(unname(jk[.x]), get_cdisc_keys(.x))
+      character(0)
+    },
+    character(0)
+  )
+})
+
+test_that("cdisc_join_keys does nothing with TealDataset", {
+  adae_cf <- callable_function(
+    function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
+  )
+  adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
+  expect_length(get_join_keys(cdisc_join_keys(adae_cdc))$get(), 0)
+})
+
+test_that("[.JoinKeys returns the primary key if arguments only have 1 dataset", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_failure(expect_identical(jk$get("ds1"), jk["ds1"]))
+  checkmate::expect_character(jk["ds1"])
+})
+
+test_that("[.JoinKeys subsets relationship pair successfully", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_identical(jk$get("ds1", "ds1"), jk["ds1"])
+})
+
+test_that("[<-.JoinKeys assigns new relationship pair", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  expect_length(jk$get("ds1", "ds2"), 0)
+
+  jk["ds1", "ds2"] <- c("id")
+  expect_identical(jk$get("ds1", "ds2"), c(id = "id"))
+  expect_identical(jk$get("ds1", "ds2"), jk["ds1", "ds2"])
+})
+
+test_that("[<-.JoinKeys modifies existing relationship pair", {
+  jk <- join_keys(join_key("ds1", keys = c("id")))
+
+  jk["ds1", "ds1"] <- c("Species")
+  expect_failure(expect_identical(jk$get("ds1", "ds1"), c(id = "id")))
+  expect_identical(jk$get("ds1", "ds1"), c(Species = "Species"))
 })
