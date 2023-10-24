@@ -43,11 +43,21 @@ cdisc_data <- function(...,
 
 #' Extrapolate parents from `TealData` classes
 #'
+#' `r lifecycle::badge("deprecated")`
+#'
 #' note: This function will be removed once the following classes are defunct:
 #'  `TealDataConnector`, `TealDataset`, `TealDatasetConnector`
 #'
 #' @keywords internal
 deprecated_join_keys_extract <- function(data_objects, join_keys) {
+  if (
+    !checkmate::test_list(
+      data_objects,
+      types = c("TealDataConnector", "TealDataset", "TealDatasetConnector")
+    )
+  ) {
+    return(join_keys)
+  }
   # TODO: check if redundant with same call in teal_data body
   update_join_keys_to_primary(data_objects, join_keys)
 

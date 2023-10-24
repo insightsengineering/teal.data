@@ -405,7 +405,9 @@ cdisc_join_keys <- function(...) {
 
   data_objects_parsed <- lapply(seq_along(data_objects), function(ix) {
     item <- data_objects[[ix]]
-    name <- names(data_objects)[ix] %||% item # fallback to value if names are not set
+
+    name <- names(data_objects)[ix]
+    if (is.null(name) || identical(trimws(name), "")) name <- item # fallback to value if names are not set
 
     if (
       checkmate::test_r6(item) &&
@@ -414,6 +416,8 @@ cdisc_join_keys <- function(...) {
           classes = c("TealDataConnector", "TealDataset", "TealDatasetConnector")
         )
     ) {
+      # Code not refactored for these data types as they'll be deprecated soon
+      # see logic in function `deprecated_join_keys_extract` called under `cdisc_data`
       return(NULL)
     } else if (
       checkmate::test_class(item, "JoinKeySet") ||
