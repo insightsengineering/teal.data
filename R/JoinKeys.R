@@ -301,8 +301,10 @@ JoinKeys <- R6::R6Class( # nolint
           return(TRUE)
         }
 
-        if (xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-          !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
+        if (
+          xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
+            !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))
+        ) {
           error_message(join_key_1$dataset_1, join_key_1$dataset_2)
         }
       }
@@ -422,7 +424,8 @@ cdisc_join_keys <- function(...) {
     } else if (
       checkmate::test_class(item, "JoinKeySet") ||
         !checkmate::test_string(name, min.chars = 1) ||
-        !name %in% names(default_cdisc_keys)) {
+        !name %in% names(default_cdisc_keys)
+    ) {
       return(list(item))
     }
 
