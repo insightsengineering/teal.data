@@ -23,6 +23,12 @@ get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
 }
 \arguments{
 \item{data}{`` - object to extract the join keys}
+
+\item{dataset_1}{(\code{character}) one dataset name}
+
+\item{dataset_2}{(\code{character}) other dataset name}
+
+\item{value}{value to assign}
 }
 \value{
 Either \code{JoinKeys} object or \code{NULL} if no join keys

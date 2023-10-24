@@ -372,6 +372,9 @@ join_keys <- function(...) {
 }
 
 #' @title Getter for JoinKeys that returns the relationship between pairs of datasets
+#' @param x JoinKeys object to extract the join keys
+#' @param dataset_1 (`character`) name of first dataset.
+#' @param dataset_2 (`character`) name of second dataset.
 #' @export
 `[.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL) {
   checkmate::assert_string(dataset_1)
@@ -382,6 +385,7 @@ join_keys <- function(...) {
 }
 
 #' @rdname sub-.JoinKeys
+#' @param value value to assign
 #' @export
 `[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL, value) {
   checkmate::assert_string(dataset_1)

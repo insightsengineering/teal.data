@@ -9,6 +9,15 @@
 
 \method{[}{JoinKeys}(x, dataset_1, dataset_2 = NULL) <- value
 }
+\arguments{
+\item{x}{JoinKeys object to extract the join keys}
+
+\item{dataset_1}{(\code{character}) name of first dataset.}
+
+\item{dataset_2}{(\code{character}) name of second dataset.}
+
+\item{value}{value to assign}
+}
 \description{
 Getter for JoinKeys that returns the relationship between pairs of datasets
 }
