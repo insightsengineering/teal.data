@@ -34,18 +34,85 @@ teal_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
   teal_data(df1_ds, df2_dc, df3_rdc, check = check, join_keys = join_keys1)
 }
 
+testthat::test_that("teal_data allows to initialize empty teal_data object", {
+  testthat::expect_s4_class(teal_data(), "teal_data")
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed objects", {
+  testthat::expect_identical(
+    teal_data(iris = iris, mtcars = mtcars)@datanames,
+    c("iris", "mtcars")
+  )
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed join_keys", {
+  testthat::expect_identical(
+    teal_data(join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
+    c("parent", "child")
+  )
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from join_keys and passed objects", {
+  testthat::expect_identical(
+    teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
+    c("iris", "parent", "child")
+  )
+})
+
 testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
   testthat::expect_silent(data <- teal_data_mixed_call())
   testthat::expect_identical(data$get_datanames(), c("df1", "df2", "df3"))
 })
 
-testthat::test_that("teal_data throws error if it receives undesired objects", {
+testthat::test_that("teal_data returns teal_data when data passed as named list", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
+  testthat::expect_s4_class(teal_data(df1 = df1), "teal_data")
+})
 
-  testthat::expect_error(
-    teal_data(df1, check = TRUE),
-    "May only contain the following types: \\{TealDataset,TealDatasetConnector,TealDataConnector\\}"
+testthat::test_that("teal_data accepts any data provided as named list", {
+  df1 <- structure(1L, class = "anyclass")
+  testthat::expect_no_error(teal_data(df1 = df1))
+})
+
+testthat::test_that("teal_data accepts code as character", {
+  testthat::expect_no_error(
+    teal_data(
+      iris1 = iris,
+      code = "iris1 <- iris"
+    )
   )
+})
+
+testthat::test_that("teal_data accepts code as language", {
+  testthat::expect_no_error(
+    teal_data(
+      iris1 = iris,
+      code = quote(iris1 <- iris)
+    )
+  )
+})
+
+testthat::test_that("teal_data code unfolds code-block wrapped in '{'", {
+  testthat::expect_identical(
+    teal_data(iris1 = iris, code = quote({
+      iris1 <- iris
+    }))@code,
+    "iris1 <- iris"
+  )
+})
+
+testthat::test_that("teal_data code is concatenated into single string", {
+  testthat::expect_identical(
+    teal_data(iris1 = iris, code = c("iris1 <- iris", "iris2 <- iris1"))@code,
+    "iris1 <- iris\niris2 <- iris1"
+  )
+})
+
+testthat::test_that("teal_data@env is locked. Not able to modify, add or remove bindings", {
+  data <- teal_data(iris = iris)
+  testthat::expect_error(data@env$iris <- iris, "cannot change value of locked binding for 'iris'")
+  testthat::expect_error(data@env$iris2 <- iris, "cannot add bindings to a locked environment")
+  testthat::expect_error(rm("iris", envir = data@env), "cannot remove bindings from a locked environment")
 })
 
 testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
@@ -58,14 +125,14 @@ testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
   jk <- join_keys(join_key("df1", "df2", "id"))
   data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
 
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df2", "id"),
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df2", "df2_id")
-    )
+  jk_expected <- join_keys(
+    join_key("df1", "df2", "id"),
+    join_key("df1", "df1", "id"),
+    join_key("df2", "df2", "df2_id")
   )
+  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
+
+  testthat::expect_equal(data$get_join_keys(), jk_expected)
 })
 
 testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when key names differ", {
@@ -76,15 +143,15 @@ testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when k
   jk <- join_keys(join_key("df1", "df2", c(id = "fk")))
   data <- teal_data(df1, df2, join_keys = jk, check = FALSE)
 
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df2", c(id = "fk")),
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df1", c(fk = "id")),
-      join_key("df2", "df2", "df2_id")
-    )
+  jk_expected <- join_keys(
+    join_key("df1", "df2", c(id = "fk")),
+    join_key("df1", "df1", "id"),
+    join_key("df2", "df1", c(fk = "id")),
+    join_key("df2", "df2", "df2_id")
   )
+  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
+
+  testthat::expect_equal(data$get_join_keys(), jk_expected)
 })
 
 testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when key names differ (multiple keys)", {
@@ -95,14 +162,13 @@ testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when k
   data <- teal_data(df1, df2, check = FALSE)
   data$mutate_join_keys("df1", "df2", c(id = "fk", id2 = "fk2"))
 
-  testthat::expect_equal(
-    data$get_join_keys(),
-    join_keys(
-      join_key("df1", "df1", "id"),
-      join_key("df2", "df2", "df2_id"),
-      join_key("df1", "df2", c(id = "fk", id2 = "fk2"))
-    )
+  jk_expected <- join_keys(
+    join_key("df1", "df1", "id"),
+    join_key("df2", "df2", "df2_id"),
+    join_key("df1", "df2", c(id = "fk", id2 = "fk2"))
   )
+  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
+  testthat::expect_equal(data$get_join_keys(), jk_expected)
 })
 
 testthat::test_that("teal_data returns TealData object with cdisc_dataset input", {
@@ -131,21 +197,18 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
 
   cdisc_only <- teal_data(adsl, adtte)
   testthat::expect_equal(class(cdisc_only), c("TealData", "TealDataAbstract", "R6"))
-
-  testthat::expect_error(
-    teal_data()
-  )
 })
 
 testthat::test_that("teal_data_file loads the TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "
-  ),
-  con = tmp_file
+    ),
+    con = tmp_file
   )
   tdf <- teal_data_file(tmp_file)
   file.remove(tmp_file)
@@ -162,8 +225,9 @@ testthat::test_that("teal_data_file loads the TealData object", {
 
 testthat::test_that("teal_data_file uses the code input to mutate the code of the loaded TealData object", {
   tmp_file <- tempfile(fileext = ".R")
-  writeLines(text = c(
-    "df <- data.frame(A = c(1, 2, 3))
+  writeLines(
+    text = c(
+      "df <- data.frame(A = c(1, 2, 3))
     df1_ds <- dataset('df', df, code = 'df <- data.frame(A = c(1, 2, 3))')
     teal_data(df1_ds)
     "

@@ -11,8 +11,9 @@
 
 # Fix R CMD check notes
 #' @import shiny
+#' @importFrom rlang %||%
 #' @importFrom digest digest
 #' @importFrom stats setNames
-#' @importFrom shinyjs show
+#' @importFrom shinyjs useShinyjs
 #' @importFrom logger log_trace
 NULL
