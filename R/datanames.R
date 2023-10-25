@@ -4,7 +4,7 @@
 #'
 #' The `@datanames` slot in a `teal_data` object specifies which of the variables stored in its environment
 #' (the `@env` slot) are data sets to be taken into consideration.
-#' The contents of `@datanames` can be specified upon instantiation and default to all variables in `@env`.
+#' The contents of `@datanames` can be specified upon creation and default to all variables in `@env`.
 #' Variables created later, which may well be data sets, are not automatically considered such.
 #' Use this function to update the slot.
 #'
