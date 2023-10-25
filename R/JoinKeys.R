@@ -409,44 +409,35 @@ join_keys <- function(...) {
 cdisc_join_keys <- function(...) {
   data_objects <- list(...)
 
-  data_objects_parsed <- lapply(seq_along(data_objects), function(ix) {
+  join_keys <- join_keys()
+  lapply(seq_along(data_objects), function(ix) {
     item <- data_objects[[ix]]
-
     name <- names(data_objects)[ix]
-    if (is.null(name) || identical(trimws(name), "")) name <- item # fallback to value if names are not set
 
-    if (
-      checkmate::test_r6(item) &&
-        checkmate::test_multi_class(
-          item,
-          classes = c("TealDataConnector", "TealDataset", "TealDatasetConnector")
-        )
-    ) {
-      # Code not refactored for these data types as they'll be deprecated soon
-      # see logic in function `deprecated_join_keys_extract` called under `cdisc_data`
+    if ((is.null(name) || identical(trimws(name), "")) && is.character(item)) {
+      name <- item
+    } else if (checkmate::test_class(item, "JoinKeySet")) {
+      join_keys$set(item)
       return(NULL)
     } else if (
-      checkmate::test_class(item, "JoinKeySet") ||
-        !checkmate::test_string(name, min.chars = 1) ||
-        !name %in% names(default_cdisc_keys)
+      checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
     ) {
-      return(list(item))
+      return(NULL)
     }
 
-    # Add primary key
-    result <- list(join_key(name, keys = get_cdisc_keys(name)))
-    keys_list <- default_cdisc_keys[[name]]
+    if (name %in% names(default_cdisc_keys)) {
+      # Set default primary keys
+      keys_list <- default_cdisc_keys[[name]]
+      join_keys[name] <- keys_list$primary
 
-    if (is.null(keys_list) || is.null(keys_list$parent) || is.null(keys_list$foreign)) {
-      return(result)
+      if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
+        join_keys[name, keys_list$parent] <- keys_list$foreign
+      }
     }
-    # Add JoinKey with parent dataset (if exists)
-    append(result, list(join_key(name, keys_list$parent, keys = keys_list$foreign)))
+
   })
 
-  data_objects_parsed <- do.call(c, data_objects_parsed)
-
-  do.call(join_keys, as.list(data_objects_parsed[!is.null(data_objects_parsed)]))
+  join_keys
 }
 
 # wrappers ====
