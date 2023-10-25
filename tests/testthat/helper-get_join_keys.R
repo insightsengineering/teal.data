@@ -14,7 +14,7 @@ helper_generator_teal_data <- function() {
 }
 
 #' Generate a JoinKeys
-helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) {
+helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) { # nolint
   join_keys(
     join_key(dataset_1, keys = keys)
   )
