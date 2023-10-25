@@ -33,7 +33,7 @@ cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
 }
 
 testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
-  testthat::expect_silent(data <- cdisc_data_mixed_call())
+  lifecycle::expect_deprecated(data <- cdisc_data_mixed_call(), "should use data directly")
   testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE", "ADAE"))
 })
 
