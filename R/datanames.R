@@ -19,8 +19,12 @@
 #' datanames(td)
 #' datanames(td) <- c("iris", "mtcars")
 #'
+#' @name datanames
+#' @aliases datanames,teal_data-method
+#' @aliases datanames<-,teal_data,character-method
+
+#' @rdname datanames
 #' @export
-#'
 setGeneric("datanames", function(x) standardGeneric("datanames"))
 setMethod("datanames", "teal_data", definition = function(x) {
   x@datanames
@@ -28,7 +32,6 @@ setMethod("datanames", "teal_data", definition = function(x) {
 
 #' @rdname datanames
 #' @export
-#'
 setGeneric("datanames<-", function(x, value) standardGeneric("datanames<-"))
 setMethod("datanames<-", c("teal_data", "character"), definition = function(x, value) {
   if (!all(is.element(value, ls(x@env, all.names = TRUE)))) {
