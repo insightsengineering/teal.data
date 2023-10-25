@@ -434,7 +434,6 @@ cdisc_join_keys <- function(...) {
         join_keys[name, keys_list$parent] <- keys_list$foreign
       }
     }
-
   })
 
   join_keys
