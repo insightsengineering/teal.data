@@ -36,8 +36,6 @@ cdisc_data <- function(...,
                        join_keys = teal.data::cdisc_join_keys(...),
                        code = "",
                        check = FALSE) {
-  data_objects <- list(...)
-  deprecated_join_keys_extract(data_objects, join_keys)
   teal_data(..., join_keys = join_keys, code = code, check = check)
 }
 

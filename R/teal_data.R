@@ -49,7 +49,7 @@ teal_data <- function(...,
         Find more information on https://github.com/insightsengineering/teal/discussions/945'
       )"
     )
-    update_join_keys_to_primary(data_objects, join_keys)
+    deprecated_join_keys_extract(data_objects, join_keys)
 
     x <- TealData$new(..., check = check, join_keys = join_keys)
     if (length(code) > 0 && !identical(code, "")) {
