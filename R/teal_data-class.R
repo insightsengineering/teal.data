@@ -44,14 +44,17 @@ setClass(
 #' @param data (`named list`) List of data.
 #' @param code (`character` or `language`) code to reproduce the `data`.
 #'   Accepts and stores comments also.
-#' @param keys (`JoinKeys`) object
+#' @param join_keys (`JoinKeys`) object
 #' @param datanames (`character`) names of datasets passed to `data`.
 #'   Needed when non-dataset objects are needed in the `env` slot.
 #' @rdname new_teal_data
 #' @keywords internal
-new_teal_data <- function(data, code = character(0), keys = join_keys(), datanames = names(data)) {
+new_teal_data <- function(data,
+                          code = character(0),
+                          join_keys = join_keys(),
+                          datanames = union(names(data), names(join_keys$get()))) {
   checkmate::assert_list(data)
-  checkmate::assert_class(keys, "JoinKeys")
+  checkmate::assert_class(join_keys, "JoinKeys")
   checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {
     stop("`code` must be a character or language object.")
@@ -68,7 +71,7 @@ new_teal_data <- function(data, code = character(0), keys = join_keys(), datanam
     warnings = "",
     messages = "",
     id = sample.int(.Machine$integer.max, size = 1L),
-    join_keys = keys,
+    join_keys = join_keys,
     datanames = datanames
   )
 }

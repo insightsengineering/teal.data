@@ -564,7 +564,7 @@ testthat::test_that("code_dataset_connector - library calls", {
     label = "ADRS dataset"
   )
 
-  data <- cdisc_data(adsl, adtte, adrs, check = TRUE)
+  expect_warning(data <- cdisc_data(adsl, adtte, adrs, check = TRUE), "deprecated")
   expect_silent(
     lapply(
       data$get_items(),

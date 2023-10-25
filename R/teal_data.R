@@ -40,7 +40,11 @@ teal_data <- function(...,
     join_keys <- teal.data::join_keys(join_keys)
   }
   if (
-    checkmate::test_list(data_objects, types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
+    checkmate::test_list(
+      data_objects,
+      types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"),
+      min.len = 1
+    )
   ) {
     lifecycle::deprecate_warn(
       when = "0.3.1",
@@ -59,13 +63,13 @@ teal_data <- function(...,
     x$check_metadata()
     x
   } else {
-    if (!checkmate::test_names(names(data_objects), type = "named")) {
+    if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
     new_teal_data(
       data = data_objects,
       code = code,
-      keys = join_keys
+      join_keys = join_keys
     )
   }
 }

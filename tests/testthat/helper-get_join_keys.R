@@ -9,7 +9,7 @@ helper_generator_teal_data <- function() {
       ds2 = iris2
     ),
     code = "ds1 <- iris2; ds2 <- iris2",
-    keys = helper_generator_JoinKeys("ds1", keys = c("id"))
+    join_keys = helper_generator_JoinKeys("ds1", keys = c("id"))
   )
 }
 

@@ -7,8 +7,8 @@
 new_teal_data(
   data,
   code = character(0),
-  keys = join_keys(),
-  datanames = names(data)
+  join_keys = join_keys(),
+  datanames = union(names(data), names(join_keys$get()))
 )
 }
 \arguments{
@@ -17,7 +17,7 @@ new_teal_data(
 \item{code}{(\code{character} or \code{language}) code to reproduce the \code{data}.
 Accepts and stores comments also.}
 
-\item{keys}{(\code{JoinKeys}) object}
+\item{join_keys}{(\code{JoinKeys}) object}
 
 \item{datanames}{(\code{character}) names of datasets passed to \code{data}.
 Needed when non-dataset objects are needed in the \code{env} slot.}
