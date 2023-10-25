@@ -35,5 +35,6 @@ setMethod("datanames<-", c("teal_data", "character"), definition = function(x, v
     stop("invalid name")
   }
   x@datanames <- value
+  methods::validObject(x)
   x
 })
