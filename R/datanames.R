@@ -19,7 +19,7 @@
 #' datanames(td)
 #' datanames(td) <- c("iris", "mtcars")
 #'
-#'@export
+#' @export
 #'
 setGeneric("datanames", function(x) standardGeneric("datanames"))
 setMethod("datanames", "teal_data", definition = function(x) {
