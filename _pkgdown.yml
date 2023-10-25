@@ -108,6 +108,8 @@ reference:
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:
+      - datanames
+      - datanames<-
       - col_labels
       - col_labels<-
       - col_relabel
