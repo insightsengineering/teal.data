@@ -704,8 +704,10 @@ testthat::test_that("TealDatasetConnector mutate method with delayed logic", {
   testthat::expect_true(t_dc$is_mutate_delayed())
 
   testthat::expect_true(
-    all(c("test_dc2$neg_integers <- t_dc3$neg_integers", "test_dc$six <- test_dc$five + 1") %in%
-      pretty_code_string(t_dc$get_code()))
+    all(
+      c("test_dc2$neg_integers <- t_dc3$neg_integers", "test_dc$six <- test_dc$five + 1") %in%
+        pretty_code_string(t_dc$get_code())
+    )
   )
   testthat::expect_true(t_dc$is_mutate_delayed())
 
@@ -889,34 +891,40 @@ testthat::test_that("TealDatasetConnector returns the correct code when mutated 
   testthat::expect_equal(dc$get_code_class()$get_code(), "mtcars <- (function() head(mtcars))()\n1")
 })
 
-testthat::test_that("Pulling an already pulled TealDatasetConnector after mutating it with a delayed object
-  undoes any eager pre-pull mutations", {
-  cf <- CallableFunction$new(function() head(mtcars))
-  dc <- TealDatasetConnector$new("mtcars", cf)
-  dc$pull()
-  dc$mutate(code = "mtcars[1] <- NULL")
-  dc$mutate(
-    code = "",
-    vars = list(delayed = TealDatasetConnector$new("iris", CallableFunction$new(function() head(iris))))
-  )
-  dc$pull()
-  testthat::expect_equal(dc$get_raw_data(), head(mtcars))
-})
+testthat::test_that(
+  "Pulling an already pulled TealDatasetConnector after mutating it with a delayed object
+  undoes any eager pre-pull mutations",
+  {
+    cf <- CallableFunction$new(function() head(mtcars))
+    dc <- TealDatasetConnector$new("mtcars", cf)
+    dc$pull()
+    dc$mutate(code = "mtcars[1] <- NULL")
+    dc$mutate(
+      code = "",
+      vars = list(delayed = TealDatasetConnector$new("iris", CallableFunction$new(function() head(iris))))
+    )
+    dc$pull()
+    testthat::expect_equal(dc$get_raw_data(), head(mtcars))
+  }
+)
 
-testthat::test_that("Pulling an already pulled TealDatasetConnector after mutating it with a delayed object
-  does not change the returned code", {
-  cf <- CallableFunction$new(function() head(mtcars))
-  dc <- TealDatasetConnector$new("mtcars", cf)
-  dc$pull()
-  dc$mutate(code = "mtcars[1] <- NULL")
-  dc$mutate(
-    code = "",
-    vars = list(delayed = TealDatasetConnector$new("iris", CallableFunction$new(function() head(iris))))
-  )
-  pre_pull_code <- dc$get_code()
-  dc$pull()
-  testthat::expect_equal(dc$get_code(), pre_pull_code)
-})
+testthat::test_that(
+  "Pulling an already pulled TealDatasetConnector after mutating it with a delayed object
+  does not change the returned code",
+  {
+    cf <- CallableFunction$new(function() head(mtcars))
+    dc <- TealDatasetConnector$new("mtcars", cf)
+    dc$pull()
+    dc$mutate(code = "mtcars[1] <- NULL")
+    dc$mutate(
+      code = "",
+      vars = list(delayed = TealDatasetConnector$new("iris", CallableFunction$new(function() head(iris))))
+    )
+    pre_pull_code <- dc$get_code()
+    dc$pull()
+    testthat::expect_equal(dc$get_code(), pre_pull_code)
+  }
+)
 
 testthat::test_that("Initializing TealDatasetConnector with code argument works", {
   test_ds1 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
@@ -995,18 +1003,20 @@ testthat::test_that("TealDatasetConnector$print prints dataset when it is pulled
   )
 })
 
-testthat::test_that("get_var_r6 returns identical objects as these passed to the vars argument in
-                    the constructor", {
-  test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_dc",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
+testthat::test_that(
+  "get_var_r6 returns identical objects as these passed to the vars argument in the constructor",
+  {
+    test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+    test_ds1 <- TealDatasetConnector$new(
+      dataname = "test_dc",
+      pull_callable = CallableFunction$new(data.frame),
+      vars = list(test_ds0 = test_ds0)
+    )
 
-  vars <- test_ds1$get_var_r6()
-  testthat::expect_identical(vars$test_ds0, test_ds0)
-})
+    vars <- test_ds1$get_var_r6()
+    testthat::expect_identical(vars$test_ds0, test_ds0)
+  }
+)
 
 testthat::test_that("clone(deep = TRUE) deep clones dependencies, which are TealDataset objects", {
   test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
@@ -1021,78 +1031,87 @@ testthat::test_that("clone(deep = TRUE) deep clones dependencies, which are Teal
   )
 })
 
-testthat::test_that("reassign_datasets_vars updates the references of the vars to
-                    addresses of passed objects", {
-  test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_dc",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
+testthat::test_that(
+  "reassign_datasets_vars updates the references of the vars to addresses of passed objects",
+  {
+    test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+    test_ds1 <- TealDatasetConnector$new(
+      dataname = "test_dc",
+      pull_callable = CallableFunction$new(data.frame),
+      vars = list(test_ds0 = test_ds0)
+    )
 
-  # after reassignment vars_r6, vars and muatate_vars match new reference
-  test_ds0_cloned <- test_ds0$clone(deep = TRUE)
-  test_ds1$reassign_datasets_vars(datasets = list(test_ds0 = test_ds0_cloned))
+    # after reassignment vars_r6, vars and muatate_vars match new reference
+    test_ds0_cloned <- test_ds0$clone(deep = TRUE)
+    test_ds1$reassign_datasets_vars(datasets = list(test_ds0 = test_ds0_cloned))
 
-  vars <- test_ds1$.__enclos_env__$private$pull_vars
-  testthat::expect_identical(vars$test_ds0, test_ds0_cloned)
-})
+    vars <- test_ds1$.__enclos_env__$private$pull_vars
+    testthat::expect_identical(vars$test_ds0, test_ds0_cloned)
+  }
+)
 
-testthat::test_that("reassign_datasets_vars updates the references of the vars_r6 to
-                    addresses of passed objects", {
-  test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
-  test_ds1 <- TealDatasetConnector$new(
-    dataname = "test_dc",
-    pull_callable = CallableFunction$new(data.frame),
-    vars = list(test_ds0 = test_ds0)
-  )
+testthat::test_that(
+  "reassign_datasets_vars updates the references of the vars_r6 to addresses of passed objects",
+  {
+    test_ds0 <- TealDataset$new("head_mtcars", head(mtcars), code = "head_mtcars <- head(mtcars)")
+    test_ds1 <- TealDatasetConnector$new(
+      dataname = "test_dc",
+      pull_callable = CallableFunction$new(data.frame),
+      vars = list(test_ds0 = test_ds0)
+    )
 
-  # after reassignment vars_r6, vars and muatate_vars match new reference
-  test_ds0_cloned <- test_ds0$clone(deep = TRUE)
-  test_ds1$reassign_datasets_vars(datasets = list(test_ds0 = test_ds0_cloned))
+    # after reassignment vars_r6, vars and muatate_vars match new reference
+    test_ds0_cloned <- test_ds0$clone(deep = TRUE)
+    test_ds1$reassign_datasets_vars(datasets = list(test_ds0 = test_ds0_cloned))
 
-  vars_r6 <- test_ds1$get_var_r6()
-  testthat::expect_identical(vars_r6$test_ds0, test_ds0_cloned)
-})
+    vars_r6 <- test_ds1$get_var_r6()
+    testthat::expect_identical(vars_r6$test_ds0, test_ds0_cloned)
+  }
+)
 
-testthat::test_that("reassign_datasets_vars does not change `vars` elements of
-                    class different than TealDataset and TealDatasetConnector", {
-  test_ds0 <- mtcars
-  test_ds1 <- TealDataset$new("mtcars", mtcars)
-  test_ds2 <- TealDatasetConnector$new(
-    dataname = "iris",
-    pull_callable = callable_function(data.frame),
-    vars = list(test_ds0 = test_ds0, test_ds1 = test_ds1)
-  )
+testthat::test_that(
+  "reassign_datasets_vars does not change `vars` elements of class different than
+    TealDataset and TealDatasetConnector",
+  {
+    test_ds0 <- mtcars
+    test_ds1 <- TealDataset$new("mtcars", mtcars)
+    test_ds2 <- TealDatasetConnector$new(
+      dataname = "iris",
+      pull_callable = callable_function(data.frame),
+      vars = list(test_ds0 = test_ds0, test_ds1 = test_ds1)
+    )
 
-  test_ds2$reassign_datasets_vars(list(test_ds1 = test_ds1))
-  testthat::expect_identical(
-    test_ds2$.__enclos_env__$private$pull_vars$test_ds0,
-    test_ds0
-  )
-})
+    test_ds2$reassign_datasets_vars(list(test_ds1 = test_ds1))
+    testthat::expect_identical(
+      test_ds2$.__enclos_env__$private$pull_vars$test_ds0,
+      test_ds0
+    )
+  }
+)
 
-testthat::test_that("reassign_datasets_vars does not change any `vars` while
-                    empty list is provided", {
-  test_ds0 <- mtcars
-  test_ds1 <- TealDataset$new("mtcars", mtcars)
-  test_ds2 <- TealDataset$new("iris", iris)
-  test_ds2 <- TealDatasetConnector$new(
-    dataname = "iris",
-    pull_callable = callable_function(data.frame),
-    vars = list(test_ds0 = test_ds0, test_ds1 = test_ds1)
-  )
+testthat::test_that(
+  "reassign_datasets_vars does not change any `vars` while empty list is provided",
+  {
+    test_ds0 <- mtcars
+    test_ds1 <- TealDataset$new("mtcars", mtcars)
+    test_ds2 <- TealDataset$new("iris", iris)
+    test_ds2 <- TealDatasetConnector$new(
+      dataname = "iris",
+      pull_callable = callable_function(data.frame),
+      vars = list(test_ds0 = test_ds0, test_ds1 = test_ds1)
+    )
 
-  test_ds2$reassign_datasets_vars(list())
-  testthat::expect_identical(
-    test_ds2$.__enclos_env__$private$pull_vars$test_ds0,
-    test_ds0
-  )
-  testthat::expect_identical(
-    test_ds2$.__enclos_env__$private$pull_vars$test_ds1,
-    test_ds1
-  )
-})
+    test_ds2$reassign_datasets_vars(list())
+    testthat::expect_identical(
+      test_ds2$.__enclos_env__$private$pull_vars$test_ds0,
+      test_ds0
+    )
+    testthat::expect_identical(
+      test_ds2$.__enclos_env__$private$pull_vars$test_ds1,
+      test_ds1
+    )
+  }
+)
 
 
 testthat::test_that("Callable metadata is pulled when data is pulled", {

@@ -55,6 +55,7 @@ new_teal_data <- function(data,
                           datanames = union(names(data), names(join_keys$get()))) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "JoinKeys")
+  if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
   checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {
     stop("`code` must be a character or language object.")
