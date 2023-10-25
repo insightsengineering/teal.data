@@ -25,6 +25,12 @@ get_join_keys.JoinKeys <- function(data) {
 }
 
 #' @rdname get_join_keys
+#' @export
+get_join_keys.TealData <- function(data) {
+  data$get_join_keys()
+}
+
+#' @rdname get_join_keys
 #' @inheritParams mutate_join_keys
 #' @param value value to assign
 #' @export
