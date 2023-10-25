@@ -34,6 +34,31 @@ teal_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
   teal_data(df1_ds, df2_dc, df3_rdc, check = check, join_keys = join_keys1)
 }
 
+testthat::test_that("teal_data allows to initialize empty teal_data object", {
+  testthat::expect_s4_class(teal_data(), "teal_data")
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed objects", {
+  testthat::expect_identical(
+    teal_data(iris = iris, mtcars = mtcars)@datanames,
+    c("iris", "mtcars")
+  )
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed join_keys", {
+  testthat::expect_identical(
+    teal_data(join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
+    c("parent", "child")
+  )
+})
+
+testthat::test_that("teal_data initializes teal_data object with @datanames taken from join_keys and passed objects", {
+  testthat::expect_identical(
+    teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
+    c("iris", "parent", "child")
+  )
+})
+
 testthat::test_that("teal_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
   testthat::expect_silent(data <- teal_data_mixed_call())
   testthat::expect_identical(data$get_datanames(), c("df1", "df2", "df3"))
@@ -172,10 +197,6 @@ testthat::test_that("teal_data returns TealData object with cdisc_dataset input"
 
   cdisc_only <- teal_data(adsl, adtte)
   testthat::expect_equal(class(cdisc_only), c("TealData", "TealDataAbstract", "R6"))
-
-  testthat::expect_error(
-    teal_data()
-  )
 })
 
 testthat::test_that("teal_data_file loads the TealData object", {
