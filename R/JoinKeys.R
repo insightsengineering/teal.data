@@ -353,14 +353,16 @@ JoinKeys <- R6::R6Class( # nolint
 #' @export
 #'
 #' @examples
-#' join_keys()
+#' # setting join keys
 #' join_keys(
 #'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
 #'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
 #' )
-#' join_keys(
-#'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a"))
-#' )
+#' # or
+#' jk <- join_keys()
+#' jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
+#' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
+#'
 join_keys <- function(...) {
   x <- list(...)
   res <- JoinKeys$new()
@@ -376,6 +378,7 @@ join_keys <- function(...) {
 #' @param dataset_1 (`character`) name of first dataset.
 #' @param dataset_2 (`character`) name of second dataset.
 #' @export
+#' @keywords internal
 `[.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
@@ -387,6 +390,7 @@ join_keys <- function(...) {
 #' @rdname sub-.JoinKeys
 #' @param value value to assign
 #' @export
+#' @keywords internal
 `[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL, value) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
@@ -404,6 +408,8 @@ join_keys <- function(...) {
 #'
 #' @export
 #' @examples
+#'
+#' # default CDISC join keys
 #' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 #'
 cdisc_join_keys <- function(...) {

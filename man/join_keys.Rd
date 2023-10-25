@@ -27,14 +27,18 @@ The \code{dataname} is extrapolated from the name  (or fallback to the value its
 it's a \code{character(1)}).
 }
 \examples{
-join_keys()
+# setting join keys
 join_keys(
   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
 )
-join_keys(
-  join_key("dataset_A", "dataset_B", c("col_1" = "col_a"))
-)
+# or
+jk <- join_keys()
+jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
+jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
+
+
+# default CDISC join keys
 cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 
 }
