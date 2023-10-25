@@ -2,6 +2,7 @@
 % Please edit documentation in R/get_join_keys.R
 \name{get_join_keys}
 \alias{get_join_keys}
+\alias{get_join_keys.default}
 \alias{get_join_keys.teal_data}
 \alias{get_join_keys.JoinKeys}
 \alias{get_join_keys<-}
@@ -10,6 +11,8 @@
 \title{Function to get join keys from a `` object}
 \usage{
 get_join_keys(data)
+
+\method{get_join_keys}{default}(data)
 
 \method{get_join_keys}{teal_data}(data)
 
