@@ -43,11 +43,17 @@ get_join_keys.TealData <- function(data) {
 #' @inheritParams mutate_join_keys
 #' @export
 `get_join_keys<-.JoinKeys` <- function(data, dataset_1, dataset_2 = NULL, value) {
+  # The reason this passthrough method is defined is to prevent a warning message
+  # The assignment is performed by `get_join_keys.JoinKeys` and `[<-.JoinKeys` combination
+  #  as well as `JoinKeys` being an R6 class
   data
 }
 
 #' @rdname get_join_keys
 #' @export
 `get_join_keys<-.teal_data` <- function(data, dataset_1, dataset_2 = NULL, value) {
+  # The reason this passthrough method is defined is to prevent a warning message
+  # The assignment is performed by `get_join_keys.teal_data` and `[<-.JoinKeys` combination
+  #  as well as `JoinKeys` being an R6 class
   data
 }
