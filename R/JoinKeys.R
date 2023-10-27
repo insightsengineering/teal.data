@@ -364,7 +364,7 @@ JoinKeys <- R6::R6Class( # nolint
 #' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
 #'
 join_keys <- function(...) {
-  x <- list(...)
+  x <- rlang::list2(...)
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
@@ -413,7 +413,7 @@ join_keys <- function(...) {
 #' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 #'
 cdisc_join_keys <- function(...) {
-  data_objects <- list(...)
+  data_objects <- rlang::list2(...)
 
   join_keys <- join_keys()
   lapply(seq_along(data_objects), function(ix) {

@@ -35,7 +35,7 @@ teal_data <- function(...,
                       join_keys = teal.data::join_keys(),
                       code = "",
                       check = FALSE) {
-  data_objects <- list(...)
+  data_objects <- rlang::list2(...)
   if (inherits(join_keys, "JoinKeySet")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
