@@ -112,6 +112,8 @@ get_code.default <- function(x,
   checkmate::assert_flag(exclude_comments)
   checkmate::assert_flag(read_sources)
 
+  lifecycle::deprecate_warn("0.3.1", "get_code.default()")
+
   if (!methods::hasArg(dataname)) {
     l_lines <- lapply(x, function(file_path) {
       code_exclude(
