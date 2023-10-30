@@ -13,13 +13,8 @@ cdisc_data(
 }
 \arguments{
 \item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
-\itemize{
-\item When one of the \verb{Teal*} objects are provided, then function returns \code{TealData} object.
-This way of specifying data is deprecated and will be removed in the next release.
-\item From version 0.4.0, one can provide any object as a named argument and function will
-return \code{teal_data} object. Objects provided in \code{...} will be stored in \code{teal_data} environment
-under the same name as the argument name.
-}}
+Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
+or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with datasets column names used for joining.

@@ -2,19 +2,14 @@
 % Please edit documentation in R/teal_data.R
 \name{teal_data}
 \alias{teal_data}
-\title{Teal data}
+\title{Teal Data}
 \usage{
 teal_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
 }
 \arguments{
 \item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
-\itemize{
-\item When one of the \verb{Teal*} objects are provided, then function returns \code{TealData} object.
-This way of specifying data is deprecated and will be removed in the next release.
-\item From version 0.4.0, one can provide any object as a named argument and function will
-return \code{teal_data} object. Objects provided in \code{...} will be stored in \code{teal_data} environment
-under the same name as the argument name.
-}}
+Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
+or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with dataset column relationships used for joining.
@@ -27,20 +22,14 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-\itemize{
-\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
-\item a \code{teal_data} object otherwise.
-}
+If old data classes are provided (\code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector}), a \code{TealData} object.
+Otherwise a \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 Universal function to pass data to teal application
 }
 \examples{
-data <- teal_data()
-data <- within(data, {
-  x1 <- iris
-  x2 <- mtcars
-})
-datanames(data) <- c("x1", "x2")
+teal_data(x1 = iris, x2 = mtcars)
+
 }
