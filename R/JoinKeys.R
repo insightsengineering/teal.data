@@ -379,13 +379,9 @@ join_keys <- function(...) {
 #' @param dataset_2 (`character`) name of second dataset.
 #' @export
 #' @keywords internal
-`[.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL) {
+`[.JoinKeys` <- function(x, dataset_1, dataset_2 = dataset_1) {
   checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-
-  if (missing(dataset_2)) {
-    dataset_2 <- dataset_1
-  }
+  checkmate::assert_string(dataset_2)
   x$get(dataset_1, dataset_2)
 }
 
@@ -393,13 +389,9 @@ join_keys <- function(...) {
 #' @param value value to assign
 #' @export
 #' @keywords internal
-`[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = NULL, value) {
+`[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = dataset_1, value) {
   checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-
-  if (missing(dataset_2)) {
-    dataset_2 <- dataset_1
-  }
+  checkmate::assert_string(dataset_2)
   x$mutate(dataset_1, dataset_2, value)
   x
 }
@@ -524,14 +516,10 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' @seealso [join_keys()]
 #'
 #' @export
-join_key <- function(dataset_1, dataset_2 = NULL, keys) {
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
+  checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
-
-  if (missing(dataset_2)) {
-    dataset_2 <- dataset_1
-  }
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
