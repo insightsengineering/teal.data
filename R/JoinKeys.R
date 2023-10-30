@@ -37,43 +37,16 @@ JoinKeys <- R6::R6Class( # nolint
     #' Split the current `JoinKeys` object into a named list of join keys objects with an element for each dataset
     #' @return (`list`) a list of `JoinKeys` object
     split = function() {
-      list_of_list_of_join_key_set <- lapply(
-        names(self$get()),
-        function(dataset_1) {
-          lapply(
-            names(self$get()[[dataset_1]]),
-            function(dataset_2) join_key(dataset_1, dataset_2, self$get()[[dataset_1]][[dataset_2]])
-          )
-        }
-      )
-      res <- lapply(
-        list_of_list_of_join_key_set,
-        function(x) {
-          y <- JoinKeys$new()
-          y$set(x)
-        }
-      )
-      names(res) <- names(self$get())
-
-      logger::log_trace("JoinKeys$split keys split.")
-      return(res)
+      split_join_keys(self)
     },
     #' @description
     #' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
     #' @param x  `list` of `JoinKeys` objects or single `JoinKeys` object
     #' @return (`self`) invisibly for chaining
     merge = function(x) {
-      if (inherits(x, "JoinKeys")) x <- list(x)
-      checkmate::assert_list(x, types = "JoinKeys", min.len = 1)
-      for (jk in x) {
-        for (dataset_1 in names(jk$get())) {
-          for (dataset_2 in names(jk$get()[[dataset_1]])) {
-            self$mutate(dataset_1, dataset_2, jk$get()[[dataset_1]][[dataset_2]])
-          }
-        }
-      }
-      logger::log_trace("JoinKeys$merge keys merged.")
-      return(invisible(self))
+      result <- merge_join_keys(self, x)
+      class(result) <- "list"
+      private$.keys <- result
     },
     #' @description
     #' Get join keys between two datasets.
@@ -83,19 +56,11 @@ JoinKeys <- R6::R6Class( # nolint
     #' @details if one or both of `dataset_1` and `dataset_2` are missing then
     #' underlying keys structure is returned for further processing
     get = function(dataset_1, dataset_2) {
-      if (missing(dataset_1) && missing(dataset_2)) {
-        return(private$.keys)
-      }
-      if (missing(dataset_2)) {
-        return(private$.keys[[dataset_1]])
-      }
-      if (missing(dataset_1)) {
-        return(private$.keys[[dataset_2]])
-      }
-      if (is.null(private$.keys[[dataset_1]][[dataset_2]])) {
-        return(character(0))
-      }
-      return(private$.keys[[dataset_1]][[dataset_2]])
+      new_keys <- private$.keys
+      class(new_keys) <- "Placeholder"
+      res <- get_join_key(new_keys, dataset_1, dataset_2)
+      if (checkmate::test_class(res, "Placeholder")) class(res) <- "list"
+      res
     },
     #' @description
     #' Change join_keys for a given pair of dataset names (or
@@ -103,20 +68,12 @@ JoinKeys <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate = function(dataset_1, dataset_2, val) {
-      checkmate::assert_string(dataset_1)
-      checkmate::assert_string(dataset_2)
-      checkmate::assert_character(val, any.missing = FALSE)
+      new_keys <- private$.keys
+      class(new_keys) <- "Placeholder"
+      res <- mutate_join_keys(new_keys, dataset_1, dataset_2, val)
+      class(res) <- "list"
 
-      private$join_pair(join_key(dataset_1, dataset_2, val))
-
-      logger::log_trace(
-        sprintf(
-          "JoinKeys$mutate updated the keys between %s and %s to %s",
-          dataset_1,
-          dataset_2,
-          paste(val, collapse = ", ")
-        )
-      )
+      private$.keys <- res
       return(invisible(self))
     },
     #' @description
@@ -127,24 +84,11 @@ JoinKeys <- R6::R6Class( # nolint
     #' to be specified once
     #' @return (`self`) invisibly for chaining
     set = function(x) {
-      if (length(private$.keys) > 0) {
-        stop("Keys already set, please use JoinKeys$mutate() to change them")
-      }
-      if (inherits(x, "JoinKeySet")) {
-        x <- list(x)
-      }
-
-      # check if any JoinKeySets share the same datasets but different values
-      for (idx_1 in seq_along(x)) {
-        for (idx_2 in seq_len(idx_1)) {
-          private$check_compatible_keys(x[[idx_1]], x[[idx_2]])
-        }
-      }
-
-      checkmate::assert_list(x, types = "JoinKeySet", min.len = 1)
-      lapply(x, private$join_pair)
-
-      logger::log_trace("JoinKeys$set keys are set.")
+      jk <- private$.keys
+      class(jk) <- c("Placeholder", "list")
+      join_keys(jk) <- x
+      class(jk) <- "list"
+      private$.keys <- jk
       return(invisible(self))
     },
     #' @description
@@ -153,18 +97,7 @@ JoinKeys <- R6::R6Class( # nolint
     #' @param ... additional arguments to the printing method
     #' @return invisibly self
     print = function(...) {
-      check_ellipsis(...)
-      keys_list <- self$get()
-      if (length(keys_list) > 0) {
-        cat(sprintf(
-          "A JoinKeys object containing foreign keys between %s datasets:\n",
-          length(keys_list)
-        ))
-        print(keys_list)
-      } else {
-        cat("An empty JoinKeys object.")
-      }
-      invisible(self)
+      print.Placeholder(private$.keys)
     },
     #' @description
     #' Sets the parents of the datasets.
@@ -254,63 +187,9 @@ JoinKeys <- R6::R6Class( # nolint
     .keys = list(),
     parents = list(),
     join_pair = function(join_key) {
-      dataset_1 <- join_key$dataset_1
-      dataset_2 <- join_key$dataset_2
-      keys <- join_key$keys
-
-      if (is.null(private$.keys[[dataset_1]])) {
-        private$.keys[[dataset_1]] <- list()
-      }
-      private$.keys[[dataset_1]][[dataset_2]] <- keys
-
-      if (dataset_2 != dataset_1) {
-        if (is.null(private$.keys[[dataset_2]])) {
-          private$.keys[[dataset_2]] <- list()
-        }
-
-        if (length(keys) > 0) {
-          keys <- setNames(names(keys), keys)
-        }
-        private$.keys[[dataset_2]][[dataset_1]] <- keys
-      }
-    },
-    # helper function to deterimine if two key sets contain incompatible keys
-    # return TRUE if compatible, throw error otherwise
-    check_compatible_keys = function(join_key_1, join_key_2) {
-      error_message <- function(dataset_1, dataset_2) {
-        stop(
-          paste("cannot specify multiple different join keys between datasets:", dataset_1, "and", dataset_2)
-        )
-      }
-
-
-      # if first datasets and the second datasets match and keys
-      # must contain the same named elements
-      if (join_key_1$dataset_1 == join_key_2$dataset_1 && join_key_1$dataset_2 == join_key_2$dataset_2) {
-        if (!identical(sort(join_key_1$keys), sort(join_key_2$keys))) {
-          error_message(join_key_1$dataset_1, join_key_1$dataset_2)
-        }
-      }
-
-      # if first dataset of join_key_1 matches second dataset of join_key_2
-      # and the first dataset of join_key_2 must match second dataset of join_key_1
-      # and keys must contain the same elements but with names and values swapped
-      if (join_key_1$dataset_1 == join_key_2$dataset_2 && join_key_1$dataset_2 == join_key_2$dataset_1) {
-        # have to handle empty case differently as names(character(0)) is NULL
-        if (length(join_key_1$keys) == 0 && length(join_key_2$keys) == 0) {
-          return(TRUE)
-        }
-
-        if (
-          xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-            !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))
-        ) {
-          error_message(join_key_1$dataset_1, join_key_1$dataset_2)
-        }
-      }
-
-      # otherwise they are compatible
-      return(TRUE)
+      res <- join_pair(self, join_key)
+      class(res) <- "list"
+      private$.keys <- res
     },
     # checks the parent child relations are valid
     check_parent_child = function() {
@@ -365,6 +244,17 @@ JoinKeys <- R6::R6Class( # nolint
 #'
 join_keys <- function(...) {
   x <- rlang::list2(...)
+
+  # Getter
+  if (checkmate::test_list(x, len = 1, types = c("Placeholder", "JoinKeys"))) {
+    return(x[[1]])
+  } else if (checkmate::test_list(x, len = 1, types = c("teal_data"))) {
+    return(x[[1]]@join_keys)
+  } else if (checkmate::test_list(x, len = 1, types = c("TealData"))) {
+    return(x[[1]]$get_join_keys())
+  }
+
+  # Constructor
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
