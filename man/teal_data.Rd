@@ -27,7 +27,7 @@ Otherwise a \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-Universal function to pass data to teal application
+Universal function to pass data to teal application.
 }
 \examples{
 teal_data(x1 = iris, x2 = mtcars)

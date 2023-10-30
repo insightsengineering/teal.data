@@ -18,7 +18,7 @@ setOldClass("JoinKeys")
 #'  Access variables with [get_var()] or [`[[`].
 #'  No setter provided. Evaluate code to add variables into `@env`.
 #' @slot code (`character`) representing code necessary to reproduce the contents of `@env`.
-#'  Access with [`get_code`].
+#'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
 #' @slot id (`integer`) random identifier assigned to each line of code in `@code`. Used internally.
 #' @slot warnings (`character`) the warnings output when evaluating the code.

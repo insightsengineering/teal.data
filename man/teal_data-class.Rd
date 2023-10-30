@@ -23,7 +23,7 @@ Access variables with \code{\link[=get_var]{get_var()}} or [\code{[[}].
 No setter provided. Evaluate code to add variables into \verb{@env}.}
 
 \item{\code{code}}{(\code{character}) representing code necessary to reproduce the contents of \verb{@env}.
-Access with \code{\link{get_code}}.
+Access with \code{\link[=get_code]{get_code()}}.
 No setter provided. Evaluate code to append code to the slot.}
 
 \item{\code{id}}{(\code{integer}) random identifier assigned to each line of code in \verb{@code}. Used internally.}

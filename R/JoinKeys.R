@@ -416,24 +416,25 @@ cdisc_join_keys <- function(...) {
     item <- data_objects[[ix]]
     name <- names(data_objects)[ix]
 
-    if ((is.null(name) || identical(trimws(name), "")) && is.character(item)) {
-      name <- item
-    } else if (checkmate::test_class(item, "JoinKeySet")) {
+    if (checkmate::test_class(item, "JoinKeySet")) {
       join_keys$set(item)
       return(NULL)
     } else if (
       checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
     ) {
       return(NULL)
-    }
+    } else {
+      if ((is.null(name) || identical(trimws(name), "")) && is.character(item)) {
+        name <- item
+      }
+      if (name %in% names(default_cdisc_keys)) {
+        # Set default primary keys
+        keys_list <- default_cdisc_keys[[name]]
+        join_keys[name] <- keys_list$primary
 
-    if (name %in% names(default_cdisc_keys)) {
-      # Set default primary keys
-      keys_list <- default_cdisc_keys[[name]]
-      join_keys[name] <- keys_list$primary
-
-      if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
-        join_keys[name, keys_list$parent] <- keys_list$foreign
+        if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
+          join_keys[name, keys_list$parent] <- keys_list$foreign
+        }
       }
     }
   })

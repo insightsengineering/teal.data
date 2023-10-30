@@ -1,7 +1,7 @@
 #' Teal Data
 #'
 #' @description `r lifecycle::badge("stable")`
-#' Universal function to pass data to teal application
+#' Universal function to pass data to teal application.
 #'
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
 #'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
