@@ -175,6 +175,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/data_label.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/datanames.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/dataset.html</loc>
   </url>
   <url>
@@ -188,6 +191,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/deep_clone_r6.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/deprecated_join_keys_extract.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/enclosed_with.html</loc>
@@ -230,6 +236,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/get_join_keys.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_key_duplicates.html</loc>
@@ -292,6 +301,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/mutate_join_keys.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/new_teal_data.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/pretty_code_string.html</loc>
   </url>
   <url>
@@ -346,7 +358,13 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/set_keys.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/sub-.JoinKeys.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/teal.data-package.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/teal_data-class.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/teal_data.html</loc>

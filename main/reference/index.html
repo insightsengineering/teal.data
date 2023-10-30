@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9007</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,16 +46,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -214,7 +204,7 @@
           
           <code><a href="teal_data.html">teal_data()</a></code> 
         </dt>
-        <dd>Teal data</dd>
+        <dd>Teal Data</dd>
       </dl><dl><dt>
           
           <code><a href="teal_data_file.html">teal_data_file()</a></code> 
@@ -225,6 +215,11 @@
           <code><a href="to_relational_data.html">to_relational_data()</a></code> 
         </dt>
         <dd>S3 generic for <code>to_relational_data</code> function.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="new_teal_data.html">new_teal_data()</a></code> 
+        </dt>
+        <dd>Initialize <code>teal_data</code> object</dd>
       </dl></div><div class="section level2">
       <h2 id="delayed-dataset-functions">Delayed Dataset Functions<a class="anchor" aria-label="anchor" href="#delayed-dataset-functions"></a></h2>
       
@@ -296,6 +291,11 @@
         <dd>Get dataset primary keys</dd>
       </dl><dl><dt>
           
+          <code><a href="get_join_keys.html">get_join_keys()</a></code> <code><a href="get_join_keys.html">`get_join_keys&lt;-`()</a></code> 
+        </dt>
+        <dd>Function to get join keys from a `` object</dd>
+      </dl><dl><dt>
+          
           <code><a href="get_raw_data.html">get_raw_data()</a></code> 
         </dt>
         <dd>Retrieve raw data</dd>
@@ -352,6 +352,11 @@
 
       <dl><dt>
           
+          <code><a href="datanames.html">datanames()</a></code> <code><a href="datanames.html">`datanames&lt;-`()</a></code> 
+        </dt>
+        <dd>Names of Data Sets in <code>teal_data</code> Object</dd>
+      </dl><dl><dt>
+          
           <code><a href="col_labels.html">col_labels()</a></code> 
         </dt>
         <dd>Get Label Attributes of Variables in a <code>data.frame</code></dd>
@@ -397,7 +402,7 @@
         <dd>Create a relationship between a pair of datasets</dd>
       </dl><dl><dt>
           
-          <code><a href="join_keys.html">join_keys()</a></code> 
+          <code><a href="join_keys.html">join_keys()</a></code> <code><a href="join_keys.html">cdisc_join_keys()</a></code> 
         </dt>
         <dd>Create a <code>JoinKeys</code> out of a list of <code>JoinKeySet</code> objects</dd>
       </dl><dl><dt>
