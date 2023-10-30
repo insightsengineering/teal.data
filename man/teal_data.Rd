@@ -4,7 +4,12 @@
 \alias{teal_data}
 \title{Teal Data}
 \usage{
-teal_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
+teal_data(
+  ...,
+  join_keys = teal.data::join_keys(),
+  code = character(0),
+  check = FALSE
+)
 }
 \arguments{
 \item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr

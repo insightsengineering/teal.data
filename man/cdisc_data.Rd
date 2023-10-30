@@ -7,7 +7,7 @@
 cdisc_data(
   ...,
   join_keys = teal.data::cdisc_join_keys(...),
-  code = "",
+  code = character(0),
   check = FALSE
 )
 }

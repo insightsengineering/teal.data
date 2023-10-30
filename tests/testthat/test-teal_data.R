@@ -38,6 +38,20 @@ testthat::test_that("teal_data allows to initialize empty teal_data object", {
   testthat::expect_s4_class(teal_data(), "teal_data")
 })
 
+testthat::test_that("empty teal_data returns empty code, id, wartnings and messages", {
+  testthat::expect_identical(teal_data()@code, character(0))
+  testthat::expect_identical(teal_data()@id, integer(0))
+  testthat::expect_identical(teal_data()@messages, character(0))
+  testthat::expect_identical(teal_data()@warnings, character(0))
+})
+
+testthat::test_that("teal_data allows to initialize empty teal_data with join_keys", {
+  testthat::expect_equal(
+    teal_data(join_keys = join_keys(join_key("data1", "data2", "id")))@join_keys,
+    join_keys(join_key("data1", "data2", "id"))
+  )
+})
+
 testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed objects", {
   testthat::expect_identical(
     teal_data(iris = iris, mtcars = mtcars)@datanames,

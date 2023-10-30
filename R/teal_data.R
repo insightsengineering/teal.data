@@ -9,7 +9,7 @@
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
-#' @param code (`character`) code to reproduce the datasets.
+#' @param code (`character`, `language`) code to reproduce the datasets.
 #' @param check (`logical`) reproducibility check - whether to perform a check that the pre-processing
 #'  code included in the object definitions actually produces those objects.
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
@@ -25,7 +25,7 @@
 #'
 teal_data <- function(...,
                       join_keys = teal.data::join_keys(),
-                      code = "",
+                      code = character(0),
                       check = FALSE) {
   data_objects <- rlang::list2(...)
   if (inherits(join_keys, "JoinKeySet")) {

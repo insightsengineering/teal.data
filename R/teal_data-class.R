@@ -71,6 +71,11 @@ new_teal_data <- function(data,
   if (is.language(code)) {
     code <- format_expression(code)
   }
+  if (length(code)) {
+    code <- paste(code, collapse = "\n")
+  }
+
+  id <- sample.int(.Machine$integer.max, size = length(code))
 
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
@@ -78,10 +83,10 @@ new_teal_data <- function(data,
   methods::new(
     "teal_data",
     env = new_env,
-    code = paste(code, collapse = "\n"),
-    warnings = "",
-    messages = "",
-    id = sample.int(.Machine$integer.max, size = 1L),
+    code = code,
+    warnings = rep("", length(code)),
+    messages = rep("", length(code)),
+    id = id,
     join_keys = join_keys,
     datanames = datanames
   )
