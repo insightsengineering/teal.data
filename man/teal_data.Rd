@@ -2,43 +2,39 @@
 % Please edit documentation in R/teal_data.R
 \name{teal_data}
 \alias{teal_data}
-\title{Teal data}
+\title{Teal Data}
 \usage{
-teal_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
+teal_data(
+  ...,
+  join_keys = teal.data::join_keys(),
+  code = character(0),
+  check = FALSE
+)
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector})\cr
-objects}
+\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
+Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
+or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 
-\item{code}{(\code{character}) code to reproduce the datasets.}
+\item{code}{(\code{character}, \code{language}) code to reproduce the datasets.}
 
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
 code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-(\code{TealData})
+If old data classes are provided (\code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector}), a \code{TealData} object.
+Otherwise a \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-Universal function to pass data to teal application
+Universal function to pass data to teal application.
 }
 \examples{
-x1 <- dataset(
-  "x1",
-  iris,
-  code = "x1 <- iris"
-)
+teal_data(x1 = iris, x2 = mtcars)
 
-x2 <- dataset(
-  "x2",
-  mtcars,
-  code = "x2 <- mtcars"
-)
-
-teal_data(x1, x2)
 }

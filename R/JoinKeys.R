@@ -301,8 +301,10 @@ JoinKeys <- R6::R6Class( # nolint
           return(TRUE)
         }
 
-        if (xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-          !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))) {
+        if (
+          xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
+            !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))
+        ) {
           error_message(join_key_1$dataset_1, join_key_1$dataset_2)
         }
       }
@@ -351,23 +353,93 @@ JoinKeys <- R6::R6Class( # nolint
 #' @export
 #'
 #' @examples
-#' join_keys()
+#' # setting join keys
 #' join_keys(
 #'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
 #'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
 #' )
-#' join_keys(
-#'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a"))
-#' )
+#' # or
+#' jk <- join_keys()
+#' jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
+#' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
+#'
 join_keys <- function(...) {
-  x <- list(...)
-
+  x <- rlang::list2(...)
   res <- JoinKeys$new()
   if (length(x) > 0) {
     res$set(x)
   }
 
   res
+}
+
+#' @title Getter for JoinKeys that returns the relationship between pairs of datasets
+#' @param x JoinKeys object to extract the join keys
+#' @param dataset_1 (`character`) name of first dataset.
+#' @param dataset_2 (`character`) name of second dataset.
+#' @export
+#' @keywords internal
+`[.JoinKeys` <- function(x, dataset_1, dataset_2 = dataset_1) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2)
+  x$get(dataset_1, dataset_2)
+}
+
+#' @rdname sub-.JoinKeys
+#' @param value value to assign
+#' @export
+#' @keywords internal
+`[<-.JoinKeys` <- function(x, dataset_1, dataset_2 = dataset_1, value) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2)
+  x$mutate(dataset_1, dataset_2, value)
+  x
+}
+
+#' @rdname join_keys
+#' @details
+#' `cdisc_join_keys` is a wrapper around `join_keys` that sets the default
+#' join keys for CDISC datasets. It is used internally by `cdisc_data` to
+#' set the default join keys for CDISC datasets.
+#'
+#' @export
+#' @examples
+#'
+#' # default CDISC join keys
+#' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
+#'
+cdisc_join_keys <- function(...) {
+  data_objects <- rlang::list2(...)
+
+  join_keys <- join_keys()
+  lapply(seq_along(data_objects), function(ix) {
+    item <- data_objects[[ix]]
+    name <- names(data_objects)[ix]
+
+    if (checkmate::test_class(item, "JoinKeySet")) {
+      join_keys$set(item)
+      return(NULL)
+    } else if (
+      checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
+    ) {
+      return(NULL)
+    } else {
+      if ((is.null(name) || identical(trimws(name), "")) && is.character(item)) {
+        name <- item
+      }
+      if (name %in% names(default_cdisc_keys)) {
+        # Set default primary keys
+        keys_list <- default_cdisc_keys[[name]]
+        join_keys[name] <- keys_list$primary
+
+        if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
+          join_keys[name, keys_list$parent] <- keys_list$foreign
+        }
+      }
+    }
+  })
+
+  join_keys
 }
 
 # wrappers ====
@@ -425,12 +497,16 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
   x$mutate_join_keys(dataset_1, dataset_2, val)
 }
 
-
 #' Create a relationship between a pair of datasets
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
+#' @details `join_key()` will create a relationship for the variables on a pair
+#' of datasets.
+#'
 #' @inheritParams mutate_join_keys
+#' @param dataset_2 (optional `character`) other dataset name. In case it is omitted, then it
+#' will create a primary key for `dataset_1`.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
 #' with relationship to columns of `dataset_2` given by the elements in `keys`.
 #' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
@@ -441,7 +517,7 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' @seealso [join_keys()]
 #'
 #' @export
-join_key <- function(dataset_1, dataset_2, keys) {
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)

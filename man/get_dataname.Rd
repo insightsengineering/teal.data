@@ -5,6 +5,7 @@
 \alias{get_dataname.TealDataAbstract}
 \alias{get_dataname.TealDatasetConnector}
 \alias{get_dataname.TealDataset}
+\alias{get_dataname.teal_data}
 \title{S3 method for getting a \code{dataname(s)} of
 (\code{TealDataAbstract}, (\code{TealDatasetConnector} or
 \code{TealDataset}) R6 object}
@@ -16,6 +17,8 @@ get_dataname(x)
 \method{get_dataname}{TealDatasetConnector}(x)
 
 \method{get_dataname}{TealDataset}(x)
+
+\method{get_dataname}{teal_data}(x)
 }
 \arguments{
 \item{x}{(\code{TealDataAbstract}, \code{TealDatasetConnector} or

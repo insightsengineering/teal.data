@@ -33,6 +33,7 @@ Imports:
     shinyjs,
     stats,
     teal.logger (>= 0.1.1),
+    teal.code (>= 0.4.1.9003),
     utils,
     yaml (>= 1.1.0)
 Suggests:
@@ -57,7 +58,7 @@ Config/Needs/verdepcheck: rstudio/shiny, mllg/checkmate,
     yaml=vubiostat/r-yaml, rstudio/bslib, tidyverse/dplyr, yihui/knitr,
     tidyverse/magrittr, bioc::MultiAssayExperiment, tidyverse/readr,
     rstudio/reticulate, rstudio/rmarkdown, bioc::SummarizedExperiment,
-    r-lib/testthat, r-lib/withr
+    insightsengineering/teal.code, r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US

@@ -1,63 +1,70 @@
-#' Teal data
+#' Teal Data
 #'
 #' @description `r lifecycle::badge("stable")`
-#' Universal function to pass data to teal application
+#' Universal function to pass data to teal application.
 #'
-#' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`)\cr
-#'   objects
+#' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
+#'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
+#'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
-#' @param code (`character`) code to reproduce the datasets.
+#' @param code (`character`, `language`) code to reproduce the datasets.
 #' @param check (`logical`) reproducibility check - whether to perform a check that the pre-processing
 #'  code included in the object definitions actually produces those objects.
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
 #'
-#' @return (`TealData`)
+#' @return
+#' If old data classes are provided (`TealDataset` `TealDatasetConnector`, `TealDataConnector`), a `TealData` object.
+#' Otherwise a `teal_data` object.
 #'
 #' @export
 #'
 #' @examples
-#' x1 <- dataset(
-#'   "x1",
-#'   iris,
-#'   code = "x1 <- iris"
-#' )
+#' teal_data(x1 = iris, x2 = mtcars)
 #'
-#' x2 <- dataset(
-#'   "x2",
-#'   mtcars,
-#'   code = "x2 <- mtcars"
-#' )
-#'
-#' teal_data(x1, x2)
 teal_data <- function(...,
                       join_keys = teal.data::join_keys(),
-                      code = "",
+                      code = character(0),
                       check = FALSE) {
-  data_objects <- list(...)
-  checkmate::assert_list(
-    data_objects,
-    types = c("TealDataset", "TealDatasetConnector", "TealDataConnector")
-  )
+  data_objects <- rlang::list2(...)
   if (inherits(join_keys, "JoinKeySet")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
+  if (
+    checkmate::test_list(
+      data_objects,
+      types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"),
+      min.len = 1
+    )
+  ) {
+    lifecycle::deprecate_warn(
+      when = "0.3.1",
+      "teal_data(
+        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.
+        Find more information on https://github.com/insightsengineering/teal/discussions/945'
+      )"
+    )
+    deprecated_join_keys_extract(data_objects, join_keys)
 
-  update_join_keys_to_primary(data_objects, join_keys)
-
-  x <- TealData$new(..., check = check, join_keys = join_keys)
-
-  if (length(code) > 0 && !identical(code, "")) {
-    x$set_pull_code(code = code)
+    x <- TealData$new(..., check = check, join_keys = join_keys)
+    if (length(code) > 0 && !identical(code, "")) {
+      x$set_pull_code(code = code)
+    }
+    x$check_reproducibility()
+    x$check_metadata()
+    x
+  } else {
+    if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
+      stop("Dot (`...`) arguments on `teal_data()` must be named.")
+    }
+    new_teal_data(
+      data = data_objects,
+      code = code,
+      join_keys = join_keys
+    )
   }
-
-  x$check_reproducibility()
-  x$check_metadata()
-
-  return(x)
 }
-
 
 #' Load `TealData` object from a file
 #'

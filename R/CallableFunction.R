@@ -144,7 +144,6 @@ CallableFunction <- R6::R6Class( # nolint
     # @return nothing
     refresh = function() {
       if (!is.null(private$fun_name) || !identical(private$fun_name, character(0))) {
-
         # replaced str2lang found at:
         # https://rlang.r-lib.org/reference/call2.html
         private$call <- as.call(

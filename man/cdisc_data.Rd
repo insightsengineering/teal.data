@@ -4,79 +4,53 @@
 \alias{cdisc_data}
 \title{Data input for teal app}
 \usage{
-cdisc_data(..., join_keys = teal.data::join_keys(), code = "", check = FALSE)
+cdisc_data(
+  ...,
+  join_keys = teal.data::cdisc_join_keys(...),
+  code = character(0),
+  check = FALSE
+)
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset} or
-\code{TealDatasetConnector}) elements to include.}
+\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
+Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
+or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
 \item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
 (optional) object with datasets column names used for joining.
-If empty then it would be automatically derived basing on intersection of datasets primary keys}
+If empty then it would be automatically derived basing on intersection of datasets primary keys.
+For ADAM datasets it would be automatically derived.}
 
-\item{code}{(\code{character}) code to reproduce the datasets.}
+\item{code}{(\code{character}, \code{language}) code to reproduce the datasets.}
 
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
 code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-a \code{TealData} object
+\itemize{
+\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
+\item a \code{teal_data} object otherwise.
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-Function takes datasets and creates \code{TealData} object which can be used in \code{teal} applications.
+Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
+for given datasets whose names match ADAM datasets names.
 }
 \details{
 This function checks if there were keys added to all data sets
 }
-\note{
-This function does not automatically assign keys to \code{TealDataset}
-and \code{TealDatasetConnector} objects passed to it. If the keys are needed
-they should be assigned before calling \code{cdisc_data}. See example:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{test_dataset <- dataset("ADAE", teal.data::example_cdisc_data("ADAE")) # does not have keys
-test_adsl <- cdisc_dataset("ADSL", teal.data::example_cdisc_data("ADSL"))
-test_data <- cdisc_data(test_dataset, test_adsl)
-get_keys(test_data, "ADAE") # returns character(0)
-
-test_dataset <- cdisc_dataset("ADAE", teal.data::example_cdisc_data("ADAE"))
-test_data <- cdisc_data(test_dataset, test_adsl)
-get_keys(test_data, "ADAE") # returns [1] "STUDYID" "USUBJID" "ASTDTM"  "AETERM"  "AESEQ"
-}\if{html}{\out{</div>}}
-}
 \examples{
-
-ADSL <- teal.data::example_cdisc_data("ADSL")
-ADTTE <- teal.data::example_cdisc_data("ADTTE")
-
-# basic example
-cdisc_data(
-  cdisc_dataset("ADSL", ADSL),
-  cdisc_dataset("ADTTE", ADTTE),
-  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-          ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-  check = TRUE
-)
-
-# Example with keys
-cdisc_data(
-  cdisc_dataset("ADSL", ADSL,
-    keys = c("STUDYID", "USUBJID")
-  ),
-  cdisc_dataset("ADTTE", ADTTE,
-    keys = c("STUDYID", "USUBJID", "PARAMCD"),
-    parent = "ADSL"
-  ),
+data <- cdisc_data(
   join_keys = join_keys(
-    join_key(
-      "ADSL",
-      "ADTTE",
-      c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID")
-    )
-  ),
-  code = "ADSL <- teal.data::example_cdisc_data(\"ADSL\")
-          ADTTE <- teal.data::example_cdisc_data(\"ADTTE\")",
-  check = TRUE
+    join_key("ADSL", "ADTTE", c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
+  )
 )
+
+data <- within(data, {
+  ADSL <- teal.data::example_cdisc_data("ADSL")
+  ADTTE <- teal.data::example_cdisc_data("ADTTE")
+})
+
 }
