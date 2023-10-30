@@ -1,14 +1,11 @@
-#' Teal data
+#' Teal Data
 #'
 #' @description `r lifecycle::badge("stable")`
 #' Universal function to pass data to teal application
 #'
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
-#'  - When one of the `Teal*` objects are provided, then function returns `TealData` object.
-#'    This way of specifying data is deprecated and will be removed in the next release.
-#'  - From version 0.4.0, one can provide any object as a named argument and function will
-#'    return `teal_data` object. Objects provided in `...` will be stored in `teal_data` environment
-#'    under the same name as the argument name.
+#'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
+#'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
@@ -18,18 +15,14 @@
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
 #'
 #' @return
-#' - a `TealData` object when `TealDataset` `TealDatasetConnector`, `TealDataConnector` is provided,
-#' - a `teal_data` object otherwise.
+#' If old data classes are provided (`TealDataset` `TealDatasetConnector`, `TealDataConnector`), a `TealData` object.
+#' Otherwise a `teal_data` object.
 #'
 #' @export
 #'
 #' @examples
-#' data <- teal_data()
-#' data <- within(data, {
-#'   x1 <- iris
-#'   x2 <- mtcars
-#' })
-#' datanames(data) <- c("x1", "x2")
+#' teal_data(x1 = iris, x2 = mtcars)
+#'
 teal_data <- function(...,
                       join_keys = teal.data::join_keys(),
                       code = "",
