@@ -2,7 +2,7 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #' Function is a wrapper around [teal_data()] and guesses `join_keys`
-#' for given datasets which names match ADAM datasets names.
+#' for given datasets whose names match ADAM datasets names.
 #'
 #' @inheritParams teal_data
 #' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
@@ -10,28 +10,26 @@
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys.
 #'   For ADAM datasets it would be automatically derived.
 #'
-#' @return a `TealData` or `teal_data` object
+#' @return
+#' - a `TealData` object when `TealDataset` `TealDatasetConnector`, `TealDataConnector` is provided,
+#' - a `teal_data` object otherwise.
 #'
 #' @details This function checks if there were keys added to all data sets
 #'
 #' @export
 #'
 #' @examples
-#'
-#' ADSL <- teal.data::example_cdisc_data("ADSL")
-#' ADTTE <- teal.data::example_cdisc_data("ADTTE")
-#'
-#' cdisc_data(
-#'   ADSL = ADSL,
-#'   ADTTE = ADTTE,
-#'   code = quote({
-#'     ADSL <- teal.data::example_cdisc_data("ADSL")
-#'     ADTTE <- teal.data::example_cdisc_data("ADTTE")
-#'   }),
+#' data <- cdisc_data(
 #'   join_keys = join_keys(
 #'     join_key("ADSL", "ADTTE", c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
 #'   )
 #' )
+#'
+#' data <- within(data, {
+#'   ADSL <- teal.data::example_cdisc_data("ADSL")
+#'   ADTTE <- teal.data::example_cdisc_data("ADTTE")
+#' })
+#'
 cdisc_data <- function(...,
                        join_keys = teal.data::cdisc_join_keys(...),
                        code = "",

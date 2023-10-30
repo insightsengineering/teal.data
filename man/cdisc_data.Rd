@@ -33,30 +33,29 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-a \code{TealData} or \code{teal_data} object
+\itemize{
+\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
+\item a \code{teal_data} object otherwise.
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
-for given datasets which names match ADAM datasets names.
+for given datasets whose names match ADAM datasets names.
 }
 \details{
 This function checks if there were keys added to all data sets
 }
 \examples{
-
-ADSL <- teal.data::example_cdisc_data("ADSL")
-ADTTE <- teal.data::example_cdisc_data("ADTTE")
-
-cdisc_data(
-  ADSL = ADSL,
-  ADTTE = ADTTE,
-  code = quote({
-    ADSL <- teal.data::example_cdisc_data("ADSL")
-    ADTTE <- teal.data::example_cdisc_data("ADTTE")
-  }),
+data <- cdisc_data(
   join_keys = join_keys(
     join_key("ADSL", "ADTTE", c("STUDYID" = "STUDYID", "USUBJID" = "USUBJID"))
   )
 )
+
+data <- within(data, {
+  ADSL <- teal.data::example_cdisc_data("ADSL")
+  ADTTE <- teal.data::example_cdisc_data("ADTTE")
+})
+
 }

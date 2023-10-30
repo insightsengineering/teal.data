@@ -383,7 +383,9 @@ join_keys <- function(...) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
 
-  dataset_2 <- dataset_2 %||% dataset_1
+  if (missing(dataset_2)) {
+    dataset_2 <- dataset_1
+  }
   x$get(dataset_1, dataset_2)
 }
 
@@ -395,16 +397,18 @@ join_keys <- function(...) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
 
-  dataset_2 <- dataset_2 %||% dataset_1
+  if (missing(dataset_2)) {
+    dataset_2 <- dataset_1
+  }
   x$mutate(dataset_1, dataset_2, value)
   x
 }
 
 #' @rdname join_keys
 #' @details
-#' `cdisc_join_keys` treat non-`JoinKeySet` arguments as possible CDISC datasets.
-#' The `dataname` is extrapolated from the name  (or fallback to the value itself if
-#' it's a `character(1)`).
+#' `cdisc_join_keys` is a wrapper around `join_keys` that sets the default
+#' join keys for CDISC datasets. It is used internally by `cdisc_data` to
+#' set the default join keys for CDISC datasets.
 #'
 #' @export
 #' @examples
@@ -508,7 +512,7 @@ mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
 #' of datasets.
 #'
 #' @inheritParams mutate_join_keys
-#' @param dataset_2 (`character`) other dataset name. In case it is omitted, then it
+#' @param dataset_2 (optional `character`) other dataset name. In case it is omitted, then it
 #' will create a primary key for `dataset_1`.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
 #' with relationship to columns of `dataset_2` given by the elements in `keys`.
@@ -525,7 +529,9 @@ join_key <- function(dataset_1, dataset_2 = NULL, keys) {
   checkmate::assert_string(dataset_2, null.ok = TRUE)
   checkmate::assert_character(keys, any.missing = FALSE)
 
-  dataset_2 <- dataset_2 %||% dataset_1
+  if (missing(dataset_2)) {
+    dataset_2 <- dataset_1
+  }
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {

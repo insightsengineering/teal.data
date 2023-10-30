@@ -17,20 +17,19 @@
 #'  code included in the object definitions actually produces those objects.
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
 #'
-#' @return (`TealData` or `teal_data`) object
+#' @return
+#' - a `TealData` object when `TealDataset` `TealDatasetConnector`, `TealDataConnector` is provided,
+#' - a `teal_data` object otherwise.
 #'
 #' @export
 #'
 #' @examples
-#'
-#' teal_data(
-#'   x1 = iris,
-#'   x2 = mtcars,
-#'   code = quote({
-#'     x1 <- iris
-#'     x2 <- mtcars
-#'   })
-#' )
+#' data <- teal_data()
+#' data <- within(data, {
+#'   x1 <- iris
+#'   x2 <- mtcars
+#' })
+#' datanames(data) <- c("x1", "x2")
 teal_data <- function(...,
                       join_keys = teal.data::join_keys(),
                       code = "",

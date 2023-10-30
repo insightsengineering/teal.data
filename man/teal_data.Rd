@@ -27,20 +27,20 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-(\code{TealData} or \code{teal_data}) object
+\itemize{
+\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
+\item a \code{teal_data} object otherwise.
+}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 Universal function to pass data to teal application
 }
 \examples{
-
-teal_data(
-  x1 = iris,
-  x2 = mtcars,
-  code = quote({
-    x1 <- iris
-    x2 <- mtcars
-  })
-)
+data <- teal_data()
+data <- within(data, {
+  x1 <- iris
+  x2 <- mtcars
+})
+datanames(data) <- c("x1", "x2")
 }

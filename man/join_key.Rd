@@ -9,7 +9,7 @@ join_key(dataset_1, dataset_2 = NULL, keys)
 \arguments{
 \item{dataset_1}{(\code{character}) one dataset name}
 
-\item{dataset_2}{(\code{character}) other dataset name. In case it is omitted, then it
+\item{dataset_2}{(optional \code{character}) other dataset name. In case it is omitted, then it
 will create a primary key for \code{dataset_1}.}
 
 \item{keys}{(optionally named \code{character}) where \code{names(keys)} are columns in \code{dataset_1}

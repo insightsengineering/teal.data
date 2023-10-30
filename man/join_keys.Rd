@@ -22,9 +22,9 @@ cdisc_join_keys(...)
 Note that join keys are symmetric although the relationship only needs
 to be specified once.
 
-\code{cdisc_join_keys} treat non-\code{JoinKeySet} arguments as possible CDISC datasets.
-The \code{dataname} is extrapolated from the name  (or fallback to the value itself if
-it's a \code{character(1)}).
+\code{cdisc_join_keys} is a wrapper around \code{join_keys} that sets the default
+join keys for CDISC datasets. It is used internally by \code{cdisc_data} to
+set the default join keys for CDISC datasets.
 }
 \examples{
 # setting join keys
