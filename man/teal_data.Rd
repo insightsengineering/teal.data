@@ -20,7 +20,7 @@ or 2) any number of any objects provided as \code{name = value} pairs, which is 
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 
-\item{code}{(\code{character}) code to reproduce the datasets.}
+\item{code}{(\code{character}, \code{language}) code to reproduce the datasets.}
 
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
 code included in the object definitions actually produces those objects.
