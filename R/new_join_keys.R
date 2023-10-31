@@ -141,7 +141,7 @@ split_join_keys <- function(keys) {
 
   if (checkmate::test_class(keys, "JoinKeys")) {
     keys <- keys$get()
-    class(keys) <- "Placeholder"
+    class(keys) <- c("Placeholder", "list")
   }
 
   list_of_list_of_join_key_set <- lapply(
@@ -178,7 +178,7 @@ split_join_keys <- function(keys) {
 merge_join_keys <- function(keys_1, keys_2) {
   if (checkmate::test_class(keys_1, "JoinKeys")) {
     keys_1 <- keys_1$get()
-    class(keys_1) <- "Placeholder"
+    class(keys_1) <- c("Placeholder", "list")
   }
   checkmate::assert_multi_class(keys_1, c("JoinKeys", "Placeholder"))
 

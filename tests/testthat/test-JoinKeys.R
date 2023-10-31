@@ -513,7 +513,9 @@ testthat::test_that("JoinKeys$merge merges mutually exclusive data", {
   )
   z <- JoinKeys$new()
   z$merge(list(x, y))
-  testthat::expect_identical(c(x$get(), y$get()), z$get())
+  manual_join <- c(x$get(), y$get())
+  class(manual_join) <- class(new_join_keys())
+  testthat::expect_identical(manual_join, z$get())
 
   x$merge(y)
   y$merge(x)

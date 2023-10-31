@@ -5,11 +5,6 @@
 \alias{parents.Placeholder}
 \alias{parents<-}
 \alias{parents<-.Placeholder}
-\alias{parents[}
-\alias{parents[.Placeholder}
-\alias{parents[[<-}
-\alias{parents[<-}
-\alias{parents[<-.Placeholder}
 \title{A name}
 \usage{
 parents(join_keys_obj)
@@ -19,16 +14,6 @@ parents(join_keys_obj)
 parents(join_keys_obj) <- value
 
 \method{parents}{Placeholder}(join_keys_obj) <- value
-
-`parents[`(join_keys_obj, dataset)
-
-\method{parents[}{Placeholder}(join_keys_obj, dataset)
-
-`parents[[`(join_keys_obj, dataset) <- value
-
-`parents[`(join_keys_obj, dataset) <- value
-
-\method{parents[}{Placeholder}(join_keys_obj, dataset) <- value
 }
 \description{
 A name
@@ -38,11 +23,6 @@ jk <- new_join_keys()
 parents(jk)
 jk <- new_join_keys()
 parents(jk) <- list(ADSL = "ADTTE")
-jk <- new_join_keys()
-parents(jk)["ADTTE"] <- "ADSL"
-jk <- new_join_keys()
-parents(jk)["ADTTE"] <- "ADSL"
-parents(jk)[["YADA"]]
 jk <- new_join_keys()
 parents(jk)["ADTTE"] <- "ADSL"
 }

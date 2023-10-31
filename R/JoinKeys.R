@@ -31,13 +31,14 @@ JoinKeys <- R6::R6Class( # nolint
     #' @return empty (`JoinKeys`)
     initialize = function() {
       logger::log_trace("JoinKeys initialized.")
+      class(private$.keys) <- class(new_join_keys())
       return(invisible(self))
     },
     #' @description
     #' Split the current `JoinKeys` object into a named list of join keys objects with an element for each dataset
     #' @return (`list`) a list of `JoinKeys` object
     split = function() {
-      split_join_keys(self)
+      split_join_keys(self$get())
     },
     #' @description
     #' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
@@ -45,7 +46,6 @@ JoinKeys <- R6::R6Class( # nolint
     #' @return (`self`) invisibly for chaining
     merge = function(x) {
       result <- merge_join_keys(self, x)
-      class(result) <- "list"
       private$.keys <- result
     },
     #' @description
@@ -56,11 +56,7 @@ JoinKeys <- R6::R6Class( # nolint
     #' @details if one or both of `dataset_1` and `dataset_2` are missing then
     #' underlying keys structure is returned for further processing
     get = function(dataset_1, dataset_2) {
-      new_keys <- private$.keys
-      class(new_keys) <- "Placeholder"
-      res <- get_join_key(new_keys, dataset_1, dataset_2)
-      if (checkmate::test_class(res, "Placeholder")) class(res) <- "list"
-      res
+      get_join_key(private$.keys, dataset_1, dataset_2)
     },
     #' @description
     #' Change join_keys for a given pair of dataset names (or
@@ -68,12 +64,7 @@ JoinKeys <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate = function(dataset_1, dataset_2, val) {
-      new_keys <- private$.keys
-      class(new_keys) <- "Placeholder"
-      res <- mutate_join_keys(new_keys, dataset_1, dataset_2, val)
-      class(res) <- "list"
-
-      private$.keys <- res
+      private$.keys <- mutate_join_keys(private$.keys, dataset_1, dataset_2, val)
       return(invisible(self))
     },
     #' @description
@@ -84,11 +75,7 @@ JoinKeys <- R6::R6Class( # nolint
     #' to be specified once
     #' @return (`self`) invisibly for chaining
     set = function(x) {
-      jk <- private$.keys
-      class(jk) <- c("Placeholder", "list")
-      join_keys(jk) <- x
-      class(jk) <- "list"
-      private$.keys <- jk
+      join_keys(private$.keys) <- x
       return(invisible(self))
     },
     #' @description
