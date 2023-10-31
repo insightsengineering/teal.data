@@ -199,6 +199,55 @@ merge_join_keys <- function(keys_1, keys_2) {
   return(new_keys)
 }
 
+#' Updates the keys of the datasets based on the parents.
+#'
+#' @return (`self`) invisibly for chaining
+#'
+#' @export
+#'
+#' @examples
+update_keys_given_parents <- function(join_keys_obj) {
+  jk <- join_keys(join_keys_obj)
+
+  checkmate::assert_class(jk, "Placeholder", .var.name = vname(join_keys_obj))
+
+  datanames <- names(jk)
+  duplicate_pairs <- list()
+  for (d1 in datanames) {
+    d1_pk <- jk[d1, d1]
+    d1_parent <- parents(jk)[[d1]]
+    for (d2 in datanames) {
+      if (paste(d2, d1) %in% duplicate_pairs) {
+        next
+      }
+      if (length(jk[d1, d2]) == 0) {
+        d2_parent <- parents(jk)[[d2]]
+        d2_pk <- jk[d2, d2]
+
+        fk <- if (identical(d1, d2_parent)) {
+          # first is parent of second -> parent keys -> first keys
+          d1_pk
+        } else if (identical(d1_parent, d2)) {
+          # second is parent of first -> parent keys -> second keys
+          d2_pk
+        } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
+          # both has the same parent -> parent keys
+          jk[d1_parent, d1_parent]
+        } else {
+          # cant find connection - leave empty
+          next
+        }
+        jk <- mutate_join_keys(jk, d1, d2, fk)
+        duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
+      }
+    }
+  }
+  # check parent child relation
+  assert_parent_child(join_keys_obj = jk)
+
+  jk
+}
+
 #' Prints `JoinKeys`.
 #'
 #' @param ... additional arguments to the printing method
@@ -296,6 +345,17 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   join_keys_obj
 }
 
+#' Check the JoinKeys class membership of an argument
+#' @inheritParams checkmate::assert_class
+#' @param extra_classes (`character` vector) with extra classes to check. Can be used
+#'
+#' @return `x` invisibly
+#'
+#' @keywords internal
+assert_join_keys <- function(x, .var.name = checkmate::vname(x)) {
+  checkmate::assert_class(x, classes = c("Placeholder"), .var.name = .var.name)
+}
+
 #' Helper function to assert if two key sets contain incompatible keys
 #'
 #' return TRUE if compatible, throw error otherwise
@@ -334,4 +394,38 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
 
   # otherwise they are compatible
   return(TRUE)
+}
+
+#' Helper function checks the parent-child relations are valid
+#'
+#' @param join_keys_obj (`JoinKeys`) object to assert validity of relations
+#'
+#' @return `join_keys_obj` invisibly
+#'
+assert_parent_child <- function(join_keys_obj) {
+  jk <- join_keys(join_keys_obj)
+  jk_parents <- parents(jk)
+
+  assert_join_keys(jk)
+
+  if (!is.null(jk_parents)) {
+    for (idx1 in seq_along(jk_parents)) {
+      name_from <- names(jk_parents)[[idx1]]
+      for (idx2 in seq_along(jk_parents[[idx1]])) {
+        name_to <- jk_parents[[idx1]][[idx2]]
+        keys_from <- jk[name_from, name_to]
+        keys_to <- jk[name_to, name_from]
+        if (length(keys_from) == 0 && length(keys_to) == 0) {
+          stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
+        }
+        if (length(keys_from) == 0) {
+          stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
+        }
+        if (length(keys_to) == 0) {
+          stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
+        }
+      }
+    }
+  }
+  invisible(join_keys_obj)
 }

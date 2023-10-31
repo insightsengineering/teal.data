@@ -26,6 +26,24 @@ test_that("parents<- will add to parents attribute using `[[` notation", {
   expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4"))
 })
 
+test_that("parents<- will add to parents attribute using list", {
+  jk <- new_join_keys()
+  parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
+
+  expect_length(parents(jk), 2)
+  expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4"))
+})
+
+test_that("parents<- will add to parents attribute using list, `[` and `[[` notation", {
+  jk <- new_join_keys()
+  parents(jk)[["ds1"]] <- "ds2"
+  parents(jk) <- list(ds3 = "ds4", "ds5" = "ds6")
+  parents(jk)["ds7"] <- "ds8"
+
+  expect_length(parents(jk), 4)
+  expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4", ds5 = "ds6", ds7 = "ds8"))
+})
+
 test_that("check_parent_child will detect empty keys", {
   jk <- new_join_keys()
   jk["ds1", "ds2"] <- character(0)

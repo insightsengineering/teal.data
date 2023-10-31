@@ -93,20 +93,7 @@ JoinKeys <- R6::R6Class( # nolint
     #'
     #' @return (`self`) invisibly for chaining
     set_parents = function(named_list) {
-      for (dataset in names(named_list)) {
-        checkmate::assert(
-          checkmate::check_null(self$get_parent(dataset)),
-          checkmate::check_true(
-            length(self$get_parent(dataset)) == 0 &&
-              length(named_list[[dataset]]) == 0
-          ),
-          checkmate::check_true(self$get_parent(dataset) == named_list[[dataset]]),
-          "Please check the difference between provided datasets parents and provided join_keys parents."
-        )
-        if (is.null(self$get_parent(dataset))) {
-          private$parents[[dataset]] <- named_list[[dataset]]
-        }
-      }
+      parents(private$.keys) <- named_list
       invisible(self)
     },
     #' @description
@@ -118,53 +105,21 @@ JoinKeys <- R6::R6Class( # nolint
       if (missing(dataname)) {
         return(NULL)
       }
-      private$parents[[dataname]]
+      parents(private$.keys)[[dataname]]
     },
     #' @description
     #' Gets the parents of the datasets.
     #'
     #' @return (`list`) A named list of the parents of all datasets
     get_parents = function() {
-      private$parents
+      parents(private$.keys)
     },
     #' @description
     #' Updates the keys of the datasets based on the parents.
     #'
     #' @return (`self`) invisibly for chaining
     update_keys_given_parents = function() {
-      datanames <- names(self$get())
-      duplicate_pairs <- list()
-      for (d1 in datanames) {
-        d1_pk <- self$get(d1, d1)
-        d1_parent <- self$get_parent(d1)
-        for (d2 in datanames) {
-          if (paste(d2, d1) %in% duplicate_pairs) {
-            next
-          }
-          if (length(self$get(d1, d2)) == 0) {
-            d2_parent <- self$get_parent(d2)
-            d2_pk <- self$get(d2, d2)
-
-            fk <- if (identical(d1, d2_parent)) {
-              # first is parent of second -> parent keys -> first keys
-              d1_pk
-            } else if (identical(d1_parent, d2)) {
-              # second is parent of first -> parent keys -> second keys
-              d2_pk
-            } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
-              # both has the same parent -> parent keys
-              self$get(d1_parent, d1_parent)
-            } else {
-              # cant find connection - leave empty
-              next
-            }
-            self$mutate(d1, d2, fk)
-            duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
-          }
-        }
-      }
-      # check parent child relation
-      private$check_parent_child()
+      private$.keys <- update_keys_given_parents(private$.keys)
 
       invisible(self)
     }
@@ -172,34 +127,9 @@ JoinKeys <- R6::R6Class( # nolint
   ## __Private Fields ====
   private = list(
     .keys = list(),
-    parents = list(),
-    join_pair = function(join_key) {
-      res <- join_pair(self, join_key)
-      class(res) <- "list"
-      private$.keys <- res
-    },
-    # checks the parent child relations are valid
     check_parent_child = function() {
-      if (!is.null(self$get_parents())) {
-        parents <- self$get_parents()
-        for (idx1 in seq_along(parents)) {
-          name_from <- names(parents)[[idx1]]
-          for (idx2 in seq_along(parents[[idx1]])) {
-            name_to <- parents[[idx1]][[idx2]]
-            keys_from <- self$get(name_from, name_to)
-            keys_to <- self$get(name_to, name_from)
-            if (length(keys_from) == 0 && length(keys_to) == 0) {
-              stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
-            }
-            if (length(keys_from) == 0) {
-              stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
-            }
-            if (length(keys_to) == 0) {
-              stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
-            }
-          }
-        }
-      }
+      # Needed for a single test
+      assert_parent_child(private$.keys)
     }
   )
 )
