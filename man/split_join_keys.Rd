@@ -2,17 +2,21 @@
 % Please edit documentation in R/join_keys.R
 \name{split_join_keys}
 \alias{split_join_keys}
-\title{Split the \code{JoinKeys} object into a named list of join keys objects with an
-element for each dataset}
+\alias{split_join_keys.default}
+\alias{split_join_keys.Placeholder}
+\title{Split the \code{JoinKeys} object into a named list of join keys objects with an element for each dataset}
 \usage{
 split_join_keys(join_keys_obj)
+
+\method{split_join_keys}{default}(join_keys_obj)
+
+\method{split_join_keys}{Placeholder}(join_keys_obj)
 }
 \value{
 (\code{list}) a list of \code{JoinKeys} object
 }
 \description{
-Split the \code{JoinKeys} object into a named list of join keys objects with an
-element for each dataset
+Split the \code{JoinKeys} object into a named list of join keys objects with an element for each dataset
 }
 \examples{
 jk <- new_join_keys()

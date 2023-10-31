@@ -17,7 +17,7 @@ join_keys(join_keys_obj) <- value
 
 \method{join_keys}{Placeholder}(join_keys_obj) <- value
 
-\method{[}{Placeholder}(join_keys_obj, dataset_1, dataset_2 = NULL)
+\method{[}{Placeholder}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
 
 \method{[}{Placeholder}(join_keys_obj, dataset_1, dataset_2 = dataset_1) <- value
 }

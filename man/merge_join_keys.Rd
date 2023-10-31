@@ -2,9 +2,15 @@
 % Please edit documentation in R/join_keys.R
 \name{merge_join_keys}
 \alias{merge_join_keys}
+\alias{merge_join_keys.default}
+\alias{merge_join_keys.Placeholder}
 \title{Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object}
 \usage{
 merge_join_keys(join_keys_obj, new_join_keys)
+
+\method{merge_join_keys}{default}(join_keys_obj, new_join_keys)
+
+\method{merge_join_keys}{Placeholder}(join_keys_obj, new_join_keys)
 }
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) object to merge the new_join_keys.}

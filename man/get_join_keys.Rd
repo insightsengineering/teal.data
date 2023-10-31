@@ -11,7 +11,7 @@ get_join_keys(data)
 
 get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
 
-\method{join_keys}{JoinKeys}(data, dataset_1, dataset_2 = NULL) <- value
+\method{join_keys}{JoinKeys}(data) <- value
 
 \method{join_keys}{teal_data}(data, dataset_1, dataset_2 = NULL) <- value
 }

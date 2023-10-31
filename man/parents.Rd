@@ -2,21 +2,35 @@
 % Please edit documentation in R/parents.R
 \name{parents}
 \alias{parents}
+\alias{parents.JoinKeys}
 \alias{parents.Placeholder}
 \alias{parents<-}
+\alias{parents<-.JoinKeys}
 \alias{parents<-.Placeholder}
-\title{A name}
+\title{Getter and setter functions for parents attribute of \code{JoinKeys}}
 \usage{
 parents(join_keys_obj)
+
+\method{parents}{JoinKeys}(join_keys_obj)
 
 \method{parents}{Placeholder}(join_keys_obj)
 
 parents(join_keys_obj) <- value
 
+\method{parents}{JoinKeys}(join_keys_obj) <- value
+
 \method{parents}{Placeholder}(join_keys_obj) <- value
 }
+\arguments{
+\item{join_keys_obj}{(\code{JoinKeys}) object to retrieve or manipulate.}
+
+\item{value}{(\code{list}) named list of character values}
+}
+\value{
+a list of \code{character} representing the parents.
+}
 \description{
-A name
+Getter and setter functions for parents attribute of \code{JoinKeys}
 }
 \examples{
 jk <- new_join_keys()

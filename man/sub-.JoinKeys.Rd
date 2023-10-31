@@ -5,7 +5,7 @@
 \alias{[<-.JoinKeys}
 \title{Getter for JoinKeys that returns the relationship between pairs of datasets}
 \usage{
-\method{[}{JoinKeys}(x, dataset_1, dataset_2 = dataset_1)
+\method{[}{JoinKeys}(x, dataset_1 = NULL, dataset_2 = NULL)
 
 \method{[}{JoinKeys}(x, dataset_1, dataset_2 = dataset_1) <- value
 }
@@ -21,4 +21,3 @@
 \description{
 Getter for JoinKeys that returns the relationship between pairs of datasets
 }
-\keyword{internal}
