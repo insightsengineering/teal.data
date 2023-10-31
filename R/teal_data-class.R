@@ -26,7 +26,7 @@ setOldClass("JoinKeys")
 #'  Access with [get_warnings()].
 #' @slot messages (`character`) messages raised when evaluating code.
 #' @slot join_keys (`JoinKeys`) object specifying joining keys for data sets in `@env`.
-#'  Access or modify with [get_join_keys()].
+#'  Access or modify with [join_keys()].
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].

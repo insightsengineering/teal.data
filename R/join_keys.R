@@ -47,6 +47,28 @@
   join_keys_obj
 }
 
+
+#' @rdname get_join_keys
+#' @inheritParams mutate_join_keys
+#' @export
+`join_keys<-.JoinKeys` <- function(data, dataset_1, dataset_2 = NULL, value) {
+  if (missing(dataset_1) || missing(value)) {
+    return(data)
+  }
+  data$mutate(dataset_1, dataset_2, value)
+  data
+}
+
+#' @rdname get_join_keys
+#' @export
+`join_keys<-.teal_data` <- function(data, dataset_1, dataset_2 = NULL, value) {
+  if (missing(dataset_1) || missing(value)) {
+    return(data)
+  }
+  data@join_keys <- mutate_join_keys(data@join_keys, dataset_1, dataset_2, value)
+  data
+}
+
 #' @details
 #' Getter for JoinKeys that returns the relationship between pairs of datasets.
 #'

@@ -57,7 +57,7 @@ testthat::test_that("cdisc_data sets the join_keys internally", {
     join_key("ADTTE", "ADAE", c("STUDYID", "USUBJID"))
   )
   jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  testthat::expect_equal(join_keys(data), jks)
 })
 
 testthat::test_that(
@@ -76,7 +76,7 @@ testthat::test_that(
     )
     jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
     testthat::expect_equal(
-      data$get_join_keys(),
+      join_keys(data),
       jks
     )
   }
@@ -96,7 +96,7 @@ testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys
     join_key("df2", "df2", "df2_id")
   )
   jks$set_parents(list(df1 = character(0), df2 = character(0)))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  testthat::expect_equal(join_keys(data), jks)
 })
 
 testthat::test_that("cdisc_data throws error when a parent/child graph is not correct", {
@@ -182,7 +182,7 @@ testthat::test_that("List values", {
 
   test_relational_data_equal <- function(data1, data2) {
     testthat::expect_equal(data1$get_items(), data2$get_items())
-    testthat::expect_equal(data1$get_join_keys(), data2$get_join_keys())
+    testthat::expect_equal(join_keys(data1), join_keys(data2))
     mapply(testthat::expect_equal, data1$get_ui("test"), data2$get_ui("test"))
   }
 

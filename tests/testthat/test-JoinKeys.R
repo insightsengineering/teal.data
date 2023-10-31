@@ -655,7 +655,7 @@ testthat::test_that("JoinKeys$check_parent_child throws error if no join_keys ex
 
 test_that("cdisc_join_keys will generate JoinKeys for named list with non-named elements", {
   new_dataset <- cdisc_join_keys("ADSL", ADTTE = rADTTE)
-  jk <- get_join_keys(new_dataset)
+  jk <- join_keys(new_dataset)
 
   expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
   expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
@@ -666,7 +666,7 @@ test_that("cdisc_join_keys will generate JoinKeys for named list with non-named 
 
 test_that("cdisc_join_keys will generate JoinKeys for character list", {
   new_dataset <- cdisc_join_keys("ADSL", "ADTTE")
-  jk <- get_join_keys(new_dataset)
+  jk <- join_keys(new_dataset)
 
   expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
   expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
@@ -677,7 +677,7 @@ test_that("cdisc_join_keys will generate JoinKeys for character list", {
 
 test_that("cdisc_join_keys will generate JoinKeys for named list", {
   new_dataset <- cdisc_join_keys(ADSL = rADSL, ADTTE = rADTTE)
-  jk <- get_join_keys(new_dataset)
+  jk <- join_keys(new_dataset)
 
   expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
   expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
@@ -738,7 +738,7 @@ test_that("cdisc_join_keys does nothing with TealDataset", {
     function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
   )
   adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
-  expect_length(get_join_keys(cdisc_join_keys(adae_cdc))$get(), 0)
+  expect_length(join_keys(cdisc_join_keys(adae_cdc))$get(), 0)
 })
 
 test_that("[.JoinKeys returns the primary key if arguments only have 1 dataset", {

@@ -295,10 +295,10 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
 #'   cdisc_dataset("ADSL", ADSL),
 #'   cdisc_dataset("ADRS", ADRS)
 #' )
-#' x$get_join_keys()$get("ADSL", "ADRS")
+#' join_keys(x)$get("ADSL", "ADRS")
 #'
 #' mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
-#' x$get_join_keys()$get("ADSL", "ADRS")
+#' join_keys(x)$get("ADSL", "ADRS")
 mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
   x$mutate_join_keys(dataset_1, dataset_2, val)
 }

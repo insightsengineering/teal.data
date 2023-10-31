@@ -57,7 +57,7 @@ data <- teal_data(
     # join_key("D2", "D2", keys = c("V", "W")), # equivalent to using primary_key
   )
 )
-data$get_join_keys()
+join_keys(data)
 ```
 
 ### Merge keys

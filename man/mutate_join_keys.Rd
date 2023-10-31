@@ -51,10 +51,10 @@ x <- cdisc_data(
   cdisc_dataset("ADSL", ADSL),
   cdisc_dataset("ADRS", ADRS)
 )
-x$get_join_keys()$get("ADSL", "ADRS")
+join_keys(x)$get("ADSL", "ADRS")
 
 mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
-x$get_join_keys()$get("ADSL", "ADRS")
+join_keys(x)$get("ADSL", "ADRS")
 jk <- new_join_keys()
 join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 mutate_join_keys(jk, "ds2", "ds3", "another")
