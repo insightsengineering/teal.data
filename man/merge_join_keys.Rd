@@ -4,15 +4,15 @@
 \alias{merge_join_keys}
 \title{Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object}
 \usage{
-merge_join_keys(keys_1, keys_2)
+merge_join_keys(join_keys_obj, new_join_keys)
 }
 \arguments{
-\item{keys_1}{\code{JoinKeys} object}
+\item{join_keys_obj}{(\code{JoinKeys}) object to merge the new_join_keys.}
 
-\item{keys_2}{\code{list} of \code{JoinKeys} objects or single \code{JoinKeys} object}
+\item{new_join_keys}{\code{list} of \code{JoinKeys} objects or single \code{JoinKeys} object}
 }
 \value{
-(\code{JoinKeys}) a new object with the resulting merge
+a new \code{JoinKeys} object with the resulting merge.
 }
 \description{
 Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
@@ -20,7 +20,9 @@ Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKe
 \examples{
 jk1 <- new_join_keys()
 jk1["ds1", "ds2"] <- "some_col"
+
 jk2 <- new_join_keys()
 jk2["ds1", "ds3"] <- "new_col"
+
 merge_join_keys(jk1, jk2)
 }

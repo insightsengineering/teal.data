@@ -6,9 +6,25 @@
 \usage{
 update_keys_given_parents(join_keys_obj)
 }
+\arguments{
+\item{join_keys_obj}{(\code{JoinKeys}) object to update the keys.}
+}
 \value{
 (\code{self}) invisibly for chaining
 }
 \description{
 Updates the keys of the datasets based on the parents.
+}
+\examples{
+jk <- new_join_keys()
+join_keys(jk) <- list(
+  join_key("df1", "df1", c("id", "id2")),
+  join_key("df1", "df2", c("id" = "id")),
+  join_key("df1", "df3", c("id" = "id"))
+)
+parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
+jk2 <- update_keys_given_parents(jk)
+
+jk[["df2"]]
+jk2[["df2"]]
 }

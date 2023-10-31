@@ -160,25 +160,20 @@ mutate_join_keys.Placeholder <- function(x, dataset_1, dataset_2, value) {
 #' jk["ds1", "ds2"] <- "some_col"
 #' jk["ds1", "ds3"] <- "new_col"
 #' split_join_keys(jk)
-split_join_keys <- function(keys) {
-  checkmate::assert_multi_class(keys, classes = c("JoinKeys", "Placeholder"))
-
-  if (checkmate::test_class(keys, "JoinKeys")) {
-    keys <- keys$get()
-    class(keys) <- c("Placeholder", "list")
-  }
+split_join_keys <- function(join_keys_obj) {
+  assert_join_keys(join_keys_obj)
 
   list_of_list_of_join_key_set <- lapply(
-    names(keys),
+    names(join_keys_obj),
     function(dataset_1) {
       lapply(
-        names(keys[[dataset_1]]),
-        function(dataset_2) join_key(dataset_1, dataset_2, get_join_key(keys, dataset_1, dataset_2))
+        names(join_keys_obj[[dataset_1]]),
+        function(dataset_2) join_key(dataset_1, dataset_2, get_join_key(join_keys_obj, dataset_1, dataset_2))
       )
     }
   )
   res <- lapply(list_of_list_of_join_key_set, function(.x) do.call(join_keys, .x))
-  names(res) <- names(keys)
+  names(res) <- names(join_keys_obj)
 
   logger::log_trace("JoinKeys keys split.")
   return(res)
@@ -186,50 +181,67 @@ split_join_keys <- function(keys) {
 
 #' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
 #'
-#' @param keys_1 (`JoinKeys`) object to merge keys_1
-#' @param keys_2  `list` of `JoinKeys` objects or single `JoinKeys` object
+#' @param join_keys_obj (`JoinKeys`) object to merge the new_join_keys.
+#' @param new_join_keys  `list` of `JoinKeys` objects or single `JoinKeys` object
 #'
-#' @return (`JoinKeys`) a new object with the resulting merge
+#' @return a new `JoinKeys` object with the resulting merge.
 #'
 #' @export
 #'
 #' @examples
 #' jk1 <- new_join_keys()
 #' jk1["ds1", "ds2"] <- "some_col"
+#'
 #' jk2 <- new_join_keys()
 #' jk2["ds1", "ds3"] <- "new_col"
+#'
 #' merge_join_keys(jk1, jk2)
-merge_join_keys <- function(keys_1, keys_2) {
-  if (checkmate::test_class(keys_1, "JoinKeys")) {
-    keys_1 <- keys_1$get()
-    class(keys_1) <- c("Placeholder", "list")
+merge_join_keys <- function(join_keys_obj, new_join_keys) {
+  assert_join_keys(join_keys_obj)
+
+  if (inherits(new_join_keys, c("JoinKeys", "Placeholder"))) {
+    new_join_keys <- list(new_join_keys)
   }
-  checkmate::assert_multi_class(keys_1, c("JoinKeys", "Placeholder"))
 
-  if (inherits(keys_2, c("JoinKeys", "Placeholder"))) keys_2 <- list(keys_2)
-  checkmate::assert_list(keys_2, types = c("JoinKeys", "Placeholder"), min.len = 1)
+  checkmate::assert_list(new_join_keys, types = c("JoinKeys", "Placeholder"), min.len = 1)
 
-  new_keys <- keys_1
+  result <- join_keys_obj
 
-  for (jk in keys_2) {
-    if (checkmate::test_class(jk, "JoinKeys")) jk <- jk$get()
+  for (jk in new_join_keys) {
+    if (checkmate::test_class(jk, "JoinKeys")) {
+      jk <- jk$get()
+    }
+
     for (dataset_1 in names(jk)) {
       for (dataset_2 in names(jk[[dataset_1]])) {
-        new_keys[dataset_1, dataset_2] <- jk[[dataset_1]][[dataset_2]]
+        result[dataset_1, dataset_2] <- jk[[dataset_1]][[dataset_2]]
       }
     }
   }
   logger::log_trace("JoinKeys keys merged.")
-  return(new_keys)
+  return(result)
 }
 
 #' Updates the keys of the datasets based on the parents.
+#'
+#' @param join_keys_obj (`JoinKeys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
 #'
 #' @export
 #'
 #' @examples
+#' jk <- new_join_keys()
+#' join_keys(jk) <- list(
+#'   join_key("df1", "df1", c("id", "id2")),
+#'   join_key("df1", "df2", c("id" = "id")),
+#'   join_key("df1", "df3", c("id" = "id"))
+#' )
+#' parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
+#' jk2 <- update_keys_given_parents(jk)
+#'
+#' jk[["df2"]]
+#' jk2[["df2"]]
 update_keys_given_parents <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
 
@@ -281,12 +293,15 @@ update_keys_given_parents <- function(join_keys_obj) {
 print.Placeholder <- function(x, ...) {
   check_ellipsis(...)
   keys_list <- x
+  my_parents <- parents(keys_list)
   class(keys_list) <- "list"
   if (length(keys_list) > 0) {
     cat(sprintf(
       "A JoinKeys object containing foreign keys between %s datasets:\n",
       length(keys_list)
     ))
+    # Hide parents
+    attr(keys_list, "__parents__") <- NULL
     print.default(keys_list)
   } else {
     cat("An empty JoinKeys object.")

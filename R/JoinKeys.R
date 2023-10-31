@@ -38,15 +38,14 @@ JoinKeys <- R6::R6Class( # nolint
     #' Split the current `JoinKeys` object into a named list of join keys objects with an element for each dataset
     #' @return (`list`) a list of `JoinKeys` object
     split = function() {
-      split_join_keys(self$get())
+      split_join_keys(private$.keys)
     },
     #' @description
     #' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
     #' @param x  `list` of `JoinKeys` objects or single `JoinKeys` object
     #' @return (`self`) invisibly for chaining
     merge = function(x) {
-      result <- merge_join_keys(self, x)
-      private$.keys <- result
+      private$.keys <- merge_join_keys(private$.keys, x)
     },
     #' @description
     #' Get join keys between two datasets.

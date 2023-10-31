@@ -5,7 +5,7 @@
 \title{Split the \code{JoinKeys} object into a named list of join keys objects with an
 element for each dataset}
 \usage{
-split_join_keys(keys)
+split_join_keys(join_keys_obj)
 }
 \value{
 (\code{list}) a list of \code{JoinKeys} object
