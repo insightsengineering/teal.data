@@ -1,17 +1,23 @@
-#' Setter for join keys
+#' @details
+#' The setter assignment `join_keys() <- ...` will only work for an empty
+#' `JoinKey` object, otherwise `mutate_join_keys()` must be used.
+#' @rdname join_keys
 #'
-#' @param data (`JoinKeys`) empty object to set the new relationship pairs.
+#' @param join_keys_obj (`JoinKeys`) empty object to set the new relationship pairs.
 #' @param value (`JoinKeySet` or list of `JoinKeySet`) relationship pairs to add
 #' to `JoinKeys` list.
-#'
-#' @rdname get_keys
 `join_keys<-` <- function(join_keys_obj, value) {
   UseMethod("join_keys<-", join_keys_obj)
 }
 
-#' @rdname get_keys
+#' @details
+#' The setter assignment `join_keys() <- ...` will only work for an empty
+#' `JoinKey` object, otherwise `mutate_join_keys()` must be used.
+#'
+#' @rdname join_keys
 #' @export
 #' @examples
+#' # Using the setter (assignment)
 #' jk <- new_join_keys()
 #' join_keys(jk)
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col2")
@@ -41,48 +47,66 @@
   join_keys_obj
 }
 
-#' @title Getter for JoinKeys that returns the relationship between pairs of datasets
-#' @param x JoinKeys object to extract the join keys
+#' @details
+#' Getter for JoinKeys that returns the relationship between pairs of datasets.
+#'
+#' @rdname join_keys
+#'
+#' @param join_keys_obj (`JoinKeys`) object to extract the join keys
 #' @param dataset_1 (`character`) name of first dataset.
 #' @param dataset_2 (`character`) name of second dataset.
 #'
 #' @export
 #'
 #' @examples
+#' # Getter for JoinKeys
 #' jk <- new_join_keys()
-#' join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
-#' jk["ds1", "ds2"]
-`[.Placeholder` <- function(x, dataset_1, dataset_2 = dataset_1) {
-  checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-
-  x[[dataset_1]][[dataset_2]]
-}
-
-#' @rdname sub-.Placeholder
-#' @param keys value to assign
-#' @export
-#' @keywords internal
-#' @examples
-#' jk <- new_join_keys()
-#' jk["ds1", "ds2"]
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' jk["ds1", "ds2"]
-#' jk["ds1", "ds2"] <- "new_col"
-#' jk["ds1", "ds2"]
-`[<-.Placeholder` <- function(data, dataset_1, dataset_2 = dataset_1, value) {
+#' jk["ds1"]
+#' jk[["ds1"]]
+`[.Placeholder` <- function(join_keys_obj, dataset_1, dataset_2 = NULL) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
 
-  if (is.null(data[[dataset_1]])) data[[dataset_1]] <- list()
+  if (is.null(dataset_2)) {
+    return(join_keys_obj[[dataset_1]])
+  }
+  join_keys_obj[[dataset_1]][[dataset_2]]
+}
 
-  data[[dataset_1]][[dataset_2]] <- value
+#' @details
+#' Setter via index directly (bypassing the need to use `join_key()`).
+#' When `dataset_2` is omitted, it will create a primary key with `dataset_2 = dataset_1`.
+#'
+#' @rdname join_keys
+#'
+#' @param value (`character` vector) value to assign.
+#'
+#' @export
+#'
+#' @examples
+#' # Setter via index
+#' jk <- new_join_keys()
+#' join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
+#' # overwrites previously defined key
+#' jk["ds1", "ds2"] <- "(new) pair key"
+#' # Creates primary key by only defining `dataset_1`
+#' jk["ds1"] <- "primary_key"
+#' jk
+`[<-.Placeholder` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
+
+  if (is.null(join_keys_obj[[dataset_1]])) join_keys_obj[[dataset_1]] <- list()
+
+  join_keys_obj[[dataset_1]][[dataset_2]] <- value
 
   if (identical(dataset_1, dataset_2)) {
-    return(data)
+    return(join_keys_obj)
   }
 
-  if (is.null(data[[dataset_2]])) data[[dataset_2]] <- list()
+  if (is.null(join_keys_obj[[dataset_2]])) join_keys_obj[[dataset_2]] <- list()
 
   if (
     checkmate::test_character(value, min.len = 1) &&
@@ -96,9 +120,9 @@
     value <- setNames(names(value), value)
   }
 
-  data[[dataset_2]][[dataset_1]] <- value
+  join_keys_obj[[dataset_2]][[dataset_1]] <- value
 
-  data
+  join_keys_obj
 }
 
 #' @rdname mutate_join_keys
@@ -162,7 +186,7 @@ split_join_keys <- function(keys) {
 
 #' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
 #'
-#' @param keys_1 `JoinKeys` object
+#' @param keys_1 (`JoinKeys`) object to merge keys_1
 #' @param keys_2  `list` of `JoinKeys` objects or single `JoinKeys` object
 #'
 #' @return (`JoinKeys`) a new object with the resulting merge
