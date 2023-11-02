@@ -29,10 +29,14 @@ modified \code{JoinKeys} object
 Mutate \code{JoinKeys} with a new values
 }
 \examples{
+
+# JoinKeys ====
+
 jk <- join_keys()
 join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 mutate_join_keys(jk, "ds2", "ds3", "another")
-# teal_data ----
+
+# teal_data ====
 
 ADSL <- teal.data::example_cdisc_data("ADSL")
 ADRS <- teal.data::example_cdisc_data("ADRS")

@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' # setting join keys
+#' # Setting join keys ----
 #'
 #' jk <- join_keys(
 #'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
@@ -68,7 +68,7 @@ join_keys <- function(...) {
 #' @export
 #' @examples
 #'
-#' # Using the setter (assignment)
+#' # Using the setter (assignment) ----
 #'
 #' jk <- join_keys()
 #' join_keys(jk)
@@ -115,6 +115,8 @@ join_keys <- function(...) {
 #' @export
 #' @examples
 #'
+#' # Setter for JoinKeys within teal_data ----
+#'
 #' td <- teal_data()
 #' join_keys(td)["ds1", "ds2"] <- "key1"
 #' join_keys(td)["ds2", "ds2"] <- "key2"
@@ -146,7 +148,7 @@ join_keys <- function(...) {
 #'
 #' @examples
 #'
-#' # Getter for JoinKeys
+#' # Getter for JoinKeys ----
 #'
 #' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
@@ -195,7 +197,7 @@ join_keys <- function(...) {
 #'
 #' @examples
 #'
-#' # Setter via index
+#' # Setter via index ----
 #'
 #' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
@@ -235,6 +237,9 @@ mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
+#'
+#' # JoinKeys ----
+#'
 #' jk <- join_keys()
 #' join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 #' mutate_join_keys(jk, "ds2", "ds3", "another")
@@ -260,6 +265,7 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
+#'
 #' # teal_data ----
 #'
 #' ADSL <- teal.data::example_cdisc_data("ADSL")
