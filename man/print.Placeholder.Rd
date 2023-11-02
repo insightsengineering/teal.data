@@ -7,7 +7,9 @@
 \method{print}{Placeholder}(x, ...)
 }
 \arguments{
-\item{...}{additional arguments to the printing method}
+\item{x}{an object used to select a method.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 the \code{x} parameter

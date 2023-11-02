@@ -5,6 +5,8 @@
 \alias{cdisc_join_keys}
 \alias{join_keys<-}
 \alias{join_keys<-.Placeholder}
+\alias{join_keys<-.JoinKeys}
+\alias{join_keys<-.teal_data}
 \alias{[.Placeholder}
 \alias{[<-.Placeholder}
 \title{Create a \code{JoinKeys} out of a list of \code{JoinKeySet} objects}
@@ -16,6 +18,10 @@ cdisc_join_keys(...)
 join_keys(join_keys_obj) <- value
 
 \method{join_keys}{Placeholder}(join_keys_obj) <- value
+
+\method{join_keys}{JoinKeys}(join_keys_obj) <- value
+
+\method{join_keys}{teal_data}(join_keys_obj) <- value
 
 \method{[}{Placeholder}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
 
@@ -59,6 +65,7 @@ When \code{dataset_2} is omitted, it will create a primary key with \code{datase
 }
 \examples{
 # setting join keys
+
 join_keys(
   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
@@ -68,27 +75,45 @@ jk <- join_keys()
 jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
 jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
 
+# Default CDISC join keys
 
-# default CDISC join keys
 cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 
 # Using the setter (assignment)
-jk <- new_join_keys()
+
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor or constructor
 join_keys(jk)
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 join_keys(jk)["ds1", "ds3"] <- "some_col3"
+
+# Using old JoinKeys
+
+jk <- JoinKeys$new()
+join_keys(jk)["ds1", "ds2"] <- "key1"
+join_keys(jk)["ds2", "ds2"] <- "key2"
+join_keys(jk)["ds3", "ds2"] <- "key3"
+td <- teal_data()
+join_keys(td)["ds1", "ds2"] <- "key1"
+join_keys(td)["ds2", "ds2"] <- "key2"
+join_keys(td)["ds3", "ds2"] <- "key3"
+
 # Getter for JoinKeys
-jk <- new_join_keys()
+
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 jk["ds1", "ds2"]
 jk["ds1"]
 jk[["ds1"]]
+
 # Setter via index
-jk <- new_join_keys()
+
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
+
 # overwrites previously defined key
 jk["ds1", "ds2"] <- "(new) pair key"
+
 # Creates primary key by only defining `dataset_1`
 jk["ds1"] <- "primary_key"
 jk

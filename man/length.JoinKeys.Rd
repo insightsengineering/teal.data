@@ -6,6 +6,13 @@
 \usage{
 \method{length}{JoinKeys}(x)
 }
+\arguments{
+\item{x}{(\code{JoinKeys}) object}
+}
+\value{
+number of relationship pairs and primary keys defined in \code{JoinKeys}
+object
+}
 \description{
 Length of an Object
 }

@@ -24,10 +24,10 @@ a new \code{JoinKeys} object with the resulting merge.
 Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
 }
 \examples{
-jk1 <- new_join_keys()
+jk1 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 jk1["ds1", "ds2"] <- "some_col"
 
-jk2 <- new_join_keys()
+jk2 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 jk2["ds1", "ds3"] <- "new_col"
 
 merge_join_keys(jk1, jk2)

@@ -7,11 +7,11 @@
 \alias{mutate_join_keys.Placeholder}
 \title{Mutate \code{JoinKeys} with a new values}
 \usage{
-mutate_join_keys(x, dataset_1, dataset_2, val)
+mutate_join_keys(x, dataset_1, dataset_2, value)
 
-\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, val)
+\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, value)
 
-\method{mutate_join_keys}{TealData}(x, dataset_1, dataset_2, val)
+\method{mutate_join_keys}{TealData}(x, dataset_1, dataset_2, value)
 
 \method{mutate_join_keys}{Placeholder}(x, dataset_1, dataset_2, value)
 }
@@ -22,7 +22,7 @@ mutate_join_keys(x, dataset_1, dataset_2, val)
 
 \item{dataset_2}{(\code{character}) other dataset name}
 
-\item{val}{(named \code{character}) column names used to join}
+\item{value}{(named \code{character}) column names used to join}
 }
 \value{
 modified \code{JoinKeys} object
@@ -55,7 +55,7 @@ join_keys(x)$get("ADSL", "ADRS")
 
 mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
 join_keys(x)$get("ADSL", "ADRS")
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 mutate_join_keys(jk, "ds2", "ds3", "another")
 }

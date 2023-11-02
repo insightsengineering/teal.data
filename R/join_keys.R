@@ -17,8 +17,10 @@
 #' @rdname join_keys
 #' @export
 #' @examples
+#'
 #' # Using the setter (assignment)
-#' jk <- new_join_keys()
+#'
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor or constructor
 #' join_keys(jk)
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
@@ -59,49 +61,51 @@
   join_keys_obj
 }
 
-#' @rdname get_join_keys
-#' @inheritParams mutate_join_keys
+#' @rdname join_keys
 #' @export
 #'
 #' @examples
+#'
+#' # Using old JoinKeys
+#'
 #' jk <- JoinKeys$new()
 #' join_keys(jk)["ds1", "ds2"] <- "key1"
 #' join_keys(jk)["ds2", "ds2"] <- "key2"
 #' join_keys(jk)["ds3", "ds2"] <- "key3"
-`join_keys<-.JoinKeys` <- function(data, value) {
+`join_keys<-.JoinKeys` <- function(join_keys_obj, value) {
   if (missing(value)) {
-    return(data)
+    return(join_keys_obj)
   }
 
-  data$set(value)
-  data
+  join_keys_obj$set(value)
+  join_keys_obj
 }
 
-#' @rdname get_join_keys
+#' @rdname join_keys
 #' @export
 #' @examples
 #' td <- teal_data()
 #' join_keys(td)["ds1", "ds2"] <- "key1"
 #' join_keys(td)["ds2", "ds2"] <- "key2"
 #' join_keys(td)["ds3", "ds2"] <- "key3"
-`join_keys<-.teal_data` <- function(data, value) {
+`join_keys<-.teal_data` <- function(join_keys_obj, value) {
   if (missing(value)) {
-    return(data)
+    return(join_keys_obj)
   }
 
   if (test_join_keys(value) && inherits(value, "tmp_assignment")) {
     # detect when coming from [<-.JoinKeys
-    data@join_keys$merge(value)
-    return(data)
+    join_keys_obj@join_keys$merge(value)
+    return(join_keys_obj)
   }
 
   if (test_join_keys(value)) {
-    data@join_keys$merge(jk, value)
-    return(data)
+    join_keys_obj@join_keys$merge(join_keys_obj, value)
+    return(join_keys_obj)
   }
 
-  data@join_keys$set(value)
-  data
+  join_keys_obj@join_keys$set(value)
+  join_keys_obj
 }
 
 #' @details
@@ -116,8 +120,10 @@
 #' @export
 #'
 #' @examples
+#'
 #' # Getter for JoinKeys
-#' jk <- new_join_keys()
+#'
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' jk["ds1", "ds2"]
 #' jk["ds1"]
@@ -159,11 +165,15 @@
 #' @export
 #'
 #' @examples
+#'
 #' # Setter via index
-#' jk <- new_join_keys()
+#'
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
+#'
 #' # overwrites previously defined key
 #' jk["ds1", "ds2"] <- "(new) pair key"
+#'
 #' # Creates primary key by only defining `dataset_1`
 #' jk["ds1"] <- "primary_key"
 #' jk
@@ -178,7 +188,7 @@
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
-#' jk <- new_join_keys()
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 #' mutate_join_keys(jk, "ds2", "ds3", "another")
 mutate_join_keys.Placeholder <- function(x, dataset_1, dataset_2, value) {
@@ -193,7 +203,7 @@ mutate_join_keys.Placeholder <- function(x, dataset_1, dataset_2, value) {
       "JoinKeys updated the keys between %s and %s to %s",
       dataset_1,
       dataset_2,
-      paste(val, collapse = ", ")
+      paste(value, collapse = ", ")
     )
   )
 
@@ -212,13 +222,18 @@ split_join_keys.default <- function(join_keys_obj) {
   split_join_keys(join_keys(join_keys_obj))
 }
 
-#' @rdname split_join_keys
-#' @title Split the `JoinKeys` object into a named list of join keys objects with an element for each dataset
+#' Split the `JoinKeys` object into a named list of join keys objects with an element for each dataset
+#'
+#' @param join_keys_obj (`JoinKeys`) base object to get the keys from.
 #'
 #' @return (`list`) a list of `JoinKeys` object
+#'
+#' @rdname split_join_keys
+#'
 #' @export
+#'
 #' @examples
-#' jk <- new_join_keys()
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' jk["ds1", "ds2"] <- "some_col"
 #' jk["ds1", "ds3"] <- "new_col"
 #' split_join_keys(jk)
@@ -265,10 +280,10 @@ merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
 #' @export
 #'
 #' @examples
-#' jk1 <- new_join_keys()
+#' jk1 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' jk1["ds1", "ds2"] <- "some_col"
 #'
-#' jk2 <- new_join_keys()
+#' jk2 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' jk2["ds1", "ds3"] <- "new_col"
 #'
 #' merge_join_keys(jk1, jk2)
@@ -300,7 +315,7 @@ merge_join_keys.Placeholder <- function(join_keys_obj, new_join_keys) {
 
 #' Prints `JoinKeys`.
 #'
-#' @param ... additional arguments to the printing method
+#' @inheritParams base::print
 #' @return the `x` parameter
 #'
 #' @export
@@ -421,7 +436,7 @@ get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
 #' @param join_key_obj (`JoinKeySet`) relationship pair to add.
 #'
 #' @examples
-#' jk <- new_join_keys()
+#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 #' jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
 #' jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
 #' jk

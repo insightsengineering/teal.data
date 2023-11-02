@@ -133,15 +133,16 @@ JoinKeys <- R6::R6Class( # nolint
   )
 )
 
-# constructors ====
+# Constructors ====
 
 #' Create a `JoinKeys` out of a list of `JoinKeySet` objects
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @param ... optional, a `JoinKeySet` objects created using the `join_key` function.
 #' @details Note that join keys are symmetric although the relationship only needs
 #' to be specified once.
+#
+#' @param ... optional, a `JoinKeySet` objects created using the `join_key` function.
 #'
 #' @return `JoinKeys`
 #'
@@ -149,6 +150,7 @@ JoinKeys <- R6::R6Class( # nolint
 #'
 #' @examples
 #' # setting join keys
+#'
 #' join_keys(
 #'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
 #'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
@@ -157,7 +159,6 @@ JoinKeys <- R6::R6Class( # nolint
 #' jk <- join_keys()
 #' jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
 #' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
-#'
 join_keys <- function(...) {
   x <- rlang::list2(...)
 
@@ -182,6 +183,12 @@ join_keys <- function(...) {
 }
 
 #' Length of an Object
+#'
+#' @param x (`JoinKeys`) object
+#'
+#' @return number of relationship pairs and primary keys defined in `JoinKeys`
+#' object
+#'
 #' @export
 length.JoinKeys <- function(x) {
   length(x$get())
@@ -209,17 +216,19 @@ length.JoinKeys <- function(x) {
 }
 
 #' @rdname join_keys
+#'
 #' @details
 #' `cdisc_join_keys` is a wrapper around `join_keys` that sets the default
 #' join keys for CDISC datasets. It is used internally by `cdisc_data` to
 #' set the default join keys for CDISC datasets.
 #'
 #' @export
+#'
 #' @examples
 #'
-#' # default CDISC join keys
-#' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
+#' # Default CDISC join keys
 #'
+#' cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
 cdisc_join_keys <- function(...) {
   data_objects <- rlang::list2(...)
 
@@ -263,12 +272,12 @@ cdisc_join_keys <- function(...) {
 #' @param x (`JoinKeys`) object to be modified
 #' @param dataset_1 (`character`) one dataset name
 #' @param dataset_2 (`character`) other dataset name
-#' @param val (named `character`) column names used to join
+#' @param value (named `character`) column names used to join
 #'
 #' @return modified `JoinKeys` object
 #'
 #' @export
-mutate_join_keys <- function(x, dataset_1, dataset_2, val) {
+mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
   UseMethod("mutate_join_keys")
 }
 
@@ -285,8 +294,8 @@ mutate_join_keys <- function(x, dataset_1, dataset_2, val) {
 #'
 #' mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
 #' x$get("dataset_A", "dataset_B")
-mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
-  x$mutate(dataset_1, dataset_2, val)
+mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
+  x$mutate(dataset_1, dataset_2, value)
 }
 
 #' @rdname mutate_join_keys
@@ -305,6 +314,6 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, val) {
 #'
 #' mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
 #' join_keys(x)$get("ADSL", "ADRS")
-mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, val) { # nolint
-  x$mutate_join_keys(dataset_1, dataset_2, val)
+mutate_join_keys.TealData <- function(x, dataset_1, dataset_2, value) { # nolint
+  x$mutate_join_keys(dataset_1, dataset_2, value)
 }

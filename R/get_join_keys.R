@@ -14,10 +14,10 @@ get_join_keys <- function(data) {
 #' @inheritParams mutate_join_keys
 #' @param value value to assign
 #' @export
-`get_join_keys<-` <- function(data, dataset_1, dataset_2 = NULL, value) {
+`get_join_keys<-` <- function(x, dataset_1, dataset_2 = NULL, value) {
   lifecycle::deprecate_stop(
     when = " 0.3.1",
-    what = "get_join_keys(data) <- ...",
-    details = "Use `join_keys(data) <- ...`"
+    what = "get_join_keys(x) <- ...",
+    details = "Use `join_keys(x) <- ...`"
   )
 }

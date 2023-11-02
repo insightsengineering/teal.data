@@ -16,7 +16,7 @@ update_keys_given_parents(join_keys_obj)
 Updates the keys of the datasets based on the parents.
 }
 \examples{
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 join_keys(jk) <- list(
   join_key("df1", "df1", c("id", "id2")),
   join_key("df1", "df2", c("id" = "id")),

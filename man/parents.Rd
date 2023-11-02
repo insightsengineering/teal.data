@@ -33,11 +33,11 @@ a list of \code{character} representing the parents.
 Getter and setter functions for parents attribute of \code{JoinKeys}
 }
 \examples{
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 parents(jk)
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 parents(jk) <- list(ADSL = "ADTTE")
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
 parents(jk)["ADTTE"] <- "ADSL"
 parents(jk)["ADTTE"] <- "ADSL2"

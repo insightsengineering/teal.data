@@ -15,7 +15,7 @@ join_pair(join_keys_obj, join_key_obj)
 Helper function to add a new pair to a \code{JoinKeys} object
 }
 \examples{
-jk <- new_join_keys()
+jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
 jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
 jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
 jk

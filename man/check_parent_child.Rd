@@ -9,10 +9,4 @@ check_parent_child(join_keys_obj)
 \description{
 Check if parent/child are valid
 }
-\examples{
-jk <- new_join_keys()
-jk["ds1", "ds2"] <- character(0)
-parents(jk) <- list(ds1 = "ds2")
-check_parent_child(jk)
-}
 \keyword{internal}
