@@ -167,9 +167,9 @@ join_keys <- function(...) {
   } else if (checkmate::test_list(x, len = 1, types = c("Placeholder"))) {
     return(x[[1]])
   } else if (checkmate::test_list(x, len = 1, types = c("teal_data"))) {
-    return(x[[1]]@join_keys)
+    return(x[[1]]@join_keys$get())
   } else if (checkmate::test_list(x, len = 1, types = c("TealData"))) {
-    return(x[[1]]$get_join_keys())
+    return(x[[1]]$get_join_keys()$get())
   }
 
   # Constructor
@@ -179,6 +179,12 @@ join_keys <- function(...) {
   }
 
   res
+}
+
+#' Length of an Object
+#' @export
+length.JoinKeys <- function(x) {
+  length(x$get())
 }
 
 #' @title Getter for JoinKeys that returns the relationship between pairs of datasets

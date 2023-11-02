@@ -105,13 +105,6 @@ test_that("join_keys can create JoinKeys with valid arguments", {
   expect_silent(join_keys(join_key("d1", "d2", "X"), join_key("d2", "d1", "X")))
 })
 
-
-test_that("join_keys cannot set keys in JoinKeys if they have already been set", {
-  my_keys <- join_keys(join_key("d1", "d2", "A"))
-  expect_error(join_keys(my_keys) <- join_key("d1", "d3", "A"))
-})
-
-
 test_that("join_keys creating join keys with d1 -> d2 also creates the key d2 - > d1", {
   my_keys <- join_keys(join_key("d1", "d2", c("A" = "C")))
   expect_equal(my_keys["d2", "d1"], c("C" = "A"))
@@ -498,33 +491,33 @@ test_that("cdisc_join_keys will generate JoinKeys for named list with non-named 
   new_dataset <- cdisc_join_keys("ADSL", ADTTE = rADTTE)
   jk <- join_keys(new_dataset)
 
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+  expect_identical(unname(jk["ADSL", "ADSL"]), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk["ADTTE", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$primary)
 
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADSL", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADTTE", "ADSL"]), default_cdisc_keys[["ADTTE"]]$foreign)
 })
 
 test_that("cdisc_join_keys will generate JoinKeys for character list", {
   new_dataset <- cdisc_join_keys("ADSL", "ADTTE")
   jk <- join_keys(new_dataset)
 
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+  expect_identical(unname(jk["ADSL", "ADSL"]), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk["ADTTE", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$primary)
 
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADSL", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADTTE", "ADSL"]), default_cdisc_keys[["ADTTE"]]$foreign)
 })
 
 test_that("cdisc_join_keys will generate JoinKeys for named list", {
   new_dataset <- cdisc_join_keys(ADSL = rADSL, ADTTE = rADTTE)
   jk <- join_keys(new_dataset)
 
-  expect_identical(unname(jk$get("ADSL", "ADSL")), default_cdisc_keys[["ADSL"]]$primary)
-  expect_identical(unname(jk$get("ADTTE", "ADTTE")), default_cdisc_keys[["ADTTE"]]$primary)
+  expect_identical(unname(jk["ADSL", "ADSL"]), default_cdisc_keys[["ADSL"]]$primary)
+  expect_identical(unname(jk["ADTTE", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$primary)
 
-  expect_identical(unname(jk$get("ADSL", "ADTTE")), default_cdisc_keys[["ADTTE"]]$foreign)
-  expect_identical(unname(jk$get("ADTTE", "ADSL")), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADSL", "ADTTE"]), default_cdisc_keys[["ADTTE"]]$foreign)
+  expect_identical(unname(jk["ADTTE", "ADSL"]), default_cdisc_keys[["ADTTE"]]$foreign)
 })
 
 test_that("cdisc_join_keys will retrieve ADTTE primary and foreign keys", {
@@ -567,7 +560,7 @@ test_that("cdisc_join_keys will retrieve known primary keys", {
     datasets,
     function(.x) {
       jk <- cdisc_join_keys(.x)
-      expect_equal(unname(jk[.x]), get_cdisc_keys(.x))
+      expect_equal(unname(jk[.x, .x]), get_cdisc_keys(.x))
       character(0)
     },
     character(0)
@@ -579,7 +572,7 @@ test_that("cdisc_join_keys does nothing with TealDataset", {
     function() as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
   )
   adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
-  expect_length(join_keys(cdisc_join_keys(adae_cdc))$get(), 0)
+  expect_length(join_keys(cdisc_join_keys(adae_cdc)), 0)
 })
 
 # -----------------------------------------------------------------------------

@@ -3,11 +3,14 @@
 \name{assert_join_keys}
 \alias{assert_join_keys}
 \alias{test_join_keys}
+\alias{expect_join_keys}
 \title{Check the JoinKeys class membership of an argument}
 \usage{
 assert_join_keys(x, .var.name = checkmate::vname(x))
 
 test_join_keys(x)
+
+expect_join_keys(x)
 }
 \arguments{
 \item{x}{[any]\cr

@@ -20,18 +20,26 @@
 #' # Using the setter (assignment)
 #' jk <- new_join_keys()
 #' join_keys(jk)
-#' join_keys(jk) <- join_key("ds1", "ds2", "some_col2")
+#' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
+#' join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
+#' join_keys(jk)["ds1", "ds3"] <- "some_col3"
 `join_keys<-.Placeholder` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
 
+  # Assume assignment of join keys as a merge operation
+  #  Needed to support join_keys(jk)[ds1, ds2] <- "key"
   if (test_join_keys(value)) {
-    return(value)
+    return(merge_join_keys(join_keys_obj, value))
   }
 
-  if (length(join_keys_obj) > 0) {
-    stop("Keys already set, please use `mutate_join_keys(data)` or `data[ds1, ds2]<- new_key` to change them")
+  # Assignment of list of JoinKeySet will merge it with existing JoinKeys
+  if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "JoinKeySet", min.len = 1)) {
+    jk <- new_join_keys()
+    join_keys(jk) <- value
+    message("Keys already set, merging new list of JoinKeySet with existing keys.")
+    return(merge_join_keys(join_keys_obj, jk))
   }
 
   if (inherits(value, "JoinKeySet")) value <- list(value)
@@ -51,28 +59,48 @@
   join_keys_obj
 }
 
-
 #' @rdname get_join_keys
 #' @inheritParams mutate_join_keys
 #' @export
+#'
+#' @examples
+#' jk <- JoinKeys$new()
+#' join_keys(jk)["ds1", "ds2"] <- "key1"
+#' join_keys(jk)["ds2", "ds2"] <- "key2"
+#' join_keys(jk)["ds3", "ds2"] <- "key3"
 `join_keys<-.JoinKeys` <- function(data, value) {
-  if (length(data$get()) > 0) {
-    stop("Keys already set, please use `mutate_join_keys(data)` or `data[ds1, ds2]<- new_key` to change them")
-  }
   if (missing(value)) {
     return(data)
   }
+
   data$set(value)
   data
 }
 
 #' @rdname get_join_keys
 #' @export
-`join_keys<-.teal_data` <- function(data, dataset_1, dataset_2 = NULL, value) {
-  if (missing(dataset_1) || missing(value)) {
+#' @examples
+#' td <- teal_data()
+#' join_keys(td)["ds1", "ds2"] <- "key1"
+#' join_keys(td)["ds2", "ds2"] <- "key2"
+#' join_keys(td)["ds3", "ds2"] <- "key3"
+`join_keys<-.teal_data` <- function(data, value) {
+  if (missing(value)) {
     return(data)
   }
-  data@join_keys <- mutate_join_keys(data@join_keys, dataset_1, dataset_2, value)
+
+  if (test_join_keys(value) && inherits(value, "tmp_assignment")) {
+    # detect when coming from [<-.JoinKeys
+    data@join_keys$merge(value)
+    return(data)
+  }
+
+  if (test_join_keys(value)) {
+    data@join_keys$merge(jk, value)
+    return(data)
+  }
+
+  data@join_keys$set(value)
   data
 }
 
@@ -140,41 +168,9 @@
 #' jk["ds1"] <- "primary_key"
 #' jk
 `[<-.Placeholder` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
-  checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
+  join_keys_obj <- add_key(join_keys_obj, dataset_1, dataset_2, value)
 
-  # Normalize value
-  new_join_key <- join_key(dataset_1, dataset_2, value)
-  dataset_1 <- new_join_key$dataset_1
-  dataset_2 <- new_join_key$dataset_2
-  value <- new_join_key$keys
-
-  # Create pair ds_1 -> ds_2
-  if (is.null(join_keys_obj[[dataset_1]])) join_keys_obj[[dataset_1]] <- list()
-
-  join_keys_obj[[dataset_1]][[dataset_2]] <- value
-
-  # Primary key, do nothing else
-  if (identical(dataset_1, dataset_2)) {
-    return(join_keys_obj)
-  }
-
-  # Create symmetrical pair ds_2 -> ds_1
-  if (is.null(join_keys_obj[[dataset_2]])) join_keys_obj[[dataset_2]] <- list()
-
-  if (
-    checkmate::test_character(value, min.len = 1) &&
-      all(is.null(names(value)))
-  ) {
-    value <- setNames(names(value), value)
-  } else if (
-    checkmate::test_character(value, min.len = 1)
-  ) {
-    # Invert key
-    value <- setNames(names(value), value)
-  }
-
-  join_keys_obj[[dataset_2]][[dataset_1]] <- value
+  class(join_keys_obj) <- unique(c(class(join_keys_obj), "tmp_assignment"))
 
   join_keys_obj
 }
@@ -294,7 +290,7 @@ merge_join_keys.Placeholder <- function(join_keys_obj, new_join_keys) {
 
     for (dataset_1 in names(jk)) {
       for (dataset_2 in names(jk[[dataset_1]])) {
-        result[dataset_1, dataset_2] <- jk[[dataset_1]][[dataset_2]]
+        result[[dataset_1]][[dataset_2]] <- jk[[dataset_1]][[dataset_2]]
       }
     }
   }
@@ -344,6 +340,50 @@ new_join_keys <- function() {
   result
 }
 
+#' Internal assignment of value to a JoinKeys object
+#'
+#' @inheritParams join_keys
+#'
+#' @keywords internal
+add_key <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
+  checkmate::assert_string(dataset_1)
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
+
+  # Normalize value
+  new_join_key <- join_key(dataset_1, dataset_2, value)
+  dataset_1 <- new_join_key$dataset_1
+  dataset_2 <- new_join_key$dataset_2
+  value <- new_join_key$keys
+
+  # Create pair ds_1 -> ds_2
+  if (is.null(join_keys_obj[[dataset_1]])) join_keys_obj[[dataset_1]] <- list()
+
+  join_keys_obj[[dataset_1]][[dataset_2]] <- value
+
+  # Primary key, do nothing else
+  if (identical(dataset_1, dataset_2)) {
+    return(join_keys_obj)
+  }
+
+  # Create symmetrical pair ds_2 -> ds_1
+  if (is.null(join_keys_obj[[dataset_2]])) join_keys_obj[[dataset_2]] <- list()
+
+  if (
+    checkmate::test_character(value, min.len = 1) &&
+      all(is.null(names(value)))
+  ) {
+    value <- setNames(names(value), value)
+  } else if (
+    checkmate::test_character(value, min.len = 1)
+  ) {
+    # Invert key
+    value <- setNames(names(value), value)
+  }
+
+  join_keys_obj[[dataset_2]][[dataset_1]] <- value
+  join_keys_obj
+}
+
 #' Get value of a single relationship pair
 #'
 #' @param join_keys_obj (`JoinKeys`) object that holds the relationship keys.
@@ -384,6 +424,7 @@ get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
 #' jk <- new_join_keys()
 #' jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
 #' jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
+#' jk
 join_pair <- function(join_keys_obj, join_key_obj) {
   assert_join_keys(join_keys_obj)
   checkmate::assert_class(join_key_obj, "JoinKeySet")
@@ -392,7 +433,7 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   dataset_2 <- join_key_obj$dataset_2
   keys <- join_key_obj$keys
 
-  join_keys_obj[dataset_1, dataset_2] <- keys
+  join_keys_obj <- add_key(join_keys_obj, dataset_1, dataset_2, keys)
   join_keys_obj
 }
 
@@ -408,8 +449,15 @@ assert_join_keys <- function(x, .var.name = checkmate::vname(x)) {
 }
 
 #' @rdname assert_join_keys
+#' @keywords internal
 test_join_keys <- function(x) {
   checkmate::test_class(x, classes = c("Placeholder"))
+}
+
+#' @rdname assert_join_keys
+#' @keywords internal
+expect_join_keys <- function(x) {
+  checkmate::expect_class(x, classes = c("Placeholder"))
 }
 
 #' Helper function to assert if two key sets contain incompatible keys

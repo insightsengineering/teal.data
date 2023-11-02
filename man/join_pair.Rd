@@ -18,4 +18,5 @@ Helper function to add a new pair to a \code{JoinKeys} object
 jk <- new_join_keys()
 jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
 jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
+jk
 }

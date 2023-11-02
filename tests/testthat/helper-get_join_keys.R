@@ -24,9 +24,9 @@ helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) { # nol
 helper_test_getter_join_keys <- function(obj, dataset_1 = "ds1") {
   jk <- join_keys(obj)
 
-  expect_s3_class(jk, c("JoinKey", "R6"))
-  expect_length(jk$get(), 1)
-  expect_length(jk$get(dataset_1), 1)
+  expect_join_keys(jk)
+  expect_length(jk, 1)
+  expect_length(jk[dataset_1, dataset_1], 1)
 
   obj
 }
@@ -38,8 +38,8 @@ helper_test_getter_join_keys_add <- function(obj, dataset_1 = "ds1", new_dataset
 
   jk <- join_keys(obj)
 
-  checkmate::expect_r6(jk, c("JoinKeys"))
-  expect_length(jk$get(), 2)
-  expect_length(jk$get(dataset_1), 1)
-  expect_length(jk$get(new_dataset_1), 1)
+  expect_join_keys(jk)
+  expect_length(jk, 2)
+  expect_length(jk[dataset_1, dataset_1], 1)
+  expect_length(jk[new_dataset_1, new_dataset_1], 1)
 }

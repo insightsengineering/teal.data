@@ -75,7 +75,9 @@ cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE
 # Using the setter (assignment)
 jk <- new_join_keys()
 join_keys(jk)
-join_keys(jk) <- join_key("ds1", "ds2", "some_col2")
+join_keys(jk) <- join_key("ds1", "ds2", "some_col")
+join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
+join_keys(jk)["ds1", "ds3"] <- "some_col3"
 # Getter for JoinKeys
 jk <- new_join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")

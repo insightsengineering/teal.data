@@ -13,7 +13,7 @@ get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
 
 \method{join_keys}{JoinKeys}(data) <- value
 
-\method{join_keys}{teal_data}(data, dataset_1, dataset_2 = NULL) <- value
+\method{join_keys}{teal_data}(data) <- value
 }
 \arguments{
 \item{data}{`` - object to extract the join keys}
@@ -29,4 +29,14 @@ Either \code{JoinKeys} object or \code{NULL} if no join keys
 }
 \description{
 Function to get join keys from a `` object
+}
+\examples{
+jk <- JoinKeys$new()
+join_keys(jk)["ds1", "ds2"] <- "key1"
+join_keys(jk)["ds2", "ds2"] <- "key2"
+join_keys(jk)["ds3", "ds2"] <- "key3"
+td <- teal_data()
+join_keys(td)["ds1", "ds2"] <- "key1"
+join_keys(td)["ds2", "ds2"] <- "key2"
+join_keys(td)["ds3", "ds2"] <- "key3"
 }
