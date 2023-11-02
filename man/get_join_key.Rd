@@ -4,7 +4,7 @@
 \alias{get_join_key}
 \title{Get value of a single relationship pair}
 \usage{
-get_join_key(join_keys_obj, dataset_1, dataset_2)
+get_join_key(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
 }
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) object that holds the relationship keys.}

@@ -156,33 +156,7 @@ join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[["ds1"]]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
-  if (checkmate::test_integerish(dataset_1, len = 2)) {
-    # if dataset_1 is an index integet vector, then return itself
-    #  trick to make the following work: join_keys(jk)["ds1", "ds2"] <- "key"
-    return(join_keys_obj)
-  }
-  checkmate::assert_string(dataset_1, null.ok = TRUE)
-  if (missing(dataset_2)) {
-    # protection if dataset_2 is passed through by a function
-    dataset_2 <- NULL
-  }
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-
-  if (is.null(dataset_1) && is.null(dataset_2)) {
-    return(join_keys_obj)
-  }
-  if (is.null(dataset_2)) {
-    return(join_keys_obj[[dataset_1]])
-  }
-  if (is.null(dataset_1)) {
-    return(join_keys_obj[[dataset_2]])
-  }
-
-  result <- join_keys_obj[[dataset_1]][[dataset_2]]
-  if (is.null(result)) {
-    return(character(0))
-  }
-  result
+  get_join_key(join_keys_obj, dataset_1, dataset_2)
 }
 
 #' @rdname join_keys
@@ -208,11 +182,7 @@ join_keys <- function(...) {
 #' jk["ds1"] <- "primary_key"
 #' jk
 `[<-.JoinKeys` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
-  join_keys_obj <- add_key(join_keys_obj, dataset_1, dataset_2, value)
-
-  class(join_keys_obj) <- unique(c(class(join_keys_obj), "tmp_assignment"))
-
-  join_keys_obj
+  add_key(join_keys_obj, dataset_1, dataset_2, value)
 }
 
 #' Mutate `JoinKeys` with a new values
@@ -436,22 +406,36 @@ new_join_keys <- function() {
 #' `JoinKeys` object
 #'
 #' @keywords internal
-get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
-  jk <- join_keys(join_keys_obj)
-
-  assert_join_keys(jk)
-
-  if (missing(dataset_1) && missing(dataset_2)) {
-    return(jk)
+get_join_key <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
+  if (checkmate::test_integerish(dataset_1, len = 2)) {
+    # if dataset_1 is an index integet vector, then return itself
+    #  trick to make the following work: join_keys(jk)["ds1", "ds2"] <- "key"
+    return(join_keys_obj)
   }
+  checkmate::assert_string(dataset_1, null.ok = TRUE)
   if (missing(dataset_2)) {
-    return(jk[dataset_1])
+    # protection if dataset_2 is passed through by a function
+    dataset_2 <- NULL
   }
-  if (missing(dataset_1)) {
-    return(jk[dataset_2])
+  checkmate::assert_string(dataset_2, null.ok = TRUE)
+  assert_join_keys(join_keys_obj)
+
+  if (is.null(dataset_1) && is.null(dataset_2)) {
+    return(join_keys_obj)
+  }
+  if (is.null(dataset_2)) {
+    return(join_keys_obj[[dataset_1]])
+  }
+  if (is.null(dataset_1)) {
+    return(join_keys_obj[[dataset_2]])
   }
 
-  jk[dataset_1, dataset_2]
+  result <- join_keys_obj[[dataset_1]][[dataset_2]]
+
+  if (is.null(result)) {
+    return(character(0))
+  }
+  result
 }
 
 #' Internal assignment of value to a JoinKeys object
