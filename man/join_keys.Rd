@@ -49,11 +49,8 @@ set the default join keys for CDISC datasets.
 Note that join keys are symmetric although the relationship only needs
 to be specified once.
 
-The setter assignment \code{join_keys() <- ...} will only work for an empty
-\code{JoinKey} object, otherwise \code{mutate_join_keys()} must be used.
-
-The setter assignment \code{join_keys() <- ...} will only work for an empty
-\code{JoinKey} object, otherwise \code{mutate_join_keys()} must be used.
+The setter assignment \code{join_keys(obj) <- ...} will merge obj and \code{...} if obj
+is not empty.
 
 Getter for JoinKeys that returns the relationship between pairs of datasets.
 
@@ -65,7 +62,7 @@ When \code{dataset_2} is omitted, it will create a primary key with \code{datase
 # Default CDISC join keys
 
 cdisc_join_keys(join_key("dataset_A", "dataset_B", c("col_1" = "col_a")), "ADTTE")
-# Setting join keys ====
+# Setting join keys ----
 
 jk <- join_keys(
   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
@@ -79,22 +76,23 @@ jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
 jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
 jk
 
-# Using the setter (assignment) ====
+# Using the setter (assignment) ----
 
 jk <- join_keys()
-join_keys(jk)
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 join_keys(jk)["ds1", "ds3"] <- "some_col3"
+jk
 
-# Setter for JoinKeys within teal_data ====
+# Setter for JoinKeys within teal_data ----
 
 td <- teal_data()
 join_keys(td)["ds1", "ds2"] <- "key1"
 join_keys(td)["ds2", "ds2"] <- "key2"
 join_keys(td)["ds3", "ds2"] <- "key3"
+join_keys(td)
 
-# Getter for JoinKeys ====
+# Getter for JoinKeys ----
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
@@ -102,7 +100,7 @@ jk["ds1", "ds2"]
 jk["ds1"]
 jk[["ds1"]]
 
-# Setter via index ====
+# Setter via index ----
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")

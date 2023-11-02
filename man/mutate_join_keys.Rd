@@ -30,13 +30,13 @@ Mutate \code{JoinKeys} with a new values
 }
 \examples{
 
-# JoinKeys ====
+# JoinKeys ----
 
 jk <- join_keys()
-join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
+join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 mutate_join_keys(jk, "ds2", "ds3", "another")
 
-# teal_data ====
+# teal_data ----
 
 ADSL <- teal.data::example_cdisc_data("ADSL")
 ADRS <- teal.data::example_cdisc_data("ADRS")
@@ -48,4 +48,5 @@ x <- cdisc_data(
 join_keys(x)["ADSL", "ADRS"]
 
 join_keys(x) <- mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
+join_keys(x)["ADSL", "ADRS"]
 }

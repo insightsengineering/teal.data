@@ -56,17 +56,17 @@ parents.JoinKeys <- function(join_keys_obj) {
 #' @examples
 #' jk <- join_keys()
 #' parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
-#' parents(jk)["ADTTE"] <- "ADSL"
-#' parents(jk)["ADTTE"] <- "ADSL2"
+#' parents(jk)["ds5"] <- "ds6"
+#' parents(jk)["ds6"] <- "ds7"
 `parents<-.JoinKeys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
   checkmate::assert_list(value, types = "character", names = "named", min.len = 1)
-  new_parents <- attr(join_keys_obj, "__parents__")
+  old_parents <- attr(join_keys_obj, "__parents__")
 
   for (dataset in names(value)) {
-    parent <- new_parents[[dataset]]
+    parent <- old_parents[[dataset]]
     checkmate::assert(
       checkmate::check_null(parent),
       checkmate::check_true(
@@ -77,10 +77,10 @@ parents.JoinKeys <- function(join_keys_obj) {
       "Please check the difference between provided datasets parents and provided join_keys parents."
     )
     if (is.null(parent)) {
-      new_parents[[dataset]] <- value[[dataset]]
+      old_parents[[dataset]] <- value[[dataset]]
     }
   }
-  attr(join_keys_obj, "__parents__") <- new_parents
+  attr(join_keys_obj, "__parents__") <- old_parents
   join_keys_obj
 }
 

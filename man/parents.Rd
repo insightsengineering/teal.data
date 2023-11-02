@@ -33,6 +33,6 @@ jk <- join_keys()
 parents(jk) <- list(ADSL = "ADTTE")
 jk <- join_keys()
 parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
-parents(jk)["ADTTE"] <- "ADSL"
-parents(jk)["ADTTE"] <- "ADSL2"
+parents(jk)["ds5"] <- "ds6"
+parents(jk)["ds6"] <- "ds7"
 }

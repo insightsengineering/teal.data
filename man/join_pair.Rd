@@ -14,9 +14,4 @@ join_pair(join_keys_obj, join_key_obj)
 \description{
 Helper function to add a new pair to a \code{JoinKeys} object
 }
-\examples{
-jk <- join_keys()
-jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
-jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
-jk
-}
+\keyword{internal}

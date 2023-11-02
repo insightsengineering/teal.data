@@ -6,7 +6,9 @@
 #'
 #' @details Note that join keys are symmetric although the relationship only needs
 #' to be specified once.
-#
+#'
+#' @name join_keys
+#'
 #' @param ... optional, a `JoinKeySet` objects created using the `join_key` function.
 #'
 #' @return `JoinKeys`
@@ -48,22 +50,20 @@ join_keys <- function(...) {
   res
 }
 
-#' @details
-#' The setter assignment `join_keys() <- ...` will only work for an empty
-#' `JoinKey` object, otherwise `mutate_join_keys()` must be used.
 #' @rdname join_keys
+#' @details
+#' The setter assignment `join_keys(obj) <- ...` will merge obj and `...` if obj
+#' is not empty.
 #'
 #' @param join_keys_obj (`JoinKeys`) empty object to set the new relationship pairs.
 #' @param value (`JoinKeySet` or list of `JoinKeySet`) relationship pairs to add
 #' to `JoinKeys` list.
+#'
+#' @export
 `join_keys<-` <- function(join_keys_obj, value) {
   UseMethod("join_keys<-", join_keys_obj)
 }
 
-#' @details
-#' The setter assignment `join_keys() <- ...` will only work for an empty
-#' `JoinKey` object, otherwise `mutate_join_keys()` must be used.
-#'
 #' @rdname join_keys
 #' @export
 #' @examples
@@ -71,10 +71,10 @@ join_keys <- function(...) {
 #' # Using the setter (assignment) ----
 #'
 #' jk <- join_keys()
-#' join_keys(jk)
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 #' join_keys(jk)["ds1", "ds3"] <- "some_col3"
+#' jk
 `join_keys<-.JoinKeys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
@@ -121,6 +121,7 @@ join_keys <- function(...) {
 #' join_keys(td)["ds1", "ds2"] <- "key1"
 #' join_keys(td)["ds2", "ds2"] <- "key2"
 #' join_keys(td)["ds3", "ds2"] <- "key3"
+#' join_keys(td)
 `join_keys<-.teal_data` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
@@ -135,10 +136,9 @@ join_keys <- function(...) {
   join_keys_obj
 }
 
+#' @rdname join_keys
 #' @details
 #' Getter for JoinKeys that returns the relationship between pairs of datasets.
-#'
-#' @rdname join_keys
 #'
 #' @param join_keys_obj (`JoinKeys`) object to extract the join keys
 #' @param dataset_1 (`character`) name of first dataset.
@@ -185,11 +185,10 @@ join_keys <- function(...) {
   result
 }
 
+#' @rdname join_keys
 #' @details
 #' Setter via index directly (bypassing the need to use `join_key()`).
 #' When `dataset_2` is omitted, it will create a primary key with `dataset_2 = dataset_1`.
-#'
-#' @rdname join_keys
 #'
 #' @param value (`character` vector) value to assign.
 #'
@@ -216,7 +215,6 @@ join_keys <- function(...) {
   join_keys_obj
 }
 
-# wrappers ====
 #' Mutate `JoinKeys` with a new values
 #'
 #' @description `r lifecycle::badge("experimental")`
@@ -241,7 +239,7 @@ mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
 #' # JoinKeys ----
 #'
 #' jk <- join_keys()
-#' join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
+#' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' mutate_join_keys(jk, "ds2", "ds3", "another")
 mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
   checkmate::assert_string(dataset_1)
@@ -278,6 +276,7 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
 #' join_keys(x)["ADSL", "ADRS"]
 #'
 #' join_keys(x) <- mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
+#' join_keys(x)["ADSL", "ADRS"]
 mutate_join_keys.teal_data <- function(x, dataset_1, dataset_2, value) { # nolint
   join_keys(x) <- mutate_join_keys(join_keys(x), dataset_1, dataset_2, value)
   join_keys(x)
@@ -504,11 +503,7 @@ add_key <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
 #' @param join_keys_obj (`JoinKeys`) Object with existing pairs.
 #' @param join_key_obj (`JoinKeySet`) relationship pair to add.
 #'
-#' @examples
-#' jk <- join_keys()
-#' jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
-#' jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
-#' jk
+#' @keywords internal
 join_pair <- function(join_keys_obj, join_key_obj) {
   assert_join_keys(join_keys_obj)
   checkmate::assert_class(join_key_obj, "JoinKeySet")
@@ -590,6 +585,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
 #'
 #' @return `join_keys_obj` invisibly
 #'
+#' @keywords internal
 assert_parent_child <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
   jk_parents <- parents(jk)
