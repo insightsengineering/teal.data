@@ -1,3 +1,53 @@
+# Constructors ====
+
+#' Create a `JoinKeys` out of a list of `JoinKeySet` objects
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' @details Note that join keys are symmetric although the relationship only needs
+#' to be specified once.
+#
+#' @param ... optional, a `JoinKeySet` objects created using the `join_key` function.
+#'
+#' @return `JoinKeys`
+#'
+#' @export
+#'
+#' @examples
+#' # setting join keys
+#'
+#' jk <- join_keys(
+#'   join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
+#'   join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
+#' )
+#' jk
+#'
+#' # or
+#' jk <- join_keys()
+#' jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
+#' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
+#' jk
+join_keys <- function(...) {
+  x <- rlang::list2(...)
+
+  # Getter
+  if (checkmate::test_list(x, len = 1, types = c("JoinKeys"))) {
+    return(x[[1]])
+  } else if (checkmate::test_list(x, len = 1, types = c("teal_data"))) {
+    return(x[[1]]@join_keys)
+  } else if (checkmate::test_list(x, len = 1, types = c("TealData"))) {
+    return(x[[1]]$get_join_keys())
+  }
+
+  # Constructor
+  res <- new_join_keys()
+  if (length(x) > 0) {
+    join_keys(res) <- x
+  }
+
+  res
+}
+
 #' @details
 #' The setter assignment `join_keys() <- ...` will only work for an empty
 #' `JoinKey` object, otherwise `mutate_join_keys()` must be used.
@@ -164,6 +214,24 @@
   join_keys_obj
 }
 
+# wrappers ====
+#' Mutate `JoinKeys` with a new values
+#'
+#' @description `r lifecycle::badge("experimental")`
+#' Mutate `JoinKeys` with a new values
+#'
+#' @param x (`JoinKeys`) object to be modified
+#' @param dataset_1 (`character`) one dataset name
+#' @param dataset_2 (`character`) other dataset name
+#' @param value (named `character`) column names used to join
+#'
+#' @return modified `JoinKeys` object
+#'
+#' @export
+mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
+  UseMethod("mutate_join_keys")
+}
+
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
@@ -187,6 +255,26 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
   )
 
   res
+}
+
+#' @rdname mutate_join_keys
+#' @export
+#' @examples
+#' # teal_data ----
+#'
+#' ADSL <- teal.data::example_cdisc_data("ADSL")
+#' ADRS <- teal.data::example_cdisc_data("ADRS")
+#'
+#' x <- cdisc_data(
+#'   "ADSL" = ADSL,
+#'   "ADRS" = ADRS
+#' )
+#' join_keys(x)["ADSL", "ADRS"]
+#'
+#' join_keys(x) <- mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
+mutate_join_keys.teal_data <- function(x, dataset_1, dataset_2, value) { # nolint
+  join_keys(x) <- mutate_join_keys(join_keys(x), dataset_1, dataset_2, value)
+  join_keys(x)
 }
 
 #' @rdname split_join_keys
