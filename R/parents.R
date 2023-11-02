@@ -11,6 +11,9 @@
 #' parents(jk) <- list("ds2" = "ds3")
 #' parent(jk, "ds2")
 parent <- function(join_keys_obj, dataset_name) {
+  if (missing(dataset_name)) {
+    return(NULL)
+  }
   checkmate::assert_string(dataset_name)
   # assert join_keys_obj is performed by parents()
   parents(join_keys_obj)[[dataset_name]]
@@ -28,16 +31,10 @@ parents <- function(join_keys_obj) {
 
 #' @rdname parents
 #' @export
-parents.JoinKeys <- function(join_keys_obj) {
-  parents(join_keys(join_keys_obj$get()))
-}
-
-#' @rdname parents
-#' @export
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' parents(jk)
-parents.Placeholder <- function(join_keys_obj) {
+parents.JoinKeys <- function(join_keys_obj) {
   rlang::`%||%`(attr(join_keys_obj, "__parents__"), list())
 }
 
@@ -48,7 +45,7 @@ parents.Placeholder <- function(join_keys_obj) {
 #' @export
 #'
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' parents(jk) <- list(ADSL = "ADTTE")
 `parents<-` <- function(join_keys_obj, value) {
   UseMethod("parents<-", join_keys_obj)
@@ -56,23 +53,12 @@ parents.Placeholder <- function(join_keys_obj) {
 
 #' @rdname parents
 #' @export
-`parents<-.JoinKeys` <- function(join_keys_obj, value) {
-  if (missing(value)) {
-    return(join_keys_obj)
-  }
-  jk <- join_keys_obj$get()
-  parents(jk) <- value
-  jk
-}
-
-#' @rdname parents
-#' @export
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
 #' parents(jk)["ADTTE"] <- "ADSL"
 #' parents(jk)["ADTTE"] <- "ADSL2"
-`parents<-.Placeholder` <- function(join_keys_obj, value) {
+`parents<-.JoinKeys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
@@ -107,7 +93,7 @@ parents.Placeholder <- function(join_keys_obj) {
 #' @export
 #'
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' join_keys(jk) <- list(
 #'   join_key("df1", "df1", c("id", "id2")),
 #'   join_key("df1", "df2", c("id" = "id")),
@@ -121,7 +107,7 @@ parents.Placeholder <- function(join_keys_obj) {
 update_keys_given_parents <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
 
-  checkmate::assert_class(jk, "Placeholder", .var.name = checkmate::vname(join_keys_obj))
+  checkmate::assert_class(jk, "JoinKeys", .var.name = checkmate::vname(join_keys_obj))
 
   datanames <- names(jk)
   duplicate_pairs <- list()

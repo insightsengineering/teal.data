@@ -56,8 +56,8 @@ testthat::test_that("cdisc_data sets the join_keys internally", {
     join_key("ADSL", "ADAE", c("STUDYID", "USUBJID")),
     join_key("ADTTE", "ADAE", c("STUDYID", "USUBJID"))
   )
-  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
-  testthat::expect_equal(join_keys(data), join_keys(jks)) # TODO: JK remove join_keys from jk_expected
+  parents(jks) <- list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL")
+  testthat::expect_equal(join_keys(data), jks)
 })
 
 testthat::test_that(
@@ -74,10 +74,10 @@ testthat::test_that(
       join_key("ADSL", "ADAE", c("STUDYID")),
       join_key("ADTTE", "ADAE", c("STUDYID"))
     )
-    jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
+    parents(jks) <- list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL")
     testthat::expect_equal(
       join_keys(data),
-      join_keys(jks) # TODO: JK remove join_keys from jk_expected
+      jks
     )
   }
 )
@@ -95,8 +95,9 @@ testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys
     join_key("df1", "df1", "id"),
     join_key("df2", "df2", "df2_id")
   )
-  jks$set_parents(list(df1 = character(0), df2 = character(0)))
-  testthat::expect_equal(join_keys(data), join_keys(jks)) # TODO: JK remove join_keys from jk_expected
+  parents(jks) <- list(df1 = character(0), df2 = character(0))
+  testthat::expect_equal(join_keys(data), jks)
+  testthat::expect_equal(parents(join_keys(data)), parents(jks))
 })
 
 testthat::test_that("cdisc_data throws error when a parent/child graph is not correct", {

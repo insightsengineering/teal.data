@@ -3,14 +3,14 @@
 \name{merge_join_keys}
 \alias{merge_join_keys}
 \alias{merge_join_keys.default}
-\alias{merge_join_keys.Placeholder}
+\alias{merge_join_keys.JoinKeys}
 \title{Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object}
 \usage{
 merge_join_keys(join_keys_obj, new_join_keys)
 
 \method{merge_join_keys}{default}(join_keys_obj, new_join_keys)
 
-\method{merge_join_keys}{Placeholder}(join_keys_obj, new_join_keys)
+\method{merge_join_keys}{JoinKeys}(join_keys_obj, new_join_keys)
 }
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) object to merge the new_join_keys.}
@@ -24,10 +24,10 @@ a new \code{JoinKeys} object with the resulting merge.
 Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
 }
 \examples{
-jk1 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk1 <- join_keys()
 jk1["ds1", "ds2"] <- "some_col"
 
-jk2 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk2 <- join_keys()
 jk2["ds1", "ds3"] <- "new_col"
 
 merge_join_keys(jk1, jk2)

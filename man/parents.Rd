@@ -3,23 +3,17 @@
 \name{parents}
 \alias{parents}
 \alias{parents.JoinKeys}
-\alias{parents.Placeholder}
 \alias{parents<-}
 \alias{parents<-.JoinKeys}
-\alias{parents<-.Placeholder}
 \title{Getter and setter functions for parents attribute of \code{JoinKeys}}
 \usage{
 parents(join_keys_obj)
 
 \method{parents}{JoinKeys}(join_keys_obj)
 
-\method{parents}{Placeholder}(join_keys_obj)
-
 parents(join_keys_obj) <- value
 
 \method{parents}{JoinKeys}(join_keys_obj) <- value
-
-\method{parents}{Placeholder}(join_keys_obj) <- value
 }
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) object to retrieve or manipulate.}
@@ -33,11 +27,11 @@ a list of \code{character} representing the parents.
 Getter and setter functions for parents attribute of \code{JoinKeys}
 }
 \examples{
-jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk <- join_keys()
 parents(jk)
-jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk <- join_keys()
 parents(jk) <- list(ADSL = "ADTTE")
-jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk <- join_keys()
 parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
 parents(jk)["ADTTE"] <- "ADSL"
 parents(jk)["ADTTE"] <- "ADSL2"

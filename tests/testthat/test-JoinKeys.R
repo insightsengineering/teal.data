@@ -130,7 +130,7 @@ test_that("join_keys can get all keys from JoinKeys", {
     join_key("d2", "d3", c("C" = "U", "L" = "M"))
   )
 
-  all_keys <- my_keys$get()
+  all_keys <- my_keys
   expect_equal(names(all_keys), c("d1", "d2", "d3"))
   expect_equal(my_keys[dataset_1 = "d1"], all_keys[["d1"]])
 })
@@ -159,13 +159,13 @@ test_that("mutate_join_keys.JoinKeys can mutate existing keys", {
 test_that("mutate_join_keys.JoinKeys mutating non-existing keys adds them", {
   my_keys <- join_keys(join_key("d1", "d2", "A"))
   new_keys <- mutate_join_keys(my_keys, "d2", "d3", c("X" = "Y"))
-  expect_equal(my_keys["d3", "d2"], c("Y" = "X"))
+  expect_equal(new_keys["d3", "d2"], c("Y" = "X"))
 })
 
 test_that("mutate_join_keys.JoinKeys can remove keys by setting them to character(0)", {
   my_keys <- join_keys(join_key("d1", "d2", "A"), join_key("d3", "d4", c("A" = "B", "C" = "D")))
   new_keys <- mutate_join_keys(my_keys, "d1", "d2", character(0))
-  expect_equal(my_keys["d1", "d2"], character(0))
+  expect_equal(new_keys["d1", "d2"], character(0))
 })
 
 # -----------------------------------------------------------------------------
@@ -190,11 +190,11 @@ testthat::test_that("split_join_keys method returns a named list of JoinKeys obj
   testthat::expect_equal(names(res), c("A", "B", "C", "Z", "Y"))
   checkmate::expect_list(res, types = "JoinKeys")
 
-  testthat::expect_equal(names(res$A$get()), c("A", "B", "C"))
-  testthat::expect_equal(names(res$B$get()), c("B", "A"))
-  testthat::expect_equal(names(res$C$get()), c("C", "A"))
-  testthat::expect_equal(names(res$Z$get()), c("Z", "Y"))
-  testthat::expect_equal(names(res$Y$get()), c("Y", "Z"))
+  testthat::expect_equal(names(res$A), c("A", "B", "C"))
+  testthat::expect_equal(names(res$B), c("B", "A"))
+  testthat::expect_equal(names(res$C), c("C", "A"))
+  testthat::expect_equal(names(res$Z), c("Z", "Y"))
+  testthat::expect_equal(names(res$Y), c("Y", "Z"))
 })
 
 testthat::test_that(
@@ -212,16 +212,16 @@ testthat::test_that(
     res2 <- split_join_keys(x2)
 
     testthat::expect_false(identical(res, res2))
-    testthat::expect_identical(res2$A$get()$A$B, c("a" = "b", "aa" = "bb"))
+    testthat::expect_identical(res2$A$A$B, c("a" = "b", "aa" = "bb"))
 
     # adding new datasets
     x3 <- mutate_join_keys(x2, "D", "G", c("d" = "g"))
     res3 <- split_join_keys(x3)
     testthat::expect_false(identical(res, res3))
     testthat::expect_false(identical(res2, res3))
-    testthat::expect_identical(res3$D$get()$D$G, c("d" = "g"))
-    testthat::expect_identical(res3$D$get()$G$D, c("g" = "d"))
-    testthat::expect_identical(names(res3$D$get()), c("D", "G"))
+    testthat::expect_identical(res3$D$D$G, c("d" = "g"))
+    testthat::expect_identical(res3$D$G$D, c("g" = "d"))
+    testthat::expect_identical(names(res3$D), c("D", "G"))
   }
 )
 
@@ -474,11 +474,11 @@ testthat::test_that("print.JoinKeys for a non-empty set", {
 })
 
 testthat::test_that("JoinKeys$set_parents sets the parents of datasets when they are empty", {
-  jk <- JoinKeys$new()
-  jk$set(list(join_key("df1", "df2", c("id" = "fk"))))
-  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
+  jk <- join_keys()
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "fk")))
+  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
   testthat::expect_identical(
-    ss <- jk$get_parents(),
+    ss <- parents(jk),
     list(df1 = character(0), df2 = "df1")
   )
 })
@@ -525,11 +525,11 @@ test_that("cdisc_join_keys will retrieve ADTTE primary and foreign keys", {
 
   internal_keys <- default_cdisc_keys[["ADTTE"]]
   jk <- cdisc_join_keys("ADTTE")
-  primary_keys <- unname(jk$get("ADTTE", "ADTTE"))
+  primary_keys <- unname(jk["ADTTE", "ADTTE"])
 
   expect_equal(primary_keys, internal_keys$primary)
 
-  foreign_keys <- unname(jk$get("ADTTE", internal_keys$parent))
+  foreign_keys <- unname(jk["ADTTE", internal_keys$parent])
   expect_equal(foreign_keys, internal_keys$foreign)
 })
 
@@ -541,10 +541,10 @@ test_that("cdisc_join_keys will retrieve known primary and foreign keys", {
     function(.x) {
       internal_keys <- default_cdisc_keys[[.x]]
       jk <- cdisc_join_keys(.x)
-      primary_keys <- unname(jk$get(.x, .x))
+      primary_keys <- unname(jk[.x, .x])
       expect_equal(primary_keys, internal_keys$primary)
       if (!is.null(internal_keys$foreign)) {
-        foreign_keys <- unname(jk$get(.x, internal_keys$parent))
+        foreign_keys <- unname(jk[.x, internal_keys$parent])
         expect_equal(foreign_keys, internal_keys$foreign)
       }
       character(0)

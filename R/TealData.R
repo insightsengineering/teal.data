@@ -180,7 +180,7 @@ TealData <- R6::R6Class( # nolint
       if (missing(dataset_1) && missing(dataset_2)) {
         private$join_keys
       } else {
-        private$join_keys$get(dataset_1, dataset_2)
+        private$join_keys[dataset_1, dataset_2]
       }
     },
 
@@ -189,7 +189,7 @@ TealData <- R6::R6Class( # nolint
     #'
     #' @return named (`list`) of the parents of all datasets.
     get_parents = function() {
-      private$join_keys$get_parents()
+      parents(private$join_keys)
     },
 
     # ___ shiny ====
@@ -294,7 +294,7 @@ TealData <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate_join_keys = function(dataset_1, dataset_2, val) {
-      private$join_keys$mutate(dataset_1, dataset_2, val)
+      private$join_keys <- mutate_join_keys(private$join_keys, dataset_1, dataset_2, val)
     },
 
     # ___ check ====

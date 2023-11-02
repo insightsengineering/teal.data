@@ -3,14 +3,14 @@
 \name{split_join_keys}
 \alias{split_join_keys}
 \alias{split_join_keys.default}
-\alias{split_join_keys.Placeholder}
+\alias{split_join_keys.JoinKeys}
 \title{Split the \code{JoinKeys} object into a named list of join keys objects with an element for each dataset}
 \usage{
 split_join_keys(join_keys_obj)
 
 \method{split_join_keys}{default}(join_keys_obj)
 
-\method{split_join_keys}{Placeholder}(join_keys_obj)
+\method{split_join_keys}{JoinKeys}(join_keys_obj)
 }
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) base object to get the keys from.}
@@ -22,7 +22,7 @@ split_join_keys(join_keys_obj)
 Split the \code{JoinKeys} object into a named list of join keys objects with an element for each dataset
 }
 \examples{
-jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk <- join_keys()
 jk["ds1", "ds2"] <- "some_col"
 jk["ds1", "ds3"] <- "new_col"
 split_join_keys(jk)

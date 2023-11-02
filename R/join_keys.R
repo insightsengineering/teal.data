@@ -20,12 +20,12 @@
 #'
 #' # Using the setter (assignment)
 #'
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor or constructor
+#' jk <- join_keys()
 #' join_keys(jk)
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 #' join_keys(jk)["ds1", "ds3"] <- "some_col3"
-`join_keys<-.Placeholder` <- function(join_keys_obj, value) {
+`join_keys<-.JoinKeys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
@@ -63,27 +63,8 @@
 
 #' @rdname join_keys
 #' @export
-#'
 #' @examples
 #'
-#' # Using old JoinKeys
-#'
-#' jk <- JoinKeys$new()
-#' join_keys(jk)["ds1", "ds2"] <- "key1"
-#' join_keys(jk)["ds2", "ds2"] <- "key2"
-#' join_keys(jk)["ds3", "ds2"] <- "key3"
-`join_keys<-.JoinKeys` <- function(join_keys_obj, value) {
-  if (missing(value)) {
-    return(join_keys_obj)
-  }
-
-  join_keys_obj$set(value)
-  join_keys_obj
-}
-
-#' @rdname join_keys
-#' @export
-#' @examples
 #' td <- teal_data()
 #' join_keys(td)["ds1", "ds2"] <- "key1"
 #' join_keys(td)["ds2", "ds2"] <- "key2"
@@ -93,15 +74,9 @@
     return(join_keys_obj)
   }
 
-  if (test_join_keys(value) && inherits(value, "tmp_assignment")) {
-    # detect when coming from [<-.JoinKeys
-    join_keys_obj@join_keys$merge(value)
-    return(join_keys_obj)
-  }
-
   if (test_join_keys(value)) {
-    join_keys_obj@join_keys$merge(join_keys_obj, value)
-    return(join_keys_obj)
+    join_keys_obj@join_keys <- merge_join_keys(join_keys_obj@join_keys, value)
+    return(join_keys_obj@join_keys)
   }
 
   join_keys_obj@join_keys$set(value)
@@ -123,18 +98,22 @@
 #'
 #' # Getter for JoinKeys
 #'
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' jk["ds1", "ds2"]
 #' jk["ds1"]
 #' jk[["ds1"]]
-`[.Placeholder` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
+`[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
   if (checkmate::test_integerish(dataset_1, len = 2)) {
     # if dataset_1 is an index integet vector, then return itself
     #  trick to make the following work: join_keys(jk)["ds1", "ds2"] <- "key"
     return(join_keys_obj)
   }
   checkmate::assert_string(dataset_1, null.ok = TRUE)
+  if (missing(dataset_2)) {
+    # protection if dataset_2 is passed through by a function
+    dataset_2 <- NULL
+  }
   checkmate::assert_string(dataset_2, null.ok = TRUE)
 
   if (is.null(dataset_1) && is.null(dataset_2)) {
@@ -168,7 +147,7 @@
 #'
 #' # Setter via index
 #'
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
 #'
 #' # overwrites previously defined key
@@ -177,7 +156,7 @@
 #' # Creates primary key by only defining `dataset_1`
 #' jk["ds1"] <- "primary_key"
 #' jk
-`[<-.Placeholder` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
+`[<-.JoinKeys` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
   join_keys_obj <- add_key(join_keys_obj, dataset_1, dataset_2, value)
 
   class(join_keys_obj) <- unique(c(class(join_keys_obj), "tmp_assignment"))
@@ -188,10 +167,10 @@
 #' @rdname mutate_join_keys
 #' @export
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 #' mutate_join_keys(jk, "ds2", "ds3", "another")
-mutate_join_keys.Placeholder <- function(x, dataset_1, dataset_2, value) {
+mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(value, any.missing = FALSE)
@@ -233,11 +212,11 @@ split_join_keys.default <- function(join_keys_obj) {
 #' @export
 #'
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' jk["ds1", "ds2"] <- "some_col"
 #' jk["ds1", "ds3"] <- "new_col"
 #' split_join_keys(jk)
-split_join_keys.Placeholder <- function(join_keys_obj) {
+split_join_keys.JoinKeys <- function(join_keys_obj) {
   assert_join_keys(join_keys_obj)
 
   list_of_list_of_join_key_set <- lapply(
@@ -280,29 +259,25 @@ merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
 #' @export
 #'
 #' @examples
-#' jk1 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk1 <- join_keys()
 #' jk1["ds1", "ds2"] <- "some_col"
 #'
-#' jk2 <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk2 <- join_keys()
 #' jk2["ds1", "ds3"] <- "new_col"
 #'
 #' merge_join_keys(jk1, jk2)
-merge_join_keys.Placeholder <- function(join_keys_obj, new_join_keys) {
+merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
   assert_join_keys(join_keys_obj)
 
-  if (inherits(new_join_keys, c("JoinKeys", "Placeholder"))) {
+  if (test_join_keys(new_join_keys)) {
     new_join_keys <- list(new_join_keys)
   }
 
-  checkmate::assert_list(new_join_keys, types = c("JoinKeys", "Placeholder"), min.len = 1)
+  checkmate::assert_list(new_join_keys, types = c("JoinKeys"), min.len = 1)
 
   result <- join_keys_obj
 
   for (jk in new_join_keys) {
-    if (checkmate::test_class(jk, "JoinKeys")) {
-      jk <- jk$get()
-    }
-
     for (dataset_1 in names(jk)) {
       for (dataset_2 in names(jk[[dataset_1]])) {
         result[[dataset_1]][[dataset_2]] <- jk[[dataset_1]][[dataset_2]]
@@ -319,7 +294,7 @@ merge_join_keys.Placeholder <- function(join_keys_obj, new_join_keys) {
 #' @return the `x` parameter
 #'
 #' @export
-print.Placeholder <- function(x, ...) {
+print.JoinKeys <- function(x, ...) {
   check_ellipsis(...)
   keys_list <- x
   my_parents <- parents(keys_list)
@@ -351,7 +326,7 @@ print.Placeholder <- function(x, ...) {
 #' @keywords internal
 new_join_keys <- function() {
   result <- list()
-  class(result) <- c("Placeholder", "list")
+  class(result) <- c("JoinKeys", "list")
   result
 }
 
@@ -436,7 +411,7 @@ get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
 #' @param join_key_obj (`JoinKeySet`) relationship pair to add.
 #'
 #' @examples
-#' jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+#' jk <- join_keys()
 #' jk <- join_pair(jk, join_key("ds1", "ds2", "value"))
 #' jk <- join_pair(jk, join_key("ds3", "ds2", "value"))
 #' jk
@@ -460,19 +435,19 @@ join_pair <- function(join_keys_obj, join_key_obj) {
 #'
 #' @keywords internal
 assert_join_keys <- function(x, .var.name = checkmate::vname(x)) {
-  checkmate::assert_class(x, classes = c("Placeholder"), .var.name = .var.name)
+  checkmate::assert_class(x, classes = c("JoinKeys"), .var.name = .var.name)
 }
 
 #' @rdname assert_join_keys
 #' @keywords internal
 test_join_keys <- function(x) {
-  checkmate::test_class(x, classes = c("Placeholder"))
+  checkmate::test_class(x, classes = c("JoinKeys"))
 }
 
 #' @rdname assert_join_keys
 #' @keywords internal
 expect_join_keys <- function(x) {
-  checkmate::expect_class(x, classes = c("Placeholder"))
+  checkmate::expect_class(x, classes = c("JoinKeys"))
 }
 
 #' Helper function to assert if two key sets contain incompatible keys

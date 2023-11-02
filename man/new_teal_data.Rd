@@ -8,7 +8,7 @@ new_teal_data(
   data,
   code = character(0),
   join_keys = join_keys(),
-  datanames = union(names(data), names(join_keys$get()))
+  datanames = union(names(data), names(join_keys))
 )
 }
 \arguments{

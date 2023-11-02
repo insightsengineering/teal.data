@@ -59,7 +59,7 @@ setClass(
 new_teal_data <- function(data,
                           code = character(0),
                           join_keys = join_keys(),
-                          datanames = union(names(data), names(join_keys$get()))) {
+                          datanames = union(names(data), names(join_keys))) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "JoinKeys")
   if (is.null(datanames)) datanames <- character(0) # todo: allow to specify

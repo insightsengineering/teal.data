@@ -72,9 +72,9 @@ test_that("check_parent_child will skip empty JoinKeys", {
 
 testthat::test_that("parents<- throws error when overwriting the parent value with a different value", {
   jk <- join_keys()
-  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
-  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
-  testthat::expect_error(jk$set_parents(list(df1 = character(0), df2 = "df5")))
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
+  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
+  testthat::expect_error(parents(jk) <- list(df1 = character(0), df2 = "df5"))
 })
 
 testthat::test_that("parents<- works when overwriting the parent value with the same value", {
@@ -94,10 +94,10 @@ testthat::test_that("parent returns the parent name of the dataset", {
 
 testthat::test_that("parent returns NULL when dataset is not found or not passed", {
   jk <- join_keys()
-  jk$set(list(join_key("df1", "df2", c("id" = "id"))))
-  testthat::expect_silent(jk$set_parents(list(df1 = character(0), df2 = "df1")))
-  testthat::expect_null(jk$get_parent())
-  testthat::expect_null(jk$get_parent("df3"))
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
+  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
+  testthat::expect_null(parent(jk))
+  testthat::expect_null(parent(jk, "df3"))
 })
 
 testthat::test_that("get_parents returns a list of all parents", {
@@ -127,7 +127,7 @@ testthat::test_that("parents throws error when dataname input is provided", {
 testthat::test_that("update_keys_given_parents does not update the join_keys when no presents are present", {
   jk <- join_keys()
   join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
-  jk$update_keys_given_parents()
+  jk <- update_keys_given_parents(jk)
   testthat::expect_equal(jk, join_keys(join_key("df1", "df2", c("id" = "id"))))
 })
 

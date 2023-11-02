@@ -2,18 +2,15 @@
 % Please edit documentation in R/JoinKeys.R, R/join_keys.R
 \name{mutate_join_keys}
 \alias{mutate_join_keys}
-\alias{mutate_join_keys.JoinKeys}
 \alias{mutate_join_keys.TealData}
-\alias{mutate_join_keys.Placeholder}
+\alias{mutate_join_keys.JoinKeys}
 \title{Mutate \code{JoinKeys} with a new values}
 \usage{
 mutate_join_keys(x, dataset_1, dataset_2, value)
 
-\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, value)
-
 \method{mutate_join_keys}{TealData}(x, dataset_1, dataset_2, value)
 
-\method{mutate_join_keys}{Placeholder}(x, dataset_1, dataset_2, value)
+\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, value)
 }
 \arguments{
 \item{x}{(\code{JoinKeys}) object to be modified}
@@ -32,16 +29,6 @@ modified \code{JoinKeys} object
 Mutate \code{JoinKeys} with a new values
 }
 \examples{
-# JoinKeys ----
-
-x <- join_keys(
-  join_key("dataset_A", "dataset_B", c("col_1" = "col_a")),
-  join_key("dataset_A", "dataset_C", c("col_2" = "col_x", "col_3" = "col_y"))
-)
-x$get("dataset_A", "dataset_B")
-
-mutate_join_keys(x, "dataset_A", "dataset_B", c("col_1" = "col_10"))
-x$get("dataset_A", "dataset_B")
 # TealData ----
 
 ADSL <- teal.data::example_cdisc_data("ADSL")
@@ -55,7 +42,7 @@ join_keys(x)$get("ADSL", "ADRS")
 
 mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
 join_keys(x)$get("ADSL", "ADRS")
-jk <- teal.data:::new_join_keys() # TODO: JK remove in favor of join_keys()
+jk <- join_keys()
 join_keys(jk) <- list(ds1 = list(ds2 = "some_col"))
 mutate_join_keys(jk, "ds2", "ds3", "another")
 }
