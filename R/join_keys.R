@@ -120,7 +120,7 @@ join_keys <- function(...) {
 #' td <- teal_data()
 #' join_keys(td)["ds1", "ds2"] <- "key1"
 #' join_keys(td)["ds2", "ds2"] <- "key2"
-#' join_keys(td)["ds3", "ds2"] <- "key3"
+#' join_keys(td) <- join_keys(join_key("ds3", "ds2", "key3"))
 #' join_keys(td)
 `join_keys<-.teal_data` <- function(join_keys_obj, value) {
   if (missing(value)) {
@@ -129,7 +129,7 @@ join_keys <- function(...) {
 
   if (test_join_keys(value)) {
     join_keys_obj@join_keys <- merge_join_keys(join_keys_obj@join_keys, value)
-    return(join_keys_obj@join_keys)
+    return(join_keys_obj)
   }
 
   join_keys_obj@join_keys$set(value)

@@ -89,7 +89,7 @@ jk
 td <- teal_data()
 join_keys(td)["ds1", "ds2"] <- "key1"
 join_keys(td)["ds2", "ds2"] <- "key2"
-join_keys(td)["ds3", "ds2"] <- "key3"
+join_keys(td) <- join_keys(join_key("ds3", "ds2", "key3"))
 join_keys(td)
 
 # Getter for JoinKeys ----
