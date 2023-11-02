@@ -40,7 +40,7 @@
   if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "JoinKeySet", min.len = 1)) {
     jk <- new_join_keys()
     join_keys(jk) <- value
-    message("Keys already set, merging new list of JoinKeySet with existing keys.")
+    message("note: Keys already set, merging new list of JoinKeySet with existing keys.")
     return(merge_join_keys(join_keys_obj, jk))
   }
 
@@ -330,6 +330,37 @@ new_join_keys <- function() {
   result
 }
 
+#' Get value of a single relationship pair
+#'
+#' @param join_keys_obj (`JoinKeys`) object that holds the relationship keys.
+#' @param dataset_1 (`character(1)`) one of the datasets to retrieve keys (
+#' order of the datasets is irrelevant).
+#' @param dataset_2 (`character(1)`) the other dataset to retrieve keys (the
+#' order of the datasets is irrelevant).
+#'
+#' @return Character vector with keys or (if one of the datasets is omitted) a
+#' list of relationship pairs. If both datasets are omitted it returens the
+#' `JoinKeys` object
+#'
+#' @keywords internal
+get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
+  jk <- join_keys(join_keys_obj)
+
+  assert_join_keys(jk)
+
+  if (missing(dataset_1) && missing(dataset_2)) {
+    return(jk)
+  }
+  if (missing(dataset_2)) {
+    return(jk[dataset_1])
+  }
+  if (missing(dataset_1)) {
+    return(jk[dataset_2])
+  }
+
+  jk[dataset_1, dataset_2]
+}
+
 #' Internal assignment of value to a JoinKeys object
 #'
 #' @inheritParams join_keys
@@ -372,37 +403,6 @@ add_key <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
 
   join_keys_obj[[dataset_2]][[dataset_1]] <- value
   join_keys_obj
-}
-
-#' Get value of a single relationship pair
-#'
-#' @param join_keys_obj (`JoinKeys`) object that holds the relationship keys.
-#' @param dataset_1 (`character(1)`) one of the datasets to retrieve keys (
-#' order of the datasets is irrelevant).
-#' @param dataset_2 (`character(1)`) the other dataset to retrieve keys (the
-#' order of the datasets is irrelevant).
-#'
-#' @return Character vector with keys or (if one of the datasets is omitted) a
-#' list of relationship pairs. If both datasets are omitted it returens the
-#' `JoinKeys` object
-#'
-#' @keywords internal
-get_join_key <- function(join_keys_obj, dataset_1, dataset_2) {
-  jk <- join_keys(join_keys_obj)
-
-  assert_join_keys(jk)
-
-  if (missing(dataset_1) && missing(dataset_2)) {
-    return(jk)
-  }
-  if (missing(dataset_2)) {
-    return(jk[dataset_1])
-  }
-  if (missing(dataset_1)) {
-    return(jk[dataset_2])
-  }
-
-  jk[dataset_1, dataset_2]
 }
 
 #' Helper function to add a new pair to a `JoinKeys` object

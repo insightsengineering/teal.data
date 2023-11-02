@@ -17,7 +17,7 @@ get_join_keys <- function(data) {
 `get_join_keys<-` <- function(x, dataset_1, dataset_2 = NULL, value) {
   lifecycle::deprecate_stop(
     when = " 0.3.1",
-    what = "get_join_keys(x) <- ...",
+    what = "`get_join_keys<-`()",
     details = "Use `join_keys(x) <- ...`"
   )
 }

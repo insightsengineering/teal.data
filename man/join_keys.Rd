@@ -86,6 +86,7 @@ join_keys(jk)
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 join_keys(jk)["ds1", "ds3"] <- "some_col3"
+
 td <- teal_data()
 join_keys(td)["ds1", "ds2"] <- "key1"
 join_keys(td)["ds2", "ds2"] <- "key2"

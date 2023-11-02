@@ -12,14 +12,30 @@ test_that("join_keys.JoinKeys will return itself", {
   helper_test_getter_join_keys(obj, "ds1")
 })
 
-test_that("join_keys<-.teal_data", {
+test_that("join_keys<-.teal_data shared test to getter and setter", {
   obj <- helper_generator_teal_data()
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
 })
 
-test_that("join_keys<-.JoinKeys", {
+test_that("join_keys<-.JoinKeys shared test to getter and setter", {
   obj <- helper_generator_JoinKeys()
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
+})
+
+test_that("join_keys<-.JoinKeys to set via a JoinKeySet object", {
+  obj <- join_keys()
+  join_keys(obj) <- join_key("ds1", "ds2", "id")
+  expect_equal(obj$ds1, list("ds2" = c("id" = "id")))
+  expect_equal(obj$ds2, list("ds1" = c("id" = "id")))
+})
+
+test_that("join_keys<-.JoinKeys to set via multiple lists that progressively merge object", {
+  obj <- join_keys()
+  join_keys(obj) <- list(join_key("ds1", "ds2", "id"))
+  join_keys(obj) <- list(join_key("ds3", "ds4", "id_id"))
+  join_keys(obj) <- join_key("ds5", "ds6", "id_id_id")
+
+  expect_length(obj, 6)
 })
 
 # -----------------------------------------------------------------------------

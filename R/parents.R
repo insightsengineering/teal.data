@@ -145,33 +145,3 @@ update_keys_given_parents <- function(join_keys_obj) {
 
   jk
 }
-
-# -----------------------------------------------------------------------------
-#
-# Helpers (non-exported)
-
-#' Check if parent/child are valid
-#'
-#' @keywords internal
-check_parent_child <- function(join_keys_obj) {
-  jk_parents <- parents(join_keys_obj)
-  if (length(jk_parents) > 0) {
-    for (idx1 in seq_along(jk_parents)) {
-      name_from <- names(jk_parents)[[idx1]]
-      for (idx2 in seq_along(jk_parents[[idx1]])) {
-        name_to <- jk_parents[[idx1]][[idx2]]
-        keys_from <- join_keys_obj[name_from, name_to]
-        keys_to <- join_keys_obj[name_to, name_from]
-        if (length(keys_from) == 0 && length(keys_to) == 0) {
-          stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
-        }
-        if (length(keys_from) == 0) {
-          stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
-        }
-        if (length(keys_to) == 0) {
-          stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
-        }
-      }
-    }
-  }
-}

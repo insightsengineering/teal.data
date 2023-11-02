@@ -26,6 +26,14 @@ test_that("parents<- will add to parents attribute using `[[` notation", {
   expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4"))
 })
 
+test_that("parents<- does nothing with empty value", {
+  jk <- join_keys()
+  jk2 <- `parents<-`(jk)
+
+  expect_length(parents(jk2), 0)
+  expect_equal(jk, jk2)
+})
+
 test_that("parents<- will add to parents attribute using list", {
   jk <- join_keys()
   parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
@@ -44,30 +52,30 @@ test_that("parents<- will add to parents attribute using list, `[` and `[[` nota
   expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4", ds5 = "ds6", ds7 = "ds8"))
 })
 
-test_that("check_parent_child will detect empty keys", {
+test_that("assert_parent_child will detect empty keys", {
   jk <- join_keys()
   jk["ds1", "ds2"] <- character(0)
   parents(jk) <- list(ds1 = "ds2")
-  expect_error(check_parent_child(jk))
+  expect_error(assert_parent_child(jk))
 })
 
-test_that("check_parent_child will detect invalid key pairs", {
+test_that("assert_parent_child will detect invalid key pairs", {
   jk <- join_keys()
   jk["ds1", "ds2"] <- "key1"
   jk["ds2", "ds1"] <- character(0)
   parents(jk) <- list(ds1 = "ds2")
-  expect_error(check_parent_child(jk))
+  expect_error(assert_parent_child(jk))
 
   jk2 <- join_keys()
   jk2["ds2", "ds1"] <- "key1"
   jk2["ds1", "ds2"] <- character(0)
   parents(jk2) <- list(ds1 = "ds2")
-  expect_error(check_parent_child(jk2))
+  expect_error(assert_parent_child(jk2))
 })
 
-test_that("check_parent_child will skip empty JoinKeys", {
+test_that("assert_parent_child will skip empty JoinKeys", {
   jk <- join_keys()
-  expect_silent(check_parent_child(jk))
+  expect_silent(assert_parent_child(jk))
 })
 
 testthat::test_that("parents<- throws error when overwriting the parent value with a different value", {
@@ -166,12 +174,38 @@ testthat::test_that("assert_parent_child does nothing if no parents are present"
   testthat::expect_silent(assert_parent_child(jk))
 })
 
-testthat::test_that("JoinKeys$check_parent_child throws error if no join_keys exist for chuld-parent", {
+testthat::test_that("assert_parent_child throws error if no join_keys exist for child-parent", {
   jk <- join_keys()
   join_keys(jk) <- list(join_key("df1", "df1", c("id" = "id")))
   parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
   testthat::expect_error(
     assert_parent_child(jk),
     "No join keys from df2 to its parent \\(df1\\) and vice versa"
+  )
+})
+
+testthat::test_that("assert_parent_child throws error if no join_keys exist for child-parent", {
+  jk <- join_keys()
+  join_keys(jk) <- list(
+    join_key("df1", "df1", c("id" = "id"))
+  )
+  jk[["df2"]][["df1"]] <- "id"
+  parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
+  testthat::expect_error(
+    assert_parent_child(jk),
+    "No join keys from df2 parent name \\(df1\\) to df2"
+  )
+})
+
+testthat::test_that("assert_parent_child throws error if no join_keys exist for child-parent", {
+  jk <- join_keys()
+  join_keys(jk) <- list(
+    join_key("df1", "df1", c("id" = "id"))
+  )
+  jk[["df1"]][["df2"]] <- "id"
+  parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
+  testthat::expect_error(
+    assert_parent_child(jk),
+    "No join keys from df2 to its parent \\(df1\\)"
   )
 })
