@@ -556,7 +556,7 @@ testthat::test_that("merge_join_keys merges mutually exclusive data", {
   testthat::expect_true(all(join_keys(y) %in% join_keys(z)) && all(join_keys(z) %in% join_keys(y)))
   testthat::expect_true(all(join_keys(y) %in% join_keys(x)) && all(join_keys(x) %in% join_keys(y)))
 
-  testthat::expect_identical(names(join_keys(z)), c("A", "B", "Z", "Y"))
+  testthat::expect_identical(names(z), c("A", "B", "Z", "Y"))
   testthat::expect_equal(length(join_keys(z)), 4)
   testthat::expect_identical(join_keys(z)$A$B, c("a" = "b"))
   testthat::expect_identical(join_keys(z)$B$A, c("b" = "a"))

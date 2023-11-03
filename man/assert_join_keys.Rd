@@ -4,13 +4,16 @@
 \alias{assert_join_keys}
 \alias{test_join_keys}
 \alias{expect_join_keys}
-\title{Check the JoinKeys class membership of an argument}
+\alias{check_join_keys_alike}
+\title{Assert the JoinKeys class membership of an argument}
 \usage{
-assert_join_keys(x, .var.name = checkmate::vname(x))
+assert_join_keys(x, .var.name = checkmate::vname(x), add = NULL)
 
 test_join_keys(x)
 
-expect_join_keys(x)
+expect_join_keys(x, info = NULL, label = vname(x))
+
+check_join_keys_alike(x)
 }
 \arguments{
 \item{x}{[any]\cr
@@ -20,12 +23,25 @@ Object to check.}
 Name of the checked object to print in assertions. Defaults to
 the heuristic implemented in \code{\link[checkmate]{vname}}.}
 
-\item{extra_classes}{(\code{character} vector) with extra classes to check. Can be used}
+\item{add}{[\code{AssertCollection}]\cr
+Collection to store assertion messages. See \code{\link[checkmate]{AssertCollection}}.}
+
+\item{info}{[\code{character(1)}]\cr
+Extra information to be included in the message for the testthat reporter.
+See \code{\link[testthat]{expect_that}}.}
+
+\item{label}{[\code{character(1)}]\cr
+Name of the checked object to print in messages. Defaults to
+the heuristic implemented in \code{\link[checkmate]{vname}}.}
 }
 \value{
 \code{x} invisibly
 }
 \description{
-Check the JoinKeys class membership of an argument
+Assert the JoinKeys class membership of an argument
+}
+\examples{
+check_join_keys_alike(list("ds1" = list("key")))
+check_join_keys_alike(list("ds1" = list(ds2 = "key")))
 }
 \keyword{internal}

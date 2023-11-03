@@ -2,6 +2,8 @@
 
 S3method("[",JoinKeys)
 S3method("[<-",JoinKeys)
+S3method("[[",JoinKeys)
+S3method("[[<-",JoinKeys)
 S3method("join_keys<-",JoinKeys)
 S3method("join_keys<-",teal_data)
 S3method("parents<-",JoinKeys)

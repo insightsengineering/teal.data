@@ -31,4 +31,5 @@ jk2 <- join_keys()
 jk2["ds1", "ds3"] <- "new_col"
 
 merge_join_keys(jk1, jk2)
+merge_join_keys(jk1, list(jk2))
 }

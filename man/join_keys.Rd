@@ -8,6 +8,8 @@
 \alias{join_keys<-.teal_data}
 \alias{[.JoinKeys}
 \alias{[<-.JoinKeys}
+\alias{[[.JoinKeys}
+\alias{[[<-.JoinKeys}
 \title{Create a \code{JoinKeys} out of a list of \code{JoinKeySet} objects}
 \usage{
 cdisc_join_keys(...)
@@ -23,6 +25,10 @@ join_keys(join_keys_obj) <- value
 \method{[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
 
 \method{[}{JoinKeys}(join_keys_obj, dataset_1, dataset_2 = dataset_1) <- value
+
+\method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value)
+
+\method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
 }
 \arguments{
 \item{...}{optional, a \code{JoinKeySet} objects created using the \code{join_key} function.}
@@ -111,4 +117,20 @@ jk["ds1", "ds2"] <- "(new) pair key"
 # Creates primary key by only defining `dataset_1`
 jk["ds1"] <- "primary_key"
 jk
+
+jk <- join_keys(join_key("ds1", "ds2", "key"))
+jk[["ds1"]]
+jk[["ds1", "ds2"]]
+
+jk <- join_keys()
+jk[["ds1"]] <- list()
+jk[["ds2"]][["ds3"]] <- "key"
+jk[["ds3", "ds4"]] <- "new_key"
+
+jk <- join_keys()
+jk[["ds1"]] <- list()
+jk[["ds2"]][["ds3"]] <- "key"
+jk[["ds4"]] <- list(ds5 = "new")
+jk[["ds6", "ds7"]] <- "yada"
+jk[["ds8", "ds9"]] <- c(A = "B", "C")
 }

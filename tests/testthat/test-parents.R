@@ -189,7 +189,10 @@ testthat::test_that("assert_parent_child throws error if no join_keys exist for 
   join_keys(jk) <- list(
     join_key("df1", "df1", c("id" = "id"))
   )
+  # Change class as trick to allow for corrupt JoinKeys
+  class(jk) <- "list"
   jk[["df2"]][["df1"]] <- "id"
+  class(jk) <- class(new_join_keys())
   parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
   testthat::expect_error(
     assert_parent_child(jk),
@@ -202,7 +205,9 @@ testthat::test_that("assert_parent_child throws error if no join_keys exist for 
   join_keys(jk) <- list(
     join_key("df1", "df1", c("id" = "id"))
   )
+  class(jk) <- "list"
   jk[["df1"]][["df2"]] <- "id"
+  class(jk) <- class(new_join_keys())
   parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
   testthat::expect_error(
     assert_parent_child(jk),
