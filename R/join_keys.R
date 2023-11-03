@@ -445,17 +445,12 @@ merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
 
   checkmate::assert_list(new_join_keys, types = c("JoinKeys"), min.len = 1)
 
-  result <- join_keys_obj
-
-  for (jk in new_join_keys) {
-    for (dataset_1 in names(jk)) {
-      for (dataset_2 in names(jk[[dataset_1]])) {
-        result[[dataset_1]][[dataset_2]] <- jk[[dataset_1]][[dataset_2]]
-      }
-    }
+  for (el in new_join_keys) {
+    join_keys_obj <- modifyList(join_keys_obj, el)
   }
+
   logger::log_trace("JoinKeys keys merged.")
-  return(result)
+  return(join_keys_obj)
 }
 
 #' Prints `JoinKeys`.
