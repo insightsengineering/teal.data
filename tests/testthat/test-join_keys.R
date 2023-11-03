@@ -698,7 +698,7 @@ test_that("[<-.JoinKeys assigns new relationship pair", {
 
   jk["ds1", "ds2"] <- c("id")
   expect_identical(jk["ds1", "ds2"], c(id = "id"))
-  expect_identical(get_join_key(jk, "ds1", "ds2"), jk["ds1", "ds2"])
+  expect_identical(jk[["ds1"]][["ds2"]], jk["ds1", "ds2"])
 })
 
 test_that("[<-.JoinKeys modifies existing relationship pair", {
@@ -706,5 +706,5 @@ test_that("[<-.JoinKeys modifies existing relationship pair", {
 
   jk["ds1", "ds1"] <- c("Species")
   expect_failure(expect_identical(jk["ds1", "ds1"], c(id = "id")))
-  expect_identical(get_join_key(jk, "ds1", "ds1"), c(Species = "Species"))
+  expect_identical(jk[["ds1"]][["ds1"]], c(Species = "Species"))
 })

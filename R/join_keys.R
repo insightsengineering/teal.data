@@ -159,11 +159,24 @@ join_keys <- function(...) {
   if (checkmate::test_integerish(dataset_1)) {
     return(NextMethod("[", join_keys_obj))
   } else if (length(dataset_1) > 1) {
-    res <- lapply(dataset_1, function(x) get_join_key(join_keys_obj, x, dataset_2))
+    res <- lapply(dataset_1, function(x) join_keys_obj[[x]][[dataset_2]])
     names(res) <- dataset_1
     return(res)
+  } else if (
+    (missing(dataset_1) && missing(dataset_2)) ||
+      (is.null(dataset_1) && is.null(dataset_2))
+  ) {
+
+  } else if (missing(dataset_1) || is.null(dataset_1)) {
+    return(join_keys_obj[[dataset_2]])
+  } else if (missing(dataset_2) || is.null(dataset_2)) {
+    return(join_keys_obj[[dataset_1]])
   }
-  get_join_key(join_keys_obj, dataset_1, dataset_2)
+  result <- join_keys_obj[[dataset_1]][[dataset_2]]
+  if (is.null(result)) {
+    return(character(0))
+  }
+  result
 }
 
 #' @rdname join_keys
@@ -394,7 +407,7 @@ split_join_keys.JoinKeys <- function(join_keys_obj) {
     function(dataset_1) {
       lapply(
         names(join_keys_obj[[dataset_1]]),
-        function(dataset_2) join_key(dataset_1, dataset_2, get_join_key(join_keys_obj, dataset_1, dataset_2))
+        function(dataset_2) join_key(dataset_1, dataset_2, join_keys_obj[[dataset_1]][[dataset_2]])
       )
     }
   )
@@ -497,46 +510,6 @@ new_join_keys <- function() {
     list(),
     class = c("JoinKeys", "list")
   )
-}
-
-#' Get value of a single relationship pair
-#'
-#' @param join_keys_obj (`JoinKeys`) object that holds the relationship keys.
-#' @param dataset_1 (`character(1)`) one of the datasets to retrieve keys (
-#' order of the datasets is irrelevant).
-#' @param dataset_2 (`character(1)`) the other dataset to retrieve keys (the
-#' order of the datasets is irrelevant).
-#'
-#' @return Character vector with keys or (if one of the datasets is omitted) a
-#' list of relationship pairs. If both datasets are omitted it returens the
-#' `JoinKeys` object
-#'
-#' @keywords internal
-get_join_key <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
-  checkmate::assert_string(dataset_1, null.ok = TRUE)
-  if (missing(dataset_2)) {
-    # protection if dataset_2 is passed through by a function
-    dataset_2 <- NULL
-  }
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-  assert_join_keys(join_keys_obj)
-
-  if (is.null(dataset_1) && is.null(dataset_2)) {
-    return(join_keys_obj)
-  }
-  if (is.null(dataset_2)) {
-    return(join_keys_obj[[dataset_1]])
-  }
-  if (is.null(dataset_1)) {
-    return(join_keys_obj[[dataset_2]])
-  }
-
-  result <- join_keys_obj[[dataset_1]][[dataset_2]]
-
-  if (is.null(result)) {
-    return(character(0))
-  }
-  result
 }
 
 #' Helper function to add a new pair to a `JoinKeys` object
