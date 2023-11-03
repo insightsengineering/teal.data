@@ -161,7 +161,6 @@ join_keys <- function(...) {
   } else if (length(dataset_1) > 1) {
     res <- lapply(dataset_1, function(x) get_join_key(join_keys_obj, x, dataset_2))
     names(res) <- dataset_1
-    class(res) <- class(new_join_keys())
     return(res)
   }
   get_join_key(join_keys_obj, dataset_1, dataset_2)
@@ -201,7 +200,9 @@ join_keys <- function(...) {
       "please do one at a time."
     ))
   }
-  add_key(join_keys_obj, dataset_1, dataset_2, value)
+
+  join_keys_obj[[dataset_1, dataset_2]] <- value
+  join_keys_obj
 }
 
 #' @rdname join_keys
@@ -240,6 +241,7 @@ join_keys <- function(...) {
   # Accepting 2 subscripts
   if (!is.null(dataset_2)) {
     checkmate::assert_character(value)
+
     # Normalize value
     new_join_key <- join_key(dataset_1, dataset_2, value)
     dataset_1 <- new_join_key$dataset_1
@@ -268,9 +270,10 @@ join_keys <- function(...) {
 
     value <- rlang::`%||%`(join_keys_obj[[ds2]], list())
     new_value <- original_value[[ds2]]
+
     if (
       checkmate::test_character(new_value, min.len = 1) &&
-        all(is.null(names(new_value)))
+        is.null(names(new_value))
     ) {
       new_value <- setNames(new_value, new_value)
     } else if (
@@ -536,20 +539,6 @@ get_join_key <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
   result
 }
 
-#' Internal assignment of value to a JoinKeys object
-#'
-#' @inheritParams join_keys
-#'
-#' @keywords internal
-add_key <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
-  checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2, null.ok = TRUE)
-  checkmate::assert_character(value)
-
-  join_keys_obj[[dataset_1, dataset_2]] <- value
-  join_keys_obj
-}
-
 #' Helper function to add a new pair to a `JoinKeys` object
 #'
 #' @param join_keys_obj (`JoinKeys`) Object with existing pairs.
@@ -564,7 +553,7 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   dataset_2 <- join_key_obj$dataset_2
   keys <- join_key_obj$keys
 
-  join_keys_obj <- add_key(join_keys_obj, dataset_1, dataset_2, keys)
+  join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   join_keys_obj
 }
 
@@ -584,7 +573,7 @@ assert_join_keys <- function(x, .var.name = checkmate::vname(x), add = NULL) {
 }
 
 #' @rdname assert_join_keys_alike
-#' @examples
+#' @keywords internal
 check_join_keys <- function(x) {
   checkmate::check_class(x, classes = c("JoinKeys", "list"))
 }
