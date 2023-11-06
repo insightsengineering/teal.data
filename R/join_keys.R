@@ -156,7 +156,7 @@ join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[["ds1"]]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
-  if (checkmate::test_integerish(dataset_1)) {
+  if (checkmate::test_integerish(dataset_1) || length(dataset_1) > 0) {
     return(NextMethod("[", join_keys_obj))
   } else if (length(dataset_1) > 1) {
     res <- lapply(dataset_1, function(x) join_keys_obj[[x]][[dataset_2]])
@@ -210,7 +210,7 @@ join_keys <- function(...) {
   } else if (length(dataset_1) > 1) {
     stop(paste(
       "Assigment of multiple JoinKeys at the same time is not supported,",
-      "please do one at a time."
+      "please only assign one pair at a time."
     ))
   }
 
@@ -487,7 +487,7 @@ print.JoinKeys <- function(x, ...) {
     ))
     # Hide parents
     attr(keys_list, "__parents__") <- NULL
-    print.default(keys_list)
+    print.default(keys_list[sort(names(keys_list))])
   } else {
     cat("An empty JoinKeys object.")
   }

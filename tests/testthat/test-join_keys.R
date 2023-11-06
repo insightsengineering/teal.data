@@ -40,6 +40,84 @@ test_that("join_keys<-.JoinKeys to set via multiple lists that progressively mer
 
 # -----------------------------------------------------------------------------
 #
+# [[ and [[<-
+#
+test_that("[[<-.JoinKeys is equivalent to using the constructor (double subscript)", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A" = "B", "C")),
+    join_key("d3", "d4", c("D", "E")),
+    join_key("d5", "d6", c("F", "K" = "k"))
+  )
+
+  jk2 <- join_keys()
+
+  jk2[["d1", "d2"]] <- c("A" = "B", "C")
+  jk2[["d3", "d4"]] <- c("D", "E")
+  jk2[["d5", "d6"]] <- c("F", "K" = "k")
+
+  expect_identical(jk, jk2)
+})
+
+test_that("[[<-.JoinKeys is equivalent to using the constructor (single subscript)", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A" = "B", "C" = "C")),
+    join_key("d3", "d4", c("D", "E")),
+    join_key("d5", "d6", c("F", "K" = "k"))
+  )
+
+  jk2 <- join_keys()
+
+  jk2[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
+  jk2[["d3"]][["d4"]] <- c("D" = "D", "E" = "E")
+  jk2[["d5"]][["d6"]] <- c("F" = "F", "K" = "k")
+
+  expect_identical(jk, jk2)
+})
+
+test_that("[<-.JoinKeys is equivalent to using the constructor (double subscript)", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A", "B")),
+    join_key("d3", "d4", c("C", "D")),
+    join_key("d5", "d6", c("E", "F"))
+  )
+
+  jk2 <- join_keys()
+
+  jk2["d1", "d2"] <- c("A", "B")
+  jk2["d3", "d4"] <- c("C", "D")
+  jk2["d5", "d6"] <- c("E", "F")
+
+  expect_identical(jk, jk2)
+})
+
+test_that("[.JoinKeys can subscript multiple values by index or name", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A" = "B", "C")),
+    join_key("d3", "d4", c("D", "E")),
+    join_key("d5", "d6", c("F", "K" = "k"))
+  )
+
+  expect_length(jk[1:2], 2)
+  expect_length(jk[c("d1", "d5")], 2)
+
+  expect_identical(jk[c("d1", "d5")], c(jk["d1"], jk["d5"]))
+
+  expect_identical(jk[2], jk["d2"])
+  expect_identical(jk[c(1, 3)], c(jk["d1"], jk["d3"]))
+})
+
+test_that("[<-.JoinKeys cannot subscript multiple values", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A" = "B", "C")),
+    join_key("d3", "d4", c("D", "E")),
+    join_key("d5", "d6", c("F", "K" = "k"))
+  )
+
+  expect_error(jk[1:2] <- NULL)
+})
+
+# -----------------------------------------------------------------------------
+#
 # mutate_join_keys (empty value name)
 #
 
