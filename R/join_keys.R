@@ -156,6 +156,7 @@ join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[["ds1"]]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
+  # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
   if (missing(dataset_2)) dataset_2 <- NULL
   if (
@@ -261,9 +262,9 @@ join_keys <- function(...) {
 
     # Normalize value
     new_join_key <- join_key(dataset_1, dataset_2, value)
-    dataset_1 <- new_join_key$dataset_1
-    dataset_2 <- new_join_key$dataset_2
-    value <- new_join_key$keys
+    dataset_1 <- dataset_1.JoinKeySet(new_join_key)
+    dataset_2 <- dataset_2.JoinKeySet(new_join_key)
+    value <- keys.JoinKeySet(new_join_key)
 
     if (is.null(join_keys_obj[[dataset_1]])) {
       join_keys_obj[[dataset_1]] <- list()
@@ -526,9 +527,9 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   assert_join_keys(join_keys_obj)
   checkmate::assert_class(join_key_obj, "JoinKeySet")
 
-  dataset_1 <- join_key_obj$dataset_1
-  dataset_2 <- join_key_obj$dataset_2
-  keys <- join_key_obj$keys
+  dataset_1 <- dataset_1.JoinKeySet(join_key_obj)
+  dataset_2 <- dataset_2.JoinKeySet(join_key_obj)
+  keys <- keys.JoinKeySet(join_key_obj)
 
   join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   join_keys_obj
@@ -622,28 +623,37 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     )
   }
 
+  dataset_1_one <- dataset_1.JoinKeySet(join_key_1)
+  dataset_2_one <- dataset_2.JoinKeySet(join_key_1)
+  keys_one <- keys.JoinKeySet(join_key_1)
+
+  dataset_1_two <- dataset_1.JoinKeySet(join_key_2)
+  dataset_2_two <- dataset_2.JoinKeySet(join_key_2)
+  keys_two <- keys.JoinKeySet(join_key_2)
+
+
   # if first datasets and the second datasets match and keys
   # must contain the same named elements
-  if (join_key_1$dataset_1 == join_key_2$dataset_1 && join_key_1$dataset_2 == join_key_2$dataset_2) {
-    if (!identical(sort(join_key_1$keys), sort(join_key_2$keys))) {
-      error_message(join_key_1$dataset_1, join_key_1$dataset_2)
+  if (dataset_1_one == dataset_1_two && dataset_2_one == dataset_2_two) {
+    if (!identical(sort(keys_one), sort(keys_two))) {
+      error_message(dataset_1_one, dataset_2_one)
     }
   }
 
   # if first dataset of join_key_1 matches second dataset of join_key_2
   # and the first dataset of join_key_2 must match second dataset of join_key_1
   # and keys must contain the same elements but with names and values swapped
-  if (join_key_1$dataset_1 == join_key_2$dataset_2 && join_key_1$dataset_2 == join_key_2$dataset_1) {
+  if (dataset_1_one == dataset_2_two && dataset_2_one == dataset_1_two) {
     # have to handle empty case differently as names(character(0)) is NULL
-    if (length(join_key_1$keys) == 0 && length(join_key_2$keys) == 0) {
+    if (length(keys_one) == 0 && length(keys_two) == 0) {
       return(TRUE)
     }
 
     if (
-      xor(length(join_key_1$keys) == 0, length(join_key_2$keys) == 0) ||
-        !identical(sort(join_key_1$keys), sort(setNames(names(join_key_2$keys), join_key_2$keys)))
+      xor(length(keys_one) == 0, length(keys_two) == 0) ||
+        !identical(sort(keys_one), sort(setNames(names(keys_two), keys_two)))
     ) {
-      error_message(join_key_1$dataset_1, join_key_1$dataset_2)
+      error_message(dataset_1_one, dataset_2_one)
     }
   }
 

@@ -18,6 +18,9 @@
 #' @seealso [join_keys()]
 #'
 #' @export
+#'
+#' @examples
+#' join_key("d1", "d2", c("A" = "B"))
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
@@ -42,11 +45,31 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   }
 
   structure(
-    list(
-      dataset_1 = dataset_1,
-      dataset_2 = dataset_2,
-      keys = keys
-    ),
+    setNames(list(setNames(list(keys), dataset_2)), dataset_1),
     class = "JoinKeySet"
   )
+}
+
+#' Getter for attributes in `JoinKeySet` object
+#'
+#' Internal methods for `JoinKeySet` operations
+#'
+#' @param join_key_object (`JoinKeySet`) object to retrieve attribute from.
+#' @return `dataset_1`, `dataset_2` or `key` as `character(1)`
+#'
+#' @keywords internal
+dataset_1.JoinKeySet <- function(join_key_object) {
+  names(join_key_object)
+}
+
+#' @rdname dataset_1.JoinKeySet
+#' @keywords internal
+dataset_2.JoinKeySet <- function(join_key_object) {
+  names(join_key_object[[1]])
+}
+
+#' @rdname dataset_1.JoinKeySet
+#' @keywords internal
+keys.JoinKeySet <- function(join_key_object) {
+  join_key_object[[1]][[1]]
 }

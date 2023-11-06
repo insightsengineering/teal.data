@@ -27,6 +27,9 @@ object of class \code{JoinKeySet} to be passed into \code{join_keys} function.
 \code{join_key()} will create a relationship for the variables on a pair
 of datasets.
 }
+\examples{
+join_key("d1", "d2", c("A" = "B"))
+}
 \seealso{
 \code{\link[=join_keys]{join_keys()}}
 }
