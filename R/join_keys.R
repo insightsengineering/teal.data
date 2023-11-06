@@ -156,20 +156,24 @@ join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[["ds1"]]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
-  if (checkmate::test_integerish(dataset_1) || length(dataset_1) > 0) {
+  if (missing(dataset_1)) dataset_1 <- NULL
+  if (missing(dataset_2)) dataset_2 <- NULL
+  if (
+    checkmate::test_integerish(dataset_1) ||
+      (length(dataset_1) >= 2 && is.null(dataset_2))
+  ) {
     return(NextMethod("[", join_keys_obj))
-  } else if (length(dataset_1) > 1) {
+  } else if (length(dataset_1) >= 2) {
     res <- lapply(dataset_1, function(x) join_keys_obj[[x]][[dataset_2]])
     names(res) <- dataset_1
     return(res)
   } else if (
-    (missing(dataset_1) && missing(dataset_2)) ||
-      (is.null(dataset_1) && is.null(dataset_2))
+    (is.null(dataset_1) && is.null(dataset_2))
   ) {
 
-  } else if (missing(dataset_1) || is.null(dataset_1)) {
+  } else if (is.null(dataset_1)) {
     return(join_keys_obj[[dataset_2]])
-  } else if (missing(dataset_2) || is.null(dataset_2)) {
+  } else if (is.null(dataset_2)) {
     return(join_keys_obj[[dataset_1]])
   }
   result <- join_keys_obj[[dataset_1]][[dataset_2]]

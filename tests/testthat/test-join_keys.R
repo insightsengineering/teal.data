@@ -100,10 +100,10 @@ test_that("[.JoinKeys can subscript multiple values by index or name", {
   expect_length(jk[1:2], 2)
   expect_length(jk[c("d1", "d5")], 2)
 
-  expect_identical(jk[c("d1", "d5")], c(jk["d1"], jk["d5"]))
+  expect_identical(jk[c("d1", "d5")], list(d1 = jk["d1"], d5 = jk["d5"]))
 
-  expect_identical(jk[2], jk["d2"])
-  expect_identical(jk[c(1, 3)], c(jk["d1"], jk["d3"]))
+  expect_identical(jk[2], list(d2 = jk["d2"]))
+  expect_identical(jk[c(1, 3)], list(d1 = jk["d1"], d3 = jk["d3"]))
 })
 
 test_that("[<-.JoinKeys cannot subscript multiple values", {
