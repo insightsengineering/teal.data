@@ -123,10 +123,13 @@ reference:
       - join_key
       - join_keys
       - join_keys<-
+      - parent
       - parents
       - parents<-
+      - print.JoinKeys
       - python_code
       - read_script
+      - update_keys_given_parents
       - validate_metadata
   - title: For Developers
     subtitle: R6 Classes
