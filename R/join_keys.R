@@ -234,7 +234,7 @@ join_keys <- function(...) {
   if (!is.null(dataset_1) && !is.null(dataset_2)) {
     return(join_keys_obj[[dataset_1]][[dataset_2]])
   }
-  NextMethod("[[", jk)
+  NextMethod("[[", join_keys_obj)
 }
 
 #' @rdname join_keys
@@ -276,7 +276,7 @@ join_keys <- function(...) {
   # Accepting 1 subscript with valid `value` formal
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
 
-  join_keys_obj <- NextMethod("[[<-", jk)
+  join_keys_obj <- NextMethod("[[<-", join_keys_obj)
 
   # Keep original parameters as variables will be overwritten for `NextMethod` call
   original_value <- value
@@ -467,7 +467,7 @@ merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
   checkmate::assert_list(new_join_keys, types = c("JoinKeys"), min.len = 1)
 
   for (el in new_join_keys) {
-    join_keys_obj <- modifyList(join_keys_obj, el)
+    join_keys_obj <- utils::modifyList(join_keys_obj, el)
   }
 
   logger::log_trace("JoinKeys keys merged.")
@@ -564,7 +564,7 @@ test_join_keys <- function(x) {
 
 #' @rdname assert_join_keys
 #' @keywords internal
-expect_join_keys <- function(x, info = NULL, label = vname(x)) {
+expect_join_keys <- function(x, info = NULL, label = checkmate::vname(x)) {
   checkmate::makeExpectation(x, check_join_keys(x), info = info, label = label)
 }
 
@@ -584,9 +584,6 @@ assert_join_keys_alike <- function(x, .var.name = checkmate::vname(x), add = NUL
 }
 
 #' @rdname assert_join_keys
-#' @examples
-#' check_join_keys_alike(list("ds1" = list("key")))
-#' check_join_keys_alike(list("ds1" = list(ds2 = "key")))
 check_join_keys_alike <- function(x) {
   result <- checkmate::check_list(x, names = "named", types = "list")
   if (checkmate::test_string(result)) {

@@ -11,7 +11,7 @@ assert_join_keys(x, .var.name = checkmate::vname(x), add = NULL)
 
 test_join_keys(x)
 
-expect_join_keys(x, info = NULL, label = vname(x))
+expect_join_keys(x, info = NULL, label = checkmate::vname(x))
 
 check_join_keys_alike(x)
 }
@@ -39,9 +39,5 @@ the heuristic implemented in \code{\link[checkmate]{vname}}.}
 }
 \description{
 Assert the JoinKeys class membership of an argument
-}
-\examples{
-check_join_keys_alike(list("ds1" = list("key")))
-check_join_keys_alike(list("ds1" = list(ds2 = "key")))
 }
 \keyword{internal}

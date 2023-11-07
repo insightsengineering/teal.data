@@ -1,4 +1,4 @@
-#' Getter for specific parent
+#' Getter and setter for specific parent
 #'
 #' @param join_keys_obj (`JoinKeys`) object to retrieve.
 #' @param dataset_name (`character(1)`)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/parents.R
 \name{parent}
 \alias{parent}
-\title{Getter for specific parent}
+\title{Getter and setter for specific parent}
 \usage{
 parent(join_keys_obj, dataset_name)
 }
@@ -12,7 +12,7 @@ parent(join_keys_obj, dataset_name)
 \item{dataset_name}{(\code{character(1)})}
 }
 \description{
-Getter for specific parent
+Getter and setter for specific parent
 }
 \examples{
 jk <- join_keys()

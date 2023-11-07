@@ -122,6 +122,9 @@ reference:
       - get_labels
       - join_key
       - join_keys
+      - join_keys<-
+      - parents
+      - parents<-
       - python_code
       - read_script
       - validate_metadata
@@ -134,7 +137,6 @@ reference:
       - CDISCTealDataConnector
       - CDISCTealDataset
       - CDISCTealDatasetConnector
-      - JoinKeys
       - MAETealDataset
       - PythonCodeClass
       - TealData
