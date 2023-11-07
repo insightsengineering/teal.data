@@ -154,6 +154,7 @@ join_keys <- function(...) {
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' jk["ds1", "ds2"]
 #' jk["ds1"]
+#' jk[dataset_2 = "ds1"]
 #' jk[["ds1"]]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
   # Protection against missing being passed through functions
@@ -171,11 +172,11 @@ join_keys <- function(...) {
   } else if (
     (is.null(dataset_1) && is.null(dataset_2))
   ) {
-
+    return(join_keys_obj)
   } else if (is.null(dataset_1)) {
-    return(join_keys_obj[[dataset_2]])
+    return(join_keys_obj[dataset_2])
   } else if (is.null(dataset_2)) {
-    return(join_keys_obj[[dataset_1]])
+    return(NextMethod("[", join_keys_obj))
   }
   result <- join_keys_obj[[dataset_1]][[dataset_2]]
   if (is.null(result)) {
@@ -403,6 +404,10 @@ merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
   logger::log_trace("JoinKeys keys merged.")
   return(join_keys_obj)
 }
+
+# S3 methods have to be exported, otherwise `.S3method` needs to be used
+.S3method("merge_join_keys", "teal_data", merge_join_keys.default)
+.S3method("merge_join_keys", "JoinKeys", merge_join_keys.JoinKeys)
 
 #' Prints `JoinKeys`.
 #'

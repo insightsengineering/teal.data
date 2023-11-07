@@ -176,11 +176,15 @@ TealData <- R6::R6Class( # nolint
     #' @return (`character`) named character vector x with names(x) the
     #' columns of `dataset_1` and the values of `(x)` the corresponding join
     #' keys in `dataset_2` or `character(0)` if no relationship
-    get_join_keys = function(dataset_1, dataset_2) {
-      if (missing(dataset_1) && missing(dataset_2)) {
+    get_join_keys = function(dataset_1 = NULL, dataset_2 = NULL) {
+      if (is.null(dataset_1) && is.null(dataset_2)) {
         private$join_keys
+      } else if (is.null(dataset_1)) {
+        private$join_keys[[dataset_2]]
+      } else if (is.null(dataset_2)) {
+        private$join_keys[[dataset_1]]
       } else {
-        private$join_keys[dataset_1, dataset_2]
+        private$join_keys[[dataset_1, dataset_2]]
       }
     },
 
