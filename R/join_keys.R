@@ -262,9 +262,9 @@ join_keys <- function(...) {
 
     # Normalize value
     new_join_key <- join_key(dataset_1, dataset_2, value)
-    dataset_1 <- dataset_1.JoinKeySet(new_join_key)
-    dataset_2 <- dataset_2.JoinKeySet(new_join_key)
-    value <- keys.JoinKeySet(new_join_key)
+    dataset_1 <- get_dataset_1(new_join_key)
+    dataset_2 <- get_dataset_2(new_join_key)
+    value <- get_keys(new_join_key)
 
     if (is.null(join_keys_obj[[dataset_1]])) {
       join_keys_obj[[dataset_1]] <- list()
@@ -516,9 +516,9 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   assert_join_keys(join_keys_obj)
   checkmate::assert_class(join_key_obj, "JoinKeySet")
 
-  dataset_1 <- dataset_1.JoinKeySet(join_key_obj)
-  dataset_2 <- dataset_2.JoinKeySet(join_key_obj)
-  keys <- keys.JoinKeySet(join_key_obj)
+  dataset_1 <- get_dataset_1(join_key_obj)
+  dataset_2 <- get_dataset_2(join_key_obj)
+  keys <- get_keys(join_key_obj)
 
   join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   join_keys_obj
@@ -609,13 +609,13 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     )
   }
 
-  dataset_1_one <- dataset_1.JoinKeySet(join_key_1)
-  dataset_2_one <- dataset_2.JoinKeySet(join_key_1)
-  keys_one <- keys.JoinKeySet(join_key_1)
+  dataset_1_one <- get_dataset_1(join_key_1)
+  dataset_2_one <- get_dataset_2(join_key_1)
+  keys_one <- get_keys(join_key_1)
 
-  dataset_1_two <- dataset_1.JoinKeySet(join_key_2)
-  dataset_2_two <- dataset_2.JoinKeySet(join_key_2)
-  keys_two <- keys.JoinKeySet(join_key_2)
+  dataset_1_two <- get_dataset_1(join_key_2)
+  dataset_2_two <- get_dataset_2(join_key_2)
+  keys_two <- get_keys(join_key_2)
 
 
   # if first datasets and the second datasets match and keys

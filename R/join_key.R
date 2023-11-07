@@ -58,18 +58,18 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
 #' @return `dataset_1`, `dataset_2` or `key` as `character(1)`
 #'
 #' @keywords internal
-dataset_1.JoinKeySet <- function(join_key_object) {
+get_dataset_1 <- function(join_key_object) {
   names(join_key_object)
 }
 
-#' @rdname dataset_1.JoinKeySet
+#' @rdname get_dataset_1
 #' @keywords internal
-dataset_2.JoinKeySet <- function(join_key_object) {
+get_dataset_2 <- function(join_key_object) {
   names(join_key_object[[1]])
 }
 
-#' @rdname dataset_1.JoinKeySet
+#' @rdname get_dataset_1
 #' @keywords internal
-keys.JoinKeySet <- function(join_key_object) {
+get_keys.JoinKeySet <- function(join_key_object) {
   join_key_object[[1]][[1]]
 }

@@ -43,8 +43,8 @@ test_that("join_key does not throw error with valid arguments", {
 test_that("join_key will fill empty names with value", {
   # keys of length 0
   jk <- join_key("d1", "d2", keys = c("A" = "B", "C"))
-  expect_identical(keys.JoinKeySet(jk), setNames(c("B", "C"), c("A", "C")))
+  expect_identical(get_keys(jk), setNames(c("B", "C"), c("A", "C")))
 
   jk <- join_key("d1", "d2", keys = c("B", "C"))
-  expect_identical(keys.JoinKeySet(jk), setNames(c("B", "C"), c("B", "C")))
+  expect_identical(get_keys(jk), setNames(c("B", "C"), c("B", "C")))
 })
