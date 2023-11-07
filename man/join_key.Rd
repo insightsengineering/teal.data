@@ -28,7 +28,10 @@ object of class \code{JoinKeySet} to be passed into \code{join_keys} function.
 of datasets.
 }
 \examples{
+join_key("d1", "d2", c("A"))
 join_key("d1", "d2", c("A" = "B"))
+join_key("d1", "d2", c("A" = "B", "C"))
+join_key("d1", "d2", c("A" = "B", "C" = ""))
 }
 \seealso{
 \code{\link[=join_keys]{join_keys()}}

@@ -20,19 +20,45 @@
 #' @export
 #'
 #' @examples
+#' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
+#' join_key("d1", "d2", c("A" = "B", "C"))
+#' join_key("d1", "d2", c("A" = "B", "C" = ""))
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
-  checkmate::assert_character(keys, any.missing = FALSE)
+  checkmate::assert_character(keys, any.missing = FALSE, min.len = 1)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
       names(keys) <- keys
     }
 
+    keys <- trimws(keys)
+    names(keys) <- trimws(names(keys))
+
+    # Remove keys with empty value and without name
+    if (any(keys == "" & names(keys) == "")) {
+      message("Key with an empty value and name are ignored.")
+      keys <- keys[keys != "" & names(keys) != ""]
+      if (!checkmate::test_character(keys, any.missing = FALSE, min.len = 1)) {
+        checkmate::makeAssertion(
+          keys,
+          "Must be of type 'character' with at least on non-empty key/name(key)",
+          var.name = "keys",
+          collection = NULL
+        )
+      }
+    }
+
+    # Set name of keys without one: c("A") -> c("A" = "A")
     if (any(names(keys) == "")) {
       names(keys)[names(keys) == "" & keys != ""] <- keys[names(keys) == "" & keys != ""]
+    }
+
+    # Set value of keys with empty string, but non-empty name: c("A" = "") -> c("A" = "A")
+    if (any(keys == "" & names(keys) != "")) {
+      keys[keys == ""] <- names(keys[keys == ""])
     }
 
     stopifnot(!is.null(names(keys)))
@@ -73,3 +99,5 @@ get_dataset_2 <- function(join_key_object) {
 get_keys.JoinKeySet <- function(join_key_object) {
   join_key_object[[1]][[1]]
 }
+# Remove this once generic `get_keys` is removed (and rename non-exported function to `get_keys`)
+.S3method("get_keys", "JoinKeySet", get_keys.JoinKeySet)

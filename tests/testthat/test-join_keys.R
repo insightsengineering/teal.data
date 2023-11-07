@@ -134,11 +134,14 @@ test_that("mutate_join_keys with empty name is changed to the key value", {
 
   # set key on non-empty variable name equal to ""
   jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", "C" = ""))
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "C")))
+  expect_equal(jk["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
 
   # set key on empty variable name equal to ""
-  jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", ""))
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "")))
+  expect_message(
+    jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", "")),
+    "are ignored"
+  )
+  expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
 })
 
 test_that("[<-.JoinKeys with empty name is changed to the key value", {
@@ -150,12 +153,12 @@ test_that("[<-.JoinKeys with empty name is changed to the key value", {
   # set key on non-empty variable name equal to ""
   jk <- join_keys()
   jk["d1", "d2"] <- c("A" = "B", "C" = "")
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "C")))
+  expect_equal(jk["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
 
   # set key on empty variable name equal to ""
   jk <- join_keys()
-  jk["d1", "d2"] <- c("A" = "B", "")
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "")))
+  expect_message(jk["d1", "d2"] <- c("A" = "B", ""), "are ignored")
+  expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
 })
 
 test_that("join_keys()[]<-.JoinKeys with empty name is changed to the key value", {
@@ -167,12 +170,12 @@ test_that("join_keys()[]<-.JoinKeys with empty name is changed to the key value"
   # set key on non-empty variable name equal to ""
   jk <- join_keys()
   join_keys(jk)["d1", "d2"] <- c("A" = "B", "C" = "")
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "C")))
+  expect_equal(jk["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
 
   # set key on empty variable name equal to ""
   jk <- join_keys()
-  join_keys(jk)["d1", "d2"] <- c("A" = "B", "")
-  expect_equal(jk["d1", "d2"], setNames(c("B", ""), c("A", "")))
+  expect_message(join_keys(jk)["d1", "d2"] <- c("A" = "B", ""), "are ignored")
+  expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
 })
 
 test_that("join_keys()[]<-.teal_data with empty name is changed to the key value", {
@@ -184,12 +187,12 @@ test_that("join_keys()[]<-.teal_data with empty name is changed to the key value
   # set key on non-empty variable name equal to ""
   td <- teal_data()
   join_keys(td)["d1", "d2"] <- c("A" = "B", "C" = "")
-  expect_equal(join_keys(td)["d1", "d2"], setNames(c("B", ""), c("A", "C")))
+  expect_equal(join_keys(td)["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
 
   # set key on empty variable name equal to ""
   td <- teal_data()
-  join_keys(td)["d1", "d2"] <- c("A" = "B", "")
-  expect_equal(join_keys(td)["d1", "d2"], setNames(c("B", ""), c("A", "")))
+  expect_message(join_keys(td)["d1", "d2"] <- c("A" = "B", ""), "are ignored")
+  expect_equal(join_keys(td)["d1", "d2"], setNames(c("B"), c("A")))
 })
 
 # -----------------------------------------------------------------------------
