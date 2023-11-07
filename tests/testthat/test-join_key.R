@@ -1,13 +1,3 @@
-test_that("join_key throws error when keys are all empty strings", {
-  # invalid types
-  expect_error(join_key("d1", "d2", keys = c("", "", "", "")))
-})
-
-test_that("join_key throws error when keys are all strings with empty spaces", {
-  # invalid types
-  expect_error(join_key("d1", "d2", keys = c(" ", " ", "    ", " ")))
-})
-
 test_that("join_key throws error with invalid keys arguments", {
   # invalid types
   expect_error(join_key("d1", "d2", keys = NULL))
@@ -74,4 +64,13 @@ test_that("join_key ignores empty name/value on keys if it has other keys", {
 
   expect_message(jk <- join_key("d1", "d2", keys = c("B", "")), "are ignored")
   expect_identical(get_keys(jk), setNames(c("B"), c("B")))
+})
+
+test_that("join_key sets key as character(0) when keys are all all empty strings", {
+  # invalid types
+  jk <- join_key("d1", "d2", keys = c("", "", "", ""))
+  expect_length(get_keys(jk), 0)
+
+  jk2 <- join_key("d1", "d2", keys = c(" ", " ", "    ", " "))
+  expect_length(get_keys(jk2), 0)
 })

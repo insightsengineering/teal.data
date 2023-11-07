@@ -27,7 +27,7 @@
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
-  checkmate::assert_character(keys, any.missing = FALSE, min.len = 1)
+  checkmate::assert_character(keys, any.missing = FALSE)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
@@ -41,14 +41,6 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     if (any(keys == "" & names(keys) == "")) {
       message("Key with an empty value and name are ignored.")
       keys <- keys[keys != "" & names(keys) != ""]
-      if (!checkmate::test_character(keys, any.missing = FALSE, min.len = 1)) {
-        checkmate::makeAssertion(
-          keys,
-          "Must be of type 'character' with at least on non-empty key/name(key)",
-          var.name = "keys",
-          collection = NULL
-        )
-      }
     }
 
     # Set name of keys without one: c("A") -> c("A" = "A")

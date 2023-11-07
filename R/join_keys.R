@@ -347,7 +347,6 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(value, any.missing = FALSE)
-
   join_pair(x, join_key(dataset_1, dataset_2, value))
 }
 
