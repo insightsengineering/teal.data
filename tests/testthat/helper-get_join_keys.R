@@ -32,7 +32,10 @@ helper_test_getter_join_keys <- function(obj, dataset_1 = "ds1") {
 }
 
 #' Test suite for JoinKeys after manual adding a primary key
-helper_test_getter_join_keys_add <- function(obj, dataset_1 = "ds1", new_dataset_1 = "ds2", new_keys = c("id")) {
+helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
+                                             dataset_1 = "ds1",
+                                             new_dataset_1 = "ds2",
+                                             new_keys = c("id")) {
   obj <- helper_test_getter_join_keys(obj, dataset_1)
   join_keys(obj)[new_dataset_1] <- c(new_keys)
 

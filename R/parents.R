@@ -80,7 +80,7 @@ parents.JoinKeys <- function(join_keys_obj) {
       old_parents[[dataset]] <- value[[dataset]]
     }
   }
-  attr(join_keys_obj, "__parents__") <- old_parents
+  attr(join_keys_obj, "__parents__") <- old_parents # nolint: object_name_linter
   join_keys_obj
 }
 

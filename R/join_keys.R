@@ -435,7 +435,7 @@ print.JoinKeys <- function(x, ...) {
       length(keys_list)
     ))
     # Hide parents
-    attr(keys_list, "__parents__") <- NULL
+    attr(keys_list, "__parents__") <- NULL # nolint: object_name_linter
     print.default(keys_list[sort(names(keys_list))])
   } else {
     cat("An empty JoinKeys object.")
@@ -485,7 +485,7 @@ join_pair <- function(join_keys_obj, join_key_obj) {
 #' @return `x` invisibly
 #'
 #' @keywords internal
-assert_join_keys_alike <- function(x, .var.name = checkmate::vname(x), add = NULL) {
+assert_join_keys_alike <- function(x, .var.name = checkmate::vname(x), add = NULL) { # nolint: object_name_linter
   if (missing(x)) {
     stop(sprintf("argument \"%s\" is missing, with no default", .var.name))
   }

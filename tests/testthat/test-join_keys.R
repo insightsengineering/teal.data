@@ -353,10 +353,13 @@ test_that("join_keys can get all keys from JoinKeys", {
   )
 })
 
-test_that("join_keys join_key with unamed keys vector creates a JoinKeys with the same column names for both datasets ", {
-  test_keys <- join_keys(join_key("d1", "d2", keys = c("A", "B")))
-  expect_equal(unname(test_keys["d1", "d2"]), names(test_keys["d1", "d2"]))
-})
+test_that(
+  "join_keys join_key with unamed keys vector creates a JoinKeys with the same column names for both datasets ",
+  {
+    test_keys <- join_keys(join_key("d1", "d2", keys = c("A", "B")))
+    expect_equal(unname(test_keys["d1", "d2"]), names(test_keys["d1", "d2"]))
+  }
+)
 
 test_that("join_keys if no keys between pair of datasets then getting them returns character(0)", {
   my_keys <- join_keys(join_key("d1", "d2", "A"))
@@ -506,25 +509,28 @@ testthat::test_that("merge_join_keys does nothing when argument is a list of one
   testthat::expect_identical(previous_output, join_keys(y))
 })
 
-testthat::test_that("merge_join_keys does nothing when argument is a list of many JoinKeys object with identical data", {
-  x <- join_keys()
-  y <- join_keys()
+testthat::test_that(
+  "merge_join_keys does nothing when argument is a list of many JoinKeys object with identical data",
+  {
+    x <- join_keys()
+    y <- join_keys()
 
-  join_keys(x) <- list(
-    join_key("A", "B", c("a" = "b")),
-    join_key("A", "C", c("a" = "c", "aa" = "cc")),
-    join_key("Z", "Y", c("z" = "y"))
-  )
-  join_keys(y) <- list(
-    join_key("A", "B", c("a" = "b")),
-    join_key("A", "C", c("a" = "c", "aa" = "cc")),
-    join_key("Z", "Y", c("z" = "y"))
-  )
+    join_keys(x) <- list(
+      join_key("A", "B", c("a" = "b")),
+      join_key("A", "C", c("a" = "c", "aa" = "cc")),
+      join_key("Z", "Y", c("z" = "y"))
+    )
+    join_keys(y) <- list(
+      join_key("A", "B", c("a" = "b")),
+      join_key("A", "C", c("a" = "c", "aa" = "cc")),
+      join_key("Z", "Y", c("z" = "y"))
+    )
 
-  previous_output <- join_keys(y)
-  testthat::expect_silent(merge_join_keys(y, list(x, x, x, x, x, x, x, x)))
-  testthat::expect_identical(previous_output, join_keys(y))
-})
+    previous_output <- join_keys(y)
+    testthat::expect_silent(merge_join_keys(y, list(x, x, x, x, x, x, x, x)))
+    testthat::expect_identical(previous_output, join_keys(y))
+  }
+)
 
 testthat::test_that("merge_join_keys clones data when argument is a list of one JoinKeys object that is a superset", {
   x <- join_keys()
