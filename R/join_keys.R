@@ -366,52 +366,6 @@ mutate_join_keys.teal_data <- function(x, dataset_1, dataset_2, value) { # nolin
   join_keys(x)
 }
 
-#' @rdname split_join_keys
-#' @export
-split_join_keys <- function(join_keys_obj) {
-  UseMethod("split_join_keys", join_keys_obj)
-}
-
-#' @rdname split_join_keys
-#' @export
-split_join_keys.default <- function(join_keys_obj) {
-  split_join_keys(join_keys(join_keys_obj))
-}
-
-#' Split the `JoinKeys` object into a named list of join keys objects with an element for each dataset
-#'
-#' @param join_keys_obj (`JoinKeys`) base object to get the keys from.
-#'
-#' @return (`list`) a list of `JoinKeys` object
-#'
-#' @rdname split_join_keys
-#'
-#' @export
-#'
-#' @examples
-#' jk <- join_keys()
-#' jk["ds1", "ds2"] <- "some_col"
-#' jk["ds1", "ds3"] <- "new_col"
-#' split_join_keys(jk)
-split_join_keys.JoinKeys <- function(join_keys_obj) {
-  assert_join_keys(join_keys_obj)
-
-  list_of_list_of_join_key_set <- lapply(
-    names(join_keys_obj),
-    function(dataset_1) {
-      lapply(
-        names(join_keys_obj[[dataset_1]]),
-        function(dataset_2) join_key(dataset_1, dataset_2, join_keys_obj[[dataset_1]][[dataset_2]])
-      )
-    }
-  )
-  res <- lapply(list_of_list_of_join_key_set, function(.x) do.call(join_keys, .x))
-  names(res) <- names(join_keys_obj)
-
-  logger::log_trace("JoinKeys keys split.")
-  return(res)
-}
-
 #' @rdname merge_join_keys
 #' @keywords internal
 merge_join_keys <- function(join_keys_obj, new_join_keys) {
