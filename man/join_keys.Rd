@@ -102,10 +102,13 @@ join_keys(td)
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-jk["ds1", "ds2"]
 jk["ds1"]
 jk[dataset_2 = "ds1"]
-jk[["ds1"]]
+jk[1:2]
+jk[c("ds1", "ds2")]
+
+# Double subscript
+jk["ds1", "ds2"]
 
 # Setter via index ----
 

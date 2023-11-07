@@ -152,10 +152,13 @@ join_keys <- function(...) {
 #'
 #' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-#' jk["ds1", "ds2"]
 #' jk["ds1"]
 #' jk[dataset_2 = "ds1"]
-#' jk[["ds1"]]
+#' jk[1:2]
+#' jk[c("ds1", "ds2")]
+#'
+#' # Double subscript
+#' jk["ds1", "ds2"]
 `[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
   # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
@@ -164,7 +167,9 @@ join_keys <- function(...) {
     checkmate::test_integerish(dataset_1) ||
       (length(dataset_1) >= 2 && is.null(dataset_2))
   ) {
-    return(NextMethod("[", join_keys_obj))
+    res <- NextMethod("[", join_keys_obj)
+    class(res) <- c("JoinKeys", "list")
+    return(res)
   } else if (length(dataset_1) >= 2) {
     res <- lapply(dataset_1, function(x) join_keys_obj[[x]][[dataset_2]])
     names(res) <- dataset_1
@@ -174,9 +179,13 @@ join_keys <- function(...) {
   ) {
     return(join_keys_obj)
   } else if (is.null(dataset_1)) {
-    return(join_keys_obj[dataset_2])
+    res <- join_keys_obj[dataset_2]
+    class(res) <- c("JoinKeys", "list")
+    return(res)
   } else if (is.null(dataset_2)) {
-    return(NextMethod("[", join_keys_obj))
+    res <- NextMethod("[", join_keys_obj)
+    class(res) <- c("JoinKeys", "list")
+    return(res)
   }
   result <- join_keys_obj[[dataset_1]][[dataset_2]]
   if (is.null(result)) {

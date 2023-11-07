@@ -100,10 +100,16 @@ test_that("[.JoinKeys can subscript multiple values by index or name", {
   expect_length(jk[1:2], 2)
   expect_length(jk[c("d1", "d5")], 2)
 
-  expect_identical(jk[c("d1", "d5")], list(d1 = jk[["d1"]], d5 = jk[["d5"]]))
+  expect_identical(
+    jk[c("d1", "d5")],
+    structure(
+      list(d1 = jk[["d1"]], d5 = jk[["d5"]]),
+      class = c("JoinKeys", "list")
+    )
+  )
 
-  expect_identical(jk[2], list(d2 = jk[["d2"]]))
-  expect_identical(jk[c(1, 3)], list(d1 = jk[["d1"]], d3 = jk[["d3"]]))
+  expect_identical(jk[2], structure(list(d2 = jk[["d2"]]), class = c("JoinKeys", "list")))
+  expect_identical(jk[c(1, 3)], structure(list(d1 = jk[["d1"]], d3 = jk[["d3"]]), class = c("JoinKeys", "list")))
 })
 
 test_that("[<-.JoinKeys cannot subscript multiple values", {
@@ -306,9 +312,27 @@ test_that("join_keys[ can get all keys for a given dataset", {
     join_key("d1", "d3", c("A" = "B", "S" = "T")),
     join_key("d2", "d3", c("C" = "U", "L" = "M"))
   )
-  expect_equal(my_keys[dataset_1 = "d1"], list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))))
-  expect_equal(my_keys[dataset_2 = "d1"], list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))))
-  expect_equal(my_keys[dataset_1 = "d3"], list("d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))))
+  expect_equal(
+    my_keys[dataset_1 = "d1"],
+    structure(
+      list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))),
+      class = c("JoinKeys", "list")
+    )
+  )
+  expect_equal(
+    my_keys[dataset_2 = "d1"],
+    structure(
+      list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))),
+      class = c("JoinKeys", "list")
+    )
+  )
+  expect_equal(
+    my_keys[dataset_1 = "d3"],
+    structure(
+      list("d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))),
+      class = c("JoinKeys", "list")
+    )
+  )
 })
 
 test_that("join_keys can get all keys from JoinKeys", {
@@ -320,7 +344,13 @@ test_that("join_keys can get all keys from JoinKeys", {
 
   all_keys <- my_keys
   expect_equal(names(all_keys), c("d1", "d2", "d3"))
-  expect_equal(my_keys[dataset_1 = "d1"], list(d1 = all_keys[["d1"]]))
+  expect_equal(
+    my_keys[dataset_1 = "d1"],
+    structure(
+      list(d1 = all_keys[["d1"]]),
+      class = c("JoinKeys", "list")
+    )
+  )
 })
 
 test_that("join_keys join_key with unamed keys vector creates a JoinKeys with the same column names for both datasets ", {
