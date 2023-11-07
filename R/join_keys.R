@@ -290,8 +290,7 @@ join_keys <- function(...) {
     new_value <- original_value[[ds2]]
 
     if (
-      checkmate::test_character(new_value, min.len = 1) &&
-        is.null(names(new_value))
+      checkmate::test_character(new_value, min.len = 1, names = "unnamed")
     ) {
       new_value <- setNames(new_value, new_value)
     } else if (
@@ -343,14 +342,6 @@ mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
 
   res <- join_pair(x, join_key(dataset_1, dataset_2, value))
 
-  logger::log_trace(
-    sprintf(
-      "JoinKeys updated the keys between %s and %s to %s",
-      dataset_1,
-      dataset_2,
-      paste(value, collapse = ", ")
-    )
-  )
 
   res
 }
