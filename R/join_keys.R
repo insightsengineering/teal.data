@@ -413,13 +413,13 @@ split_join_keys.JoinKeys <- function(join_keys_obj) {
 }
 
 #' @rdname merge_join_keys
-#' @export
+#' @keywords internal
 merge_join_keys <- function(join_keys_obj, new_join_keys) {
   UseMethod("merge_join_keys", join_keys_obj)
 }
 
 #' @rdname merge_join_keys
-#' @export
+#' @keywords internal
 merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
   merge_join_keys(join_keys(join_keys_obj), new_join_keys)
 }
@@ -433,17 +433,7 @@ merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
 #'
 #' @return a new `JoinKeys` object with the resulting merge.
 #'
-#' @export
-#'
-#' @examples
-#' jk1 <- join_keys()
-#' jk1["ds1", "ds2"] <- "some_col"
-#'
-#' jk2 <- join_keys()
-#' jk2["ds1", "ds3"] <- "new_col"
-#'
-#' merge_join_keys(jk1, jk2)
-#' merge_join_keys(jk1, list(jk2))
+#' @keywords internal
 merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
   assert_join_keys(join_keys_obj)
 

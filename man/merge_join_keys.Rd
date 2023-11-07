@@ -23,13 +23,4 @@ a new \code{JoinKeys} object with the resulting merge.
 \description{
 Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
 }
-\examples{
-jk1 <- join_keys()
-jk1["ds1", "ds2"] <- "some_col"
-
-jk2 <- join_keys()
-jk2["ds1", "ds3"] <- "new_col"
-
-merge_join_keys(jk1, jk2)
-merge_join_keys(jk1, list(jk2))
-}
+\keyword{internal}
