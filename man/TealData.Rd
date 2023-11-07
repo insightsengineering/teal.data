@@ -199,7 +199,7 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 \subsection{Method \code{get_join_keys()}}{
 Get join keys between two datasets.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1, dataset_2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1 = NULL, dataset_2 = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
