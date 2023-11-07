@@ -82,7 +82,7 @@ join_keys <- function(...) {
 
   # Assume assignment of join keys as a merge operation
   #  Needed to support join_keys(jk)[ds1, ds2] <- "key"
-  if (test_join_keys(value)) {
+  if (checkmate::test_class(value, classes = c("JoinKeys", "list"))) {
     return(merge_join_keys(join_keys_obj, value))
   }
 
@@ -127,7 +127,7 @@ join_keys <- function(...) {
     return(join_keys_obj)
   }
 
-  if (test_join_keys(value)) {
+  if (checkmate::test_class(value, c("JoinKeys", "list"))) {
     join_keys_obj@join_keys <- merge_join_keys(join_keys_obj@join_keys, value)
     return(join_keys_obj)
   }
@@ -387,9 +387,9 @@ merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
 #'
 #' @keywords internal
 merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
-  assert_join_keys(join_keys_obj)
+  checkmate::assert_class(join_keys_obj, classes = c("JoinKeys", "list"))
 
-  if (test_join_keys(new_join_keys)) {
+  if (checkmate::test_class(new_join_keys, classes = c("JoinKeys", "list"))) {
     new_join_keys <- list(new_join_keys)
   }
 
@@ -459,7 +459,7 @@ new_join_keys <- function() {
 #'
 #' @keywords internal
 join_pair <- function(join_keys_obj, join_key_obj) {
-  assert_join_keys(join_keys_obj)
+  checkmate::assert_class(join_keys_obj, c("JoinKeys", "list"))
   checkmate::assert_class(join_key_obj, "JoinKeySet")
 
   dataset_1 <- get_dataset_1(join_key_obj)
@@ -468,39 +468,6 @@ join_pair <- function(join_keys_obj, join_key_obj) {
 
   join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   join_keys_obj
-}
-
-#' Assert the JoinKeys class membership of an argument
-#' @inheritParams checkmate::assert_class
-#'
-#' @return `x` invisibly
-#'
-#' @keywords internal
-assert_join_keys <- function(x, .var.name = checkmate::vname(x), add = NULL) {
-  if (missing(x)) {
-    stop(sprintf("argument \"%s\" is missing, with no default", .var.name))
-  }
-
-  res <- check_join_keys(x)
-  checkmate::makeAssertion(x, res, var.name = .var.name, add)
-}
-
-#' @rdname assert_join_keys_alike
-#' @keywords internal
-check_join_keys <- function(x) {
-  checkmate::check_class(x, classes = c("JoinKeys", "list"))
-}
-
-#' @rdname assert_join_keys
-#' @keywords internal
-test_join_keys <- function(x) {
-  checkmate::makeTest(check_join_keys(x))
-}
-
-#' @rdname assert_join_keys
-#' @keywords internal
-expect_join_keys <- function(x, info = NULL, label = checkmate::vname(x)) {
-  checkmate::makeExpectation(x, check_join_keys(x), info = info, label = label)
 }
 
 #' Assert the JoinKeys class membership of an argument
@@ -518,7 +485,7 @@ assert_join_keys_alike <- function(x, .var.name = checkmate::vname(x), add = NUL
   checkmate::makeAssertion(x, res, var.name = .var.name, add)
 }
 
-#' @rdname assert_join_keys
+#' @rdname assert_join_keys_alike
 check_join_keys_alike <- function(x) {
   result <- checkmate::check_list(x, names = "named", types = "list")
   if (checkmate::test_string(result)) {
@@ -604,7 +571,7 @@ assert_parent_child <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
   jk_parents <- parents(jk)
 
-  assert_join_keys(jk)
+  checkmate::assert_class(jk, c("JoinKeys", "list"))
 
   if (!is.null(jk_parents)) {
     for (idx1 in seq_along(jk_parents)) {

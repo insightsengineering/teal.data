@@ -24,7 +24,7 @@ helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) { # nol
 helper_test_getter_join_keys <- function(obj, dataset_1 = "ds1") {
   jk <- join_keys(obj)
 
-  expect_join_keys(jk)
+  expect_s3_class(jk, class = c("JoinKeys", "list"))
   expect_length(jk, 1)
   expect_length(jk[dataset_1, dataset_1], 1)
 
@@ -38,7 +38,7 @@ helper_test_getter_join_keys_add <- function(obj, dataset_1 = "ds1", new_dataset
 
   jk <- join_keys(obj)
 
-  expect_join_keys(jk)
+  expect_s3_class(jk, class = c("JoinKeys", "list"))
   expect_length(jk, 2)
   expect_length(jk[dataset_1, dataset_1], 1)
   expect_length(jk[new_dataset_1, new_dataset_1], 1)
