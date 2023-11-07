@@ -286,12 +286,10 @@ join_keys <- function(...) {
   for (ds2 in names(value)) {
     if (ds2 == ds1) next
 
-    value <- rlang::`%||%`(join_keys_obj[[ds2]], list())
+    value <- join_keys_obj[[ds2]] %||% list()
     new_value <- original_value[[ds2]]
 
-    if (
-      checkmate::test_character(new_value, min.len = 1, names = "unnamed")
-    ) {
+    if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
       new_value <- setNames(new_value, new_value)
     } else if (
       checkmate::test_character(new_value, min.len = 1)

@@ -35,7 +35,7 @@ parents <- function(join_keys_obj) {
 #' jk <- join_keys()
 #' parents(jk)
 parents.JoinKeys <- function(join_keys_obj) {
-  rlang::`%||%`(attr(join_keys_obj, "__parents__"), list())
+  attr(join_keys_obj, "__parents__") %||% list()
 }
 
 #' @rdname parents
