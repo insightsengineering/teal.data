@@ -37,7 +37,7 @@ helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
                                              new_dataset_1 = "ds2",
                                              new_keys = c("id")) {
   obj <- helper_test_getter_join_keys(obj, dataset_1)
-  join_keys(obj)[new_dataset_1] <- c(new_keys)
+  join_keys(obj)[new_dataset_1] <- c(new_keys) # primary key
 
   jk <- join_keys(obj)
 
@@ -45,4 +45,95 @@ helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
   expect_length(jk, 2)
   expect_length(jk[dataset_1, dataset_1], 1)
   expect_length(jk[new_dataset_1, new_dataset_1], 1)
+}
+
+#' Test suite for JoinKeys after manual adding a primary key
+helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length_linter
+  obj <- helper_test_getter_join_keys(obj, "ds1")
+
+  counter <- 2
+  .ds <- function(add = 1, prefix = "ds") {
+    counter <<- counter + add
+    paste0(prefix, "-", counter - add)
+  }
+
+  .key <- function(type = 1, prefix = "col") {
+    col_name <- .ds(add = 1, prefix = prefix)
+    switch(type,
+      "1" = col_name,
+      "2" = setNames(col_name, col_name),
+      "3" = setNames(col_name, paste0(col_name, "-diff")),
+      "4" = setNames("", paste0(col_name))
+    )
+  }
+
+  # Primary key (each adds 1)
+  join_keys(obj)[.ds()] <- .key()
+  join_keys(obj)[.ds(add = 0), .ds()] <- .key(2)
+  join_keys(obj)[.ds(add = 0), .ds()] <- .key(4)
+  join_keys(obj)[.ds(add = 0), .ds()] <- character(0)
+  expect_error(join_keys(obj)[.ds(add = 0), .ds()] <- .key(3))
+
+  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(1))
+  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(2))
+  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(4))
+  join_keys(obj) <- join_key(.ds(add = 0), .ds(), character(0))
+  expect_error(join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(3)))
+
+  # Relationship pair (each adds 2)
+  join_keys(obj)[[.ds()]][[.ds()]] <- .key(1)
+  join_keys(obj)[[.ds()]][[.ds()]] <- .key(2)
+  join_keys(obj)[[.ds()]][[.ds()]] <- .key(3)
+  join_keys(obj)[[.ds()]][[.ds()]] <- .key(4)
+  join_keys(obj)[[.ds()]][[.ds()]] <- character(0)
+
+  # Relationship pair alt 1 (each adds 2)
+  join_keys(obj)[[.ds(), .ds()]] <- .key(1)
+  join_keys(obj)[[.ds(), .ds()]] <- .key(2)
+  join_keys(obj)[[.ds(), .ds()]] <- .key(3)
+  join_keys(obj)[[.ds(), .ds()]] <- .key(4)
+  join_keys(obj)[[.ds(), .ds()]] <- character(0)
+
+  # Relationship pair alt 2 (each adds 2)
+  join_keys(obj)[[.ds()]] <- setNames(list(.key(1)), .ds())
+  join_keys(obj)[[.ds()]] <- setNames(list(.key(2)), .ds())
+  join_keys(obj)[[.ds()]] <- setNames(list(.key(3)), .ds())
+  join_keys(obj)[[.ds()]] <- setNames(list(.key(4)), .ds())
+  join_keys(obj)[[.ds()]] <- setNames(list(character(0)), .ds())
+
+  # Using join_key (each adds 2)
+  join_keys(obj) <- join_key(.ds(), .ds(), .key(1))
+  join_keys(obj) <- join_key(.ds(), .ds(), .key(2))
+  join_keys(obj) <- join_key(.ds(), .ds(), .key(3))
+  join_keys(obj) <- join_key(.ds(), .ds(), .key(4))
+  join_keys(obj) <- join_key(.ds(), .ds(), character(0))
+
+  # (each join_key adds 2)
+  join_keys(obj) <- list(
+    join_key(.ds(), .ds(), .key(1)),
+    join_key(.ds(), .ds(), .key(2)),
+    join_key(.ds(), .ds(), .key(3)),
+    join_key(.ds(), .ds(), .key(4)),
+    join_key(.ds(), .ds(), character(0))
+  )
+
+  # (each join_key adds 2)
+  join_keys(obj) <- join_keys(
+    join_key(.ds(), .ds(), .key(1)),
+    join_key(.ds(), .ds(), .key(2)),
+    join_key(.ds(), .ds(), .key(3)),
+    join_key(.ds(), .ds(), .key(4)),
+    join_key(.ds(), .ds(), character(0))
+  )
+
+  expect_s3_class(join_keys(obj), class = c("JoinKeys", "list"))
+
+  expected_length <- 68 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
+  expect_length(join_keys(obj), expected_length)
+
+  join_keys(obj) <- join_key("ds-manual", .ds(), .key(1))
+  expect_length(join_keys(obj), expected_length + 2) # adds 2 new datasets
+
+  join_keys(obj) <- join_key(.ds(), "ds-manual", .key(1))
+  expect_length(join_keys(obj), expected_length + 2 + 1) # adds 1 new dataset as ds-manual already exists
 }

@@ -12,6 +12,16 @@ test_that("join_keys.JoinKeys will return itself", {
   helper_test_getter_join_keys(obj, "ds1")
 })
 
+test_that("join_keys<-.teal_data shared test to setter (in mass)", {
+  obj <- helper_generator_teal_data()
+  helper_test_setter_mass_join_keys_add(obj)
+})
+
+test_that("join_keys<-.JoinKeys shared test to setter  (in mass)", {
+  obj <- helper_generator_JoinKeys()
+  helper_test_setter_mass_join_keys_add(obj)
+})
+
 test_that("join_keys<-.teal_data shared test to getter and setter", {
   obj <- helper_generator_teal_data()
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
@@ -42,6 +52,23 @@ test_that("join_keys<-.JoinKeys to set via multiple lists that progressively mer
 #
 # [[ and [[<-
 #
+test_that("[[<-.JoinKeys creates symmetric relationship", {
+  jk <- join_keys()
+
+  jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
+
+  expect_identical(
+    jk,
+    structure(
+      list(
+        d1 = list(d2 = c("A" = "B", "C" = "C")),
+        d2 = list(d1 = c("B" = "A", "C" = "C"))
+      ),
+      class = c("JoinKeys", "list")
+    )
+  )
+})
+
 test_that("[[<-.JoinKeys is equivalent to using the constructor (double subscript)", {
   jk <- join_keys(
     join_key("d1", "d2", c("A" = "B", "C")),
@@ -196,6 +223,22 @@ test_that("join_keys()[]<-.teal_data with empty name is changed to the key value
 })
 
 # -----------------------------------------------------------------------------
+
+test_that("join_keys constructor creates symmetric relationship", {
+  jk <- join_keys(join_key("d1", "d2", c("A" = "B", "C" = "C")))
+
+  expect_identical(
+    jk,
+    structure(
+      list(
+        d1 = list(d2 = c("A" = "B", "C" = "C")),
+        d2 = list(d1 = c("B" = "A", "C" = "C"))
+      ),
+      class = c("JoinKeys", "list")
+    )
+  )
+})
+
 
 test_that("join_keys cannot set join_keys with incompatible keys", {
   # different keys

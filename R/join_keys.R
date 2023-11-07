@@ -90,7 +90,6 @@ join_keys <- function(...) {
   if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "JoinKeySet", min.len = 1)) {
     jk <- new_join_keys()
     join_keys(jk) <- value
-    message("note: Keys already set, merging new list of JoinKeySet with existing keys.")
     return(merge_join_keys(join_keys_obj, jk))
   }
 
@@ -132,7 +131,7 @@ join_keys <- function(...) {
     return(join_keys_obj)
   }
 
-  join_keys_obj@join_keys$set(value)
+  join_keys(join_keys_obj@join_keys) <- value
   join_keys_obj
 }
 
