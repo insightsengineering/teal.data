@@ -3,22 +3,22 @@
 \name{get_dataset_1}
 \alias{get_dataset_1}
 \alias{get_dataset_2}
-\alias{get_keys.JoinKeySet}
-\title{Getter for attributes in \code{JoinKeySet} object}
+\alias{get_keys.join_key_set}
+\title{Getter for attributes in \code{join_key_set} object}
 \usage{
 get_dataset_1(join_key_set_object)
 
 get_dataset_2(join_key_set_object)
 
-\method{get_keys}{JoinKeySet}(join_key_set_object)
+\method{get_keys}{join_key_set}(join_key_set_object)
 }
 \arguments{
-\item{join_key_set_object}{(\code{JoinKeySet}) object to retrieve attribute from.}
+\item{join_key_set_object}{(\code{join_key_set}) object to retrieve attribute from.}
 }
 \value{
 \code{dataset_1}, \code{dataset_2} or \code{key} as \code{character(1)}
 }
 \description{
-Internal methods for \code{JoinKeySet} operations
+Internal methods for \code{join_key_set} operations
 }
 \keyword{internal}

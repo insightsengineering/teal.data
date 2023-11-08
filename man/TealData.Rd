@@ -110,7 +110,7 @@ objects}
 \item{\code{check}}{(\code{logical}) reproducibility check - whether evaluated preprocessing code gives the same objects
 as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.}
 
-\item{\code{join_keys}}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
+\item{\code{join_keys}}{(\code{JoinKeys}) or a single (\code{join_key_set})\cr
 (optional) object with dataset column relationships used for joining.
 If empty then an empty \code{JoinKeys} object is passed by default.}
 }

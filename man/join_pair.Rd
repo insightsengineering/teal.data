@@ -9,7 +9,7 @@ join_pair(join_keys_obj, join_key_obj)
 \arguments{
 \item{join_keys_obj}{(\code{JoinKeys}) Object with existing pairs.}
 
-\item{join_key_obj}{(\code{JoinKeySet}) relationship pair to add.}
+\item{join_key_obj}{(\code{join_key_set}) relationship pair to add.}
 }
 \description{
 Helper function to add a new pair to a \code{JoinKeys} object

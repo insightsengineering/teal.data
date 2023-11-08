@@ -6,7 +6,7 @@
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
 #'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
 #'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
-#' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
+#' @param join_keys (`JoinKeys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
 #' @param code (`character`, `language`) code to reproduce the datasets.
@@ -28,7 +28,7 @@ teal_data <- function(...,
                       code = character(0),
                       check = FALSE) {
   data_objects <- rlang::list2(...)
-  if (inherits(join_keys, "JoinKeySet")) {
+  if (inherits(join_keys, "join_key_set")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
   if (

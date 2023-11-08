@@ -18,7 +18,7 @@ If \code{names(keys)} is \code{NULL} then the same column names are used for bot
 and \code{dataset_2}.}
 }
 \value{
-object of class \code{JoinKeySet} to be passed into \code{join_keys} function.
+object of class \code{join_key_set} to be passed into \code{join_keys} function.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

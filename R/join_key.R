@@ -13,7 +13,7 @@
 #' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
 #' and `dataset_2`.
 #'
-#' @return object of class `JoinKeySet` to be passed into `join_keys` function.
+#' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
 #' @seealso [join_keys()]
 #'
@@ -70,15 +70,15 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
       )
     ),
     names = dataset_1,
-    class = "JoinKeySet"
+    class = "join_key_set"
   )
 }
 
-#' Getter for attributes in `JoinKeySet` object
+#' Getter for attributes in `join_key_set` object
 #'
-#' Internal methods for `JoinKeySet` operations
+#' Internal methods for `join_key_set` operations
 #'
-#' @param join_key_set_object (`JoinKeySet`) object to retrieve attribute from.
+#' @param join_key_set_object (`join_key_set`) object to retrieve attribute from.
 #' @return `dataset_1`, `dataset_2` or `key` as `character(1)`
 #'
 #' @keywords internal
@@ -94,8 +94,8 @@ get_dataset_2 <- function(join_key_set_object) {
 
 #' @rdname get_dataset_1
 #' @keywords internal
-get_keys.JoinKeySet <- function(join_key_set_object) {
+get_keys.join_key_set <- function(join_key_set_object) {
   join_key_set_object[[1]][[1]]
 }
 # Remove this once generic `get_keys` is removed (and rename non-exported function to `get_keys`)
-.S3method("get_keys", "JoinKeySet", get_keys.JoinKeySet)
+.S3method("get_keys", "join_key_set", get_keys.join_key_set)

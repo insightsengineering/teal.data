@@ -11,7 +11,7 @@
 #'
 #' @export
 get_keys <- function(x, ...) {
-  # TODO: rename function `get_keys.JoinKeySet` to `get_keys` once this generic is removed
+  # TODO: rename function `get_keys.join_key_set` to `get_keys` once this generic is removed
   UseMethod("get_keys")
 }
 

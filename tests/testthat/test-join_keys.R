@@ -32,7 +32,7 @@ test_that("join_keys<-.JoinKeys shared test to getter and setter", {
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
 })
 
-test_that("join_keys<-.JoinKeys to set via a JoinKeySet object", {
+test_that("join_keys<-.JoinKeys to set via a join_key_set object", {
   obj <- join_keys()
   join_keys(obj) <- join_key("ds1", "ds2", "id")
   expect_equal(obj$ds1, list("ds2" = c("id" = "id")))

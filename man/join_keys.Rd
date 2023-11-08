@@ -14,7 +14,7 @@
 \alias{[<-.JoinKeys}
 \alias{[[.JoinKeys}
 \alias{[[<-.JoinKeys}
-\title{Create a \code{JoinKeys} out of a list of \code{JoinKeySet} objects}
+\title{Create a \code{JoinKeys} out of a list of \code{join_key_set} objects}
 \usage{
 cdisc_join_keys(...)
 
@@ -43,11 +43,11 @@ join_keys(join_keys_obj) <- value
 \method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
 }
 \arguments{
-\item{...}{(optional), additional \code{JoinKeySet} objects when \code{x} is a \code{JoinKeySet}.
+\item{...}{(optional), additional \code{join_key_set} objects when \code{x} is a \code{join_key_set}.
 If argument types are mixed the call will fail.}
 
 \item{x}{(optional), when no argument is given the empty constructor is called.
-Otherwise, it can be one of: \code{JoinKeys}, \code{teal_data} or \code{JoinKeySet}.}
+Otherwise, it can be one of: \code{JoinKeys}, \code{teal_data} or \code{join_key_set}.}
 
 \item{join_keys_obj}{(\code{JoinKeys}) object to extract the join keys}
 
@@ -73,7 +73,7 @@ set the default join keys for CDISC datasets.
 empty constructor.
 \item \code{join_keys(x)}: When called with a single argument it will return the \code{JoinKeys}
 object contained in \code{x} (if it contains a \code{JoinKeys} object).
-\item \code{join_keys(...)}: When called with a single or more \code{JoinKeySet} parameters it will
+\item \code{join_keys(...)}: When called with a single or more \code{join_key_set} parameters it will
 create a new object.
 }
 

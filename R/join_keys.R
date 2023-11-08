@@ -1,6 +1,6 @@
 # Constructors ====
 
-#' Create a `JoinKeys` out of a list of `JoinKeySet` objects
+#' Create a `JoinKeys` out of a list of `join_key_set` objects
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
@@ -8,7 +8,7 @@
 #' empty constructor.
 #' - `join_keys(x)`: When called with a single argument it will return the `JoinKeys`
 #' object contained in `x` (if it contains a `JoinKeys` object).
-#' - `join_keys(...)`: When called with a single or more `JoinKeySet` parameters it will
+#' - `join_keys(...)`: When called with a single or more `join_key_set` parameters it will
 #' create a new object.
 #'
 #' Note that join keys are created symmetrically, that is, if `dat1` and `dat2`
@@ -16,8 +16,8 @@
 #' `dat2 → dat1`. The only exception is for a primary key.
 #'
 #' @param x (optional), when no argument is given the empty constructor is called.
-#' Otherwise, it can be one of: `JoinKeys`, `teal_data` or `JoinKeySet`.
-#' @param ... (optional), additional `JoinKeySet` objects when `x` is a `JoinKeySet`.
+#' Otherwise, it can be one of: `JoinKeys`, `teal_data` or `join_key_set`.
+#' @param ... (optional), additional `join_key_set` objects when `x` is a `join_key_set`.
 #' If argument types are mixed the call will fail.
 #'
 #' @return `JoinKeys` object.
@@ -102,7 +102,7 @@ join_keys.default <- function(x, ...) {
 #' is not empty.
 #'
 #' @param join_keys_obj (`JoinKeys`) empty object to set the new relationship pairs.
-#' @param value (`JoinKeySet` or list of `JoinKeySet`) relationship pairs to add
+#' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
 #' to `JoinKeys` list.
 #'
 #' @export
@@ -132,18 +132,18 @@ join_keys.default <- function(x, ...) {
     return(merge_join_keys(join_keys_obj, value))
   }
 
-  # Assignment of list of JoinKeySet will merge it with existing JoinKeys
-  if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "JoinKeySet", min.len = 1)) {
+  # Assignment of list of join_key_set will merge it with existing JoinKeys
+  if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "join_key_set", min.len = 1)) {
     jk <- new_join_keys()
     join_keys(jk) <- value
     return(merge_join_keys(join_keys_obj, jk))
   }
 
-  if (inherits(value, "JoinKeySet")) value <- list(value)
+  if (inherits(value, "join_key_set")) value <- list(value)
 
-  checkmate::assert_list(value, types = "JoinKeySet", min.len = 1)
+  checkmate::assert_list(value, types = "join_key_set", min.len = 1)
 
-  # check if any JoinKeySets share the same datasets but different values
+  # check if any join_key_sets share the same datasets but different values
   for (idx_1 in seq_along(value)) {
     for (idx_2 in seq_along(value[idx_1])) {
       assert_compatible_keys(value[[idx_1]], value[[idx_2]])
@@ -508,12 +508,12 @@ new_join_keys <- function() {
 #' Helper function to add a new pair to a `JoinKeys` object
 #'
 #' @param join_keys_obj (`JoinKeys`) Object with existing pairs.
-#' @param join_key_obj (`JoinKeySet`) relationship pair to add.
+#' @param join_key_obj (`join_key_set`) relationship pair to add.
 #'
 #' @keywords internal
 join_pair <- function(join_keys_obj, join_key_obj) {
   checkmate::assert_class(join_keys_obj, c("JoinKeys", "list"))
-  checkmate::assert_class(join_key_obj, "JoinKeySet")
+  checkmate::assert_class(join_key_obj, "join_key_set")
 
   dataset_1 <- get_dataset_1(join_key_obj)
   dataset_2 <- get_dataset_2(join_key_obj)

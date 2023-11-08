@@ -20,7 +20,7 @@ cdisc_join_keys <- function(...) {
     item <- data_objects[[ix]]
     name <- names(data_objects)[ix]
 
-    if (checkmate::test_class(item, "JoinKeySet")) {
+    if (checkmate::test_class(item, "join_key_set")) {
       jk[get_dataset_1(item), get_dataset_2(item)] <- get_keys(item)
     } else if (
       checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))

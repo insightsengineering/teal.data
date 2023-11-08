@@ -16,7 +16,7 @@ cdisc_data(
 Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
 or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
-\item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
+\item{join_keys}{(\code{JoinKeys}) or a single (\code{join_key_set})\cr
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}

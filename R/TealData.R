@@ -8,7 +8,7 @@
 #'
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`)\cr
 #'   objects
-#' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
+#' @param join_keys (`JoinKeys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then an empty `JoinKeys` object is passed by default.
 #' @param check (`logical`) reproducibility check - whether evaluated preprocessing code gives the same objects
