@@ -532,28 +532,31 @@ testthat::test_that("merge_join_keys does nothing when argument is a join_keys o
   testthat::expect_identical(previous_output, join_keys(y))
 })
 
-testthat::test_that("merge_join_keys does nothing when argument is a list of one join_keys object with identical data", {
-  x <- join_keys()
-  y <- join_keys()
+testthat::test_that(
+  "merge_join_keys does nothing when argument is a list of one join_keys object with identical data",
+  {
+    x <- join_keys()
+    y <- join_keys()
 
-  join_keys(x) <- list(
-    join_key("A", "B", c("a" = "b")),
-    join_key("A", "C", c("a" = "c", "aa" = "cc")),
-    join_key("Z", "Y", c("z" = "y"))
-  )
-  join_keys(y) <- list(
-    join_key("A", "B", c("a" = "b")),
-    join_key("A", "C", c("a" = "c", "aa" = "cc")),
-    join_key("Z", "Y", c("z" = "y"))
-  )
+    join_keys(x) <- list(
+      join_key("A", "B", c("a" = "b")),
+      join_key("A", "C", c("a" = "c", "aa" = "cc")),
+      join_key("Z", "Y", c("z" = "y"))
+    )
+    join_keys(y) <- list(
+      join_key("A", "B", c("a" = "b")),
+      join_key("A", "C", c("a" = "c", "aa" = "cc")),
+      join_key("Z", "Y", c("z" = "y"))
+    )
 
-  previous_output <- join_keys(y)
-  testthat::expect_silent(merge_join_keys(y, list(x)))
-  testthat::expect_identical(previous_output, join_keys(y))
+    previous_output <- join_keys(y)
+    testthat::expect_silent(merge_join_keys(y, list(x)))
+    testthat::expect_identical(previous_output, join_keys(y))
 
-  testthat::expect_silent(merge_join_keys(y, list(x, x)))
-  testthat::expect_identical(previous_output, join_keys(y))
-})
+    testthat::expect_silent(merge_join_keys(y, list(x, x)))
+    testthat::expect_identical(previous_output, join_keys(y))
+  }
+)
 
 testthat::test_that(
   "merge_join_keys does nothing when argument is a list of many join_keys object with identical data",
