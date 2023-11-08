@@ -45,11 +45,11 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
 
     # Set name of keys without one: c("A") -> c("A" = "A")
     if (any(names(keys) == "")) {
-      names(keys)[names(keys) == "" & keys != ""] <- keys[names(keys) == "" & keys != ""]
+      names(keys)[names(keys) == ""] <- keys[names(keys) == ""]
     }
 
     # Set value of keys with empty string, but non-empty name: c("A" = "") -> c("A" = "A")
-    if (any(keys == "" & names(keys) != "")) {
+    if (any(keys == "")) {
       keys[keys == ""] <- names(keys[keys == ""])
     }
 
