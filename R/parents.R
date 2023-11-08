@@ -119,7 +119,7 @@ update_keys_given_parents <- function(join_keys_obj) {
         next
       }
       if (length(jk[d1, d2]) == 0) {
-        d2_parent <- parents(jk)[[d2]]
+        d2_parent <- parent(jk, d2)
         d2_pk <- jk[d2, d2]
 
         fk <- if (identical(d1, d2_parent)) {

@@ -49,19 +49,19 @@
 #' jk <- join_keys(join_key("a", "b", "c"))
 #' jk <- join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c"))
 join_keys <- function(...) {
-  if (missing(...) || length(x) == 0) {
+  if (missing(...)) {
     return(new_join_keys())
   }
   x <- rlang::list2(...)
+  if (length(x) > 1) {
+    return(join_keys.default(...))
+  }
   UseMethod("join_keys", x[[1]])
 }
 
 #' @rdname join_keys
 #' @export
 join_keys.join_keys <- function(...) {
-  if (length(...) > 1) {
-    return(join_keys.default(...))
-  }
   x <- rlang::list2(...)
   x[[1]]
 }
@@ -69,9 +69,6 @@ join_keys.join_keys <- function(...) {
 #' @rdname join_keys
 #' @export
 join_keys.teal_data <- function(...) {
-  if (length(...) > 1) {
-    return(join_keys.default(...))
-  }
   x <- rlang::list2(...)
   x[[1]]@join_keys
 }
@@ -80,9 +77,6 @@ join_keys.teal_data <- function(...) {
 #' @export
 join_keys.TealData <- function(...) {
   x <- rlang::list2(...)
-  if (length(...) > 1) {
-    return(join_keys.default(...))
-  }
   x[[1]]$get_join_keys()
 }
 
@@ -90,7 +84,6 @@ join_keys.TealData <- function(...) {
 #' @export
 join_keys.default <- function(...) {
   x <- rlang::list2(...)
-
   # Constructor
   res <- new_join_keys()
   if (length(x) > 0) {
