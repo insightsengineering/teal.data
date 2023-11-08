@@ -2,13 +2,15 @@
 
 ### Enhancements
 * Simplified `join_key` to better support primary keys.
-* `JoinKey` `R6` object was removed in favor of a list-like object. Subset operators and assignments are supported (`[`, `[[`, `[<-` and `[[<-`)
+* `JoinKey` `R6` object was removed in favor of a list-like object with class name `join_keys`. Subset operators and assignments are supported (`[`, `[[`, `[<-` and `[[<-`)
 * `join_keys` function works as a constructor, getter and setter.
 
 ### Breaking changes
 
 * Introduced new data class (`teal_data`) which replaces deprecated `TealData`. New data class becomes a standard input for whole `teal` framework.
 * Deprecated `teal_data` constructor when `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects are provided. New delayed data loading functions introduced in `teal` package.
+* `JoinKeySet` class was renamed to `join_key_set`.
+* `JoinKeys` class was renamed to `join_keys`
 
 ### Miscellaneous
 * Specified minimal version of package dependencies.
