@@ -126,7 +126,7 @@ reference:
       - parent
       - parents
       - parents<-
-      - print.JoinKeys
+      - print.join_keys
       - python_code
       - read_script
       - update_keys_given_parents

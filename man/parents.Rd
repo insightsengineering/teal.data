@@ -2,21 +2,21 @@
 % Please edit documentation in R/parents.R
 \name{parents}
 \alias{parents}
-\alias{parents.JoinKeys}
+\alias{parents.join_keys}
 \alias{parents<-}
-\alias{parents<-.JoinKeys}
-\title{Getter and setter functions for parents attribute of \code{JoinKeys}}
+\alias{parents<-.join_keys}
+\title{Getter and setter functions for parents attribute of \code{join_keys}}
 \usage{
 parents(join_keys_obj)
 
-\method{parents}{JoinKeys}(join_keys_obj)
+\method{parents}{join_keys}(join_keys_obj)
 
 parents(join_keys_obj) <- value
 
-\method{parents}{JoinKeys}(join_keys_obj) <- value
+\method{parents}{join_keys}(join_keys_obj) <- value
 }
 \arguments{
-\item{join_keys_obj}{(\code{JoinKeys}) object to retrieve or manipulate.}
+\item{join_keys_obj}{(\code{join_keys}) object to retrieve or manipulate.}
 
 \item{value}{(\code{list}) named list of character values}
 }
@@ -24,7 +24,7 @@ parents(join_keys_obj) <- value
 a list of \code{character} representing the parents.
 }
 \description{
-Getter and setter functions for parents attribute of \code{JoinKeys}
+Getter and setter functions for parents attribute of \code{join_keys}
 }
 \examples{
 jk <- join_keys()

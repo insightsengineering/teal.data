@@ -149,7 +149,7 @@ testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
   testthat::expect_equal(join_keys(data), jk_expected)
 })
 
-testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when key names differ", {
+testthat::test_that("teal_data sets passed join_keys to datasets correctly when key names differ", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
   df1 <- dataset("df1", df1, keys = "id")
@@ -168,7 +168,7 @@ testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when k
   testthat::expect_equal(join_keys(data), jk_expected)
 })
 
-testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when key names differ (multiple keys)", {
+testthat::test_that("teal_data sets passes join_keys to datasets correctly when key names differ (multiple keys)", {
   df1 <- data.frame(id = c("A", "B"), id2 = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), fk2 = c("A", "B"), b = c(1L, 2L))
   df1 <- dataset("df1", df1, keys = "id")

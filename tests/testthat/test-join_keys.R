@@ -5,8 +5,8 @@ test_that("join_keys.teal_data will successfully obtain object from teal_data", 
   helper_test_getter_join_keys(obj, "ds1")
 })
 
-test_that("join_keys.JoinKeys will return itself", {
-  obj <- helper_generator_JoinKeys()
+test_that("join_keys.join_keys will return itself", {
+  obj <- helper_generator_join_keys()
 
   expect_identical(obj, join_keys(obj))
   helper_test_getter_join_keys(obj, "ds1")
@@ -17,8 +17,8 @@ test_that("join_keys<-.teal_data shared test to setter (in mass)", {
   helper_test_setter_mass_join_keys_add(obj)
 })
 
-test_that("join_keys<-.JoinKeys shared test to setter  (in mass)", {
-  obj <- helper_generator_JoinKeys()
+test_that("join_keys<-.join_keys shared test to setter  (in mass)", {
+  obj <- helper_generator_join_keys()
   helper_test_setter_mass_join_keys_add(obj)
 })
 
@@ -27,19 +27,19 @@ test_that("join_keys<-.teal_data shared test to getter and setter", {
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
 })
 
-test_that("join_keys<-.JoinKeys shared test to getter and setter", {
-  obj <- helper_generator_JoinKeys()
+test_that("join_keys<-.join_keys shared test to getter and setter", {
+  obj <- helper_generator_join_keys()
   helper_test_getter_join_keys_add(obj, "ds1", "ds2")
 })
 
-test_that("join_keys<-.JoinKeys to set via a join_key_set object", {
+test_that("join_keys<-.join_keys to set via a join_key_set object", {
   obj <- join_keys()
   join_keys(obj) <- join_key("ds1", "ds2", "id")
   expect_equal(obj$ds1, list("ds2" = c("id" = "id")))
   expect_equal(obj$ds2, list("ds1" = c("id" = "id")))
 })
 
-test_that("join_keys<-.JoinKeys to set via multiple lists that progressively merge object", {
+test_that("join_keys<-.join_keys to set via multiple lists that progressively merge object", {
   obj <- join_keys()
   join_keys(obj) <- list(join_key("ds1", "ds2", "id"))
   join_keys(obj) <- list(join_key("ds3", "ds4", "id_id"))
@@ -52,7 +52,7 @@ test_that("join_keys<-.JoinKeys to set via multiple lists that progressively mer
 #
 # [[ and [[<-
 #
-test_that("[[<-.JoinKeys creates symmetric relationship", {
+test_that("[[<-.join_keys creates symmetric relationship", {
   jk <- join_keys()
 
   jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
@@ -64,12 +64,12 @@ test_that("[[<-.JoinKeys creates symmetric relationship", {
         d1 = list(d2 = c("A" = "B", "C" = "C")),
         d2 = list(d1 = c("B" = "A", "C" = "C"))
       ),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
 })
 
-test_that("[[<-.JoinKeys is equivalent to using the constructor (double subscript)", {
+test_that("[[<-.join_keys is equivalent to using the constructor (double subscript)", {
   jk <- join_keys(
     join_key("d1", "d2", c("A" = "B", "C")),
     join_key("d3", "d4", c("D", "E")),
@@ -85,7 +85,7 @@ test_that("[[<-.JoinKeys is equivalent to using the constructor (double subscrip
   expect_identical(jk, jk2)
 })
 
-test_that("[[<-.JoinKeys is equivalent to using the constructor (single subscript)", {
+test_that("[[<-.join_keys is equivalent to using the constructor (single subscript)", {
   jk <- join_keys(
     join_key("d1", "d2", c("A" = "B", "C" = "C")),
     join_key("d3", "d4", c("D", "E")),
@@ -101,7 +101,7 @@ test_that("[[<-.JoinKeys is equivalent to using the constructor (single subscrip
   expect_identical(jk, jk2)
 })
 
-test_that("[<-.JoinKeys is equivalent to using the constructor (double subscript)", {
+test_that("[<-.join_keys is equivalent to using the constructor (double subscript)", {
   jk <- join_keys(
     join_key("d1", "d2", c("A", "B")),
     join_key("d3", "d4", c("C", "D")),
@@ -117,7 +117,7 @@ test_that("[<-.JoinKeys is equivalent to using the constructor (double subscript
   expect_identical(jk, jk2)
 })
 
-test_that("[.JoinKeys can subscript multiple values by index or name", {
+test_that("[.join_keys can subscript multiple values by index or name", {
   jk <- join_keys(
     join_key("d1", "d2", c("A" = "B", "C")),
     join_key("d3", "d4", c("D", "E")),
@@ -131,15 +131,15 @@ test_that("[.JoinKeys can subscript multiple values by index or name", {
     jk[c("d1", "d5")],
     structure(
       list(d1 = jk[["d1"]], d5 = jk[["d5"]]),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
 
-  expect_identical(jk[2], structure(list(d2 = jk[["d2"]]), class = c("JoinKeys", "list")))
-  expect_identical(jk[c(1, 3)], structure(list(d1 = jk[["d1"]], d3 = jk[["d3"]]), class = c("JoinKeys", "list")))
+  expect_identical(jk[2], structure(list(d2 = jk[["d2"]]), class = c("join_keys", "list")))
+  expect_identical(jk[c(1, 3)], structure(list(d1 = jk[["d1"]], d3 = jk[["d3"]]), class = c("join_keys", "list")))
 })
 
-test_that("[<-.JoinKeys cannot subscript multiple values", {
+test_that("[<-.join_keys cannot subscript multiple values", {
   jk <- join_keys(
     join_key("d1", "d2", c("A" = "B", "C")),
     join_key("d3", "d4", c("D", "E")),
@@ -171,7 +171,7 @@ test_that("mutate_join_keys with empty name is changed to the key value", {
   expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
 })
 
-test_that("[<-.JoinKeys with empty name is changed to the key value", {
+test_that("[<-.join_keys with empty name is changed to the key value", {
   # set empty key name
   jk <- join_keys()
   jk["d1", "d2"] <- c("A" = "B", "C")
@@ -188,7 +188,7 @@ test_that("[<-.JoinKeys with empty name is changed to the key value", {
   expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
 })
 
-test_that("join_keys()[]<-.JoinKeys with empty name is changed to the key value", {
+test_that("join_keys()[]<-.join_keys with empty name is changed to the key value", {
   # set empty key name
   jk <- join_keys()
   join_keys(jk)["d1", "d2"] <- c("A" = "B", "C")
@@ -234,7 +234,7 @@ test_that("join_keys constructor creates symmetric relationship", {
         d1 = list(d2 = c("A" = "B", "C" = "C")),
         d2 = list(d1 = c("B" = "A", "C" = "C"))
       ),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
 })
@@ -327,7 +327,7 @@ test_that("join_keys can create join_keys with compatible information", {
   )
 })
 
-test_that("join_keys cannot create JoinKeys with invalid arguments", {
+test_that("join_keys cannot create join_keys with invalid arguments", {
   # not using join_key
   expect_error(join_keys("d1", "d2", "A"))
   # key sets with the same pair of datasets but different values
@@ -335,7 +335,7 @@ test_that("join_keys cannot create JoinKeys with invalid arguments", {
   expect_error(join_keys(join_key("d1", "d2", c("A" = "X")), join_key("d2", "d1", c("A" = "X"))))
 })
 
-test_that("join_keys can create JoinKeys with valid arguments", {
+test_that("join_keys can create join_keys with valid arguments", {
   # no keys
   expect_silent(join_keys())
   # list of keys
@@ -362,26 +362,26 @@ test_that("join_keys[ can get all keys for a given dataset", {
     my_keys[dataset_1 = "d1"],
     structure(
       list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
   expect_equal(
     my_keys[dataset_2 = "d1"],
     structure(
       list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
   expect_equal(
     my_keys[dataset_1 = "d3"],
     structure(
       list("d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
 })
 
-test_that("join_keys can get all keys from JoinKeys", {
+test_that("join_keys can get all keys from join_keys", {
   my_keys <- join_keys(
     join_key("d1", "d2", c("A" = "C")),
     join_key("d1", "d3", c("A" = "B", "S" = "T")),
@@ -394,13 +394,13 @@ test_that("join_keys can get all keys from JoinKeys", {
     my_keys[dataset_1 = "d1"],
     structure(
       list(d1 = all_keys[["d1"]]),
-      class = c("JoinKeys", "list")
+      class = c("join_keys", "list")
     )
   )
 })
 
 test_that(
-  "join_keys join_key with unamed keys vector creates a JoinKeys with the same column names for both datasets ",
+  "join_keys join_key with unamed keys vector creates a join_keys with the same column names for both datasets ",
   {
     test_keys <- join_keys(join_key("d1", "d2", keys = c("A", "B")))
     expect_equal(unname(test_keys["d1", "d2"]), names(test_keys["d1", "d2"]))
@@ -417,19 +417,19 @@ test_that("join_keys if no keys between pair of datasets then getting them retur
 #
 # mutate_join_keys
 
-test_that("mutate_join_keys.JoinKeys can mutate existing keys", {
+test_that("mutate_join_keys.join_keys can mutate existing keys", {
   my_keys <- join_keys(join_key("d1", "d2", "A"))
   new_keys <- mutate_join_keys(my_keys, "d1", "d2", c("X" = "Y"))
   expect_equal(new_keys["d1", "d2"], c("X" = "Y"))
 })
 
-test_that("mutate_join_keys.JoinKeys mutating non-existing keys adds them", {
+test_that("mutate_join_keys.join_keys mutating non-existing keys adds them", {
   my_keys <- join_keys(join_key("d1", "d2", "A"))
   new_keys <- mutate_join_keys(my_keys, "d2", "d3", c("X" = "Y"))
   expect_equal(new_keys["d3", "d2"], c("Y" = "X"))
 })
 
-test_that("mutate_join_keys.JoinKeys can remove keys by setting them to character(0)", {
+test_that("mutate_join_keys.join_keys can remove keys by setting them to character(0)", {
   my_keys <- join_keys(join_key("d1", "d2", "A"), join_key("d3", "d4", c("A" = "B", "C" = "D")))
   new_keys <- mutate_join_keys(my_keys, "d1", "d2", character(0))
   expect_equal(new_keys["d1", "d2"], character(0))
@@ -514,7 +514,7 @@ testthat::test_that(
   }
 )
 
-testthat::test_that("merge_join_keys does nothing when argument is a JoinKeys object with identical data", {
+testthat::test_that("merge_join_keys does nothing when argument is a join_keys object with identical data", {
   x <- join_keys()
   y <- join_keys()
   join_keys(x) <- list(
@@ -532,7 +532,7 @@ testthat::test_that("merge_join_keys does nothing when argument is a JoinKeys ob
   testthat::expect_identical(previous_output, join_keys(y))
 })
 
-testthat::test_that("merge_join_keys does nothing when argument is a list of one JoinKeys object with identical data", {
+testthat::test_that("merge_join_keys does nothing when argument is a list of one join_keys object with identical data", {
   x <- join_keys()
   y <- join_keys()
 
@@ -556,7 +556,7 @@ testthat::test_that("merge_join_keys does nothing when argument is a list of one
 })
 
 testthat::test_that(
-  "merge_join_keys does nothing when argument is a list of many JoinKeys object with identical data",
+  "merge_join_keys does nothing when argument is a list of many join_keys object with identical data",
   {
     x <- join_keys()
     y <- join_keys()
@@ -578,7 +578,7 @@ testthat::test_that(
   }
 )
 
-testthat::test_that("merge_join_keys clones data when argument is a list of one JoinKeys object that is a superset", {
+testthat::test_that("merge_join_keys clones data when argument is a list of one join_keys object that is a superset", {
   x <- join_keys()
   y <- join_keys()
 
@@ -600,7 +600,7 @@ testthat::test_that("merge_join_keys clones data when argument is a list of one 
   testthat::expect_identical(join_keys(x), join_keys(y))
 })
 
-testthat::test_that("merge_join_keys does nothing when argument is a list of one JoinKeys object that is a subset", {
+testthat::test_that("merge_join_keys does nothing when argument is a list of one join_keys object that is a subset", {
   x <- join_keys()
   y <- join_keys()
 
@@ -654,26 +654,26 @@ testthat::test_that("merge_join_keys merges mutually exclusive data", {
 
 # -----------------------------------------------------------------------------
 #
-# print.JoinKeys
+# print.join_keys
 
-testthat::test_that("print.JoinKeys for empty set", {
+testthat::test_that("print.join_keys for empty set", {
   jk <- join_keys()
   testthat::expect_output(
     print(jk),
-    "An empty JoinKeys object."
+    "An empty join_keys object."
   )
 })
 
-testthat::test_that("print.JoinKeys for a non-empty set", {
+testthat::test_that("print.join_keys for a non-empty set", {
   jk <- join_keys()
   join_keys(jk) <- list(join_key("DF1", "DF2", c("id" = "fk")))
   testthat::expect_output(
     print(jk),
-    "A JoinKeys object containing foreign keys between 2 datasets:"
+    "A join_keys object containing foreign keys between 2 datasets:"
   )
 })
 
-testthat::test_that("JoinKeys$set_parents sets the parents of datasets when they are empty", {
+testthat::test_that("parents<- sets the parents of datasets when they are empty", {
   jk <- join_keys()
   join_keys(jk) <- list(join_key("df1", "df2", c("id" = "fk")))
   testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
@@ -687,7 +687,7 @@ testthat::test_that("JoinKeys$set_parents sets the parents of datasets when they
 #
 # cdisc_join_keys
 
-test_that("cdisc_join_keys will generate JoinKeys for named list with non-named elements", {
+test_that("cdisc_join_keys will generate join_keys for named list with non-named elements", {
   new_dataset <- cdisc_join_keys("ADSL", ADTTE = rADTTE)
   jk <- join_keys(new_dataset)
 
@@ -698,7 +698,7 @@ test_that("cdisc_join_keys will generate JoinKeys for named list with non-named 
   expect_identical(unname(jk["ADTTE", "ADSL"]), default_cdisc_keys[["ADTTE"]]$foreign)
 })
 
-test_that("cdisc_join_keys will generate JoinKeys for character list", {
+test_that("cdisc_join_keys will generate join_keys for character list", {
   new_dataset <- cdisc_join_keys("ADSL", "ADTTE")
   jk <- join_keys(new_dataset)
 
@@ -709,7 +709,7 @@ test_that("cdisc_join_keys will generate JoinKeys for character list", {
   expect_identical(unname(jk["ADTTE", "ADSL"]), default_cdisc_keys[["ADTTE"]]$foreign)
 })
 
-test_that("cdisc_join_keys will generate JoinKeys for named list", {
+test_that("cdisc_join_keys will generate join_keys for named list", {
   new_dataset <- cdisc_join_keys(ADSL = rADSL, ADTTE = rADTTE)
   jk <- join_keys(new_dataset)
 
@@ -777,9 +777,9 @@ test_that("cdisc_join_keys does nothing with TealDataset", {
 
 # -----------------------------------------------------------------------------
 #
-# Subset-JoinKeys
+# Subset-join_keys
 
-test_that("[<-.JoinKeys assigns new relationship pair", {
+test_that("[<-.join_keys assigns new relationship pair", {
   jk <- join_keys(join_key("ds1", keys = c("id")))
 
   expect_length(jk["ds1", "ds2"], 0)
@@ -789,7 +789,7 @@ test_that("[<-.JoinKeys assigns new relationship pair", {
   expect_identical(jk[["ds1"]][["ds2"]], jk["ds1", "ds2"])
 })
 
-test_that("[<-.JoinKeys modifies existing relationship pair", {
+test_that("[<-.join_keys modifies existing relationship pair", {
   jk <- join_keys(join_key("ds1", keys = c("id")))
 
   jk["ds1", "ds1"] <- c("Species")

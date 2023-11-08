@@ -8,9 +8,9 @@
 #'
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`)\cr
 #'   objects
-#' @param join_keys (`JoinKeys`) or a single (`join_key_set`)\cr
+#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
-#'   If empty then an empty `JoinKeys` object is passed by default.
+#'   If empty then an empty `join_keys` object is passed by default.
 #' @param check (`logical`) reproducibility check - whether evaluated preprocessing code gives the same objects
 #'   as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.
 #'
@@ -61,7 +61,7 @@ TealData <- R6::R6Class( # nolint
     #' @description
     #' Create a new object of `TealData` class
     initialize = function(..., check = FALSE, join_keys = teal.data::join_keys()) {
-      checkmate::assert_class(join_keys, "JoinKeys")
+      checkmate::assert_class(join_keys, "join_keys")
 
       dot_args <- list(...)
       is_teal_data <- checkmate::test_list(
@@ -315,7 +315,7 @@ TealData <- R6::R6Class( # nolint
         dataname <- get_dataname(dataset)
         dataset_colnames <- dataset$get_colnames()
 
-        # expected columns in this dataset from JoinKeys specification
+        # expected columns in this dataset from join_keys specification
         join_key_cols <- unique(unlist(lapply(self$get_join_keys(dataname), names)))
         if (!is.null(join_key_cols) && !all(join_key_cols %in% dataset_colnames)) {
           stop(

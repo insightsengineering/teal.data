@@ -3,24 +3,24 @@
 \name{merge_join_keys}
 \alias{merge_join_keys}
 \alias{merge_join_keys.default}
-\alias{merge_join_keys.JoinKeys}
-\title{Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object}
+\alias{merge_join_keys.join_keys}
+\title{Merging a list (or one) of \code{join_keys} objects into the current \code{join_keys} object}
 \usage{
 merge_join_keys(join_keys_obj, new_join_keys)
 
 \method{merge_join_keys}{default}(join_keys_obj, new_join_keys)
 
-\method{merge_join_keys}{JoinKeys}(join_keys_obj, new_join_keys)
+\method{merge_join_keys}{join_keys}(join_keys_obj, new_join_keys)
 }
 \arguments{
-\item{join_keys_obj}{(\code{JoinKeys}) object to merge the new_join_keys.}
+\item{join_keys_obj}{(\code{join_keys}) object to merge the new_join_keys.}
 
-\item{new_join_keys}{\code{list} of \code{JoinKeys} objects or single \code{JoinKeys} object}
+\item{new_join_keys}{\code{list} of \code{join_keys} objects or single \code{join_keys} object}
 }
 \value{
-a new \code{JoinKeys} object with the resulting merge.
+a new \code{join_keys} object with the resulting merge.
 }
 \description{
-Merging a list (or one) of \code{JoinKeys} objects into the current \code{JoinKeys} object
+Merging a list (or one) of \code{join_keys} objects into the current \code{join_keys} object
 }
 \keyword{internal}

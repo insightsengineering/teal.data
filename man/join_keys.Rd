@@ -3,24 +3,24 @@
 \name{cdisc_join_keys}
 \alias{cdisc_join_keys}
 \alias{join_keys}
-\alias{join_keys.JoinKeys}
+\alias{join_keys.join_keys}
 \alias{join_keys.teal_data}
 \alias{join_keys.TealData}
 \alias{join_keys.default}
 \alias{join_keys<-}
-\alias{join_keys<-.JoinKeys}
+\alias{join_keys<-.join_keys}
 \alias{join_keys<-.teal_data}
-\alias{[.JoinKeys}
-\alias{[<-.JoinKeys}
-\alias{[[.JoinKeys}
-\alias{[[<-.JoinKeys}
-\title{Create a \code{JoinKeys} out of a list of \code{join_key_set} objects}
+\alias{[.join_keys}
+\alias{[<-.join_keys}
+\alias{[[.join_keys}
+\alias{[[<-.join_keys}
+\title{Create a \code{join_keys} out of a list of \code{join_key_set} objects}
 \usage{
 cdisc_join_keys(...)
 
 join_keys(x = NULL, ...)
 
-\method{join_keys}{JoinKeys}(x, ...)
+\method{join_keys}{join_keys}(x, ...)
 
 \method{join_keys}{teal_data}(x, ...)
 
@@ -30,26 +30,26 @@ join_keys(x = NULL, ...)
 
 join_keys(join_keys_obj) <- value
 
-\method{join_keys}{JoinKeys}(join_keys_obj) <- value
+\method{join_keys}{join_keys}(join_keys_obj) <- value
 
 \method{join_keys}{teal_data}(join_keys_obj) <- value
 
-\method{[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
+\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
 
-\method{[}{JoinKeys}(join_keys_obj, dataset_1, dataset_2 = dataset_1) <- value
+\method{[}{join_keys}(join_keys_obj, dataset_1, dataset_2 = dataset_1) <- value
 
-\method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value)
+\method{[[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value)
 
-\method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
+\method{[[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
 }
 \arguments{
 \item{...}{(optional), additional \code{join_key_set} objects when \code{x} is a \code{join_key_set}.
 If argument types are mixed the call will fail.}
 
 \item{x}{(optional), when no argument is given the empty constructor is called.
-Otherwise, it can be one of: \code{JoinKeys}, \code{teal_data} or \code{join_key_set}.}
+Otherwise, it can be one of: \code{join_keys}, \code{teal_data} or \code{join_key_set}.}
 
-\item{join_keys_obj}{(\code{JoinKeys}) object to extract the join keys}
+\item{join_keys_obj}{(\code{join_keys}) object to extract the join keys}
 
 \item{value}{(\code{character} vector) value to assign.}
 
@@ -58,7 +58,7 @@ Otherwise, it can be one of: \code{JoinKeys}, \code{teal_data} or \code{join_key
 \item{dataset_2}{(\code{character}) name of second dataset.}
 }
 \value{
-\code{JoinKeys} object.
+\code{join_keys} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
@@ -71,8 +71,8 @@ set the default join keys for CDISC datasets.
 \itemize{
 \item \code{join_keys()}: When called without arguments it will return an
 empty constructor.
-\item \code{join_keys(x)}: When called with a single argument it will return the \code{JoinKeys}
-object contained in \code{x} (if it contains a \code{JoinKeys} object).
+\item \code{join_keys(x)}: When called with a single argument it will return the \code{join_keys}
+object contained in \code{x} (if it contains a \code{join_keys} object).
 \item \code{join_keys(...)}: When called with a single or more \code{join_key_set} parameters it will
 create a new object.
 }
@@ -84,7 +84,7 @@ have a join key of \code{col1}, then 2 join keys are created, \verb{dat1 → dat
 The setter assignment \code{join_keys(obj) <- ...} will merge obj and \code{...} if obj
 is not empty.
 
-Getter for \code{JoinKeys} that returns the relationship between pairs of datasets.
+Getter for \code{join_keys} that returns the relationship between pairs of datasets.
 
 Setter via index directly (bypassing the need to use \code{join_key()}).
 When \code{dataset_2} is omitted, it will create a primary key with \code{dataset_2 = dataset_1}.
@@ -126,7 +126,7 @@ join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 join_keys(jk)["ds1", "ds3"] <- "some_col3"
 jk
 
-# Setter for JoinKeys within teal_data ----
+# Setter for join_keys within teal_data ----
 
 td <- teal_data()
 join_keys(td)["ds1", "ds2"] <- "key1"
@@ -134,7 +134,7 @@ join_keys(td)["ds2", "ds2"] <- "key2"
 join_keys(td) <- join_keys(join_key("ds3", "ds2", "key3"))
 join_keys(td)
 
-# Getter for JoinKeys ----
+# Getter for join_keys ----
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")

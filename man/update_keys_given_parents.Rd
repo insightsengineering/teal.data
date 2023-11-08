@@ -7,7 +7,7 @@
 update_keys_given_parents(join_keys_obj)
 }
 \arguments{
-\item{join_keys_obj}{(\code{JoinKeys}) object to update the keys.}
+\item{join_keys_obj}{(\code{join_keys}) object to update the keys.}
 }
 \value{
 (\code{self}) invisibly for chaining

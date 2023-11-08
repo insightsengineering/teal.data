@@ -1,6 +1,6 @@
 #' Function to get join keys from a `` object
 #' @param data `` - object to extract the join keys
-#' @return Either `JoinKeys` object or `NULL` if no join keys
+#' @return Either `join_keys` object or `NULL` if no join keys
 #' @export
 get_join_keys <- function(data) {
   lifecycle::deprecate_stop(

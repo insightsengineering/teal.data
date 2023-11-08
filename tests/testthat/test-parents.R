@@ -73,7 +73,7 @@ test_that("assert_parent_child will detect invalid key pairs", {
   expect_error(assert_parent_child(jk2))
 })
 
-test_that("assert_parent_child will skip empty JoinKeys", {
+test_that("assert_parent_child will skip empty join_keys", {
   jk <- join_keys()
   expect_silent(assert_parent_child(jk))
 })
@@ -189,7 +189,7 @@ testthat::test_that("assert_parent_child throws error if no join_keys exist for 
   join_keys(jk) <- list(
     join_key("df1", "df1", c("id" = "id"))
   )
-  # Change class as trick to allow for corrupt JoinKeys
+  # Change class as trick to allow for corrupt join_keys
   class(jk) <- "list"
   jk[["df2"]][["df1"]] <- "id"
   class(jk) <- class(new_join_keys())

@@ -9,7 +9,7 @@ update_join_keys_to_primary(data_objects, join_keys)
 \arguments{
 \item{data_objects}{(\code{list}) of \code{TealDataset}, \code{TealDatasetConnector} or \code{TealDataConnector} objects}
 
-\item{join_keys}{(\code{JoinKeys}) object}
+\item{join_keys}{(\code{join_keys}) object}
 }
 \description{
 Add primary keys as join_keys to a dataset self

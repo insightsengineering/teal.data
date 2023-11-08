@@ -17,7 +17,7 @@ new_teal_data(
 \item{code}{(\code{character} or \code{language}) code to reproduce the \code{data}.
 Accepts and stores comments also.}
 
-\item{join_keys}{(\code{JoinKeys}) object}
+\item{join_keys}{(\code{join_keys}) object}
 
 \item{datanames}{(\code{character}) names of datasets passed to \code{data}.
 Needed when non-dataset objects are needed in the \code{env} slot.}

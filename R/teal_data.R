@@ -6,7 +6,7 @@
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
 #'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
 #'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
-#' @param join_keys (`JoinKeys`) or a single (`join_key_set`)\cr
+#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
 #' @param code (`character`, `language`) code to reproduce the datasets.
@@ -110,7 +110,7 @@ teal_data_file <- function(path, code = get_code(path)) {
 #' Add primary keys as join_keys to a dataset self
 #'
 #' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
-#' @param join_keys (`JoinKeys`) object
+#' @param join_keys (`join_keys`) object
 #'
 #' @keywords internal
 update_join_keys_to_primary <- function(data_objects, join_keys) {

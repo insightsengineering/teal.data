@@ -7,7 +7,7 @@
 new_join_keys()
 }
 \value{
-an empty \code{JoinKeys} list
+an empty \code{join_keys} list
 }
 \description{
 Internal constructor

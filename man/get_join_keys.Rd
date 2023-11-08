@@ -12,7 +12,7 @@ get_join_keys(x, dataset_1, dataset_2 = NULL) <- value
 \arguments{
 \item{data}{`` - object to extract the join keys}
 
-\item{x}{(\code{JoinKeys}) object to be modified}
+\item{x}{(\code{join_keys}) object to be modified}
 
 \item{dataset_1}{(\code{character}) one dataset name}
 
@@ -21,7 +21,7 @@ get_join_keys(x, dataset_1, dataset_2 = NULL) <- value
 \item{value}{value to assign}
 }
 \value{
-Either \code{JoinKeys} object or \code{NULL} if no join keys
+Either \code{join_keys} object or \code{NULL} if no join keys
 }
 \description{
 Function to get join keys from a `` object

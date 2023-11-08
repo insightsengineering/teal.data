@@ -1,4 +1,4 @@
-#' Generate a teal_data dataset with sample data and JoinKeys
+#' Generate a teal_data dataset with sample data and join_keys
 helper_generator_teal_data <- function() {
   iris2 <- iris
   iris2$id <- rnorm(NROW(iris2))
@@ -9,12 +9,12 @@ helper_generator_teal_data <- function() {
       ds2 = iris2
     ),
     code = "ds1 <- iris2; ds2 <- iris2",
-    join_keys = helper_generator_JoinKeys("ds1", keys = c("id"))
+    join_keys = helper_generator_join_keys("ds1", keys = c("id"))
   )
 }
 
-#' Generate a JoinKeys
-helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) { # nolint
+#' Generate a join_keys
+helper_generator_join_keys <- function(dataset_1 = "ds1", keys = c("id")) { # nolint
   join_keys(
     join_key(dataset_1, keys = keys)
   )
@@ -24,14 +24,14 @@ helper_generator_JoinKeys <- function(dataset_1 = "ds1", keys = c("id")) { # nol
 helper_test_getter_join_keys <- function(obj, dataset_1 = "ds1") {
   jk <- join_keys(obj)
 
-  expect_s3_class(jk, class = c("JoinKeys", "list"))
+  expect_s3_class(jk, class = c("join_keys", "list"))
   expect_length(jk, 1)
   expect_length(jk[dataset_1, dataset_1], 1)
 
   obj
 }
 
-#' Test suite for JoinKeys after manual adding a primary key
+#' Test suite for join_keys after manual adding a primary key
 helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
                                              dataset_1 = "ds1",
                                              new_dataset_1 = "ds2",
@@ -41,13 +41,13 @@ helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
 
   jk <- join_keys(obj)
 
-  expect_s3_class(jk, class = c("JoinKeys", "list"))
+  expect_s3_class(jk, class = c("join_keys", "list"))
   expect_length(jk, 2)
   expect_length(jk[dataset_1, dataset_1], 1)
   expect_length(jk[new_dataset_1, new_dataset_1], 1)
 }
 
-#' Test suite for JoinKeys after manual adding a primary key
+#' Test suite for join_keys after manual adding a primary key
 helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length_linter
   obj <- helper_test_getter_join_keys(obj, "ds1")
 
@@ -126,7 +126,7 @@ helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length
     join_key(.ds(), .ds(), character(0))
   )
 
-  expect_s3_class(join_keys(obj), class = c("JoinKeys", "list"))
+  expect_s3_class(join_keys(obj), class = c("join_keys", "list"))
 
   expected_length <- 68 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
   expect_length(join_keys(obj), expected_length)

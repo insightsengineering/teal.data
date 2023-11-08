@@ -1,13 +1,13 @@
 # Constructors ====
 
-#' Create a `JoinKeys` out of a list of `join_key_set` objects
+#' Create a `join_keys` out of a list of `join_key_set` objects
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
 #' @details - `join_keys()`: When called without arguments it will return an
 #' empty constructor.
-#' - `join_keys(x)`: When called with a single argument it will return the `JoinKeys`
-#' object contained in `x` (if it contains a `JoinKeys` object).
+#' - `join_keys(x)`: When called with a single argument it will return the `join_keys`
+#' object contained in `x` (if it contains a `join_keys` object).
 #' - `join_keys(...)`: When called with a single or more `join_key_set` parameters it will
 #' create a new object.
 #'
@@ -16,11 +16,11 @@
 #' `dat2 → dat1`. The only exception is for a primary key.
 #'
 #' @param x (optional), when no argument is given the empty constructor is called.
-#' Otherwise, it can be one of: `JoinKeys`, `teal_data` or `join_key_set`.
+#' Otherwise, it can be one of: `join_keys`, `teal_data` or `join_key_set`.
 #' @param ... (optional), additional `join_key_set` objects when `x` is a `join_key_set`.
 #' If argument types are mixed the call will fail.
 #'
-#' @return `JoinKeys` object.
+#' @return `join_keys` object.
 #'
 #' @export
 #'
@@ -57,7 +57,7 @@ join_keys <- function(x = NULL, ...) {
 
 #' @rdname join_keys
 #' @export
-join_keys.JoinKeys <- function(x, ...) {
+join_keys.join_keys <- function(x, ...) {
   if (missing(...)) {
     return(x)
   }
@@ -101,9 +101,9 @@ join_keys.default <- function(x, ...) {
 #' The setter assignment `join_keys(obj) <- ...` will merge obj and `...` if obj
 #' is not empty.
 #'
-#' @param join_keys_obj (`JoinKeys`) empty object to set the new relationship pairs.
+#' @param join_keys_obj (`join_keys`) empty object to set the new relationship pairs.
 #' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
-#' to `JoinKeys` list.
+#' to `join_keys` list.
 #'
 #' @export
 `join_keys<-` <- function(join_keys_obj, value) {
@@ -121,18 +121,18 @@ join_keys.default <- function(x, ...) {
 #' join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 #' join_keys(jk)["ds1", "ds3"] <- "some_col3"
 #' jk
-`join_keys<-.JoinKeys` <- function(join_keys_obj, value) {
+`join_keys<-.join_keys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
 
   # Assume assignment of join keys as a merge operation
   #  Needed to support join_keys(jk)[ds1, ds2] <- "key"
-  if (checkmate::test_class(value, classes = c("JoinKeys", "list"))) {
+  if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
     return(merge_join_keys(join_keys_obj, value))
   }
 
-  # Assignment of list of join_key_set will merge it with existing JoinKeys
+  # Assignment of list of join_key_set will merge it with existing join_keys
   if (length(join_keys_obj) > 0 && checkmate::test_list(value, types = "join_key_set", min.len = 1)) {
     jk <- new_join_keys()
     join_keys(jk) <- value
@@ -151,7 +151,7 @@ join_keys.default <- function(x, ...) {
     join_keys_obj <- join_pair(join_keys_obj, value[[idx_1]])
   }
 
-  logger::log_trace("JoinKeys keys are set.")
+  logger::log_trace("join_keys keys are set.")
 
   join_keys_obj
 }
@@ -160,7 +160,7 @@ join_keys.default <- function(x, ...) {
 #' @export
 #' @examples
 #'
-#' # Setter for JoinKeys within teal_data ----
+#' # Setter for join_keys within teal_data ----
 #'
 #' td <- teal_data()
 #' join_keys(td)["ds1", "ds2"] <- "key1"
@@ -172,7 +172,7 @@ join_keys.default <- function(x, ...) {
     return(join_keys_obj)
   }
 
-  if (checkmate::test_class(value, c("JoinKeys", "list"))) {
+  if (checkmate::test_class(value, c("join_keys", "list"))) {
     join_keys_obj@join_keys <- merge_join_keys(join_keys_obj@join_keys, value)
     return(join_keys_obj)
   }
@@ -183,9 +183,9 @@ join_keys.default <- function(x, ...) {
 
 #' @rdname join_keys
 #' @details
-#' Getter for `JoinKeys` that returns the relationship between pairs of datasets.
+#' Getter for `join_keys` that returns the relationship between pairs of datasets.
 #'
-#' @param join_keys_obj (`JoinKeys`) object to extract the join keys
+#' @param join_keys_obj (`join_keys`) object to extract the join keys
 #' @param dataset_1 (`character`) name of first dataset.
 #' @param dataset_2 (`character`) name of second dataset.
 #'
@@ -193,7 +193,7 @@ join_keys.default <- function(x, ...) {
 #'
 #' @examples
 #'
-#' # Getter for JoinKeys ----
+#' # Getter for join_keys ----
 #'
 #' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
@@ -204,7 +204,7 @@ join_keys.default <- function(x, ...) {
 #'
 #' # Double subscript
 #' jk["ds1", "ds2"]
-`[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
+`[.join_keys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) {
   # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
   if (missing(dataset_2)) dataset_2 <- NULL
@@ -213,7 +213,7 @@ join_keys.default <- function(x, ...) {
       (length(dataset_1) >= 2 && is.null(dataset_2))
   ) {
     res <- NextMethod("[", join_keys_obj)
-    class(res) <- c("JoinKeys", "list")
+    class(res) <- c("join_keys", "list")
     return(res)
   } else if (length(dataset_1) >= 2) {
     res <- lapply(dataset_1, function(x) join_keys_obj[[x]][[dataset_2]])
@@ -225,11 +225,11 @@ join_keys.default <- function(x, ...) {
     return(join_keys_obj)
   } else if (is.null(dataset_1)) {
     res <- join_keys_obj[dataset_2]
-    class(res) <- c("JoinKeys", "list")
+    class(res) <- c("join_keys", "list")
     return(res)
   } else if (is.null(dataset_2)) {
     res <- NextMethod("[", join_keys_obj)
-    class(res) <- c("JoinKeys", "list")
+    class(res) <- c("join_keys", "list")
     return(res)
   }
   result <- join_keys_obj[[dataset_1]][[dataset_2]]
@@ -261,15 +261,15 @@ join_keys.default <- function(x, ...) {
 #' # Creates primary key by only defining `dataset_1`
 #' jk["ds1"] <- "primary_key"
 #' jk
-`[<-.JoinKeys` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
+`[<-.join_keys` <- function(join_keys_obj, dataset_1, dataset_2 = dataset_1, value) {
   if (checkmate::test_integerish(dataset_1)) {
     stop(paste(
-      "Assigment via index number is not supported with JoinKeys object,",
+      "Assigment via index number is not supported with `join_keys` object,",
       "please use a dataset name as index and one at a time."
     ))
   } else if (length(dataset_1) > 1) {
     stop(paste(
-      "Assigment of multiple JoinKeys at the same time is not supported,",
+      "Assigment of multiple `join_keys` at the same time is not supported,",
       "please only assign one pair at a time."
     ))
   }
@@ -285,7 +285,7 @@ join_keys.default <- function(x, ...) {
 #' jk <- join_keys(join_key("ds1", "ds2", "key"))
 #' jk[["ds1"]]
 #' jk[["ds1", "ds2"]]
-`[[.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value) {
+`[[.join_keys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value) {
   if (!is.null(dataset_1) && !is.null(dataset_2)) {
     return(join_keys_obj[[dataset_1]][[dataset_2]])
   }
@@ -307,7 +307,7 @@ join_keys.default <- function(x, ...) {
 #' jk[["ds4"]] <- list(ds5 = "new")
 #' jk[["ds6", "ds7"]] <- "yada"
 #' jk[["ds8", "ds9"]] <- c(A = "B", "C")
-`[[<-.JoinKeys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value) {
+`[[<-.join_keys` <- function(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2, null.ok = TRUE)
 
@@ -362,17 +362,17 @@ join_keys.default <- function(x, ...) {
   join_keys_obj
 }
 
-#' Mutate `JoinKeys` with a new values
+#' Mutate `join_keys` with a new values
 #'
 #' @description `r lifecycle::badge("experimental")`
-#' Mutate `JoinKeys` with a new values
+#' Mutate `join_keys` with a new values
 #'
-#' @param x (`JoinKeys`) object to be modified
+#' @param x (`join_keys`) object to be modified
 #' @param dataset_1 (`character`) one dataset name
 #' @param dataset_2 (`character`) other dataset name
 #' @param value (named `character`) column names used to join
 #'
-#' @return modified `JoinKeys` object
+#' @return modified `join_keys` object
 #'
 #' @export
 mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
@@ -383,12 +383,12 @@ mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
 #' @export
 #' @examples
 #'
-#' # JoinKeys ----
+#' # join_keys ----
 #'
 #' jk <- join_keys()
 #' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 #' mutate_join_keys(jk, "ds2", "ds3", "another")
-mutate_join_keys.JoinKeys <- function(x, dataset_1, dataset_2, value) {
+mutate_join_keys.join_keys <- function(x, dataset_1, dataset_2, value) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(value, any.missing = FALSE)
@@ -429,60 +429,60 @@ merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
   merge_join_keys(join_keys(join_keys_obj), new_join_keys)
 }
 
-#' Merging a list (or one) of `JoinKeys` objects into the current `JoinKeys` object
+#' Merging a list (or one) of `join_keys` objects into the current `join_keys` object
 #'
 #' @rdname merge_join_keys
 #'
-#' @param join_keys_obj (`JoinKeys`) object to merge the new_join_keys.
-#' @param new_join_keys  `list` of `JoinKeys` objects or single `JoinKeys` object
+#' @param join_keys_obj (`join_keys`) object to merge the new_join_keys.
+#' @param new_join_keys  `list` of `join_keys` objects or single `join_keys` object
 #'
-#' @return a new `JoinKeys` object with the resulting merge.
+#' @return a new `join_keys` object with the resulting merge.
 #'
 #' @keywords internal
-merge_join_keys.JoinKeys <- function(join_keys_obj, new_join_keys) {
-  checkmate::assert_class(join_keys_obj, classes = c("JoinKeys", "list"))
+merge_join_keys.join_keys <- function(join_keys_obj, new_join_keys) {
+  checkmate::assert_class(join_keys_obj, classes = c("join_keys", "list"))
 
-  if (checkmate::test_class(new_join_keys, classes = c("JoinKeys", "list"))) {
+  if (checkmate::test_class(new_join_keys, classes = c("join_keys", "list"))) {
     new_join_keys <- list(new_join_keys)
   }
 
   lapply(new_join_keys, assert_join_keys_alike)
 
-  checkmate::assert_list(new_join_keys, types = c("JoinKeys"), min.len = 1)
+  checkmate::assert_list(new_join_keys, types = c("join_keys"), min.len = 1)
 
   for (el in new_join_keys) {
     join_keys_obj <- utils::modifyList(join_keys_obj, el)
   }
 
-  logger::log_trace("JoinKeys keys merged.")
+  logger::log_trace("join_keys keys merged.")
   return(join_keys_obj)
 }
 
 # S3 methods have to be exported, otherwise `.S3method` needs to be used
 .S3method("merge_join_keys", "teal_data", merge_join_keys.default)
-.S3method("merge_join_keys", "JoinKeys", merge_join_keys.JoinKeys)
+.S3method("merge_join_keys", "join_keys", merge_join_keys.join_keys)
 
-#' Prints `JoinKeys`.
+#' Prints `join_keys`.
 #'
 #' @inheritParams base::print
 #' @return the `x` parameter
 #'
 #' @export
-print.JoinKeys <- function(x, ...) {
+print.join_keys <- function(x, ...) {
   check_ellipsis(...)
   keys_list <- x
   my_parents <- parents(keys_list)
   class(keys_list) <- "list"
   if (length(keys_list) > 0) {
     cat(sprintf(
-      "A JoinKeys object containing foreign keys between %s datasets:\n",
+      "A join_keys object containing foreign keys between %s datasets:\n",
       length(keys_list)
     ))
     # Hide parents
     attr(keys_list, "__parents__") <- NULL # nolint: object_name_linter
     print.default(keys_list[sort(names(keys_list))])
   } else {
-    cat("An empty JoinKeys object.")
+    cat("An empty join_keys object.")
   }
   invisible(x)
 }
@@ -495,24 +495,24 @@ print.JoinKeys <- function(x, ...) {
 
 #' Internal constructor
 #'
-#' @return an empty `JoinKeys` list
+#' @return an empty `join_keys` list
 #'
 #' @keywords internal
 new_join_keys <- function() {
   structure(
     list(),
-    class = c("JoinKeys", "list")
+    class = c("join_keys", "list")
   )
 }
 
-#' Helper function to add a new pair to a `JoinKeys` object
+#' Helper function to add a new pair to a `join_keys` object
 #'
-#' @param join_keys_obj (`JoinKeys`) Object with existing pairs.
+#' @param join_keys_obj (`join_keys`) Object with existing pairs.
 #' @param join_key_obj (`join_key_set`) relationship pair to add.
 #'
 #' @keywords internal
 join_pair <- function(join_keys_obj, join_key_obj) {
-  checkmate::assert_class(join_keys_obj, c("JoinKeys", "list"))
+  checkmate::assert_class(join_keys_obj, c("join_keys", "list"))
   checkmate::assert_class(join_key_obj, "join_key_set")
 
   dataset_1 <- get_dataset_1(join_key_obj)
@@ -523,7 +523,7 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   join_keys_obj
 }
 
-#' Assert the `JoinKeys` class membership of an argument
+#' Assert the `join_keys` class membership of an argument
 #' @inheritParams checkmate::assert_class
 #'
 #' @return `x` invisibly
@@ -615,7 +615,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
 
 #' Helper function checks the parent-child relations are valid
 #'
-#' @param join_keys_obj (`JoinKeys`) object to assert validity of relations
+#' @param join_keys_obj (`join_keys`) object to assert validity of relations
 #'
 #' @return `join_keys_obj` invisibly
 #'
@@ -624,7 +624,7 @@ assert_parent_child <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
   jk_parents <- parents(jk)
 
-  checkmate::assert_class(jk, c("JoinKeys", "list"))
+  checkmate::assert_class(jk, c("join_keys", "list"))
 
   if (!is.null(jk_parents)) {
     for (idx1 in seq_along(jk_parents)) {

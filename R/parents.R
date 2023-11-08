@@ -1,6 +1,6 @@
 #' Getter and setter for specific parent
 #'
-#' @param join_keys_obj (`JoinKeys`) object to retrieve.
+#' @param join_keys_obj (`join_keys`) object to retrieve.
 #' @param dataset_name (`character(1)`)
 #'
 #' @export
@@ -19,9 +19,9 @@ parent <- function(join_keys_obj, dataset_name) {
   parents(join_keys_obj)[[dataset_name]]
 }
 
-#' Getter and setter functions for parents attribute of `JoinKeys`
+#' Getter and setter functions for parents attribute of `join_keys`
 #'
-#' @param join_keys_obj (`JoinKeys`) object to retrieve or manipulate.
+#' @param join_keys_obj (`join_keys`) object to retrieve or manipulate.
 #' @return a list of `character` representing the parents.
 #'
 #' @export
@@ -34,7 +34,7 @@ parents <- function(join_keys_obj) {
 #' @examples
 #' jk <- join_keys()
 #' parents(jk)
-parents.JoinKeys <- function(join_keys_obj) {
+parents.join_keys <- function(join_keys_obj) {
   attr(join_keys_obj, "__parents__") %||% list()
 }
 
@@ -58,7 +58,7 @@ parents.JoinKeys <- function(join_keys_obj) {
 #' parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
 #' parents(jk)["ds5"] <- "ds6"
 #' parents(jk)["ds6"] <- "ds7"
-`parents<-.JoinKeys` <- function(join_keys_obj, value) {
+`parents<-.join_keys` <- function(join_keys_obj, value) {
   if (missing(value)) {
     return(join_keys_obj)
   }
@@ -86,7 +86,7 @@ parents.JoinKeys <- function(join_keys_obj) {
 
 #' Updates the keys of the datasets based on the parents.
 #'
-#' @param join_keys_obj (`JoinKeys`) object to update the keys.
+#' @param join_keys_obj (`join_keys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
 #'
@@ -107,7 +107,7 @@ parents.JoinKeys <- function(join_keys_obj) {
 update_keys_given_parents <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
 
-  checkmate::assert_class(jk, "JoinKeys", .var.name = checkmate::vname(join_keys_obj))
+  checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(join_keys_obj))
 
   datanames <- names(jk)
   duplicate_pairs <- list()

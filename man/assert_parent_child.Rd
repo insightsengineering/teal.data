@@ -7,7 +7,7 @@
 assert_parent_child(join_keys_obj)
 }
 \arguments{
-\item{join_keys_obj}{(\code{JoinKeys}) object to assert validity of relations}
+\item{join_keys_obj}{(\code{join_keys}) object to assert validity of relations}
 }
 \value{
 \code{join_keys_obj} invisibly

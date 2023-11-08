@@ -2,18 +2,18 @@
 % Please edit documentation in R/join_keys.R
 \name{mutate_join_keys}
 \alias{mutate_join_keys}
-\alias{mutate_join_keys.JoinKeys}
+\alias{mutate_join_keys.join_keys}
 \alias{mutate_join_keys.teal_data}
-\title{Mutate \code{JoinKeys} with a new values}
+\title{Mutate \code{join_keys} with a new values}
 \usage{
 mutate_join_keys(x, dataset_1, dataset_2, value)
 
-\method{mutate_join_keys}{JoinKeys}(x, dataset_1, dataset_2, value)
+\method{mutate_join_keys}{join_keys}(x, dataset_1, dataset_2, value)
 
 \method{mutate_join_keys}{teal_data}(x, dataset_1, dataset_2, value)
 }
 \arguments{
-\item{x}{(\code{JoinKeys}) object to be modified}
+\item{x}{(\code{join_keys}) object to be modified}
 
 \item{dataset_1}{(\code{character}) one dataset name}
 
@@ -22,15 +22,15 @@ mutate_join_keys(x, dataset_1, dataset_2, value)
 \item{value}{(named \code{character}) column names used to join}
 }
 \value{
-modified \code{JoinKeys} object
+modified \code{join_keys} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Mutate \code{JoinKeys} with a new values
+Mutate \code{join_keys} with a new values
 }
 \examples{
 
-# JoinKeys ----
+# join_keys ----
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")

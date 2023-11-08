@@ -7,7 +7,7 @@
 parent(join_keys_obj, dataset_name)
 }
 \arguments{
-\item{join_keys_obj}{(\code{JoinKeys}) object to retrieve.}
+\item{join_keys_obj}{(\code{join_keys}) object to retrieve.}
 
 \item{dataset_name}{(\code{character(1)})}
 }
