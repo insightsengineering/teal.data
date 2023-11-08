@@ -27,7 +27,7 @@ join_keys(...)
 
 \method{join_keys}{TealData}(...)
 
-\method{join_keys}{default}(x, ...)
+\method{join_keys}{default}(...)
 
 join_keys(join_keys_obj) <- value
 
@@ -49,9 +49,6 @@ join_keys(join_keys_obj) <- value
 \item{...}{(optional), additional \code{join_key_set} objects when \code{x} is a \code{join_key_set}.
 If argument types are mixed the call will fail.}
 
-\item{x}{(optional), when no argument is given the empty constructor is called.
-Otherwise, it can be one of: \code{join_keys}, \code{teal_data} or \code{join_key_set}.}
-
 \item{join_keys_obj}{(\code{join_keys}) object to extract the join keys}
 
 \item{value}{(\code{character} vector) value to assign.}
@@ -59,6 +56,9 @@ Otherwise, it can be one of: \code{join_keys}, \code{teal_data} or \code{join_ke
 \item{dataset_1}{(\code{character}) name of first dataset.}
 
 \item{dataset_2}{(\code{character}) name of second dataset.}
+
+\item{x}{(optional), when no argument is given the empty constructor is called.
+Otherwise, it can be one of: \code{join_keys}, \code{teal_data} or \code{join_key_set}.}
 }
 \value{
 \code{join_keys} object.
