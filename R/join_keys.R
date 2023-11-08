@@ -48,44 +48,48 @@
 #' jk <- join_keys()
 #' jk <- join_keys(join_key("a", "b", "c"))
 #' jk <- join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c"))
-join_keys <- function(x = NULL, ...) {
-  if (is.null(x)) {
+join_keys <- function(...) {
+  if (missing(...) || length(x) == 0) {
     return(new_join_keys())
   }
-  UseMethod("join_keys", x)
+  x <- rlang::list2(...)
+  UseMethod("join_keys", x[[1]])
 }
 
 #' @rdname join_keys
 #' @export
-join_keys.join_keys <- function(x, ...) {
-  if (missing(...)) {
-    return(x)
+join_keys.join_keys <- function(...) {
+  if (length(...) > 1) {
+    return(join_keys.default(...))
   }
-  join_keys.default(x, ...)
+  x <- rlang::list2(...)
+  x[[1]]
 }
 
 #' @rdname join_keys
 #' @export
-join_keys.teal_data <- function(x, ...) {
-  if (missing(...)) {
-    return(x@join_keys)
+join_keys.teal_data <- function(...) {
+  if (length(...) > 1) {
+    return(join_keys.default(...))
   }
-  join_keys.default(x, ...)
+  x <- rlang::list2(...)
+  x[[1]]@join_keys
 }
 
 #' @rdname join_keys
 #' @export
-join_keys.TealData <- function(x, ...) {
-  if (missing(...)) {
-    return(x$get_join_keys())
+join_keys.TealData <- function(...) {
+  x <- rlang::list2(...)
+  if (length(...) > 1) {
+    return(join_keys.default(...))
   }
-  join_keys.default(x, ...)
+  x[[1]]$get_join_keys()
 }
 
 #' @rdname join_keys
 #' @export
-join_keys.default <- function(x, ...) {
-  x <- append(list(x), rlang::list2(...))
+join_keys.default <- function(...) {
+  x <- rlang::list2(...)
 
   # Constructor
   res <- new_join_keys()
@@ -154,6 +158,26 @@ join_keys.default <- function(x, ...) {
   logger::log_trace("join_keys keys are set.")
 
   join_keys_obj
+}
+
+#' @rdname join_keys
+#' @export
+#'
+#' @examples
+#'
+#' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
+c.join_keys <- function(...) {
+  x <- rlang::list2(...)
+
+  if (!length(x)) {
+    return(NULL)
+  }
+  checkmate::assert_list(x, types = c("join_keys", "list"))
+  jk <- x[[1]]
+  for (ix in seq_along(x[-1])) {
+    jk <- merge_join_keys.default(jk, x[[ix + 1]])
+  }
+  jk
 }
 
 #' @rdname join_keys

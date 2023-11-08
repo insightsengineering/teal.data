@@ -9,6 +9,7 @@
 \alias{join_keys.default}
 \alias{join_keys<-}
 \alias{join_keys<-.join_keys}
+\alias{c.join_keys}
 \alias{join_keys<-.teal_data}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
@@ -18,19 +19,21 @@
 \usage{
 cdisc_join_keys(...)
 
-join_keys(x = NULL, ...)
+join_keys(...)
 
-\method{join_keys}{join_keys}(x, ...)
+\method{join_keys}{join_keys}(...)
 
-\method{join_keys}{teal_data}(x, ...)
+\method{join_keys}{teal_data}(...)
 
-\method{join_keys}{TealData}(x, ...)
+\method{join_keys}{TealData}(...)
 
 \method{join_keys}{default}(x, ...)
 
 join_keys(join_keys_obj) <- value
 
 \method{join_keys}{join_keys}(join_keys_obj) <- value
+
+\method{c}{join_keys}(...)
 
 \method{join_keys}{teal_data}(join_keys_obj) <- value
 
@@ -125,6 +128,8 @@ join_keys(jk) <- join_key("ds1", "ds2", "some_col")
 join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
 join_keys(jk)["ds1", "ds3"] <- "some_col3"
 jk
+
+c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 
 # Setter for join_keys within teal_data ----
 
