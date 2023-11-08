@@ -58,7 +58,7 @@ to be specified once.
 The setter assignment \code{join_keys(obj) <- ...} will merge obj and \code{...} if obj
 is not empty.
 
-Getter for JoinKeys that returns the relationship between pairs of datasets.
+Getter for \code{JoinKeys} that returns the relationship between pairs of datasets.
 
 Setter via index directly (bypassing the need to use \code{join_key()}).
 When \code{dataset_2} is omitted, it will create a primary key with \code{dataset_2 = dataset_1}.

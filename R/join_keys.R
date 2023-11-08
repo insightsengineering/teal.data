@@ -137,7 +137,7 @@ join_keys <- function(...) {
 
 #' @rdname join_keys
 #' @details
-#' Getter for JoinKeys that returns the relationship between pairs of datasets.
+#' Getter for `JoinKeys` that returns the relationship between pairs of datasets.
 #'
 #' @param join_keys_obj (`JoinKeys`) object to extract the join keys
 #' @param dataset_1 (`character`) name of first dataset.
@@ -477,7 +477,7 @@ join_pair <- function(join_keys_obj, join_key_obj) {
   join_keys_obj
 }
 
-#' Assert the JoinKeys class membership of an argument
+#' Assert the `JoinKeys` class membership of an argument
 #' @inheritParams checkmate::assert_class
 #'
 #' @return `x` invisibly

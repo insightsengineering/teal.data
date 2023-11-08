@@ -3,7 +3,7 @@
 \name{assert_join_keys_alike}
 \alias{assert_join_keys_alike}
 \alias{check_join_keys_alike}
-\title{Assert the JoinKeys class membership of an argument}
+\title{Assert the \code{JoinKeys} class membership of an argument}
 \usage{
 assert_join_keys_alike(x, .var.name = checkmate::vname(x), add = NULL)
 
@@ -24,6 +24,6 @@ Collection to store assertion messages. See \code{\link[checkmate]{AssertCollect
 \code{x} invisibly
 }
 \description{
-Assert the JoinKeys class membership of an argument
+Assert the \code{JoinKeys} class membership of an argument
 }
 \keyword{internal}
