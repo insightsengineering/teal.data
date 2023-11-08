@@ -63,7 +63,13 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   }
 
   structure(
-    setNames(list(setNames(list(keys), dataset_2)), dataset_1),
+    list(
+      structure(
+        list(keys),
+        names = dataset_2
+      )
+    ),
+    names = dataset_1,
     class = "JoinKeySet"
   )
 }
