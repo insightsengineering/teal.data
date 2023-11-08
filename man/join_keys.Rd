@@ -46,8 +46,11 @@ join_keys(join_keys_obj) <- value
 \method{[[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
 }
 \arguments{
-\item{...}{(optional), additional \code{join_key_set} objects when \code{x} is a \code{join_key_set}.
-If argument types are mixed the call will fail.}
+\item{...}{(optional), when no argument is given the empty constructor is called.
+Otherwise, when called with only one argument of type: \code{join_keys} or  \code{teal_data}
+it will return the \code{join_keys} of that object.
+When called with 1 or more \code{join_key_set} it will create a new \code{join_keys} with
+constructed from the arguments.}
 
 \item{join_keys_obj}{(\code{join_keys}) object to extract the join keys}
 
@@ -56,9 +59,6 @@ If argument types are mixed the call will fail.}
 \item{dataset_1}{(\code{character}) name of first dataset.}
 
 \item{dataset_2}{(\code{character}) name of second dataset.}
-
-\item{x}{(optional), when no argument is given the empty constructor is called.
-Otherwise, it can be one of: \code{join_keys}, \code{teal_data} or \code{join_key_set}.}
 }
 \value{
 \code{join_keys} object.

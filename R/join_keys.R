@@ -15,10 +15,11 @@
 #' have a join key of `col1`, then 2 join keys are created, `dat1 → dat2` and
 #' `dat2 → dat1`. The only exception is for a primary key.
 #'
-#' @param x (optional), when no argument is given the empty constructor is called.
-#' Otherwise, it can be one of: `join_keys`, `teal_data` or `join_key_set`.
-#' @param ... (optional), additional `join_key_set` objects when `x` is a `join_key_set`.
-#' If argument types are mixed the call will fail.
+#' @param ... (optional), when no argument is given the empty constructor is called.
+#' Otherwise, when called with only one argument of type: `join_keys` or  `teal_data`
+#' it will return the `join_keys` of that object.
+#' When called with 1 or more `join_key_set` it will create a new `join_keys` with
+#' constructed from the arguments.
 #'
 #' @return `join_keys` object.
 #'
