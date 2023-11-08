@@ -4,14 +4,23 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @details Note that join keys are symmetric although the relationship only needs
-#' to be specified once.
+#' @details - `join_keys()`: When called without arguments it will return an
+#' empty constructor.
+#' - `join_keys(x)`: When called with a single argument it will return the `JoinKeys`
+#' object contained in `x` (if it contains a `JoinKeys` object).
+#' - `join_keys(...)`: When called with a single or more `JoinKeySet` parameters it will
+#' create a new object.
 #'
-#' @name join_keys
+#' Note that join keys are created symmetrically, that is, if `dat1` and `dat2`
+#' have a join key of `col1`, then 2 join keys are created, `dat1 → dat2` and
+#' `dat2 → dat1`. The only exception is for a primary key.
 #'
-#' @param ... optional, a `JoinKeySet` objects created using the `join_key` function.
+#' @param x (optional), when no argument is given the empty constructor is called.
+#' Otherwise, it can be one of: `JoinKeys`, `teal_data` or `JoinKeySet`.
+#' @param ... (optional), additional `JoinKeySet` objects when `x` is a `JoinKeySet`.
+#' If argument types are mixed the call will fail.
 #'
-#' @return `JoinKeys`
+#' @return `JoinKeys` object.
 #'
 #' @export
 #'
@@ -29,17 +38,54 @@
 #' jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
 #' jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
 #' jk
-join_keys <- function(...) {
-  x <- rlang::list2(...)
-
-  # Getter
-  if (checkmate::test_list(x, len = 1, types = c("JoinKeys"))) {
-    return(x[[1]])
-  } else if (checkmate::test_list(x, len = 1, types = c("teal_data"))) {
-    return(x[[1]]@join_keys)
-  } else if (checkmate::test_list(x, len = 1, types = c("TealData"))) {
-    return(x[[1]]$get_join_keys())
+#'
+#' td <- teal_data(join_keys = join_keys(join_key("a", "b", "c")))
+#' join_keys(td)
+#'
+#' jk <- join_keys()
+#' join_keys(jk)
+#'
+#' jk <- join_keys()
+#' jk <- join_keys(join_key("a", "b", "c"))
+#' jk <- join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c"))
+join_keys <- function(x = NULL, ...) {
+  if (is.null(x)) {
+    return(new_join_keys())
   }
+  UseMethod("join_keys", x)
+}
+
+#' @rdname join_keys
+#' @export
+join_keys.JoinKeys <- function(x, ...) {
+  if (missing(...)) {
+    return(x)
+  }
+  join_keys.default(x, ...)
+}
+
+#' @rdname join_keys
+#' @export
+join_keys.teal_data <- function(x, ...) {
+  if (missing(...)) {
+    return(x@join_keys)
+  }
+  join_keys.default(x, ...)
+}
+
+#' @rdname join_keys
+#' @export
+join_keys.TealData <- function(x, ...) {
+  if (missing(...)) {
+    return(x$get_join_keys())
+  }
+  join_keys.default(x, ...)
+}
+
+#' @rdname join_keys
+#' @export
+join_keys.default <- function(x, ...) {
+  x <- append(list(x), rlang::list2(...))
 
   # Constructor
   res <- new_join_keys()

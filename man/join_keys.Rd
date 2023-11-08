@@ -3,6 +3,10 @@
 \name{cdisc_join_keys}
 \alias{cdisc_join_keys}
 \alias{join_keys}
+\alias{join_keys.JoinKeys}
+\alias{join_keys.teal_data}
+\alias{join_keys.TealData}
+\alias{join_keys.default}
 \alias{join_keys<-}
 \alias{join_keys<-.JoinKeys}
 \alias{join_keys<-.teal_data}
@@ -14,7 +18,15 @@
 \usage{
 cdisc_join_keys(...)
 
-join_keys(...)
+join_keys(x = NULL, ...)
+
+\method{join_keys}{JoinKeys}(x, ...)
+
+\method{join_keys}{teal_data}(x, ...)
+
+\method{join_keys}{TealData}(x, ...)
+
+\method{join_keys}{default}(x, ...)
 
 join_keys(join_keys_obj) <- value
 
@@ -31,7 +43,11 @@ join_keys(join_keys_obj) <- value
 \method{[[}{JoinKeys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
 }
 \arguments{
-\item{...}{optional, a \code{JoinKeySet} objects created using the \code{join_key} function.}
+\item{...}{(optional), additional \code{JoinKeySet} objects when \code{x} is a \code{JoinKeySet}.
+If argument types are mixed the call will fail.}
+
+\item{x}{(optional), when no argument is given the empty constructor is called.
+Otherwise, it can be one of: \code{JoinKeys}, \code{teal_data} or \code{JoinKeySet}.}
 
 \item{join_keys_obj}{(\code{JoinKeys}) object to extract the join keys}
 
@@ -42,7 +58,7 @@ join_keys(join_keys_obj) <- value
 \item{dataset_2}{(\code{character}) name of second dataset.}
 }
 \value{
-\code{JoinKeys}
+\code{JoinKeys} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
@@ -52,8 +68,18 @@ join_keys(join_keys_obj) <- value
 join keys for CDISC datasets. It is used internally by \code{cdisc_data} to
 set the default join keys for CDISC datasets.
 
-Note that join keys are symmetric although the relationship only needs
-to be specified once.
+\itemize{
+\item \code{join_keys()}: When called without arguments it will return an
+empty constructor.
+\item \code{join_keys(x)}: When called with a single argument it will return the \code{JoinKeys}
+object contained in \code{x} (if it contains a \code{JoinKeys} object).
+\item \code{join_keys(...)}: When called with a single or more \code{JoinKeySet} parameters it will
+create a new object.
+}
+
+Note that join keys are created symmetrically, that is, if \code{dat1} and \code{dat2}
+have a join key of \code{col1}, then 2 join keys are created, \verb{dat1 → dat2} and
+\verb{dat2 → dat1}. The only exception is for a primary key.
 
 The setter assignment \code{join_keys(obj) <- ...} will merge obj and \code{...} if obj
 is not empty.
@@ -81,6 +107,16 @@ jk <- join_keys()
 jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
 jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
 jk
+
+td <- teal_data(join_keys = join_keys(join_key("a", "b", "c")))
+join_keys(td)
+
+jk <- join_keys()
+join_keys(jk)
+
+jk <- join_keys()
+jk <- join_keys(join_key("a", "b", "c"))
+jk <- join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c"))
 
 # Using the setter (assignment) ----
 
