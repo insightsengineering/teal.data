@@ -78,24 +78,24 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
 #'
 #' Internal methods for `JoinKeySet` operations
 #'
-#' @param join_key_object (`JoinKeySet`) object to retrieve attribute from.
+#' @param join_key_set_object (`JoinKeySet`) object to retrieve attribute from.
 #' @return `dataset_1`, `dataset_2` or `key` as `character(1)`
 #'
 #' @keywords internal
-get_dataset_1 <- function(join_key_object) {
-  names(join_key_object)
+get_dataset_1 <- function(join_key_set_object) {
+  names(join_key_set_object)
 }
 
 #' @rdname get_dataset_1
 #' @keywords internal
-get_dataset_2 <- function(join_key_object) {
-  names(join_key_object[[1]])
+get_dataset_2 <- function(join_key_set_object) {
+  names(join_key_set_object[[1]])
 }
 
 #' @rdname get_dataset_1
 #' @keywords internal
-get_keys.JoinKeySet <- function(join_key_object) {
-  join_key_object[[1]][[1]]
+get_keys.JoinKeySet <- function(join_key_set_object) {
+  join_key_set_object[[1]][[1]]
 }
 # Remove this once generic `get_keys` is removed (and rename non-exported function to `get_keys`)
 .S3method("get_keys", "JoinKeySet", get_keys.JoinKeySet)
