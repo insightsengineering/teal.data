@@ -25,7 +25,7 @@ repos:
           - shiny
           - shinyjs
           - stats
-          - insightsengineering/teal.logger
+          - teal.logger
           - insightsengineering/teal.code
           - utils
           - yaml
