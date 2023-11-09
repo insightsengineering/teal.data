@@ -31,7 +31,6 @@ setOldClass("JoinKeys")
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
 #'
-#' @import teal.code
 #' @keywords internal
 setClass(
   Class = "teal_data",

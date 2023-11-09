@@ -26,6 +26,7 @@ repos:
           - shinyjs
           - stats
           - insightsengineering/teal.logger
+          - insightsengineering/teal.code
           - utils
           - yaml
       - id: spell-check

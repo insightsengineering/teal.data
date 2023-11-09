@@ -11,6 +11,7 @@
 
 # Fix R CMD check notes
 #' @import shiny
+#' @import teal.code
 #' @importFrom digest digest
 #' @importFrom stats setNames
 #' @importFrom shinyjs useShinyjs
