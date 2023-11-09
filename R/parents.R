@@ -89,21 +89,6 @@ parents.join_keys <- function(join_keys_obj) {
 #' @param join_keys_obj (`join_keys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
-#'
-#' @export
-#'
-#' @examples
-#' jk <- join_keys()
-#' join_keys(jk) <- list(
-#'   join_key("df1", "df1", c("id", "id2")),
-#'   join_key("df1", "df2", c("id" = "id")),
-#'   join_key("df1", "df3", c("id" = "id"))
-#' )
-#' parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
-#' jk2 <- update_keys_given_parents(jk)
-#'
-#' jk[["df2"]]
-#' jk2[["df2"]]
 update_keys_given_parents <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
 
