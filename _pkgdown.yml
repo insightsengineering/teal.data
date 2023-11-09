@@ -102,7 +102,6 @@ reference:
       - load_datasets
       - mutate_data
       - mutate_dataset
-      - mutate_join_keys
       - set_args
       - set_keys
   - title: Helpers

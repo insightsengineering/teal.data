@@ -149,27 +149,33 @@ test_that("[<-.join_keys cannot subscript multiple values", {
   expect_error(jk[1:2] <- NULL)
 })
 
+test_that("[[<- can mutate existing keys", {
+  my_keys <- join_keys(join_key("d1", "d2", "A"))
+  my_keys[["d1"]][["d2"]] <- c("X" = "Y")
+  expect_equal(my_keys[["d1"]][["d2"]], c("X" = "Y"))
+  expect_equal(my_keys[["d2"]][["d1"]], c("Y" = "X"))
+})
+
+test_that("[[<- mutating non-existing keys adds them", {
+  my_keys <- join_keys(join_key("d1", "d2", "A"))
+  my_keys[["d2"]][["d3"]] <- c("X" = "Y")
+  expect_equal(my_keys[["d2"]][["d3"]], c("X" = "Y"))
+  expect_equal(my_keys[["d3"]][["d2"]], c("Y" = "X"))
+})
+
+test_that("[[<- can remove keys by setting them to character(0)", {
+  my_keys <- join_keys(
+    join_key("d1", "d2", "A"),
+    join_key("d3", "d4", c("A" = "B", "C" = "D"))
+  )
+  my_keys[["d1"]][["d2"]] <- character(0)
+  expect_equal(my_keys[["d1"]][["d2"]], character(0))
+})
+
 # -----------------------------------------------------------------------------
 #
 # mutate_join_keys (empty value name)
 #
-
-test_that("mutate_join_keys with empty name is changed to the key value", {
-  # set empty key name
-  jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", "C"))
-  expect_equal(jk["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
-
-  # set key on non-empty variable name equal to ""
-  jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", "C" = ""))
-  expect_equal(jk["d1", "d2"], setNames(c("B", "C"), c("A", "C")))
-
-  # set key on empty variable name equal to ""
-  expect_message(
-    jk <- mutate_join_keys(join_keys(), "d1", "d2", c("A" = "B", "")),
-    "are ignored"
-  )
-  expect_equal(jk["d1", "d2"], setNames(c("B"), c("A")))
-})
 
 test_that("[<-.join_keys with empty name is changed to the key value", {
   # set empty key name
@@ -411,28 +417,6 @@ test_that("join_keys if no keys between pair of datasets then getting them retur
   my_keys <- join_keys(join_key("d1", "d2", "A"))
   expect_equal(my_keys["d1", "d3"], character(0))
   expect_equal(my_keys["d1", "d4"], character(0))
-})
-
-# -----------------------------------------------------------------------------
-#
-# mutate_join_keys
-
-test_that("mutate_join_keys.join_keys can mutate existing keys", {
-  my_keys <- join_keys(join_key("d1", "d2", "A"))
-  new_keys <- mutate_join_keys(my_keys, "d1", "d2", c("X" = "Y"))
-  expect_equal(new_keys["d1", "d2"], c("X" = "Y"))
-})
-
-test_that("mutate_join_keys.join_keys mutating non-existing keys adds them", {
-  my_keys <- join_keys(join_key("d1", "d2", "A"))
-  new_keys <- mutate_join_keys(my_keys, "d2", "d3", c("X" = "Y"))
-  expect_equal(new_keys["d3", "d2"], c("Y" = "X"))
-})
-
-test_that("mutate_join_keys.join_keys can remove keys by setting them to character(0)", {
-  my_keys <- join_keys(join_key("d1", "d2", "A"), join_key("d3", "d4", c("A" = "B", "C" = "D")))
-  new_keys <- mutate_join_keys(my_keys, "d1", "d2", character(0))
-  expect_equal(new_keys["d1", "d2"], character(0))
 })
 
 # -----------------------------------------------------------------------------

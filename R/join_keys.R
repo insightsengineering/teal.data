@@ -349,6 +349,13 @@ c.join_keys <- function(...) {
   # Accepting 1 subscript with valid `value` formal
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
 
+  # Normalize values
+  norm_value <- lapply(names(value), function(.x) {
+    get_keys(join_key(dataset_1, .x, value[[.x]]))
+  })
+  names(norm_value) <- names(value)
+  value <- norm_value
+
   join_keys_obj <- NextMethod("[[<-", join_keys_obj)
 
   # Keep original parameters as variables will be overwritten for `NextMethod` call
@@ -378,61 +385,6 @@ c.join_keys <- function(...) {
   }
 
   join_keys_obj
-}
-
-#' Mutate `join_keys` with a new values
-#'
-#' @description `r lifecycle::badge("experimental")`
-#' Mutate `join_keys` with a new values
-#'
-#' @param x (`join_keys`) object to be modified
-#' @param dataset_1 (`character`) one dataset name
-#' @param dataset_2 (`character`) other dataset name
-#' @param value (named `character`) column names used to join
-#'
-#' @return modified `join_keys` object
-#'
-#' @export
-mutate_join_keys <- function(x, dataset_1, dataset_2, value) {
-  UseMethod("mutate_join_keys")
-}
-
-#' @rdname mutate_join_keys
-#' @export
-#' @examples
-#'
-#' # join_keys ----
-#'
-#' jk <- join_keys()
-#' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-#' mutate_join_keys(jk, "ds2", "ds3", "another")
-mutate_join_keys.join_keys <- function(x, dataset_1, dataset_2, value) {
-  checkmate::assert_string(dataset_1)
-  checkmate::assert_string(dataset_2)
-  checkmate::assert_character(value, any.missing = FALSE)
-  join_pair(x, join_key(dataset_1, dataset_2, value))
-}
-
-#' @rdname mutate_join_keys
-#' @export
-#' @examples
-#'
-#' # teal_data ----
-#'
-#' ADSL <- teal.data::example_cdisc_data("ADSL")
-#' ADRS <- teal.data::example_cdisc_data("ADRS")
-#'
-#' x <- cdisc_data(
-#'   "ADSL" = ADSL,
-#'   "ADRS" = ADRS
-#' )
-#' join_keys(x)["ADSL", "ADRS"]
-#'
-#' join_keys(x) <- mutate_join_keys(x, "ADSL", "ADRS", c("COLUMN1" = "COLUMN2"))
-#' join_keys(x)["ADSL", "ADRS"]
-mutate_join_keys.teal_data <- function(x, dataset_1, dataset_2, value) { # nolint
-  join_keys(x) <- mutate_join_keys(join_keys(x), dataset_1, dataset_2, value)
-  join_keys(x)
 }
 
 #' @rdname merge_join_keys

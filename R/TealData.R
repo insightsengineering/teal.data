@@ -298,7 +298,8 @@ TealData <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate_join_keys = function(dataset_1, dataset_2, val) {
-      private$join_keys <- mutate_join_keys(private$join_keys, dataset_1, dataset_2, val)
+      private$join_keys[[dataset_1]][[dataset_2]] <- val
+      private$join_keys
     },
 
     # ___ check ====

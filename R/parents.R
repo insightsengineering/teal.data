@@ -105,7 +105,7 @@ update_keys_given_parents <- function(join_keys_obj) {
       }
       if (length(jk[d1, d2]) == 0) {
         d2_parent <- parent(jk, d2)
-        d2_pk <- jk[d2, d2]
+        d2_pk <- jk[[d2]][[d2]]
 
         fk <- if (identical(d1, d2_parent)) {
           # first is parent of second -> parent keys -> first keys
@@ -115,12 +115,12 @@ update_keys_given_parents <- function(join_keys_obj) {
           d2_pk
         } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
           # both has the same parent -> parent keys
-          jk[d1_parent, d1_parent]
+          jk[[d1_parent]][[d1_parent]]
         } else {
           # cant find connection - leave empty
           next
         }
-        jk <- mutate_join_keys(jk, d1, d2, fk)
+        jk[[d1]][[d2]] <- fk # mutate join key
         duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
       }
     }

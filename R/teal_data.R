@@ -120,12 +120,7 @@ update_join_keys_to_primary <- function(data_objects, join_keys) {
     } else {
       dataname <- obj$get_dataname()
       if (length(join_keys[dataname, dataname]) == 0) {
-        join_keys <- mutate_join_keys(
-          join_keys,
-          dataname,
-          dataname,
-          obj$get_keys()
-        )
+        join_keys[dataname, dataname] <- obj$get_keys()
       }
     }
   }

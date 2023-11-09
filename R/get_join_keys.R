@@ -11,7 +11,7 @@ get_join_keys <- function(data) {
 }
 
 #' @rdname get_join_keys
-#' @inheritParams mutate_join_keys
+#' @inheritParams join_keys
 #' @param value value to assign
 #' @export
 `get_join_keys<-` <- function(x, dataset_1, dataset_2 = NULL, value) {

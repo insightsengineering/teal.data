@@ -5,7 +5,7 @@
 #' @details `join_key()` will create a relationship for the variables on a pair
 #' of datasets.
 #'
-#' @inheritParams mutate_join_keys
+#' @inheritParams join_keys
 #' @param dataset_2 (optional `character`) other dataset name. In case it is omitted, then it
 #' will create a primary key for `dataset_1`.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
