@@ -220,22 +220,23 @@ c.join_keys <- function(...) {
   # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
 
-  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
-    res <- NextMethod("[", join_keys_obj)
-    class(res) <- c("join_keys", "list")
-    return(res)
-  } else if (length(dataset_1) >= 2) {
-    res <- lapply(dataset_1, function(x) join_keys_obj[[x]])
-    names(res) <- dataset_1
-    class(res) <- c("join_keys", "list")
-    return(res)
-  } else if (is.null(dataset_1)) {
+  if (is.null(dataset_1)) {
     return(join_keys_obj)
   }
 
-  res <- NextMethod("[", join_keys_obj)
-  class(res) <- c("join_keys", "list")
-  res
+  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
+    dataset_1 <- names(join_keys_obj)[dataset_1]
+  }
+
+  # When retrieving a relationship pair, it will also return the symmetric key
+  new_jk <- new_join_keys()
+  for (ix in dataset_1) {
+    new_jk[[ix]] <- join_keys_obj[[ix]]
+  }
+  common_parents_ix <- names(parents(join_keys_obj)) %in% names(new_jk)
+  if (any(common_parents_ix)) parents(new_jk) <- parents(join_keys_obj)[common_parents_ix]
+
+  new_jk
 }
 
 #' @rdname join_keys

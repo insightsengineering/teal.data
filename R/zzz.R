@@ -6,6 +6,13 @@
   ) # nolint
   assign("default_cdisc_keys", default_cdisc_keys, envir = parent.env(environment()))
 
+  # update default_cdisc_join_keys
+  assign(
+    "default_cdisc_join_keys",
+    do.call(cdisc_join_keys, as.list(names(default_cdisc_keys))),
+    envir = parent.env(environment())
+  )
+
   # Set up the teal logger instance
   teal.logger::register_logger("teal.data")
 

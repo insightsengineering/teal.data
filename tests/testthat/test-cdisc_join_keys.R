@@ -71,6 +71,23 @@ test_that("cdisc_join_keys will retrieve known primary and foreign keys", {
   )
 })
 
+test_that("cdisc_join_keys will set parents of datasets", {
+  datasets <- names(default_cdisc_keys)
+
+  vapply(
+    datasets,
+    function(.x) {
+      jk <- cdisc_join_keys(.x)
+      parent_name <- default_cdisc_keys[[.x]][["parent"]]
+      if (!is.null(parent_name)) {
+        expect_identical(parent(jk, .x), parent_name)
+      }
+      character(0)
+    },
+    character(0)
+  )
+})
+
 test_that("cdisc_join_keys will retrieve known primary keys", {
   datasets <- names(default_cdisc_keys)
 
@@ -91,4 +108,11 @@ test_that("cdisc_join_keys does nothing with TealDataset", {
   )
   adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
   expect_length(join_keys(cdisc_join_keys(adae_cdc)), 0)
+})
+
+test_that("default_cdisc_join_keys can get a valid `join_keys` object", {
+  ds1 <- sample(names(default_cdisc_keys), 3)
+  result <- default_cdisc_join_keys[ds1]
+  expect_gte(length(result), 3)
+  expect_gte(length(parents(result)), 3)
 })

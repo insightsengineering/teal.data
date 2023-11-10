@@ -25,14 +25,20 @@ cdisc_join_keys <- function(...) {
     } else if (
       checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
     ) {
+      # Do nothing. This is handled by `teal_data()`
     } else {
       if ((is.null(name) || identical(trimws(name), "")) && is.character(item)) {
         name <- item
       }
+
       if (name %in% names(default_cdisc_keys)) {
         # Set default primary keys
         keys_list <- default_cdisc_keys[[name]]
         jk[[name]][[name]] <- keys_list$primary
+
+        if (!is.null(keys_list$parent)) {
+          parents(jk)[[name]] <- keys_list$parent
+        }
 
         if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
           jk[[name]][[keys_list$parent]] <- keys_list$foreign
@@ -43,3 +49,13 @@ cdisc_join_keys <- function(...) {
 
   jk
 }
+
+#' List containing the default `CDISC` join keys
+#'
+#' @details
+#' This data object is created at loading time from `cdisc_datasets/cdisc_datasets.yaml`.
+#'
+#' @name default_cdisc_join_keys
+#' @docType data
+#' @export
+NULL

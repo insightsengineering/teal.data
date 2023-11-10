@@ -109,18 +109,35 @@ test_that("[.join_keys can subscript multiple values by index or name", {
   )
 
   expect_length(jk[1:2], 2)
-  expect_length(jk[c("d1", "d5")], 2)
+  expect_length(jk[c("d1", "d5")], 4)
 
   expect_identical(
     jk[c("d1", "d5")],
     structure(
-      list(d1 = jk[["d1"]], d5 = jk[["d5"]]),
+      list(
+        d1 = jk[["d1"]],
+        d2 = jk[["d2"]],
+        d5 = jk[["d5"]],
+        d6 = jk[["d6"]]
+      ),
       class = c("join_keys", "list")
     )
   )
 
-  expect_identical(jk[2], structure(list(d2 = jk[["d2"]]), class = c("join_keys", "list")))
-  expect_identical(jk[c(1, 3)], structure(list(d1 = jk[["d1"]], d3 = jk[["d3"]]), class = c("join_keys", "list")))
+  expect_identical(
+    jk[2],
+    structure(
+      list(d2 = jk[["d2"]], d1 = jk[["d1"]]),
+      class = c("join_keys", "list")
+    )
+  )
+  expect_identical(
+    jk[c(1, 3)],
+    structure(
+      list(d1 = jk[["d1"]], d2 = jk[["d2"]], d3 = jk[["d3"]], d4 = jk[["d4"]]),
+      class = c("join_keys", "list")
+    )
+  )
 })
 
 test_that("[<-.join_keys cannot subscript multiple values", {
@@ -394,14 +411,23 @@ test_that("join_keys[ can get all keys for a given dataset", {
   expect_equal(
     my_keys[dataset_1 = "d1"],
     structure(
-      list("d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T"))),
+      list(
+        "d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T")),
+        "d2" = list(d1 = c("C" = "A")),
+        "d3" = list(d1 = c("B" = "A", "T" = "S"))
+      ),
       class = c("join_keys", "list")
     )
   )
+
   expect_equal(
     my_keys[dataset_1 = "d3"],
     structure(
-      list("d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))),
+      list(
+        "d1" = list(d3 = c("A" = "B", "S" = "T")),
+        "d2" = list(d3 = c("C" = "U", "L" = "M")),
+        "d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))
+      ),
       class = c("join_keys", "list")
     )
   )
@@ -419,7 +445,11 @@ test_that("join_keys can get all keys from join_keys", {
   expect_equal(
     my_keys[dataset_1 = "d1"],
     structure(
-      list(d1 = all_keys[["d1"]]),
+      list(
+        "d1" = all_keys[["d1"]],
+        "d2" = list(d1 = all_keys[["d2"]][["d1"]]),
+        "d3" = list(d1 = all_keys[["d3"]][["d1"]])
+      ),
       class = c("join_keys", "list")
     )
   )
