@@ -11,10 +11,19 @@
 #' @export
 is_reproducible <- function(teal_data) {
   checkmate::assert_class(teal_data, 'teal_data')
+  if (teal_data@valid) {
+    teal_data
+  }
   hashes_qenv <- sapply(ls(teal_data@env), function(x) digest::digest(get(x, env = teal_data@env)))
   eval_env <- new.env()
   eval(parse(text = teal_data@code), envir = eval_env)
   hashes_eval_qenv <- sapply(ls(eval_env), function(x) digest::digest(get(x, env = eval_env)))
 
-  identical(hashes_qenv, hashes_eval_qenv)
+  reproducible <- identical(hashes_qenv, hashes_eval_qenv)
+  if (reproducible) {
+    teal_data@valid <- TRUE
+    # TODO @valid should be a blocked slot and we should unlock it here
+  } else {
+    stop('@env is not reproducible with @code.')
+  }
 }
