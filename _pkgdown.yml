@@ -109,6 +109,7 @@ reference:
     contents:
       - datanames
       - datanames<-
+      - default_cdisc_join_keys
       - col_labels
       - col_labels<-
       - col_relabel
