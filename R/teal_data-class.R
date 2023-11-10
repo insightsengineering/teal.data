@@ -30,16 +30,18 @@ setOldClass("JoinKeys")
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
+#' @slot valid (`logical(1)`) whether the `@code` is validated.
 #'
 #' @import teal.code
 #' @keywords internal
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "JoinKeys", datanames = "character"),
+  slots = c(join_keys = "JoinKeys", datanames = "character", valid = "logical"),
   prototype = list(
     join_keys = join_keys(),
-    datanames = character(0)
+    datanames = character(0),
+    valid = TRUE
   )
 )
 
@@ -62,6 +64,7 @@ new_teal_data <- function(data,
                           datanames = union(names(data), names(join_keys$get()))) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "JoinKeys")
+  checkmate::assert_logical(valid)
   if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
   checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {
@@ -74,6 +77,7 @@ new_teal_data <- function(data,
   if (length(code)) {
     code <- paste(code, collapse = "\n")
   }
+  valid <- !(length(code) || !is.null(data))
 
   id <- sample.int(.Machine$integer.max, size = length(code))
 
@@ -88,6 +92,7 @@ new_teal_data <- function(data,
     messages = rep("", length(code)),
     id = id,
     join_keys = join_keys,
-    datanames = datanames
+    datanames = datanames,
+    valid = valid
   )
 }

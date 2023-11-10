@@ -41,6 +41,8 @@ Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
 \item{\code{datanames}}{(\code{character}) vector of names of data sets in \verb{@env}.
 Used internally to distinguish them from auxiliary variables.
 Access or modify with \code{\link[=datanames]{datanames()}}.}
+
+\item{\code{valid}}{(\code{logical(1)}) whether the \verb{@code} is validated.}
 }}
 
 \keyword{internal}
