@@ -22,7 +22,6 @@ is_reproducible <- function(teal_data) {
   reproducible <- identical(hashes_qenv, hashes_eval_qenv)
   if (reproducible) {
     teal_data@valid <- TRUE
-    # TODO @valid should be a blocked slot and we should unlock it here
   } else {
     stop("@env is not reproducible with @code.")
   }
