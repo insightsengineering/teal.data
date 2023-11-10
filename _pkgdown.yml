@@ -122,6 +122,7 @@ reference:
       - join_key
       - join_keys
       - join_keys<-
+      - length.join_keys
       - parent
       - parents
       - parents<-
