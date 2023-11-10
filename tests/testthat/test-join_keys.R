@@ -213,6 +213,31 @@ test_that("[[<-.join_keys removes keys with NULL and keeps existing", {
   expect_length(jk, 4)
 })
 
+# -----------------------------------------------------------------------------
+#
+# names<-.join_keys
+#
+
+test_that("names<-.join_keys will replace names at first and second levels", {
+  jk <- join_keys(
+    join_key("a", keys = "k4"),
+    join_key("a", "b", "k1"),
+    join_key("a", "c", "k3"),
+    join_key("d", "b", "k2"),
+  )
+
+  expect_named(jk, c("a", "b", "c", "d"), ignore.order = TRUE)
+
+  names(jk)[1:2] <- c("aa", "bb")
+
+  expect_named(jk, c("aa", "bb", "c", "d"), ignore.order = TRUE)
+
+  expect_identical(jk[["aa"]][["c"]], c("k3" = "k3"))
+  expect_identical(jk[["aa"]][["bb"]], c("k1" = "k1"))
+  expect_identical(jk[["aa"]][["aa"]], c("k4" = "k4"))
+
+  expect_length(names(jk), 4)
+})
 
 # -----------------------------------------------------------------------------
 #

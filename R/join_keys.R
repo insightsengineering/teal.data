@@ -196,6 +196,28 @@ c.join_keys <- function(...) {
   join_keys_obj
 }
 
+#' The Names of an `join_keys` Object
+#' @inheritParams base::`names<-`
+#' @export
+`names<-.join_keys` <- function(x, value) {
+  x <- unclass(x)
+  # Update inner keys
+  for (old_name in setdiff(names(x), value)) {
+    old_entry <- x[[old_name]]
+    new_name <- value[names(x) == old_name]
+
+    # Change 2nd-tier first
+    for (sub_name in names(old_entry)) {
+      names(x[[sub_name]])[names(x[[sub_name]]) == old_name] <- new_name
+    }
+
+    # Change in first tier
+    names(x)[names(x) == old_name] <- new_name
+  }
+  class(x) <- c("join_keys", "list")
+  x
+}
+
 #' @rdname join_keys
 #' @details
 #' Getter for `join_keys` that returns the relationship between pairs of datasets.
