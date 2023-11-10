@@ -97,13 +97,13 @@ update_keys_given_parents <- function(join_keys_obj) {
   datanames <- names(jk)
   duplicate_pairs <- list()
   for (d1 in datanames) {
-    d1_pk <- jk[d1, d1]
+    d1_pk <- jk[[d1]][[d1]]
     d1_parent <- parents(jk)[[d1]]
     for (d2 in datanames) {
       if (paste(d2, d1) %in% duplicate_pairs) {
         next
       }
-      if (length(jk[d1, d2]) == 0) {
+      if (length(jk[[d1]][[d2]]) == 0) {
         d2_parent <- parent(jk, d2)
         d2_pk <- jk[[d2]][[d2]]
 

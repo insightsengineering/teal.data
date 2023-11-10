@@ -110,19 +110,19 @@ teal_data_file <- function(path, code = get_code(path)) {
 #' Add primary keys as join_keys to a dataset self
 #'
 #' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
-#' @param join_keys (`join_keys`) object
+#' @param join_keys_obj (`join_keys`) object
 #'
 #' @keywords internal
-update_join_keys_to_primary <- function(data_objects, join_keys) {
+update_join_keys_to_primary <- function(data_objects, join_keys_obj) {
   for (obj in data_objects) {
     if (inherits(obj, "TealDataConnector")) {
-      join_keys <- update_join_keys_to_primary(obj$get_items(), join_keys)
+      join_keys_obj <- update_join_keys_to_primary(obj$get_items(), join_keys_obj)
     } else {
       dataname <- obj$get_dataname()
-      if (length(join_keys[dataname, dataname]) == 0) {
-        join_keys[dataname, dataname] <- obj$get_keys()
+      if (length(join_keys_obj[[dataname]][[dataname]]) == 0) {
+        join_keys_obj[[dataname]][[dataname]] <- obj$get_keys()
       }
     }
   }
-  join_keys
+  join_keys_obj
 }

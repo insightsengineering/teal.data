@@ -26,7 +26,7 @@ helper_test_getter_join_keys <- function(obj, dataset_1 = "ds1") {
 
   expect_s3_class(jk, class = c("join_keys", "list"))
   expect_length(jk, 1)
-  expect_length(jk[dataset_1, dataset_1], 1)
+  expect_length(jk[[dataset_1]][[dataset_1]], 1)
 
   obj
 }
@@ -43,8 +43,8 @@ helper_test_getter_join_keys_add <- function(obj, # nolint: object_length_linter
 
   expect_s3_class(jk, class = c("join_keys", "list"))
   expect_length(jk, 2)
-  expect_length(jk[dataset_1, dataset_1], 1)
-  expect_length(jk[new_dataset_1, new_dataset_1], 1)
+  expect_length(jk[[dataset_1]][[dataset_1]], 1)
+  expect_length(jk[[new_dataset_1]][[new_dataset_1]], 1)
 }
 
 #' Test suite for join_keys after manual adding a primary key
@@ -69,16 +69,13 @@ helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length
 
   # Primary key (each adds 1)
   join_keys(obj)[.ds()] <- .key()
-  join_keys(obj)[.ds(add = 0), .ds()] <- .key(2)
-  join_keys(obj)[.ds(add = 0), .ds()] <- .key(4)
-  join_keys(obj)[.ds(add = 0), .ds()] <- character(0)
-  expect_error(join_keys(obj)[.ds(add = 0), .ds()] <- .key(3))
+  expect_error(join_keys(obj)[.ds()] <- .key(3))
 
-  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(1))
-  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(2))
-  join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(4))
-  join_keys(obj) <- join_key(.ds(add = 0), .ds(), character(0))
-  expect_error(join_keys(obj) <- join_key(.ds(add = 0), .ds(), .key(3)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(1)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(2)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(4)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), character(0)))
+  expect_error(join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(3))))
 
   # Relationship pair (each adds 2)
   join_keys(obj)[[.ds()]][[.ds()]] <- .key(1)
@@ -87,14 +84,7 @@ helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length
   join_keys(obj)[[.ds()]][[.ds()]] <- .key(4)
   join_keys(obj)[[.ds()]][[.ds()]] <- character(0)
 
-  # Relationship pair alt 1 (each adds 2)
-  join_keys(obj)[[.ds(), .ds()]] <- .key(1)
-  join_keys(obj)[[.ds(), .ds()]] <- .key(2)
-  join_keys(obj)[[.ds(), .ds()]] <- .key(3)
-  join_keys(obj)[[.ds(), .ds()]] <- .key(4)
-  join_keys(obj)[[.ds(), .ds()]] <- character(0)
-
-  # Relationship pair alt 2 (each adds 2)
+  # Relationship pair alternative (each adds 2)
   join_keys(obj)[[.ds()]] <- setNames(list(.key(1)), .ds())
   join_keys(obj)[[.ds()]] <- setNames(list(.key(2)), .ds())
   join_keys(obj)[[.ds()]] <- setNames(list(.key(3)), .ds())
@@ -102,14 +92,15 @@ helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length
   join_keys(obj)[[.ds()]] <- setNames(list(character(0)), .ds())
 
   # Using join_key (each adds 2)
-  join_keys(obj) <- join_key(.ds(), .ds(), .key(1))
-  join_keys(obj) <- join_key(.ds(), .ds(), .key(2))
-  join_keys(obj) <- join_key(.ds(), .ds(), .key(3))
-  join_keys(obj) <- join_key(.ds(), .ds(), .key(4))
-  join_keys(obj) <- join_key(.ds(), .ds(), character(0))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(1)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(2)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(3)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(4)))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), character(0)))
 
   # (each join_key adds 2)
-  join_keys(obj) <- list(
+  join_keys(obj) <- c(
+    join_keys(obj),
     join_key(.ds(), .ds(), .key(1)),
     join_key(.ds(), .ds(), .key(2)),
     join_key(.ds(), .ds(), .key(3)),
@@ -118,22 +109,24 @@ helper_test_setter_mass_join_keys_add <- function(obj) { # nolint: object_length
   )
 
   # (each join_key adds 2)
-  join_keys(obj) <- join_keys(
-    join_key(.ds(), .ds(), .key(1)),
-    join_key(.ds(), .ds(), .key(2)),
-    join_key(.ds(), .ds(), .key(3)),
-    join_key(.ds(), .ds(), .key(4)),
-    join_key(.ds(), .ds(), character(0))
+  join_keys(obj) <- c(
+    join_keys(obj), join_keys(
+      join_key(.ds(), .ds(), .key(1)),
+      join_key(.ds(), .ds(), .key(2)),
+      join_key(.ds(), .ds(), .key(3)),
+      join_key(.ds(), .ds(), .key(4)),
+      join_key(.ds(), .ds(), character(0))
+    )
   )
 
   expect_s3_class(join_keys(obj), class = c("join_keys", "list"))
 
-  expected_length <- 68 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
+  expected_length <- 55 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
   expect_length(join_keys(obj), expected_length)
 
-  join_keys(obj) <- join_key("ds-manual", .ds(), .key(1))
+  join_keys(obj) <- c(join_keys(obj), join_key("ds-manual", .ds(), .key(1)))
   expect_length(join_keys(obj), expected_length + 2) # adds 2 new datasets
 
-  join_keys(obj) <- join_key(.ds(), "ds-manual", .key(1))
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), "ds-manual", .key(1)))
   expect_length(join_keys(obj), expected_length + 2 + 1) # adds 1 new dataset as ds-manual already exists
 }

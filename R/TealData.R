@@ -184,7 +184,7 @@ TealData <- R6::R6Class( # nolint
       } else if (is.null(dataset_2)) {
         private$join_keys[[dataset_1]]
       } else {
-        private$join_keys[[dataset_1, dataset_2]]
+        private$join_keys[[dataset_1]][[dataset_2]]
       }
     },
 

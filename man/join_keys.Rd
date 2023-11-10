@@ -13,7 +13,6 @@
 \alias{join_keys<-.teal_data}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
-\alias{[[.join_keys}
 \alias{[[<-.join_keys}
 \title{Create a \code{join_keys} out of a list of \code{join_key_set} objects}
 \usage{
@@ -37,13 +36,11 @@ join_keys(join_keys_obj) <- value
 
 \method{join_keys}{teal_data}(join_keys_obj) <- value
 
-\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL)
+\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL)
 
-\method{[}{join_keys}(join_keys_obj, dataset_1, dataset_2 = dataset_1) <- value
+\method{[}{join_keys}(join_keys_obj, dataset_1) <- value
 
-\method{[[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL, value)
-
-\method{[[}{join_keys}(join_keys_obj, dataset_1 = NULL, dataset_2 = NULL) <- value
+\method{[[}{join_keys}(join_keys_obj, dataset_1) <- value
 }
 \arguments{
 \item{...}{(optional), when no argument is given the empty constructor is called.
@@ -57,8 +54,6 @@ constructed from the arguments.}
 \item{value}{(\code{character} vector) value to assign.}
 
 \item{dataset_1}{(\code{character}) name of first dataset.}
-
-\item{dataset_2}{(\code{character}) name of second dataset.}
 }
 \value{
 \code{join_keys} object.
@@ -107,8 +102,8 @@ jk
 
 # or
 jk <- join_keys()
-jk["dataset_A", "dataset_B"] <- c("col_1" = "col_a")
-jk["dataset_A", "dataset_C"] <- c("col_2" = "col_x", "col_3" = "col_y")
+jk[["dataset_A"]][["dataset_B"]] <- c("col_1" = "col_a")
+jk[["dataset_A"]][["dataset_C"]] <- c("col_2" = "col_x", "col_3" = "col_y")
 jk
 
 td <- teal_data(join_keys = join_keys(join_key("a", "b", "c")))
@@ -118,15 +113,16 @@ jk <- join_keys()
 join_keys(jk)
 
 jk <- join_keys()
-jk <- join_keys(join_key("a", "b", "c"))
-jk <- join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c"))
+jk <- c(jk, join_keys(join_key("a", "b", "c")))
+jk <- c(jk, join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c")))
 
 # Using the setter (assignment) ----
 
 jk <- join_keys()
 join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-join_keys(jk) <- join_key("ds3", "ds4", "some_col2")
-join_keys(jk)["ds1", "ds3"] <- "some_col3"
+join_keys(jk) <- c(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
+
+join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 jk
 
 c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
@@ -134,48 +130,51 @@ c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 # Setter for join_keys within teal_data ----
 
 td <- teal_data()
-join_keys(td)["ds1", "ds2"] <- "key1"
-join_keys(td)["ds2", "ds2"] <- "key2"
-join_keys(td) <- join_keys(join_key("ds3", "ds2", "key3"))
+join_keys(td)[["ds1"]][["ds2"]] <- "key1"
+join_keys(td)[["ds2"]][["ds2"]] <- "key2"
+join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
 
 # Getter for join_keys ----
 
 jk <- join_keys()
-join_keys(jk) <- join_key("ds1", "ds2", "some_col")
+jk[["ds1"]][["ds2"]] <- "some_col"
+jk[["ds1"]][["ds3"]] <- "some_col2"
+
 jk["ds1"]
-jk[dataset_2 = "ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
 
-# Double subscript
-jk["ds1", "ds2"]
-
 # Setter via index ----
 
-jk <- join_keys()
-join_keys(jk) <- join_key("ds1", "ds2", "(original) pair key")
+jk <- join_keys(
+  join_key("ds1", "ds2", "col12"),
+  join_key("ds3", "ds4", "col34")
+)
 
 # overwrites previously defined key
-jk["ds1", "ds2"] <- "(new) pair key"
+jk["ds1"] <- list(ds2 = "(new)co12")
+jk["ds1"] <- list(ds3 = "col13", ds4 = "col14")
+jk
+
+jk[c("ds1", "ds2")] <- list(ds5 = "col*5")
+jk[c(1, 2)] <- list(ds5 = "col**5")
 
 # Creates primary key by only defining `dataset_1`
 jk["ds1"] <- "primary_key"
 jk
 
-jk <- join_keys(join_key("ds1", "ds2", "key"))
-jk[["ds1"]]
-jk[["ds1", "ds2"]]
-
 jk <- join_keys()
 jk[["ds1"]] <- list()
 jk[["ds2"]][["ds3"]] <- "key"
-jk[["ds3", "ds4"]] <- "new_key"
 
 jk <- join_keys()
 jk[["ds1"]] <- list()
 jk[["ds2"]][["ds3"]] <- "key"
 jk[["ds4"]] <- list(ds5 = "new")
-jk[["ds6", "ds7"]] <- "yada"
-jk[["ds8", "ds9"]] <- c(A = "B", "C")
+
+jk <- join_keys()
+jk[["ds2"]][["ds3"]] <- "key"
+jk[["ds2"]][["ds3"]] <- NULL
+jk
 }

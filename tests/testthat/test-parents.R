@@ -54,21 +54,21 @@ test_that("parents<- will add to parents attribute using list, `[` and `[[` nota
 
 test_that("assert_parent_child will detect empty keys", {
   jk <- join_keys()
-  jk["ds1", "ds2"] <- character(0)
+  jk[["ds1"]][["ds2"]] <- character(0)
   parents(jk) <- list(ds1 = "ds2")
   expect_error(assert_parent_child(jk))
 })
 
 test_that("assert_parent_child will detect invalid key pairs", {
   jk <- join_keys()
-  jk["ds1", "ds2"] <- "key1"
-  jk["ds2", "ds1"] <- character(0)
+  jk[["ds1"]][["ds2"]] <- "key1"
+  jk[["ds2"]][["ds1"]] <- character(0)
   parents(jk) <- list(ds1 = "ds2")
   expect_error(assert_parent_child(jk))
 
   jk2 <- join_keys()
-  jk2["ds2", "ds1"] <- "key1"
-  jk2["ds1", "ds2"] <- character(0)
+  jk2[["ds2"]][["ds1"]] <- "key1"
+  jk2[["ds1"]][["ds2"]] <- character(0)
   parents(jk2) <- list(ds1 = "ds2")
   expect_error(assert_parent_child(jk2))
 })

@@ -21,7 +21,7 @@ cdisc_join_keys <- function(...) {
     name <- names(data_objects)[ix]
 
     if (checkmate::test_class(item, "join_key_set")) {
-      jk[get_dataset_1(item), get_dataset_2(item)] <- get_keys(item)
+      jk[[get_dataset_1(item)]][[get_dataset_2(item)]] <- get_keys(item)
     } else if (
       checkmate::test_multi_class(item, c("TealDataConnector", "TealDataset", "TealDatasetConnector"))
     ) {
@@ -32,10 +32,10 @@ cdisc_join_keys <- function(...) {
       if (name %in% names(default_cdisc_keys)) {
         # Set default primary keys
         keys_list <- default_cdisc_keys[[name]]
-        jk[name] <- keys_list$primary
+        jk[[name]][[name]] <- keys_list$primary
 
         if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
-          jk[name, keys_list$parent] <- keys_list$foreign
+          jk[[name]][[keys_list$parent]] <- keys_list$foreign
         }
       }
     }
