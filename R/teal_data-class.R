@@ -64,7 +64,6 @@ new_teal_data <- function(data,
                           datanames = union(names(data), names(join_keys$get()))) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "JoinKeys")
-  checkmate::assert_logical(valid)
   if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
   checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {
@@ -77,7 +76,7 @@ new_teal_data <- function(data,
   if (length(code)) {
     code <- paste(code, collapse = "\n")
   }
-  valid <- !(length(code) || !is.null(data))
+  valid <- !(length(code) || !identical(list(), data))
 
   id <- sample.int(.Machine$integer.max, size = length(code))
 
