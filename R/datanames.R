@@ -22,12 +22,17 @@
 #' @name datanames
 #' @aliases datanames,teal_data-method
 #' @aliases datanames<-,teal_data,character-method
+#' @aliases datanames,qenv.error-method
+#' @aliases datanames<-,qenv.error,character-method
 
 #' @rdname datanames
 #' @export
 setGeneric("datanames", function(x) standardGeneric("datanames"))
 setMethod("datanames", "teal_data", definition = function(x) {
   x@datanames
+})
+setMethod("datanames", "qenv.error", definition = function(x) {
+  NULL
 })
 
 #' @rdname datanames
@@ -38,6 +43,10 @@ setMethod("datanames<-", c("teal_data", "character"), definition = function(x, v
     stop("invalid name")
   }
   x@datanames <- value
+  methods::validObject(x)
+  x
+})
+setMethod("datanames<-", c("qenv.error", "character"), definition = function(x, value) {
   methods::validObject(x)
   x
 })
