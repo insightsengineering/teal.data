@@ -26,6 +26,7 @@ testthat::test_that("only names of existing variables are accepted", {
 
 # qenv.error support ----
 testthat::test_that("datanames supports qenv.error class" ,{
+  qe <- within(teal_data(), stop())
   testthat::expect_no_error(datanames(qe))
   testthat::expect_no_error(datanames(qe) <- "name")
 })
