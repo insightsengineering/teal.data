@@ -31,6 +31,9 @@ setGeneric("datanames", function(x) standardGeneric("datanames"))
 setMethod("datanames", "teal_data", definition = function(x) {
   x@datanames
 })
+setMethod("datanames", "qenv.error", definition = function(x) {
+  NULL
+})
 
 #' @rdname datanames
 #' @export
@@ -43,13 +46,6 @@ setMethod("datanames<-", c("teal_data", "character"), definition = function(x, v
   methods::validObject(x)
   x
 })
-
-#' @export
-setMethod("datanames", "qenv.error", definition = function(x) {
-  NULL
-})
-
-#' @export
 setMethod("datanames<-", c("qenv.error", "character"), definition = function(x, value) {
   methods::validObject(x)
   x
