@@ -628,7 +628,8 @@ testthat::test_that("merge_join_keys merges mutually exclusive data", {
   x <- c(x, y)
   y <- c(y, x)
 
-  testthat::expect_identical(x, z)
+  testthat::expect_equal(x, z)
+  testthat::expect_equal(y, z)
   testthat::expect_true(all(y %in% z) && all(z %in% y))
   testthat::expect_true(all(y %in% x) && all(x %in% y))
 
