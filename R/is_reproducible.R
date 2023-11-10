@@ -1,0 +1,20 @@
+#' Reproducibility Check for `@code` Slot in `teal_data`
+#' @inheritParams teal_data
+#' @examples
+#' tdata1 <- teal_data()
+#' tdata1 <- within(tdata1, {
+#'    a <- 1
+#'    b <- a^5
+#'    c <- list(x = 2)
+#' })
+#' is_reproducible(tdata1)
+#' @export
+is_reproducible <- function(teal_data) {
+  checkmate::assert_class(teal_data, 'teal_data')
+  hashes_qenv <- sapply(ls(teal_data@env), function(x) digest::digest(get(x, env = teal_data@env)))
+  eval_env <- new.env()
+  eval(parse(text = teal_data@code), envir = eval_env)
+  hashes_eval_qenv <- sapply(ls(eval_env), function(x) digest::digest(get(x, env = eval_env)))
+
+  identical(hashes_qenv, hashes_eval_qenv)
+}
