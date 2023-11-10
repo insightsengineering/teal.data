@@ -220,7 +220,7 @@ c.join_keys <- function(...) {
   # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
 
-  if (checkmate::test_integerish(dataset_1)) {
+  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
     res <- NextMethod("[", join_keys_obj)
     class(res) <- c("join_keys", "list")
     return(res)
