@@ -80,6 +80,11 @@ parents.join_keys <- function(join_keys_obj) {
       old_parents[[dataset]] <- value[[dataset]]
     }
   }
+
+  if (is_dag(old_parents)) {
+    stop("Cycle detected in a parent and child dataset graph.")
+  }
+
   attr(join_keys_obj, "__parents__") <- old_parents # nolint: object_name_linter
   join_keys_obj
 }

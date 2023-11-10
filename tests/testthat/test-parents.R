@@ -1,3 +1,8 @@
+# -----------------------------------------------------------------------------
+#
+# parents()
+#
+
 test_that("parents will return empty list when empty/not set", {
   jk <- join_keys()
   expect_identical(parents(jk), list())
@@ -7,6 +12,30 @@ test_that("parents will return empty NULL when there is no parent", {
   jk <- join_keys()
   expect_null(parents(jk)[["ds1"]])
 })
+
+testthat::test_that("parents returns a list of all parents", {
+  jk <- join_keys()
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
+  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
+  testthat::expect_identical(parents(jk), list(df1 = character(0), df2 = "df1"))
+})
+
+testthat::test_that("parents returns an empty list when no parents are present", {
+  jk <- join_keys()
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
+  testthat::expect_identical(parents(jk), list())
+})
+
+testthat::test_that("parents throws error when dataname input is provided", {
+  jk <- join_keys()
+  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
+  testthat::expect_error(parents(jk, "df1"), "unused argument \\(\"df1\"\\)")
+})
+
+# -----------------------------------------------------------------------------
+#
+# parents<-
+#
 
 test_that("parents<- will add to parents attribute using `[` notation", {
   jk <- join_keys()
@@ -52,30 +81,20 @@ test_that("parents<- will add to parents attribute using list, `[` and `[[` nota
   expect_identical(parents(jk), list(ds1 = "ds2", ds3 = "ds4", ds5 = "ds6", ds7 = "ds8"))
 })
 
-test_that("assert_parent_child will detect empty keys", {
-  jk <- join_keys()
-  jk[["ds1"]][["ds2"]] <- character(0)
-  parents(jk) <- list(ds1 = "ds2")
-  expect_error(assert_parent_child(jk))
-})
-
-test_that("assert_parent_child will detect invalid key pairs", {
-  jk <- join_keys()
-  jk[["ds1"]][["ds2"]] <- "key1"
-  jk[["ds2"]][["ds1"]] <- character(0)
-  parents(jk) <- list(ds1 = "ds2")
-  expect_error(assert_parent_child(jk))
-
-  jk2 <- join_keys()
-  jk2[["ds2"]][["ds1"]] <- "key1"
-  jk2[["ds1"]][["ds2"]] <- character(0)
-  parents(jk2) <- list(ds1 = "ds2")
-  expect_error(assert_parent_child(jk2))
-})
-
-test_that("assert_parent_child will skip empty join_keys", {
-  jk <- join_keys()
-  expect_silent(assert_parent_child(jk))
+test_that("parents<- ensures it is a directed acyclical graph (DAG)", {
+  cyclic_jk <- join_keys(
+    join_key("a", "b", "id"),
+    join_key("b", "c", "id"),
+    join_key("c", "a", "id")
+  )
+  expect_error(
+    parents(cyclic_jk) <- list(
+      a = "b",
+      b = "c",
+      c = "a"
+    ),
+    "Cycle detected"
+  )
 })
 
 testthat::test_that("parents<- throws error when overwriting the parent value with a different value", {
@@ -92,6 +111,11 @@ testthat::test_that("parents<- works when overwriting the parent value with the 
   testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
 })
 
+# -----------------------------------------------------------------------------
+#
+# parent()
+#
+
 testthat::test_that("parent returns the parent name of the dataset", {
   jk <- join_keys()
   join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
@@ -106,25 +130,6 @@ testthat::test_that("parent returns NULL when dataset is not found or not passed
   testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
   testthat::expect_null(parent(jk))
   testthat::expect_null(parent(jk, "df3"))
-})
-
-testthat::test_that("get_parents returns a list of all parents", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
-  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
-  testthat::expect_identical(parents(jk), list(df1 = character(0), df2 = "df1"))
-})
-
-testthat::test_that("parents returns an empty list when no parents are present", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
-  testthat::expect_identical(parents(jk), list())
-})
-
-testthat::test_that("parents throws error when dataname input is provided", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
-  testthat::expect_error(parents(jk, "df1"), "unused argument \\(\"df1\"\\)")
 })
 
 # -----------------------------------------------------------------------------
@@ -166,6 +171,32 @@ testthat::test_that("update_keys_given_parents updates the join_keys when presen
 # -----------------------------------------------------------------------------
 #
 # assert_parent_child
+
+test_that("assert_parent_child will detect empty keys", {
+  jk <- join_keys()
+  jk[["ds1"]][["ds2"]] <- character(0)
+  parents(jk) <- list(ds1 = "ds2")
+  expect_error(assert_parent_child(jk))
+})
+
+test_that("assert_parent_child will detect invalid key pairs", {
+  jk <- join_keys()
+  jk[["ds1"]][["ds2"]] <- "key1"
+  jk[["ds2"]][["ds1"]] <- character(0)
+  parents(jk) <- list(ds1 = "ds2")
+  expect_error(assert_parent_child(jk))
+
+  jk2 <- join_keys()
+  jk2[["ds2"]][["ds1"]] <- "key1"
+  jk2[["ds1"]][["ds2"]] <- character(0)
+  parents(jk2) <- list(ds1 = "ds2")
+  expect_error(assert_parent_child(jk2))
+})
+
+test_that("assert_parent_child will skip empty join_keys", {
+  jk <- join_keys()
+  expect_silent(assert_parent_child(jk))
+})
 
 testthat::test_that("assert_parent_child does nothing if no parents are present", {
   jk <- join_keys()
