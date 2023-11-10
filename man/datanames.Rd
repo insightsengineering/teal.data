@@ -4,6 +4,8 @@
 \alias{datanames}
 \alias{datanames,teal_data-method}
 \alias{datanames<-,teal_data,character-method}
+\alias{datanames,qenv.error-method}
+\alias{datanames<-,qenv.error,character-method}
 \alias{datanames<-}
 \title{Names of Data Sets in \code{teal_data} Object}
 \usage{
