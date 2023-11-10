@@ -3,14 +3,14 @@
 #' @examples
 #' tdata1 <- teal_data()
 #' tdata1 <- within(tdata1, {
-#'    a <- 1
-#'    b <- a^5
-#'    c <- list(x = 2)
+#'   a <- 1
+#'   b <- a^5
+#'   c <- list(x = 2)
 #' })
 #' is_reproducible(tdata1)
 #' @export
 is_reproducible <- function(teal_data) {
-  checkmate::assert_class(teal_data, 'teal_data')
+  checkmate::assert_class(teal_data, "teal_data")
   if (teal_data@valid) {
     teal_data
   }
@@ -24,6 +24,6 @@ is_reproducible <- function(teal_data) {
     teal_data@valid <- TRUE
     # TODO @valid should be a blocked slot and we should unlock it here
   } else {
-    stop('@env is not reproducible with @code.')
+    stop("@env is not reproducible with @code.")
   }
 }
