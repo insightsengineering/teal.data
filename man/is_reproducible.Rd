@@ -6,6 +6,9 @@
 \usage{
 is_reproducible(teal_data)
 }
+\arguments{
+\item{teal_data}{\code{teal_data} object}
+}
 \description{
 Reproducibility Check for \verb{@code} Slot in \code{teal_data}
 }

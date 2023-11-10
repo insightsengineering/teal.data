@@ -1,5 +1,5 @@
 #' Reproducibility Check for `@code` Slot in `teal_data`
-#' @inheritParams teal_data
+#' @param teal_data `teal_data` object
 #' @examples
 #' tdata1 <- teal_data()
 #' tdata1 <- within(tdata1, {
