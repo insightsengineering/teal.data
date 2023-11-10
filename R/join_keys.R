@@ -330,6 +330,10 @@ c.join_keys <- function(...) {
 #' jk[["ds2"]][["ds3"]] <- NULL
 #' jk
 `[[<-.join_keys` <- function(join_keys_obj, dataset_1, value) {
+  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
+    dataset_1 <- names(join_keys_obj)[[dataset_1]]
+  }
+
   checkmate::assert_string(dataset_1)
 
   # Accepting 1 subscript with valid `value` formal
@@ -343,33 +347,24 @@ c.join_keys <- function(...) {
   names(norm_value) <- names(value)
   value <- norm_value
 
-  # Keep original parameters as variables will be overwritten for `NextMethod` call
-  original_value <- value
-  ds1 <- dataset_1
+  #
+  # Remove classes to use list-based get/assign operations
+  join_keys_obj <- unclass(join_keys_obj)
 
-  # In case an pair is removed, also remove the symmetric pair
+  # In case a pair is removed, also remove the symmetric pair
   removed_names <- setdiff(names(join_keys_obj[[dataset_1]]), names(value))
   if (length(removed_names) > 0) {
-    for (.x in removed_names) {
-      value <- join_keys_obj[[.x]]
-      value[[ds1]] <- NULL
-      dataset_1 <- .x
-      join_keys_obj <- NextMethod("[[<-", join_keys_obj)
-    }
-
-    # Restore original values
-    dataset_1 <- ds1
-    value <- original_value
+    for (.x in removed_names) join_keys_obj[[.x]][[dataset_1]] <- NULL
   }
 
-  join_keys_obj <- NextMethod("[[<-", join_keys_obj)
+  join_keys_obj[[dataset_1]] <- value
 
   # Iterate on all new values to create symmetrical pair
-  for (ds2 in names(original_value)) {
-    if (ds2 == ds1) next
+  for (ds2 in names(value)) {
+    if (ds2 == dataset_1) next
 
-    value <- join_keys_obj[[ds2]] %||% list()
-    new_value <- original_value[[ds2]]
+    keep_value <- join_keys_obj[[ds2]] %||% list()
+    new_value <- value[[ds2]]
 
     if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
       new_value <- setNames(new_value, new_value)
@@ -380,12 +375,25 @@ c.join_keys <- function(...) {
       new_value <- setNames(names(new_value), new_value)
     }
 
-    # Change variables for NextMethod call
-    dataset_1 <- ds2
-    value[[ds1]] <- new_value
-    join_keys_obj <- NextMethod("[[<-", join_keys_obj)
+    keep_value[[dataset_1]] <- new_value
+
+    # Assign symmetrical
+    join_keys_obj[[ds2]] <- keep_value
   }
 
+  # Remove NULL or empty keys
+  empty_ix <- vapply(
+    join_keys_obj,
+    function(.x) is.null(.x) || length(.x) == 0,
+    logical(1)
+  )
+  preserve_attr <- attributes(join_keys_obj)[!names(attributes(join_keys_obj)) %in% "names"]
+  join_keys_obj <- join_keys_obj[!empty_ix]
+  attributes(join_keys_obj) <- modifyList(attributes(join_keys_obj), preserve_attr)
+
+  #
+  # restore class
+  class(join_keys_obj) <- c("join_keys", "list")
   join_keys_obj
 }
 

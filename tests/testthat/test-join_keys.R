@@ -187,10 +187,8 @@ test_that("[[<-.join_keys removes keys with NULL", {
   expect_identical(
     jk,
     structure(
-      list(
-        d1 = structure(list(), names = character(0)),
-        d2 = structure(list(), names = character(0))
-      ),
+      list(),
+      names = character(0),
       class = c("join_keys", "list")
     )
   )
