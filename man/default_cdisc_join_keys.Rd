@@ -7,3 +7,6 @@
 \description{
 List containing the default \code{CDISC} join keys
 }
+\details{
+This data object is created at loading time from \code{cdisc_datasets/cdisc_datasets.yaml}.
+}
