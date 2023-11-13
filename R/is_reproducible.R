@@ -24,6 +24,6 @@ is_reproducible <- function(teal_data) {
     teal_data@valid <- TRUE
     teal_data
   } else {
-    stop("@env is not reproducible with @code.")
+    stop("Code validation failed.")
   }
 }

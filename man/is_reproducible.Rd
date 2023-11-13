@@ -15,9 +15,9 @@ Reproducibility Check for \verb{@code} Slot in \code{teal_data}
 \examples{
 tdata1 <- teal_data()
 tdata1 <- within(tdata1, {
-   a <- 1
-   b <- a^5
-   c <- list(x = 2)
+  a <- 1
+  b <- a^5
+  c <- list(x = 2)
 })
 is_reproducible(tdata1)
 }

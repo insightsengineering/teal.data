@@ -41,7 +41,7 @@ setClass(
   prototype = list(
     join_keys = join_keys(),
     datanames = character(0),
-    valid = TRUE
+    valid = logical(0)
   )
 )
 
