@@ -8,18 +8,22 @@
 #'   c <- list(x = 2)
 #' })
 #' is_reproducible(tdata1)
+#'
+#' tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+#' is_reproducible(tdata2)
+#' is_reproducible(tdata2)@valid
+#' tdata2@valid
+#'
 #' @export
 is_reproducible <- function(teal_data) {
   checkmate::assert_class(teal_data, "teal_data")
   if (teal_data@valid) {
-    teal_data
+    return(teal_data)
   }
-  hashes_qenv <- sapply(ls(teal_data@env), function(x) digest::digest(get(x, env = teal_data@env)))
   eval_env <- new.env()
   eval(parse(text = teal_data@code), envir = eval_env)
-  hashes_eval_qenv <- sapply(ls(eval_env), function(x) digest::digest(get(x, env = eval_env)))
 
-  reproducible <- identical(hashes_qenv, hashes_eval_qenv)
+  reproducible <- all.equal(teal_data@env, eval_env)
   if (reproducible) {
     teal_data@valid <- TRUE
     teal_data

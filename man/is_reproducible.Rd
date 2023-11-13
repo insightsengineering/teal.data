@@ -20,4 +20,10 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 is_reproducible(tdata1)
+
+tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+is_reproducible(tdata2)
+is_reproducible(tdata2)@valid
+tdata2@valid
+
 }
