@@ -1,4 +1,11 @@
 #' Reproducibility Check for `@code` Slot in `teal_data`
+#'
+#' Validates the reproducibility of the `teal_data@env` environment using the `@code` slot.
+#'
+#' @return If the objects returned by the `@code` slot in the input `teal_data` object exactly match
+#' the objects in `teal_data@env`, the function updates the `@valid` slot to `TRUE` in the `teal_data` object.
+#' If the `@code` fails to recreate objects in `teal_data@env`, an error is thrown.
+#'
 #' @param teal_data `teal_data` object
 #' @examples
 #' tdata1 <- teal_data()
