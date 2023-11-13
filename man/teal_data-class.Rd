@@ -18,22 +18,20 @@ If errors are raised, a \code{qenv.error} object is returned.
 \section{Slots}{
 
 \describe{
-\item{\code{env}}{(\code{environment}) environment containing data sets and possibly auxiliary variables
+\item{\code{env}}{(\code{environment}) environment containing data sets and possibly auxiliary variables.
 Access variables with \code{\link[=get_var]{get_var()}} or [\code{[[}].
 No setter provided. Evaluate code to add variables into \verb{@env}.}
 
-\item{\code{code}}{(\code{character}) representing code necessary to reproduce the contents of \verb{@env}.
+\item{\code{code}}{(\code{character}) vector representing code necessary to reproduce the contents of \verb{@env}.
 Access with \code{\link[=get_code]{get_code()}}.
 No setter provided. Evaluate code to append code to the slot.}
 
-\item{\code{id}}{(\code{integer}) random identifier assigned to each line of code in \verb{@code}. Used internally.}
+\item{\code{id}}{(\code{integer}) random identifier assigned to each element of \verb{@code}. Used internally.}
 
-\item{\code{warnings}}{(\code{character}) the warnings output when evaluating the code.}
-
-\item{\code{warnings}}{(\code{character}) warnings raised when evaluating code.
+\item{\code{warnings}}{(\code{character}) vector of warnings raised when evaluating code.
 Access with \code{\link[=get_warnings]{get_warnings()}}.}
 
-\item{\code{messages}}{(\code{character}) messages raised when evaluating code.}
+\item{\code{messages}}{(\code{character}) vector of messages raised when evaluating code.}
 
 \item{\code{join_keys}}{(\code{JoinKeys}) object specifying joining keys for data sets in \verb{@env}.
 Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
@@ -42,8 +40,12 @@ Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
 Used internally to distinguish them from auxiliary variables.
 Access or modify with \code{\link[=datanames]{datanames()}}.}
 
+<<<<<<< HEAD
 \item{\code{valid}}{(logical(1)) representing whether the check of the reproducibility of the \verb{@env} environment using the
 code from the \verb{@code} slot was performed. See \code{\link[=is_reproducible]{is_reproducible()}} for more information.}
+=======
+\item{\code{valid}}{(\code{logical}) flag specifying whether running code in \verb{@code} yields contents of \verb{@env}. Used internally.}
+>>>>>>> 9f76f32bb538dc4c08af336e315c7c73f28fa884
 }}
 
 \keyword{internal}

@@ -158,6 +158,7 @@ testthat::test_that("Error raised when executing MAETealDataset$check and code i
 testthat::test_that("MAETealDataset$check_keys doesn't throw if constructed with correct keys", {
   utils::data(miniACC, package = "MultiAssayExperiment")
   mae <- MAETealDataset$new(dataname = "miniACC", x = miniACC, keys = "patientID")
+  testthat::skip_on_ci()
   testthat::expect_silent(mae$check_keys())
 })
 

@@ -14,17 +14,16 @@ setOldClass("JoinKeys")
 #' @name teal_data-class
 #' @rdname teal_data-class
 #'
-#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables
+#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables.
 #'  Access variables with [get_var()] or [`[[`].
 #'  No setter provided. Evaluate code to add variables into `@env`.
-#' @slot code (`character`) representing code necessary to reproduce the contents of `@env`.
+#' @slot code (`character`) vector representing code necessary to reproduce the contents of `@env`.
 #'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
-#' @slot id (`integer`) random identifier assigned to each line of code in `@code`. Used internally.
-#' @slot warnings (`character`) the warnings output when evaluating the code.
-#' @slot warnings (`character`) warnings raised when evaluating code.
+#' @slot id (`integer`) random identifier assigned to each element of `@code`. Used internally.
+#' @slot warnings (`character`) vector of warnings raised when evaluating code.
 #'  Access with [get_warnings()].
-#' @slot messages (`character`) messages raised when evaluating code.
+#' @slot messages (`character`) vector of messages raised when evaluating code.
 #' @slot join_keys (`JoinKeys`) object specifying joining keys for data sets in `@env`.
 #'  Access or modify with [get_join_keys()].
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
