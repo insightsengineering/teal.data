@@ -104,8 +104,8 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
 #'   c <- list(x = 2)
 #' })
 #' get_code(tdata1)
-#' get_code(tdata1, 'a')
-#' get_code(tdata1, 'b')
+#' get_code(tdata1, "a")
+#' get_code(tdata1, "b")
 #'
 get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) {
   if (!x@valid) {
@@ -121,7 +121,7 @@ get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) 
   if (deparse) {
     code
   } else {
-    parse(text = code , keep.source = TRUE)
+    parse(text = code, keep.source = TRUE)
   }
 }
 
