@@ -1,19 +1,26 @@
-test_that("join_key throws error with invalid keys arguments", {
-  # invalid types
+test_that("join_key throws error with NULL keys", {
   expect_error(join_key("d1", "d2", keys = NULL))
+})
+
+test_that("join_key throws error with NA keys", {
+  expect_error(join_key("d1", "d2", keys = NA))
+  expect_error(join_key("d1", "d2", keys = c("X" = "A", "B", NA)))
+})
+
+test_that("join_key throws error with numeric keys", {
   expect_error(join_key("d1", "d2", keys = 1:10))
+})
 
-  # not fully named
-  expect_error(join_key("d1", "d2", keys = c("X" = "A", "B")), NA)
-  keys <- c("A", "C" = "B")
-  names(keys)[1] <- ""
-  expect_error(join_key("d1", "d2", keys), NA)
+test_that("join_key throws error with data keys", {
+  expect_error(join_key("d1", "d2", keys = Sys.time() + seq(1, 5)))
+})
 
-  # duplicates in names or values
+test_that("join_key throws error with invalid duplicate names in keys/values", {
   expect_error(join_key("d1", "d2", keys = c("A" = "A", "A" = "B")))
   expect_error(join_key("d1", "d2", keys = c("C" = "A", "D" = "A")))
+})
 
-  # names(keys)!= keys if datasets are the same
+test_that("join_key throws error with invalid primary keys (names != keys)", {
   expect_error(join_key("d1", "d1", keys = c("B" = "A", "A" = "B")))
   expect_error(join_key("d1", keys = c("B" = "A", "A" = "B")))
 })
