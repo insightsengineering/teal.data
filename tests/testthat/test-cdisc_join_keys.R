@@ -111,8 +111,13 @@ test_that("cdisc_join_keys does nothing with TealDataset", {
 })
 
 test_that("default_cdisc_join_keys can get a valid `join_keys` object", {
-  ds1 <- sample(names(default_cdisc_keys), 3)
+  ds1 <- c("ADTTE", "ADEX", "ADRS")
   result <- default_cdisc_join_keys[ds1]
-  expect_gte(length(result), 3)
-  expect_gte(length(parents(result)), 3)
+  expect_length(result, 4)
+  expect_length(parents(result), 3)
+
+  ds2 <- c("ADTTE", "ADSL")
+  result2 <- default_cdisc_join_keys[ds2]
+  expect_length(result2, 2)
+  expect_length(parents(result2), 1)
 })
