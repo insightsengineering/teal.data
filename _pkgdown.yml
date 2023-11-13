@@ -98,6 +98,7 @@ reference:
       - get_join_keys
       - get_raw_data
       - is_pulled
+      - is_reproducible
       - load_dataset
       - load_datasets
       - mutate_data
