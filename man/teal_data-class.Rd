@@ -42,7 +42,8 @@ Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
 Used internally to distinguish them from auxiliary variables.
 Access or modify with \code{\link[=datanames]{datanames()}}.}
 
-\item{\code{valid}}{(\code{logical(1)}) representing whether the \verb{@code} slot is reproducible.}
+\item{\code{valid}}{(logical(1)) representing whether the check of the reproducibility of the \verb{@env} environment using the
+code from the \verb{@code} slot was performed. See \code{\link[=is_reproducible]{is_reproducible()}} for more information.}
 }}
 
 \keyword{internal}
