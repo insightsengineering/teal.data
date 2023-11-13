@@ -76,7 +76,7 @@ new_teal_data <- function(data,
   if (length(code)) {
     code <- paste(code, collapse = "\n")
   }
-  valid <- !(length(code) || !identical(list(), data))
+  valid <- (length(code) == 0L && length(data) == 0L)
 
   id <- sample.int(.Machine$integer.max, size = length(code))
 
