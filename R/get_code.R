@@ -21,7 +21,8 @@
 #'   \item{to close chunk }{`#<code` or `#<ADSL code` or `#<ADSL ADTTE code`}
 #' }
 #'
-#' @param x ([`TealDatasetConnector`] or [`TealDataset`]). If of class `character` will be treated as file to read.
+#' @param x ([`TealDatasetConnector`], [`TealDataset`]) or [`teal_data`]. If of `character` class, it will be treated as
+#' an input file to read.
 #' @param exclude_comments (`logical`) whether exclude commented-out lines of code. Lines to be excluded
 #' should be ended with `# nocode`. For multiple line exclusions one should enclose ignored block of code with
 #' `# nocode>` and `# <nocode`
@@ -89,6 +90,38 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
     x$get_code(dataname = dataname, deparse = deparse)
   } else {
     x$get_code(deparse = deparse)
+  }
+}
+
+#' @rdname get_code
+#' @export
+#' @examples
+#'
+#' tdata1 <- teal_data()
+#' tdata1 <- within(tdata1, {
+#'   a <- 1
+#'   b <- a^5
+#'   c <- list(x = 2)
+#' })
+#' get_code(tdata1)
+#' get_code(tdata1, 'a')
+#' get_code(tdata1, 'b')
+#'
+get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) {
+  if (!x@valid) {
+    warning("Code was not validated for reproducibility.")
+  }
+
+  code <- if (length(dataname) > 0) {
+    teal.code:::get_code_dependency(x@code, dataname)
+  } else {
+    x@code
+  }
+
+  if (deparse) {
+    code
+  } else {
+    parse(text = code , keep.source = TRUE)
   }
 }
 
