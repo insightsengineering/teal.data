@@ -30,7 +30,7 @@ setOldClass("JoinKeys")
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
-#' @slot valid (`logical(1)`) whether the `@code` is validated.
+#' @slot valid (`logical(1)`) representing whether the `@code` slot is reproducible.
 #'
 #' @import teal.code
 #' @keywords internal
