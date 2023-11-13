@@ -187,11 +187,6 @@ c.join_keys <- function(...) {
     return(join_keys_obj)
   }
 
-  if (checkmate::test_class(value, c("join_keys", "list"))) {
-    join_keys_obj@join_keys <- merge_join_keys(join_keys_obj@join_keys, value)
-    return(join_keys_obj)
-  }
-
   join_keys(join_keys_obj@join_keys) <- value
   join_keys_obj
 }

@@ -48,6 +48,41 @@ test_that("c.join_keys to set via multiple lists that progressively merge object
   expect_length(obj, 8)
 })
 
+test_that("join_keys<-.join_keys overwrites existing join_keys", {
+  jk <- join_keys(
+    join_key("d1", "d2", c("A" = "B", "C" = "C")),
+    join_key("d3", "d4", c("D", "E")),
+    join_key("d5", "d6", c("F", "K" = "k"))
+  )
+
+  join_keys(jk) <- join_keys(
+    join_key("d1", "d1", "primary")
+  )
+
+  expect_length(jk, 1)
+  expect_identical(jk[["d1"]], list(d1 = c("primary" = "primary")))
+})
+
+test_that("join_keys<-.teal_data overwrites existing join_keys", {
+  td <- teal_data(
+    iris = iris,
+    join_keys = join_keys(
+      join_key("d1", "d2", c("A" = "B", "C" = "C")),
+      join_key("d3", "d4", c("D", "E")),
+      join_key("d5", "d6", c("F", "K" = "k"))
+    )
+  )
+
+  expect_length(join_keys(td), 6)
+
+  join_keys(td) <- join_keys(
+    join_key("d1", "d1", "primary")
+  )
+
+  expect_length(join_keys(td), 1)
+  expect_identical(join_keys(td)[["d1"]], list(d1 = c("primary" = "primary")))
+})
+
 # -----------------------------------------------------------------------------
 #
 # [, [<-, [[ and [[<-
@@ -115,7 +150,13 @@ test_that("[.join_keys can subscript multiple values by index or name", {
 
   expect_length(jk[c("d1", "d5"), keep_all_foreign_keys = TRUE], 4)
   expect_length(jk[c("d1", "d5")], 1)
-  expect_equal(jk[c("d1", "d5")], list(d1 = list(d1 = c("A" = "A"))))
+  expect_equal(
+    jk[c("d1", "d5")],
+    structure(
+      list(d1 = list(d1 = c("A" = "A"))),
+      class = c("join_keys", "list")
+    )
+  )
 
   expect_identical(
     jk[c("d1", "d5"), keep_all_foreign_keys = TRUE],
@@ -506,7 +547,8 @@ test_that("join_keys[ can get all keys for a given dataset", {
         "d2" = list(d1 = c("C" = "A")),
         "d3" = list(d1 = c("B" = "A", "T" = "S"))
       ),
-      class = c("join_keys", "list")
+      class = c("join_keys", "list"),
+      "__parents__" = list("d2" = "d1", "d3" = "d1")
     )
   )
 
@@ -517,7 +559,8 @@ test_that("join_keys[ can get all keys for a given dataset", {
         "d1" = list(d3 = c("A" = "B", "S" = "T")),
         "d3" = list(d1 = c("B" = "A", "T" = "S"))
       ),
-      class = c("join_keys", "list")
+      class = c("join_keys", "list"),
+      "__parents__" = list("d3" = "d1")
     )
   )
 })
