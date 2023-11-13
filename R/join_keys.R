@@ -253,8 +253,17 @@ c.join_keys <- function(...) {
   # When retrieving a relationship pair, it will also return the symmetric key
   new_jk <- new_join_keys()
   for (ix in dataset_1) {
-    new_jk[[ix]] <- join_keys_obj[[ix]]
+    ix_parent <- parent(join_keys_obj, ix)
+
+    ix_valid_names <- names(join_keys_obj[[ix]]) %in% c(ix_parent, dataset_1)
+    new_jk[[ix]] <- join_keys_obj[[ix]][ix_valid_names]
+
+    # Add primary key of parent
+    if (length(ix_parent) > 0) {
+      new_jk[[ix_parent]][[ix_parent]] <- join_keys_obj[[ix_parent]][[ix_parent]]
+    }
   }
+
   common_parents_ix <- names(parents(join_keys_obj)) %in% names(new_jk)
   if (any(common_parents_ix)) parents(new_jk) <- parents(join_keys_obj)[common_parents_ix]
 
