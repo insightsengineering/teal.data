@@ -5,6 +5,8 @@
 #'
 #' `expect_identical(x, y, list_as_map = TRUE)`
 #'
+#' note: this needs to be located in an environment that contains `testthat`
+#' namespace, as it extends a S3 method of that package.
 #'
 #' @inheritParams testthat::compare
 #'
@@ -32,5 +34,4 @@ compare.join_keys <- function(x, y, ...) {
 
   compare(as_map(x), as_map(y))
 }
-
 .S3method("compare", "join_keys", compare.join_keys)

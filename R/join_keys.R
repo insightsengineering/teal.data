@@ -238,7 +238,7 @@ c.join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(join_keys_obj, dataset_1 = NULL) {
+`[.join_keys` <- function(join_keys_obj, dataset_1 = NULL, keep_all_foreign_keys = FALSE) {
   # Protection against missing being passed through functions
   if (missing(dataset_1)) dataset_1 <- NULL
 
@@ -256,6 +256,10 @@ c.join_keys <- function(...) {
     ix_parent <- parent(join_keys_obj, ix)
 
     ix_valid_names <- names(join_keys_obj[[ix]]) %in% c(ix_parent, dataset_1)
+    if (keep_all_foreign_keys) {
+      ix_valid_names <- rep(TRUE, length(names(join_keys_obj[[ix]])))
+    }
+
     new_jk[[ix]] <- join_keys_obj[[ix]][ix_valid_names]
 
     # Add primary key of parent

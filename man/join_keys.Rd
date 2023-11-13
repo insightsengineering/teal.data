@@ -36,7 +36,7 @@ join_keys(join_keys_obj) <- value
 
 \method{join_keys}{teal_data}(join_keys_obj) <- value
 
-\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL)
+\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL, keep_all_foreign_keys = FALSE)
 
 \method{[}{join_keys}(join_keys_obj, dataset_1) <- value
 

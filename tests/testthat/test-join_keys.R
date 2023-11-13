@@ -1,35 +1,35 @@
 test_that("join_keys.teal_data will successfully obtain object from teal_data", {
-  obj <- helper_generator_teal_data()
+  obj <- local_teal_data()
 
   expect_identical(obj@join_keys, join_keys(obj))
-  helper_test_getter_join_keys(obj, "ds1")
+  test_join_keys_bare(obj, "ds1")
 })
 
 test_that("join_keys.join_keys will return itself", {
-  obj <- helper_generator_join_keys()
+  obj <- local_join_keys()
 
   expect_identical(obj, join_keys(obj))
-  helper_test_getter_join_keys(obj, "ds1")
+  test_join_keys_bare(obj, "ds1")
 })
 
 test_that("join_keys<-.teal_data shared test to setter (in mass)", {
-  obj <- helper_generator_teal_data()
-  helper_test_setter_mass_join_keys_add(obj)
+  obj <- local_teal_data()
+  test_join_keys_combinatory(obj)
 })
 
 test_that("join_keys<-.join_keys shared test to setter  (in mass)", {
-  obj <- helper_generator_join_keys()
-  helper_test_setter_mass_join_keys_add(obj)
+  obj <- local_join_keys()
+  test_join_keys_combinatory(obj)
 })
 
 test_that("join_keys<-.teal_data shared test to getter and setter", {
-  obj <- helper_generator_teal_data()
-  helper_test_getter_join_keys_add(obj, "ds1", "ds2")
+  obj <- local_teal_data()
+  test_join_keys_add(obj, "ds1", "ds2")
 })
 
 test_that("join_keys<-.join_keys shared test to getter and setter", {
-  obj <- helper_generator_join_keys()
-  helper_test_getter_join_keys_add(obj, "ds1", "ds2")
+  obj <- local_join_keys()
+  test_join_keys_add(obj, "ds1", "ds2")
 })
 
 test_that("join_keys<-.join_keys to set via a join_key_set object", {
@@ -103,16 +103,22 @@ test_that("[<-.join_keys is equivalent to using the constructor", {
 
 test_that("[.join_keys can subscript multiple values by index or name", {
   jk <- join_keys(
+    join_key("d1", "d1", c("A")),
     join_key("d1", "d2", c("A" = "B", "C")),
     join_key("d3", "d4", c("D", "E")),
     join_key("d5", "d6", c("F", "K" = "k"))
   )
 
   expect_length(jk[1:2], 2)
-  expect_length(jk[c("d1", "d5")], 4)
+  expect_identical(jk[1:2], jk[c("d1", "d2")])
+  expect_identical(jk[c(1, 5)], jk[c("d1", "d5")])
+
+  expect_length(jk[c("d1", "d5"), keep_all_foreign_keys = TRUE], 4)
+  expect_length(jk[c("d1", "d5")], 1)
+  expect_equal(jk[c("d1", "d5")], list(d1 = list(d1 = c("A" = "A"))))
 
   expect_identical(
-    jk[c("d1", "d5")],
+    jk[c("d1", "d5"), keep_all_foreign_keys = TRUE],
     structure(
       list(
         d1 = jk[["d1"]],
@@ -125,17 +131,31 @@ test_that("[.join_keys can subscript multiple values by index or name", {
   )
 
   expect_identical(
-    jk[2],
+    jk[1],
     structure(
-      list(d2 = jk[["d2"]], d1 = jk[["d1"]]),
+      list(d1 = jk[["d1"]]["d1"]),
       class = c("join_keys", "list")
     )
   )
+
   expect_identical(
-    jk[c(1, 3)],
+    jk[c(1, 3), keep_all_foreign_keys = TRUE],
     structure(
       list(d1 = jk[["d1"]], d2 = jk[["d2"]], d3 = jk[["d3"]], d4 = jk[["d4"]]),
       class = c("join_keys", "list")
+    )
+  )
+
+  parents(jk) <- list("d2" = "d1")
+  expect_identical(
+    jk[2],
+    structure(
+      list(
+        d2 = jk[["d2"]],
+        d1 = list(d2 = jk[["d1"]][["d2"]], d1 = jk[["d1"]][["d1"]])
+      ),
+      class = c("join_keys", "list"),
+      "__parents__" = parents(jk)
     )
   )
 })
@@ -474,8 +494,12 @@ test_that("join_keys[ can get all keys for a given dataset", {
     join_key("d1", "d3", c("A" = "B", "S" = "T")),
     join_key("d2", "d3", c("C" = "U", "L" = "M"))
   )
+  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
+
+  expect_length(my_keys[dataset_1 = "d1"], 0)
+
   expect_equal(
-    my_keys[dataset_1 = "d1"],
+    my_keys[dataset_1 = "d1", keep_all_foreign_keys = TRUE],
     structure(
       list(
         "d1" = list(d2 = c("A" = "C"), d3 = c("A" = "B", "S" = "T")),
@@ -491,8 +515,7 @@ test_that("join_keys[ can get all keys for a given dataset", {
     structure(
       list(
         "d1" = list(d3 = c("A" = "B", "S" = "T")),
-        "d2" = list(d3 = c("C" = "U", "L" = "M")),
-        "d3" = list(d1 = c("B" = "A", "T" = "S"), d2 = c("U" = "C", "M" = "L"))
+        "d3" = list(d1 = c("B" = "A", "T" = "S"))
       ),
       class = c("join_keys", "list")
     )
@@ -509,12 +532,12 @@ test_that("join_keys can get all keys from join_keys", {
   all_keys <- my_keys
   expect_equal(names(all_keys), c("d1", "d2", "d3"))
   expect_equal(
-    my_keys[dataset_1 = "d1"],
+    my_keys[c("d1", "d2", "d3")],
     structure(
       list(
-        "d1" = all_keys[["d1"]],
-        "d2" = list(d1 = all_keys[["d2"]][["d1"]]),
-        "d3" = list(d1 = all_keys[["d3"]][["d1"]])
+        "d1" = list(d2 = all_keys[["d1"]][["d2"]], d3 = all_keys[["d1"]][["d3"]]),
+        "d2" = list(d1 = all_keys[["d2"]][["d1"]], d3 = all_keys[["d2"]][["d3"]]),
+        "d3" = list(d1 = all_keys[["d3"]][["d1"]], d2 = all_keys[["d3"]][["d2"]])
       ),
       class = c("join_keys", "list")
     )
