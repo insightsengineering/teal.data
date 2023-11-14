@@ -36,7 +36,7 @@ join_keys(join_keys_obj) <- value
 
 \method{c}{join_keys}(...)
 
-\method{[}{join_keys}(x, i = NULL, keep_all_foreign_keys = FALSE)
+\method{[}{join_keys}(x, i, keep_all_foreign_keys = FALSE)
 
 \method{[}{join_keys}(x, i) <- value
 

@@ -221,7 +221,11 @@ c.join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(x, i = NULL, keep_all_foreign_keys = FALSE) {
+`[.join_keys` <- function(x, i, keep_all_foreign_keys = FALSE) {
+  if (missing(i)) {
+    return(x)
+  }
+
   checkmate::assert(
     combine = "or",
     checkmate::check_integerish(i),
@@ -309,48 +313,7 @@ c.join_keys <- function(...) {
 #' jk["ds1"] <- "primary_key"
 #' jk
 `[<-.join_keys` <- function(x, i, value) {
-  checkmate::assert(
-    combine = "or",
-    checkmate::check_character(i),
-    checkmate::check_integerish(i),
-    checkmate::check_logical(i)
-  )
-
-  if (checkmate::test_integerish(i)) {
-    i <- names(x)[i]
-  }
-
-  checkmate::assert(
-    combine = "or",
-    checkmate::check_character(value),
-    checkmate::check_list(value, names = "named", types = "character", null.ok = TRUE)
-  )
-
-  # Assume characters as being primary keys
-  if (checkmate::test_character(value)) {
-    value <- lapply(i, function(dataset_ix) {
-      value
-    })
-    names(value) <- i
-  }
-
-  original_value <- value
-  for (dataset_ix in i) {
-    if (is.null(value)) {
-      inner_items <- names(x[[dataset_ix]])
-      value <- structure(
-        vector(mode = "list", length = length(inner_items)),
-        names = inner_items
-      )
-    }
-
-    for (new_ix in names(value)) {
-      x[[dataset_ix]][[new_ix]] <- value[[new_ix]]
-    }
-    value <- original_value
-  }
-
-  x
+  stop("Can't use `[<-` for object `join_keys`. Use [[<- instead.")
 }
 
 #' @rdname join_keys
@@ -575,11 +538,12 @@ check_join_keys_alike <- function(x) {
     vapply(
       x,
       function(el) {
-        checkmate::test_list(el, types = "character", names = "named")
+        checkmate::test_list(el, types = c("character", "null"), names = "named")
       },
       logical(1)
     )
   )
+
   if (isFALSE(all(result))) {
     return(
       paste(

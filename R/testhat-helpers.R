@@ -66,7 +66,7 @@ test_join_keys_add <- function(obj,
                                new_dataset_1 = "ds2",
                                new_keys = c("id")) {
   obj <- test_join_keys_bare(obj, dataset_1)
-  join_keys(obj)[new_dataset_1] <- c(new_keys) # primary key
+  join_keys(obj)[[new_dataset_1]][[new_dataset_1]] <- c(new_keys) # primary key
 
   jk <- join_keys(obj)
 
@@ -107,13 +107,9 @@ test_join_keys_combinatory <- function(obj) {
   }
 
   # Primary key (each adds 1)
-  join_keys(obj)[.ds()] <- .key()
-  expect_error(join_keys(obj)[.ds()] <- .key(3))
-
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(1)))
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(2)))
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(4)))
-  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), character(0)))
   expect_error(join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), .key(3))))
 
   # Relationship pair (each adds 2)
@@ -121,23 +117,20 @@ test_join_keys_combinatory <- function(obj) {
   join_keys(obj)[[.ds()]][[.ds()]] <- .key(2)
   join_keys(obj)[[.ds()]][[.ds()]] <- .key(3)
   join_keys(obj)[[.ds()]][[.ds()]] <- .key(4)
-  join_keys(obj)[[.ds()]][[.ds()]] <- character(0)
 
   # Relationship pair alternative (each adds 2)
   join_keys(obj)[[.ds()]] <- setNames(list(.key(1)), .ds())
   join_keys(obj)[[.ds()]] <- setNames(list(.key(2)), .ds())
   join_keys(obj)[[.ds()]] <- setNames(list(.key(3)), .ds())
   join_keys(obj)[[.ds()]] <- setNames(list(.key(4)), .ds())
-  join_keys(obj)[[.ds()]] <- setNames(list(character(0)), .ds())
 
   # Using join_key (each adds 2)
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(1)))
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(2)))
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(3)))
   join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), .key(4)))
-  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), character(0)))
 
-  # (each join_key adds 2)
+  # (each join_key adds 2, except character(0))
   join_keys(obj) <- c(
     join_keys(obj),
     join_key(.ds(), .ds(), .key(1)),
@@ -146,6 +139,13 @@ test_join_keys_combinatory <- function(obj) {
     join_key(.ds(), .ds(), .key(4)),
     join_key(.ds(), .ds(), character(0))
   )
+
+  # Setting character(0) is the same as NUL (adds nothing)
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(add = 0), .ds(), character(0)))
+  join_keys(obj)[[.ds()]][[.ds()]] <- character(0)
+  join_keys(obj)[[.ds()]] <- setNames(list(character(0)), .ds())
+  join_keys(obj) <- c(join_keys(obj), join_key(.ds(), .ds(), character(0)))
+
 
   # (each join_key adds 2)
   join_keys(obj) <- c(
@@ -160,7 +160,7 @@ test_join_keys_combinatory <- function(obj) {
 
   expect_s3_class(join_keys(obj), class = c("join_keys", "list"))
 
-  expected_length <- 55 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
+  expected_length <- 43 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
   expect_length(join_keys(obj), expected_length)
 
   join_keys(obj) <- c(join_keys(obj), join_key("ds-manual", .ds(), .key(1)))
