@@ -108,10 +108,7 @@ join_keys.default <- function(...) {
     checkmate::check_class(value, classes = c("join_key_set")),
     checkmate::check_list(value, types = "join_key_set")
   )
-  logger::log_trace("join_keys setting join keys.")
-  result <- UseMethod("join_keys<-", join_keys_obj)
-  logger::log_trace("join_keys keys are set.")
-  result
+  UseMethod("join_keys<-", join_keys_obj)
 }
 
 #' @rdname join_keys
@@ -492,7 +489,6 @@ merge_join_keys.join_keys <- function(join_keys_obj, new_join_keys) {
     join_keys_obj <- utils::modifyList(join_keys_obj, el)
   }
 
-  logger::log_trace("join_keys keys merged.")
   return(join_keys_obj)
 }
 
