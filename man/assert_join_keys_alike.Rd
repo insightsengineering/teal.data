@@ -24,6 +24,8 @@ Collection to store assertion messages. See \code{\link[checkmate]{AssertCollect
 \code{x} invisibly
 }
 \description{
-Assert the \code{join_keys} class membership of an argument
+Relaxed validation of a \code{join_keys} object. It accepts \code{join_keys}, a list
+of \code{join_key_set} (not symmetrical) or even a named list of character vectors
+without looking at the class name.
 }
 \keyword{internal}

@@ -173,9 +173,31 @@ join_keys.default <- function(...) {
 #' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 c.join_keys <- function(...) {
   x <- rlang::list2(...)
+  checkmate::assert_class(x[[1]], c("join_keys", "list"))
   checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
 
-  merge_join_keys.join_keys(x[[1]], x[-1])
+  join_keys_obj <- x[[1]]
+  x <- x[-1]
+  if (
+    checkmate::test_class(x, "join_key_set") ||
+      checkmate::test_class(x, c("join_keys", "list"))
+  ) {
+    x <- list(x)
+  }
+
+  lapply(x, assert_join_keys_alike)
+
+  if (checkmate::test_list(x, types = "join_key_set")) {
+    jk_temp <- new_join_keys()
+    join_keys(jk_temp) <- x
+    x <- list(jk_temp)
+  }
+
+  for (el in x) {
+    join_keys_obj <- utils::modifyList(join_keys_obj, el)
+  }
+
+  join_keys_obj
 }
 
 #' The Names of an `join_keys` Object
@@ -408,57 +430,6 @@ c.join_keys <- function(...) {
   x
 }
 
-#' @rdname merge_join_keys
-#' @keywords internal
-merge_join_keys <- function(join_keys_obj, new_join_keys) {
-  UseMethod("merge_join_keys", join_keys_obj)
-}
-
-#' @rdname merge_join_keys
-#' @keywords internal
-merge_join_keys.default <- function(join_keys_obj, new_join_keys) {
-  merge_join_keys(join_keys(join_keys_obj), new_join_keys)
-}
-
-#' Merging a list (or one) of `join_keys` objects into the current `join_keys` object
-#'
-#' @rdname merge_join_keys
-#'
-#' @param join_keys_obj (`join_keys`) object to merge the new_join_keys.
-#' @param new_join_keys  `list` of `join_keys` objects or single `join_keys` object
-#'
-#' @return a new `join_keys` object with the resulting merge.
-#'
-#' @keywords internal
-merge_join_keys.join_keys <- function(join_keys_obj, new_join_keys) {
-  if (
-    checkmate::test_class(new_join_keys, "join_key_set") ||
-      checkmate::test_class(new_join_keys, "join_keys")
-  ) {
-    new_join_keys <- list(new_join_keys)
-  }
-
-  lapply(new_join_keys, assert_join_keys_alike)
-
-  if (checkmate::test_list(new_join_keys, types = "join_key_set")) {
-    jk_temp <- new_join_keys()
-    join_keys(jk_temp) <- new_join_keys
-    new_join_keys <- list(jk_temp)
-  }
-
-  checkmate::assert_list(new_join_keys, types = c("join_keys"), min.len = 1)
-
-  for (el in new_join_keys) {
-    join_keys_obj <- utils::modifyList(join_keys_obj, el)
-  }
-
-  return(join_keys_obj)
-}
-
-# S3 methods have to be exported, otherwise `.S3method` needs to be used
-.S3method("merge_join_keys", "teal_data", merge_join_keys.default)
-.S3method("merge_join_keys", "join_keys", merge_join_keys.join_keys)
-
 #' Length of `join_keys` object.
 #' @inheritParams base::length
 #' @export
@@ -514,6 +485,11 @@ new_join_keys <- function() {
 }
 
 #' Assert the `join_keys` class membership of an argument
+#'
+#' Relaxed validation of a `join_keys` object. It accepts `join_keys`, a list
+#' of `join_key_set` (not symmetrical) or even a named list of character vectors
+#' without looking at the class name.
+#'
 #' @inheritParams checkmate::assert_class
 #'
 #' @return `x` invisibly
