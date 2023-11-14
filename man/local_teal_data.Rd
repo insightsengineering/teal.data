@@ -2,7 +2,7 @@
 % Please edit documentation in R/testhat-helpers.R
 \name{local_teal_data}
 \alias{local_teal_data}
-\title{Generate a teal_data dataset with sample data and join_keys}
+\title{(test helper) Generate a teal_data dataset with sample data and join_keys}
 \usage{
 local_teal_data()
 }
@@ -10,5 +10,6 @@ local_teal_data()
 \code{teal_data}
 }
 \description{
-Generate a teal_data dataset with sample data and join_keys
+(test helper) Generate a teal_data dataset with sample data and join_keys
 }
+\keyword{internal}

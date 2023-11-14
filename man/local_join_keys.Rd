@@ -2,7 +2,7 @@
 % Please edit documentation in R/testhat-helpers.R
 \name{local_join_keys}
 \alias{local_join_keys}
-\title{Generate a join_keys}
+\title{(test helper) Generate a join_keys}
 \usage{
 local_join_keys(dataset_1 = "ds1", keys = c("id"))
 }
@@ -15,5 +15,6 @@ local_join_keys(dataset_1 = "ds1", keys = c("id"))
 \code{join_keys} object with a primary key
 }
 \description{
-Generate a join_keys
+(test helper) Generate a join_keys
 }
+\keyword{internal}

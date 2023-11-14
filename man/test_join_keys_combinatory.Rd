@@ -2,7 +2,7 @@
 % Please edit documentation in R/testhat-helpers.R
 \name{test_join_keys_combinatory}
 \alias{test_join_keys_combinatory}
-\title{Test suite for join_keys that performs a mass modification}
+\title{(test helper) Test suite for join_keys that performs a mass modification}
 \usage{
 test_join_keys_combinatory(obj)
 }
@@ -17,3 +17,4 @@ or \code{teal_data})}
 The goal of this helper is to modify the \code{join_keys} with all variants of a
 valid foreign key.
 }
+\keyword{internal}

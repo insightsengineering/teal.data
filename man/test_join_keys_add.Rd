@@ -2,7 +2,7 @@
 % Please edit documentation in R/testhat-helpers.R
 \name{test_join_keys_add}
 \alias{test_join_keys_add}
-\title{Test suite for join_keys after manual adding a primary key}
+\title{(test helper) Test suite for join_keys after manual adding a primary key}
 \usage{
 test_join_keys_add(
   obj,
@@ -25,5 +25,6 @@ or \code{teal_data})}
 \code{obj} itself modified with a new foreign key.
 }
 \description{
-Test suite for join_keys after manual adding a primary key
+(test helper) Test suite for join_keys after manual adding a primary key
 }
+\keyword{internal}
