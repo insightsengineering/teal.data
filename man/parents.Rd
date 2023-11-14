@@ -58,5 +58,5 @@ td <- cdisc_data(
   ADRS = teal.data::rADRS
 )
 parents(td) <- list("ADTTE" = "ADSL") # replace existing
-parents(td)["ADRS"] <- "ADSL"         # add new parent
+parents(td)["ADRS"] <- "ADSL" # add new parent
 }
