@@ -1,6 +1,6 @@
 #' Getter and setter for specific parent
 #'
-#' @param join_keys_obj (`join_keys`) object to retrieve.
+#' @param x (`join_keys`) object to retrieve.
 #' @param dataset_name (`character(1)`)
 #'
 #' @export
@@ -10,20 +10,20 @@
 #' parent(jk, "ds2")
 #' parents(jk) <- list("ds2" = "ds1")
 #' parent(jk, "ds2")
-parent <- function(join_keys_obj, dataset_name) {
+parent <- function(x, dataset_name) {
   checkmate::assert_string(dataset_name)
-  # assert join_keys_obj is performed by parents()
-  parents(join_keys_obj)[[dataset_name]]
+  # assert x is performed by parents()
+  parents(x)[[dataset_name]]
 }
 
 #' Getter and setter functions for parents attribute of `join_keys`
 #'
-#' @param join_keys_obj (`join_keys`) object to retrieve or manipulate.
+#' @param x (`join_keys`) object to retrieve or manipulate.
 #' @return a list of `character` representing the parents.
 #'
 #' @export
-parents <- function(join_keys_obj) {
-  UseMethod("parents", join_keys_obj)
+parents <- function(x) {
+  UseMethod("parents", x)
 }
 
 #' @rdname parents
@@ -31,8 +31,8 @@ parents <- function(join_keys_obj) {
 #' @examples
 #' jk <- default_cdisc_join_keys["ADEX"]
 #' parents(jk)
-parents.join_keys <- function(join_keys_obj) {
-  attr(join_keys_obj, "__parents__") %||% list()
+parents.join_keys <- function(x) {
+  attr(x, "__parents__") %||% list()
 }
 
 #' @rdname parents
@@ -44,8 +44,8 @@ parents.join_keys <- function(join_keys_obj) {
 #'   ADTTE = teal.data::rADTTE
 #' )
 #' parents(td)
-parents.teal_data <- function(join_keys_obj) {
-  attr(join_keys_obj@join_keys, "__parents__") %||% list()
+parents.teal_data <- function(x) {
+  attr(x@join_keys, "__parents__") %||% list()
 }
 
 #' @rdname parents
@@ -53,8 +53,8 @@ parents.teal_data <- function(join_keys_obj) {
 #' @param value (`list`) named list of character values
 #'
 #' @export
-`parents<-` <- function(join_keys_obj, value) {
-  UseMethod("parents<-", join_keys_obj)
+`parents<-` <- function(x, value) {
+  UseMethod("parents<-", x)
 }
 
 #' @rdname parents
@@ -70,7 +70,7 @@ parents.teal_data <- function(join_keys_obj) {
 #' parents(jk) <- list(ds1 = "ds2")
 #' parents(jk)["ds5"] <- "ds6"
 #' parents(jk)["ds6"] <- "ds7"
-`parents<-.join_keys` <- function(join_keys_obj, value) {
+`parents<-.join_keys` <- function(x, value) {
   checkmate::assert_list(value, types = "character", names = "named")
 
   new_parents <- list()
@@ -95,10 +95,10 @@ parents.teal_data <- function(join_keys_obj) {
     stop("Cycle detected in a parent and child dataset graph.")
   }
 
-  attr(join_keys_obj, "__parents__") <- new_parents # nolint: object_name_linter
+  attr(x, "__parents__") <- new_parents # nolint: object_name_linter
 
-  assert_parent_child(join_keys_obj)
-  join_keys_obj
+  assert_parent_child(x)
+  x
 }
 
 #' @rdname parents
@@ -112,22 +112,22 @@ parents.teal_data <- function(join_keys_obj) {
 #' )
 #' parents(td) <- list("ADTTE" = "ADSL") # replace existing
 #' parents(td)["ADRS"] <- "ADSL" # add new parent
-`parents<-.teal_data` <- function(join_keys_obj, value) {
-  parents(join_keys_obj@join_keys) <- value
-  join_keys_obj
+`parents<-.teal_data` <- function(x, value) {
+  parents(x@join_keys) <- value
+  x
 }
 
 #' Updates the keys of the datasets based on the parents.
 #'
-#' @param join_keys_obj (`join_keys`) object to update the keys.
+#' @param x (`join_keys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
 #'
 #' @keywords internal
-update_keys_given_parents <- function(join_keys_obj) {
-  jk <- join_keys(join_keys_obj)
+update_keys_given_parents <- function(x) {
+  jk <- join_keys(x)
 
-  checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(join_keys_obj))
+  checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(x))
 
   datanames <- names(jk)
   duplicate_pairs <- list()
@@ -161,7 +161,7 @@ update_keys_given_parents <- function(join_keys_obj) {
     }
   }
   # check parent child relation
-  assert_parent_child(join_keys_obj = jk)
+  assert_parent_child(x = jk)
 
   jk
 }

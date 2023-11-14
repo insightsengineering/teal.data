@@ -4,13 +4,13 @@
 \alias{assert_parent_child}
 \title{Helper function checks the parent-child relations are valid}
 \usage{
-assert_parent_child(join_keys_obj)
+assert_parent_child(x)
 }
 \arguments{
-\item{join_keys_obj}{(\code{join_keys}) object to assert validity of relations}
+\item{x}{(\code{join_keys}) object to assert validity of relations}
 }
 \value{
-\code{join_keys_obj} invisibly
+\code{join_keys} invisibly
 }
 \description{
 Helper function checks the parent-child relations are valid

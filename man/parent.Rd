@@ -4,10 +4,10 @@
 \alias{parent}
 \title{Getter and setter for specific parent}
 \usage{
-parent(join_keys_obj, dataset_name)
+parent(x, dataset_name)
 }
 \arguments{
-\item{join_keys_obj}{(\code{join_keys}) object to retrieve.}
+\item{x}{(\code{join_keys}) object to retrieve.}
 
 \item{dataset_name}{(\code{character(1)})}
 }

@@ -4,10 +4,10 @@
 \alias{update_keys_given_parents}
 \title{Updates the keys of the datasets based on the parents.}
 \usage{
-update_keys_given_parents(join_keys_obj)
+update_keys_given_parents(x)
 }
 \arguments{
-\item{join_keys_obj}{(\code{join_keys}) object to update the keys.}
+\item{x}{(\code{join_keys}) object to update the keys.}
 }
 \value{
 (\code{self}) invisibly for chaining

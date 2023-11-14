@@ -25,11 +25,11 @@ join_keys(...)
 
 \method{join_keys}{default}(...)
 
-join_keys(join_keys_obj) <- value
+join_keys(x) <- value
 
-\method{join_keys}{join_keys}(join_keys_obj) <- value
+\method{join_keys}{join_keys}(x) <- value
 
-\method{join_keys}{teal_data}(join_keys_obj) <- value
+\method{join_keys}{teal_data}(x) <- value
 
 \method{c}{join_keys}(...)
 
@@ -46,7 +46,7 @@ it will return the \code{join_keys} of that object.
 When called with 1 or more \code{join_key_set} it will create a new \code{join_keys} with
 constructed from the arguments.}
 
-\item{join_keys_obj}{(\code{join_keys}) empty object to set the new relationship pairs.}
+\item{x}{(\code{join_keys}) empty object to set the new relationship pairs.}
 
 \item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
 to \code{join_keys} list.}
@@ -135,25 +135,6 @@ jk[["ds1"]][["ds3"]] <- "some_col2"
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
-
-# Setter via index ----
-
-jk <- join_keys(
-  join_key("ds1", "ds2", c("id_1" = "id_2")),
-  join_key("ds3", "ds4", c("id_3" = "id_4"))
-)
-
-# overwrites previously defined key
-jk["ds1"] <- list(ds2 = "(new)co12")
-jk["ds1"] <- list(ds3 = "col13", ds4 = "col14")
-jk
-
-jk[c("ds1", "ds2")] <- list(ds5 = "col*5")
-jk[c(1, 2)] <- list(ds5 = "col**5")
-
-# Creates primary key by only defining `i`
-jk["ds1"] <- "primary_key"
-jk
 
 jk <- join_keys()
 jk[["ds1"]] <- list()

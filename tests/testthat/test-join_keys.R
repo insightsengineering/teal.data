@@ -35,12 +35,12 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
 })
 
 testthat::test_that("join_keys.teal_data returns join_keys object from teal_data", {
-  obj <- local_teal_data()
+  obj <- teal_data(join_keys = join_keys(join_key("d1", "d1", "a")))
   testthat::expect_identical(obj@join_keys, join_keys(obj))
 })
 
 testthat::test_that("join_keys.join_keys returns itself", {
-  obj <- local_join_keys()
+  obj <- join_keys(join_key("d1", "d1", "a"))
   testthat::expect_identical(obj, join_keys(obj))
 })
 

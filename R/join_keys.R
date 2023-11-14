@@ -96,19 +96,19 @@ join_keys.default <- function(...) {
 #' The setter assignment `join_keys(obj) <- ...` will merge obj and `...` if obj
 #' is not empty.
 #'
-#' @param join_keys_obj (`join_keys`) empty object to set the new relationship pairs.
+#' @param x (`join_keys`) empty object to set the new relationship pairs.
 #' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
 #' to `join_keys` list.
 #'
 #' @export
-`join_keys<-` <- function(join_keys_obj, value) {
+`join_keys<-` <- function(x, value) {
   checkmate::assert(
     combine = "or",
     checkmate::check_class(value, classes = c("join_keys", "list")),
     checkmate::check_class(value, classes = c("join_key_set")),
     checkmate::check_list(value, types = "join_key_set")
   )
-  UseMethod("join_keys<-", join_keys_obj)
+  UseMethod("join_keys<-", x)
 }
 
 #' @rdname join_keys
@@ -123,7 +123,7 @@ join_keys.default <- function(...) {
 #'
 #' join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 #' jk
-`join_keys<-.join_keys` <- function(join_keys_obj, value) {
+`join_keys<-.join_keys` <- function(x, value) {
   # Assume assignment of join keys as a merge operation
   #  Needed to support join_keys(jk)[c("ds1", "ds2")] <- "key"
   if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
@@ -160,9 +160,9 @@ join_keys.default <- function(...) {
 #' join_keys(td)[["ds2"]][["ds2"]] <- "key2"
 #' join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 #' join_keys(td)
-`join_keys<-.teal_data` <- function(join_keys_obj, value) {
-  join_keys(join_keys_obj@join_keys) <- value
-  join_keys_obj
+`join_keys<-.teal_data` <- function(x, value) {
+  join_keys(x@join_keys) <- value
+  x
 }
 
 #' @rdname join_keys
@@ -224,7 +224,7 @@ c.join_keys <- function(...) {
 #' @details
 #' Getter for `join_keys` that returns the relationship between pairs of datasets.
 #'
-#' @inheritParams base::`[`
+#' @inheritParams base::`[[`
 #' @param keep_all_foreign_keys (`logical`) flag that keeps foreign keys and other
 #' datasets even if they are not a parent of the selected dataset.
 #'
@@ -315,27 +315,6 @@ c.join_keys <- function(...) {
 #' @inheritParams base::`[<-`
 #'
 #' @export
-#'
-#' @examples
-#'
-#' # Setter via index ----
-#'
-#' jk <- join_keys(
-#'   join_key("ds1", "ds2", c("id_1" = "id_2")),
-#'   join_key("ds3", "ds4", c("id_3" = "id_4"))
-#' )
-#'
-#' # overwrites previously defined key
-#' jk["ds1"] <- list(ds2 = "(new)co12")
-#' jk["ds1"] <- list(ds3 = "col13", ds4 = "col14")
-#' jk
-#'
-#' jk[c("ds1", "ds2")] <- list(ds5 = "col*5")
-#' jk[c(1, 2)] <- list(ds5 = "col**5")
-#'
-#' # Creates primary key by only defining `i`
-#' jk["ds1"] <- "primary_key"
-#' jk
 `[<-.join_keys` <- function(x, i, value) {
   stop("Can't use `[<-` for object `join_keys`. Use [[<- instead.")
 }
@@ -432,7 +411,7 @@ c.join_keys <- function(...) {
   )
   preserve_attr <- attributes(x)[!names(attributes(x)) %in% "names"]
   x <- x[!empty_ix]
-  attributes(x) <- modifyList(attributes(x), preserve_attr)
+  attributes(x) <- utils::modifyList(attributes(x), preserve_attr)
 
   #
   # restore class
@@ -545,13 +524,13 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
 
 #' Helper function checks the parent-child relations are valid
 #'
-#' @param join_keys_obj (`join_keys`) object to assert validity of relations
+#' @param x (`join_keys`) object to assert validity of relations
 #'
-#' @return `join_keys_obj` invisibly
+#' @return `join_keys` invisibly
 #'
 #' @keywords internal
-assert_parent_child <- function(join_keys_obj) {
-  jk <- join_keys(join_keys_obj)
+assert_parent_child <- function(x) {
+  jk <- join_keys(x)
   jk_parents <- parents(jk)
 
   checkmate::assert_class(jk, c("join_keys", "list"))
@@ -575,5 +554,5 @@ assert_parent_child <- function(join_keys_obj) {
       }
     }
   }
-  invisible(join_keys_obj)
+  invisible(x)
 }

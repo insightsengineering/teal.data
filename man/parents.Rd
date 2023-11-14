@@ -9,20 +9,20 @@
 \alias{parents<-.teal_data}
 \title{Getter and setter functions for parents attribute of \code{join_keys}}
 \usage{
-parents(join_keys_obj)
+parents(x)
 
-\method{parents}{join_keys}(join_keys_obj)
+\method{parents}{join_keys}(x)
 
-\method{parents}{teal_data}(join_keys_obj)
+\method{parents}{teal_data}(x)
 
-parents(join_keys_obj) <- value
+parents(x) <- value
 
-\method{parents}{join_keys}(join_keys_obj) <- value
+\method{parents}{join_keys}(x) <- value
 
-\method{parents}{teal_data}(join_keys_obj) <- value
+\method{parents}{teal_data}(x) <- value
 }
 \arguments{
-\item{join_keys_obj}{(\code{join_keys}) object to retrieve or manipulate.}
+\item{x}{(\code{join_keys}) object to retrieve or manipulate.}
 
 \item{value}{(\code{list}) named list of character values}
 }

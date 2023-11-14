@@ -10,10 +10,6 @@ local_cdisc_data_mixed_call(check = TRUE, join_keys1 = join_keys())
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
 code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
-
-\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
-(optional) object with dataset column relationships used for joining.
-If empty then no joins between pairs of objects.}
 }
 \value{
 a \code{CDISC} data set with the following tables: \code{ADSL}, \code{ADTTE} and \code{ADAE}
