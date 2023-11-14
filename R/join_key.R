@@ -56,6 +56,8 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     stopifnot(!is.null(names(keys)))
     stopifnot(!anyDuplicated(keys))
     stopifnot(!anyDuplicated(names(keys)))
+  } else {
+    keys <- NULL
   }
 
   if (dataset_1 == dataset_2 && any(names(keys) != keys)) {

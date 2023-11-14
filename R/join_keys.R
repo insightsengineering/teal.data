@@ -108,7 +108,10 @@ join_keys.default <- function(...) {
     checkmate::check_class(value, classes = c("join_key_set")),
     checkmate::check_list(value, types = "join_key_set")
   )
-  UseMethod("join_keys<-", join_keys_obj)
+  logger::log_trace("join_keys setting join keys.")
+  result <- UseMethod("join_keys<-", join_keys_obj)
+  logger::log_trace("join_keys keys are set.")
+  result
 }
 
 #' @rdname join_keys
@@ -145,8 +148,6 @@ join_keys.default <- function(...) {
 
     join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   }
-
-  logger::log_trace("join_keys keys are set.")
 
   join_keys_obj
 }
@@ -206,8 +207,9 @@ c.join_keys <- function(...) {
 #' @details
 #' Getter for `join_keys` that returns the relationship between pairs of datasets.
 #'
-#' @param join_keys_obj (`join_keys`) object to extract the join keys
-#' @param dataset_1 (`character`) name of first dataset.
+#' @inheritParams base::`[`
+#' @param keep_all_foreign_keys (`logical`) flag that keeps foreign keys and other
+#' datasets even if they are not a parent of the selected dataset.
 #'
 #' @export
 #'
@@ -222,21 +224,23 @@ c.join_keys <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(join_keys_obj, dataset_1 = NULL, keep_all_foreign_keys = FALSE) {
-  # Protection against missing being passed through functions
-  if (missing(dataset_1)) dataset_1 <- NULL
+`[.join_keys` <- function(x, i = NULL, keep_all_foreign_keys = FALSE) {
+  checkmate::assert(
+    combine = "or",
+    checkmate::check_integerish(i),
+    checkmate::check_logical(i),
+    checkmate::check_character(i)
+  )
+  checkmate::assert_logical(keep_all_foreign_keys, len = 1)
 
-  if (is.null(dataset_1)) {
-    return(join_keys_obj)
-  }
-
-  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
-    dataset_1 <- names(join_keys_obj)[dataset_1]
+  # Convert integer/logical index to named index
+  if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
+    i <- names(x)[i]
   }
 
   # When retrieving a relationship pair, it will also return the symmetric key
   new_jk <- new_join_keys()
-  queue <- dataset_1
+  queue <- i
   bin <- character(0)
 
   # Need to iterate on a mutating queue if subset of a dataset will also
@@ -251,29 +255,29 @@ c.join_keys <- function(...) {
     }
     bin <- c(bin, ix)
 
-    ix_parent <- parent(join_keys_obj, ix)
+    ix_parent <- parent(x, ix)
 
     if (checkmate::test_string(ix_parent, min.chars = 1) && !ix_parent %in% c(queue, bin)) {
       queue <- c(queue, ix_parent)
     }
 
-    ix_valid_names <- names(join_keys_obj[[ix]]) %in% c(queue, bin)
+    ix_valid_names <- names(x[[ix]]) %in% c(queue, bin)
     if (keep_all_foreign_keys) {
-      ix_valid_names <- rep(TRUE, length(names(join_keys_obj[[ix]])))
+      ix_valid_names <- rep(TRUE, length(names(x[[ix]])))
     }
 
-    new_jk[[ix]] <- join_keys_obj[[ix]][ix_valid_names]
+    new_jk[[ix]] <- x[[ix]][ix_valid_names]
 
     # Add primary key of parent
     if (length(ix_parent) > 0) {
-      new_jk[[ix_parent]][[ix_parent]] <- join_keys_obj[[ix_parent]][[ix_parent]]
+      new_jk[[ix_parent]][[ix_parent]] <- x[[ix_parent]][[ix_parent]]
     }
   }
 
-  common_parents_ix <- names(parents(join_keys_obj)) %in% names(new_jk) &
-    parents(join_keys_obj) %in% names(new_jk)
+  common_parents_ix <- names(parents(x)) %in% names(new_jk) &
+    parents(x) %in% names(new_jk)
 
-  if (any(common_parents_ix)) parents(new_jk) <- parents(join_keys_obj)[common_parents_ix]
+  if (any(common_parents_ix)) parents(new_jk) <- parents(x)[common_parents_ix]
 
   new_jk
 }
@@ -283,7 +287,7 @@ c.join_keys <- function(...) {
 #' Setter via index directly (bypassing the need to use `join_key()`).
 #' When `dataset_2` is omitted, it will create a primary key with `dataset_2 = dataset_1`.
 #'
-#' @param value (`character` vector) value to assign.
+#' @inheritParams base::`[<-`
 #'
 #' @export
 #'
@@ -292,8 +296,8 @@ c.join_keys <- function(...) {
 #' # Setter via index ----
 #'
 #' jk <- join_keys(
-#'   join_key("ds1", "ds2", "col12"),
-#'   join_key("ds3", "ds4", "col34")
+#'   join_key("ds1", "ds2", c("id_1" = "id_2")),
+#'   join_key("ds3", "ds4", c("id_3" = "id_4"))
 #' )
 #'
 #' # overwrites previously defined key
@@ -304,18 +308,19 @@ c.join_keys <- function(...) {
 #' jk[c("ds1", "ds2")] <- list(ds5 = "col*5")
 #' jk[c(1, 2)] <- list(ds5 = "col**5")
 #'
-#' # Creates primary key by only defining `dataset_1`
+#' # Creates primary key by only defining `i`
 #' jk["ds1"] <- "primary_key"
 #' jk
-`[<-.join_keys` <- function(join_keys_obj, dataset_1, value) {
+`[<-.join_keys` <- function(x, i, value) {
   checkmate::assert(
     combine = "or",
-    checkmate::check_character(dataset_1),
-    checkmate::check_integerish(dataset_1)
+    checkmate::check_character(i),
+    checkmate::check_integerish(i),
+    checkmate::check_logical(i)
   )
 
-  if (checkmate::test_integerish(dataset_1)) {
-    dataset_1 <- names(join_keys_obj)[dataset_1]
+  if (checkmate::test_integerish(i)) {
+    i <- names(x)[i]
   }
 
   checkmate::assert(
@@ -326,16 +331,16 @@ c.join_keys <- function(...) {
 
   # Assume characters as being primary keys
   if (checkmate::test_character(value)) {
-    value <- lapply(dataset_1, function(dataset_ix) {
+    value <- lapply(i, function(dataset_ix) {
       value
     })
-    names(value) <- dataset_1
+    names(value) <- i
   }
 
   original_value <- value
-  for (dataset_ix in dataset_1) {
+  for (dataset_ix in i) {
     if (is.null(value)) {
-      inner_items <- names(join_keys_obj[[dataset_ix]])
+      inner_items <- names(x[[dataset_ix]])
       value <- structure(
         vector(mode = "list", length = length(inner_items)),
         names = inner_items
@@ -343,12 +348,12 @@ c.join_keys <- function(...) {
     }
 
     for (new_ix in names(value)) {
-      join_keys_obj[[dataset_ix]][[new_ix]] <- value[[new_ix]]
+      x[[dataset_ix]][[new_ix]] <- value[[new_ix]]
     }
     value <- original_value
   }
 
-  join_keys_obj
+  x
 }
 
 #' @rdname join_keys
@@ -367,42 +372,49 @@ c.join_keys <- function(...) {
 #' jk <- join_keys()
 #' jk[["ds2"]][["ds3"]] <- "key"
 #' jk[["ds2"]][["ds3"]] <- NULL
+#'
 #' jk
-`[[<-.join_keys` <- function(join_keys_obj, dataset_1, value) {
-  if (checkmate::test_integerish(dataset_1) || checkmate::test_logical(dataset_1)) {
-    dataset_1 <- names(join_keys_obj)[[dataset_1]]
-  }
-
-  checkmate::assert_string(dataset_1)
-
-  # Accepting 1 subscript with valid `value` formal
+`[[<-.join_keys` <- function(x, i, value) {
+  checkmate::assert(
+    combine = "or",
+    checkmate::check_string(i),
+    checkmate::check_integerish(i, len = 1),
+    checkmate::check_logical(i, len = 1)
+  )
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
+
+  if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
+    i <- names(x)[[i]]
+  }
 
   # Normalize values
   norm_value <- lapply(names(value), function(.x) {
-    get_keys(join_key(dataset_1, .x, value[[.x]]))
+    get_keys(join_key(i, .x, value[[.x]]))
   })
 
   names(norm_value) <- names(value)
   value <- norm_value
 
+  # Remove elements with length == 0L
+  value <- value[!vapply(seq_along(value), function(.x) is.null(value[[.x]]) || length(value[[.x]]) == 0L, logical(1))]
+
   #
   # Remove classes to use list-based get/assign operations
-  join_keys_obj <- unclass(join_keys_obj)
+  x <- unclass(x)
 
   # In case a pair is removed, also remove the symmetric pair
-  removed_names <- setdiff(names(join_keys_obj[[dataset_1]]), names(value))
+  removed_names <- setdiff(names(x[[i]]), names(value))
   if (length(removed_names) > 0) {
-    for (.x in removed_names) join_keys_obj[[.x]][[dataset_1]] <- NULL
+    for (.x in removed_names) x[[.x]][[i]] <- NULL
   }
 
-  join_keys_obj[[dataset_1]] <- value
+  x[[i]] <- value
 
   # Iterate on all new values to create symmetrical pair
   for (ds2 in names(value)) {
-    if (ds2 == dataset_1) next
+    if (ds2 == i) next
 
-    keep_value <- join_keys_obj[[ds2]] %||% list()
+    keep_value <- x[[ds2]] %||% list()
     new_value <- value[[ds2]]
 
     if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
@@ -414,26 +426,26 @@ c.join_keys <- function(...) {
       new_value <- setNames(names(new_value), new_value)
     }
 
-    keep_value[[dataset_1]] <- new_value
+    keep_value[[i]] <- new_value
 
     # Assign symmetrical
-    join_keys_obj[[ds2]] <- keep_value
+    x[[ds2]] <- keep_value
   }
 
   # Remove NULL or empty keys
   empty_ix <- vapply(
-    join_keys_obj,
+    x,
     function(.x) is.null(.x) || length(.x) == 0,
     logical(1)
   )
-  preserve_attr <- attributes(join_keys_obj)[!names(attributes(join_keys_obj)) %in% "names"]
-  join_keys_obj <- join_keys_obj[!empty_ix]
-  attributes(join_keys_obj) <- modifyList(attributes(join_keys_obj), preserve_attr)
+  preserve_attr <- attributes(x)[!names(attributes(x)) %in% "names"]
+  x <- x[!empty_ix]
+  attributes(x) <- modifyList(attributes(x), preserve_attr)
 
   #
   # restore class
-  class(join_keys_obj) <- c("join_keys", "list")
-  join_keys_obj
+  class(x) <- c("join_keys", "list")
+  x
 }
 
 #' @rdname merge_join_keys

@@ -36,9 +36,9 @@ join_keys(join_keys_obj) <- value
 
 \method{c}{join_keys}(...)
 
-\method{[}{join_keys}(join_keys_obj, dataset_1 = NULL, keep_all_foreign_keys = FALSE)
+\method{[}{join_keys}(x, i = NULL, keep_all_foreign_keys = FALSE)
 
-\method{[}{join_keys}(join_keys_obj, dataset_1) <- value
+\method{[}{join_keys}(x, i) <- value
 
 \method{[[}{join_keys}(join_keys_obj, dataset_1) <- value
 }
@@ -49,11 +49,13 @@ it will return the \code{join_keys} of that object.
 When called with 1 or more \code{join_key_set} it will create a new \code{join_keys} with
 constructed from the arguments.}
 
-\item{join_keys_obj}{(\code{join_keys}) object to extract the join keys}
+\item{join_keys_obj}{(\code{join_keys}) empty object to set the new relationship pairs.}
 
-\item{value}{(\code{character} vector) value to assign.}
+\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
+to \code{join_keys} list.}
 
-\item{dataset_1}{(\code{character}) name of first dataset.}
+\item{keep_all_foreign_keys}{(\code{logical}) flag that keeps foreign keys and other
+datasets even if they are not a parent of the selected dataset.}
 }
 \value{
 \code{join_keys} object.
@@ -148,8 +150,8 @@ jk[c("ds1", "ds2")]
 # Setter via index ----
 
 jk <- join_keys(
-  join_key("ds1", "ds2", "col12"),
-  join_key("ds3", "ds4", "col34")
+  join_key("ds1", "ds2", c("id_1"= "id_2")),
+  join_key("ds3", "ds4", c("id_3"= "id_4"))
 )
 
 # overwrites previously defined key
@@ -160,7 +162,7 @@ jk
 jk[c("ds1", "ds2")] <- list(ds5 = "col*5")
 jk[c(1, 2)] <- list(ds5 = "col**5")
 
-# Creates primary key by only defining `dataset_1`
+# Creates primary key by only defining `i`
 jk["ds1"] <- "primary_key"
 jk
 

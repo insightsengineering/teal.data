@@ -12,8 +12,6 @@ get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
 \arguments{
 \item{data}{`` - object to extract the join keys}
 
-\item{dataset_1}{(\code{character}) name of first dataset.}
-
 \item{dataset_2}{(\code{character(1)}) name of a dataset.}
 
 \item{value}{value to assign}
