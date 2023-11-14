@@ -85,14 +85,10 @@ join_keys.TealData <- function(...) {
 #' @rdname join_keys
 #' @export
 join_keys.default <- function(...) {
-  x <- rlang::list2(...)
-  # Constructor
-  res <- new_join_keys()
-  if (length(x) > 0) {
-    join_keys(res) <- x
-  }
-
-  res
+  # Constructor using join_keys<-.xxx setter
+  result <- new_join_keys()
+  join_keys(result) <- rlang::list2(...)
+  result
 }
 
 #' @rdname join_keys
