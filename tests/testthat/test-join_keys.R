@@ -162,6 +162,26 @@ testthat::test_that("[.join_keys returns join_keys object for given dataset incl
   testthat::expect_equal(my_keys["d2"], expected)
 })
 
+testthat::test_that("[.join_keys returns join_keys object for given dataset and doesn't include its childs", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c"),
+    join_key("d2", "d1", "ab"),
+    join_key("d3", "d1", "ac")
+  )
+  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
+
+  expected <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d2", "d1", "ab")
+  )
+  parents(expected) <- list("d2" = "d1")
+
+  testthat::expect_equal(my_keys["d2"], expected)
+})
+
 testthat::test_that("[.join_keys returns empty join_keys for inexisting dataset", {
   my_keys <- join_keys(join_key("d1", "d1", "a"))
   testthat::expect_length(my_keys["d2"], 0)
@@ -467,15 +487,5 @@ testthat::test_that("print.join_keys for a non-empty set", {
   testthat::expect_output(
     print(jk),
     "A join_keys object containing foreign keys between 2 datasets:"
-  )
-})
-
-testthat::test_that("parents<- sets the parents of datasets when they are empty", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "fk")))
-  testthat::expect_silent(parents(jk) <- list(df1 = character(0), df2 = "df1"))
-  testthat::expect_identical(
-    ss <- parents(jk),
-    list(df1 = character(0), df2 = "df1")
   )
 })
