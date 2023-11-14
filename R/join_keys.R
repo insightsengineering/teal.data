@@ -163,10 +163,6 @@ join_keys.default <- function(...) {
 #' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 c.join_keys <- function(...) {
   x <- rlang::list2(...)
-
-  if (!length(x)) {
-    return(NULL)
-  }
   checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
 
   merge_join_keys.join_keys(x[[1]], x[-1])
