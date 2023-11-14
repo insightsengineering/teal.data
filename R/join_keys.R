@@ -54,10 +54,11 @@ join_keys <- function(...) {
     return(new_join_keys())
   }
   x <- rlang::list2(...)
-  if (length(x) > 1) {
-    return(join_keys.default(...))
+  if (length(x) == 1L) {
+    UseMethod("join_keys", x[[1]])
+  } else {
+    join_keys.default(...)
   }
-  UseMethod("join_keys", x[[1]])
 }
 
 #' @rdname join_keys
