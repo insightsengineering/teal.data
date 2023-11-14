@@ -170,14 +170,14 @@ test_join_keys_combinatory <- function(obj) {
   expect_length(join_keys(obj), expected_length + 2 + 1) # adds 1 new dataset as ds-manual already exists
 }
 
-#' (test helper) Create test data for CDISC data
+#' (test helper) Create test data for `CDISC` data
 #'
 #' @inheritParams cdisc_data
 #' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects.
 #'
-#' @return a cdisc data of `ADSL`, `ADTTE` and `ADAE`
+#' @return a `CDISC` data set with the following tables: `ADSL`, `ADTTE` and `ADAE`
 #'
 #' @keywords internal
 local_cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = cdisc_join_keys()) {

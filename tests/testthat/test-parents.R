@@ -139,42 +139,6 @@ testthat::test_that("parent returns NULL when dataset is not found or not passed
 
 # -----------------------------------------------------------------------------
 #
-# update_keys_given_parents
-#
-
-testthat::test_that("update_keys_given_parents does not update the join_keys when no presents are present", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("df1", "df2", c("id" = "id")))
-  jk <- update_keys_given_parents(jk)
-  testthat::expect_equal(jk, join_keys(join_key("df1", "df2", c("id" = "id"))))
-})
-
-testthat::test_that("update_keys_given_parents updates the join_keys when presents are present", {
-  jk <- join_keys()
-
-  join_keys(jk) <- list(
-    join_key("df1", "df1", c("id", "id2")),
-    join_key("df1", "df2", c("id" = "id")),
-    join_key("df1", "df3", c("id" = "id"))
-  )
-
-  parents(jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
-  jk <- update_keys_given_parents(jk)
-
-  expected_jk <- join_keys(
-    join_key("df1", "df1", c("id", "id2")),
-    join_key("df1", "df2", c("id" = "id")),
-    join_key("df1", "df3", c("id" = "id")),
-    join_key("df2", "df2", c("id", "id2")),
-    join_key("df2", "df3", c("id", "id2")),
-    join_key("df3", "df3", c("id", "id2"))
-  )
-  parents(expected_jk) <- list(df1 = character(0), df2 = "df1", df3 = "df1")
-  testthat::expect_equal(jk, expected_jk)
-})
-
-# -----------------------------------------------------------------------------
-#
 # assert_parent_child errors
 
 test_that("parents<-.join_keys (assert_parent_child) will detect empty keys", {
