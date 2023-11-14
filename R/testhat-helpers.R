@@ -160,7 +160,7 @@ test_join_keys_combinatory <- function(obj) {
 
   expect_s3_class(join_keys(obj), class = c("join_keys", "list"))
 
-  expected_length <- 43 + 1 # 68 from the operations + 1 from `helper_test_getter_join_keys`
+  expected_length <- 43 + 1 # Add + 1 from `helper_test_getter_join_keys`
   expect_length(join_keys(obj), expected_length)
 
   join_keys(obj) <- c(join_keys(obj), join_key("ds-manual", .ds(), .key(1)))
