@@ -382,6 +382,15 @@ testthat::test_that("[[<-.join_keys passing key unnamed 'empty' value is ignored
   testthat::expect_equal(jk[["d1"]][["d2"]], c(A = "B"))
 })
 
+testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for same datasets, but different keys", {
+  jk <- join_keys()
+
+  testthat::expect_error(
+    jk[["ds1"]] <- list(ds2 = "new", ds2 = "new_but_different"),
+    "cannot specify multiple different join keys between datasets"
+  )
+})
+
 # -----------------------------------------------------------------------------
 #
 # names<-.join_keys

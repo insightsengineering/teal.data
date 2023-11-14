@@ -136,16 +136,16 @@ join_keys.default <- function(...) {
 
   # check if any join_key_sets share the same datasets but different values
   for (idx_1 in seq_along(value)) {
-    for (idx_2 in seq_along(value[idx_1])) {
+    for (idx_2 in seq_along(value)[-seq(1, idx_1)]) {
       assert_compatible_keys(value[[idx_1]], value[[idx_2]])
     }
+
     dataset_1 <- get_dataset_1(value[[idx_1]])
     dataset_2 <- get_dataset_2(value[[idx_1]])
     keys <- get_keys(value[[idx_1]])
 
     join_keys_obj[[dataset_1]][[dataset_2]] <- keys
   }
-
   join_keys_obj
 }
 
@@ -374,10 +374,18 @@ c.join_keys <- function(...) {
   }
 
   # Normalize values
-  norm_value <- lapply(names(value), function(.x) {
-    get_keys(join_key(i, .x, value[[.x]]))
+  norm_value <- lapply(seq_along(value), function(.x) {
+    join_key(i, names(value)[.x], value[[.x]])
   })
 
+  # Check if multiple modifications don't have a conflict
+  for (idx_1 in seq_along(norm_value)) {
+    for (idx_2 in seq_along(norm_value)[-seq(1, idx_1)]) {
+      assert_compatible_keys(norm_value[[idx_1]], norm_value[[idx_2]])
+    }
+  }
+
+  norm_value <- lapply(norm_value, get_keys)
   names(norm_value) <- names(value)
   value <- norm_value
 
@@ -540,7 +548,7 @@ check_join_keys_alike <- function(x) {
 #' return TRUE if compatible, throw error otherwise
 #' @keywords internal
 assert_compatible_keys <- function(join_key_1, join_key_2) {
-  error_message <- function(dataset_1, dataset_2) {
+  stop_message <- function(dataset_1, dataset_2) {
     stop(
       paste("cannot specify multiple different join keys between datasets:", dataset_1, "and", dataset_2)
     )
@@ -559,7 +567,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
   # must contain the same named elements
   if (dataset_1_one == dataset_1_two && dataset_2_one == dataset_2_two) {
     if (!identical(sort(keys_one), sort(keys_two))) {
-      error_message(dataset_1_one, dataset_2_one)
+      stop_message(dataset_1_one, dataset_2_one)
     }
   }
 
@@ -576,7 +584,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
       xor(length(keys_one) == 0, length(keys_two) == 0) ||
         !identical(sort(keys_one), sort(setNames(names(keys_two), keys_two)))
     ) {
-      error_message(dataset_1_one, dataset_2_one)
+      stop_message(dataset_1_one, dataset_2_one)
     }
   }
 
