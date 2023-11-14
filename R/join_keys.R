@@ -185,8 +185,6 @@ c.join_keys <- function(...) {
     x <- list(x)
   }
 
-  lapply(x, assert_join_keys_alike)
-
   if (checkmate::test_list(x, types = "join_key_set")) {
     jk_temp <- new_join_keys()
     join_keys(jk_temp) <- x
@@ -494,53 +492,6 @@ new_join_keys <- function() {
     list(),
     class = c("join_keys", "list")
   )
-}
-
-#' Assert the `join_keys` class membership of an argument
-#'
-#' Relaxed validation of a `join_keys` object. It accepts `join_keys`, a list
-#' of `join_key_set` (not symmetrical) or even a named list of character vectors
-#' without looking at the class name.
-#'
-#' @inheritParams checkmate::assert_class
-#'
-#' @return `x` invisibly
-#'
-#' @keywords internal
-assert_join_keys_alike <- function(x, .var.name = checkmate::vname(x), add = NULL) { # nolint: object_name_linter
-  if (missing(x)) {
-    stop(sprintf("argument \"%s\" is missing, with no default", .var.name))
-  }
-  res <- check_join_keys_alike(x)
-
-  checkmate::makeAssertion(x, res, var.name = .var.name, add)
-}
-
-#' @rdname assert_join_keys_alike
-check_join_keys_alike <- function(x) {
-  result <- checkmate::check_list(x, names = "named", types = "list")
-  if (checkmate::test_string(result)) {
-    return(result)
-  }
-  result <- all(
-    vapply(
-      x,
-      function(el) {
-        checkmate::test_list(el, types = c("character", "null"), names = "named")
-      },
-      logical(1)
-    )
-  )
-
-  if (isFALSE(all(result))) {
-    return(
-      paste(
-        "Elements of list may only be named lists with a vector of  type `character`",
-        "(that may be named or partially named)"
-      )
-    )
-  }
-  result
 }
 
 #' Helper function to assert if two key sets contain incompatible keys
