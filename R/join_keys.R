@@ -118,10 +118,6 @@ join_keys.default <- function(...) {
 #' join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 #' jk
 `join_keys<-.join_keys` <- function(join_keys_obj, value) {
-  if (missing(value)) {
-    return(join_keys_obj)
-  }
-
   # Assume assignment of join keys as a merge operation
   #  Needed to support join_keys(jk)[ds1, ds2] <- "key"
   if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
