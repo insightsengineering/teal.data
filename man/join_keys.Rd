@@ -9,8 +9,8 @@
 \alias{join_keys.default}
 \alias{join_keys<-}
 \alias{join_keys<-.join_keys}
-\alias{c.join_keys}
 \alias{join_keys<-.teal_data}
+\alias{c.join_keys}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
 \alias{[[<-.join_keys}
@@ -32,9 +32,9 @@ join_keys(join_keys_obj) <- value
 
 \method{join_keys}{join_keys}(join_keys_obj) <- value
 
-\method{c}{join_keys}(...)
-
 \method{join_keys}{teal_data}(join_keys_obj) <- value
+
+\method{c}{join_keys}(...)
 
 \method{[}{join_keys}(join_keys_obj, dataset_1 = NULL, keep_all_foreign_keys = FALSE)
 
@@ -125,8 +125,6 @@ join_keys(jk) <- c(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
 join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 jk
 
-c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
-
 # Setter for join_keys within teal_data ----
 
 td <- teal_data()
@@ -134,6 +132,8 @@ join_keys(td)[["ds1"]][["ds2"]] <- "key1"
 join_keys(td)[["ds2"]][["ds2"]] <- "key2"
 join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
+
+c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 
 # Getter for join_keys ----
 

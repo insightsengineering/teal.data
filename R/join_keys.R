@@ -102,6 +102,12 @@ join_keys.default <- function(...) {
 #'
 #' @export
 `join_keys<-` <- function(join_keys_obj, value) {
+  checkmate::assert(
+    combine = "or",
+    checkmate::check_class(value, classes = c("join_keys", "list")),
+    checkmate::check_class(value, classes = c("join_key_set")),
+    checkmate::check_list(value, types = "join_key_set")
+  )
   UseMethod("join_keys<-", join_keys_obj)
 }
 
@@ -119,14 +125,12 @@ join_keys.default <- function(...) {
 #' jk
 `join_keys<-.join_keys` <- function(join_keys_obj, value) {
   # Assume assignment of join keys as a merge operation
-  #  Needed to support join_keys(jk)[ds1, ds2] <- "key"
+  #  Needed to support join_keys(jk)[c("ds1", "ds2")] <- "key"
   if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
     return(value)
   }
 
   if (inherits(value, "join_key_set")) value <- list(value)
-
-  checkmate::assert_list(value, types = "join_key_set", min.len = 1)
 
   join_keys_obj <- new_join_keys()
 
@@ -149,19 +153,6 @@ join_keys.default <- function(...) {
 
 #' @rdname join_keys
 #' @export
-#'
-#' @examples
-#'
-#' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
-c.join_keys <- function(...) {
-  x <- rlang::list2(...)
-  checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
-
-  merge_join_keys.join_keys(x[[1]], x[-1])
-}
-
-#' @rdname join_keys
-#' @export
 #' @examples
 #'
 #' # Setter for join_keys within teal_data ----
@@ -172,12 +163,21 @@ c.join_keys <- function(...) {
 #' join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 #' join_keys(td)
 `join_keys<-.teal_data` <- function(join_keys_obj, value) {
-  if (missing(value)) {
-    return(join_keys_obj)
-  }
-
   join_keys(join_keys_obj@join_keys) <- value
   join_keys_obj
+}
+
+#' @rdname join_keys
+#' @export
+#'
+#' @examples
+#'
+#' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
+c.join_keys <- function(...) {
+  x <- rlang::list2(...)
+  checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
+
+  merge_join_keys.join_keys(x[[1]], x[-1])
 }
 
 #' The Names of an `join_keys` Object
