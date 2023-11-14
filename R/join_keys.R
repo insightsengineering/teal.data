@@ -85,10 +85,7 @@ join_keys.TealData <- function(...) {
 #' @rdname join_keys
 #' @export
 join_keys.default <- function(...) {
-  # Constructor using join_keys<-.xxx setter
-  result <- new_join_keys()
-  join_keys(result) <- rlang::list2(...)
-  result
+  c(new_join_keys(), ...)
 }
 
 #' @rdname join_keys
@@ -129,24 +126,8 @@ join_keys.default <- function(...) {
   if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
     return(value)
   }
-
-  if (inherits(value, "join_key_set")) value <- list(value)
-
   join_keys_obj <- new_join_keys()
-
-  # check if any join_key_sets share the same datasets but different values
-  for (idx_1 in seq_along(value)) {
-    for (idx_2 in seq_along(value)[-seq(1, idx_1)]) {
-      assert_compatible_keys(value[[idx_1]], value[[idx_2]])
-    }
-
-    dataset_1 <- get_dataset_1(value[[idx_1]])
-    dataset_2 <- get_dataset_2(value[[idx_1]])
-    keys <- get_keys(value[[idx_1]])
-
-    join_keys_obj[[dataset_1]][[dataset_2]] <- keys
-  }
-  join_keys_obj
+  c(join_keys_obj, value)
 }
 
 #' @rdname join_keys
@@ -175,26 +156,13 @@ c.join_keys <- function(...) {
   x <- rlang::list2(...)
   checkmate::assert_class(x[[1]], c("join_keys", "list"))
   checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
+  # todo: assert if ... contains incompatible keys
 
   join_keys_obj <- x[[1]]
   x <- x[-1]
-  if (
-    checkmate::test_class(x, "join_key_set") ||
-      checkmate::test_class(x, c("join_keys", "list"))
-  ) {
-    x <- list(x)
-  }
-
-  if (checkmate::test_list(x, types = "join_key_set")) {
-    jk_temp <- new_join_keys()
-    join_keys(jk_temp) <- x
-    x <- list(jk_temp)
-  }
-
   for (el in x) {
     join_keys_obj <- utils::modifyList(join_keys_obj, el)
   }
-
   join_keys_obj
 }
 

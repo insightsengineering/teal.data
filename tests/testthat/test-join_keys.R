@@ -104,7 +104,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given da
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
+    join_key("d3", "d3", "c")
   )
   testthat::expect_identical(
     my_keys[c("d1", "d2")],
@@ -116,7 +116,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given in
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
+    join_key("d3", "d3", "c")
   )
   testthat::expect_identical(
     my_keys[c(1, 2)],
@@ -400,7 +400,7 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
     join_key("a", "a", "a"),
     join_key("a", "b", "ab"),
     join_key("a", "c", "ac"),
-    join_key("d", "b", "db"),
+    join_key("d", "b", "db")
   )
 
   names(jk)[1:2] <- c("x", "y")
@@ -411,7 +411,7 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
       join_key("x", "x", "a"),
       join_key("x", "y", "ab"),
       join_key("x", "c", "ac"),
-      join_key("d", "y", "db"),
+      join_key("d", "y", "db")
     )
   )
 })
@@ -476,6 +476,17 @@ testthat::test_that("c.join_keys doesn't throw when second object is empty join_
   x <- join_keys(join_key("a", "a", "aa"))
   y <- join_keys()
   testthat::expect_no_error(c(x, y))
+})
+
+testthat::test_that("c.join_keys doesn't allow to specify the keys which are incompatible", {
+  obj <- join_keys()
+  testthat::expect_error(
+    c(
+      obj,
+      join_keys(join_key("a", "b", "aa")),
+      join_keys(join_key("b", "a", "bb"))
+    )
+  )
 })
 
 # -----------------------------------------------------------------------------
