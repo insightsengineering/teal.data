@@ -6,14 +6,11 @@
 #' @export
 #'
 #' @examples
-#' jk <- join_keys()
-#' parent(jk, "ds1")
-#' parents(jk) <- list("ds2" = "ds3")
+#' jk <- join_keys(join_key("ds1", "ds2", "key"))
+#' parent(jk, "ds2")
+#' parents(jk) <- list("ds2" = "ds1")
 #' parent(jk, "ds2")
 parent <- function(join_keys_obj, dataset_name) {
-  if (missing(dataset_name)) {
-    return(NULL)
-  }
   checkmate::assert_string(dataset_name)
   # assert join_keys_obj is performed by parents()
   parents(join_keys_obj)[[dataset_name]]
@@ -32,10 +29,23 @@ parents <- function(join_keys_obj) {
 #' @rdname parents
 #' @export
 #' @examples
-#' jk <- join_keys()
+#' jk <- default_cdisc_join_keys["ADEX"]
 #' parents(jk)
 parents.join_keys <- function(join_keys_obj) {
   attr(join_keys_obj, "__parents__") %||% list()
+}
+
+#' @rdname parents
+#' @export
+#' @examples
+#'
+#' td <- cdisc_data(
+#'   ADSL = teal.data::rADSL,
+#'   ADTTE = teal.data::rADTTE
+#' )
+#' parents(td)
+parents.teal_data <- function(join_keys_obj) {
+  attr(join_keys_obj@join_keys, "__parents__") %||% list()
 }
 
 #' @rdname parents
@@ -43,10 +53,6 @@ parents.join_keys <- function(join_keys_obj) {
 #' @param value (`list`) named list of character values
 #'
 #' @export
-#'
-#' @examples
-#' jk <- join_keys()
-#' parents(jk) <- list(ADSL = "ADTTE")
 `parents<-` <- function(join_keys_obj, value) {
   UseMethod("parents<-", join_keys_obj)
 }
@@ -54,19 +60,23 @@ parents.join_keys <- function(join_keys_obj) {
 #' @rdname parents
 #' @export
 #' @examples
-#' jk <- join_keys()
-#' parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
+#'
+#' jk <- join_keys(
+#'   join_key("ds1", "ds2", "id"),
+#'   join_key("ds5", "ds6", "id"),
+#'   join_key("ds7", "ds6", "id")
+#' )
+#' parents(jk) <- list()
+#' parents(jk) <- list(ds1 = "ds2")
 #' parents(jk)["ds5"] <- "ds6"
 #' parents(jk)["ds6"] <- "ds7"
 `parents<-.join_keys` <- function(join_keys_obj, value) {
-  if (missing(value)) {
-    return(join_keys_obj)
-  }
-  checkmate::assert_list(value, types = "character", names = "named", min.len = 1)
-  old_parents <- attr(join_keys_obj, "__parents__")
+  checkmate::assert_list(value, types = "character", names = "named")
+
+  new_parents <- list()
 
   for (dataset in names(value)) {
-    parent <- old_parents[[dataset]]
+    parent <- new_parents[[dataset]]
     checkmate::assert(
       checkmate::check_null(parent),
       checkmate::check_true(
@@ -77,17 +87,33 @@ parents.join_keys <- function(join_keys_obj) {
       "Please check the difference between provided datasets parents and provided join_keys parents."
     )
     if (is.null(parent)) {
-      old_parents[[dataset]] <- value[[dataset]]
+      new_parents[[dataset]] <- value[[dataset]]
     }
   }
 
-  if (is_dag(old_parents)) {
+  if (is_dag(new_parents)) {
     stop("Cycle detected in a parent and child dataset graph.")
   }
 
-  attr(join_keys_obj, "__parents__") <- old_parents # nolint: object_name_linter
+  attr(join_keys_obj, "__parents__") <- new_parents # nolint: object_name_linter
 
   assert_parent_child(join_keys_obj)
+  join_keys_obj
+}
+
+#' @rdname parents
+#' @export
+#' @examples
+#'
+#' td <- cdisc_data(
+#'   ADSL = teal.data::rADSL,
+#'   ADTTE = teal.data::rADTTE,
+#'   ADRS = teal.data::rADRS
+#' )
+#' parents(td) <- list("ADTTE" = "ADSL") # replace existing
+#' parents(td)["ADRS"] <- "ADSL" # add new parent
+`parents<-.teal_data` <- function(join_keys_obj, value) {
+  parents(join_keys_obj@join_keys) <- value
   join_keys_obj
 }
 

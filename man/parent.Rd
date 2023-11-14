@@ -15,8 +15,8 @@ parent(join_keys_obj, dataset_name)
 Getter and setter for specific parent
 }
 \examples{
-jk <- join_keys()
-parent(jk, "ds1")
-parents(jk) <- list("ds2" = "ds3")
+jk <- join_keys(join_key("ds1", "ds2", "key"))
+parent(jk, "ds2")
+parents(jk) <- list("ds2" = "ds1")
 parent(jk, "ds2")
 }

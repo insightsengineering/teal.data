@@ -3,17 +3,23 @@
 \name{parents}
 \alias{parents}
 \alias{parents.join_keys}
+\alias{parents.teal_data}
 \alias{parents<-}
 \alias{parents<-.join_keys}
+\alias{parents<-.teal_data}
 \title{Getter and setter functions for parents attribute of \code{join_keys}}
 \usage{
 parents(join_keys_obj)
 
 \method{parents}{join_keys}(join_keys_obj)
 
+\method{parents}{teal_data}(join_keys_obj)
+
 parents(join_keys_obj) <- value
 
 \method{parents}{join_keys}(join_keys_obj) <- value
+
+\method{parents}{teal_data}(join_keys_obj) <- value
 }
 \arguments{
 \item{join_keys_obj}{(\code{join_keys}) object to retrieve or manipulate.}
@@ -27,12 +33,30 @@ a list of \code{character} representing the parents.
 Getter and setter functions for parents attribute of \code{join_keys}
 }
 \examples{
-jk <- join_keys()
+jk <- default_cdisc_join_keys["ADEX"]
 parents(jk)
-jk <- join_keys()
-parents(jk) <- list(ADSL = "ADTTE")
-jk <- join_keys()
-parents(jk) <- list(ds1 = "ds2", "ds3" = "ds4")
+
+td <- cdisc_data(
+  ADSL = teal.data::rADSL,
+  ADTTE = teal.data::rADTTE
+)
+parents(td)
+
+jk <- join_keys(
+  join_key("ds1", "ds2", "id"),
+  join_key("ds5", "ds6", "id"),
+  join_key("ds7", "ds6", "id")
+)
+parents(jk) <- list()
+parents(jk) <- list(ds1 = "ds2")
 parents(jk)["ds5"] <- "ds6"
 parents(jk)["ds6"] <- "ds7"
+
+td <- cdisc_data(
+  ADSL = teal.data::rADSL,
+  ADTTE = teal.data::rADTTE,
+  ADRS = teal.data::rADRS
+)
+parents(td) <- list("ADTTE" = "ADSL") # replace existing
+parents(td)["ADRS"] <- "ADSL"         # add new parent
 }
