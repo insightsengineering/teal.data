@@ -4,7 +4,7 @@
 \alias{local_cdisc_data_mixed_call}
 \title{(test helper) Create test data for \code{CDISC} data}
 \usage{
-local_cdisc_data_mixed_call(check = TRUE, join_keys1 = cdisc_join_keys())
+local_cdisc_data_mixed_call(check = TRUE, join_keys1 = join_keys())
 }
 \arguments{
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing

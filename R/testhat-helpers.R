@@ -180,7 +180,7 @@ test_join_keys_combinatory <- function(obj) {
 #' @return a `CDISC` data set with the following tables: `ADSL`, `ADTTE` and `ADAE`
 #'
 #' @keywords internal
-local_cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = cdisc_join_keys()) {
+local_cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
   adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
   adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))

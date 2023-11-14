@@ -11,7 +11,7 @@
 #' @inheritParams testthat::compare
 #'
 #' @keywords internal
-compare.join_keys <- function(x, y, ...) {
+compare.join_keys <- function(x, y, ...) { # nolint: object_name_linter
   as_map <- function(x) {
     attr(x, "extra_class") <- class(x)
     attr(x, "class") <- "list"

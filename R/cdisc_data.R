@@ -31,7 +31,7 @@
 #' })
 #'
 cdisc_data <- function(...,
-                       join_keys = teal.data::cdisc_join_keys(...),
+                       join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],
                        code = character(0),
                        check = FALSE) {
   teal_data(..., join_keys = join_keys, code = code, check = check)
@@ -91,8 +91,7 @@ deprecated_join_keys_extract <- function(data_objects, join_keys) {
   }
 
   # Keep non-check setting of parents (this will be removed in refactor)
-  attr(join_keys, "__parents__") <- new_parents
-  # parents(join_keys) <- new_parents
+  attr(join_keys, "__parents__") <- new_parents # nolint: object_name_linter
   join_keys <- update_keys_given_parents(join_keys)
 
   join_keys

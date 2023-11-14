@@ -248,6 +248,10 @@ c.join_keys <- function(...) {
     return(x)
   }
 
+  if (is.null(i)) {
+    return(new_join_keys()) # replicate base R
+  }
+
   checkmate::assert(
     combine = "or",
     checkmate::check_integerish(i),

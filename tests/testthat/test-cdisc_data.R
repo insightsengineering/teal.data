@@ -55,7 +55,7 @@ testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys
   df1 <- dataset("df1", df1, keys = "id")
   df2 <- dataset("df2", df2, keys = "df2_id")
 
-  data <- cdisc_data(df1, df2, check = FALSE)
+  data <- cdisc_data(df1 = df1, df2 = df2, check = FALSE)
 
   jks <- join_keys(
     join_key("df1", "df1", "id"),

@@ -6,7 +6,7 @@
 \usage{
 cdisc_data(
   ...,
-  join_keys = teal.data::cdisc_join_keys(...),
+  join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],
   code = character(0),
   check = FALSE
 )
