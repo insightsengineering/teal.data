@@ -193,7 +193,7 @@ test_that("[.join_keys can subscript multiple values by index or name", {
     structure(
       list(
         d2 = jk[["d2"]],
-        d1 = list(d2 = jk[["d1"]][["d2"]], d1 = jk[["d1"]][["d1"]])
+        d1 = list(d1 = jk[["d1"]][["d1"]], d2 = jk[["d1"]][["d2"]])
       ),
       class = c("join_keys", "list"),
       "__parents__" = parents(jk)
@@ -204,44 +204,53 @@ test_that("[.join_keys can subscript multiple values by index or name", {
 test_that("[.join_keys only keeps parents and common keys in index", {
   jk <- join_keys(
     join_key("d1", keys = "1"),
-    join_key("d2", keys = "2"),
-    join_key("d3", keys = "3"),
-    join_key("d4", keys = "4"),
-    join_key("d5", keys = "5"),
+    join_key("d2", keys = c("1", "2")),
+    join_key("d3", keys = c("2", "3")),
+    join_key("d4", keys = c("3", "4")),
+    join_key("d5", keys = c("4", "5")),
     #
-    join_key("d1", "d2", c("1-2" = "2-1")),
-    join_key("d2", "d3", c("2-3" = "3-2")),
-    join_key("d3", "d4", c("3-4" = "4-3")),
-    join_key("d4", "d5", c("4-5" = "5-4"))
+    join_key("d1", "d2", c("1")),
+    join_key("d2", "d3", c("2")),
+    join_key("d3", "d4", c("3")),
+    join_key("d4", "d5", c("4"))
   )
 
   parents(jk) <- list(
     "d2" = "d1",
-    "d3" = "d1",
-    "d4" = "d1",
-    "d5" = "d1"
+    "d3" = "d2",
+    "d4" = "d3",
+    "d5" = "d4"
   )
 
   # Include parent
   expect_length(jk[c("d1")], 1)
-  expect_length(jk[c("d2")], 2)
+  expect_length(jk[c("d2")], 2) # d2 parent is d1, so it's added
   expect_length(jk[c("d2", "d3")], 3)
   expect_length(jk[c(2, 3, 4)], 4)
-  expect_length(jk[c(1, 3)], 2)
-  expect_length(jk[c("d1", "d3")], 2)
+  expect_length(jk[c(1, 3)], 3) # d3 parent is d2, so it's added
+  expect_length(jk[c("d1", "d4")], 4) # d4 parent is d3, d3 parent is d2, so both are added
 
   # Only keeps relevant parents
   expect_length(parents(jk[c("d2", "d3")]), 2)
-  expect_equal(parents(jk[c("d2", "d3")]), list("d2" = "d1", "d3" = "d1"))
+  expect_equal(parents(jk[c("d2", "d3")]), list("d2" = "d1", "d3" = "d2"))
 
   # Checks names
   expect_named(jk[c("d2", "d3")], c("d1", "d2", "d3"), ignore.order = TRUE)
   # Deep check
   sliced_jk <- jk[c("d2", "d3")]
 
-  expect_identical(sliced_jk[["d1"]], list(d2 = jk[["d1"]][["d2"]], d1 = jk[["d1"]][["d1"]]))
-  expect_identical(sliced_jk[["d2"]], list(d2 = jk[["d2"]][["d2"]], d1 = jk[["d2"]][["d1"]], d3 = jk[["d2"]][["d3"]]))
-  expect_identical(sliced_jk[["d3"]], list(d3 = jk[["d3"]][["d3"]], d2 = jk[["d3"]][["d2"]]))
+  expect_identical(
+    sliced_jk[["d1"]],
+    list(d1 = jk[["d1"]][["d1"]], d2 = jk[["d1"]][["d2"]])
+  )
+  expect_identical(
+    sliced_jk[["d2"]],
+    list(d2 = jk[["d2"]][["d2"]], d1 = jk[["d2"]][["d1"]], d3 = jk[["d2"]][["d3"]])
+  )
+  expect_identical(
+    sliced_jk[["d3"]],
+    list(d3 = jk[["d3"]][["d3"]], d2 = jk[["d3"]][["d2"]])
+  )
 })
 
 test_that("[<-.join_keys cannot subscript multiple values", {

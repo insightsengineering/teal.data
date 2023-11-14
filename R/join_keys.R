@@ -247,10 +247,28 @@ c.join_keys <- function(...) {
 
   # When retrieving a relationship pair, it will also return the symmetric key
   new_jk <- new_join_keys()
-  for (ix in dataset_1) {
+  queue <- dataset_1
+  bin <- character(0)
+
+  # Need to iterate on a mutating queue if subset of a dataset will also
+  #  select its parent as that parent might have relationships with others
+  #  already selected.
+  while (length(queue) > 0) {
+    ix <- queue[1]
+    queue <- queue[-1]
+
+    if (ix %in% bin) {
+      next
+    }
+    bin <- c(bin, ix)
+
     ix_parent <- parent(join_keys_obj, ix)
 
-    ix_valid_names <- names(join_keys_obj[[ix]]) %in% c(ix_parent, dataset_1)
+    if (checkmate::test_string(ix_parent, min.chars = 1) && !ix_parent %in% c(queue, bin)) {
+      queue <- c(queue, ix_parent)
+    }
+
+    ix_valid_names <- names(join_keys_obj[[ix]]) %in% c(queue, bin)
     if (keep_all_foreign_keys) {
       ix_valid_names <- rep(TRUE, length(names(join_keys_obj[[ix]])))
     }
@@ -263,7 +281,9 @@ c.join_keys <- function(...) {
     }
   }
 
-  common_parents_ix <- names(parents(join_keys_obj)) %in% names(new_jk)
+  common_parents_ix <- names(parents(join_keys_obj)) %in% names(new_jk) &
+    parents(join_keys_obj) %in% names(new_jk)
+
   if (any(common_parents_ix)) parents(new_jk) <- parents(join_keys_obj)[common_parents_ix]
 
   new_jk

@@ -90,7 +90,9 @@ deprecated_join_keys_extract <- function(data_objects, join_keys) {
     stop("Cycle detected in a parent and child dataset graph.")
   }
 
-  parents(join_keys) <- new_parents
+  # Keep non-check setting of parents (this will be removed in refactor)
+  attr(join_keys, "__parents__") <- new_parents
+  # parents(join_keys) <- new_parents
   join_keys <- update_keys_given_parents(join_keys)
 
   join_keys

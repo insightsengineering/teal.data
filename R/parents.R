@@ -86,6 +86,8 @@ parents.join_keys <- function(join_keys_obj) {
   }
 
   attr(join_keys_obj, "__parents__") <- old_parents # nolint: object_name_linter
+
+  assert_parent_child(join_keys_obj)
   join_keys_obj
 }
 
@@ -94,6 +96,8 @@ parents.join_keys <- function(join_keys_obj) {
 #' @param join_keys_obj (`join_keys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
+#'
+#' @keywords internal
 update_keys_given_parents <- function(join_keys_obj) {
   jk <- join_keys(join_keys_obj)
 

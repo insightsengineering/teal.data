@@ -37,11 +37,10 @@ cdisc_join_keys <- function(...) {
         jk[[name]][[name]] <- keys_list$primary
 
         if (!is.null(keys_list$parent)) {
+          if (!is.null(keys_list$foreign)) {
+            jk[[name]][[keys_list$parent]] <- keys_list$foreign
+          }
           parents(jk)[[name]] <- keys_list$parent
-        }
-
-        if (!is.null(keys_list$parent) && !is.null(keys_list$foreign)) {
-          jk[[name]][[keys_list$parent]] <- keys_list$foreign
         }
       }
     }

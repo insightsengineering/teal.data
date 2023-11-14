@@ -1,4 +1,4 @@
-cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
+cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = cdisc_join_keys()) {
   adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
   adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
   adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
