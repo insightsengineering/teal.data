@@ -40,7 +40,7 @@ join_keys(join_keys_obj) <- value
 
 \method{[}{join_keys}(x, i) <- value
 
-\method{[[}{join_keys}(join_keys_obj, dataset_1) <- value
+\method{[[}{join_keys}(x, i) <- value
 }
 \arguments{
 \item{...}{(optional), when no argument is given the empty constructor is called.
@@ -150,8 +150,8 @@ jk[c("ds1", "ds2")]
 # Setter via index ----
 
 jk <- join_keys(
-  join_key("ds1", "ds2", c("id_1"= "id_2")),
-  join_key("ds3", "ds4", c("id_3"= "id_4"))
+  join_key("ds1", "ds2", c("id_1" = "id_2")),
+  join_key("ds3", "ds4", c("id_3" = "id_4"))
 )
 
 # overwrites previously defined key
@@ -178,5 +178,6 @@ jk[["ds4"]] <- list(ds5 = "new")
 jk <- join_keys()
 jk[["ds2"]][["ds3"]] <- "key"
 jk[["ds2"]][["ds3"]] <- NULL
+
 jk
 }
