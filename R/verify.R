@@ -49,5 +49,5 @@ setMethod("verify", "teal_data", definition = function(x) {
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
-  stop(x$trace)
+  stop(x$message, call. = FALSE)
 })
