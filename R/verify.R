@@ -1,4 +1,4 @@
-#' Reproducibility Check for `@code` Slot in `teal_data`
+#' Check Code Reproducibility
 #'
 #' Verifies the reproducibility of the `teal_data@env` environment using the `@code` slot.
 #'
