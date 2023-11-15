@@ -117,7 +117,7 @@ get_code.teal_data <- function(x, names = NULL, deparse = TRUE, ...) {
   checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
 
-  code <- if (length(names) > 0) {
+  code <- if (!is.null(names)) {
     get_code_dependency(x@code, names)
   } else {
     x@code
