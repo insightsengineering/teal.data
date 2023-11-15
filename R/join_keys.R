@@ -99,12 +99,7 @@ join_keys.default <- function(...) {
 #'
 #' @export
 `join_keys<-` <- function(x, value) {
-  checkmate::assert(
-    combine = "or",
-    checkmate::check_class(value, classes = c("join_keys", "list")),
-    checkmate::check_class(value, classes = c("join_key_set")),
-    checkmate::check_list(value, types = "join_key_set")
-  )
+  checkmate::assert_class(value, classes = c("join_keys", "list"))
   UseMethod("join_keys<-", x)
 }
 
@@ -115,8 +110,7 @@ join_keys.default <- function(...) {
 #' # Using the setter (assignment) ----
 #'
 #' jk <- join_keys()
-#' join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-#' join_keys(jk) <- c(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
+#' join_keys(jk) <- join_keys(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
 #'
 #' join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 #' jk
@@ -159,12 +153,14 @@ c.join_keys <- function(...) {
   checkmate::assert_list(x, types = c("join_keys", "join_key_set"))
 
   x_merged <- Reduce(
-    x,
+    init = join_keys(),
+    x = x,
     f = function(.x, .y) {
       assert_compatible_keys2(.x, .y)
       utils::modifyList(.x, .y, keep.null = FALSE)
     }
   )
+
   utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
 }
 
@@ -461,6 +457,10 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     stop(
       paste("cannot specify multiple different join keys between datasets:", dataset_1, "and", dataset_2)
     )
+  }
+
+  if (!length(join_key_1) || !length(join_key_2)) {
+    return(TRUE)
   }
 
   dataset_1_one <- names(join_key_1)

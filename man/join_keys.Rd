@@ -110,8 +110,7 @@ jk <- c(jk, join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c")))
 # Using the setter (assignment) ----
 
 jk <- join_keys()
-join_keys(jk) <- join_key("ds1", "ds2", "some_col")
-join_keys(jk) <- c(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
+join_keys(jk) <- join_keys(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
 
 join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 jk
