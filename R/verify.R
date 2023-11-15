@@ -6,7 +6,7 @@
 #' the objects in `teal_data@env`, the function updates the `@verified` slot to `TRUE` in the `teal_data` object.
 #' If the `@code` fails to recreate objects in `teal_data@env`, an error is thrown.
 #'
-#' @param teal_data `teal_data` object
+#' @param x `teal_data` object
 #' @examples
 #' tdata1 <- teal_data()
 #' tdata1 <- within(tdata1, {

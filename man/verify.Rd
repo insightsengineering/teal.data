@@ -9,7 +9,7 @@
 verify(x)
 }
 \arguments{
-\item{teal_data}{\code{teal_data} object}
+\item{x}{\code{teal_data} object}
 }
 \value{
 If the objects returned by the \verb{@code} slot in the input \code{teal_data} object exactly match
