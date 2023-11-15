@@ -113,7 +113,7 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
 #'
 get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) {
   code <- if (length(dataname) > 0) {
-    teal.code:::get_code_dependency(x@code, dataname)
+    get_code_dependency(x@code, dataname)
   } else {
     x@code
   }
