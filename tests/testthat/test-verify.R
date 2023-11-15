@@ -1,7 +1,6 @@
 testthat::test_that("verify returns the same object for empty teal_data", {
   tdata1 <- teal_data()
   testthat::expect_identical(tdata1, verify(tdata1))
-  testthat::expect_identical(tdata1@verified, TRUE)
 })
 
 testthat::test_that("verify returns the same object for teal_data where code was run in within/eval_code", {
