@@ -28,6 +28,7 @@
 #'
 #' verify(tdata3)
 #'
+#'
 #' @name verify
 #' @aliases verify,teal_data-method
 #' @aliases verify,qenv.error-method
@@ -38,12 +39,11 @@ setMethod("verify", "teal_data", definition = function(x) {
   if (x@valid) {
     return(x)
   }
-  eval_env <- new.env()
-  eval(parse(text = x@code), envir = eval_env)
+  new_teal_data <- eval_code(teal_data(), x@code)
 
-  reproducible <- all.equal(x@env, eval_env)
-  if (reproducible) {
-    x@valid <- TRUE
+  reproducible <- all.equal(x@env, new_teal_data@env)
+  if (isTRUE(reproducible)) {
+    x@verified <- TRUE
     x
   } else {
     stop("Code validation failed.")
