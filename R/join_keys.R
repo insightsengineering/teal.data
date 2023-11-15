@@ -162,10 +162,10 @@ c.join_keys <- function(...) {
     x,
     f = function(.x, .y) {
       assert_compatible_keys2(.x, .y)
-      modifyList(.x, .y)
+      utils::modifyList(.x, .y, keep.null = FALSE)
     }
   )
-  utils::modifyList(join_keys_obj, x_merged)
+  utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
 }
 
 #' The Names of an `join_keys` Object
@@ -326,28 +326,27 @@ c.join_keys <- function(...) {
 
   norm_value <- lapply(norm_value, get_keys)
   names(norm_value) <- names(value)
-  value <- norm_value
 
   # Remove elements with length == 0L
-  value <- Filter(function(x) length(x) > 0, value)
+  norm_value <- Filter(function(.x) length(.x) > 0, norm_value)
 
   # Remove classes to use list-based get/assign operations
-  x <- unclass(x)
+  new_x <- unclass(x)
 
   # In case a pair is removed, also remove the symmetric pair
-  removed_names <- setdiff(names(x[[i]]), names(value))
+  removed_names <- setdiff(names(new_x[[i]]), names(norm_value))
   if (length(removed_names) > 0) {
-    for (.x in removed_names) x[[.x]][[i]] <- NULL
+    for (.x in removed_names) new_x[[.x]][[i]] <- NULL
   }
 
-  x[[i]] <- value
+  new_x[[i]] <- norm_value
 
   # Iterate on all new values to create symmetrical pair
-  for (ds2 in names(value)) {
+  for (ds2 in names(norm_value)) {
     if (ds2 == i) next
 
-    keep_value <- x[[ds2]] %||% list()
-    new_value <- value[[ds2]]
+    keep_value <- new_x[[ds2]] %||% list()
+    new_value <- norm_value[[ds2]]
 
     if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
       new_value <- setNames(new_value, new_value)
@@ -359,23 +358,23 @@ c.join_keys <- function(...) {
     keep_value[[i]] <- new_value
 
     # Assign symmetrical
-    x[[ds2]] <- keep_value
+    new_x[[ds2]] <- keep_value
   }
 
   # Remove NULL or empty keys
   empty_ix <- vapply(
-    x,
+    new_x,
     function(.x) is.null(.x) || length(.x) == 0,
     logical(1)
   )
-  preserve_attr <- attributes(x)[!names(attributes(x)) %in% "names"]
-  x <- x[!empty_ix]
-  attributes(x) <- utils::modifyList(attributes(x), preserve_attr)
+  preserve_attr <- attributes(new_x)[!names(attributes(new_x)) %in% "names"]
+  new_x <- new_x[!empty_ix]
+  attributes(new_x) <- utils::modifyList(attributes(new_x), preserve_attr)
 
   #
   # restore class
-  class(x) <- c("join_keys", "list")
-  x
+  class(new_x) <- class(x)
+  new_x
 }
 
 #' Length of `join_keys` object.
