@@ -329,6 +329,18 @@ c.join_key_set <- function(...) {
   norm_value <- lapply(seq_along(value), function(.x) {
     join_key(i, names(value)[.x], value[[.x]])
   })
+  names(norm_value) <- names(value)
+
+  # Check if multiple modifications don't have a conflict
+  repeated_value_ix <- names(value) %in% names(value)[duplicated(names(value))]
+  repeated <- norm_value[repeated_value_ix]
+  vapply(
+    seq_along(repeated),
+    function(.ix, .x_value = repeated[[.ix]], .x_name = get_dataset_2(.x_value)) {
+      assert_compatible_keys(.x_value, repeated[-.ix][names(repeated[-.ix]) == .x_name])
+    },
+    logical(1)
+  )
 
   norm_value <- lapply(norm_value, get_keys)
   names(norm_value) <- names(value)
@@ -486,6 +498,7 @@ assert_compatible_keys2 <- function(x, y) {
       assert_compatible_keys(x[idx_1], y[idx_2])
     }
   }
+  TRUE
 }
 
 #' Helper function to assert if two key sets contain incompatible keys
