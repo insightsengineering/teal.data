@@ -26,7 +26,7 @@
 #' tdata3 <- within(tdata3, {
 #'   stop("error")
 #' })
-#'
+#' }
 #' @name verify
 #' @aliases verify,teal_data-method
 #' @aliases verify,qenv.error-method
