@@ -351,9 +351,7 @@ c.join_keys <- function(...) {
 
     if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
       new_value <- setNames(new_value, new_value)
-    } else if (
-      checkmate::test_character(new_value, min.len = 1)
-    ) {
+    } else if (checkmate::test_character(new_value, min.len = 1)) {
       # Invert key
       new_value <- setNames(names(new_value), new_value)
     }
@@ -387,13 +385,12 @@ length.join_keys <- function(x) {
   if (NextMethod("length", x) == 0) {
     return(0)
   }
-  sum(vapply(x, function(.x) !is.null(.x) && length(.x) > 0, logical(1)))
+  sum(vapply(x, function(.x) length(.x) > 0, logical(1)))
 }
 
 #' Prints `join_keys`.
 #'
 #' @inheritParams base::print
-#' @return the `x` parameter
 #'
 #' @export
 print.join_keys <- function(x, ...) {
