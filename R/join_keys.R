@@ -85,10 +85,7 @@ join_keys.TealData <- function(...) {
 #' @rdname join_keys
 #' @export
 join_keys.default <- function(...) {
-  # Constructor using join_keys<-.xxx setter
-  result <- new_join_keys()
-  join_keys(result) <- rlang::list2(...)
-  result
+  c(new_join_keys(), ...)
 }
 
 #' @rdname join_keys
@@ -129,24 +126,8 @@ join_keys.default <- function(...) {
   if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
     return(value)
   }
-
-  if (inherits(value, "join_key_set")) value <- list(value)
-
   join_keys_obj <- new_join_keys()
-
-  # check if any join_key_sets share the same datasets but different values
-  for (idx_1 in seq_along(value)) {
-    for (idx_2 in seq_along(value)[-seq(1, idx_1)]) {
-      assert_compatible_keys(value[[idx_1]], value[[idx_2]])
-    }
-
-    dataset_1 <- get_dataset_1(value[[idx_1]])
-    dataset_2 <- get_dataset_2(value[[idx_1]])
-    keys <- get_keys(value[[idx_1]])
-
-    join_keys_obj[[dataset_1]][[dataset_2]] <- keys
-  }
-  join_keys_obj
+  c(join_keys_obj, value)
 }
 
 #' @rdname join_keys
@@ -172,30 +153,19 @@ join_keys.default <- function(...) {
 #'
 #' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
 c.join_keys <- function(...) {
-  x <- rlang::list2(...)
-  checkmate::assert_class(x[[1]], c("join_keys", "list"))
-  checkmate::assert_list(x[-1], types = c("join_keys", "join_key_set"))
+  join_keys_obj <- rlang::list2(...)[[1]]
+  x <- rlang::list2(...)[-1]
+  checkmate::assert_class(join_keys_obj, c("join_keys", "list"))
+  checkmate::assert_list(x, types = c("join_keys", "join_key_set"))
 
-  join_keys_obj <- x[[1]]
-  x <- x[-1]
-  if (
-    checkmate::test_class(x, "join_key_set") ||
-      checkmate::test_class(x, c("join_keys", "list"))
-  ) {
-    x <- list(x)
-  }
-
-  if (checkmate::test_list(x, types = "join_key_set")) {
-    jk_temp <- new_join_keys()
-    join_keys(jk_temp) <- x
-    x <- list(jk_temp)
-  }
-
-  for (el in x) {
-    join_keys_obj <- utils::modifyList(join_keys_obj, el)
-  }
-
-  join_keys_obj
+  x_merged <- Reduce(
+    x,
+    f = function(.x, .y) {
+      assert_compatible_keys2(.x, .y)
+      modifyList(.x, .y)
+    }
+  )
+  utils::modifyList(join_keys_obj, x_merged)
 }
 
 #' The Names of an `join_keys` Object
@@ -345,7 +315,6 @@ c.join_keys <- function(...) {
     checkmate::check_logical(i, len = 1)
   )
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
-
   if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
     i <- names(x)[[i]]
   }
@@ -355,21 +324,13 @@ c.join_keys <- function(...) {
     join_key(i, names(value)[.x], value[[.x]])
   })
 
-  # Check if multiple modifications don't have a conflict
-  for (idx_1 in seq_along(norm_value)) {
-    for (idx_2 in seq_along(norm_value)[-seq(1, idx_1)]) {
-      assert_compatible_keys(norm_value[[idx_1]], norm_value[[idx_2]])
-    }
-  }
-
   norm_value <- lapply(norm_value, get_keys)
   names(norm_value) <- names(value)
   value <- norm_value
 
   # Remove elements with length == 0L
-  value <- value[!vapply(seq_along(value), function(.x) is.null(value[[.x]]) || length(value[[.x]]) == 0L, logical(1))]
+  value <- Filter(function(x) length(x) > 0, value)
 
-  #
   # Remove classes to use list-based get/assign operations
   x <- unclass(x)
 
@@ -473,6 +434,28 @@ new_join_keys <- function() {
   )
 }
 
+assert_compatible_keys2 <- function(.x, .y) {
+  if (length(.x) == 1 && length(.y) == 1) {
+    # both are join_key_set
+    assert_compatible_keys(.x, .y)
+  } else if (length(.x) > 1 && length(.y) > 1) {
+    # both are join_keys - need to compare all x with single y
+    for (idx_1 in seq_along(.x)) {
+      for (idx_2 in seq_along(.y)) {
+        assert_compatible_keys(.x[idx_1], .y[idx_2])
+      }
+    }
+  } else if (length(.x) > 1 && length(.y) == 1) {
+    for (idx_1 in seq_along(.x)) {
+      assert_compatible_keys(.x[idx_1], .y)
+    }
+  } else if (length(.x) == 1 && length(.y) > 1) {
+    for (idx_2 in seq_along(.y)) {
+      assert_compatible_keys(.x, .y[idx_2])
+    }
+  }
+}
+
 #' Helper function to assert if two key sets contain incompatible keys
 #'
 #' return TRUE if compatible, throw error otherwise
@@ -484,14 +467,13 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     )
   }
 
-  dataset_1_one <- get_dataset_1(join_key_1)
-  dataset_2_one <- get_dataset_2(join_key_1)
-  keys_one <- get_keys(join_key_1)
+  dataset_1_one <- names(join_key_1)
+  dataset_2_one <- names(join_key_1[[1]])
+  keys_one <- join_key_1[[1]][[1]]
 
-  dataset_1_two <- get_dataset_1(join_key_2)
-  dataset_2_two <- get_dataset_2(join_key_2)
-  keys_two <- get_keys(join_key_2)
-
+  dataset_1_two <- names(join_key_2)
+  dataset_2_two <- names(join_key_2[[1]])
+  keys_two <- join_key_2[[1]][[1]]
 
   # if first datasets and the second datasets match and keys
   # must contain the same named elements
