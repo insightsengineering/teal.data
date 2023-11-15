@@ -95,7 +95,7 @@ testthat::test_that("[.join_keys returns join_keys object", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
+    join_key("d3", "d3", "c")
   )
   testthat::expect_identical(my_keys[], my_keys)
 })
@@ -104,7 +104,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given da
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
+    join_key("d3", "d3", "c")
   )
   testthat::expect_identical(
     my_keys[c("d1", "d2")],
@@ -116,7 +116,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given in
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
+    join_key("d3", "d3", "c")
   )
   testthat::expect_identical(
     my_keys[c(1, 2)],
@@ -136,8 +136,7 @@ testthat::test_that("[.join_keys returns join_keys for given dataset including t
     my_keys["d2", keep_all_foreign_keys = TRUE],
     join_keys(
       join_key("d2", "d2", "b"),
-      join_key("d2", "d1", "ab"),
-      join_key("d1", "d2", "ab")
+      join_key("d2", "d1", "ab")
     )
   )
 })
@@ -400,7 +399,7 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
     join_key("a", "a", "a"),
     join_key("a", "b", "ab"),
     join_key("a", "c", "ac"),
-    join_key("d", "b", "db"),
+    join_key("d", "b", "db")
   )
 
   names(jk)[1:2] <- c("x", "y")
@@ -411,7 +410,7 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
       join_key("x", "x", "a"),
       join_key("x", "y", "ab"),
       join_key("x", "c", "ac"),
-      join_key("d", "y", "db"),
+      join_key("d", "y", "db")
     )
   )
 })
@@ -423,6 +422,18 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
 testthat::test_that("c.join_keys joins join_keys object with join_key objects", {
   obj <- join_keys()
   obj <- c(obj, join_key("a", "a", "aa"), join_key("b", "b", "bb"))
+  testthat::expect_identical(
+    obj,
+    join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb")
+    )
+  )
+})
+
+testthat::test_that("c.join_keys duplicated keys are ignored", {
+  obj <- join_keys()
+  obj <- c(obj, join_key("a", "a", "aa"), join_key("a", "a", "aa"))
   testthat::expect_identical(
     obj,
     join_keys(
@@ -478,23 +489,72 @@ testthat::test_that("c.join_keys doesn't throw when second object is empty join_
   testthat::expect_no_error(c(x, y))
 })
 
+testthat::test_that("c.join_keys doesn't allow to specify the keys which are incompatible", {
+  obj <- join_keys()
+  testthat::expect_error(
+    c(
+      obj,
+      join_keys(join_key("a", "b", "aa")),
+      join_keys(join_key("b", "a", "bb"))
+    )
+  )
+})
+
 # -----------------------------------------------------------------------------
 #
 # print.join_keys
 
-testthat::test_that("print.join_keys for empty set", {
+testthat::test_that("format.join_keys for empty set", {
   jk <- join_keys()
-  testthat::expect_output(
-    print(jk),
-    "An empty join_keys object."
+  testthat::expect_identical(format(jk), "An empty join_keys object.")
+})
+
+testthat::test_that("format.join_keys with empty parents", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c"),
+    join_key("d2", "d1", "ba"),
+    join_key("d3", "d2", "ca")
+  )
+  testthat::expect_identical(
+    format(my_keys),
+    paste(
+      "A join_keys object containing foreign keys between 3 datasets:",
+      "d1: [a]", "  <-> d2: [ba]", "d2: [b]", "  <-> d1: [ba]", "  <-> d3: [ca]",
+      "d3: [c]", "  <-> d2: [ca]",
+      sep = "\n"
+    )
   )
 })
 
-testthat::test_that("print.join_keys for a non-empty set", {
-  jk <- join_keys()
-  join_keys(jk) <- list(join_key("DF1", "DF2", c("id" = "fk")))
-  testthat::expect_output(
-    print(jk),
-    "A join_keys object containing foreign keys between 2 datasets:"
+testthat::test_that("format.join_keys for parents", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c"),
+    join_key("d2", "d1", "ba"),
+    join_key("d3", "d2", "ca")
   )
+  parents(my_keys) <- list("d2" = "d1", "d3" = "d2")
+  testthat::expect_identical(
+    format(my_keys),
+    paste(
+      "A join_keys object containing foreign keys between 3 datasets:",
+      "d1: [a]", "  <-- d2: [ba]", "d2: [b]", "  --> d1: [ba]", "  <-- d3: [ca]",
+      "d3: [c]", "  --> d2: [ca]",
+      sep = "\n"
+    )
+  )
+})
+
+testthat::test_that("print.join_keys produces output same as format", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c"),
+    join_key("d2", "d1", "ba"),
+    join_key("d3", "d2", "ca")
+  )
+  testthat::expect_output(print(my_keys), format(my_keys), fixed = TRUE)
 })
