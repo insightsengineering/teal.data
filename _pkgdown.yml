@@ -98,7 +98,6 @@ reference:
       - get_join_keys
       - get_raw_data
       - is_pulled
-      - is_reproducible
       - load_dataset
       - load_datasets
       - mutate_data
@@ -106,6 +105,7 @@ reference:
       - mutate_join_keys
       - set_args
       - set_keys
+      - verify
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:

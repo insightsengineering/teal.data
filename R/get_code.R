@@ -109,7 +109,7 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
 #'
 #' tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
 #' get_code(tdata2)
-#' get_code(is_reproducible(tdata2))
+#' get_code(verify(tdata2))
 #'
 get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) {
   code <- if (length(dataname) > 0) {
@@ -118,8 +118,8 @@ get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) 
     x@code
   }
 
-  if (!x@valid) {
-    code <- c("warning('Code was not validated for reproducibility.')", code)
+  if (!x@verified) {
+    code <- c("warning('Code was not verified for reproducibility.')", code)
   }
 
   if (deparse) {

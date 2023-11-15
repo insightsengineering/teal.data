@@ -109,6 +109,6 @@ get_code(tdata1, "b")
 
 tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
 get_code(tdata2)
-get_code(is_reproducible(tdata2))
+get_code(verify(tdata2))
 
 }

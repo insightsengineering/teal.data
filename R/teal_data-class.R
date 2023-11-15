@@ -29,19 +29,19 @@ setOldClass("JoinKeys")
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
-#' @slot valid (logical(1)) representing whether the check of the reproducibility of the `@env` environment using the
-#' code from the `@code` slot was performed. See [`is_reproducible()`] for more information.
+#' @slot verified (logical(1)) representing whether the check of the reproducibility of the `@env` environment using the
+#' code from the `@code` slot was performed. See [`verify()`] for more information.
 #'
 #' @import teal.code
 #' @keywords internal
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "JoinKeys", datanames = "character", valid = "logical"),
+  slots = c(join_keys = "JoinKeys", datanames = "character", verified = "logical"),
   prototype = list(
     join_keys = join_keys(),
     datanames = character(0),
-    valid = logical(0)
+    verified = logical(0)
   )
 )
 
@@ -76,7 +76,7 @@ new_teal_data <- function(data,
   if (length(code)) {
     code <- paste(code, collapse = "\n")
   }
-  valid <- (length(code) == 0L && length(data) == 0L)
+  verified <- (length(code) == 0L && length(data) == 0L)
 
   id <- sample.int(.Machine$integer.max, size = length(code))
 
@@ -92,6 +92,6 @@ new_teal_data <- function(data,
     id = id,
     join_keys = join_keys,
     datanames = datanames,
-    valid = valid
+    verified = verified
   )
 }
