@@ -4,7 +4,7 @@
 \alias{verify}
 \alias{verify,teal_data-method}
 \alias{verify,qenv.error-method}
-\title{Reproducibility Check for \verb{@code} Slot in \code{teal_data}}
+\title{Check Code Reproducibility}
 \usage{
 verify(x)
 }
@@ -17,7 +17,7 @@ the objects in \code{teal_data@env}, the function updates the \verb{@verified} s
 If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is thrown.
 }
 \description{
-Verifies the reproducibility of the \code{teal_data@env} environment using the \verb{@code} slot.
+Checks whether code in \code{teal_data} reproduces the stored objects.
 }
 \examples{
 tdata1 <- teal_data()
