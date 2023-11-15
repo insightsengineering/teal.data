@@ -26,7 +26,6 @@ get_code(x, ...)
   deparse = FALSE,
   files_path = NULL,
   dataname = NULL,
-  names = NULL,
   ...
 )
 }

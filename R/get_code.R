@@ -144,7 +144,6 @@ get_code.default <- function(x,
                              deparse = FALSE,
                              files_path = NULL,
                              dataname = NULL,
-                             names = NULL,
                              ...) {
   if (!is.null(files_path)) {
     x <- files_path
