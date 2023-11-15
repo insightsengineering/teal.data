@@ -28,7 +28,6 @@
 #'
 #' verify(tdata3)
 #'
-#'
 #' @name verify
 #' @aliases verify,teal_data-method
 #' @aliases verify,qenv.error-method
