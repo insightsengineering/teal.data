@@ -452,24 +452,28 @@ new_join_keys <- function() {
   )
 }
 
-assert_compatible_keys2 <- function(.x, .y) {
-  if (length(.x) == 1 && length(.y) == 1) {
-    # both are join_key_set
-    assert_compatible_keys(.x, .y)
-  } else if (length(.x) > 1 && length(.y) > 1) {
-    # both are join_keys - need to compare all x with single y
-    for (idx_1 in seq_along(.x)) {
-      for (idx_2 in seq_along(.y)) {
-        assert_compatible_keys(.x[idx_1], .y[idx_2])
-      }
-    }
-  } else if (length(.x) > 1 && length(.y) == 1) {
-    for (idx_1 in seq_along(.x)) {
-      assert_compatible_keys(.x[idx_1], .y)
-    }
-  } else if (length(.x) == 1 && length(.y) > 1) {
-    for (idx_2 in seq_along(.y)) {
-      assert_compatible_keys(.x, .y[idx_2])
+assert_compatible_keys2 <- function(x, y) {
+  # Helper to flatten join_keys / join_key_set
+  flatten_join_key_sets <- function(value) {
+    value <- unclass(value)
+    Reduce(
+      init = list(),
+      f = function(u, v, ...) {
+        el <- value[v][[1]]
+        res <- lapply(seq_along(el), function(ix) el[ix])
+        names(res) <- rep(v, length(res))
+        append(u, res)
+      },
+      x = names(value)
+    )
+  }
+
+  x <- flatten_join_key_sets(x)
+  y <- flatten_join_key_sets(y)
+
+  for (idx_1 in seq_along(x)) {
+    for (idx_2 in seq_along(y)) {
+      assert_compatible_keys(x[idx_1], y[idx_2])
     }
   }
 }
