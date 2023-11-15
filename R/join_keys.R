@@ -430,7 +430,6 @@ length.join_keys <- function(x) {
 #' Prints `join_keys`.
 #'
 #' @inheritParams base::print
-#' @return the `x` parameter
 #'
 #' @export
 print.join_keys <- function(x, ...) {

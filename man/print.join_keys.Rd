@@ -11,9 +11,6 @@
 
 \item{...}{further arguments passed to or from other methods.}
 }
-\value{
-the \code{x} parameter
-}
 \description{
 Prints \code{join_keys}.
 }
