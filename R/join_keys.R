@@ -390,9 +390,7 @@ c.join_keys <- function(...) {
 
     if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
       new_value <- setNames(new_value, new_value)
-    } else if (
-      checkmate::test_character(new_value, min.len = 1)
-    ) {
+    } else if (checkmate::test_character(new_value, min.len = 1)) {
       # Invert key
       new_value <- setNames(names(new_value), new_value)
     }
