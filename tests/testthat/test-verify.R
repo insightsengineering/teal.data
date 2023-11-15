@@ -1,18 +1,14 @@
-testthat::test_that("verify returns the same object for empty teal_data", {
-  tdata1 <- teal_data()
-  testthat::expect_identical(tdata1, verify(tdata1))
-})
+testthat::test_that("verify returns the same object for @verified=TRUE", {
+  tdata <- teal_data()
+  testthat::expect_identical(tdata, verify(tdata))
 
-testthat::test_that("verify returns the same object for teal_data where code was run in within/eval_code", {
   tdata1 <- teal_data()
   tdata1 <- within(tdata1, {
     a <- 1
     b <- a^5
     c <- list(x = 2)
   })
-  testthat::expect_identical(verify(tdata1)@verified, TRUE)
-  testthat::expect_identical(verify(tdata1)@code, tdata1@code)
-  testthat::expect_identical(verify(tdata1)@env, tdata1@env)
+  testthat::expect_identical(verify(tdata1), tdata1)
 })
 
 testthat::test_that("verify returns the same object with changed @verified field for properly executed code", {
