@@ -26,8 +26,6 @@
 #' tdata3 <- within(tdata3, {
 #'   stop("error")
 #' })
-#' verify(tdata3)
-#' }
 #'
 #' @name verify
 #' @aliases verify,teal_data-method
