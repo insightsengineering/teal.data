@@ -337,13 +337,21 @@ c.join_key_set <- function(...) {
   vapply(
     seq_along(repeated),
     function(.ix, .x_value = repeated[[.ix]], .x_name = get_dataset_2(.x_value)) {
-      assert_compatible_keys(.x_value, repeated[-.ix][names(repeated[-.ix]) == .x_name])
+      assert_compatible_keys2(
+        .x_value,
+        unlist(unname(
+          repeated[-.ix][names(repeated[-.ix]) == .x_name]
+        ), recursive = FALSE)
+      )
     },
     logical(1)
   )
 
   norm_value <- lapply(norm_value, get_keys)
   names(norm_value) <- names(value)
+
+  # Safe to do as duplicated are the same
+  norm_value[duplicated(names(norm_value))] <- NULL
 
   # Remove elements with length == 0L
   norm_value <- Filter(function(.x) length(.x) > 0, norm_value)

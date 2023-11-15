@@ -394,6 +394,20 @@ testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for sa
   )
 })
 
+testthat::test_that("[[<-.join_keys succeeds when provided foreign key pairs for same datasets and same keys", {
+  jk <- join_keys()
+
+  testthat::expect_silent(
+    jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new"))
+  )
+
+  testthat::expect_silent(
+    jk[["ds1"]] <- list(ds2 = "new", ds2 = "new")
+  )
+
+  testthat::expect_length(jk[["ds1"]], 1)
+})
+
 # -----------------------------------------------------------------------------
 #
 # names<-.join_keys
