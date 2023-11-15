@@ -25,7 +25,7 @@ testthat::test_that("verify returns the same object with changed @verified field
   testthat::expect_identical(verify(tdata2)@env, tdata2@env)
 })
 
-testthat::test_that("verify returns error if @code does not restore objects in @env", {
+testthat::test_that("verify raises error if @code does not restore objects in @env", {
   tdata3 <- teal_data(x1 = iris, code = "x1 = mtcars")
 
   testthat::expect_error(verify(tdata3))
