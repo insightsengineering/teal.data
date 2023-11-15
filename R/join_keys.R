@@ -424,7 +424,7 @@ length.join_keys <- function(x) {
   if (NextMethod("length", x) == 0) {
     return(0)
   }
-  sum(vapply(x, function(.x) !is.null(.x) && length(.x) > 0, logical(1)))
+  sum(vapply(x, function(.x) length(.x) > 0, logical(1)))
 }
 
 #' Prints `join_keys`.
