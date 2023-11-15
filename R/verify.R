@@ -36,7 +36,7 @@
 #' @export
 setGeneric("verify", function(x) standardGeneric("verify"))
 setMethod("verify", "teal_data", definition = function(x) {
-  if (x@valid) {
+  if (x@verified) {
     return(x)
   }
   new_teal_data <- eval_code(teal_data(), x@code)
