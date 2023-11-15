@@ -39,8 +39,8 @@ setMethod("verify", "teal_data", definition = function(x) {
   }
   new_teal_data <- eval_code(teal_data(), x@code)
 
-  reproducible <- all.equal(x@env, new_teal_data@env)
-  if (isTRUE(reproducible)) {
+  reproduced <- (inherits(new_teal_data, "teal_data") && isTRUE(all.equal(x@env, new_teal_data@env)))
+  if (reproduced) {
     x@verified <- TRUE
     methods::validObject(x)
     x
