@@ -383,28 +383,54 @@ length.join_keys <- function(x) {
   sum(vapply(x, function(.x) length(.x) > 0, logical(1)))
 }
 
-#' Prints `join_keys`.
-#'
-#' @inheritParams base::print
-#'
+
+#' @rdname join_keys
+#' @export
+format.join_keys <- function(x, ...) {
+  check_ellipsis(...)
+  if (length(x) > 0) {
+    my_parents <- parents(x)
+    names_sorted <- topological_sort(my_parents)
+    names <- union(names_sorted, names(x))
+
+    out <- lapply(names, function(i) {
+      this_parent <- my_parents[[i]]
+      out_i <- lapply(union(i, names(x[[i]])), function(j) {
+        direction <- if (identical(my_parents[[j]], i)) {
+          "  <-- "
+        } else if (identical(my_parents[[i]], j)) {
+          "  --> "
+        } else if (!identical(i, j)) {
+          "  <-> "
+        } else {
+          ""
+        }
+
+        keys <- x[[i]][[j]]
+        sprintf(
+          "%s%s: [%s]",
+          direction, j,
+          if (length(keys) == 0) "no primary keys" else toString(keys)
+        )
+      })
+      paste(out_i, collapse = "\n")
+    })
+    paste(
+      c(
+        sprintf("A join_keys object containing foreign keys between %s datasets:", length(x)),
+        out
+      ),
+      collapse = "\n"
+    )
+  } else {
+    "An empty join_keys object."
+  }
+}
+
+#' @rdname join_keys
 #' @export
 print.join_keys <- function(x, ...) {
-  check_ellipsis(...)
-  keys_list <- x
-  my_parents <- parents(keys_list)
-  class(keys_list) <- "list"
-  if (length(keys_list) > 0) {
-    cat(sprintf(
-      "A join_keys object containing foreign keys between %s datasets:\n",
-      length(x)
-    ))
-    # Hide parents
-    attr(keys_list, "__parents__") <- NULL # nolint: object_name_linter
-    non_empty_ix <- vapply(keys_list, function(.x) !is.null(.x) && length(.x) > 0, logical(1))
-    print.default(keys_list[sort(names(keys_list))][non_empty_ix])
-  } else {
-    cat("An empty join_keys object.")
-  }
+  cat(format(x, ...), "\n")
   invisible(x)
 }
 
