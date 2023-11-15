@@ -42,6 +42,7 @@ setMethod("verify", "teal_data", definition = function(x) {
   reproducible <- all.equal(x@env, new_teal_data@env)
   if (isTRUE(reproducible)) {
     x@verified <- TRUE
+    methods::validObject(x)
     x
   } else {
     stop("Code verification failed.")
