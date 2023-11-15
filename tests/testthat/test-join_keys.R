@@ -68,6 +68,18 @@ testthat::test_that("join_keys fails when provided foreign key pairs have incomp
     join_keys(join_key("d1", "d2", c(a = "b")), join_key("d2", "d1", c(a = "b"))),
     "cannot specify multiple different join keys between datasets"
   )
+
+  testthat::expect_error(
+    join_keys(
+      join_keys(
+        join_key("q", "b", "d"),
+        join_key("a", "b", "c")
+      ),
+      join_key("a", "q", "e"),
+      join_key("a", "b", "f")
+    ),
+    "cannot specify multiple different join keys between datasets"
+  )
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
@@ -485,7 +497,28 @@ testthat::test_that("c.join_keys throws on conflicting join_keys_set objects", {
       obj,
       join_keys(join_key("a", "b", "aa")),
       join_keys(join_key("b", "a", "bb"))
-    )
+    ),
+    "cannot specify multiple different join keys between datasets"
+  )
+
+  testthat::expect_error(
+    c(
+      obj,
+      join_key("a", "b", "aa"),
+      join_key("b", "a", "bb")
+    ),
+    "cannot specify multiple different join keys between datasets"
+  )
+})
+
+testthat::test_that("c.join_key_set throws on conflicting join_keys_set objects", {
+  testthat::expect_error(
+    c(
+      join_key("a", "b", "aa"),
+      join_key("a", "b", "ca"),
+      join_key("a", "b", "cc")
+    ),
+    "cannot specify multiple different join keys between datasets"
   )
 })
 

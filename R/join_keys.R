@@ -149,7 +149,7 @@ join_keys.default <- function(...) {
 c.join_keys <- function(...) {
   join_keys_obj <- rlang::list2(...)[[1]]
   x <- rlang::list2(...)[-1]
-  checkmate::assert_class(join_keys_obj, c("join_keys", "list"))
+  checkmate::assert_multi_class(join_keys_obj, classes = c("join_keys", "join_key_set"))
   checkmate::assert_list(x, types = c("join_keys", "join_key_set"))
 
   x_merged <- Reduce(
@@ -162,6 +162,16 @@ c.join_keys <- function(...) {
   )
 
   utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
+}
+
+#' @rdname join_keys
+#' @export
+#'
+#' @examples
+#'
+#' c(join_key("a", "b", "c"), join_keys(join_key("a", "d2", "c")))
+c.join_key_set <- function(...) {
+  c.join_keys(...)
 }
 
 #' The Names of an `join_keys` Object

@@ -10,6 +10,7 @@
 \alias{join_keys<-.join_keys}
 \alias{join_keys<-.teal_data}
 \alias{c.join_keys}
+\alias{c.join_key_set}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
 \alias{[[<-.join_keys}
@@ -34,6 +35,8 @@ join_keys(x) <- value
 \method{join_keys}{teal_data}(x) <- value
 
 \method{c}{join_keys}(...)
+
+\method{c}{join_key_set}(...)
 
 \method{[}{join_keys}(x, i, keep_all_foreign_keys = FALSE)
 
@@ -130,6 +133,8 @@ join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
 
 c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
+
+c(join_key("a", "b", "c"), join_keys(join_key("a", "d2", "c")))
 
 # Getter for join_keys ----
 
