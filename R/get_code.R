@@ -114,7 +114,7 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
 #'
 get_code.teal_data <- function(x, names = NULL, deparse = TRUE, ...) {
   check_ellipsis(...)
-  checkmate::assert_character(names, null.ok = TRUE)
+  checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
 
   code <- if (length(names) > 0) {
