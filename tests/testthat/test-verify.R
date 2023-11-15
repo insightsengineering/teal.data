@@ -18,7 +18,7 @@ testthat::test_that("verify returns the same object for teal_data where code was
 
 testthat::test_that("verify returns the same object with changed @verified field for properly executed code", {
   tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
-
+  tdata2_ver <- verify(tdata2)
   testthat::expect_identical(tdata2@verified, FALSE)
   testthat::expect_identical(verify(tdata2)@verified, TRUE)
   testthat::expect_identical(verify(tdata2)@code, tdata2@code)
