@@ -23,7 +23,7 @@ testthat::test_that("verify returns the same object with changed @verified field
 testthat::test_that("verify raises error if @code does not restore objects in @env", {
   tdata3 <- teal_data(x1 = iris, code = "x1 = mtcars")
 
-  testthat::expect_error(verify(tdata3))
+  testthat::expect_error(verify(tdata3), "Code verification failed.")
 })
 
 testthat::test_that("verify returns error for qenv.error input", {
