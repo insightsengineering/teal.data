@@ -44,7 +44,7 @@ setMethod("verify", "teal_data", definition = function(x) {
     x@verified <- TRUE
     x
   } else {
-    stop("Code validation failed.")
+    stop("Code verification failed.")
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
