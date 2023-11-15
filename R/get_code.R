@@ -32,6 +32,7 @@
 #' @param files_path (`character`) (optional) vector of files path to be read for preprocessing. Code from
 #' multiple files is joined together.
 #' @param dataname (`character`) Name of dataset to return code for.
+#' @param names (`character(n)`) vector with object names to return the code for.
 #' @param ... not used, only for support of S3
 #' @export
 #' @return (`character`) code of import and preparation of data for teal application.
@@ -111,9 +112,13 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
 #' get_code(tdata2)
 #' get_code(verify(tdata2))
 #'
-get_code.teal_data <- function(x, dataname = character(0), deparse = TRUE, ...) {
-  code <- if (length(dataname) > 0) {
-    get_code_dependency(x@code, dataname)
+get_code.teal_data <- function(x, names = NULL, deparse = TRUE, ...) {
+  check_ellipsis(...)
+  checkmate::assert_character(names, null.ok = TRUE)
+  checkmate::assert_flag(deparse)
+
+  code <- if (length(names) > 0) {
+    get_code_dependency(x@code, names)
   } else {
     x@code
   }
@@ -139,6 +144,7 @@ get_code.default <- function(x,
                              deparse = FALSE,
                              files_path = NULL,
                              dataname = NULL,
+                             names = NULL,
                              ...) {
   if (!is.null(files_path)) {
     x <- files_path

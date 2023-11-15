@@ -17,7 +17,7 @@ get_code(x, ...)
 
 \method{get_code}{TealDataAbstract}(x, dataname = character(0), deparse = TRUE, ...)
 
-\method{get_code}{teal_data}(x, dataname = character(0), deparse = TRUE, ...)
+\method{get_code}{teal_data}(x, names = NULL, deparse = TRUE, ...)
 
 \method{get_code}{default}(
   x,
@@ -26,6 +26,7 @@ get_code(x, ...)
   deparse = FALSE,
   files_path = NULL,
   dataname = NULL,
+  names = NULL,
   ...
 )
 }
@@ -38,6 +39,8 @@ an input file to read.}
 \item{deparse}{(\code{logical}) whether return deparsed form of a call}
 
 \item{dataname}{(\code{character}) Name of dataset to return code for.}
+
+\item{names}{(\code{character(n)}) vector with object names to return the code for.}
 
 \item{exclude_comments}{(\code{logical}) whether exclude commented-out lines of code. Lines to be excluded
 should be ended with \verb{# nocode}. For multiple line exclusions one should enclose ignored block of code with
