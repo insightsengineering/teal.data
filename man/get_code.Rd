@@ -5,6 +5,7 @@
 \alias{get_code.TealDatasetConnector}
 \alias{get_code.TealDataset}
 \alias{get_code.TealDataAbstract}
+\alias{get_code.teal_data}
 \alias{get_code.default}
 \title{Get code}
 \usage{
@@ -15,6 +16,8 @@ get_code(x, ...)
 \method{get_code}{TealDataset}(x, deparse = TRUE, ...)
 
 \method{get_code}{TealDataAbstract}(x, dataname = character(0), deparse = TRUE, ...)
+
+\method{get_code}{teal_data}(x, dataname = character(0), deparse = TRUE, ...)
 
 \method{get_code}{default}(
   x,
@@ -27,7 +30,8 @@ get_code(x, ...)
 )
 }
 \arguments{
-\item{x}{(\code{\link{TealDatasetConnector}} or \code{\link{TealDataset}}). If of class \code{character} will be treated as file to read.}
+\item{x}{(\code{\link{TealDatasetConnector}}, \code{\link{TealDataset}}) or \code{\link{teal_data}}. If of \code{character} class, it will be treated as
+an input file to read.}
 
 \item{...}{not used, only for support of S3}
 
@@ -92,4 +96,19 @@ rd <- teal_data(x1, x2)
 get_code(rd)
 get_code(rd, "XY")
 get_code(rd, "XYZ")
+
+tdata1 <- teal_data()
+tdata1 <- within(tdata1, {
+  a <- 1
+  b <- a^5
+  c <- list(x = 2)
+})
+get_code(tdata1)
+get_code(tdata1, "a")
+get_code(tdata1, "b")
+
+tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+get_code(tdata2)
+get_code(verify(tdata2))
+
 }
