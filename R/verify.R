@@ -1,6 +1,6 @@
 #' Check Code Reproducibility
 #'
-#' Verifies the reproducibility of the `teal_data@env` environment using the `@code` slot.
+#' Checks whether code in `teal_data` reproduces the stored objects.
 #'
 #' @return If the objects returned by the `@code` slot in the input `teal_data` object exactly match
 #' the objects in `teal_data@env`, the function updates the `@verified` slot to `TRUE` in the `teal_data` object.
