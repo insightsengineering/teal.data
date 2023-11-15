@@ -193,11 +193,6 @@ testthat::test_that("join_keys<-.join_keys overwrites existing join_keys", {
   testthat::expect_identical(my_keys, join_keys(join_key("d1", "d1", "test")))
 })
 
-testthat::test_that("join_keys<-.join_keys accepts join_key_set object to modify keys", {
-  obj <- join_keys()
-  join_keys(obj) <- join_key("ds1", "ds2", "id")
-  testthat::expect_identical(obj, join_keys(join_key("ds1", "ds2", "id")))
-})
 
 testthat::test_that("join_keys<-.teal_data overwrites existing join_keys", {
   td <- teal_data(
@@ -311,7 +306,7 @@ testthat::test_that("[[<- mutating non-existing keys adds them", {
   )
 })
 
-testthat::test_that("[[<- can key pair values can be set to character(0)", {
+testthat::test_that("[[<- setting a key to character(0) drops the key", {
   my_keys <- join_keys(
     join_key("d1", "d2", "A"),
     join_key("d2", "d3", "B")
@@ -321,10 +316,7 @@ testthat::test_that("[[<- can key pair values can be set to character(0)", {
 
   testthat::expect_identical(
     my_keys,
-    join_keys(
-      join_key("d1", "d2", character(0)),
-      join_key("d2", "d3", "B")
-    )
+    join_keys(join_key("d2", "d3", "B"))
   )
 })
 
@@ -436,10 +428,7 @@ testthat::test_that("c.join_keys duplicated keys are ignored", {
   obj <- c(obj, join_key("a", "a", "aa"), join_key("a", "a", "aa"))
   testthat::expect_identical(
     obj,
-    join_keys(
-      join_key("a", "a", "aa"),
-      join_key("b", "b", "bb")
-    )
+    join_keys(join_key("a", "a", "aa"))
   )
 })
 
@@ -489,7 +478,7 @@ testthat::test_that("c.join_keys doesn't throw when second object is empty join_
   testthat::expect_no_error(c(x, y))
 })
 
-testthat::test_that("c.join_keys doesn't allow to specify the keys which are incompatible", {
+testthat::test_that("c.join_keys throws on conflicting join_keys_set objects", {
   obj <- join_keys()
   testthat::expect_error(
     c(
