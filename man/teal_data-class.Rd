@@ -40,8 +40,8 @@ Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
 Used internally to distinguish them from auxiliary variables.
 Access or modify with \code{\link[=datanames]{datanames()}}.}
 
-\item{\code{verified}}{(logical(1)) representing whether the check of the reproducibility of the \verb{@env} environment using the
-code from the \verb{@code} slot was performed. See \code{\link[=verify]{verify()}} for more information.}
+\item{\code{verified}}{(\code{logical(1)}) (logical) flag signifying that code in \verb{@code} has been proven to yield contents of \verb{@env}.
+Used internally. See \code{\link[=verify]{verify()}} for more details.}
 }}
 
 \keyword{internal}
