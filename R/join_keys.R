@@ -268,7 +268,7 @@ c.join_key_set <- function(...) {
 
   # When retrieving a relationship pair, it will also return the symmetric key
   new_jk <- new_join_keys()
-  queue <- i
+  queue <- unique(i)
   bin <- character(0)
 
   # Need to iterate on a mutating queue if subset of a dataset will also
@@ -277,10 +277,6 @@ c.join_key_set <- function(...) {
   while (length(queue) > 0) {
     ix <- queue[1]
     queue <- queue[-1]
-
-    if (ix %in% bin) {
-      next
-    }
     bin <- c(bin, ix)
 
     ix_parent <- parent(x, ix)
