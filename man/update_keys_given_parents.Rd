@@ -15,8 +15,4 @@ update_keys_given_parents(x)
 \description{
 Updates the keys of the datasets based on the parents.
 }
-\examples{
-update_keys_given_parents(my_keys)
-
-}
 \keyword{internal}
