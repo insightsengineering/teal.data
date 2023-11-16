@@ -4,16 +4,23 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @details - `join_keys()`: When called without arguments it will return an
+#' Note that join keys are created symmetrically, that is, if `dat1` and `dat2`
+#' have a join key of `col1`, then 2 join keys are created, `dat1 → dat2` and
+#' `dat2 → dat1`. The only exception is for a primary key.
+#'
+#' @details
+#'
+#' - `join_keys()`: When called without arguments it will return an
 #' empty constructor.
 #' - `join_keys(x)`: When called with a single argument it will return the `join_keys`
 #' object contained in `x` (if it contains a `join_keys` object).
 #' - `join_keys(...)`: When called with a single or more `join_key_set` parameters it will
 #' create a new object.
+#' - `[[.join_keys` is the preferred getter for `join_keys` that returns the
+#' relationship between pairs of datasets. It returns `NULL` if there is nor
+#' relationship.
 #'
-#' Note that join keys are created symmetrically, that is, if `dat1` and `dat2`
-#' have a join key of `col1`, then 2 join keys are created, `dat1 → dat2` and
-#' `dat2 → dat1`. The only exception is for a primary key.
+#' @order 1
 #'
 #' @param ... (optional), when no argument is given the empty constructor is called.
 #' Otherwise, when called with only one argument of type: `join_keys` or  `teal_data`
@@ -40,15 +47,14 @@
 #' jk[["dataset_A"]][["dataset_C"]] <- c("col_2" = "col_x", "col_3" = "col_y")
 #' jk
 #'
+#' # Retrieving a key for relationship pair
+#'
+#' jk[["dataset_A"]][["dataset_B"]]
+#'
+#' # Using a teal_data (which contains a join_keys object)
+#'
 #' td <- teal_data(join_keys = join_keys(join_key("a", "b", "c")))
 #' join_keys(td)
-#'
-#' jk <- join_keys()
-#' join_keys(jk)
-#'
-#' jk <- join_keys()
-#' jk <- c(jk, join_keys(join_key("a", "b", "c")))
-#' jk <- c(jk, join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c")))
 join_keys <- function(...) {
   if (missing(...)) {
     return(new_join_keys())
@@ -89,9 +95,10 @@ join_keys.default <- function(...) {
 }
 
 #' @rdname join_keys
+#'
 #' @details
-#' The setter assignment `join_keys(obj) <- ...` will merge obj and `...` if obj
-#' is not empty.
+#' - "`join_keys(obj) <- value`" will set the `join_keys` in object with `value`.
+#' `value` needs to be an object of class `join_keys` or `join_key_set`.
 #'
 #' @param x (`join_keys`) empty object to set the new relationship pairs.
 #' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
@@ -108,9 +115,6 @@ join_keys.default <- function(...) {
 #' @examples
 #'
 #' # Using the setter (assignment) ----
-#'
-#' jk <- join_keys()
-#' join_keys(jk) <- join_keys(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
 #'
 #' join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 #' jk
@@ -139,7 +143,9 @@ join_keys.default <- function(...) {
 #'
 #' @examples
 #'
-#' c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
+#' # Merging multiple `join_keys`
+#'
+#' jk_merged <- c(jk, join_keys(join_key("dataset_D", "dataset_E", "col_2")))
 c.join_keys <- function(...) {
   join_keys_obj <- rlang::list2(...)[[1]]
   x <- rlang::list2(...)[-1]
@@ -163,7 +169,13 @@ c.join_keys <- function(...) {
 #'
 #' @examples
 #'
-#' c(join_key("a", "b", "c"), join_keys(join_key("a", "d2", "c")))
+#' # Note that you can merge join_keys or a single join_key_set
+#'
+#' jk_merged <- c(
+#'   jk_merged,
+#'   join_key("dataset_A", "dataset_F", "col_a"),
+#'   join_key("dataset_O", "dataset_G", "col_g")
+#' )
 c.join_key_set <- function(...) {
   c.join_keys(...)
 }
@@ -206,8 +218,11 @@ c.join_key_set <- function(...) {
 }
 
 #' @rdname join_keys
+#'
 #' @details
-#' Getter for `join_keys` that returns the relationship between pairs of datasets.
+#' - `[.join_keys` can be used to return a subset of relationship pairs. It will
+#' retrieve the primary keys of the selected elements and its parents (along with)
+#' the relationship keys between the selected elements and their parents.
 #'
 #' @param i index specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
@@ -221,9 +236,10 @@ c.join_key_set <- function(...) {
 #'
 #' # Getter for join_keys ----
 #'
-#' jk <- join_keys()
-#' jk[["ds1"]][["ds2"]] <- "some_col"
-#' jk[["ds1"]][["ds3"]] <- "some_col2"
+#' jk <- join_keys(
+#'   join_key("ds1", "ds2", "some_col"),
+#'   join_key("ds1", "ds3", "some_col2")
+#' )
 #'
 #' jk["ds1"]
 #' jk[1:2]
@@ -297,7 +313,7 @@ c.join_key_set <- function(...) {
 #' @rdname join_keys
 #'
 #' @details
-#' `[<-` is not a supported operation for `join_keys`.
+#' - `[<-` is not a supported operation for `join_keys`.
 #'
 #' @export
 `[<-.join_keys` <- function(x, i, value) {
@@ -305,21 +321,23 @@ c.join_key_set <- function(...) {
 }
 
 #' @rdname join_keys
+#'
+#' @order 3
+#'
+#' @details
+#' - `[[<-` is the preferred method to replace or assign new relationship pair to an
+#' existing `join_keys` object.
+#' - `join_keys(obj)[[dataset_1]] <- value` can also be used to assign a relationship
+#' pair to an `obj` that contains a `join_keys`, such as itself or a `teal_data`
+#' object.
+#'
 #' @export
 #' @examples
 #'
 #' jk <- join_keys()
-#' jk[["ds1"]] <- list()
-#' jk[["ds2"]][["ds3"]] <- "key"
-#'
-#' jk <- join_keys()
-#' jk[["ds1"]] <- list()
-#' jk[["ds2"]][["ds3"]] <- "key"
-#' jk[["ds4"]] <- list(ds5 = "new")
-#'
-#' jk <- join_keys()
-#' jk[["ds2"]][["ds3"]] <- "key"
-#' jk[["ds2"]][["ds3"]] <- NULL
+#' jk[["dataset_A"]][["dataset_B"]] <- "key"
+#' jk[["dataset_C"]] <- list(dataset_A = "key_2", dataset_B = "key_3")
+#' jk[["dataset_A"]][["dataset_C"]] <- NULL # removes key
 #'
 #' jk
 `[[<-.join_keys` <- function(x, i, value) {

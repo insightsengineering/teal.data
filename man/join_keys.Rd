@@ -2,6 +2,7 @@
 % Please edit documentation in R/join_keys.R
 \name{join_keys}
 \alias{join_keys}
+\alias{[[<-.join_keys}
 \alias{join_keys.join_keys}
 \alias{join_keys.teal_data}
 \alias{join_keys.TealData}
@@ -13,12 +14,13 @@
 \alias{c.join_key_set}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
-\alias{[[<-.join_keys}
 \alias{format.join_keys}
 \alias{print.join_keys}
 \title{Create a \code{join_keys} out of a list of \code{join_key_set} objects}
 \usage{
 join_keys(...)
+
+\method{[[}{join_keys}(x, i) <- value
 
 \method{join_keys}{join_keys}(...)
 
@@ -42,8 +44,6 @@ join_keys(x) <- value
 
 \method{[}{join_keys}(x, i) <- value
 
-\method{[[}{join_keys}(x, i) <- value
-
 \method{format}{join_keys}(x, ...)
 
 \method{print}{join_keys}(x, ...)
@@ -57,11 +57,11 @@ constructed from the arguments.}
 
 \item{x}{(\code{join_keys}) empty object to set the new relationship pairs.}
 
-\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
-to \code{join_keys} list.}
-
 \item{i}{index specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
+
+\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
+to \code{join_keys} list.}
 
 \item{keep_all_foreign_keys}{(\code{logical}) flag that keeps foreign keys and other
 datasets even if they are not a parent of the selected dataset.}
@@ -71,6 +71,10 @@ datasets even if they are not a parent of the selected dataset.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
+Note that join keys are created symmetrically, that is, if \code{dat1} and \code{dat2}
+have a join key of \code{col1}, then 2 join keys are created, \verb{dat1 → dat2} and
+\verb{dat2 → dat1}. The only exception is for a primary key.
 }
 \details{
 \itemize{
@@ -80,18 +84,33 @@ empty constructor.
 object contained in \code{x} (if it contains a \code{join_keys} object).
 \item \code{join_keys(...)}: When called with a single or more \code{join_key_set} parameters it will
 create a new object.
+\item \verb{[[.join_keys} is the preferred getter for \code{join_keys} that returns the
+relationship between pairs of datasets. It returns \code{NULL} if there is nor
+relationship.
 }
 
-Note that join keys are created symmetrically, that is, if \code{dat1} and \code{dat2}
-have a join key of \code{col1}, then 2 join keys are created, \verb{dat1 → dat2} and
-\verb{dat2 → dat1}. The only exception is for a primary key.
+\itemize{
+\item \verb{[[<-} is the preferred method to replace or assign new relationship pair to an
+existing \code{join_keys} object.
+\item \code{join_keys(obj)[[dataset_1]] <- value} can also be used to assign a relationship
+pair to an \code{obj} that contains a \code{join_keys}, such as itself or a \code{teal_data}
+object.
+}
 
-The setter assignment \code{join_keys(obj) <- ...} will merge obj and \code{...} if obj
-is not empty.
+\itemize{
+\item "\code{join_keys(obj) <- value}" will set the \code{join_keys} in object with \code{value}.
+\code{value} needs to be an object of class \code{join_keys} or \code{join_key_set}.
+}
 
-Getter for \code{join_keys} that returns the relationship between pairs of datasets.
+\itemize{
+\item \verb{[.join_keys} can be used to return a subset of relationship pairs. It will
+retrieve the primary keys of the selected elements and its parents (along with)
+the relationship keys between the selected elements and their parents.
+}
 
-\verb{[<-} is not a supported operation for \code{join_keys}.
+\itemize{
+\item \verb{[<-} is not a supported operation for \code{join_keys}.
+}
 }
 \examples{
 # Setting join keys ----
@@ -108,20 +127,23 @@ jk[["dataset_A"]][["dataset_B"]] <- c("col_1" = "col_a")
 jk[["dataset_A"]][["dataset_C"]] <- c("col_2" = "col_x", "col_3" = "col_y")
 jk
 
+# Retrieving a key for relationship pair
+
+jk[["dataset_A"]][["dataset_B"]]
+
+# Using a teal_data (which contains a join_keys object)
+
 td <- teal_data(join_keys = join_keys(join_key("a", "b", "c")))
 join_keys(td)
 
 jk <- join_keys()
-join_keys(jk)
+jk[["dataset_A"]][["dataset_B"]] <- "key"
+jk[["dataset_C"]] <- list(dataset_A = "key_2", dataset_B = "key_3")
+jk[["dataset_A"]][["dataset_C"]] <- NULL # removes key
 
-jk <- join_keys()
-jk <- c(jk, join_keys(join_key("a", "b", "c")))
-jk <- c(jk, join_keys(join_key("a", "b", "c"), join_key("a", "b2", "c")))
+jk
 
 # Using the setter (assignment) ----
-
-jk <- join_keys()
-join_keys(jk) <- join_keys(join_keys(jk), join_key("ds3", "ds4", "some_col2"))
 
 join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 jk
@@ -134,32 +156,26 @@ join_keys(td)[["ds2"]][["ds2"]] <- "key2"
 join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
 
-c(join_keys(join_key("a", "b", "c")), join_keys(join_key("a", "d2", "c")))
+# Merging multiple `join_keys`
 
-c(join_key("a", "b", "c"), join_keys(join_key("a", "d2", "c")))
+jk_merged <- c(jk, join_keys(join_key("dataset_D", "dataset_E", "col_2")))
+
+# Note that you can merge join_keys or a single join_key_set
+
+jk_merged <- c(
+  jk_merged,
+  join_key("dataset_A", "dataset_F", "col_a"),
+  join_key("dataset_O", "dataset_G", "col_g")
+)
 
 # Getter for join_keys ----
 
-jk <- join_keys()
-jk[["ds1"]][["ds2"]] <- "some_col"
-jk[["ds1"]][["ds3"]] <- "some_col2"
+jk <- join_keys(
+  join_key("ds1", "ds2", "some_col"),
+  join_key("ds1", "ds3", "some_col2")
+)
 
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
-
-jk <- join_keys()
-jk[["ds1"]] <- list()
-jk[["ds2"]][["ds3"]] <- "key"
-
-jk <- join_keys()
-jk[["ds1"]] <- list()
-jk[["ds2"]][["ds3"]] <- "key"
-jk[["ds4"]] <- list(ds5 = "new")
-
-jk <- join_keys()
-jk[["ds2"]][["ds3"]] <- "key"
-jk[["ds2"]][["ds3"]] <- NULL
-
-jk
 }
