@@ -110,7 +110,7 @@ testthat::test_that("[[.join_keys returns keys for given pair", {
     join_key("b", "a", "child-parent"),
     join_key("c", "a", "child-parent")
   )
-  testthat::expect_identical(my_keys[["b"]][["a"]], c(`child-parent` = "child-parent"))
+  testthat::expect_identical(my_keys["b", "a"], c(`child-parent` = "child-parent"))
 })
 
 testthat::test_that("[[.join_keys doesn't return keys for given a pair without explicit join_key", {

@@ -124,6 +124,9 @@ parents.teal_data <- function(x) {
 #' @return (`self`) invisibly for chaining
 #'
 #' @keywords internal
+#' @examples
+#' update_keys_given_parents(my_keys)
+#'
 update_keys_given_parents <- function(x) {
   jk <- join_keys(x)
 

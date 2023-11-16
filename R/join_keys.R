@@ -244,13 +244,17 @@ c.join_key_set <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(x, i, keep_all_foreign_keys = FALSE) {
+`[.join_keys` <- function(x, i, j, keep_all_foreign_keys = FALSE) {
   if (missing(i)) {
     return(x)
   }
 
   if (is.null(i)) {
     return(new_join_keys()) # replicate base R
+  }
+
+  if (!missing(j)) {
+    return(update_keys_given_parents(x)[[i]][[j]])
   }
 
   checkmate::assert(
@@ -312,8 +316,16 @@ c.join_key_set <- function(...) {
 #' - `[<-` is not a supported operation for `join_keys`.
 #'
 #' @export
-`[<-.join_keys` <- function(x, i, value) {
-  stop("Can't use `[<-` for object `join_keys`. Use [[<- instead.")
+`[<-.join_keys` <- function(x, i, j, value) {
+  if (missing(j)) {
+    stop("Can't use `[<-` for object `join_keys` with only i. Use [[<- instead.")
+  }
+
+  checkmate::assert_string(i)
+  checkmate::assert_string(j)
+
+  x[[i]][[j]] <- value
+  x
 }
 
 #' @rdname join_keys
@@ -435,7 +447,6 @@ length.join_keys <- function(x) {
   }
   sum(vapply(x, function(.x) length(.x) > 0, logical(1)))
 }
-
 
 #' @rdname join_keys
 #' @export

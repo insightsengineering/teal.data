@@ -40,9 +40,9 @@ join_keys(x) <- value
 
 \method{c}{join_key_set}(...)
 
-\method{[}{join_keys}(x, i, keep_all_foreign_keys = FALSE)
+\method{[}{join_keys}(x, i, j, keep_all_foreign_keys = FALSE)
 
-\method{[}{join_keys}(x, i) <- value
+\method{[}{join_keys}(x, i, j) <- value
 
 \method{format}{join_keys}(x, ...)
 
