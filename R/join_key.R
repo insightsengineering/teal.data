@@ -76,24 +76,6 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   )
 }
 
-#' Getter for attributes in `join_key_set` object
-#'
-#' Internal methods for `join_key_set` operations
-#'
-#' @param join_key_set_object (`join_key_set`) object to retrieve attribute from.
-#' @return `dataset_1`, `dataset_2` or `key` as `character(1)`
-#'
-#' @keywords internal
-get_dataset_1 <- function(join_key_set_object) {
-  names(join_key_set_object)
-}
-
-#' @rdname get_dataset_1
-#' @keywords internal
-get_dataset_2 <- function(join_key_set_object) {
-  names(join_key_set_object[[1]])
-}
-
 #' @rdname get_dataset_1
 #' @keywords internal
 get_keys.join_key_set <- function(join_key_set_object) {

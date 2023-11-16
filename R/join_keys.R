@@ -336,7 +336,7 @@ c.join_key_set <- function(...) {
   repeated <- norm_value[repeated_value_ix]
   vapply(
     seq_along(repeated),
-    function(.ix, .x_value = repeated[[.ix]], .x_name = get_dataset_2(.x_value)) {
+    function(.ix, .x_value = repeated[[.ix]], .x_name = names(.x_value[[1]])) {
       assert_compatible_keys2(
         .x_value,
         unlist(unname(
@@ -347,7 +347,7 @@ c.join_key_set <- function(...) {
     logical(1)
   )
 
-  norm_value <- lapply(norm_value, get_keys)
+  norm_value <- lapply(norm_value, function(x) x[[1]][[1]])
   names(norm_value) <- names(value)
 
   # Safe to do as duplicated are the same
@@ -583,12 +583,6 @@ assert_parent_child <- function(x) {
         keys_to <- jk[[name_to]][[name_from]]
         if (length(keys_from) == 0 && length(keys_to) == 0) {
           stop(sprintf("No join keys from %s to its parent (%s) and vice versa", name_from, name_to))
-        }
-        if (length(keys_from) == 0) {
-          stop(sprintf("No join keys from %s to its parent (%s)", name_from, name_to))
-        }
-        if (length(keys_to) == 0) {
-          stop(sprintf("No join keys from %s parent name (%s) to %s", name_from, name_to, name_from))
         }
       }
     }

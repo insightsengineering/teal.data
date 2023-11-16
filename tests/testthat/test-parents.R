@@ -41,6 +41,14 @@ testthat::test_that("parents<- dataset can't be own parent", {
   testthat::expect_error(parents(jk) <- list(a = "a"))
 })
 
+testthat::test_that("parents<- setting parent-child relationship fails when no foreign keys between datasets", {
+  jk <- join_keys(
+    join_key("a", "1", "aa"),
+    join_key("b", "b", "bb")
+  )
+  testthat::expect_error(parents(jk) <- list(a = "b"))
+})
+
 testthat::test_that("parents<- ensures it is a directed acyclical graph (DAG)", {
   cyclic_jk <- join_keys(
     join_key("a", "b", "id"),
@@ -79,8 +87,6 @@ testthat::test_that("parents<- setting parents again overwrites previous state",
   parents(jk) <- list(b = "a")
   testthat::expect_identical(parents(jk), list(b = "a"))
 })
-
-
 
 testthat::test_that("parents<- sets parent datasets to join_keys kept in teal_data", {
   td <- teal_data(

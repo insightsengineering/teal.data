@@ -205,7 +205,6 @@ testthat::test_that("join_keys<-.join_keys overwrites existing join_keys", {
   testthat::expect_identical(my_keys, join_keys(join_key("d1", "d1", "test")))
 })
 
-
 testthat::test_that("join_keys<-.teal_data overwrites existing join_keys", {
   td <- teal_data(
     d1 = data.frame(), d2 = data.frame(),
@@ -252,6 +251,20 @@ testthat::test_that("[[<-.join_keys accepts named list where each containing cha
   jk <- join_keys()
   testthat::expect_no_error(
     jk[["d1"]] <- list(d1 = c("a", "b", "c"), d2 = c(b = "c", "d" = "d"))
+  )
+})
+
+testthat::test_that("[[<-.join_keys accepts integerish as index", {
+  jk <- join_keys(join_key("a", "a", "aa"))
+  testthat::expect_no_error(
+    jk[[1]][[1]] <- "bb"
+  )
+})
+
+testthat::test_that("[[<-.join_keys accepts unnamed vector", {
+  jk <- join_keys()
+  testthat::expect_no_error(
+    jk[["d1"]] <- list(d1 = c("a", "b", "c"))
   )
 })
 
@@ -387,25 +400,16 @@ testthat::test_that("[[<-.join_keys passing key unnamed 'empty' value is ignored
 
 testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for same datasets, but different keys", {
   jk <- join_keys()
-
   testthat::expect_error(
     jk[["ds1"]] <- list(ds2 = "new", ds2 = "new_but_different"),
     "cannot specify multiple different join keys between datasets"
   )
 })
 
-testthat::test_that("[[<-.join_keys succeeds when provided foreign key pairs for same datasets and same keys", {
+testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for same datasets and same keys", {
   jk <- join_keys()
-
-  testthat::expect_silent(
-    jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new"))
-  )
-
-  testthat::expect_silent(
-    jk[["ds1"]] <- list(ds2 = "new", ds2 = "new")
-  )
-
-  testthat::expect_length(jk[["ds1"]], 1)
+  testthat::expect_silent(jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new")))
+  testthat::expect_identical(jk, join_keys(join_key("ds1", "ds2", "new")))
 })
 
 # -----------------------------------------------------------------------------
