@@ -39,7 +39,7 @@ an input file to read.}
 
 \item{dataname}{(\code{character}) Name of dataset to return code for.}
 
-\item{names}{(\code{character}) vector with object names to return the code for.}
+\item{names}{(\code{character}) vector of object names to return the code for.}
 
 \item{exclude_comments}{(\code{logical}) whether exclude commented-out lines of code. Lines to be excluded
 should be ended with \verb{# nocode}. For multiple line exclusions one should enclose ignored block of code with
