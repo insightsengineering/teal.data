@@ -106,6 +106,7 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 get_code(tdata1)
+datanames(tdata1) <- c("a", "b", "c")
 get_code(tdata1, "a")
 get_code(tdata1, "b")
 
