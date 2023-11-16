@@ -157,6 +157,11 @@ update_keys_given_parents <- function(x) {
           common_ix_1 <- unname(keys_d1_parent) %in% unname(keys_d2_parent)
           common_ix_2 <- unname(keys_d2_parent) %in% unname(keys_d1_parent)
 
+          if (all(!common_ix_1)) {
+            # No common keys between datasets - leave empty
+            next
+          }
+
           structure(
             names(keys_d2_parent)[common_ix_2],
             names = names(keys_d1_parent)[common_ix_1]
