@@ -209,7 +209,9 @@ c.join_key_set <- function(...) {
 #' @details
 #' Getter for `join_keys` that returns the relationship between pairs of datasets.
 #'
-#' @inheritParams base::`[[`
+#' @param i index specifying elements to extract or replace. Index should be a
+#' a character vector, but it can also take numeric, logical, `NULL` or missing.
+#'
 #' @param keep_all_foreign_keys (`logical`) flag that keeps foreign keys and other
 #' datasets even if they are not a parent of the selected dataset.
 #'
@@ -293,11 +295,9 @@ c.join_key_set <- function(...) {
 }
 
 #' @rdname join_keys
-#' @details
-#' Setter via index directly (bypassing the need to use `join_key()`).
-#' When `dataset_2` is omitted, it will create a primary key with `dataset_2 = dataset_1`.
 #'
-#' @inheritParams base::`[<-`
+#' @details
+#' `[<-` is not a supported operation for `join_keys`.
 #'
 #' @export
 `[<-.join_keys` <- function(x, i, value) {

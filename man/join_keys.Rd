@@ -60,6 +60,9 @@ constructed from the arguments.}
 \item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
 to \code{join_keys} list.}
 
+\item{i}{index specifying elements to extract or replace. Index should be a
+a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
+
 \item{keep_all_foreign_keys}{(\code{logical}) flag that keeps foreign keys and other
 datasets even if they are not a parent of the selected dataset.}
 }
@@ -88,8 +91,7 @@ is not empty.
 
 Getter for \code{join_keys} that returns the relationship between pairs of datasets.
 
-Setter via index directly (bypassing the need to use \code{join_key()}).
-When \code{dataset_2} is omitted, it will create a primary key with \code{dataset_2 = dataset_1}.
+\verb{[<-} is not a supported operation for \code{join_keys}.
 }
 \examples{
 # Setting join keys ----
