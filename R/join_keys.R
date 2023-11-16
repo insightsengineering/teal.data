@@ -456,7 +456,7 @@ format.join_keys <- function(x, ...) {
     my_parents <- parents(x)
     names_sorted <- topological_sort(my_parents)
     names <- union(names_sorted, names(x))
-
+    x_implicit <- update_keys_given_parents(x)
     out <- lapply(names, function(i) {
       this_parent <- my_parents[[i]]
       out_i <- lapply(union(i, names(x[[i]])), function(j) {
@@ -477,6 +477,18 @@ format.join_keys <- function(x, ...) {
           if (length(keys) == 0) "no primary keys" else toString(keys)
         )
       })
+
+      implicit_datasets <- setdiff(names(x_implicit[[i]]), names(x[[i]]))
+      if (length(implicit_datasets) > 0) {
+        out_i <- c(
+          out_i,
+          paste0(
+            "  --* (implicit via parent with): ",
+            paste(implicit_datasets, collapse = ", ")
+          )
+        )
+      }
+
       paste(out_i, collapse = "\n")
     })
     paste(
