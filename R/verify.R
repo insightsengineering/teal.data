@@ -60,7 +60,21 @@ setMethod("verify", "teal_data", definition = function(x) {
       logical(1)
     )
 
-    stop("Code verification failed at object(s):\n", paste(c(names_diff, names(which(!objects_diff))), collapse = "\n"))
+    names_diff_other <- setdiff(names(new_teal_data@env), names(x@env))
+
+    error <- c(
+      "\nCode verification failed at object(s):\n",
+      paste(c(names_diff, names(which(!objects_diff))), collapse = "\n")
+    )
+
+    if (length(names_diff_other)) {
+      error <- c(error,
+        "\nObject(s) created with code that do not exist in teal_data:\n",
+        paste(names_diff_other, collapse = "\n")
+      )
+    }
+
+    stop(error)
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
