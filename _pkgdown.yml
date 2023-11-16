@@ -124,6 +124,7 @@ reference:
       - join_keys
       - join_keys<-
       - length.join_keys
+      - names<-.join_keys
       - parent
       - parents
       - parents<-
