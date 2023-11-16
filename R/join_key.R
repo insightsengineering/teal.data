@@ -23,7 +23,6 @@
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
-#' join_key("d1", "d2", c("A" = "B", "C" = ""))
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)

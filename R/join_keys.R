@@ -115,13 +115,7 @@ join_keys.default <- function(...) {
 #' join_keys(jk)[["ds1"]][["ds3"]] <- "some_col3"
 #' jk
 `join_keys<-.join_keys` <- function(x, value) {
-  # Assume assignment of join keys as a merge operation
-  #  Needed to support join_keys(jk)[c("ds1", "ds2")] <- "key"
-  if (checkmate::test_class(value, classes = c("join_keys", "list"))) {
-    return(value)
-  }
-  join_keys_obj <- new_join_keys()
-  c(join_keys_obj, value)
+  value
 }
 
 #' @rdname join_keys
@@ -178,22 +172,37 @@ c.join_key_set <- function(...) {
 #' @inheritParams base::`names<-`
 #' @export
 `names<-.join_keys` <- function(x, value) {
-  x <- unclass(x)
+  new_x <- unclass(x)
+  parent_list <- parents(x)
   # Update inner keys
-  for (old_name in setdiff(names(x), value)) {
-    old_entry <- x[[old_name]]
-    new_name <- value[names(x) == old_name]
+  for (old_name in setdiff(names(new_x), value)) {
+    old_entry <- new_x[[old_name]]
+    new_name <- value[names(new_x) == old_name]
 
     # Change 2nd-tier first
     for (sub_name in names(old_entry)) {
-      names(x[[sub_name]])[names(x[[sub_name]]) == old_name] <- new_name
+      names(new_x[[sub_name]])[names(new_x[[sub_name]]) == old_name] <- new_name
     }
 
     # Change in first tier
-    names(x)[names(x) == old_name] <- new_name
+    names(new_x)[names(new_x) == old_name] <- new_name
+
+    # changing name in the parents
+    if (length(parent_list)) {
+      names(parent_list)[names(parent_list) == old_name] <- new_name
+      parent_list <- lapply(parent_list, function(.x) {
+        if (identical(.x, old_name)) {
+          new_name
+        } else {
+          .x
+        }
+      })
+      attr(new_x, "__parents__") <- parent_list
+    }
   }
-  class(x) <- c("join_keys", "list")
-  x
+
+  class(new_x) <- c("join_keys", "list")
+  new_x
 }
 
 #' @rdname join_keys
@@ -520,10 +529,6 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     )
   }
 
-  if (!length(join_key_1) || !length(join_key_2)) {
-    return(TRUE)
-  }
-
   dataset_1_one <- names(join_key_1)
   dataset_2_one <- names(join_key_1[[1]])
   keys_one <- join_key_1[[1]][[1]]
@@ -544,11 +549,6 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
   # and the first dataset of join_key_2 must match second dataset of join_key_1
   # and keys must contain the same elements but with names and values swapped
   if (dataset_1_one == dataset_2_two && dataset_2_one == dataset_1_two) {
-    # have to handle empty case differently as names(character(0)) is NULL
-    if (length(keys_one) == 0 && length(keys_two) == 0) {
-      return(TRUE)
-    }
-
     if (
       xor(length(keys_one) == 0, length(keys_two) == 0) ||
         !identical(sort(keys_one), sort(setNames(names(keys_two), keys_two)))

@@ -31,7 +31,6 @@ of datasets.
 join_key("d1", "d2", c("A"))
 join_key("d1", "d2", c("A" = "B"))
 join_key("d1", "d2", c("A" = "B", "C"))
-join_key("d1", "d2", c("A" = "B", "C" = ""))
 }
 \seealso{
 \code{\link[=join_keys]{join_keys()}}

@@ -416,7 +416,7 @@ testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for s
 #
 # names<-.join_keys
 #
-testthat::test_that("names<-.join_keys will replace names at first and second level of the join_keys list", {
+testthat::test_that("names<-.join_keys will replace names at all levels of the join_keys list", {
   jk <- join_keys(
     join_key("a", "a", "a"),
     join_key("a", "b", "ab"),
@@ -435,6 +435,27 @@ testthat::test_that("names<-.join_keys will replace names at first and second le
       join_key("d", "y", "db")
     )
   )
+})
+
+testthat::test_that("names<-.join_keys will replace names at all levels of the join_keys list when parents set", {
+  jk <- join_keys(
+    join_key("a", "a", "a"),
+    join_key("b", "a", "ba"),
+    join_key("c", "a", "ca"),
+    join_key("d", "b", "db")
+  )
+  parents(jk) <- list(b = "a", c = "a", d = "b")
+
+  expected <- join_keys(
+    join_key("a", "a", "a"),
+    join_key("B", "a", "ba"),
+    join_key("c", "a", "ca"),
+    join_key("d", "B", "db")
+  )
+  parents(expected) <- list(B = "a", c = "a", d = "B")
+
+  names(jk)[2] <- "B"
+  testthat::expect_identical(jk, expected)
 })
 
 # -----------------------------------------------------------------------------
