@@ -21,7 +21,8 @@
 #'   \item{to close chunk }{`#<code` or `#<ADSL code` or `#<ADSL ADTTE code`}
 #' }
 #'
-#' @param x ([`TealDatasetConnector`] or [`TealDataset`]). If of class `character` will be treated as file to read.
+#' @param x ([`TealDatasetConnector`], [`TealDataset`]) or [`teal_data`]. If of `character` class, it will be treated as
+#' an input file to read.
 #' @param exclude_comments (`logical`) whether exclude commented-out lines of code. Lines to be excluded
 #' should be ended with `# nocode`. For multiple line exclusions one should enclose ignored block of code with
 #' `# nocode>` and `# <nocode`
@@ -31,6 +32,7 @@
 #' @param files_path (`character`) (optional) vector of files path to be read for preprocessing. Code from
 #' multiple files is joined together.
 #' @param dataname (`character`) Name of dataset to return code for.
+#' @param names (`character`) vector of object names to return the code for.
 #' @param ... not used, only for support of S3
 #' @export
 #' @return (`character`) code of import and preparation of data for teal application.
@@ -89,6 +91,47 @@ get_code.TealDataAbstract <- function(x, dataname = character(0), deparse = TRUE
     x$get_code(dataname = dataname, deparse = deparse)
   } else {
     x$get_code(deparse = deparse)
+  }
+}
+
+#' @rdname get_code
+#' @export
+#' @examples
+#'
+#' tdata1 <- teal_data()
+#' tdata1 <- within(tdata1, {
+#'   a <- 1
+#'   b <- a^5
+#'   c <- list(x = 2)
+#' })
+#' get_code(tdata1)
+#' get_code(tdata1, "a")
+#' get_code(tdata1, "b")
+#'
+#' tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+#' get_code(tdata2)
+#' get_code(verify(tdata2))
+#'
+get_code.teal_data <- function(x, names = NULL, deparse = TRUE, ...) {
+  check_ellipsis(...)
+  checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
+  checkmate::assert_subset(names, x@datanames, empty.ok = TRUE)
+  checkmate::assert_flag(deparse)
+
+  code <- if (!is.null(names)) {
+    get_code_dependency(x@code, names)
+  } else {
+    x@code
+  }
+
+  if (!x@verified) {
+    code <- c("warning('Code was not verified for reproducibility.')", code)
+  }
+
+  if (deparse) {
+    code
+  } else {
+    parse(text = code, keep.source = TRUE)
   }
 }
 

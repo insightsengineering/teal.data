@@ -39,9 +39,7 @@ setMethod("datanames", "qenv.error", definition = function(x) {
 #' @export
 setGeneric("datanames<-", function(x, value) standardGeneric("datanames<-"))
 setMethod("datanames<-", c("teal_data", "character"), definition = function(x, value) {
-  if (!all(is.element(value, ls(x@env, all.names = TRUE)))) {
-    stop("invalid name")
-  }
+  checkmate::assert_subset(value, names(x@env))
   x@datanames <- value
   methods::validObject(x)
   x
