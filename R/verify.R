@@ -50,7 +50,6 @@ setMethod("verify", "teal_data", definition = function(x) {
     methods::validObject(x)
     x
   } else {
-
     names_diff <- setdiff(names(x@env), names(new_teal_data@env))
 
     objects_diff <- vapply(
@@ -61,7 +60,7 @@ setMethod("verify", "teal_data", definition = function(x) {
       logical(1)
     )
 
-    stop("Code verification failed at object(s):\n", paste(c(names_diff, names(which(!objects_diff))), collapse = '\n'))
+    stop("Code verification failed at object(s):\n", paste(c(names_diff, names(which(!objects_diff))), collapse = "\n"))
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
