@@ -38,5 +38,6 @@ tdata3 <- teal_data()
 tdata3 <- within(tdata3, {
   stop("error")
 })
+verify(tdata3)
 }
 }
