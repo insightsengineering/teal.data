@@ -68,7 +68,8 @@ setMethod("verify", "teal_data", definition = function(x) {
     )
 
     if (length(names_diff_other)) {
-      error <- c(error,
+      error <- c(
+        error,
         "\nObject(s) created with code that do not exist in teal_data:\n",
         paste(names_diff_other, collapse = "\n")
       )
