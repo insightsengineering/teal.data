@@ -26,6 +26,7 @@
 #' tdata3 <- within(tdata3, {
 #'   stop("error")
 #' })
+#' verify(tdata3)
 #' }
 #' @name verify
 #' @aliases verify,teal_data-method
@@ -39,13 +40,28 @@ setMethod("verify", "teal_data", definition = function(x) {
   }
   new_teal_data <- eval_code(teal_data(), x@code)
 
-  reproduced <- (inherits(new_teal_data, "teal_data") && isTRUE(all.equal(x@env, new_teal_data@env)))
+  if (inherits(new_teal_data, "qenv.error")) {
+    return(stop(new_teal_data@message, call. = FALSE))
+  }
+
+  reproduced <- isTRUE(all.equal(x@env, new_teal_data@env))
   if (reproduced) {
     x@verified <- TRUE
     methods::validObject(x)
     x
   } else {
-    stop("Code verification failed.")
+
+    names_diff <- setdiff(names(x@env), names(new_teal_data@env))
+
+    objects_diff <- vapply(
+      intersect(names(x@env), names(new_teal_data@env)),
+      function(element) {
+        isTRUE(all.equal(x@env[[element]], new_teal_data@env[[element]]))
+      },
+      logical(1)
+    )
+
+    stop("Code verification failed at object(s):", paste('\n', c(names_diff, names(which(!objects_diff))), collapse = '\n'))
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
