@@ -227,8 +227,6 @@ c.join_key_set <- function(...) {
 #' @param i index specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
 #'
-#' @param keep_all_foreign_keys (`logical`) flag that keeps foreign keys and other
-#' datasets even if they are not a parent of the selected dataset.
 #'
 #' @export
 #'
@@ -244,7 +242,7 @@ c.join_key_set <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(x, i, j, keep_all_foreign_keys = FALSE) {
+`[.join_keys` <- function(x, i, j) {
   if (missing(i)) {
     return(x)
   }
@@ -254,16 +252,30 @@ c.join_key_set <- function(...) {
   }
 
   if (!missing(j)) {
-    return(update_keys_given_parents(x)[[i]][[j]])
+    checkmate::assert(
+      combine = "or",
+      checkmate::check_string(i),
+      checkmate::check_integerish(i, len = 1),
+      checkmate::check_logical(i, len = length(x))
+    )
+    checkmate::assert(
+      combine = "or",
+      checkmate::check_string(j),
+      checkmate::check_integerish(j, len = 1),
+      checkmate::check_logical(j, len = length(x))
+    )
+
+    subset_x <- update_keys_given_parents(x[union(i, j)])
+    return(subset_x[[i]][[j]])
   }
 
   checkmate::assert(
     combine = "or",
-    checkmate::check_integerish(i),
-    checkmate::check_logical(i),
-    checkmate::check_character(i)
+    checkmate::check_character(i, max.len = length(x)),
+    checkmate::check_integerish(i, max.len = length(x)),
+    checkmate::check_logical(i, len = length(x))
   )
-  checkmate::assert_logical(keep_all_foreign_keys, len = 1)
+
 
   # Convert integer/logical index to named index
   if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
@@ -290,9 +302,6 @@ c.join_key_set <- function(...) {
     }
 
     ix_valid_names <- names(x[[ix]]) %in% c(queue, bin)
-    if (keep_all_foreign_keys) {
-      ix_valid_names <- rep(TRUE, length(names(x[[ix]])))
-    }
 
     new_jk[[ix]] <- x[[ix]][ix_valid_names]
 
@@ -353,7 +362,7 @@ c.join_key_set <- function(...) {
     combine = "or",
     checkmate::check_string(i),
     checkmate::check_integerish(i, len = 1),
-    checkmate::check_logical(i, len = 1)
+    checkmate::check_logical(i, len = length(x))
   )
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
   if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
