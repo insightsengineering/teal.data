@@ -41,7 +41,7 @@ setMethod("verify", "teal_data", definition = function(x) {
   new_teal_data <- eval_code(teal_data(), x@code)
 
   if (inherits(new_teal_data, "qenv.error")) {
-    return(stop(new_teal_data@message, call. = FALSE))
+    stop(conditionMessage(new_teal_data), call. = FALSE)
   }
 
   reproduced <- isTRUE(all.equal(x@env, new_teal_data@env))
@@ -65,5 +65,5 @@ setMethod("verify", "teal_data", definition = function(x) {
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
-  stop(x$message, call. = FALSE)
+  stop(conditionMessage(x), call. = FALSE)
 })
