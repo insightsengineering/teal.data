@@ -101,9 +101,43 @@ testthat::test_that("join_keys constructor adds symmetric keys on given (named) 
     )
   )
 })
+# [.join_keys -----------------------------------------------------------------
+testthat::test_that("[[.join_keys returns keys for given pair", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  testthat::expect_identical(my_keys[["b"]][["a"]], c(`child-parent` = "child-parent"))
+})
+
+testthat::test_that("[[.join_keys doesn't return keys for given a pair without explicit join_key", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  testthat::expect_null(my_keys[["b"]][["c"]])
+})
+
+testthat::test_that("[[.join_keys infer keys between child by shared foreign keys to parent ", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  parents(my_keys) <- list("b" = "a", "c" = "a")
+  testthat::expect_identical(my_keys[["b"]][["c"]], c(`child-parent` = "child-parent"))
+})
 
 # [.join_keys -----------------------------------------------------------------
-testthat::test_that("[.join_keys returns join_keys object", {
+testthat::test_that("[.join_keys returns join_keys object when i is missing", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -198,6 +232,18 @@ testthat::test_that("[.join_keys returns empty join_keys for inexisting dataset"
   testthat::expect_length(my_keys["d2"], 0)
 })
 
+testthat::test_that("[.join_keys ignores duplicate indexes - return only first occurrence", {
+  jk <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d2", "b")
+  )
+  testthat::expect_identical(
+    jk[c("d1", "d2", "d1")],
+    join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
+  )
+})
+
 # join_keys.<- ----------------------------------------------------------------
 testthat::test_that("join_keys<-.join_keys overwrites existing join_keys", {
   my_keys <- join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
@@ -238,7 +284,6 @@ testthat::test_that("join_keys()[]<-.join_keys with named empty valued is change
   join_keys(jk)[["d1"]][["d2"]] <- c(A = "B", C = "")
   expect_equal(jk[["d1"]][["d2"]], c(A = "B", C = "C"))
 })
-
 
 testthat::test_that("join_keys()[]<-.join_keys with empty value in a named vector are ignored ", {
   jk <- join_keys()
