@@ -137,14 +137,46 @@ testthat::test_that("[[.join_keys infer keys between child by shared foreign key
 })
 
 testthat::test_that(
-  "[[.join_keys infer keys between child by shared foreign keys to parent (not all keys have same name)",
+  "[[.join_keys infer keys between child by shared foreign keys to parent (key names are unique to datasets)",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c("c1" = "p1", "c3" = "p3", "c2" = "p2", "qq4" = "ww4", "g4_" = "h4_", "**" = "**")),
-      join_key("c", "a", c("c1" = "p1", "c2" = "p2", "c3" = "p3", "dd4" = "ww4", "f5_" = "z5_", "**" = "**"))
+      join_key(
+        "b",
+        "a",
+        c(
+          # Unsorted vector (neither by name nor value)
+          # Key names shared between "b" and "c"
+          "c1" = "p1",
+          "c3" = "p3",
+          "c2" = "p2",
+          # Key names unique to "b"
+          "qq4" = "ww4",
+          # Key to "a" that is not shared
+          "g4_" = "h4_",
+          # Same key across datasets
+          "**" = "**"
+        )
+      ),
+      join_key(
+        "c",
+        "a",
+        c(
+          # Unsorted vector (neither by name nor value)
+          # Key names shared between "b" and "c"
+          "c1" = "p1",
+          "c2" = "p2",
+          "c3" = "p3",
+          # Key names unique to "b"
+          "dd4" = "ww4",
+          # Key to "a" that is not shared
+          "f5_" = "z5_",
+          # Same key across datasets
+          "**" = "**"
+        )
+      )
     )
     parents(my_keys) <- list("b" = "a", "c" = "a")
 
