@@ -32,7 +32,7 @@
 #' @param files_path (`character`) (optional) vector of files path to be read for preprocessing. Code from
 #' multiple files is joined together.
 #' @param dataname (`character`) Name of dataset to return code for.
-#' @param names (`character`) vector with object names to return the code for.
+#' @param names (`character`) vector of object names to return the code for.
 #' @param ... not used, only for support of S3
 #' @export
 #' @return (`character`) code of import and preparation of data for teal application.
