@@ -124,7 +124,7 @@ testthat::test_that("[[.join_keys doesn't return keys for given a pair without e
   testthat::expect_null(my_keys[["b"]][["c"]])
 })
 
-testthat::test_that("[[.join_keys infer keys between child by shared foreign keys to parent ", {
+testthat::test_that("[[.join_keys infer keys between child by shared foreign keys to parent", {
   my_keys <- join_keys(
     join_key("a", "a", "aa"),
     join_key("b", "b", "bb"),
@@ -136,27 +136,30 @@ testthat::test_that("[[.join_keys infer keys between child by shared foreign key
   testthat::expect_identical(my_keys["b", "c"], c(`child-parent` = "child-parent"))
 })
 
-testthat::test_that("[[.join_keys infer keys between child by shared foreign keys to parent ", {
-  my_keys <- join_keys(
-    join_key("a", "a", "aa"),
-    join_key("b", "b", "bb"),
-    join_key("c", "c", "cc"),
-    join_key("b", "a", c("c1" = "p1", "c3" = "p3", "c2" = "p2", "qq4" = "ww4", "g4_" = "h4_", "**" = "**")),
-    join_key("c", "a", c("c1" = "p1", "c2" = "p2", "c3" = "p3", "dd4" = "ww4", "f5_" = "z5_", "**" = "**"))
-  )
-  parents(my_keys) <- list("b" = "a", "c" = "a")
-
-  testthat::expect_identical(
-    my_keys["b", "c"],
-    c(
-      "**" = "**",
-      "c1" = "c1",
-      "c2" = "c2",
-      "c3" = "c3",
-      "qq4" = "dd4"
+testthat::test_that(
+  "[[.join_keys infer keys between child by shared foreign keys to parent (not all keys have same name)",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb"),
+      join_key("c", "c", "cc"),
+      join_key("b", "a", c("c1" = "p1", "c3" = "p3", "c2" = "p2", "qq4" = "ww4", "g4_" = "h4_", "**" = "**")),
+      join_key("c", "a", c("c1" = "p1", "c2" = "p2", "c3" = "p3", "dd4" = "ww4", "f5_" = "z5_", "**" = "**"))
     )
-  )
-})
+    parents(my_keys) <- list("b" = "a", "c" = "a")
+
+    testthat::expect_identical(
+      my_keys["b", "c"],
+      c(
+        "**" = "**",
+        "c1" = "c1",
+        "c2" = "c2",
+        "c3" = "c3",
+        "qq4" = "dd4"
+      )
+    )
+  }
+)
 
 # [.join_keys -----------------------------------------------------------------
 testthat::test_that("[.join_keys returns join_keys object when i is missing", {
