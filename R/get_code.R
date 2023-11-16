@@ -116,6 +116,7 @@ get_code.teal_data <- function(x, names = NULL, deparse = TRUE, ...) {
   check_ellipsis(...)
   checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
+  checkmate::assert_subset(names, x@datanames, empty.ok = TRUE)
 
   code <- if (!is.null(names)) {
     get_code_dependency(x@code, names)
