@@ -459,7 +459,7 @@ testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for s
 
 # -----------------------------------------------------------------------------
 #
-# names<-.join_keys
+# Setting names (names<-join_keys)
 #
 testthat::test_that("names<-.join_keys will replace names at all levels of the join_keys list", {
   jk <- join_keys(
@@ -505,7 +505,7 @@ testthat::test_that("names<-.join_keys will replace names at all levels of the j
 
 # -----------------------------------------------------------------------------
 #
-# c.join_keys
+# Merging join_keys (c.join_keys)
 
 testthat::test_that("c.join_keys joins join_keys object with join_key objects", {
   obj <- join_keys()
