@@ -2,7 +2,7 @@
 #'
 #' Prints `teal_data` object
 #' @param object (`teal_data`)
-#' @return nothing
+#' @return Input `teal_data` object.
 #' @importFrom methods show
 #' @examples
 #' teal_data()
