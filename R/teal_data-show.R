@@ -10,6 +10,10 @@
 #' verify(teal_data(x = iris, code = "x = iris"))
 #' @export
 setMethod("show", "teal_data", function(object) {
-  if (object@verified) cat("✅︎", "verified teal_data object\n")
+  if (object@verified) {
+    cat("✅︎", "verified teal_data object\n")
+  } else {
+    cat("✖️︎", "unverified teal_data object\n")
+  }
   rlang::env_print(object@env)
 })
