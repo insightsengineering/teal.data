@@ -156,6 +156,7 @@ join_keys.TealData <- function(...) {
 new_join_keys <- function() {
   structure(
     list(),
-    class = c("join_keys", "list")
+    class = c("join_keys", "list"),
+    "__parents__" = list()
   )
 }

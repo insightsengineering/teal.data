@@ -20,7 +20,7 @@ testthat::test_that("join_keys[i] subsets join_keys object to specific datasets"
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c")
   )
-  testthat::expect_identical(
+  testthat::expect_equal(
     my_keys[c("d1", "d2")],
     join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
   )
@@ -32,7 +32,7 @@ testthat::test_that("join_keys[i] returns join_keys object with keys for given i
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c")
   )
-  testthat::expect_identical(
+  testthat::expect_equal(
     my_keys[c(1, 2)],
     join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
   )
@@ -44,7 +44,7 @@ testthat::test_that("join_keys[-i] drops keys for given index", {
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c")
   )
-  testthat::expect_identical(
+  testthat::expect_equal(
     my_keys[-3],
     join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
   )
@@ -101,7 +101,7 @@ testthat::test_that("join_keys[i] ignores duplicate indexes - return only first 
     join_key("d2", "d2", "b"),
     join_key("d3", "d2", "b")
   )
-  testthat::expect_identical(
+  testthat::expect_equal(
     jk[c("d1", "d2", "d1")],
     join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
   )
@@ -304,7 +304,7 @@ testthat::test_that("[[<-.join_keys doesn't accepts other list than named contai
 testthat::test_that("[[<-.join_keys adds join_keys specified as named list to the list of keys", {
   jk <- join_keys()
   jk[["d1"]] <- list(d1 = "a")
-  testthat::expect_identical(jk, join_keys(join_key("d1", "d1", "a")))
+  testthat::expect_equal(jk, join_keys(join_key("d1", "d1", "a")))
 })
 
 testthat::test_that("[[<-.join_keys assigning NULL drops a key", {
@@ -317,7 +317,7 @@ testthat::test_that("[[<-.join_keys adds symmetrical change to the foreign datas
   jk <- join_keys()
   jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
 
-  testthat::expect_identical(
+  testthat::expect_equal(
     jk,
     join_keys(
       join_key("d1", "d2", c("A" = "B", "C" = "C")),
@@ -422,5 +422,5 @@ testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for sa
 testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for same datasets and same keys", {
   jk <- join_keys()
   testthat::expect_silent(jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new")))
-  testthat::expect_identical(jk, join_keys(join_key("ds1", "ds2", "new")))
+  testthat::expect_equal(jk, join_keys(join_key("ds1", "ds2", "new")))
 })

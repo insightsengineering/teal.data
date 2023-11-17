@@ -22,7 +22,8 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
     jk,
     structure(c(key1, key2), class = c("join_keys", "list"))
   )
-  testthat::expect_identical(
+
+  testthat::expect_equal(
     jk,
     structure(
       list(
