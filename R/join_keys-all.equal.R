@@ -5,7 +5,7 @@
 #'
 #' If they are different, comparison is still made to some extent, and a report
 #' of the differences is returned.
-#' Do not use all.equal directly in if expressions—either use isTRUE(all.equal(....))
+#' Do not use all.equal directly in if expressions—either use `isTRUE(all.equal(....))`
 #' or identical if appropriate.
 #'
 #' @inheritParams base::all.equal
