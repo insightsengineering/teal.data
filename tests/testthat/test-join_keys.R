@@ -124,7 +124,7 @@ testthat::test_that("[[.join_keys doesn't return keys for given a pair without e
   testthat::expect_null(my_keys[["b"]][["c"]])
 })
 
-testthat::test_that("[[.join_keys infer keys between child by equal (unordered) foreign keys to parent", {
+testthat::test_that("[[.join_keys infer keys between children by equal (unordered) foreign keys to parent", {
   my_keys <- join_keys(
     join_key("a", "a", "aa"),
     join_key("b", "b", "bb"),
@@ -137,14 +137,14 @@ testthat::test_that("[[.join_keys infer keys between child by equal (unordered) 
 })
 
 testthat::test_that(
-  "[[.join_keys infer keys between child by shared foreign keys to parent (key names are unique to datasets)",
+  "[[.join_keys infer keys between children by foreign keys to common parent. ",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c(aa = "bb")),
-      join_key("c", "a", c(aa = "cc"))
+      join_key("b", "a", c(bb = "aa")),
+      join_key("c", "a", c(cc = "aa"))
     )
     parents(my_keys) <- list("b" = "a", "c" = "a")
     testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
@@ -205,7 +205,7 @@ testthat::test_that("[.join_keys returns join_keys object for given dataset incl
   testthat::expect_equal(my_keys["d2"], expected)
 })
 
-testthat::test_that("[.join_keys returns join_keys object for given dataset and doesn't include its childs", {
+testthat::test_that("[.join_keys returns join_keys object for given dataset and doesn't include its children", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),

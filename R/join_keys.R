@@ -1,23 +1,27 @@
 # Constructors ====
 
-#' Create a `join_keys` out of a list of `join_key_set` objects
+#' Manage relationships between datasets using `join_keys`
 #'
-#' @description `r lifecycle::badge("stable")`
+#' @description
+#' `join_keys()` facilitates the creation and retrieval of relationships between datasets.
+#' `join_keys` class extends a list and contains keys connecting pairs of datasets. Each element
+#' of the list contains keys for specific dataset. Each dataset can have a relationship with
+#' itself (primary key) and with other datasets.
 #'
-#' Note that join keys are created symmetrically, that is, if `dat1` and `dat2`
-#' have a join key of `col1`, then 2 join keys are created, `dat1 → dat2` and
+#' Note that `join_keys` list is symmetrical, that is, when keys are set between `dat1` and `dat2` it
+#' is automatically mirrored between `dat2` and `dat1`.
 #' `dat2 → dat1`. The only exception is for a primary key.
 #'
 #' @details
 #'
-#' - `join_keys()`: When called without arguments it will return an
-#' empty constructor.
-#' - `join_keys(x)`: When called with a single argument it will return the `join_keys`
-#' object contained in `x` (if it contains a `join_keys` object).
-#' - `join_keys(...)`: When called with a single or more `join_key_set` parameters it will
-#' create a new object.
-#' - `[[.join_keys` is the preferred getter for `join_keys` that returns the
-#' relationship between pairs of datasets. It returns `NULL` if there is nor
+#' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
+#' - `join_keys(x)`: Returns the `join_keys` object contained in `x` (if it contains one).
+#' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
+#' - `join_keys[datanames]`: Returns a subset of the `join_keys` object for given datanames,
+#'   including their symmetric mirror keys.
+#' - `join_keys[i, j]`: Returns join keys between datasets `i` and `j`,
+#'   including implicit keys inferred from their relationship with a parent.
+#'
 #' relationship.
 #'
 #' @order 1
