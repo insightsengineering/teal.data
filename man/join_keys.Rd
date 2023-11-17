@@ -84,7 +84,7 @@ is automatically mirrored between \code{dat2} and \code{dat1}.
 \item \code{join_keys()}: Returns an empty \code{join_keys} object when called without arguments.
 \item \code{join_keys(x)}: Returns the \code{join_keys} object contained in \code{x} (if it contains one).
 \item \code{join_keys(...)}: Creates a new object with one or more \code{join_key_set} parameters.
-\item \code{join_keys[datanames]}: Returns a subset of the \code{join_keys} object for given datanames,
+\item \code{join_keys[datanames]}: Returns a subset of the \code{join_keys} object for given \code{datanames},
 including their symmetric mirror keys.
 \item \code{join_keys[i, j]}: Returns join keys between datasets \code{i} and \code{j},
 including implicit keys inferred from their relationship with a parent.

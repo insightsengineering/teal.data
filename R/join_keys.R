@@ -14,7 +14,7 @@
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
 #' - `join_keys(x)`: Returns the `join_keys` object contained in `x` (if it contains one).
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
-#' - `join_keys[datanames]`: Returns a subset of the `join_keys` object for given datanames,
+#' - `join_keys[datanames]`: Returns a subset of the `join_keys` object for given `datanames`,
 #'   including their symmetric mirror keys.
 #' - `join_keys[i, j]`: Returns join keys between datasets `i` and `j`,
 #'   including implicit keys inferred from their relationship with a parent.
