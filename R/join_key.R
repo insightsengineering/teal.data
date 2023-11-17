@@ -5,13 +5,11 @@
 #' @details `join_key()` will create a relationship for the variables on a pair
 #' of datasets.
 #'
-#' @param dataset_1 (`character(1)`) dataset name.
-#' @param dataset_2 (optional `character(1)`) other dataset name. In case it is omitted, then it
-#' will create a primary key for `dataset_1`.
+#' @param dataset_1,dataset_2 (`character(1)`) dataset names. If `dataset_2` is omitted,
+#'  a primary key for `dataset_1` is created.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
-#' with relationship to columns of `dataset_2` given by the elements in `keys`.
-#' If `names(keys)` is `NULL` then the same column names are used for both `dataset_1`
-#' and `dataset_2`.
+#' corresponding to columns of `dataset_2` given by the elements of `keys`.
+#' If unnamed, the same column names are used for both datasets.
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'

@@ -47,7 +47,7 @@ parents.teal_data <- function(x) {
 
 #' @describeIn parents Assignment of parents in `join_keys` object.
 #'
-#' @param value (`list`) named list of character values
+#' @param value (`named list`) of `character` vectors.
 #'
 #' @export
 `parents<-` <- function(x, value) {

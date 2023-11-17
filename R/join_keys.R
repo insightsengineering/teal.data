@@ -20,11 +20,10 @@
 #' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data`.
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
 #'
-#' @param ... (optional), when no argument is given the empty constructor is called.
-#' Otherwise, when called with only one argument of type: `join_keys` or  `teal_data`
-#' it will return the `join_keys` of that object.
-#' When called with 1 or more `join_key_set` it will create a new `join_keys` with
-#' constructed from the arguments.
+#' @param ... (optional)\cr
+#'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
+#'  or any number of `join_key_set` objects to create `join_keys`, \cr
+#'  or nothing to create an empty `join_keys`
 #'
 #' @return `join_keys` object.
 #'

@@ -8,10 +8,7 @@
 #' - `x[i, j]`: Returns join keys between datasets `i` and `j`,
 #'   including implicit keys inferred from their relationship with a parent.
 #'
-#' @param i index specifying elements to extract or replace. Index should be a
-#' a character vector, but it can also take numeric, logical, `NULL` or missing.
-#'
-#' @param j index specifying elements to extract or replace. Index should be a
+#' @param i,j indices specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
 #'
 #' @export
