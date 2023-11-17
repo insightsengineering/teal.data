@@ -218,14 +218,9 @@
     new_x[[ds2]] <- keep_value
   }
 
-  # Remove NULL or empty keys
-  empty_ix <- vapply(
-    new_x,
-    function(.x) is.null(.x) || length(.x) == 0,
-    logical(1)
-  )
   preserve_attr <- attributes(new_x)[!names(attributes(new_x)) %in% "names"]
-  new_x <- new_x[!empty_ix]
+  # Remove NULL or empty keys
+  new_x <- Filter(function(x) length(x) != 0L, new_x)
   attributes(new_x) <- utils::modifyList(attributes(new_x), preserve_attr)
 
   #
