@@ -1,0 +1,36 @@
+#' The Names of an `join_keys` Object
+#' @inheritParams base::`names<-`
+#' @export
+`names<-.join_keys` <- function(x, value) {
+  new_x <- unclass(x)
+  parent_list <- parents(x)
+  # Update inner keys
+  for (old_name in setdiff(names(new_x), value)) {
+    old_entry <- new_x[[old_name]]
+    new_name <- value[names(new_x) == old_name]
+
+    # Change 2nd-tier first
+    for (sub_name in names(old_entry)) {
+      names(new_x[[sub_name]])[names(new_x[[sub_name]]) == old_name] <- new_name
+    }
+
+    # Change in first tier
+    names(new_x)[names(new_x) == old_name] <- new_name
+
+    # changing name in the parents
+    if (length(parent_list)) {
+      names(parent_list)[names(parent_list) == old_name] <- new_name
+      parent_list <- lapply(parent_list, function(.x) {
+        if (identical(.x, old_name)) {
+          new_name
+        } else {
+          .x
+        }
+      })
+      attr(new_x, "__parents__") <- parent_list
+    }
+  }
+
+  class(new_x) <- c("join_keys", "list")
+  new_x
+}

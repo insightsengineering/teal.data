@@ -23,3 +23,19 @@ c.join_keys <- function(...) {
 
   utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
 }
+
+#' @rdname join_keys
+#' @export
+#'
+#' @examples
+#'
+#' # Note that you can merge join_keys or a single join_key_set
+#'
+#' jk_merged <- c(
+#'   jk_merged,
+#'   join_key("dataset_A", "dataset_F", "col_a"),
+#'   join_key("dataset_O", "dataset_G", "col_g")
+#' )
+c.join_key_set <- function(...) {
+  c.join_keys(...)
+}
