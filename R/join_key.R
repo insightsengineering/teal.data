@@ -57,12 +57,12 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     stopifnot(!is.null(names(keys)))
     stopifnot(!anyDuplicated(keys))
     stopifnot(!anyDuplicated(names(keys)))
+
+    if (dataset_1 == dataset_2 && any(names(keys) != keys)) {
+      stop("Keys within a dataset must match exactly: keys = c('A' = 'B') are not allowed")
+    }
   } else {
     keys <- NULL
-  }
-
-  if (dataset_1 == dataset_2 && any(names(keys) != keys)) {
-    stop("Keys within a dataset must match exactly: keys = c('A' = 'B') are not allowed")
   }
 
   structure(
