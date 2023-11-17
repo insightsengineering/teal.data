@@ -6,6 +6,7 @@
 \alias{[[<-.join_keys}
 \alias{join_keys.teal_data}
 \alias{c.join_keys}
+\alias{c.join_key_set}
 \alias{[.join_keys}
 \alias{format.join_keys}
 \alias{print.join_keys}
@@ -15,7 +16,6 @@
 \alias{join_keys<-}
 \alias{join_keys<-.join_keys}
 \alias{join_keys<-.teal_data}
-\alias{c.join_key_set}
 \alias{[<-.join_keys}
 \title{Manage relationships between datasets using \code{join_keys}}
 \usage{
@@ -26,6 +26,8 @@ join_keys(...)
 \method{join_keys}{teal_data}(...)
 
 \method{c}{join_keys}(...)
+
+\method{c}{join_key_set}(...)
 
 \method{[}{join_keys}(x, i, j)
 
@@ -44,8 +46,6 @@ join_keys(x) <- value
 \method{join_keys}{join_keys}(x) <- value
 
 \method{join_keys}{teal_data}(x) <- value
-
-\method{c}{join_key_set}(...)
 
 \method{[}{join_keys}(x, i, j) <- value
 }
@@ -148,6 +148,14 @@ join_keys(td)
 
 jk_merged <- c(jk, join_keys(join_key("dataset_D", "dataset_E", "col_2")))
 
+# Note that you can merge join_keys or a single join_key_set
+
+jk_merged <- c(
+  jk_merged,
+  join_key("dataset_A", "dataset_F", "col_a"),
+  join_key("dataset_O", "dataset_G", "col_g")
+)
+
 # Getter for join_keys ----
 
 jk <- join_keys(
@@ -177,12 +185,4 @@ td <- teal_data()
 join_keys(td)["ds1", "ds2"] <- "key1"
 join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
-
-# Note that you can merge join_keys or a single join_key_set
-
-jk_merged <- c(
-  jk_merged,
-  join_key("dataset_A", "dataset_F", "col_a"),
-  join_key("dataset_O", "dataset_G", "col_g")
-)
 }
