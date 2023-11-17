@@ -265,15 +265,15 @@ c.join_key_set <- function(...) {
       checkmate::check_logical(j, len = length(x))
     )
 
-    subset_x <- update_keys_given_parents(x[union(i, j)])
+    subset_x <- update_keys_given_parents(x)[union(i, j)]
     return(subset_x[[i]][[j]])
   }
 
   checkmate::assert(
     combine = "or",
-    checkmate::check_character(i, max.len = length(x)),
-    checkmate::check_integerish(i, max.len = length(x)),
-    checkmate::check_logical(i, len = length(x))
+    checkmate::check_character(i),
+    checkmate::check_integerish(i),
+    checkmate::check_logical(i)
   )
 
 
