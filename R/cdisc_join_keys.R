@@ -16,7 +16,7 @@ NULL
 build_cdisc_join_keys <- function(default_cdisc_keys) {
   checkmate::assert_list(default_cdisc_keys, types = "list")
 
-  jk <- new_join_keys()
+  jk <- join_keys()
   for (name in names(default_cdisc_keys)) {
     # Set default primary keys
     keys_list <- default_cdisc_keys[[name]]
