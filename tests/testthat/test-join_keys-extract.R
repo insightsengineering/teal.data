@@ -1,55 +1,5 @@
-# [.join_keys -----------------------------------------------------------------
-testthat::test_that("[[.join_keys returns keys for given pair", {
-  my_keys <- join_keys(
-    join_key("a", "a", "aa"),
-    join_key("b", "b", "bb"),
-    join_key("c", "c", "cc"),
-    join_key("b", "a", "child-parent"),
-    join_key("c", "a", "child-parent")
-  )
-  testthat::expect_identical(my_keys["b", "a"], c(`child-parent` = "child-parent"))
-})
-
-testthat::test_that("[[.join_keys doesn't return keys for given a pair without explicit join_key", {
-  my_keys <- join_keys(
-    join_key("a", "a", "aa"),
-    join_key("b", "b", "bb"),
-    join_key("c", "c", "cc"),
-    join_key("b", "a", "child-parent"),
-    join_key("c", "a", "child-parent")
-  )
-  testthat::expect_null(my_keys[["b"]][["c"]])
-})
-
-testthat::test_that("[[.join_keys infer keys between children by equal (unordered) foreign keys to parent", {
-  my_keys <- join_keys(
-    join_key("a", "a", "aa"),
-    join_key("b", "b", "bb"),
-    join_key("c", "c", "cc"),
-    join_key("b", "a", sample(letters[1:5])),
-    join_key("c", "a", sample(letters[1:5]))
-  )
-  parents(my_keys) <- list("b" = "a", "c" = "a")
-  testthat::expect_identical(my_keys["b", "c"], setNames(letters[1:5], letters[1:5]))
-})
-
-testthat::test_that(
-  "[[.join_keys infer keys between children by foreign keys to common parent. ",
-  {
-    my_keys <- join_keys(
-      join_key("a", "a", "aa"),
-      join_key("b", "b", "bb"),
-      join_key("c", "c", "cc"),
-      join_key("b", "a", c(bb = "aa")),
-      join_key("c", "a", c(cc = "aa"))
-    )
-    parents(my_keys) <- list("b" = "a", "c" = "a")
-    testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
-  }
-)
-
-# [.join_keys -----------------------------------------------------------------
-testthat::test_that("[.join_keys returns join_keys object when i is missing", {
+# join_keys[i] -----------------------------------------------------------------
+testthat::test_that("join_keys[i] returns join_keys object when i and j is missing", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -58,7 +8,13 @@ testthat::test_that("[.join_keys returns join_keys object when i is missing", {
   testthat::expect_identical(my_keys[], my_keys)
 })
 
-testthat::test_that("[.join_keys returns join_keys object with keys for given datasets", {
+testthat::test_that("join_keys[i] returns empty join_keys when i or j are NULL", {
+  my_keys <- join_keys(join_key("d1", "d1", "a"))
+  testthat::expect_identical(my_keys[NULL], join_keys())
+  testthat::expect_identical(my_keys[, NULL], join_keys())
+})
+
+testthat::test_that("join_keys[i] subsets join_keys object to specific datasets", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -70,7 +26,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given da
   )
 })
 
-testthat::test_that("[.join_keys returns join_keys object with keys for given index", {
+testthat::test_that("join_keys[i] returns join_keys object with keys for given index", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -82,7 +38,7 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given in
   )
 })
 
-testthat::test_that("[.join_keys returns join_keys object for given dataset including its parent", {
+testthat::test_that("join_keys[i] returns join_keys object for given dataset including its parent", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -102,7 +58,7 @@ testthat::test_that("[.join_keys returns join_keys object for given dataset incl
   testthat::expect_equal(my_keys["d2"], expected)
 })
 
-testthat::test_that("[.join_keys returns join_keys object for given dataset and doesn't include its children", {
+testthat::test_that("join_keys[i] returns join_keys object for given dataset and doesn't include its children", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -122,12 +78,12 @@ testthat::test_that("[.join_keys returns join_keys object for given dataset and 
   testthat::expect_equal(my_keys["d2"], expected)
 })
 
-testthat::test_that("[.join_keys returns empty join_keys for inexisting dataset", {
+testthat::test_that("join_keys[i] returns empty join_keys for inexisting dataset", {
   my_keys <- join_keys(join_key("d1", "d1", "a"))
   testthat::expect_length(my_keys["d2"], 0)
 })
 
-testthat::test_that("[.join_keys ignores duplicate indexes - return only first occurrence", {
+testthat::test_that("join_keys[i] ignores duplicate indexes - return only first occurrence", {
   jk <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
@@ -139,7 +95,153 @@ testthat::test_that("[.join_keys ignores duplicate indexes - return only first o
   )
 })
 
-# [<-.join_keys and [[<-.join_keys ------------------------------------------------
+testthat::test_that("join_keys[,j] returns the same as join_keys[i,]", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c")
+  )
+  testthat::expect_identical(
+    my_keys[, c("d1", "d2")],
+    my_keys[c("d1", "d2")]
+  )
+})
+
+# join_keys[i, j]  -----------------------------------------------------------------
+testthat::test_that("join_keys[i,j] returns keys for given pair", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  testthat::expect_identical(my_keys["b", "a"], c(`child-parent` = "child-parent"))
+})
+
+testthat::test_that("join_keys[i,j] return NULL for given pair when no such key and no common parent", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  testthat::expect_null(my_keys["b", "c"])
+})
+
+testthat::test_that(
+  "join_keys[i,j] infer keys between children through unnamed foreign keys to parent (reglardless keys order)",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb"),
+      join_key("c", "c", "cc"),
+      join_key("b", "a", sample(letters[1:5])),
+      join_key("c", "a", sample(letters[1:5]))
+    )
+    parents(my_keys) <- list("b" = "a", "c" = "a")
+    testthat::expect_identical(my_keys["b", "c"], setNames(letters[1:5], letters[1:5]))
+  }
+)
+
+testthat::test_that(
+  "join_keys[i,j] doesn't infer keys between grandchildren",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb"),
+      join_key("c", "c", "cc"),
+      join_key("b", "a", "child-parent"),
+      join_key("c", "a", "child-parent"),
+      join_key("d", "b", "grandchild-child"),
+      join_key("e", "c", "grandchild-child")
+    )
+    parents(my_keys) <- list("b" = "a", "c" = "a", "d" = "b", "e" = "c")
+    testthat::expect_null(my_keys["d", "e"])
+  }
+)
+
+testthat::test_that(
+  "join_keys[i,j ] infer keys between children through foreign keys to parent. ",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb"),
+      join_key("c", "c", "cc"),
+      join_key("b", "a", c(bb = "aa")),
+      join_key("c", "a", c(cc = "aa"))
+    )
+    parents(my_keys) <- list("b" = "a", "c" = "a")
+    # "bb" and "cc" are the names in child datasets, "aa" is the name in parent dataset
+    testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
+  }
+)
+
+testthat::test_that("join_keys[i,j] returns NULL for inexisting key pair (can't even infer)", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc")
+  )
+  testthat::expect_null(my_keys["inexisting", "inexisting"])
+})
+
+testthat::test_that("join_keys[i,j] throws when one of the indices is longer than 1", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc")
+  )
+  testthat::expect_error(my_keys[c("a", "b"), "c"], "Can't extract keys for multiple pairs.")
+})
+
+# [<-.join_keys ------------------------------------------------
+testthat::test_that("join_keys[i]<- throws when assigning anything", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys["a"] <- join_key("a", "b", "test"), "specify both indices to set a key pair.")
+})
+
+testthat::test_that("join_keys[i]<- throws when no index specified", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys[] <- join_key("a", "b", "test"), "specify both indices to set a key pair.")
+})
+
+testthat::test_that("join_keys[i,j]<- can set new value for existing pair", {
+  my_keys <- join_keys(join_key("a", "a", "aa"))
+  testthat::expect_no_error(my_keys["a", "a"] <- "new key")
+  testthat::expect_identical(my_keys, join_keys(join_key("a", "a", "new key")))
+})
+
+testthat::test_that("join_keys[i,j]<- sets a new keys for inexisting pair", {
+  my_keys <- join_keys(join_key("a", "a", "aa"))
+  testthat::expect_no_error(my_keys["b", "c"] <- "new key")
+  testthat::expect_identical(my_keys, join_keys(join_key("a", "a", "aa"), join_key("b", "c", "new key")))
+})
+
+testthat::test_that("join_keys[i,j]<- throws when assigning to inspecific index", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys[, "b"] <- join_key("a", "b", "test"))
+})
+
+testthat::test_that("join_keys[i,j]<- throws when assigning to j only", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys[, "b"] <- join_key("a", "b", "test"))
+})
+
+testthat::test_that("join_keys[i,j]<- throws when i or j are NULL", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys[NULL, 1] <- join_key("a", "b", "test"), "NULL")
+  testthat::expect_error(my_keys[1, NULL] <- join_key("a", "b", "test"), "NULL")
+})
+
+testthat::test_that("join_keys[i,j]<- throws when i or j are longer than 1", {
+  my_keys <- join_keys()
+  testthat::expect_error(my_keys[c("a", "b"), "a"] <- "new key")
+  testthat::expect_error(my_keys["a", c("a", "b")] <- "new key")
+})
+
+# [[<-.join_keys ------------------------------------------------
 testthat::test_that("[[<-.join_keys accepts named list where each containing character", {
   jk <- join_keys()
   testthat::expect_no_error(
@@ -199,11 +301,6 @@ testthat::test_that("[[<-.join_keys adds symmetrical change to the foreign datas
       join_key("d2", "d1", c("B" = "A", "C" = "C"))
     )
   )
-})
-
-testthat::test_that("[<-.join_keys throws when assigning anything", {
-  jk_expected <- join_keys()
-  testthat::expect_error(jk_expected["a"] <- join_key("a", "b", "test"), "Can't use `\\[<-`")
 })
 
 testthat::test_that("[[<- can mutate existing keys", {

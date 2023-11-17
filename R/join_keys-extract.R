@@ -30,30 +30,41 @@
 #' jk[c("ds1", "ds2")]
 #' jk["ds1", "ds2"]
 `[.join_keys` <- function(x, i, j) {
-  if (missing(i)) {
+  if (missing(i) && missing(j)) {
+    # because:
+    # - list(a = 1)[] returns list(a = 1)
+    # - data.frame(a = 1)[] returns data.frame(a = 1)
     return(x)
-  }
+  } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
+    # because list(a = 1)[NULL] returns NULL
+    # data.frame(a = 1)[NULL, NULL] returns data.frame(
+    return(join_keys())
+  } else if (!missing(i) && !missing(j)) {
+    if (
+      !any(
+        checkmate::test_string(i),
+        checkmate::test_integerish(i, len = 1),
+        checkmate::test_logical(i, len = length(x)) && sum(j) == 1
+      ) ||
+        !any(
+          checkmate::test_string(j),
+          checkmate::test_integerish(j, len = 1),
+          checkmate::test_logical(j, len = length(x)) && sum(j) == 1
+        )
+    ) {
+      stop(
+        "join_keys[i, j] - Can't extract keys for multiple pairs.",
+        "When specifying a pair [i, j], both indices must point to a single key pair.\n",
+        call. = FALSE
+      )
+    }
 
-  if (is.null(i)) {
-    return(join_keys()) # replicate base R
-  }
-
-  if (!missing(j)) {
-    checkmate::assert(
-      combine = "or",
-      checkmate::check_string(i),
-      checkmate::check_integerish(i, len = 1),
-      checkmate::check_logical(i, len = length(x))
-    )
-    checkmate::assert(
-      combine = "or",
-      checkmate::check_string(j),
-      checkmate::check_integerish(j, len = 1),
-      checkmate::check_logical(j, len = length(x))
-    )
-
-    subset_x <- update_keys_given_parents(x)[union(i, j)]
+    subset_x <- update_keys_given_parents(x[union(i, j)])
     return(subset_x[[i]][[j]])
+  } else if (!missing(j)) {
+    # ie. select all keys which have j as dataset_2
+    # since list is symmetrical it is equivalent to selecting by i
+    i <- j
   }
 
   checkmate::assert(
@@ -113,12 +124,28 @@
 #'
 #' @export
 `[<-.join_keys` <- function(x, i, j, value) {
-  if (missing(j)) {
-    stop("Can't use `[<-` for object `join_keys` with only i. Use [[<- instead.")
+  if (missing(i) || missing(j)) {
+    stop("join_keys[i, j] specify both indices to set a key pair.")
+  } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
+    stop("join_keys[i, j] neither i nor j can be NULL.")
+  } else if (
+    !any(
+      checkmate::test_string(i),
+      checkmate::test_integerish(i, len = 1),
+      checkmate::test_logical(i, len = length(x)) && sum(j) == 1
+    ) ||
+      !any(
+        checkmate::test_string(j),
+        checkmate::test_integerish(j, len = 1),
+        checkmate::test_logical(j, len = length(x)) && sum(j) == 1
+      )
+  ) {
+    stop(
+      "join_keys[i, j] <- Can't set keys to specified indices.\n",
+      "When setting pair [i, j], both indices must point to a single key pair.\n",
+      call. = FALSE
+    )
   }
-
-  checkmate::assert_string(i)
-  checkmate::assert_string(j)
 
   x[[i]][[j]] <- value
   x
@@ -203,15 +230,8 @@
     if (ds2 == i) next
 
     keep_value <- new_x[[ds2]] %||% list()
-    new_value <- norm_value[[ds2]]
-
-    if (checkmate::test_character(new_value, min.len = 1, names = "unnamed")) {
-      new_value <- setNames(new_value, new_value)
-    } else if (checkmate::test_character(new_value, min.len = 1)) {
-      # Invert key
-      new_value <- setNames(names(new_value), new_value)
-    }
-
+    # Invert key
+    new_value <- setNames(names(norm_value[[ds2]]), norm_value[[ds2]])
     keep_value[[i]] <- new_value
 
     # Assign symmetrical
