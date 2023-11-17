@@ -79,12 +79,17 @@ itself (primary key) and with other datasets.
 Note that \code{join_keys} list is symmetrical, that is, when keys are set between \code{dat1} and \code{dat2} it
 is automatically mirrored between \code{dat2} and \code{dat1}.
 }
-\details{
+\section{Methods (by class)}{
+
 \itemize{
 \item \code{join_keys()}: Returns an empty \code{join_keys} object when called without arguments.
-\item \code{join_keys(x)}: Returns the \code{join_keys} object contained in \code{x} (if it contains one).
+\item \code{join_keys(join_keys)}: Returns itself.
+\item \code{join_keys(teal_data)}: Returns the \code{join_keys} object contained in \code{teal_data}.
 \item \code{join_keys(...)}: Creates a new object with one or more \code{join_key_set} parameters.
 }
+}
+
+\section{Functions}{
 
 \itemize{
 \item \code{x[datanames]}: Returns a subset of the \code{join_keys} object for
@@ -94,6 +99,7 @@ given \code{datanames}, including parent \code{datanames} and symmetric mirror k
 including implicit keys inferred from their relationship with a parent.
 }
 
+
 \itemize{
 \item \code{x[i, j] <- value}: Assignment of a key to pair \verb{(i, j)}.
 \item \code{x[i] <- value}: This (without \code{j} parameter) \strong{is not} a supported
@@ -102,11 +108,13 @@ operation for \code{join_keys}.
 such as a \code{teal_data} or \code{join_keys} itself.
 }
 
+
 \itemize{
 \item \code{join_keys(x) <- value}: Assignment of the \code{join_keys} in object with \code{value}.
 \code{value} needs to be an object of class \code{join_keys} or \code{join_key_set}.
 }
 }
+
 \examples{
 # Creating a new join keys ----
 

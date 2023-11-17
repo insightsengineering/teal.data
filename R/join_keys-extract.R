@@ -1,7 +1,7 @@
 #' @rdname join_keys
 #' @order 2
 #'
-#' @details
+#' @section Functions:
 #' - `x[datanames]`: Returns a subset of the `join_keys` object for
 #' given `datanames`, including parent `datanames` and symmetric mirror keys between
 #' `datanames` in the result.
@@ -118,7 +118,7 @@
 #' @rdname join_keys
 #' @order 2
 #'
-#' @details
+#' @section Functions:
 #' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
 #' - `x[i] <- value`: This (without `j` parameter) **is not** a supported
 #' operation for `join_keys`.
@@ -175,7 +175,7 @@
 #' @usage ## Prefered method is x[i, j] <- value
 #' x[[i]][[j]] <- value
 #'
-#' @details
+#' @section Functions:
 #' - `x[[i]][[j]] <- value`: It is equivalent as  `x[i, j] <- value`.
 #'
 #' @export

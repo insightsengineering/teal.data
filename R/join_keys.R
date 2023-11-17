@@ -14,10 +14,10 @@
 #' Note that `join_keys` list is symmetrical, that is, when keys are set between `dat1` and `dat2` it
 #' is automatically mirrored between `dat2` and `dat1`.
 #'
-#' @details
-#'
+#' @section Methods (by class):
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
-#' - `join_keys(x)`: Returns the `join_keys` object contained in `x` (if it contains one).
+#' - `join_keys(join_keys)`: Returns itself.
+#' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data`.
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
 #'
 #' @param ... (optional), when no argument is given the empty constructor is called.
@@ -93,7 +93,7 @@ join_keys.TealData <- function(...) {
 #' @rdname join_keys
 #' @order 5
 #'
-#' @details
+#' @section Functions:
 #' - `join_keys(x) <- value`: Assignment of the `join_keys` in object with `value`.
 #' `value` needs to be an object of class `join_keys` or `join_key_set`.
 #'
