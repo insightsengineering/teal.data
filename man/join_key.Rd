@@ -7,15 +7,12 @@
 join_key(dataset_1, dataset_2 = dataset_1, keys)
 }
 \arguments{
-\item{dataset_1}{(\code{character(1)}) dataset name.}
-
-\item{dataset_2}{(optional \code{character(1)}) other dataset name. In case it is omitted, then it
-will create a primary key for \code{dataset_1}.}
+\item{dataset_1, dataset_2}{(\code{character(1)}) dataset names. If \code{dataset_2} is omitted,
+a primary key for \code{dataset_1} is created.}
 
 \item{keys}{(optionally named \code{character}) where \code{names(keys)} are columns in \code{dataset_1}
-with relationship to columns of \code{dataset_2} given by the elements in \code{keys}.
-If \code{names(keys)} is \code{NULL} then the same column names are used for both \code{dataset_1}
-and \code{dataset_2}.}
+corresponding to columns of \code{dataset_2} given by the elements of \code{keys}.
+If unnamed, the same column names are used for both datasets.}
 }
 \value{
 object of class \code{join_key_set} to be passed into \code{join_keys} function.

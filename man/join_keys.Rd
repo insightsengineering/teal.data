@@ -48,20 +48,16 @@ join_keys(x) <- value
 \method{print}{join_keys}(x, ...)
 }
 \arguments{
-\item{...}{(optional), when no argument is given the empty constructor is called.
-Otherwise, when called with only one argument of type: \code{join_keys} or  \code{teal_data}
-it will return the \code{join_keys} of that object.
-When called with 1 or more \code{join_key_set} it will create a new \code{join_keys} with
-constructed from the arguments.}
+\item{...}{(optional)\cr
+either \code{teal_data} or \code{join_keys} to extract \code{join_keys}, \cr
+or any number of \code{join_key_set} objects to create \code{join_keys}, \cr
+or nothing to create an empty \code{join_keys}}
 
 \item{x}{(\code{join_keys}) empty object to set the new relationship pairs.
 \code{x} is typically an object of \code{join_keys} class. When called with the \code{join_keys(x)}
 or \code{join_keys(x) <- value} then it can also take a supported class (\code{teal_data}, \code{join_keys})}
 
-\item{i}{index specifying elements to extract or replace. Index should be a
-a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
-
-\item{j}{index specifying elements to extract or replace. Index should be a
+\item{i, j}{indices specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
 \item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add

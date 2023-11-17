@@ -28,7 +28,7 @@ parent(x, dataset_name)
 \item{x}{(\code{join_keys} or \code{teal_data}) object that contains "parents" information
 to retrieve or manipulate.}
 
-\item{value}{(\code{list}) named list of character values}
+\item{value}{(\verb{named list}) of \code{character} vectors.}
 
 \item{dataset_name}{(\code{character(1)}) Name of dataset to query on their parent.}
 }
