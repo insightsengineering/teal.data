@@ -16,7 +16,7 @@
 \alias{[<-.join_keys}
 \alias{format.join_keys}
 \alias{print.join_keys}
-\title{Create a \code{join_keys} out of a list of \code{join_key_set} objects}
+\title{Manage relationships between datasets using \code{join_keys}}
 \usage{
 join_keys(...)
 
@@ -67,24 +67,27 @@ to \code{join_keys} list.}
 \code{join_keys} object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\code{join_keys()} facilitates the creation and retrieval of relationships between datasets.
+\code{join_keys} class extends a list and contains keys connecting pairs of datasets. Each element
+of the list contains keys for specific dataset. Each dataset can have a relationship with
+itself (primary key) and with other datasets.
 
-Note that join keys are created symmetrically, that is, if \code{dat1} and \code{dat2}
-have a join key of \code{col1}, then 2 join keys are created, \verb{dat1 → dat2} and
+Note that \code{join_keys} list is symmetrical, that is, when keys are set between \code{dat1} and \code{dat2} it
+is automatically mirrored between \code{dat2} and \code{dat1}.
 \verb{dat2 → dat1}. The only exception is for a primary key.
 }
 \details{
 \itemize{
-\item \code{join_keys()}: When called without arguments it will return an
-empty constructor.
-\item \code{join_keys(x)}: When called with a single argument it will return the \code{join_keys}
-object contained in \code{x} (if it contains a \code{join_keys} object).
-\item \code{join_keys(...)}: When called with a single or more \code{join_key_set} parameters it will
-create a new object.
-\item \verb{[[.join_keys} is the preferred getter for \code{join_keys} that returns the
-relationship between pairs of datasets. It returns \code{NULL} if there is nor
-relationship.
+\item \code{join_keys()}: Returns an empty \code{join_keys} object when called without arguments.
+\item \code{join_keys(x)}: Returns the \code{join_keys} object contained in \code{x} (if it contains one).
+\item \code{join_keys(...)}: Creates a new object with one or more \code{join_key_set} parameters.
+\item \code{join_keys[datanames]}: Returns a subset of the \code{join_keys} object for given datanames,
+including their symmetric mirror keys.
+\item \code{join_keys[i, j]}: Returns join keys between datasets \code{i} and \code{j},
+including implicit keys inferred from their relationship with a parent.
 }
+
+relationship.
 
 \itemize{
 \item \verb{[[<-} is the preferred method to replace or assign new relationship pair to an
