@@ -110,6 +110,7 @@ parents.teal_data <- function(x) {
 #'   ADTTE = teal.data::rADTTE,
 #'   ADRS = teal.data::rADRS
 #' )
+#'
 #' parents(td) <- list("ADTTE" = "ADSL") # replace existing
 #' parents(td)["ADRS"] <- "ADSL" # add new parent
 `parents<-.teal_data` <- function(x, value) {
@@ -133,7 +134,7 @@ update_keys_given_parents <- function(x) {
   duplicate_pairs <- list()
   for (d1 in datanames) {
     d1_pk <- jk[[d1]][[d1]]
-    d1_parent <- parents(jk)[[d1]]
+    d1_parent <- parent(jk, d1)
     for (d2 in datanames) {
       if (paste(d2, d1) %in% duplicate_pairs) {
         next
@@ -149,8 +150,22 @@ update_keys_given_parents <- function(x) {
           # second is parent of first -> parent keys -> second keys
           d2_pk
         } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
-          # both has the same parent -> parent keys
-          jk[[d1_parent]][[d1_parent]]
+          # both has the same parent -> common keys to parent
+          keys_d1_parent <- sort(jk[[d1]][[d1_parent]])
+          keys_d2_parent <- sort(jk[[d2]][[d2_parent]])
+
+          common_ix_1 <- unname(keys_d1_parent) %in% unname(keys_d2_parent)
+          common_ix_2 <- unname(keys_d2_parent) %in% unname(keys_d1_parent)
+
+          if (all(!common_ix_1)) {
+            # No common keys between datasets - leave empty
+            next
+          }
+
+          structure(
+            names(keys_d2_parent)[common_ix_2],
+            names = names(keys_d1_parent)[common_ix_1]
+          )
         } else {
           # cant find connection - leave empty
           next

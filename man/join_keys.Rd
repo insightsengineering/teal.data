@@ -40,9 +40,9 @@ join_keys(x) <- value
 
 \method{c}{join_key_set}(...)
 
-\method{[}{join_keys}(x, i, keep_all_foreign_keys = FALSE)
+\method{[}{join_keys}(x, i, j)
 
-\method{[}{join_keys}(x, i) <- value
+\method{[}{join_keys}(x, i, j) <- value
 
 \method{format}{join_keys}(x, ...)
 
@@ -62,9 +62,6 @@ a character vector, but it can also take numeric, logical, \code{NULL} or missin
 
 \item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
 to \code{join_keys} list.}
-
-\item{keep_all_foreign_keys}{(\code{logical}) flag that keeps foreign keys and other
-datasets even if they are not a parent of the selected dataset.}
 }
 \value{
 \code{join_keys} object.

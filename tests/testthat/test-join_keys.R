@@ -110,7 +110,7 @@ testthat::test_that("[[.join_keys returns keys for given pair", {
     join_key("b", "a", "child-parent"),
     join_key("c", "a", "child-parent")
   )
-  testthat::expect_identical(my_keys[["b"]][["a"]], c(`child-parent` = "child-parent"))
+  testthat::expect_identical(my_keys["b", "a"], c(`child-parent` = "child-parent"))
 })
 
 testthat::test_that("[[.join_keys doesn't return keys for given a pair without explicit join_key", {
@@ -124,17 +124,32 @@ testthat::test_that("[[.join_keys doesn't return keys for given a pair without e
   testthat::expect_null(my_keys[["b"]][["c"]])
 })
 
-testthat::test_that("[[.join_keys infer keys between child by shared foreign keys to parent ", {
+testthat::test_that("[[.join_keys infer keys between child by equal (unordered) foreign keys to parent", {
   my_keys <- join_keys(
     join_key("a", "a", "aa"),
     join_key("b", "b", "bb"),
     join_key("c", "c", "cc"),
-    join_key("b", "a", "child-parent"),
-    join_key("c", "a", "child-parent")
+    join_key("b", "a", sample(letters[1:5])),
+    join_key("c", "a", sample(letters[1:5]))
   )
   parents(my_keys) <- list("b" = "a", "c" = "a")
-  testthat::expect_identical(my_keys[["b"]][["c"]], c(`child-parent` = "child-parent"))
+  testthat::expect_identical(my_keys["b", "c"], setNames(letters[1:5], letters[1:5]))
 })
+
+testthat::test_that(
+  "[[.join_keys infer keys between child by shared foreign keys to parent (key names are unique to datasets)",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa"),
+      join_key("b", "b", "bb"),
+      join_key("c", "c", "cc"),
+      join_key("b", "a", c(aa = "bb")),
+      join_key("c", "a", c(aa = "cc"))
+    )
+    parents(my_keys) <- list("b" = "a", "c" = "a")
+    testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
+  }
+)
 
 # [.join_keys -----------------------------------------------------------------
 testthat::test_that("[.join_keys returns join_keys object when i is missing", {
@@ -167,23 +182,6 @@ testthat::test_that("[.join_keys returns join_keys object with keys for given in
   testthat::expect_identical(
     my_keys[c(1, 2)],
     join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
-  )
-})
-
-testthat::test_that("[.join_keys returns join_keys for given dataset including those connected with foreign keys", {
-  my_keys <- join_keys(
-    join_key("d1", "d1", "a"),
-    join_key("d2", "d2", "b"),
-    join_key("d3", "d3", "c"),
-    join_key("d2", "d1", "ab"),
-    join_key("d3", "d1", "ac")
-  )
-  testthat::expect_identical(
-    my_keys["d2", keep_all_foreign_keys = TRUE],
-    join_keys(
-      join_key("d2", "d2", "b"),
-      join_key("d2", "d1", "ab")
-    )
   )
 })
 

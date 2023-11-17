@@ -227,8 +227,6 @@ c.join_key_set <- function(...) {
 #' @param i index specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
 #'
-#' @param keep_all_foreign_keys (`logical`) flag that keeps foreign keys and other
-#' datasets even if they are not a parent of the selected dataset.
 #'
 #' @export
 #'
@@ -244,7 +242,7 @@ c.join_key_set <- function(...) {
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-`[.join_keys` <- function(x, i, keep_all_foreign_keys = FALSE) {
+`[.join_keys` <- function(x, i, j) {
   if (missing(i)) {
     return(x)
   }
@@ -253,13 +251,31 @@ c.join_key_set <- function(...) {
     return(new_join_keys()) # replicate base R
   }
 
+  if (!missing(j)) {
+    checkmate::assert(
+      combine = "or",
+      checkmate::check_string(i),
+      checkmate::check_integerish(i, len = 1),
+      checkmate::check_logical(i, len = length(x))
+    )
+    checkmate::assert(
+      combine = "or",
+      checkmate::check_string(j),
+      checkmate::check_integerish(j, len = 1),
+      checkmate::check_logical(j, len = length(x))
+    )
+
+    subset_x <- update_keys_given_parents(x[union(i, j)])
+    return(subset_x[[i]][[j]])
+  }
+
   checkmate::assert(
     combine = "or",
-    checkmate::check_integerish(i),
-    checkmate::check_logical(i),
-    checkmate::check_character(i)
+    checkmate::check_character(i, max.len = length(x)),
+    checkmate::check_integerish(i, max.len = length(x)),
+    checkmate::check_logical(i, len = length(x))
   )
-  checkmate::assert_logical(keep_all_foreign_keys, len = 1)
+
 
   # Convert integer/logical index to named index
   if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
@@ -286,9 +302,6 @@ c.join_key_set <- function(...) {
     }
 
     ix_valid_names <- names(x[[ix]]) %in% c(queue, bin)
-    if (keep_all_foreign_keys) {
-      ix_valid_names <- rep(TRUE, length(names(x[[ix]])))
-    }
 
     new_jk[[ix]] <- x[[ix]][ix_valid_names]
 
@@ -312,8 +325,16 @@ c.join_key_set <- function(...) {
 #' - `[<-` is not a supported operation for `join_keys`.
 #'
 #' @export
-`[<-.join_keys` <- function(x, i, value) {
-  stop("Can't use `[<-` for object `join_keys`. Use [[<- instead.")
+`[<-.join_keys` <- function(x, i, j, value) {
+  if (missing(j)) {
+    stop("Can't use `[<-` for object `join_keys` with only i. Use [[<- instead.")
+  }
+
+  checkmate::assert_string(i)
+  checkmate::assert_string(j)
+
+  x[[i]][[j]] <- value
+  x
 }
 
 #' @rdname join_keys
@@ -341,7 +362,7 @@ c.join_key_set <- function(...) {
     combine = "or",
     checkmate::check_string(i),
     checkmate::check_integerish(i, len = 1),
-    checkmate::check_logical(i, len = 1)
+    checkmate::check_logical(i, len = length(x))
   )
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
   if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
@@ -436,7 +457,6 @@ length.join_keys <- function(x) {
   sum(vapply(x, function(.x) length(.x) > 0, logical(1)))
 }
 
-
 #' @rdname join_keys
 #' @export
 format.join_keys <- function(x, ...) {
@@ -445,7 +465,7 @@ format.join_keys <- function(x, ...) {
     my_parents <- parents(x)
     names_sorted <- topological_sort(my_parents)
     names <- union(names_sorted, names(x))
-
+    x_implicit <- update_keys_given_parents(x)
     out <- lapply(names, function(i) {
       this_parent <- my_parents[[i]]
       out_i <- lapply(union(i, names(x[[i]])), function(j) {
@@ -466,6 +486,18 @@ format.join_keys <- function(x, ...) {
           if (length(keys) == 0) "no primary keys" else toString(keys)
         )
       })
+
+      implicit_datasets <- setdiff(names(x_implicit[[i]]), names(x[[i]]))
+      if (length(implicit_datasets) > 0) {
+        out_i <- c(
+          out_i,
+          paste0(
+            "  --* (implicit via parent with): ",
+            paste(implicit_datasets, collapse = ", ")
+          )
+        )
+      }
+
       paste(out_i, collapse = "\n")
     })
     paste(
