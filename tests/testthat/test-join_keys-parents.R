@@ -1,7 +1,4 @@
-# -----------------------------------------------------------------------------
-#
-# parents()
-#
+# get parents -----------------------------------------------------------------------------
 testthat::test_that("parents will return empty list when empty/not set", {
   jk <- join_keys()
   testthat::expect_identical(parents(jk), list())
@@ -14,10 +11,7 @@ testthat::test_that("parents returns the same list as used in parents<-", {
   testthat::expect_identical(parents(jk), parents)
 })
 
-# -----------------------------------------------------------------------------
-#
-# parents<-
-#
+# set parents ----------------------------------------------------------------------------
 testthat::test_that("parents<- accepts a named list containing (non-empty, non-missing) character", {
   jk <- join_keys(join_key("a", "b", "test"))
   testthat::expect_no_error(parents(jk) <- list(b = "a"))
@@ -74,7 +68,6 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 
 testthat::test_that("parents<- fails when value isn't a list (non-empty, non-missing) character", {
   jk <- join_keys(join_key("a", "b", "test"))
-  # testthat::expect_error(parents(jk) <- list(b = character(0))) # todo: make an assert
   testthat::expect_error(parents(jk) <- list(b = 1))
   testthat::expect_error(parents(jk) <- list(b = NA_character_))
   testthat::expect_error(parents(jk) <- list(b = NULL))
