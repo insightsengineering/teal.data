@@ -3,51 +3,49 @@
 %   R/join_keys-c.R, R/join_keys-print.R
 \name{join_keys}
 \alias{join_keys}
-\alias{[[<-.join_keys}
-\alias{join_keys.teal_data}
-\alias{c.join_keys}
-\alias{c.join_key_set}
-\alias{[.join_keys}
-\alias{[<-.join_keys}
-\alias{format.join_keys}
-\alias{print.join_keys}
 \alias{join_keys.default}
 \alias{join_keys.join_keys}
+\alias{join_keys.teal_data}
 \alias{join_keys.TealData}
+\alias{[.join_keys}
+\alias{[<-.join_keys}
+\alias{c.join_keys}
+\alias{c.join_key_set}
 \alias{join_keys<-}
 \alias{join_keys<-.join_keys}
 \alias{join_keys<-.teal_data}
+\alias{format.join_keys}
+\alias{print.join_keys}
 \title{Manage relationships between datasets using \code{join_keys}}
 \usage{
+## Constructor, getter and setter
 join_keys(...)
-
-\method{[[}{join_keys}(x, i) <- value
-
-\method{join_keys}{teal_data}(...)
-
-\method{c}{join_keys}(...)
-
-\method{c}{join_key_set}(...)
-
-\method{[}{join_keys}(x, i, j)
-
-\method{[}{join_keys}(x, i, j) <- value
-
-\method{format}{join_keys}(x, ...)
-
-\method{print}{join_keys}(x, ...)
 
 \method{join_keys}{default}(...)
 
 \method{join_keys}{join_keys}(...)
 
+\method{join_keys}{teal_data}(...)
+
 \method{join_keys}{TealData}(...)
+
+\method{[}{join_keys}(x, i, j)
+
+\method{[}{join_keys}(x, i, j) <- value
+
+\method{c}{join_keys}(...)
+
+\method{c}{join_key_set}(...)
 
 join_keys(x) <- value
 
 \method{join_keys}{join_keys}(x) <- value
 
 \method{join_keys}{teal_data}(x) <- value
+
+\method{format}{join_keys}(x, ...)
+
+\method{print}{join_keys}(x, ...)
 }
 \arguments{
 \item{...}{(optional), when no argument is given the empty constructor is called.
@@ -56,16 +54,18 @@ it will return the \code{join_keys} of that object.
 When called with 1 or more \code{join_key_set} it will create a new \code{join_keys} with
 constructed from the arguments.}
 
-\item{x}{(\code{join_keys}) empty object to set the new relationship pairs.}
+\item{x}{(\code{join_keys}) empty object to set the new relationship pairs.
+\code{x} is typically an object of \code{join_keys} class. When called with the \code{join_keys(x)}
+or \code{join_keys(x) <- value} then it can also take a supported class (\code{teal_data}, \code{join_keys})}
 
 \item{i}{index specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
-\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
-to \code{join_keys} list.}
-
 \item{j}{index specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
+
+\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
+to \code{join_keys} list.}
 }
 \value{
 \code{join_keys} object.
@@ -84,37 +84,31 @@ is automatically mirrored between \code{dat2} and \code{dat1}.
 \item \code{join_keys()}: Returns an empty \code{join_keys} object when called without arguments.
 \item \code{join_keys(x)}: Returns the \code{join_keys} object contained in \code{x} (if it contains one).
 \item \code{join_keys(...)}: Creates a new object with one or more \code{join_key_set} parameters.
-\item \code{join_keys[datanames]}: Returns a subset of the \code{join_keys} object for given \code{datanames},
-including their symmetric mirror keys.
-\item \code{join_keys[i, j]}: Returns join keys between datasets \code{i} and \code{j},
+}
+
+\itemize{
+\item \code{x[datanames]}: Returns a subset of the \code{join_keys} object for
+given \code{datanames}, including parent \code{datanames} and symmetric mirror keys between
+\code{datanames} in the result.
+\item \code{x[i, j]}: Returns join keys between datasets \code{i} and \code{j},
 including implicit keys inferred from their relationship with a parent.
 }
 
 \itemize{
-\item \verb{[[<-} is the preferred method to replace or assign new relationship pair to an
-existing \code{join_keys} object.
-\item \code{join_keys(obj)[[dataset_1]] <- value} can also be used to assign a relationship
-pair to an \code{obj} that contains a \code{join_keys}, such as itself or a \code{teal_data}
-object.
+\item \code{x[i, j] <- value}: Assignment of a key to pair \verb{(i, j)}.
+\item \code{x[i] <- value}: This (without \code{j} parameter) \strong{is not} a supported
+operation for \code{join_keys}.
+\item \code{join_keys(x)[i, j] <- value}: Assignment to \code{join_keys} object stored in \code{x},
+such as a \code{teal_data} or \code{join_keys} itself.
 }
 
 \itemize{
-\item \verb{[.join_keys} can be used to return a subset of relationship pairs. It will
-retrieve the primary keys of the selected elements and its parents (along with)
-the relationship keys between the selected elements and their parents.
-}
-
-\itemize{
-\item \verb{[<-} is not a supported operation for \code{join_keys}.
-}
-
-\itemize{
-\item "\code{join_keys(obj) <- value}" will set the \code{join_keys} in object with \code{value}.
+\item \code{join_keys(x) <- value}: Assignment of the \code{join_keys} in object with \code{value}.
 \code{value} needs to be an object of class \code{join_keys} or \code{join_key_set}.
 }
 }
 \examples{
-# Setting join keys ----
+# Creating a new join keys ----
 
 jk <- join_keys(
   join_key("ds1", "ds1", "pk1"),
@@ -126,63 +120,73 @@ jk <- join_keys(
 
 jk
 
-jk <- join_keys()
-jk[["dataset_A"]][["dataset_B"]] <- "key"
-jk[["dataset_C"]] <- list(dataset_A = "key_2", dataset_B = "key_3")
-jk[["dataset_A"]][["dataset_C"]] <- NULL # removes key
+# Getter for join_keys ---
 
-jk
-# Using a `join_keys` with `teal_data`
+jk["ds1", "ds2"]
 
-td <- teal_data()
-join_keys(td) <- join_keys(
-  join_key("ds1", "ds1", "pk1"),
-  join_key("ds2", "ds2", "pk2"),
-  join_key("ds3", "ds3", "pk3"),
-  join_key("ds2", "ds1", c(pk2 = "pk1")),
-  join_key("ds3", "ds1", c(pk3 = "pk1"))
-)
-join_keys(td)
-
-# Merging multiple `join_keys`
-
-jk_merged <- c(jk, join_keys(join_key("dataset_D", "dataset_E", "col_2")))
-
-# Note that you can merge join_keys or a single join_key_set
-
-jk_merged <- c(
-  jk_merged,
-  join_key("dataset_A", "dataset_F", "col_a"),
-  join_key("dataset_O", "dataset_G", "col_g")
-)
-
-# Getter for join_keys ----
-
-jk <- join_keys(
-  join_key("ds1", "ds1", "primary-key-1"),
-  join_key("ds2", "ds2", "primary-key-2"),
-  join_key("ds3", "ds3", "primary-key-3"),
-  join_key("ds2", "ds1", "foreign-key-2-1"),
-  join_key("ds3", "ds1", "foregin-key-3-1")
-)
+# Subsetting join_keys ----
 
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
-jk["ds1", "ds2"]
 
-# Using the setter (assignment) ----
-jk <- join_keys()
-jk["ds1", "ds1"] <- "pk1"
-jk["ds2", "ds2"] <- "pk2"
-jk["ds3", "ds3"] <- "pk3"
-jk["ds2", "ds1"] <- c(pk2 = "pk1")
-jk["ds3", "ds1"] <- c(pk3 = "pk1")
+# Setting a new primary key ---
+
+jk["ds4", "ds4"] <- "pk4"
+jk["ds5", "ds5"] <- "pk5"
+
+# Setting a single relationship pair ---
+
+jk["ds4", "ds1"] <- c("pk4" = "pk1")
+
+# Removing a key ---
+
+jk["ds5", "ds5"] <- NULL
+
+# Merging multiple `join_keys` ---
+
+jk_merged <- c(
+  jk,
+  join_keys(
+    join_key("ds4", keys = c("pk4", "pk4_2")),
+    join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+  )
+)
+
+# note: merge can be performed with both join_keys and join_key_set
+
+jk_merged <- c(
+  jk_merged,
+  join_key("ds5", keys = "pk5"),
+  join_key("ds5", "ds1", c(pk5 = "pk1"))
+)
+
+# Assigning keys via join_keys(x)[i, j] <- value ----
+
+obj <- join_keys()
+# or
+obj <- teal_data()
+
+join_keys(obj)["ds1", "ds1"] <- "pk1"
+join_keys(obj)["ds2", "ds2"] <- "pk2"
+join_keys(obj)["ds3", "ds3"] <- "pk3"
+join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
+join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+
+identical(jk, join_keys(obj))
 
 # Setter for join_keys within teal_data ----
 
 td <- teal_data()
-join_keys(td)["ds1", "ds2"] <- "key1"
+join_keys(td) <- jk
+
+join_keys(td)["ds1", "ds2"] <- "new_key"
 join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 join_keys(td)
+}
+\seealso{
+\code{\link[=join_key]{join_key()}} for creating \code{join_keys_set},
+\code{\link[=parents]{parents()}} for parent operations,
+\code{\link[=teal_data]{teal_data()}} for \code{teal_data} constructor \emph{and}
+\link{default_cdisc_join_keys} for default \code{CDISC} keys.
 }

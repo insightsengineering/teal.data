@@ -1,11 +1,18 @@
 #' @rdname join_keys
+#' @order 4
 #' @export
 #'
 #' @examples
 #'
-#' # Merging multiple `join_keys`
+#' # Merging multiple `join_keys` ---
 #'
-#' jk_merged <- c(jk, join_keys(join_key("dataset_D", "dataset_E", "col_2")))
+#' jk_merged <- c(
+#'   jk,
+#'   join_keys(
+#'     join_key("ds4", keys = c("pk4", "pk4_2")),
+#'     join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+#'   )
+#' )
 c.join_keys <- function(...) {
   join_keys_obj <- rlang::list2(...)[[1]]
   x <- rlang::list2(...)[-1]
@@ -25,16 +32,18 @@ c.join_keys <- function(...) {
 }
 
 #' @rdname join_keys
+#' @order 4
+#'
 #' @export
 #'
 #' @examples
 #'
-#' # Note that you can merge join_keys or a single join_key_set
+#' # note: merge can be performed with both join_keys and join_key_set
 #'
 #' jk_merged <- c(
 #'   jk_merged,
-#'   join_key("dataset_A", "dataset_F", "col_a"),
-#'   join_key("dataset_O", "dataset_G", "col_g")
+#'   join_key("ds5", keys = "pk5"),
+#'   join_key("ds5", "ds1", c(pk5 = "pk1"))
 #' )
 c.join_key_set <- function(...) {
   c.join_keys(...)

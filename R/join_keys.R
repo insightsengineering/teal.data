@@ -1,4 +1,9 @@
 #' Manage relationships between datasets using `join_keys`
+#' @order 1
+#' @name join_keys
+#'
+#' @usage ## Constructor, getter and setter
+#' join_keys(...)
 #'
 #' @description
 #' `join_keys()` facilitates the creation and retrieval of relationships between datasets.
@@ -14,13 +19,6 @@
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
 #' - `join_keys(x)`: Returns the `join_keys` object contained in `x` (if it contains one).
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
-#' - `join_keys[datanames]`: Returns a subset of the `join_keys` object for given `datanames`,
-#'   including their symmetric mirror keys.
-#' - `join_keys[i, j]`: Returns join keys between datasets `i` and `j`,
-#'   including implicit keys inferred from their relationship with a parent.
-#'
-#'
-#' @order 1
 #'
 #' @param ... (optional), when no argument is given the empty constructor is called.
 #' Otherwise, when called with only one argument of type: `join_keys` or  `teal_data`
@@ -32,8 +30,13 @@
 #'
 #' @export
 #'
+#' @seealso [join_key()] for creating `join_keys_set`,
+#' [parents()] for parent operations,
+#' [teal_data()] for `teal_data` constructor _and_
+#' [default_cdisc_join_keys] for default `CDISC` keys.
+#'
 #' @examples
-#' # Setting join keys ----
+#' # Creating a new join keys ----
 #'
 #' jk <- join_keys(
 #'   join_key("ds1", "ds1", "pk1"),
@@ -57,12 +60,14 @@ join_keys <- function(...) {
 }
 
 #' @rdname join_keys
+#' @order 1
 #' @export
 join_keys.default <- function(...) {
   c(new_join_keys(), ...)
 }
 
 #' @rdname join_keys
+#' @order 1
 #' @export
 join_keys.join_keys <- function(...) {
   x <- rlang::list2(...)
@@ -70,26 +75,15 @@ join_keys.join_keys <- function(...) {
 }
 
 #' @rdname join_keys
-#' @order 1000
+#' @order 1
 #' @export
-#' @examples
-#' # Using a `join_keys` with `teal_data`
-#'
-#' td <- teal_data()
-#' join_keys(td) <- join_keys(
-#'   join_key("ds1", "ds1", "pk1"),
-#'   join_key("ds2", "ds2", "pk2"),
-#'   join_key("ds3", "ds3", "pk3"),
-#'   join_key("ds2", "ds1", c(pk2 = "pk1")),
-#'   join_key("ds3", "ds1", c(pk3 = "pk1"))
-#' )
-#' join_keys(td)
 join_keys.teal_data <- function(...) {
   x <- rlang::list2(...)
   x[[1]]@join_keys
 }
 
 #' @rdname join_keys
+#' @order 1
 #' @export
 join_keys.TealData <- function(...) {
   x <- rlang::list2(...)
@@ -97,12 +91,15 @@ join_keys.TealData <- function(...) {
 }
 
 #' @rdname join_keys
+#' @order 5
 #'
 #' @details
-#' - "`join_keys(obj) <- value`" will set the `join_keys` in object with `value`.
+#' - `join_keys(x) <- value`: Assignment of the `join_keys` in object with `value`.
 #' `value` needs to be an object of class `join_keys` or `join_key_set`.
 #'
 #' @param x (`join_keys`) empty object to set the new relationship pairs.
+#' `x` is typically an object of `join_keys` class. When called with the `join_keys(x)`
+#' or `join_keys(x) <- value` then it can also take a supported class (`teal_data`, `join_keys`)
 #' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
 #' to `join_keys` list.
 #'
@@ -113,28 +110,38 @@ join_keys.TealData <- function(...) {
 }
 
 #' @rdname join_keys
+#' @order 5
 #' @export
 #' @examples
 #'
-#' # Using the setter (assignment) ----
-#' jk <- join_keys()
-#' jk["ds1", "ds1"] <- "pk1"
-#' jk["ds2", "ds2"] <- "pk2"
-#' jk["ds3", "ds3"] <- "pk3"
-#' jk["ds2", "ds1"] <- c(pk2 = "pk1")
-#' jk["ds3", "ds1"] <- c(pk3 = "pk1")
+#' # Assigning keys via join_keys(x)[i, j] <- value ----
+#'
+#' obj <- join_keys()
+#' # or
+#' obj <- teal_data()
+#'
+#' join_keys(obj)["ds1", "ds1"] <- "pk1"
+#' join_keys(obj)["ds2", "ds2"] <- "pk2"
+#' join_keys(obj)["ds3", "ds3"] <- "pk3"
+#' join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
+#' join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+#'
+#' identical(jk, join_keys(obj))
 `join_keys<-.join_keys` <- function(x, value) {
   value
 }
 
 #' @rdname join_keys
+#' @order 5
 #' @export
 #' @examples
 #'
 #' # Setter for join_keys within teal_data ----
 #'
 #' td <- teal_data()
-#' join_keys(td)["ds1", "ds2"] <- "key1"
+#' join_keys(td) <- jk
+#'
+#' join_keys(td)["ds1", "ds2"] <- "new_key"
 #' join_keys(td) <- c(join_keys(td), join_keys(join_key("ds3", "ds2", "key3")))
 #' join_keys(td)
 `join_keys<-.teal_data` <- function(x, value) {

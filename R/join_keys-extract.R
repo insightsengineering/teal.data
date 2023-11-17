@@ -1,9 +1,12 @@
 #' @rdname join_keys
+#' @order 2
 #'
 #' @details
-#' - `[.join_keys` can be used to return a subset of relationship pairs. It will
-#' retrieve the primary keys of the selected elements and its parents (along with)
-#' the relationship keys between the selected elements and their parents.
+#' - `x[datanames]`: Returns a subset of the `join_keys` object for
+#' given `datanames`, including parent `datanames` and symmetric mirror keys between
+#' `datanames` in the result.
+#' - `x[i, j]`: Returns join keys between datasets `i` and `j`,
+#'   including implicit keys inferred from their relationship with a parent.
 #'
 #' @param i index specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
@@ -15,20 +18,15 @@
 #'
 #' @examples
 #'
-#' # Getter for join_keys ----
+#' # Getter for join_keys ---
 #'
-#' jk <- join_keys(
-#'   join_key("ds1", "ds1", "primary-key-1"),
-#'   join_key("ds2", "ds2", "primary-key-2"),
-#'   join_key("ds3", "ds3", "primary-key-3"),
-#'   join_key("ds2", "ds1", "foreign-key-2-1"),
-#'   join_key("ds3", "ds1", "foregin-key-3-1")
-#' )
+#' jk["ds1", "ds2"]
+#'
+#' # Subsetting join_keys ----
 #'
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
-#' jk["ds1", "ds2"]
 `[.join_keys` <- function(x, i, j) {
   if (missing(i) && missing(j)) {
     # because:
@@ -118,11 +116,30 @@
 }
 
 #' @rdname join_keys
+#' @order 2
 #'
 #' @details
-#' - `[<-` is not a supported operation for `join_keys`.
+#' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
+#' - `x[i] <- value`: This (without `j` parameter) **is not** a supported
+#' operation for `join_keys`.
+#' - `join_keys(x)[i, j] <- value`: Assignment to `join_keys` object stored in `x`,
+#' such as a `teal_data` or `join_keys` itself.
 #'
 #' @export
+#' @examples
+#'
+#' # Setting a new primary key ---
+#'
+#' jk["ds4", "ds4"] <- "pk4"
+#' jk["ds5", "ds5"] <- "pk5"
+#'
+#' # Setting a single relationship pair ---
+#'
+#' jk["ds4", "ds1"] <- c("pk4" = "pk1")
+#'
+#' # Removing a key ---
+#'
+#' jk["ds5", "ds5"] <- NULL
 `[<-.join_keys` <- function(x, i, j, value) {
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
@@ -151,24 +168,25 @@
   x
 }
 
+#' @noRd
 #' @rdname join_keys
 #'
-#' @order 3
+#' @order 1000
+#' @usage ## Prefered method is x[i, j] <- value
+#' x[[i]][[j]] <- value
 #'
 #' @details
-#' - `[[<-` is the preferred method to replace or assign new relationship pair to an
-#' existing `join_keys` object.
-#' - `join_keys(obj)[[dataset_1]] <- value` can also be used to assign a relationship
-#' pair to an `obj` that contains a `join_keys`, such as itself or a `teal_data`
-#' object.
+#' - `x[[i]][[j]] <- value`: It is equivalent as  `x[i, j] <- value`.
 #'
 #' @export
 #' @examples
 #'
+#' # Setting via x[[i]] <- value ---
+#'
 #' jk <- join_keys()
-#' jk[["dataset_A"]][["dataset_B"]] <- "key"
-#' jk[["dataset_C"]] <- list(dataset_A = "key_2", dataset_B = "key_3")
-#' jk[["dataset_A"]][["dataset_C"]] <- NULL # removes key
+#' jk[["ds6"]][["ds6"]] <- "pk6"
+#' jk[["ds7"]] <- list(ds7 = "pk7", ds6 = c(pk7 = "pk6"))
+#' jk[["ds7"]][["ds7"]] <- NULL # removes key
 #'
 #' jk
 `[[<-.join_keys` <- function(x, i, value) {

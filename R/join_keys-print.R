@@ -1,4 +1,5 @@
 #' @rdname join_keys
+#' @order 7
 #' @export
 format.join_keys <- function(x, ...) {
   check_ellipsis(...)
@@ -54,6 +55,7 @@ format.join_keys <- function(x, ...) {
 }
 
 #' @rdname join_keys
+#' @order 7
 #' @export
 print.join_keys <- function(x, ...) {
   cat(format(x, ...), "\n")
