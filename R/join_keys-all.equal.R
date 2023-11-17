@@ -1,7 +1,7 @@
 #' Test if Two Objects are (Nearly) Equal
 #'
 #' `all.equal(target, current)` is a utility to compare `join_keys` objects target
-#' and current testing ‘near equality’.
+#' and current testing `near equality`.
 #'
 #' If they are different, comparison is still made to some extent, and a report
 #' of the differences is returned.
@@ -18,6 +18,8 @@
 #' The list containing all the relationships is treated like a map and ignores
 #' entries with `NULL` if they exist.
 #'
+#' @seealso [base::all.equal()]
+#'
 #' @export
 all.equal.join_keys <- function(target, current, ...) {
   .as_map <- function(.x) {
@@ -25,6 +27,7 @@ all.equal.join_keys <- function(target, current, ...) {
     # Keep only non-list attributes
     old_attributes[["names"]] <- NULL
     old_attributes[["class"]] <- NULL
+    old_attributes[["original_class"]] <- class(.x)
     old_attributes[["__parents__"]] <- old_attributes[["__parents__"]] %||% list()
 
     attr(.x, "class") <- "list"
