@@ -12,7 +12,11 @@ a primary key for \code{dataset_1} is created.}
 
 \item{keys}{(optionally named \code{character}) where \code{names(keys)} are columns in \code{dataset_1}
 corresponding to columns of \code{dataset_2} given by the elements of \code{keys}.
-If unnamed, the same column names are used for both datasets.}
+
+If unnamed, the same column names are used for both datasets.
+
+If any element of the \code{keys} vector is empty with a non-empty name, then the name is
+used for both datasets.}
 }
 \value{
 object of class \code{join_key_set} to be passed into \code{join_keys} function.

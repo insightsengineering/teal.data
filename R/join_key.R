@@ -9,7 +9,11 @@
 #'  a primary key for `dataset_1` is created.
 #' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
 #' corresponding to columns of `dataset_2` given by the elements of `keys`.
+#'
 #' If unnamed, the same column names are used for both datasets.
+#'
+#' If any element of the `keys` vector is empty with a non-empty name, then the name is
+#' used for both datasets.
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
