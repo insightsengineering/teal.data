@@ -150,10 +150,3 @@ testthat::test_that("join_keys()[]<-.join_keys with empty value in a named vecto
   testthat::expect_message(join_keys(jk)[["d1"]][["d2"]] <- c("A" = "B", ""), "are ignored")
   testthat::expect_equal(jk[["d1"]][["d2"]], c(A = "B"))
 })
-
-
-
-# -----------------------------------------------------------------------------
-#
-# Setting names (names<-join_keys)
-#

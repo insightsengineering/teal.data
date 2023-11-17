@@ -20,13 +20,8 @@
     # changing name in the parents
     if (length(parent_list)) {
       names(parent_list)[names(parent_list) == old_name] <- new_name
-      parent_list <- lapply(parent_list, function(.x) {
-        if (identical(.x, old_name)) {
-          new_name
-        } else {
-          .x
-        }
-      })
+      ind <- vapply(parent_list, identical, logical(1), old_name)
+      parent_list[ind] <- new_name
       attr(new_x, "__parents__") <- parent_list
     }
   }

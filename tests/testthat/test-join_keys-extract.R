@@ -38,6 +38,18 @@ testthat::test_that("join_keys[i] returns join_keys object with keys for given i
   )
 })
 
+testthat::test_that("join_keys[-i] drops keys for given index", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d3", "d3", "c")
+  )
+  testthat::expect_identical(
+    my_keys[-3],
+    join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
+  )
+})
+
 testthat::test_that("join_keys[i] returns join_keys object for given dataset including its parent", {
   my_keys <- join_keys(
     join_key("d1", "d1", "a"),
@@ -119,6 +131,17 @@ testthat::test_that("join_keys[i,j] returns keys for given pair", {
   testthat::expect_identical(my_keys["b", "a"], c(`child-parent` = "child-parent"))
 })
 
+testthat::test_that("join_keys[i,j] returns keys for pair given by numeric indices", {
+  my_keys <- join_keys(
+    join_key("a", "a", "aa"),
+    join_key("b", "b", "bb"),
+    join_key("c", "c", "cc"),
+    join_key("b", "a", "child-parent"),
+    join_key("c", "a", "child-parent")
+  )
+  testthat::expect_identical(my_keys[2, 1], c(`child-parent` = "child-parent"))
+})
+
 testthat::test_that("join_keys[i,j] return NULL for given pair when no such key and no common parent", {
   my_keys <- join_keys(
     join_key("a", "a", "aa"),
@@ -131,17 +154,17 @@ testthat::test_that("join_keys[i,j] return NULL for given pair when no such key 
 })
 
 testthat::test_that(
-  "join_keys[i,j] infer keys between children through unnamed foreign keys to parent (reglardless keys order)",
+  "join_keys[i,j] doesn't infer keys between children if they don't have common key to parent",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", sample(letters[1:5])),
-      join_key("c", "a", sample(letters[1:5]))
+      join_key("b", "a", c(child = "a1")),
+      join_key("c", "a", c(child = "a2"))
     )
     parents(my_keys) <- list("b" = "a", "c" = "a")
-    testthat::expect_identical(my_keys["b", "c"], setNames(letters[1:5], letters[1:5]))
+    testthat::expect_null(my_keys["b", "c"])
   }
 )
 

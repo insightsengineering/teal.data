@@ -41,12 +41,12 @@
     if (
       !any(
         checkmate::test_string(i),
-        checkmate::test_integerish(i, len = 1),
+        checkmate::test_number(i),
         checkmate::test_logical(i, len = length(x)) && sum(j) == 1
       ) ||
         !any(
           checkmate::test_string(j),
-          checkmate::test_integerish(j, len = 1),
+          checkmate::test_number(j),
           checkmate::test_logical(j, len = length(x)) && sum(j) == 1
         )
     ) {
@@ -56,6 +56,8 @@
         call. = FALSE
       )
     }
+    if (is.numeric(i)) i <- names(x)[i]
+    if (is.numeric(j)) j <- names(x)[j]
 
     subset_x <- update_keys_given_parents(x[union(i, j)])
     return(subset_x[[i]][[j]])
@@ -68,13 +70,13 @@
   checkmate::assert(
     combine = "or",
     checkmate::check_character(i),
-    checkmate::check_integerish(i),
+    checkmate::check_numeric(i),
     checkmate::check_logical(i)
   )
 
 
   # Convert integer/logical index to named index
-  if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
+  if (checkmate::test_numeric(i) || checkmate::test_logical(i)) {
     i <- names(x)[i]
   }
 
@@ -148,12 +150,12 @@
   } else if (
     !any(
       checkmate::test_string(i),
-      checkmate::test_integerish(i, len = 1),
+      checkmate::test_number(i),
       checkmate::test_logical(i, len = length(x)) && sum(j) == 1
     ) ||
       !any(
         checkmate::test_string(j),
-        checkmate::test_integerish(j, len = 1),
+        checkmate::test_number(j),
         checkmate::test_logical(j, len = length(x)) && sum(j) == 1
       )
   ) {
@@ -193,11 +195,11 @@
   checkmate::assert(
     combine = "or",
     checkmate::check_string(i),
-    checkmate::check_integerish(i, len = 1),
+    checkmate::check_number(i),
     checkmate::check_logical(i, len = length(x))
   )
   checkmate::assert_list(value, names = "named", types = "character", null.ok = TRUE)
-  if (checkmate::test_integerish(i) || checkmate::test_logical(i)) {
+  if (checkmate::test_numeric(i) || checkmate::test_logical(i)) {
     i <- names(x)[[i]]
   }
 
@@ -229,17 +231,15 @@
   # Safe to do as duplicated are the same
   norm_value[duplicated(names(norm_value))] <- NULL
 
-  # Remove elements with length == 0L
-  norm_value <- Filter(function(.x) length(.x) > 0, norm_value)
+  # Keep only elements with length > 0L
+  norm_value <- Filter(length, norm_value)
 
   # Remove classes to use list-based get/assign operations
   new_x <- unclass(x)
 
   # In case a pair is removed, also remove the symmetric pair
   removed_names <- setdiff(names(new_x[[i]]), names(norm_value))
-  if (length(removed_names) > 0) {
-    for (.x in removed_names) new_x[[.x]][[i]] <- NULL
-  }
+  for (.x in removed_names) new_x[[.x]][[i]] <- NULL
 
   new_x[[i]] <- norm_value
 
