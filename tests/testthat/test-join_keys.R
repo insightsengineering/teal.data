@@ -23,12 +23,25 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
     structure(c(key1, key2), class = c("join_keys", "list"))
   )
 
-  testthat::expect_equal(
+  testthat::expect_identical(
     jk,
     structure(
       list(
         d1 = list(d1 = c(test = "test")),
         d2 = list(d2 = c(test = "test"))
+      ),
+      class = c("join_keys", "list"),
+      "__parents__" = list()
+    )
+  )
+
+  # Relaxed comparison (not ordered and without need of empty attributes)
+  testthat::expect_equal(
+    jk,
+    structure(
+      list(
+        d2 = list(d2 = c(test = "test")),
+        d1 = list(d1 = c(test = "test"))
       ),
       class = c("join_keys", "list")
     )

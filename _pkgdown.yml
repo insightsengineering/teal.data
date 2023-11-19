@@ -107,7 +107,6 @@ reference:
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:
-      - all.equal.join_keys
       - datanames
       - datanames<-
       - default_cdisc_join_keys

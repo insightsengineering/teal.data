@@ -90,3 +90,14 @@ testthat::test_that("parents<- sets parent datasets to join_keys kept in teal_da
   parents(td) <- list(b = "a")
   testthat::expect_identical(parents(td), list(b = "a"))
 })
+
+testthat::test_that("parents<- setting parents changes join_keys object", {
+  jk <- join_keys(join_key("a", "b", "ab"))
+  jk2 <- jk
+  parents <- list(b = "a")
+  parents(jk) <- parents
+
+  testthat::expect_failure(testthat::expect_identical(jk, jk2))
+  # Relaxed comparison also fails
+  testthat::expect_failure(testthat::expect_equal(jk, jk2))
+})
