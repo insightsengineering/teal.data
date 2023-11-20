@@ -6,7 +6,7 @@
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
 #'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
 #'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
-#' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
+#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
 #' @param code (`character`, `language`) code to reproduce the datasets.
@@ -28,7 +28,7 @@ teal_data <- function(...,
                       code = character(0),
                       check = FALSE) {
   data_objects <- rlang::list2(...)
-  if (inherits(join_keys, "JoinKeySet")) {
+  if (inherits(join_keys, "join_key_set")) {
     join_keys <- teal.data::join_keys(join_keys)
   }
   if (
@@ -45,7 +45,7 @@ teal_data <- function(...,
         Find more information on https://github.com/insightsengineering/teal/discussions/945'
       )"
     )
-    deprecated_join_keys_extract(data_objects, join_keys)
+    join_keys <- deprecated_join_keys_extract(data_objects, join_keys)
 
     x <- TealData$new(..., check = check, join_keys = join_keys)
     if (length(code) > 0 && !identical(code, "")) {
@@ -110,22 +110,19 @@ teal_data_file <- function(path, code = get_code(path)) {
 #' Add primary keys as join_keys to a dataset self
 #'
 #' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
-#' @param join_keys (`JoinKeys`) object
+#' @param x (`join_keys`) object
 #'
 #' @keywords internal
-update_join_keys_to_primary <- function(data_objects, join_keys) {
-  lapply(data_objects, function(obj) {
+update_join_keys_to_primary <- function(data_objects, x) {
+  for (obj in data_objects) {
     if (inherits(obj, "TealDataConnector")) {
-      update_join_keys_to_primary(obj$get_items(), join_keys)
+      x <- update_join_keys_to_primary(obj$get_items(), x)
     } else {
       dataname <- obj$get_dataname()
-      if (length(join_keys$get(dataname, dataname)) == 0) {
-        join_keys$mutate(
-          dataname,
-          dataname,
-          obj$get_keys()
-        )
+      if (length(x[[dataname]][[dataname]]) == 0) {
+        x[[dataname]][[dataname]] <- obj$get_keys()
       }
     }
-  })
+  }
+  x
 }

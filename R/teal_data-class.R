@@ -1,4 +1,4 @@
-setOldClass("JoinKeys")
+setOldClass("join_keys")
 
 #' Reproducible data.
 #'
@@ -24,8 +24,8 @@ setOldClass("JoinKeys")
 #' @slot warnings (`character`) vector of warnings raised when evaluating code.
 #'  Access with [get_warnings()].
 #' @slot messages (`character`) vector of messages raised when evaluating code.
-#' @slot join_keys (`JoinKeys`) object specifying joining keys for data sets in `@env`.
-#'  Access or modify with [get_join_keys()].
+#' @slot join_keys (`join_keys`) object specifying joining keys for data sets in `@env`.
+#'  Access or modify with [join_keys()].
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
@@ -38,6 +38,7 @@ setClass(
   Class = "teal_data",
   contains = "qenv",
   slots = c(join_keys = "JoinKeys", datanames = "character", verified = "logical"),
+  slots = c(join_keys = "join_keys", datanames = "character"),
   prototype = list(
     join_keys = join_keys(),
     datanames = character(0),
@@ -53,7 +54,7 @@ setClass(
 #' @param data (`named list`) List of data.
 #' @param code (`character` or `language`) code to reproduce the `data`.
 #'   Accepts and stores comments also.
-#' @param join_keys (`JoinKeys`) object
+#' @param join_keys (`join_keys`) object
 #' @param datanames (`character`) names of datasets passed to `data`.
 #'   Needed when non-dataset objects are needed in the `env` slot.
 #' @rdname new_teal_data
@@ -61,9 +62,9 @@ setClass(
 new_teal_data <- function(data,
                           code = character(0),
                           join_keys = join_keys(),
-                          datanames = union(names(data), names(join_keys$get()))) {
+                          datanames = union(names(data), names(join_keys))) {
   checkmate::assert_list(data)
-  checkmate::assert_class(join_keys, "JoinKeys")
+  checkmate::assert_class(join_keys, "join_keys")
   if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
   checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {

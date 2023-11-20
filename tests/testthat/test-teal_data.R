@@ -149,12 +149,12 @@ testthat::test_that("teal_data sets passed join_keys to datasets correctly", {
     join_key("df1", "df1", "id"),
     join_key("df2", "df2", "df2_id")
   )
-  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
+  parents(jk_expected) <- list(df1 = character(0), df2 = character(0))
 
-  testthat::expect_equal(data$get_join_keys(), jk_expected)
+  testthat::expect_equal(join_keys(data), jk_expected)
 })
 
-testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when key names differ", {
+testthat::test_that("teal_data sets passed join_keys to datasets correctly when key names differ", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), b = c(1L, 2L))
   df1 <- dataset("df1", df1, keys = "id")
@@ -168,12 +168,12 @@ testthat::test_that("teal_data sets passed JoinKeys to datasets correctly when k
     join_key("df2", "df1", c(fk = "id")),
     join_key("df2", "df2", "df2_id")
   )
-  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
+  parents(jk_expected) <- list(df1 = character(0), df2 = character(0))
 
-  testthat::expect_equal(data$get_join_keys(), jk_expected)
+  testthat::expect_equal(join_keys(data), jk_expected)
 })
 
-testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when key names differ (multiple keys)", {
+testthat::test_that("teal_data sets passes join_keys to datasets correctly when key names differ (multiple keys)", {
   df1 <- data.frame(id = c("A", "B"), id2 = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), fk = c("A", "B"), fk2 = c("A", "B"), b = c(1L, 2L))
   df1 <- dataset("df1", df1, keys = "id")
@@ -186,8 +186,8 @@ testthat::test_that("teal_data sets passes JoinKeys to datasets correctly when k
     join_key("df2", "df2", "df2_id"),
     join_key("df1", "df2", c(id = "fk", id2 = "fk2"))
   )
-  jk_expected$set_parents(list(df1 = character(0), df2 = character(0)))
-  testthat::expect_equal(data$get_join_keys(), jk_expected)
+  parents(jk_expected) <- list(df1 = character(0), df2 = character(0))
+  testthat::expect_equal(join_keys(data), jk_expected)
 })
 
 testthat::test_that("teal_data returns TealData object with cdisc_dataset input", {
@@ -268,7 +268,7 @@ testthat::test_that("update_join_keys_to_primary updates the join_keys", {
   jks <- join_keys(join_key("df1", "df2", "id"))
   data_objects <- list(df1, df2)
 
-  update_join_keys_to_primary(data_objects, jks)
+  jks <- update_join_keys_to_primary(data_objects, jks)
   testthat::expect_equal(
     jks,
     join_keys(
@@ -289,7 +289,7 @@ testthat::test_that("update_join_keys_to_primary updates the join_keys when prim
   jks <- join_keys(join_key("df1", "df2", "id"))
   data_objects <- list(df1, df2)
 
-  update_join_keys_to_primary(data_objects, jks)
+  jks <- update_join_keys_to_primary(data_objects, jks)
   testthat::expect_equal(
     jks,
     join_keys(
@@ -310,7 +310,7 @@ testthat::test_that("update_join_keys_to_primary updates join_keys with characte
   jks <- join_keys(join_key("df1", "df2", "id"))
   data_objects <- list(df1, df2)
 
-  update_join_keys_to_primary(data_objects, jks)
+  jks <- update_join_keys_to_primary(data_objects, jks)
   testthat::expect_equal(
     jks,
     join_keys(
