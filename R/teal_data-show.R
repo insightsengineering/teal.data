@@ -11,9 +11,9 @@
 #' @export
 setMethod("show", "teal_data", function(object) {
   if (object@verified) {
-    cat("✅︎", "verified teal_data object\n")
+    cat("\u2705\ufe0e", "verified teal_data object\n")
   } else {
-    cat("✖️︎", "unverified teal_data object\n")
+    cat("\u2716", "unverified teal_data object\n")
   }
   rlang::env_print(object@env)
 })
