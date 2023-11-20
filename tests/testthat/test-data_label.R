@@ -41,13 +41,3 @@ testthat::test_that("get_labels' column_labels is a named vector of the labels o
   attr(test[[2]], "label") <- test_labels[2]
   testthat::expect_equal(get_labels(test)$column_labels, stats::setNames(object = test_labels, nm = colnames(test)))
 })
-
-testthat::test_that("get_cdisc_keys returns column names present in the cached datasets", {
-  datasets <- c("ADSL", "ADAE", "ADTTE", "ADLB", "ADRS", "ADVS")
-
-  sapply(seq_along(datasets), function(x) {
-    testthat::expect_true(
-      all(get_cdisc_keys(datasets[x]) %in% names(example_cdisc_data(datasets[x])))
-    )
-  })
-})

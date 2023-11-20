@@ -244,7 +244,8 @@
   for (ds2 in names(norm_value)) {
     if (ds2 == i) next
 
-    keep_value <- new_x[[ds2]] %||% list()
+    keep_value <- if (is.null(x)) list() else new_x[[ds2]]
+
     # Invert key
     new_value <- setNames(names(norm_value[[ds2]]), norm_value[[ds2]])
     keep_value[[i]] <- new_value

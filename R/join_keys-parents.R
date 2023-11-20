@@ -25,7 +25,7 @@ parents <- function(x) {
 #' jk <- default_cdisc_join_keys["ADEX"]
 #' parents(jk)
 parents.join_keys <- function(x) {
-  attr(x, "__parents__") %||% list()
+  if (is.null(attr(x, "__parents__"))) list() else attr(x, "__parents__")
 }
 
 #' @describeIn parents Retrieves parents of `join_keys` inside `teal_data` object.
@@ -42,7 +42,7 @@ parents.join_keys <- function(x) {
 #' )
 #' parents(td)
 parents.teal_data <- function(x) {
-  attr(x@join_keys, "__parents__") %||% list()
+  parents(x@join_keys)
 }
 
 #' @describeIn parents Assignment of parents in `join_keys` object.
