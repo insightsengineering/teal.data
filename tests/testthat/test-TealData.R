@@ -256,7 +256,7 @@ testthat::test_that("TealData$get_parents returns an empty list even when parent
   testthat::expect_equal(data$get_parents(), list())
 })
 
-testthat::test_that("TealData$mutate_join_keys returns a JoinKeys object with the updated join_keys", {
+testthat::test_that("TealData$mutate_join_keys returns a join_keys object with the updated join_keys", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
   df2 <- data.frame(df2_id = c("A", "B"), id = c("A", "B"), b = c(1L, 2L))
 

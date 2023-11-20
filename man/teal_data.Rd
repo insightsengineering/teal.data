@@ -16,7 +16,7 @@ teal_data(
 Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
 or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
 
-\item{join_keys}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
+\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 

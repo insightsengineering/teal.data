@@ -102,7 +102,6 @@ reference:
       - load_datasets
       - mutate_data
       - mutate_dataset
-      - mutate_join_keys
       - set_args
       - set_keys
   - title: Helpers
@@ -110,6 +109,7 @@ reference:
     contents:
       - datanames
       - datanames<-
+      - default_cdisc_join_keys
       - col_labels
       - col_labels<-
       - col_relabel
@@ -122,8 +122,14 @@ reference:
       - get_labels
       - join_key
       - join_keys
+      - join_keys<-
+      - names<-.join_keys
+      - parent
+      - parents
+      - parents<-
       - python_code
       - read_script
+      - update_keys_given_parents
       - validate_metadata
   - title: For Developers
     subtitle: R6 Classes
@@ -134,7 +140,6 @@ reference:
       - CDISCTealDataConnector
       - CDISCTealDataset
       - CDISCTealDatasetConnector
-      - JoinKeys
       - MAETealDataset
       - PythonCodeClass
       - TealData

@@ -110,9 +110,9 @@ objects}
 \item{\code{check}}{(\code{logical}) reproducibility check - whether evaluated preprocessing code gives the same objects
 as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.}
 
-\item{\code{join_keys}}{(\code{JoinKeys}) or a single (\code{JoinKeySet})\cr
+\item{\code{join_keys}}{(\code{join_keys}) or a single (\code{join_key_set})\cr
 (optional) object with dataset column relationships used for joining.
-If empty then an empty \code{JoinKeys} object is passed by default.}
+If empty then an empty \code{join_keys} object is passed by default.}
 }
 \if{html}{\out{</div>}}
 }
@@ -199,7 +199,7 @@ name of dataset connector to be returned. If \code{NULL}, all connectors are ret
 \subsection{Method \code{get_join_keys()}}{
 Get join keys between two datasets.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1, dataset_2)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TealData$get_join_keys(dataset_1 = NULL, dataset_2 = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

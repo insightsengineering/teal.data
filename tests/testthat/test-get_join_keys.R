@@ -1,23 +1,7 @@
-test_that("get_join_keys.teal_data will successfully obtain object from teal_data", {
-  obj <- helper_generator_teal_data()
-
-  expect_identical(obj@join_keys, get_join_keys(obj))
-  helper_test_get_join_keys(obj, "ds1")
+testthat::test_that("get_join_keys is deprecated", {
+  lifecycle::expect_defunct(get_join_keys(join_keys()))
 })
 
-test_that("get_join_keys.JoinKeys will return itself", {
-  obj <- helper_generator_JoinKeys()
-
-  expect_identical(obj, get_join_keys(obj))
-  helper_test_get_join_keys(obj, "ds1")
-})
-
-test_that("get_join_keys<-.teal_data", {
-  obj <- helper_generator_teal_data()
-  helper_test_get_join_keys_add(obj, "ds1", "ds2")
-})
-
-test_that("get_join_keys<-.JoinKeys", {
-  obj <- helper_generator_JoinKeys()
-  helper_test_get_join_keys_add(obj, "ds1", "ds2")
+testthat::test_that("get_join_keys<- is deprecated", {
+  lifecycle::expect_defunct(`get_join_keys<-`(NULL, NULL, NULL, NULL))
 })

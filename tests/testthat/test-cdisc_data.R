@@ -1,39 +1,5 @@
-cdisc_data_mixed_call <- function(check = TRUE, join_keys1 = join_keys()) {
-  adsl_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADSL"))))
-  adtte_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-  adae_raw <- as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
-
-  adsl <- cdisc_dataset(
-    dataname = "ADSL",
-    x = adsl_raw,
-    code = "ADSL <- as.data.frame(as.list(setNames(nm = get_cdisc_keys(\"ADSL\"))))"
-  )
-  adtte_cf <- callable_function(
-    function() {
-      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADTTE"))))
-    }
-  )
-  adtte <- cdisc_dataset_connector("ADTTE", adtte_cf, keys = get_cdisc_keys("ADTTE"), vars = list(x = adsl))
-  adae_cf <- callable_function(
-    function() {
-      as.data.frame(as.list(setNames(nm = get_cdisc_keys("ADAE"))))
-    }
-  )
-  adae_cdc <- cdisc_dataset_connector("ADAE", adae_cf, keys = get_cdisc_keys("ADAE"))
-  adae_rdc <- cdisc_data_connector(
-    connection = data_connection(open_fun = callable_function(function() "open function")),
-    connectors = list(adae_cdc)
-  )
-
-  load_dataset(adsl)
-  load_dataset(adtte)
-  load_dataset(adae_cdc)
-
-  cdisc_data(adsl, adtte, adae_rdc, check = check, join_keys = join_keys1)
-}
-
 testthat::test_that("cdisc_data accepts TealDataset, TealDatasetConnector, TealDataConnector objects", {
-  lifecycle::expect_deprecated(data <- cdisc_data_mixed_call(), "should use data directly")
+  lifecycle::expect_deprecated(data <- local_cdisc_data_mixed_call(), "should use data directly")
   testthat::expect_identical(data$get_datanames(), c("ADSL", "ADTTE", "ADAE"))
 })
 
@@ -46,7 +12,7 @@ testthat::test_that("cdisc_data returns teal_data object for objects different t
 })
 
 testthat::test_that("cdisc_data sets the join_keys internally", {
-  data <- cdisc_data_mixed_call()
+  data <- local_cdisc_data_mixed_call()
 
   jks <- join_keys(
     join_key("ADSL", "ADSL", c("STUDYID", "USUBJID")),
@@ -56,15 +22,15 @@ testthat::test_that("cdisc_data sets the join_keys internally", {
     join_key("ADSL", "ADAE", c("STUDYID", "USUBJID")),
     join_key("ADTTE", "ADAE", c("STUDYID", "USUBJID"))
   )
-  jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  parents(jks) <- list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL")
+  testthat::expect_equal(join_keys(data), jks)
 })
 
 testthat::test_that(
   "cdisc_data sets the join_keys internally based on parents relations when primary keys are altered",
   {
     jks <- join_keys(join_key("ADSL", "ADSL", c("STUDYID")))
-    data <- cdisc_data_mixed_call(join_keys1 = jks)
+    data <- local_cdisc_data_mixed_call(join_keys1 = jks)
 
     jks <- join_keys(
       join_key("ADSL", "ADSL", c("STUDYID")),
@@ -74,9 +40,9 @@ testthat::test_that(
       join_key("ADSL", "ADAE", c("STUDYID")),
       join_key("ADTTE", "ADAE", c("STUDYID"))
     )
-    jks$set_parents(list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL"))
+    parents(jks) <- list(ADSL = character(0), ADTTE = "ADSL", ADAE = "ADSL")
     testthat::expect_equal(
-      data$get_join_keys(),
+      join_keys(data),
       jks
     )
   }
@@ -89,14 +55,15 @@ testthat::test_that("cdisc_data sets primary keys as join_keys when no join_keys
   df1 <- dataset("df1", df1, keys = "id")
   df2 <- dataset("df2", df2, keys = "df2_id")
 
-  data <- cdisc_data(df1, df2, check = FALSE)
+  data <- cdisc_data(df1 = df1, df2 = df2, check = FALSE)
 
   jks <- join_keys(
     join_key("df1", "df1", "id"),
     join_key("df2", "df2", "df2_id")
   )
-  jks$set_parents(list(df1 = character(0), df2 = character(0)))
-  testthat::expect_equal(data$get_join_keys(), jks)
+  parents(jks) <- list(df1 = character(0), df2 = character(0))
+  testthat::expect_equal(join_keys(data), jks)
+  testthat::expect_equal(parents(join_keys(data)), parents(jks))
 })
 
 testthat::test_that("cdisc_data throws error when a parent/child graph is not correct", {
@@ -182,7 +149,7 @@ testthat::test_that("List values", {
 
   test_relational_data_equal <- function(data1, data2) {
     testthat::expect_equal(data1$get_items(), data2$get_items())
-    testthat::expect_equal(data1$get_join_keys(), data2$get_join_keys())
+    testthat::expect_equal(join_keys(data1), join_keys(data2))
     mapply(testthat::expect_equal, data1$get_ui("test"), data2$get_ui("test"))
   }
 

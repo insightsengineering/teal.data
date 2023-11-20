@@ -35,8 +35,8 @@ Access with \code{\link[=get_warnings]{get_warnings()}}.}
 
 \item{\code{messages}}{(\code{character}) messages raised when evaluating code.}
 
-\item{\code{join_keys}}{(\code{JoinKeys}) object specifying joining keys for data sets in \verb{@env}.
-Access or modify with \code{\link[=get_join_keys]{get_join_keys()}}.}
+\item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in \verb{@env}.
+Access or modify with \code{\link[=join_keys]{join_keys()}}.}
 
 \item{\code{datanames}}{(\code{character}) vector of names of data sets in \verb{@env}.
 Used internally to distinguish them from auxiliary variables.

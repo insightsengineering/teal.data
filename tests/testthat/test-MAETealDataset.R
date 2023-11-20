@@ -159,7 +159,10 @@ testthat::test_that("MAETealDataset$check_keys doesn't throw if constructed with
   utils::data(miniACC, package = "MultiAssayExperiment")
   mae <- MAETealDataset$new(dataname = "miniACC", x = miniACC, keys = "patientID")
   testthat::skip_on_ci()
-  testthat::expect_silent(mae$check_keys())
+  withr::with_envvar(
+    new = c("_R_CHECK_AS_DATA_FRAME_EXPLICIT_METHOD_" = ""),
+    testthat::expect_silent(mae$check_keys())
+  )
 })
 
 testthat::test_that("MAETealDataset$check_keys throws if constructed with keys not present in colData", {

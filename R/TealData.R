@@ -8,9 +8,9 @@
 #'
 #' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`)\cr
 #'   objects
-#' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
+#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
-#'   If empty then an empty `JoinKeys` object is passed by default.
+#'   If empty then an empty `join_keys` object is passed by default.
 #' @param check (`logical`) reproducibility check - whether evaluated preprocessing code gives the same objects
 #'   as provided in arguments. Check is run only if flag is true and preprocessing code is not empty.
 #'
@@ -61,7 +61,7 @@ TealData <- R6::R6Class( # nolint
     #' @description
     #' Create a new object of `TealData` class
     initialize = function(..., check = FALSE, join_keys = teal.data::join_keys()) {
-      checkmate::assert_class(join_keys, "JoinKeys")
+      checkmate::assert_class(join_keys, "join_keys")
 
       dot_args <- list(...)
       is_teal_data <- checkmate::test_list(
@@ -176,11 +176,15 @@ TealData <- R6::R6Class( # nolint
     #' @return (`character`) named character vector x with names(x) the
     #' columns of `dataset_1` and the values of `(x)` the corresponding join
     #' keys in `dataset_2` or `character(0)` if no relationship
-    get_join_keys = function(dataset_1, dataset_2) {
-      if (missing(dataset_1) && missing(dataset_2)) {
+    get_join_keys = function(dataset_1 = NULL, dataset_2 = NULL) {
+      if (is.null(dataset_1) && is.null(dataset_2)) {
         private$join_keys
+      } else if (is.null(dataset_1)) {
+        private$join_keys[[dataset_2]]
+      } else if (is.null(dataset_2)) {
+        private$join_keys[[dataset_1]]
       } else {
-        private$join_keys$get(dataset_1, dataset_2)
+        private$join_keys[[dataset_1]][[dataset_2]]
       }
     },
 
@@ -189,7 +193,7 @@ TealData <- R6::R6Class( # nolint
     #'
     #' @return named (`list`) of the parents of all datasets.
     get_parents = function() {
-      private$join_keys$get_parents()
+      parents(private$join_keys)
     },
 
     # ___ shiny ====
@@ -294,7 +298,8 @@ TealData <- R6::R6Class( # nolint
     #' @param val (named `character`) column names used to join
     #' @return (`self`) invisibly for chaining
     mutate_join_keys = function(dataset_1, dataset_2, val) {
-      private$join_keys$mutate(dataset_1, dataset_2, val)
+      private$join_keys[[dataset_1]][[dataset_2]] <- val
+      private$join_keys
     },
 
     # ___ check ====
@@ -311,7 +316,7 @@ TealData <- R6::R6Class( # nolint
         dataname <- get_dataname(dataset)
         dataset_colnames <- dataset$get_colnames()
 
-        # expected columns in this dataset from JoinKeys specification
+        # expected columns in this dataset from join_keys specification
         join_key_cols <- unique(unlist(lapply(self$get_join_keys(dataname), names)))
         if (!is.null(join_key_cols) && !all(join_key_cols %in% dataset_colnames)) {
           stop(

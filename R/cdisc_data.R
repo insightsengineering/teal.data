@@ -5,7 +5,7 @@
 #' for given datasets whose names match ADAM datasets names.
 #'
 #' @inheritParams teal_data
-#' @param join_keys (`JoinKeys`) or a single (`JoinKeySet`)\cr
+#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with datasets column names used for joining.
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys.
 #'   For ADAM datasets it would be automatically derived.
@@ -31,7 +31,7 @@
 #' })
 #'
 cdisc_data <- function(...,
-                       join_keys = teal.data::cdisc_join_keys(...),
+                       join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],
                        code = character(0),
                        check = FALSE) {
   teal_data(..., join_keys = join_keys, code = code, check = check)
@@ -54,8 +54,9 @@ deprecated_join_keys_extract <- function(data_objects, join_keys) {
   ) {
     return(join_keys)
   }
+
   # TODO: check if redundant with same call in teal_data body
-  update_join_keys_to_primary(data_objects, join_keys)
+  join_keys <- update_join_keys_to_primary(data_objects, join_keys)
 
   new_parents_fun <- function(data_objects) {
     lapply(
@@ -88,8 +89,10 @@ deprecated_join_keys_extract <- function(data_objects, join_keys) {
   if (is_dag(new_parents)) {
     stop("Cycle detected in a parent and child dataset graph.")
   }
-  join_keys$set_parents(new_parents)
-  join_keys$update_keys_given_parents()
+
+  # Keep non-check setting of parents (this will be removed in refactor)
+  attr(join_keys, "__parents__") <- new_parents # nolint: object_name_linter
+  join_keys <- update_keys_given_parents(join_keys)
 
   join_keys
 }
