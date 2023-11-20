@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9009</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,16 +46,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -80,7 +70,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Create a relationship between a pair of datasets</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/teal.data/blob/HEAD/R/JoinKeys.R" class="external-link"><code>R/JoinKeys.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/teal.data/blob/HEAD/R/join_key.R" class="external-link"><code>R/join_key.R</code></a></small>
       <div class="d-none name"><code>join_key.Rd</code></div>
     </div>
 
@@ -95,27 +85,24 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>dataset_1</dt>
-<dd><p>(<code>character</code>) one dataset name</p></dd>
-
-
-<dt>dataset_2</dt>
-<dd><p>(optional <code>character</code>) other dataset name. In case it is omitted, then it
-will create a primary key for <code>dataset_1</code>.</p></dd>
+    <dl><dt>dataset_1, dataset_2</dt>
+<dd><p>(<code>character(1)</code>) dataset names. If <code>dataset_2</code> is omitted,
+a primary key for <code>dataset_1</code> is created.</p></dd>
 
 
 <dt>keys</dt>
 <dd><p>(optionally named <code>character</code>) where <code>names(keys)</code> are columns in <code>dataset_1</code>
-with relationship to columns of <code>dataset_2</code> given by the elements in <code>keys</code>.
-If <code>names(keys)</code> is <code>NULL</code> then the same column names are used for both <code>dataset_1</code>
-and <code>dataset_2</code>.</p></dd>
+corresponding to columns of <code>dataset_2</code> given by the elements of <code>keys</code>.</p>
+<p>If unnamed, the same column names are used for both datasets.</p>
+<p>If any element of the <code>keys</code> vector is empty with a non-empty name, then the name is
+used for both datasets.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>object of class <code>JoinKeySet</code> to be passed into <code>join_keys</code> function.</p>
+<p>object of class <code>join_key_set</code> to be passed into <code>join_keys</code> function.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -127,6 +114,37 @@ of datasets.</p>
     <div class="dont-index"><p><code><a href="join_keys.html">join_keys()</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">join_key</span><span class="op">(</span><span class="st">"d1"</span>, <span class="st">"d2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1$d2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "A" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "join_key_set"</span>
+<span class="r-in"><span><span class="fu">join_key</span><span class="op">(</span><span class="st">"d1"</span>, <span class="st">"d2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span> <span class="op">=</span> <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1$d2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   A </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "B" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "join_key_set"</span>
+<span class="r-in"><span><span class="fu">join_key</span><span class="op">(</span><span class="st">"d1"</span>, <span class="st">"d2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span> <span class="op">=</span> <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $d1$d2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   A   C </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "B" "C" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "join_key_set"</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

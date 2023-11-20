@@ -82,9 +82,6 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/CodeClass.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/JoinKeys.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/MAETealDataset.html</loc>
   </url>
   <url>
@@ -109,7 +106,19 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/TealDatasetConnector.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/all.equal.join_keys.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/as_cdisc.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/assert_compatible_keys.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/assert_parent_child.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/build_cdisc_join_keys.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/callable_code.html</loc>
@@ -193,7 +202,13 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/deep_clone_r6.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/default_cdisc_join_keys.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/deprecated_join_keys_extract.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/dot-merge_parents.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/enclosed_with.html</loc>
@@ -289,6 +304,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/load_datasets.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/local_cdisc_data_mixed_call.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/mae_dataset.html</loc>
   </url>
   <url>
@@ -298,10 +316,16 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/mutate_dataset.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/mutate_join_keys.html</loc>
+    <loc>https://insightsengineering.github.io/teal.data/reference/names-set-.join_keys.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/new_join_keys.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/new_teal_data.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/parents.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/pretty_code_string.html</loc>
@@ -358,9 +382,6 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/set_keys.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/sub-.JoinKeys.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/teal.data-package.html</loc>
   </url>
   <url>
@@ -383,6 +404,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/update_join_keys_to_primary.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/update_keys_given_parents.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/validate_metadata.html</loc>

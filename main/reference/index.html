@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9009</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,16 +46,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -336,11 +326,6 @@
         <dd>Mutate dataset by code</dd>
       </dl><dl><dt>
           
-          <code><a href="mutate_join_keys.html">mutate_join_keys()</a></code> 
-        </dt>
-        <dd>Mutate <code>JoinKeys</code> with a new values</dd>
-      </dl><dl><dt>
-          
           <code><a href="set_args.html">set_args()</a></code> 
         </dt>
         <dd>Set arguments of a <code>CallableFunction</code></dd>
@@ -365,6 +350,11 @@
           <code><a href="datanames.html">datanames()</a></code> <code><a href="datanames.html">`datanames&lt;-`()</a></code> 
         </dt>
         <dd>Names of Data Sets in <code>teal_data</code> Object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="default_cdisc_join_keys.html">default_cdisc_join_keys</a></code> 
+        </dt>
+        <dd>List containing the default <code>CDISC</code> join keys</dd>
       </dl><dl><dt>
           
           <code><a href="col_labels.html">col_labels()</a></code> 
@@ -412,9 +402,19 @@
         <dd>Create a relationship between a pair of datasets</dd>
       </dl><dl><dt>
           
-          <code><a href="join_keys.html">join_keys()</a></code> <code><a href="join_keys.html">cdisc_join_keys()</a></code> 
+          <code><a href="join_keys.html">join_keys()</a></code> <code><a href="join_keys.html">`[`(<i>&lt;join_keys&gt;</i>)</a></code> <code><a href="join_keys.html">`[&lt;-`(<i>&lt;join_keys&gt;</i>)</a></code> <code><a href="join_keys.html">c(<i>&lt;join_keys&gt;</i>)</a></code> <code><a href="join_keys.html">c(<i>&lt;join_key_set&gt;</i>)</a></code> <code><a href="join_keys.html">`join_keys&lt;-`()</a></code> <code><a href="join_keys.html">format(<i>&lt;join_keys&gt;</i>)</a></code> <code><a href="join_keys.html">print(<i>&lt;join_keys&gt;</i>)</a></code> 
         </dt>
-        <dd>Create a <code>JoinKeys</code> out of a list of <code>JoinKeySet</code> objects</dd>
+        <dd>Manage relationships between datasets using <code>join_keys</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="names-set-.join_keys.html">`names&lt;-`(<i>&lt;join_keys&gt;</i>)</a></code> 
+        </dt>
+        <dd>The Names of an <code>join_keys</code> Object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="parents.html">parents()</a></code> <code><a href="parents.html">`parents&lt;-`()</a></code> <code><a href="parents.html">parent()</a></code> 
+        </dt>
+        <dd>Getter and setter functions for parents attribute of <code>join_keys</code></dd>
       </dl><dl><dt>
           
           <code><a href="python_code.html">python_code()</a></code> 
@@ -425,6 +425,11 @@
           <code><a href="read_script.html">read_script()</a></code> 
         </dt>
         <dd>Read .R file into character</dd>
+      </dl><dl><dt>
+          
+          <code><a href="update_keys_given_parents.html">update_keys_given_parents()</a></code> 
+        </dt>
+        <dd>Updates the keys of the datasets based on the parents.</dd>
       </dl><dl><dt>
           
           <code><a href="validate_metadata.html">validate_metadata()</a></code> 
@@ -472,11 +477,6 @@
           <code><a href="CDISCTealDatasetConnector.html">CDISCTealDatasetConnector</a></code> 
         </dt>
         <dd>A <code>CDISCTealDatasetConnector</code> class of objects</dd>
-      </dl><dl><dt>
-          
-          <code><a href="JoinKeys.html">JoinKeys</a></code> 
-        </dt>
-        <dd>R6 Class to store relationships for joining datasets</dd>
       </dl><dl><dt>
           
           <code><a href="MAETealDataset.html">MAETealDataset</a></code> 

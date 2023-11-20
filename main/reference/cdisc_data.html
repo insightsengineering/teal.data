@@ -14,7 +14,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9009</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,16 +50,6 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -98,7 +88,7 @@ for given datasets whose names match ADAM datasets names.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cdisc_data</span><span class="op">(</span></span>
 <span>  <span class="va">...</span>,</span>
-<span>  join_keys <span class="op">=</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="join_keys.html">cdisc_join_keys</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>  join_keys <span class="op">=</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="default_cdisc_join_keys.html">default_cdisc_join_keys</a></span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html" class="external-link">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
 <span>  check <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -113,7 +103,7 @@ or 2) any number of any objects provided as <code>name = value</code> pairs, whi
 
 
 <dt>join_keys</dt>
-<dd><p>(<code>JoinKeys</code>) or a single (<code>JoinKeySet</code>)<br>
+<dd><p>(<code>join_keys</code>) or a single (<code>join_key_set</code>)<br>
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.</p></dd>
