@@ -37,7 +37,7 @@ setOldClass("join_keys")
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "JoinKeys", datanames = "character", verified = "logical"),
+  slots = c(join_keys = "join_keys", datanames = "character", verified = "logical"),
   prototype = list(
     join_keys = join_keys(),
     datanames = character(0),
