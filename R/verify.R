@@ -63,15 +63,14 @@ setMethod("verify", "teal_data", definition = function(x) {
     names_diff_other <- setdiff(names(new_teal_data@env), names(x@env))
 
     error <- c(
-      "\nCode verification failed at object(s):\n",
-      paste(c(names_diff, names(which(!objects_diff))), collapse = "\n")
+      "Code verification failed at object(s):",
+      paste0("  \u2022 ", c(names_diff, names(which(!objects_diff))))
     )
-
     if (length(names_diff_other)) {
       error <- c(
         error,
-        "\nObject(s) created with code that do not exist in teal_data:\n",
-        paste(names_diff_other, collapse = "\n")
+        "Object(s) created with code that do not exist in teal_data:",
+        paste0("  \u2022 ", names_diff_other)
       )
     }
 
