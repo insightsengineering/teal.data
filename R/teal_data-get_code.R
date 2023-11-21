@@ -28,7 +28,6 @@
 #' @export
 setGeneric("get_code", function(x, ...) standardGeneric("get_code"))
 setMethod("get_code", "teal_data", definition = function(x, names = NULL, deparse = TRUE) {
-
   checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
   checkmate::assert_subset(names, x@datanames, empty.ok = TRUE)
   checkmate::assert_flag(deparse)
