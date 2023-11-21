@@ -21,4 +21,3 @@
 
 # use non-exported function from teal.code
 format_expression <- getFromNamespace("format_expression", "teal.code")
-get_code_dependency <- getFromNamespace("get_code_dependency", "teal.code")
