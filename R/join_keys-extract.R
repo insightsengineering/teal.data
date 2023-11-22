@@ -247,7 +247,7 @@
     keep_value <- if (is.null(x)) list() else new_x[[ds2]]
 
     # Invert key
-    new_value <- setNames(names(norm_value[[ds2]]), norm_value[[ds2]])
+    new_value <- stats::setNames(names(norm_value[[ds2]]), norm_value[[ds2]])
     keep_value[[i]] <- new_value
 
     # Assign symmetrical

@@ -50,27 +50,27 @@ test_that("join_key does not throw error with valid arguments", {
 test_that("join_key will fill empty names with value", {
   # keys of length 0
   jk <- join_key("d1", "d2", keys = c("A" = "B", "C"))
-  expect_identical(jk[[1]][[1]], setNames(c("B", "C"), c("A", "C")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B", "C"), c("A", "C")))
 
   jk <- join_key("d1", "d2", keys = c("B", "C"))
-  expect_identical(jk[[1]][[1]], setNames(c("B", "C"), c("B", "C")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B", "C"), c("B", "C")))
 })
 
 test_that("join_key will fill empty values with name", {
   # keys of length 0
   jk <- join_key("d1", "d2", keys = c("A" = "B", "C" = ""))
-  expect_identical(jk[[1]][[1]], setNames(c("B", "C"), c("A", "C")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B", "C"), c("A", "C")))
 
   jk <- join_key("d1", "d2", keys = c("B", "C" = ""))
-  expect_identical(jk[[1]][[1]], setNames(c("B", "C"), c("B", "C")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B", "C"), c("B", "C")))
 })
 
 test_that("join_key ignores empty name/value on keys if it has other keys", {
   expect_message(jk <- join_key("d1", "d2", keys = c("A" = "B", "")), "are ignored")
-  expect_identical(jk[[1]][[1]], setNames(c("B"), c("A")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B"), c("A")))
 
   expect_message(jk <- join_key("d1", "d2", keys = c("B", "")), "are ignored")
-  expect_identical(jk[[1]][[1]], setNames(c("B"), c("B")))
+  expect_identical(jk[[1]][[1]], stats::setNames(c("B"), c("B")))
 })
 
 test_that("join_key sets key as character(0) when keys are all all empty strings", {

@@ -9,6 +9,4 @@
 #' @keywords internal
 "_PACKAGE"
 
-# Fix R CMD check notes
-#' @importFrom stats setNames
 NULL
