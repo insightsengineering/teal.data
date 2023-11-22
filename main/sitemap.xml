@@ -157,6 +157,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/code_dataset_connector.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/code_dependency.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/code_exclude.html</loc>
   </url>
   <url>
@@ -208,6 +211,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/deprecated_join_keys_extract.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/detect_symbol.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/dot-merge_parents.html</loc>
   </url>
   <url>
@@ -235,7 +241,13 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/get_cdisc_keys.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/get_children.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_code.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/get_code_dependency.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_code_single.html</loc>
@@ -373,6 +385,12 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/relational_data_connector.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/return_code.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/return_code_for_effects.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/script_dataset_connector.html</loc>
   </url>
   <url>
@@ -407,6 +425,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/update_keys_given_parents.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/used_in_function.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/validate_metadata.html</loc>
