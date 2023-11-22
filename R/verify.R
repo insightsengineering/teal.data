@@ -17,7 +17,7 @@
 #' })
 #' verify(tdata1)
 #'
-#' tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+#' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' verify(tdata2)
 #' verify(tdata2)@verified
 #' tdata2@verified
@@ -28,6 +28,24 @@
 #'   stop("error")
 #' })
 #' verify(tdata3)
+#'
+#'
+#' a <- 1
+#' b <- a+2
+#' c <- list(x = 2)
+#' d <- 5
+#' tdata4 <- teal_data(
+#'   a = a, b = b, c = c, d = d,
+#'   code =
+#'     "
+#'     a <- 1
+#'     b <- a
+#'     c <- list(x = 2)
+#'     e <- 1
+#'     "
+#' )
+#' tdata4
+#' verify(tdata4)
 #' }
 #'
 #' @name verify
@@ -53,7 +71,7 @@ setMethod("verify", "teal_data", definition = function(x) {
     methods::validObject(x)
     x
   } else {
-    names_diff <- setdiff(names(x@env), names(new_teal_data@env))
+    error <- "Code verification failed."
 
     objects_diff <- vapply(
       intersect(names(x@env), names(new_teal_data@env)),
@@ -64,11 +82,22 @@ setMethod("verify", "teal_data", definition = function(x) {
     )
 
     names_diff_other <- setdiff(names(new_teal_data@env), names(x@env))
+    names_diff_inenv <- setdiff(names(x@env), names(new_teal_data@env))
 
-    error <- c(
-      "Code verification failed at object(s):",
-      paste0("  \u2022 ", c(names_diff, names(which(!objects_diff))))
-    )
+    if (length(objects_diff)) {
+      error <- c(
+        error,
+        "Object(s) recreated with code that have different structure in teal_data:",
+        paste0("  \u2022 ", names(which(!objects_diff)))
+      )
+    }
+    if (length(names_diff_inenv)) {
+      error <- c(
+        error,
+        "Object(s) not created with code that exist in teal_data:",
+        paste0("  \u2022 ", names_diff_inenv)
+      )
+    }
     if (length(names_diff_other)) {
       error <- c(
         error,
@@ -77,7 +106,7 @@ setMethod("verify", "teal_data", definition = function(x) {
       )
     }
 
-    stop(error)
+    stop(paste(error, collapse = "\n"))
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {

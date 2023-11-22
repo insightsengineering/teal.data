@@ -29,7 +29,7 @@ tdata1 <- within(tdata1, {
 })
 verify(tdata1)
 
-tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 verify(tdata2)
 verify(tdata2)@verified
 tdata2@verified
@@ -40,6 +40,24 @@ tdata3 <- within(tdata3, {
   stop("error")
 })
 verify(tdata3)
+
+
+a <- 1
+b <- a+2
+c <- list(x = 2)
+d <- 5
+tdata4 <- teal_data(
+  a = a, b = b, c = c, d = d,
+  code =
+    "
+    a <- 1
+    b <- a
+    c <- list(x = 2)
+    e <- 1
+    "
+)
+tdata4
+verify(tdata4)
 }
 
 }
