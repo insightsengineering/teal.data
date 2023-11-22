@@ -9,7 +9,8 @@
 #' @param object `teal_data`
 #' @param names (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) whether return deparsed form of a call.
-#' @return (`character`) code of import and preparation of data for `teal` application.
+#' @return 
+#' Either a character vector or expression representing code used to create the requested data sets.
 #' @examples
 #'
 #' tdata1 <- teal_data()
