@@ -1,8 +1,10 @@
 #' Get Code from `teal_data`
 #'
-#' Get code from [`teal_data`]. The extraction of the code limited to specific objects can be performed with the usage
-#' of `names` parameter. If input `teal_data@verified` is `FALSE` the returned code is pre-pended with a warning
-#' stating that the object was not verified.
+#' Retrieve code from `teal_data` object.
+#'
+#' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
+#' Use `names` to limit the code to one or more of the data sets enumerated in `@datanames`.
+#' If the code has not passed verification, a warning will be prepended.
 #'
 #' @param object `teal_data`
 #' @param names (`character`) vector of object names to return the code for.
