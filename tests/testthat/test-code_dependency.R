@@ -1,3 +1,14 @@
+testthat::test_that("get_code_dependency does not brake for empty input", {
+  testthat::expect_identical(
+    get_code_dependency(character(0), names = "a"),
+    character(0)
+  )
+  testthat::expect_identical(
+    get_code_dependency("", names = "a"),
+    ""
+  )
+})
+
 testthat::test_that("get_code_dependency extract code of a binding from a simple code put in a character", {
   q <- c(
     "a <- 1",
