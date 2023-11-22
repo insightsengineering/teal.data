@@ -45,7 +45,8 @@ all.equal.join_keys <- function(target, current, ...) {
       idx[is_named] <- idx[is_named][order(nx[is_named])]
       .x <- .x[idx]
     }
-    attributes(.x) <- utils::modifyList(old_attributes, attributes(.x) %||% list())
+    new_attributes <- if (is.null(attributes(.x))) list() else attributes(.x)
+    attributes(.x) <- utils::modifyList(old_attributes, new_attributes)
     .x
   }
   x <- .as_map(target)

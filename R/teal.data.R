@@ -10,6 +10,5 @@
 "_PACKAGE"
 
 # Fix R CMD check notes
-#' @importFrom rlang `%||%`
 #' @importFrom stats setNames
 NULL
