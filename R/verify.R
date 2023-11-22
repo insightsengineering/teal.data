@@ -31,7 +31,7 @@
 #'
 #'
 #' a <- 1
-#' b <- a+2
+#' b <- a + 2
 #' c <- list(x = 2)
 #' d <- 5
 #' tdata4 <- teal_data(
