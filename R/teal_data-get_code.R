@@ -6,7 +6,7 @@
 #' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datadatanames`.
 #' If the code has not passed verification, a warning will be prepended.
 #'
-#' @param object `teal_data`
+#' @param object (`teal_data`)
 #' @param datanames (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) whether return deparsed form of a call.
 #' @return

@@ -7,11 +7,11 @@
 \S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
 }
 \arguments{
-\item{object}{\code{teal_data}}
+\item{object}{(\code{teal_data})}
 
 \item{deparse}{(\code{logical}) whether return deparsed form of a call.}
 
-\item{datanames}{(\code{character}) vector of data set datanames to return the code for.}
+\item{datanames}{(\code{character}) vector of data set names to return the code for.}
 }
 \value{
 Either a character vector or expression representing code used to create the requested data sets.
