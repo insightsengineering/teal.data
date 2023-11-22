@@ -7,7 +7,7 @@
 #' If the code has not passed verification, a warning will be prepended.
 #'
 #' @param object `teal_data`
-#' @param names (`character`) vector of object names to return the code for.
+#' @param names (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) whether return deparsed form of a call.
 #' @return (`character`) code of import and preparation of data for `teal` application.
 #' @examples
