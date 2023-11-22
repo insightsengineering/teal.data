@@ -59,13 +59,13 @@ setMethod("verify", "teal_data", definition = function(x) {
   if (x@verified) {
     return(x)
   }
-  new_teal_data <- eval_code(teal_data(), get_code(x))
+  y <- eval_code(teal_data(), get_code(x))
 
-  if (inherits(new_teal_data, "qenv.error")) {
-    stop(conditionMessage(new_teal_data), call. = FALSE)
+  if (inherits(y, "qenv.error")) {
+    stop(conditionMessage(y), call. = FALSE)
   }
 
-  reproduced <- isTRUE(all.equal(x@env, new_teal_data@env))
+  reproduced <- isTRUE(all.equal(x@env, y@env))
   if (reproduced) {
     x@verified <- TRUE
     methods::validObject(x)
@@ -74,15 +74,15 @@ setMethod("verify", "teal_data", definition = function(x) {
     error <- "Code verification failed."
 
     objects_diff <- vapply(
-      intersect(names(x@env), names(new_teal_data@env)),
+      intersect(names(x@env), names(y@env)),
       function(element) {
-        isTRUE(all.equal(x@env[[element]], new_teal_data@env[[element]]))
+        isTRUE(all.equal(x@env[[element]], y@env[[element]]))
       },
       logical(1)
     )
 
-    names_diff_other <- setdiff(names(new_teal_data@env), names(x@env))
-    names_diff_inenv <- setdiff(names(x@env), names(new_teal_data@env))
+    names_diff_other <- setdiff(names(y@env), names(x@env))
+    names_diff_inenv <- setdiff(names(x@env), names(y@env))
 
     if (length(objects_diff)) {
       error <- c(
