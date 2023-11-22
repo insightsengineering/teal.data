@@ -24,7 +24,7 @@
 #' get_code(tdata1, names = "a")
 #' get_code(tdata1, names = "b")
 #'
-#' tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+#' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' get_code(tdata2)
 #' get_code(verify(tdata2))
 #' @aliases get_code,teal_data-method
