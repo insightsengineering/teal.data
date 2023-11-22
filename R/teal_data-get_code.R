@@ -3,11 +3,11 @@
 #' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `names` to limit the code to one or more of the data sets enumerated in `@datanames`.
+#' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datadatanames`.
 #' If the code has not passed verification, a warning will be prepended.
 #'
 #' @param object `teal_data`
-#' @param names (`character`) vector of data set names to return the code for.
+#' @param datanames (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) whether return deparsed form of a call.
 #' @return
 #' Either a character vector or expression representing code used to create the requested data sets.
@@ -20,22 +20,22 @@
 #'   c <- list(x = 2)
 #' })
 #' get_code(tdata1)
-#' datanames(tdata1) <- c("a", "b", "c")
-#' get_code(tdata1, names = "a")
-#' get_code(tdata1, names = "b")
+#' datadatanames(tdata1) <- c("a", "b", "c")
+#' get_code(tdata1, datanames = "a")
+#' get_code(tdata1, datanames = "b")
 #'
 #' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' get_code(tdata2)
 #' get_code(verify(tdata2))
 #' @aliases get_code,teal_data-method
 #' @export
-setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE, names = NULL) {
-  checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_subset(names, datanames(object))
+setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
+  checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
+  checkmate::assert_subset(datanames, datadatanames(object))
   checkmate::assert_flag(deparse)
 
-  code <- if (!is.null(names)) {
-    get_code_dependency(object@code, names)
+  code <- if (!is.null(datanames)) {
+    get_code_dependency(object@code, datanames)
   } else {
     object@code
   }

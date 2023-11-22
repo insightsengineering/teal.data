@@ -4,22 +4,25 @@
 \alias{get_code,teal_data-method}
 \title{Get Code from \code{teal_data}}
 \usage{
-\S4method{get_code}{teal_data}(object, deparse = TRUE, names = NULL)
+\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
 }
 \arguments{
 \item{object}{\code{teal_data}}
 
 \item{deparse}{(\code{logical}) whether return deparsed form of a call.}
 
-\item{names}{(\code{character}) vector of object names to return the code for.}
+\item{datanames}{(\code{character}) vector of data set datanames to return the code for.}
 }
 \value{
-(\code{character}) code of import and preparation of data for \code{teal} application.
+Either a character vector or expression representing code used to create the requested data sets.
 }
 \description{
-Get code from \code{\link{teal_data}}. The extraction of the code limited to specific objects can be performed with the usage
-of \code{names} parameter. If input \code{teal_data@verified} is \code{FALSE} the returned code is pre-pended with a warning
-stating that the object was not verified.
+Retrieve code from \code{teal_data} object.
+}
+\details{
+Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
+Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datadatanames}.
+If the code has not passed verification, a warning will be prepended.
 }
 \examples{
 
@@ -30,11 +33,11 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 get_code(tdata1)
-datanames(tdata1) <- c("a", "b", "c")
-get_code(tdata1, names = "a")
-get_code(tdata1, names = "b")
+datadatanames(tdata1) <- c("a", "b", "c")
+get_code(tdata1, datanames = "a")
+get_code(tdata1, datanames = "b")
 
-tdata2 <- teal_data(x1 = iris, code = "x1 = iris")
+tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 get_code(tdata2)
 get_code(verify(tdata2))
 }
