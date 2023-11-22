@@ -2,11 +2,16 @@ testthat::test_that("teal_data allows to initialize empty teal_data object", {
   testthat::expect_s4_class(teal_data(), "teal_data")
 })
 
-testthat::test_that("empty teal_data returns empty code, id, wartnings and messages", {
+testthat::test_that("empty teal_data returns empty code, id, wartnings and messages and verified=TRUE", {
   testthat::expect_identical(teal_data()@code, character(0))
   testthat::expect_identical(teal_data()@id, integer(0))
   testthat::expect_identical(teal_data()@messages, character(0))
   testthat::expect_identical(teal_data()@warnings, character(0))
+  testthat::expect_identical(teal_data()@verified, TRUE)
+})
+
+testthat::test_that("non-empty data in teal_data returns verified=FALSE", {
+  testthat::expect_identical(teal_data(IRIS = iris)@verified, FALSE)
 })
 
 testthat::test_that("teal_data allows to initialize empty teal_data with join_keys", {

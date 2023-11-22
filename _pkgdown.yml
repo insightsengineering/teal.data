@@ -80,6 +80,7 @@ reference:
       - teal_data_file
       - to_relational_data
       - new_teal_data
+      - show,teal_data-method
   - title: Delayed Dataset Functions
     desc: For loading and modifying delayed data objects.
     contents:
@@ -89,6 +90,7 @@ reference:
       - get_attrs
       - get_cdisc_keys
       - get_code
+      - get_code,teal_data-method
       - get_dataname
       - get_dataset
       - get_dataset_label
@@ -103,6 +105,7 @@ reference:
       - mutate_dataset
       - set_args
       - set_keys
+      - verify
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:

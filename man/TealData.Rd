@@ -27,7 +27,6 @@
 \alias{relational_data_connector}
 \alias{mae_dataset}
 \alias{get_attrs}
-\alias{get_code}
 \alias{get_dataset_label}
 \alias{get_dataset}
 \alias{get_datasets}
@@ -100,8 +99,6 @@ relational_data_connector(...)
 mae_dataset(...)
 
 get_attrs(...)
-
-get_code(...)
 
 get_dataset_label(...)
 

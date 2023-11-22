@@ -172,12 +172,6 @@ get_attrs <- function(...) {
 
 #' @rdname TealData
 #' @export
-get_code <- function(...) {
-  .deprecate_teal_data("get_code()")
-}
-
-#' @rdname TealData
-#' @export
 get_dataset_label <- function(...) {
   .deprecate_teal_data("get_dataset_label()")
 }
