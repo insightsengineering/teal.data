@@ -40,7 +40,7 @@ setMethod("verify", "teal_data", definition = function(x) {
   if (x@verified) {
     return(x)
   }
-  new_teal_data <- eval_code(teal_data(), x@code)
+  new_teal_data <- eval_code(teal_data(), get_code(x))
 
   if (inherits(new_teal_data, "qenv.error")) {
     stop(conditionMessage(new_teal_data), call. = FALSE)
