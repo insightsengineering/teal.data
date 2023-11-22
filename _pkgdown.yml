@@ -91,6 +91,7 @@ reference:
       - get_attrs
       - get_cdisc_keys
       - get_code
+      - get_code,teal_data-method
       - get_dataname
       - get_dataset
       - get_dataset_label
