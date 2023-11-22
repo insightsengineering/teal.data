@@ -61,6 +61,7 @@ setMethod("verify", "teal_data", definition = function(x) {
   if (x@verified) {
     return(x)
   }
+  x_name <- deparse(substitute(x))
   y <- eval_code(teal_data(), get_code(x))
 
   if (inherits(y, "qenv.error")) {
@@ -89,26 +90,26 @@ setMethod("verify", "teal_data", definition = function(x) {
     if (length(objects_diff)) {
       error <- c(
         error,
-        "Object(s) recreated with code that have different structure in teal_data:",
+        paste0("Object(s) recreated with code that have different structure in ", x_name, ":"),
         paste0("  \u2022 ", names(which(!objects_diff)))
       )
     }
     if (length(names_diff_inenv)) {
       error <- c(
         error,
-        "Object(s) not created with code that exist in teal_data:",
+        paste0("Object(s) not created with code that exist in ", x_name, ":"),
         paste0("  \u2022 ", names_diff_inenv)
       )
     }
     if (length(names_diff_other)) {
       error <- c(
         error,
-        "Object(s) created with code that do not exist in teal_data:",
+        paste0("Object(s) created with code that do not exist in ", x_name, ":"),
         paste0("  \u2022 ", names_diff_other)
       )
     }
 
-    stop(paste(error, collapse = "\n"))
+    stop(paste(error, collapse = "\n"), call. = FALSE)
   }
 })
 setMethod("verify", "qenv.error", definition = function(x) {
