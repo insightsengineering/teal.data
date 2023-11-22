@@ -1,5 +1,4 @@
 testthat::test_that("get_code_dependency does not brake for empty input", {
-
   testthat::expect_identical(
     get_code_dependency(character(0), names = "a"),
     character(0)
