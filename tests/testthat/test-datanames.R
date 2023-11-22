@@ -21,7 +21,7 @@ testthat::test_that("datanames can set value of @datanames", {
 testthat::test_that("only names of existing variables are accepted", {
   td <- teal_data(i = iris, m = mtcars)
   testthat::expect_no_error(datanames(td) <- "i")
-  testthat::expect_error(datanames(td) <- "f", "invalid name")
+  testthat::expect_error(datanames(td) <- "f", "Assertion .* failed: Must be a subset")
 })
 
 # qenv.error support ----
