@@ -28,12 +28,12 @@
 #' })
 #' verify(tdata3)
 #' }
-#' 
+#'
 #' @name verify
 #' @rdname verify
 #' @aliases verify,teal_data-method
 #' @aliases verify,qenv.error-method
-#' 
+#'
 #' @export
 setGeneric("verify", function(x) standardGeneric("verify"))
 setMethod("verify", "teal_data", definition = function(x) {
