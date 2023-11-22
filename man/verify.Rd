@@ -14,7 +14,8 @@ verify(x)
 \value{
 If the objects returned by the \verb{@code} slot in the input \code{teal_data} object exactly match
 the objects in \code{teal_data@env}, the function updates the \verb{@verified} slot to \code{TRUE} in the \code{teal_data} object.
-If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is thrown.
+Once it's verified, the slot will always be set to \code{TRUE}. If the \verb{@code} fails to recreate objects in
+\code{teal_data@env}, an error is thrown.
 }
 \description{
 Checks whether code in \code{teal_data} reproduces the stored objects.

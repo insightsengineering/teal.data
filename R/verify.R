@@ -4,7 +4,8 @@
 #'
 #' @return If the objects returned by the `@code` slot in the input `teal_data` object exactly match
 #' the objects in `teal_data@env`, the function updates the `@verified` slot to `TRUE` in the `teal_data` object.
-#' If the `@code` fails to recreate objects in `teal_data@env`, an error is thrown.
+#' Once it's verified, the slot will always be set to `TRUE`. If the `@code` fails to recreate objects in
+#' `teal_data@env`, an error is thrown.
 #'
 #' @param x `teal_data` object
 #' @examples
