@@ -82,14 +82,6 @@ join_keys.teal_data <- function(...) {
 }
 
 #' @rdname join_keys
-#' @order 1
-#' @export
-join_keys.TealData <- function(...) {
-  x <- rlang::list2(...)
-  x[[1]]$get_join_keys()
-}
-
-#' @rdname join_keys
 #' @order 5
 #'
 #' @section Functions:

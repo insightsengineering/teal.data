@@ -38,22 +38,13 @@ teal_data <- function(...,
       min.len = 1
     )
   ) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.3.1",
       "teal_data(
         data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.
         Find more information on https://github.com/insightsengineering/teal/discussions/945'
       )"
     )
-    join_keys <- deprecated_join_keys_extract(data_objects, join_keys)
-
-    x <- TealData$new(..., check = check, join_keys = join_keys)
-    if (length(code) > 0 && !identical(code, "")) {
-      x$set_pull_code(code = code)
-    }
-    x$check_reproducibility()
-    x$check_metadata()
-    x
   } else {
     if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
@@ -64,65 +55,4 @@ teal_data <- function(...,
       join_keys = join_keys
     )
   }
-}
-
-#' Load `TealData` object from a file
-#'
-#' @description `r lifecycle::badge("experimental")`
-#' Please note that the script has to end with a call creating desired object. The error will be raised otherwise.
-#'
-#' @param path A (`connection`) or a (`character`)\cr
-#'   string giving the pathname of the file or URL to read from. "" indicates the connection `stdin`.
-#' @param code (`character`)\cr
-#'   reproducible code to re-create object
-#'
-#' @return `TealData` object
-#'
-#'
-#' @export
-#'
-#' @examples
-#' # simple example
-#' file_example <- tempfile(fileext = ".R")
-#' writeLines(
-#'   text = c(
-#'     "library(teal.data)
-#'
-#'      x1 <- dataset(dataname = \"IRIS\",
-#'                    x = iris,
-#'                    code = \"IRIS <- iris\")
-#'
-#'      x2 <- dataset(dataname = \"MTCARS\",
-#'                    x = mtcars,
-#'                    code = \"MTCARS <- mtcars\")
-#'
-#'      teal_data(x1, x2)"
-#'   ),
-#'   con = file_example
-#' )
-#' teal_data_file(file_example, code = character(0))
-teal_data_file <- function(path, code = get_code(path)) {
-  object <- object_file(path, "TealData")
-  object$mutate(code)
-  return(object)
-}
-
-#' Add primary keys as join_keys to a dataset self
-#'
-#' @param data_objects (`list`) of `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects
-#' @param x (`join_keys`) object
-#'
-#' @keywords internal
-update_join_keys_to_primary <- function(data_objects, x) {
-  for (obj in data_objects) {
-    if (inherits(obj, "TealDataConnector")) {
-      x <- update_join_keys_to_primary(obj$get_items(), x)
-    } else {
-      dataname <- obj$get_dataname()
-      if (length(x[[dataname]][[dataname]]) == 0) {
-        x[[dataname]][[dataname]] <- obj$get_keys()
-      }
-    }
-  }
-  x
 }

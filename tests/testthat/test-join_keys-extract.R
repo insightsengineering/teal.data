@@ -395,13 +395,13 @@ testthat::test_that("[[<-.join_keys with empty name is changed to the key value"
   # set empty key name
   jk <- join_keys()
   jk[["d1"]][["d2"]] <- c("A" = "B", "C")
-  expect_equal(jk[["d1"]][["d2"]], setNames(c("B", "C"), c("A", "C")))
+  expect_equal(jk[["d1"]][["d2"]], stats::setNames(c("B", "C"), c("A", "C")))
 })
 
 testthat::test_that("[[<-.join_keys with empty value is set to its name", {
   jk <- join_keys()
   jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "")
-  expect_equal(jk[["d1"]][["d2"]], setNames(c("B", "C"), c("A", "C")))
+  expect_equal(jk[["d1"]][["d2"]], stats::setNames(c("B", "C"), c("A", "C")))
 })
 
 testthat::test_that("[[<-.join_keys passing key unnamed 'empty' value is ignored", {

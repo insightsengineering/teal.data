@@ -34,3 +34,35 @@ build_cdisc_join_keys <- function(default_cdisc_keys) {
   }
   jk
 }
+
+
+#' Function that returns the default keys for a `CDISC` dataset by name
+#'
+#' @description `r lifecycle::badge("stable")`
+#'
+#' @param dataname name of the `CDISC` dataset
+#'
+#' @return \code{keys} object
+#'
+#' @export
+#'
+#' @examples
+#' get_cdisc_keys("ADSL")
+get_cdisc_keys <- function(dataname) {
+  checkmate::assert_string(dataname)
+
+  if (!(dataname %in% names(default_cdisc_keys))) {
+    stop(paste(sprintf("get_cdisc_keys does not support datasets called %s", dataname),
+      "  Please specify the keys directly, for example:",
+      sprintf(
+        "  cdisc_dataset(dataname = \"%s\", keys = c(\"STUDYID\", \"USUBJID\", ...), parent = \"ADSL\", ...)",
+        dataname
+      ),
+      sep = "\n"
+    ))
+  } else {
+    cdisc_keys <- default_cdisc_keys[[dataname]]$primary
+
+    return(cdisc_keys)
+  }
+}
