@@ -8,7 +8,8 @@
 #'
 #' @param object (`teal_data`)
 #' @param datanames (`character`) vector of data set names to return the code for.
-#' @param deparse (`logical`) whether return deparsed form of a call.
+#' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
+#' `expression` (`deparse = FALSE`).
 #' @return
 #' Either a character vector or expression representing code used to create the requested data sets.
 #' @examples

@@ -9,7 +9,8 @@
 \arguments{
 \item{object}{(\code{teal_data})}
 
-\item{deparse}{(\code{logical}) whether return deparsed form of a call.}
+\item{deparse}{(\code{logical}) flag specifying whether to return code as \code{character} (\code{deparse = TRUE}) or as
+\code{expression} (\code{deparse = FALSE}).}
 
 \item{datanames}{(\code{character}) vector of data set names to return the code for.}
 }
