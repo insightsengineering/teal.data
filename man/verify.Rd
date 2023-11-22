@@ -15,10 +15,13 @@ verify(x)
 Input \code{teal_data} object or error.
 }
 \description{
-Checks whether code in \code{teal_data} reproduces the stored objects. If objects returned by the \verb{@code} slot
-in the input \code{teal_data} exactly match objects in \code{teal_data@env}, the function updates the
-\verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object. Once verified, the slot will always be set to \code{TRUE}.
-If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is thrown.
+Checks whether code in \code{teal_data} reproduces the stored objects.
+}
+\details{
+If objects returned by the \verb{@code} slot in the input \code{teal_data} exactly match objects in \code{teal_data@env},
+the function updates the \verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object. Once verified, the slot
+will always be set to \code{TRUE}.
+If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is raised.
 }
 \examples{
 tdata1 <- teal_data()

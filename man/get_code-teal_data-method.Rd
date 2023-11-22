@@ -22,7 +22,7 @@ Retrieve code from \code{teal_data} object.
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
-Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datadatanames}.
+Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datanames}.
 If the code has not passed verification, a warning will be prepended.
 }
 \examples{
@@ -34,7 +34,7 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 get_code(tdata1)
-datadatanames(tdata1) <- c("a", "b", "c")
+datanames(tdata1) <- c("a", "b", "c")
 get_code(tdata1, datanames = "a")
 get_code(tdata1, datanames = "b")
 

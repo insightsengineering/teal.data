@@ -3,7 +3,7 @@
 #' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datadatanames`.
+#' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datanames`.
 #' If the code has not passed verification, a warning will be prepended.
 #'
 #' @param object (`teal_data`)
@@ -21,7 +21,7 @@
 #'   c <- list(x = 2)
 #' })
 #' get_code(tdata1)
-#' datadatanames(tdata1) <- c("a", "b", "c")
+#' datanames(tdata1) <- c("a", "b", "c")
 #' get_code(tdata1, datanames = "a")
 #' get_code(tdata1, datanames = "b")
 #'
@@ -32,7 +32,7 @@
 #' @export
 setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_subset(datanames, datadatanames(object))
+  checkmate::assert_subset(datanames, datanames(object))
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(datanames)) {
