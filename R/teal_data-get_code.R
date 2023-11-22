@@ -28,7 +28,7 @@
 #' @export
 setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE, names = NULL) {
   checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_subset(names, object@datanames, empty.ok = TRUE)
+  checkmate::assert_subset(names, datanames(object))
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(names)) {
