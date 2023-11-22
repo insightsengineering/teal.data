@@ -1,4 +1,4 @@
-# teal.data 0.3.0.9011
+# teal.data 0.3.0.9012
 
 ### Enhancements
 * Simplified `join_key` to better support primary keys.
