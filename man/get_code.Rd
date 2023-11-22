@@ -8,15 +8,15 @@
 \alias{get_code.default}
 \title{Get code}
 \usage{
-get_code(x, ...)
+get_code(object, deparse = TRUE, ...)
 
-\method{get_code}{TealDatasetConnector}(x, deparse = TRUE, ...)
+get_code.TealDatasetConnector(x, deparse = TRUE, ...)
 
-\method{get_code}{TealDataset}(x, deparse = TRUE, ...)
+get_code.TealDataset(x, deparse = TRUE, ...)
 
-\method{get_code}{TealDataAbstract}(x, dataname = character(0), deparse = TRUE, ...)
+get_code.TealDataAbstract(x, dataname = character(0), deparse = TRUE, ...)
 
-\method{get_code}{default}(
+get_code.default(
   x,
   exclude_comments = TRUE,
   read_sources = TRUE,
@@ -27,11 +27,11 @@ get_code(x, ...)
 )
 }
 \arguments{
-\item{x}{(\code{\link{TealDatasetConnector}} or \code{\link{TealDataset}}). If of class \code{character} will be treated as file to read.}
+\item{deparse}{(\code{logical}) whether return deparsed form of a call}
 
 \item{...}{not used, only for support of S3}
 
-\item{deparse}{(\code{logical}) whether return deparsed form of a call}
+\item{x}{(\code{\link{TealDatasetConnector}} or \code{\link{TealDataset}}). If of class \code{character} will be treated as file to read.}
 
 \item{dataname}{(\code{character}) Name of dataset to return code for.}
 
