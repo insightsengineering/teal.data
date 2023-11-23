@@ -51,6 +51,5 @@ all.equal.join_keys <- function(target, current, ...) {
   }
   x <- .as_map(target)
   y <- .as_map(current)
-  print("inner")
   all.equal(x, y)
 }
