@@ -9,7 +9,7 @@
 #' `# @linksto object_name` at the end of a line where the side-effect occurs.
 #'
 #' @param code An `expression` with `srcref` attribute or a `character` with the code.
-#' @param object_names (`character(n)`) A vector containing the names of existing objects.
+#' @param names (`character(n)`) A vector containing the names of existing objects.
 #'
 #' @return A `list` with three components:
 #' - `occurrence`: A named `list` where object names are the names of existing objects, and each element is a numeric
@@ -26,9 +26,9 @@
 #'
 #' @keywords internal
 #'
-code_dependency <- function(code, object_names) {
+code_dependency <- function(code, names) {
   checkmate::assert_multi_class(code, classes = c("character", "expression"))
-  checkmate::assert_character(object_names, null.ok = TRUE)
+  checkmate::assert_character(names, null.ok = TRUE)
 
   if (is.expression(code)) {
     if (!is.null(attr(code, "srcref"))) {
@@ -46,13 +46,13 @@ code_dependency <- function(code, object_names) {
 
   calls_pd <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
 
-  occurrence <- lapply(sapply(object_names, detect_symbol, calls_pd = calls_pd, simplify = FALSE), which)
+  occurrence <- lapply(sapply(names, detect_symbol, calls_pd = calls_pd, simplify = FALSE), which)
 
   cooccurrence <- lapply(
     calls_pd,
     function(x) {
-      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL") & x$text %in% object_names)
-      sym_form_cond <- which(x$token == "SYMBOL_FORMALS" & x$text %in% object_names)
+      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL") & x$text %in% names)
+      sym_form_cond <- which(x$token == "SYMBOL_FORMALS" & x$text %in% names)
       sym_cond <- sym_cond[!x[sym_cond, "text"] %in% x[sym_form_cond, "text"]]
 
       object_ids <- x[sym_cond, "id"]
@@ -79,9 +79,9 @@ code_dependency <- function(code, object_names) {
       affected <-
         unlist(strsplit(sub("\\s*#\\s*@linksto\\s+", "", side_effects), "\\s+"))
 
-      union(object_names, affected)
+      union(names, affected)
     } else {
-      object_names
+      names
     }
 
   effects <- sapply(

@@ -4,12 +4,12 @@
 \alias{code_dependency}
 \title{Create Object Dependencies Structure Within Parsed Code}
 \usage{
-code_dependency(code, object_names)
+code_dependency(code, names)
 }
 \arguments{
 \item{code}{An \code{expression} with \code{srcref} attribute or a \code{character} with the code.}
 
-\item{object_names}{(\code{character(n)}) A vector containing the names of existing objects.}
+\item{names}{(\code{character(n)}) A vector containing the names of existing objects.}
 }
 \value{
 A \code{list} with three components:
