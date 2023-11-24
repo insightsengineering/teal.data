@@ -31,7 +31,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
   if (dataset_1_one == dataset_2_two && dataset_2_one == dataset_1_two) {
     if (
       xor(length(keys_one) == 0, length(keys_two) == 0) ||
-        !identical(sort(keys_one), sort(setNames(names(keys_two), keys_two)))
+        !identical(sort(keys_one), sort(stats::setNames(names(keys_two), keys_two)))
     ) {
       stop_message(dataset_1_one, dataset_2_one)
     }

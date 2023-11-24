@@ -6,7 +6,6 @@
 \alias{join_keys.default}
 \alias{join_keys.join_keys}
 \alias{join_keys.teal_data}
-\alias{join_keys.TealData}
 \alias{[.join_keys}
 \alias{[<-.join_keys}
 \alias{c.join_keys}
@@ -26,8 +25,6 @@ join_keys(...)
 \method{join_keys}{join_keys}(...)
 
 \method{join_keys}{teal_data}(...)
-
-\method{join_keys}{TealData}(...)
 
 \method{[}{join_keys}(x, i, j)
 

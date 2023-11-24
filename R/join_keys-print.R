@@ -2,7 +2,6 @@
 #' @order 7
 #' @export
 format.join_keys <- function(x, ...) {
-  check_ellipsis(...)
   if (length(x) > 0) {
     my_parents <- parents(x)
     names_sorted <- topological_sort(my_parents)

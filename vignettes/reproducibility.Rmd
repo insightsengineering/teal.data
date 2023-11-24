@@ -12,36 +12,34 @@ vignette: >
 
 ## Mechanism
 
-`teal.data` classes that accumulate raw data accept a boolean `check` argument, e.g. `teal_data`. This boolean
-flag indicates whether `teal` performs validation of the data passed to the `TealData` object during launch of a
-`teal` application.
+`teal_data` objects instantiated with data and code run the risk of the code not being reproducible.
+Such objects will be created in an _unverified_ state. 
+To confirm that the code exactly reproduces the variables stored in the object, one must run the `verify` function.
+If the verification succeeds, the object's state will be changed to _verified`, otherwise an error will be raised.
 
-The validation compares the raw data passed to the class with the dataset returned by the code stored in the class.
-E.g.:
+`teal_data` objects that are instantiated empty and can only become populated by evaluating code, are created verified.
+Evaluating code in a `teal_data` object _does not_ change its verification status.
 
-```{r, message=FALSE}
+When retrieving code, unverified objects will always add a warning to the code stating that it has not passed verification.
+
+```{r, message=FALSE, error=TRUE}
 library(teal.data)
-iris_ds <- dataset("iris", iris, code = "iris <- iris")
-data <- teal_data(iris_ds, check = TRUE)
+library(magrittr)
 
-data$check()
-```
+IRIS <- iris
+IRIS$id <- seq_len(nrow(iris))
 
-The `check()` method called during launch can be invoked directly and returns `TRUE` if the raw data passed
-to `teal_data` matches the return value of the code stored in the class. It returns an error if the comparison
-fails and `NULL` if the `check = FALSE` was passed to `teal_data`.
+data_right <- teal_data(IRIS = IRIS, code = expression(IRIS <- iris, IRIS$id <- seq_len(nrow(iris))))
+(data_right_verified <- verify(data_right)) # returns verified object
 
-```{r, error=TRUE}
-# throws an error:
-data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = TRUE)
+data_wrong <- teal_data(IRIS = IRIS, code = expression(iris <- iris, iris$id <- seq_len(nrow(iris))))
+verify(data_wrong) # fails verification, raises error
 
-data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = FALSE)
-
-# returns NULL even though the code does not match the raw data
-data$check()
+data_naive <- teal_data()
+data_naive <- within(data_naive, IRIS <- iris)
+data_naive <- within(data_naive, IRIS$id <- seq_len(nrow(iris)))
+data_naive # is verified
+verify(data_naive) # runs without error
 ```
 
 Find out more in the `teal_data()` documentation.
-
-## Final considerations
-- `<x>_connector` objects do not accept raw data as input and therefore are not checked even if `check = TRUE` is used.
