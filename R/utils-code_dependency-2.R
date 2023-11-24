@@ -59,7 +59,9 @@ extract_calls <- function(pd) {
   lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
 }
 
-graph_parser <- function(x, graph) {
+graph_parser <- function(x, graph, skip = NULL) {
+
+  skip <- c(x, skip)
 
   # returns: logical
   occurence <- ##### NOTE (1) BELOW
@@ -75,11 +77,12 @@ graph_parser <- function(x, graph) {
     lapply(graph[which(occurence)], function(call) {
       strsplit(call, split = ":", fixed = TRUE)[[1]][2]
     })
+  influencers <- setdiff(influencers, skip)
 
   # returns: logical
   influencers_deps <-
     lapply(influencers, function(influencer){
-      graph_parser(influencer, graph[1:max(which(occurence))]) ##### NOTE (2) BELOW
+      graph_parser(influencers, graph[1:max(which(occurence))], skip) ##### NOTE (2) BELOW
     })
 
   unique(which(occurence), which(influencers_deps))
