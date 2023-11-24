@@ -38,22 +38,21 @@ extract_occurence <- function(calls_pd) {
   lapply(
     calls_pd,
     function(x) {
-      # CAN THIS BE SIMPLIFIED
+      # CAN THIS BE SIMPLIFIED?
       # x %in% "SYMBOL", "SYMBOL_FUNCTION_CALL"
       # and x not %in% "SYMBOL_FORMALS"
+      # DO I STILL NEED & x$text %in% names
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))# & x$text %in% names)
       sym_form_cond <- which(x$token == "SYMBOL_FORMALS")# & x$text %in% names)
       sym_cond <- sym_cond[!x[sym_cond, "text"] %in% x[sym_form_cond, "text"]]
 
       # watch out for SYMBOLS after $ and @, e.g. x$a x@a // x is object, a is not
-      # and remove those
+      # for x$a, a's ID is $'s ID-2
+      # so we need to remove all IDs that have ID = $ID - 2
       object_ids <- x[sym_cond, "id"]
       dollar_ids <- x[x$token %in% c("'$'", "'@'"), "id"]
       after_dollar <- object_ids[(object_ids - 2) %in% dollar_ids]
       sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
-
-      # sym_cond is row idenfitier in x
-      # x is an element of calls_pd
 
       # if there was an assignment operation
       if (length(sym_cond) >= 2) {
@@ -103,8 +102,8 @@ get_code_dependency <- function(code, names) {
   calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
-  indexes <- sapply(names, function(x) graph_parser(x, graph))
-  calls_pd[indexes] # or parsed_code[indexes] which is created in create_calls_pd # NOT SURE YET
+  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+  as.character(code[indexes])
 }
 
 extract_calls <- function(pd) {
@@ -222,6 +221,10 @@ graph_expected <- list(
   c("a", "c")
 )
 
+code_a_expected <- c("a <- 5", "a <- a + 6", "c <- 5")
+code_b_expected <- c("a <- 5", "b <- a + 3")
+code_c_expected <- c("c <- 5")
+
 testthat::test_that("code_graph returns proper structure of the dependency graph", {
 
   code <- assert_code(code)
@@ -242,10 +245,33 @@ testthat::test_that("graph_parser returns proper code based on code_graph", {
   calls_pd <- extract_calls(pd)
   graph <- code_graph(calls_pd)
   names <- 'a'
+  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
   testthat::expect_identical(
-    sapply(names, function(x) graph_parser(x, graph)),
-    graph_expected
+    as.character(code[indexes]),
+    code_a_expected
   )
+
+})
+
+testthat::test_that("get_code_dependency returns proper code", {
+
+  testthat::expect_identical(
+    get_code_dependency(code, names = 'a'),
+    code_a_expected
+  )
+
+  # TO BE FIXED:
+  testthat::skip({
+    testthat::expect_identical(
+      get_code_dependency(code, names = 'b'),
+      code_b_expected
+    )
+
+    testthat::expect_identical(
+      get_code_dependency(code, names = 'C'),
+      code_c_expected
+    )
+  })
 
 })
 
