@@ -8,8 +8,15 @@ code_graph <- function(calls_pd) {
   # R/utils-code_dependency.R used_in_function
   # R/utils-code_dependency.R code_dependency()->cooccurrence
 
-  # final_list is a list()
-  # length = length(calls_pd)
+  # list, length = length(calls_pd)
+  cooccurence <- extract_occurence(calls_pd)
+
+  # list, length = length(calls_pd)
+  side_effects <- extract_side_effects(calls_pd)
+
+  # list, length = length(calls_pd)
+  final_list <- append_side_effects(cooccurence, side_effects)
+
   # structure - character(n)
   #           - (1) character(n) # occurence  OR side_effectS
   #           - (2) character(n) # occurence AND side_effectS
@@ -27,6 +34,50 @@ code_graph <- function(calls_pd) {
   # for case with only influencers then it is c(":", "influencer_name")
 
 }
+
+extract_occurence <- function(calls_pd) {
+  # TO BE FINISHED:
+  # USED detect_symbol() and used_in_function() to simplify?
+  lapply(
+    calls_pd,
+    function(x) {
+      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL") & x$text %in% names)
+      sym_form_cond <- which(x$token == "SYMBOL_FORMALS" & x$text %in% names)
+      sym_cond <- sym_cond[!x[sym_cond, "text"] %in% x[sym_form_cond, "text"]]
+
+      object_ids <- x[sym_cond, "id"]
+      dollar_ids <- x[x$"token" %in% c("'$'", "'@'"), "id"]
+      after_dollar <- object_ids[(object_ids - 2) %in% dollar_ids]
+      sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
+
+      if (length(sym_cond) >= 2) {
+        ass_cond <- grep("ASSIGN", x$token)
+        text <- unique(x[sort(c(sym_cond, ass_cond)), "text"])
+
+        if (text[1] == "->") {
+          rev(text[-1])
+        } else {
+          text[-1]
+        }
+      }
+    }
+  )
+}
+
+extract_side_effects <- function(calls_pd) {
+  # TO BE FINISHED:
+  # can this work on calls_pd
+  pd <- do.call(calls_pd, rbind) ## ??
+  side_effects <- grep("@linksto", pd[pd$token == "COMMENT", "text"], value = TRUE)
+  if (length(side_effects) > 0) {
+    affected <- # maybe this should be adjusted as well
+      unlist(strsplit(sub("\\s*#\\s*@linksto\\s+", "", side_effects), "\\s+"))
+  } else {
+    list() #?
+  }
+  # affected as a list
+}
+
 
 get_code_dependency <- function(code, names) {
   assert_classes(code, names)
@@ -139,7 +190,7 @@ code <- "
   a <- 5
   b <- a + 3
   a <- a + 6
-  5 -> c @linksto a
+  5 -> c # @linksto a
 
 "
 
