@@ -2,7 +2,11 @@
 
 code_graph <- function(calls_pd) {
 
-  final_list <- symbols_by_calls(calls_pd)
+  # TODO
+  # based on
+  # R/utils-code_dependency.R detect_symbol
+  # R/utils-code_dependency.R used_in_function
+  # R/utils-code_dependency.R code_dependency()->cooccurrence
 
   # final_list is a list()
   # length = length(calls_pd)
@@ -24,30 +28,35 @@ code_graph <- function(calls_pd) {
 
 }
 
-symbols_by_calls <- function(calls_pd) {
-  # TODO
-  # based on
-  # R/utils-code_dependency.R detect_symbol
-  # R/utils-code_dependency.R used_in_function
-  # R/utils-code_dependency.R code_dependency()->cooccurrence
-}
-
 get_code_dependency <- function(code, names) {
-  assert_classes()
-  assert_names()
-  code_assertions() # parse character / verify expression (if has 'srcref' attribute)
+  assert_classes(code, names)
 
-  calls_pd <- create_calls_pd(code)
+  if (is_empty(code)) return(code)
+
+  code <- assert_code(code)
+  pd <- create_pd(code)
+  assert_names(names, pd)
+
+  calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
   indexes <- sapply(names, function(x) graph_parser(x, graph))
   calls_pd[indexes] # or parsed_code[indexes] which is created in create_calls_pd # NOT SURE YET
 }
 
-create_calls_pd <- function(code) {
-  parsed_code <- parse(text = code, keep.source = TRUE)
-  pd <- utils::getParseData(parsed_code)
-  extract_calls(pd) # R/utils-code_dependency.R get_children
+extract_calls <- function(pd) {
+  get_children <- function(pd, parent) {
+    idx_children <- abs(pd$parent) == parent
+    children <- pd[idx_children, c("token", "text", "id")]
+    if (nrow(children) == 0) {
+      return(NULL)
+    }
+
+    if (parent > 0) {
+      do.call(rbind, c(list(children), lapply(children$id, get_children, pd = pd)))
+    }
+  }
+  lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
 }
 
 graph_parser <- function(x, graph) {
@@ -82,7 +91,43 @@ graph_parser <- function(x, graph) {
 
 }
 
+assert_classes <- function(code, names) {
+  checkmate::assert_multi_class(code, classes = c("character", "expression"))
+  checkmate::assert_character(names)
+}
 
+assert_code <- function(code) {
+  if (is.expression(code)) {
+    if (!is.null(attr(code, "srcref"))) {
+      parsed_code <- code
+    } else {
+      stop("The 'expression' code input does not contain 'srcref' attribute.")
+    }
+  }
+
+  if (is.character(code)) {
+    parsed_code <- parse(text = code, keep.source = TRUE)
+  }
+  parsed_code
+}
+
+assert_names <- function(names, pd) {
+  symbols <- unique(pd[pd$token == "SYMBOL", "text"])
+  if (!all(names %in% symbols)) {
+    warning(
+      "Object(s) not found in code: ",
+      toString(setdiff(names, symbols))
+    )
+  }
+}
+
+create_pd <- function(code) {
+  utils::getParseData(code)
+}
+
+is_empty <- function(code){
+  identical(code, character(0)) || identical(trimws(code), "")
+}
 
 # example code
 
