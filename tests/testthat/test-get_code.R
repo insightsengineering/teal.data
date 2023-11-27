@@ -145,6 +145,7 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
   )
 })
 
+# ERROR: to be fixed
 testthat::test_that("get_code with datanames detects every assign calls even if not evaluated", {
   code <- c(
     "a <- 1",
@@ -286,6 +287,7 @@ testthat::test_that(
 
 # functions -------------------------------------------------------------------------------------------------------
 
+# ERROR: to be fixed
 testthat::test_that("get_code with datanames ignores occurrence in function definition", {
   code <- c(
     "b <- 2",
@@ -303,6 +305,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
+# ERROR: to be fixed
 testthat::test_that("get_code with datanames ignores occurrence in function definition without { curly brackets", {
   code <- c(
     "b <- 2",
@@ -333,7 +336,6 @@ testthat::test_that("get_code with datanames ignores effect of the object which 
   )
 })
 
-# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames detects occurrence of the function object", {
   code <- c(
     "a <- 1",
@@ -349,7 +351,6 @@ testthat::test_that("get_code with datanames detects occurrence of the function 
   )
 })
 
-# ERROR: TO BE FIXED
 testthat::test_that(
   "Can't detect occurrence of function definition when a formal is named the same as a function",
   {
