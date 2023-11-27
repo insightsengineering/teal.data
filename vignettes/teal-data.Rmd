@@ -25,8 +25,8 @@ my_data <- teal_data()
 my_data <- within(
   my_data,
   {
-    data1 <- data.frame(x = 1:10, y = 11:20)
-    data2 <- data.frame(x = 1:10, y = 21:30)
+    data1 <- data.frame(id = 1:10, x = 11:20)
+    data2 <- data.frame(id = 1:10, x = 21:30)
   }
 )
 
@@ -56,12 +56,12 @@ print(my_data)
 
 ### Reproducibility
 
-Primary function of `teal_data` is to provide reproducibility of data. We recommend to initialise empty `teal_data` which marks object as _verified_. Read more in [teal_data Reproducibility](teal-data-reproducibility.html).
+Primary function of `teal_data` is to provide reproducibility of data. We recommend to initialize empty `teal_data` which marks object as _verified_. Read more in [teal_data Reproducibility](teal-data-reproducibility.html).
 
 ```{r}
 my_data <- teal_data()
-my_data <- within(my_data, IRIS <- iris)
-my_data <- within(my_data, IRIS$id <- seq_len(nrow(iris)))
+my_data <- within(my_data, data <- data.frame(x = 11:20))
+my_data <- within(my_data, data$id <- seq_len(nrow(data)))
 my_data # is verified
 ```
 
@@ -71,15 +71,16 @@ my_data # is verified
 `teal_data` class can be extended to support relational data. `join_keys` function can be used to specify relationships between datasets. See more in [join_keys](join-keys.html).
 
 ```{r}
-my_data <- teal_data(
-  parent = data.frame(id = 1:10, y = 11:20),
-  child = data.frame(id = 1:20, parent_id = c(1:10, 1:10), y = 21:30)
-)
+my_data <- teal_data()
+my_data <- within(my_data, {
+  data <- data.frame(id = 1:10, x = 11:20)
+  child <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
+})
 
 join_keys(my_data) <- join_keys(
-  join_key("parent", "parent", key = "id"),
+  join_key("data", "data", key = "id"),
   join_key("child", "child", key = "id"),
-  join_key("child", "parent", key = c("parent_id" = "id"))
+  join_key("child", "data", key = c("data_id" = "id"))
 )
 
 join_keys(my_data)

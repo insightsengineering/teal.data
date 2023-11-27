@@ -20,8 +20,8 @@ Reproducibility is a primary function of the `qenv` class which `teal_data` inhe
 library(teal.data)
 
 my_data <- teal_data()
-my_data <- within(my_data, IRIS <- iris)
-my_data <- within(my_data, IRIS$id <- seq_len(nrow(iris)))
+my_data <- within(my_data, data <- data.frame(x = 11:20))
+my_data <- within(my_data, data$id <- seq_len(nrow(data)))
 my_data # is verified
 ```
 
@@ -41,15 +41,15 @@ When retrieving code, unverified objects will always add a warning to the code s
 library(teal.data)
 library(magrittr)
 
-IRIS <- iris
-IRIS$id <- seq_len(nrow(iris))
+data <- data.frame(x = 11:20)
+data$id <- seq_len(nrow(data))
 
 data_right <- teal_data(
-  IRIS = IRIS,
-  code = expression(
-    IRIS <- iris,
-    IRIS$id <- seq_len(nrow(iris))
-  )
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+    data$id <- seq_len(nrow(data))
+  })
 )
 (data_right_verified <- verify(data_right)) # returns verified object
 ```
@@ -58,11 +58,10 @@ data_right <- teal_data(
 
 ```{r, message=FALSE, error=TRUE}
 data_wrong <- teal_data(
-  IRIS = IRIS,
-  code = expression(
-    iris <- iris,
-    iris$id <- seq_len(nrow(iris))
-  )
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+  })
 )
 verify(data_wrong) # fails verification, raises error
 ```
