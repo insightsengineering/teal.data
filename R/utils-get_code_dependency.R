@@ -19,7 +19,7 @@ get_code_dependency <- function(code, names) {
 
   if (is_empty(code)) return(code)
 
-  code <- assert_code(code)
+  code <- assert_code(code) # turns code into expression with srcref attribute
   pd <- utils::getParseData(code)
   assert_names(names, pd)
 
@@ -46,7 +46,21 @@ extract_calls <- function(pd) {
       do.call(rbind, c(list(children), lapply(children$id, get_children, pd = pd)))
     }
   }
-  lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  fix_comments(calls)
+}
+
+fix_comments <- function(calls) {
+  # if the first token is a COMMENT then it belongs to the previous call
+  if (length(calls) >= 2) {
+    for(i in 2:length(calls)){
+      if (grepl("@linksto", calls[[i]][1, "text"])) {
+        calls[[i-1]] <- rbind(calls[[i-1]], calls[[i]][ 1, ])
+        calls[[i  ]] <-                     calls[[i]][-1, ]
+      }
+    }
+  }
+  calls
 }
 
 # code_graph ----
@@ -93,17 +107,25 @@ extract_occurence <- function(calls_pd) {
       # x %in% "SYMBOL", "SYMBOL_FUNCTION_CALL"
       # and x not %in% "SYMBOL_FORMALS"
       # DO I STILL NEED & x$text %in% names
-      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))# & x$text %in% names)
-      sym_form_cond <- which(x$token == "SYMBOL_FORMALS")# & x$text %in% names)
-      sym_cond <- sym_cond[!x[sym_cond, "text"] %in% x[sym_form_cond, "text"]]
+      #
+      # # WHY DO I NEED SYMBOL_FUNCTION_CALL and SYMBOL_FORMALS
+      # sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))# & x$text %in% names)
+      # sym_form_cond <- which(x$token == "SYMBOL_FORMALS")# & x$text %in% names)
+      # sym_cond <- sym_cond[!x[sym_cond, "text"] %in% x[sym_form_cond, "text"]]
+      #
+
+      sym_cond <- which(x$token %in% "SYMBOL")
 
       # watch out for SYMBOLS after $ and @, e.g. x$a x@a // x is object, a is not
       # for x$a, a's ID is $'s ID-2
       # so we need to remove all IDs that have ID = $ID - 2
-      object_ids <- x[sym_cond, "id"]
+
       dollar_ids <- x[x$token %in% c("'$'", "'@'"), "id"]
-      after_dollar <- object_ids[(object_ids - 2) %in% dollar_ids]
-      sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
+      if (length(dollar_ids)) {
+        object_ids <- x[sym_cond, "id"]
+        after_dollar <- object_ids[(object_ids - 2) %in% dollar_ids]
+        sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
+      }
 
       # if there was an assignment operation
       if (length(sym_cond) >= 2) {
@@ -254,6 +276,39 @@ code_a_expected <- c("a <- 5", "a <- a + 6", "c <- 5")
 code_b_expected <- c("a <- 5", "b <- a + 3")
 code_c_expected <- c("c <- 5")
 
+
+code_2 <- "
+
+  a <- 1
+  b <- identity(x = a)
+  a <- 2
+
+"
+
+graph_expected_2 <- list(
+  c("a"),
+  c("b", ":", "a"),
+  c("a")
+)
+
+code_b_expected_2 <- c("a <- 1", "b <- identity(x = a)")
+
+code_3 <- "
+
+  a <- 1
+  assign('b', 5) # @linksto b
+  b <- b + 2
+
+"
+
+graph_expected_3 <- list(
+  c("a"),
+  c("b"),
+  c("b", ":", "b")
+)
+
+code_b_expected_3 <- c("assign(\"b\", 5)", "b <- b + 2")
+
 testthat::test_that("code_graph returns proper structure of the dependency graph", {
 
   code <- assert_code(code)
@@ -263,6 +318,24 @@ testthat::test_that("code_graph returns proper structure of the dependency graph
   testthat::expect_identical(
     graph,
     graph_expected
+  )
+
+  code <- assert_code(code_2)
+  pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
+  graph <- code_graph(calls_pd)
+  testthat::expect_identical(
+    graph,
+    graph_expected_2
+  )
+
+  code <- assert_code(code_3)
+  pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
+  graph <- code_graph(calls_pd)
+  testthat::expect_identical(
+    graph,
+    graph_expected_3
   )
 
 })
@@ -278,6 +351,28 @@ testthat::test_that("graph_parser returns proper code based on code_graph", {
   testthat::expect_identical(
     as.character(code[indexes]),
     code_a_expected
+  )
+
+  code <- assert_code(code_2)
+  pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
+  graph <- code_graph(calls_pd)
+  names <- 'b'
+  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+  testthat::expect_identical(
+    as.character(code[indexes]),
+    code_b_expected_2
+  )
+
+  code <- assert_code(code_3)
+  pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
+  graph <- code_graph(calls_pd)
+  names <- 'b'
+  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+  testthat::expect_identical(
+    as.character(code[indexes]),
+    code_b_expected_3
   )
 
 })
