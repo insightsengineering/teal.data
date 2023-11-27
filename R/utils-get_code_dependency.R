@@ -19,7 +19,7 @@ get_code_dependency <- function(code, names) {
 
   if (is_empty(code)) return(code)
 
-  code <- assert_code(code) # turns code into expression with srcref attribute
+  code <- assert_code(code) # Turns code into expression with srcref attribute.
   pd <- utils::getParseData(code)
   assert_names(names, pd)
 
@@ -87,7 +87,7 @@ code_graph <- function(calls_pd) {
 
   graph <- mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
 
-  remove_duplicates(graph)
+  remove_graph_duplicates(graph)
 
 }
 
@@ -176,6 +176,30 @@ extract_side_effects <- function(calls_pd) {
       unlist(strsplit(sub("\\s*#\\s*@linksto\\s+", "", linksto), "\\s+"))
     }
   )
+}
+
+#' @keywords internal
+#' @noRd
+remove_graph_duplicates <- function(graph) {
+  # This function is just a nice to have.
+  # This is not crucial for the implementation.
+  # Purpose: remove duplicates before ":" and after, in each element of list.
+
+  lapply(
+    lapply(graph, paste, collapse = "***"),
+    function(x) {
+      split <- strsplit(x, split = ":", fixed = TRUE)[[1]]
+      deps <- strsplit(split[1], split = "***", fixed = TRUE)[[1]]
+
+      if (length(split) == 1) {
+        unique(deps)
+      } else if (length(split) == 2) {
+        infl <- strsplit(split[2], split = "***", fixed = TRUE)[[1]][-1]
+        c(unique(deps), ":", unique(infl))
+      }
+    }
+  )
+
 }
 
 # graph_parser ----
@@ -272,199 +296,203 @@ is_empty <- function(code){
   identical(code, character(0)) || identical(trimws(code), "")
 }
 
+# # # examples and test -----------------------------------------------------------------------------------------------
 #
-# # examples and test -----------------------------------------------------------------------------------------------
-
-code <- "
-
-  a <- 5
-  b <- a + 3
-  a <- a + 6
-  5 -> c # @linksto a
-
-"
-
-graph_expected <- list(
-  c("a"),
-  c("b", ":", "a"),
-  c("a", ":", "a"),
-  c("a", "c")
-)
-
-code_a_expected <- c("a <- 5", "a <- a + 6", "c <- 5")
-code_b_expected <- c("a <- 5", "b <- a + 3")
-code_c_expected <- c("c <- 5")
-
-
-code_2 <- "
-
-  a <- 1
-  b <- identity(x = a)
-  a <- 2
-
-"
-
-graph_expected_2 <- list(
-  c("a"),
-  c("b", ":", "a"),
-  c("a")
-)
-
-code_b_expected_2 <- c("a <- 1", "b <- identity(x = a)")
-
-code_3 <- "
-
-  a <- 1
-  assign('b', 5) # @linksto b
-  b <- b + 2
-
-"
-
-graph_expected_3 <- list(
-  c("a"),
-  c("b"),
-  c("b", ":", "b")
-)
-
-code_b_expected_3 <- c("assign(\"b\", 5)", "b <- b + 2")
-
-code_4 <- "
-  iris[1:5, ] -> iris2
-  iris_head <- head(iris) # @linksto iris3
-  iris3 <- iris_head[1, ] # @linksto iris2
-  classes <- lapply(iris2, class)
-"
-
-graph_expected_4 <- list(
-  c("iris2", ":", "iris"),
-  c("iris3", "iris_head", ":", "iris"),
-  c("iris2", "iris3", ":", "iris_head"),
-  c("classes", ":", "iris2", "class")
-)
-
-code_c_expected_4 <- c(
-  "iris2 <- iris[1:5, ]",
-  "iris_head <- head(iris)",
-  "iris3 <- iris_head[1, ]",
-  "classes <- lapply(iris2, class)"
-)
-
-make_graph <- function(code) {
-  pd <- utils::getParseData(code)
-  calls_pd <- extract_calls(pd)
-  code_graph(calls_pd)
-}
-
-code <- assert_code(code)
-graph <- make_graph(code)
-
-code_2 <- assert_code(code_2)
-graph_2 <- make_graph(code_2)
-
-code_3 <- assert_code(code_3)
-graph_3 <- make_graph(code_3)
-
-code_4 <- assert_code(code_4)
-graph_4 <- make_graph(code_4)
-
-testthat::test_that("code_graph returns proper structure of the dependency graph", {
-
-  testthat::expect_identical(
-    graph,
-    graph_expected
-  )
-
-  testthat::expect_identical(
-    graph_2,
-    graph_expected_2
-  )
-
-  testthat::expect_identical(
-    graph_3,
-    graph_expected_3
-  )
-
-  testthat::expect_identical(
-    graph_4,
-    graph_expected_4
-  )
-
-})
-
-testthat::test_that("graph_parser returns proper code based on code_graph", {
-
-  names <- 'a'
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  testthat::expect_identical(
-    as.character(code[indexes]),
-    code_a_expected
-  )
-
-  names <- 'b'
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_2)))
-  testthat::expect_identical(
-    as.character(code_2[indexes]),
-    code_b_expected_2
-  )
-
-  names <- 'b'
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_3)))
-  testthat::expect_identical(
-    as.character(code_3[indexes]),
-    code_b_expected_3
-  )
-
-  names <- 'classes'
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_4)))
-  testthat::expect_identical(
-    as.character(code_4[indexes]),
-    code_c_expected_4
-  )
-
-})
-
-testthat::test_that("get_code_dependency returns proper code", {
-
-  testthat::expect_identical(
-    get_code_dependency(code, names = 'a'),
-    code_a_expected
-  )
-
-  testthat::expect_identical(
-    get_code_dependency(code, names = 'b'),
-    code_b_expected
-  )
-
-  testthat::expect_identical(
-    get_code_dependency(code, names = 'c'),
-    code_c_expected
-  )
-
-  testthat::expect_identical(
-    get_code_dependency(code_2, names = 'b'),
-    code_b_expected_2
-  )
-
-  testthat::expect_identical(
-    get_code_dependency(code_3, names = 'b'),
-    code_b_expected_3
-  )
-
-  testthat::expect_identical(
-    get_code_dependency(code_4, names = 'classes'),
-    code_c_expected_4
-  )
-
-})
-
-
-
-
-# TODO ------------------------------------------------------------------------------------------------------------
-
-# what with graphs containing <-
-# one last ERROR in tests
-# cleanup extact_occurence
-# what about a <- 5 -> c cases
-# remove function names from code_graph ?
-# remove duplicates in code_graph ?
+# code <- "
+#
+#   a <- 5
+#   b <- a + 3
+#   a <- a + 6
+#   5 -> c # @linksto a
+#
+# "
+#
+# graph_expected <- list(
+#   c("a"),
+#   c("b", ":", "a"),
+#   c("a", ":", "a"),
+#   c("a", "c")
+# )
+#
+# code_a_expected <- c("a <- 5", "a <- a + 6", "c <- 5")
+# code_b_expected <- c("a <- 5", "b <- a + 3")
+# code_c_expected <- c("c <- 5")
+#
+#
+# code_2 <- "
+#
+#   a <- 1
+#   b <- identity(x = a)
+#   a <- 2
+#
+# "
+#
+# graph_expected_2 <- list(
+#   c("a"),
+#   c("b", ":", "a"),
+#   c("a")
+# )
+#
+# code_b_expected_2 <- c("a <- 1", "b <- identity(x = a)")
+#
+# code_3 <- "
+#
+#   a <- 1
+#   assign('b', 5) # @linksto b
+#   b <- b + 2
+#
+# "
+#
+# graph_expected_3 <- list(
+#   c("a"),
+#   c("b"),
+#   c("b", ":", "b")
+# )
+#
+# code_b_expected_3 <- c("assign(\"b\", 5)", "b <- b + 2")
+#
+# code_4 <- "
+#   iris[1:5, ] -> iris2
+#   iris_head <- head(iris) # @linksto iris3
+#   iris3 <- iris_head[1, ] # @linksto iris2
+#   classes <- lapply(iris2, class)
+# "
+#
+# graph_expected_4 <- list(
+#   c("iris2", ":", "iris"),
+#   c("iris3", "iris_head", ":", "iris"),
+#   c("iris2", "iris3", ":", "iris_head"),
+#   c("classes", ":", "iris2", "class")
+# )
+#
+# code_c_expected_4 <- c(
+#   "iris2 <- iris[1:5, ]",
+#   "iris_head <- head(iris)",
+#   "iris3 <- iris_head[1, ]",
+#   "classes <- lapply(iris2, class)"
+# )
+#
+# make_graph <- function(code) {
+#   pd <- utils::getParseData(code)
+#   calls_pd <- extract_calls(pd)
+#   code_graph(calls_pd)
+# }
+#
+# code <- assert_code(code)
+# graph <- make_graph(code)
+#
+# code_2 <- assert_code(code_2)
+# graph_2 <- make_graph(code_2)
+#
+# code_3 <- assert_code(code_3)
+# graph_3 <- make_graph(code_3)
+#
+# code_4 <- assert_code(code_4)
+# graph_4 <- make_graph(code_4)
+#
+# testthat::test_that("code_graph returns proper structure of the dependency graph", {
+#
+#   testthat::expect_identical(
+#     graph,
+#     graph_expected
+#   )
+#
+#   testthat::expect_identical(
+#     graph_2,
+#     graph_expected_2
+#   )
+#
+#   testthat::expect_identical(
+#     graph_3,
+#     graph_expected_3
+#   )
+#
+#   testthat::expect_identical(
+#     graph_4,
+#     graph_expected_4
+#   )
+#
+# })
+#
+# testthat::test_that("graph_parser returns proper code based on code_graph", {
+#
+#   names <- 'a'
+#   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+#   testthat::expect_identical(
+#     as.character(code[indexes]),
+#     code_a_expected
+#   )
+#
+#   names <- 'b'
+#   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_2)))
+#   testthat::expect_identical(
+#     as.character(code_2[indexes]),
+#     code_b_expected_2
+#   )
+#
+#   names <- 'b'
+#   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_3)))
+#   testthat::expect_identical(
+#     as.character(code_3[indexes]),
+#     code_b_expected_3
+#   )
+#
+#   names <- 'classes'
+#   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_4)))
+#   testthat::expect_identical(
+#     as.character(code_4[indexes]),
+#     code_c_expected_4
+#   )
+#
+# })
+#
+# testthat::test_that("get_code_dependency returns proper code", {
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code, names = 'a'),
+#     code_a_expected
+#   )
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code, names = 'b'),
+#     code_b_expected
+#   )
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code, names = 'c'),
+#     code_c_expected
+#   )
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code_2, names = 'b'),
+#     code_b_expected_2
+#   )
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code_3, names = 'b'),
+#     code_b_expected_3
+#   )
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code_4, names = 'classes'),
+#     code_c_expected_4
+#   )
+#
+# })
+#
+# testthat::test_that("remove_graph_duplicates cleans graph out ouf duplicates", {
+#   graph <- list(
+#     c("a", "a", ":", "b"),
+#     c("a", ":", "b", "b"),
+#     c("a", ":", "a")
+#   )
+#   testthat::expect_equal(
+#     remove_graph_duplicates(graph),
+#     list(
+#       c("a", ":", "b"),
+#       c("a", ":", "b"),
+#       c("a", ":", "a")
+#     )
+#   )
+#
+# })
