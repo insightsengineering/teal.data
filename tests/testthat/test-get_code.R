@@ -145,7 +145,6 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
   )
 })
 
-# ERROR: to be fixed
 testthat::test_that("get_code with datanames detects every assign calls even if not evaluated", {
   code <- c(
     "a <- 1",
