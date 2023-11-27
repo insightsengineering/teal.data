@@ -266,7 +266,6 @@ testthat::test_that(
   }
 )
 
-# ERROR: TO BE FIXED
 testthat::test_that(
   "@linksto gets extracted if it's a side-effect on a dependent object of a dependent object",
   {
