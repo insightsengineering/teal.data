@@ -287,7 +287,6 @@ testthat::test_that(
 
 # functions -------------------------------------------------------------------------------------------------------
 
-# ERROR: to be fixed
 testthat::test_that("get_code with datanames ignores occurrence in function definition", {
   code <- c(
     "b <- 2",
@@ -305,7 +304,6 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
-# ERROR: to be fixed
 testthat::test_that("get_code with datanames ignores occurrence in function definition without { curly brackets", {
   code <- c(
     "b <- 2",

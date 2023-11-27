@@ -94,11 +94,24 @@ code_graph <- function(calls_pd) {
 #' @noRd
 extract_occurence <- function(calls_pd) {
 
-  # TO BE POLISHED:
-  # CAN
-  # R/utils-code_dependency.R used_in_function
-  # R/utils-code_dependency.R code_dependency()
-  # HELP?
+  used_in_function <- function(call, rows) {
+
+    # If an object is a function parameter,
+    # then in calls_pd there is a `SYMBOL_FORMALS` entry for that object.
+    objects <- sapply(rows, function(row) call$text[row])
+
+    vapply(objects, function(object) {
+      if (any(call[call$token == "SYMBOL_FORMALS", "text"] == object) && any(call$token == "FUNCTION")) {
+        object_sf_ids <- call[call$text == object & call$token == "SYMBOL", "id"]
+        function_start_id <- call[call$token == "FUNCTION", "id"]
+        all(object_sf_ids > function_start_id)
+      } else {
+        FALSE
+      }
+    },
+      logical(1)
+    )
+  }
 
   lapply(
     calls_pd,
@@ -115,6 +128,8 @@ extract_occurence <- function(calls_pd) {
       #
 
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
+
+      sym_cond <- sym_cond[!used_in_function(x, sym_cond)]
 
       # watch out for SYMBOLS after $ and @, e.g. x$a x@a // x is object, a is not
       # for x$a, a's ID is $'s ID-2
@@ -252,17 +267,6 @@ assert_names <- function(names, pd) {
 #' @noMd
 is_empty <- function(code){
   identical(code, character(0)) || identical(trimws(code), "")
-}
-
-# LAST TODO:
-used_in_function <- function(call, object) {
-  if (any(call[call$token == "SYMBOL_FORMALS", "text"] == object) && any(call$token == "FUNCTION")) {
-    object_sf_ids <- call[call$text == object & call$token == "SYMBOL", "id"]
-    function_start_id <- call[call$token == "FUNCTION", "id"]
-    all(object_sf_ids > function_start_id)
-  } else {
-    FALSE
-  }
 }
 
 #
@@ -450,3 +454,12 @@ used_in_function <- function(call, object) {
 #
 # })
 #
+
+
+
+# TODO ------------------------------------------------------------------------------------------------------------
+
+# what with graphs containing <-
+# one last ERROR in tests
+# cleanup extact_occurence
+# what about a <- 5 -> c cases
