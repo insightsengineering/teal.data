@@ -17,4 +17,4 @@
 }
 
 # use non-exported function from teal.code
-format_expression <- getFromNamespace("format_expression", "teal.code")
+lang2calls <- getFromNamespace("lang2calls", "teal.code")
