@@ -7,7 +7,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  final_list <- append_side_effects(cooccurence, side_effects)
+  final_list <- prepend_side_effects(cooccurence, side_effects)
 
   # structure - character(n)
   #           - (1) character(n) # occurence  OR side_effectS
@@ -85,7 +85,7 @@ extract_side_effects <- function(calls_pd) {
   )
 }
 
-append_side_effects <- function(cooccurence, side_effects) {
+prepend_side_effects <- function(cooccurence, side_effects) {
   mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
 }
 
