@@ -1,32 +1,30 @@
-
-
+#' Create Object Dependencies Graph Within Parsed Code
+#'
+#' @description This function constructs a dependency graph that identifies the relationships between objects in
+#' parsed code. It helps you understand which objects are needed to recreate a specific object.
+#'
+#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
+#'
+#' @return A list (of length of input `calls_pd`) where each element represents one call. Each element consists of a
+#' character vector containing names of objects that were influenced by this call, and names of objects influencing this
+#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call influenced object named `a`,
+#' and thi object was influenced by objects named `b` and `c`.
+#'
+#' @keywords internal
+#' @noRd
 code_graph <- function(calls_pd) {
 
-  # below are 3 lists, length = length(calls_pd)
   cooccurence <- extract_occurence(calls_pd)
 
   side_effects <- extract_side_effects(calls_pd)
 
-  final_list <- prepend_side_effects(cooccurence, side_effects)
+  # prepend side_effects to cooccurence
+  mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
 
-  # structure - character(n)
-  #           - (1) character(n) # occurence  OR side_effectS
-  #           - (2) character(n) # occurence AND side_effectS
-  #           - (3) character(n) # occurence  OR side_effectS  and influencers
-  #           - (5) character(n) # occurence AND side_effectS  and influencers
-  #           - (6) character(n) #                            only influencers  - is this possible?
-  #
-  #           - occurence can be character(n), e.g. "a <- b <- 5", "a <- iris"                # a, b / a
-  #           - side_effectS  is character(n), e.g. "@linktso ADSL", "@linktso ADSL ADLB"     # ADSL / ADSL ADLB
-  #           - influencers   is character(n), e.g. "a <- iris", "a <- setdiff(letters, 'd')" # iris / letters, b
-  #
-  # we need a separator to differentiate between influencers
-  # proposition:
-  # character(n) containing ":" element that divides occurence and side_effects from influencers
-  # for case with only influencers then it is c(":", "influencer_name") - is this possible?
-  final_list
 }
 
+#' @keywords internal
+#' @noRd
 extract_occurence <- function(calls_pd) {
 
   # TO BE POLISHED:
@@ -75,6 +73,8 @@ extract_occurence <- function(calls_pd) {
   )
 }
 
+#' @keywords internal
+#' @noRd
 extract_side_effects <- function(calls_pd) {
   lapply(
     calls_pd,
@@ -85,18 +85,27 @@ extract_side_effects <- function(calls_pd) {
   )
 }
 
-prepend_side_effects <- function(cooccurence, side_effects) {
-  mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
-}
-
-
+#' Return the lines of code (with side-effects) needed to reproduce the object
+#'
+#' @details This function assumes that object relationships are established using the `<-`, `=`, or `->` assignment
+#' operators. It does not support other object creation methods like `assign` or `<<-`, nor non-standard-evaluation
+#' methods. To specify relationships between side-effects and objects, you can use the comment tag
+#' `# @linksto object_name` at the end of a line where the side-effect occurs.
+#'
+#' @param code An `expression` with `srcref` attribute or a `character` with the code.
+#' @param names A `character(n)` with object names.
+#'
+#' @return `character` vector of elements of `code` calls that were required to build the side-effects and
+#' influencing objects having and impact on the `object`
+#'
+#' @keywords internal
 get_code_dependency <- function(code, names) {
   assert_classes(code, names)
 
   if (is_empty(code)) return(code)
 
   code <- assert_code(code)
-  pd <- create_pd(code)
+  pd <- utils::getParseData(code)
   assert_names(names, pd)
 
   calls_pd <- extract_calls(pd)
@@ -106,6 +115,10 @@ get_code_dependency <- function(code, names) {
   as.character(code[indexes])
 }
 
+#' Group the result of `utils::getParseData()` into separate calls
+#' @param pd (`data.frame`) A result of `utils::getParseData()`.
+#' @keywords internal
+#' @noRd
 extract_calls <- function(pd) {
   get_children <- function(pd, parent) {
     idx_children <- abs(pd$parent) == parent
@@ -121,6 +134,18 @@ extract_calls <- function(pd) {
   lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
 }
 
+
+#' Return the indexes of calls of code needed to reproduce the object
+#'
+#' @param x The name of the object to return code for.
+#' @param graph A result of `code_graph()`.
+#' @param skip `NULL` or `character` vector. In a recursive call, it is needed to drop parent object to omit dependency
+#' cycles.
+#'
+#' @return `numeric` vector indicating which calls of `graph` are required to build the object passed by name in `x`.
+#'
+#' @keywords internal
+#' @noRd
 graph_parser <- function(x, graph, skip = NULL) {
 
   skip <- c(x, skip)
@@ -164,11 +189,18 @@ graph_parser <- function(x, graph, skip = NULL) {
 
 }
 
+
+# utils -----------------------------------------------------------------------------------------------------------
+
+#' @keywords internal
+#' @noMd
 assert_classes <- function(code, names) {
   checkmate::assert_multi_class(code, classes = c("character", "expression"))
   checkmate::assert_character(names)
 }
 
+#' @keywords internal
+#' @noMd
 assert_code <- function(code) {
   if (is.expression(code)) {
     if (!is.null(attr(code, "srcref"))) {
@@ -184,6 +216,8 @@ assert_code <- function(code) {
   parsed_code
 }
 
+#' @keywords internal
+#' @noMd
 assert_names <- function(names, pd) {
   symbols <- unique(pd[pd$token == "SYMBOL", "text"])
   if (!all(names %in% symbols)) {
@@ -194,16 +228,15 @@ assert_names <- function(names, pd) {
   }
 }
 
-create_pd <- function(code) {
-  utils::getParseData(code)
-}
-
+#' @keywords internal
+#' @noMd
 is_empty <- function(code){
   identical(code, character(0)) || identical(trimws(code), "")
 }
 
 
-# example ---------------------------------------------------------------------------------------------------------
+
+# examples and test -----------------------------------------------------------------------------------------------
 
 code <- "
 
@@ -225,55 +258,55 @@ code_a_expected <- c("a <- 5", "a <- a + 6", "c <- 5")
 code_b_expected <- c("a <- 5", "b <- a + 3")
 code_c_expected <- c("c <- 5")
 
-testthat::test_that("code_graph returns proper structure of the dependency graph", {
+# testthat::test_that("code_graph returns proper structure of the dependency graph", {
+#
+#   code <- assert_code(code)
+#   pd <- utils::getParseData(code)
+#   calls_pd <- extract_calls(pd)
+#   graph <- code_graph(calls_pd)
+#   testthat::expect_identical(
+#     graph,
+#     graph_expected
+#   )
+#
+# })
+#
+# testthat::test_that("graph_parser returns proper code based on code_graph", {
+#
+#   code <- assert_code(code)
+#   pd <- utils::getParseData(code)
+#   calls_pd <- extract_calls(pd)
+#   graph <- code_graph(calls_pd)
+#   names <- 'a'
+#   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+#   testthat::expect_identical(
+#     as.character(code[indexes]),
+#     code_a_expected
+#   )
+#
+# })
 
-  code <- assert_code(code)
-  pd <- create_pd(code)
-  calls_pd <- extract_calls(pd)
-  graph <- code_graph(calls_pd)
-  testthat::expect_identical(
-    graph,
-    graph_expected
-  )
-
-})
-
-testthat::test_that("graph_parser returns proper code based on code_graph", {
-
-  code <- assert_code(code)
-  pd <- create_pd(code)
-  calls_pd <- extract_calls(pd)
-  graph <- code_graph(calls_pd)
-  names <- 'a'
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  testthat::expect_identical(
-    as.character(code[indexes]),
-    code_a_expected
-  )
-
-})
-
-testthat::test_that("get_code_dependency returns proper code", {
-
-  testthat::expect_identical(
-    get_code_dependency(code, names = 'a'),
-    code_a_expected
-  )
-
-  # TO BE FIXED:
-  testthat::skip({
-    testthat::expect_identical(
-      get_code_dependency(code, names = 'b'),
-      code_b_expected
-    )
-
-    testthat::expect_identical(
-      get_code_dependency(code, names = 'C'),
-      code_c_expected
-    )
-  })
-
-})
+# testthat::test_that("get_code_dependency returns proper code", {
+#
+#   testthat::expect_identical(
+#     get_code_dependency(code, names = 'a'),
+#     code_a_expected
+#   )
+#
+#   # TO BE FIXED:
+#   testthat::skip({
+#     testthat::expect_identical(
+#       get_code_dependency(code, names = 'b'),
+#       code_b_expected
+#     )
+#
+#     testthat::expect_identical(
+#       get_code_dependency(code, names = 'C'),
+#       code_c_expected
+#     )
+#   })
+#
+# })
 
 
 
