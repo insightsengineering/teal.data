@@ -27,7 +27,7 @@ get_code_dependency <- function(code, names) {
 
   graph <- code_graph(calls_pd)
   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  as.character(code[indexes])
+  as.character(code[unique(indexes)])
 }
 
 #' Group the result of `utils::getParseData()` into separate calls
@@ -155,45 +155,36 @@ graph_parser <- function(x, graph, skip = NULL) {
 
   skip <- c(x, skip)
 
-  # returns: logical
-  occurence <- ##### NOTE (1) BELOW
+  occurence <-
     vapply(graph, function(call) {
-      objects <- strsplit(call, split = ":", fixed = TRUE)[[1]][1]
-      x %in% objects
+      if (":" %in% call) {
+        call <- call[1:(which(":" == call)-1)]
+      }
+      x %in% call
     },
     logical(1)
   )
 
-  # returns: character
-  influencers <- #
+  influencers <-
     unlist(
       lapply(graph[occurence], function(call) {
         call[which(":" == call)+1]
-        #strsplit(call, split = ":", fixed = TRUE)[[1]][2]
       })
     )
   influencers <- setdiff(influencers, skip)
 
-  # STOPPED HERE: CONTINUE FROM HERE - almost there!
   if (length(influencers)) {
-    # returns: logical
-    influencers_deps <-
+    influencers_ids <-
       lapply(influencers, function(influencer){
-        graph_parser(influencers, graph[1:max(which(occurence))], skip) ##### NOTE (2) BELOW
+        graph_parser(influencers, graph[1:max(which(occurence))], skip)
       })
 
-    unique(which(occurence), which(influencers_deps))
+    sort(unique(c(which(occurence), unlist(influencers_ids))))
   } else {
     which(occurence)
   }
 
-  ##### NOTE (1)
-  # DOUBLE CHECK: Does it also return side effects created after the object was used?
-  ##### NOTE (2)
-  # What about side effects for influencers that are in higher lines than max(which(occurence))
-
 }
-
 
 # utils -----------------------------------------------------------------------------------------------------------
 
@@ -298,19 +289,15 @@ testthat::test_that("get_code_dependency returns proper code", {
     code_a_expected
   )
 
-  # TO BE FIXED:
-  testthat::skip({
-    testthat::expect_identical(
-      get_code_dependency(code, names = 'b'),
-      code_b_expected
-    )
+  testthat::expect_identical(
+    get_code_dependency(code, names = 'b'),
+    code_b_expected
+  )
 
-    testthat::expect_identical(
-      get_code_dependency(code, names = 'C'),
-      code_c_expected
-    )
-  })
-
+  testthat::expect_identical(
+    get_code_dependency(code, names = 'c'),
+    code_c_expected
+  )
 })
 
 
