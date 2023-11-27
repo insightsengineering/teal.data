@@ -59,6 +59,7 @@ testthat::test_that(
   }
 )
 
+# TO BE FIXED: ERROR
 testthat::test_that("get_code with datanames extracts code of a parent binding if used as an arg in fun call", {
   code <- c(
     "a <- 1",
@@ -101,6 +102,7 @@ testthat::test_that("get_code with datanames can't extract the code when no assi
   )
 })
 
+# ERROR: TO BE FIXED
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
   code <- c(
     "a <- 1",
@@ -115,7 +117,7 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
   )
 })
 
-
+# ERROR: TO BE FIXED
 testthat::test_that(
   "get_code with datanames can extract the code when function creates an object which is used only on rhs",
   {
@@ -146,6 +148,7 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
   )
 })
 
+# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames detects every assign calls even if not evaluated", {
   code <- c(
     "a <- 1",
@@ -251,6 +254,7 @@ testthat::test_that(
   }
 )
 
+# ERROR: TO BE FIXED
 testthat::test_that(
   "@linksto gets extracted if it's a side-effect on a dependent object",
   {
@@ -268,6 +272,7 @@ testthat::test_that(
   }
 )
 
+# ERROR: TO BE FIXED
 testthat::test_that(
   "@linksto gets extracted if it's a side-effect on a dependent object of a dependent object",
   {
@@ -335,6 +340,7 @@ testthat::test_that("get_code with datanames ignores effect of the object which 
   )
 })
 
+# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames detects occurrence of the function object", {
   code <- c(
     "a <- 1",
@@ -350,6 +356,7 @@ testthat::test_that("get_code with datanames detects occurrence of the function 
   )
 })
 
+# ERROR: TO BE FIXED
 testthat::test_that(
   "Can't detect occurrence of function definition when a formal is named the same as a function",
   {
@@ -369,6 +376,7 @@ testthat::test_that(
 
 # $ ---------------------------------------------------------------------------------------------------------------
 
+# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames understands $ usage and do not treat rhs of $ as objects (only lhs)", {
   code <- c(
     "x <- data.frame(a = 1:3)",
@@ -389,6 +397,7 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
   )
 })
 
+# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames detects cooccurrence properly even if all objects are on rhs", {
   code <- c(
     "a <- 1",
@@ -406,6 +415,7 @@ testthat::test_that("get_code with datanames detects cooccurrence properly even 
 
 # @ ---------------------------------------------------------------------------------------------------------------
 
+# ERROR: TO BE FIXED
 testthat::test_that("get_code with datanames understands @ usage and do not treat rhs of @ as objects (only lhs)", {
   code <- c(
     "setClass('aclass', slots = c(a = 'numeric', x = 'numeric', y = 'numeric')) # @linksto a x",
