@@ -32,8 +32,7 @@ The `join_keys` function is used to specify keys:
   - `dataset_1`, `dataset_2` - name of each datasets (if `dataset_2` is the same as `dataset_1` then it creates a primary key)
   - `key` - (optionally) named vector of column names
 
-Note that it is assumed that join keys are symmetric, i.e. `join_key("x", "y", "x_col" = "y_col")` will enable merge
-from "x" to "y" and vice versa.
+Note that it is assumed that join keys are symmetric, i.e. `join_key("x", "y", c("x_col" = "y_col"))` will set relationship from "x" to "y" and vice versa.
 
 ```{r, eval=FALSE}
 jk <- join_keys(
