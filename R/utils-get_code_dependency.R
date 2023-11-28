@@ -30,7 +30,7 @@ get_code_dependency <- function(code, names) {
   as.character(code[unique(indexes)])
 }
 
-#' Group the result of `utils::getParseData()` into separate calls
+#' Split the result of `utils::getParseData()` into separate calls
 #' @param pd (`data.frame`) A result of `utils::getParseData()`.
 #'
 #' @return A `list` of length equal to the number of calls in code used to create `pd`. Each element of the returned
