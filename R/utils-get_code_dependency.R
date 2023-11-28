@@ -170,14 +170,10 @@ extract_occurrence <- function(calls_pd) {
         ass_cond <- grep("ASSIGN", x$token)
         if (length(ass_cond)) { # NOTE(1)
           sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE(2)
-          text <- x[sort(c(sym_cond, ass_cond)), "text"]
-
-          ans <- if (text[1] == "->") { # NOTE(3)
-            rev(text[-1])
-          } else {
-            text[-1]
-          }
-          c(ans[1], ":", unique(ans[-1]))
+          if (x$text[ass_cond] == "->") { # NOTE(3)
+            sym_cond <- rev(sym_cond)
+          } 
+          append(x[sym_cond, "text"], ":", after = 1)
         } else {
           x[sym_cond, "text"]
         }
