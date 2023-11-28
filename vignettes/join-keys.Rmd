@@ -1,7 +1,9 @@
 ---
 title: "Join Keys"
 author: "NEST CoreDev"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Join Keys}
   %\VignetteEngine{knitr::rmarkdown}
@@ -128,13 +130,10 @@ join_keys(data)
 # nolint end: commented_code_linter.
 ```
 
-### Merge keys with `teal_data`
+### Foreign keys with `teal_data`
 
-When passing multiple datasets to the `teal_data` function, dataset relationship are set using
-`join_keys` and `join_key` and these are used to merge datasets together
-within `teal` apps. For users familiar with `SQL` database schema, these relationships are symmetric and not as strict
-as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key
-columns are present in the parent table.
+When passing multiple datasets to the `teal_data` function, dataset relationship are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
+For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
 
 For example:
 
