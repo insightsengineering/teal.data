@@ -17,8 +17,8 @@ Each dataset can have a set of keys that inform its structure and relation to ot
 - Columns consisting of the primary key
 - Merge keys, a concept similar to `SQL`'s foreign key.
 
-Usually, an application developer needs to specify the keys manually, but in case of datasets named according to the `ADaM` standard, `teal` can assign the keys on its own.
-Refer to `vignette("including-adam-data-in-teal", package = "teal")` for more information.
+Usually, an application developer needs to specify the keys manually, but in case of datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own via `default_cdisc_join_keys` object.
+See section called ["`ADaM` `join_keys`"](#adam-join_keys) below on how to use this object to select specific datasets.
 
 ### Anatomy of `join_keys`
 
@@ -100,7 +100,7 @@ join_keys(td)
 
 We can extend the previous example and define primary keys for multiple datasets:
 
-```{r, message=FALSE, collapse=TRUE}
+```{r, message=FALSE}
 library(teal.data)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
@@ -138,7 +138,7 @@ columns are present in the parent table.
 
 For example:
 
-```{r, collapse=TRUE}
+```{r}
 library(teal.data)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
@@ -170,7 +170,7 @@ If two datasets that are a child of the same parent _(and have common keys)_, th
 
 These implicit relationships can be used to merge 2 datasets together, just as if they were defined manually.
 
-```{r, collapse=TRUE}
+```{r}
 jk <- join_keys(
   join_key("ds1", keys = "id1"),
   join_key("ds2", keys = c("id1", "id2")),
@@ -183,5 +183,29 @@ jk <- join_keys(
 parents(jk) <- list(ds2 = "ds1", ds3 = "ds1")
 
 jk["ds3", "ds2"]
-# note that the definition above does not define "ds2" <--> "ds3"
 ```
+
+_note_: the definition above contains no `join_key` for `"ds2" <-> "ds3"`
+
+### `ADaM` `join_keys`
+
+When working with datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own using the `teal.data::default_cdisc_join_keys` that contains primary and foreign keys for standard datasets (`r paste("\u0060", names(default_cdisc_join_keys), "\u0060", collapse = ", ", sep = "")`).
+
+The full set of join keys can be used, or a subset of those.
+Please note, that if the subsetted dataset has a parent, that will also be returned.
+
+```{r}
+default_cdisc_join_keys["ADSL"]
+
+default_cdisc_join_keys["ADTTE"]
+
+default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
+```
+
+#### The full set of `ADaM` `join_keys`
+
+```{r}
+default_cdisc_join_keys
+```
+
+
