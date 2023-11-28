@@ -76,7 +76,7 @@ The simplest method to define the join keys when calling the `teal_data` functio
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
 
 ```{r, include=FALSE}
-# nolint start: commented_code_linter
+# nolint start: commented_code_linter.
 ```
 
 ```{r, message=FALSE}
@@ -125,7 +125,7 @@ join_keys(data)
 ```
 
 ```{r, include=FALSE}
-# nolint end: commented_code_linter
+# nolint end: commented_code_linter.
 ```
 
 ### Merge keys with `teal_data`
