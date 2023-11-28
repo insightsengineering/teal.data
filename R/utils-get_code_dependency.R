@@ -32,6 +32,10 @@ get_code_dependency <- function(code, names) {
 
 #' Group the result of `utils::getParseData()` into separate calls
 #' @param pd (`data.frame`) A result of `utils::getParseData()`.
+#'
+#' @return A `list` of length equal to the number of calls in code used to create `pd`. Each element of the returned
+#' `list` is one call of a structure similar to `pd` (`utils::getParseData()`) but limited to three columns
+#' (`"token"`, `"text"`, `"id"`).
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
