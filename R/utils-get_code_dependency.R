@@ -75,17 +75,19 @@ fix_comments <- function(calls) {
 #' parsed code. It helps you understand which objects are needed to recreate a specific object.
 #'
 #' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
+#' A result of `extract_calls()` function.
 #'
-#' @return A list (of length of input `calls_pd`) where each element represents one call. Each element consists of a
+#' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
 #' character vector containing names of objects that were influenced by this call, and names of objects influencing this
 #' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call influenced object named `a`,
-#' and the object was influenced by objects named `b` and `c`.
+#' and the object was influenced by objects named `b` and `c`. If an object was marked with `@linksto` side effects tag
+#' then it appears as an influenced object at the beginning of a vector.
 #'
 #' @keywords internal
 #' @noRd
 code_graph <- function(calls_pd) {
 
-  cooccurence <- extract_occurence(calls_pd)
+  cooccurence <- extract_occurrence(calls_pd)
 
   side_effects <- extract_side_effects(calls_pd)
 
@@ -95,9 +97,20 @@ code_graph <- function(calls_pd) {
 
 }
 
+#' Extract Object Occurrence
+#'
+#' @description Extract objects occurrence within calls passed by `calls_pd`. It also detects which objects are
+#' influenced by others within a call, and which are influencers.
+#'
+#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
+#' A result of `extract_calls()` function.
+#' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
+#' character vector containing names of objects that were influenced by this call, and names of objects influencing this
+#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call influenced object named `a`,
+#' and the object was influenced by objects named `b` and `c`.
 #' @keywords internal
 #' @noRd
-extract_occurence <- function(calls_pd) {
+extract_occurrence <- function(calls_pd) {
 
   used_in_function <- function(call, rows) {
 
@@ -170,6 +183,21 @@ extract_occurence <- function(calls_pd) {
   )
 }
 
+#' Extract Side Effects
+#'
+#' @description Extract all object names from the code that are marked with `@linksto` tag.
+#'
+#' @details The code sometimes consists of functions calls that create side effects. Those are actions that modify the
+#' environment outside of the function environment. Sometimes there is no way to understand, just based on static code
+#' analysis, which objects are modified or created by a function call that has side effects. To allow to point to
+#' objects that are modified or created by function calls with side effects, a `@linksto` comment tag was introduced.
+#' This tag enables to restore the reproducible code for an object, with all side effects that do not directly change
+#' this object. Read more about side effects and the usage of `@linksto` tag in [`get_code_dependencies()`] function.
+#'
+#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
+#' A result of `extract_calls()` function.
+#' @return A `list` of length equal to the lenght of `calls_pd` of character vectors of names of objects that are
+#' influenced by `@linksto` tag in a corresponding `call` element of `calls_pd`.
 #' @keywords internal
 #' @noRd
 extract_side_effects <- function(calls_pd) {
