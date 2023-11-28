@@ -141,7 +141,7 @@ extract_occurrence <- function(calls_pd) {
   }
 
   extract_function_names <- function(calls_pd) {
-    # returns function names which are created within code and called
+    # Returns function names which are created within code and called.
     pd <- do.call(rbind, calls_pd)
     symbols <- pd[pd$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"), c('token', 'text')]
     symbols_table <- table(unique(symbols)$text)
@@ -172,7 +172,7 @@ extract_occurrence <- function(calls_pd) {
           sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE(2)
           if (x$text[ass_cond] == "->") { # NOTE(3)
             sym_cond <- rev(sym_cond)
-          } 
+          }
           append(x[sym_cond, "text"], ":", after = 1)
         } else {
           x[sym_cond, "text"]
