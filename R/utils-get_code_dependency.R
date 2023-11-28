@@ -19,7 +19,7 @@ get_code_dependency <- function(code, names) {
 
   if (is_empty(code)) return(code)
 
-  code <- assert_code(code) # Turns code into expression with srcref attribute.
+  code <- parse(code, keep.source = TRUE) 
   pd <- utils::getParseData(code)
   assert_names(names, pd)
 
