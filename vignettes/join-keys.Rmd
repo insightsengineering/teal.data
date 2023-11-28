@@ -71,10 +71,14 @@ jk
 | `## ds5: [no primary keys]`    |                                                                               | 
 | `##   <-> ds4: [id4] `         |                                                                               | 
 
-### Primary key
+### Primary key with `teal_data`
 
 The simplest method to define the join keys when calling the `teal_data` function is to use the `join_keys` argument.
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
+
+```{r, include=FALSE}
+# nolint start: commented_code_linter
+```
 
 ```{r, message=FALSE}
 library(teal.data)
@@ -97,7 +101,7 @@ join_keys(td)
 
 We can extend the previous example and define primary keys for multiple datasets:
 
-```{r, message=FALSE}
+```{r, message=FALSE, collapse=TRUE}
 library(teal.data)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
@@ -110,7 +114,7 @@ data <- teal_data(
     join_key("D1", keys = c("X")),
     join_key("D2", keys = c("V", "W"))
     ## equivalent to using primary_key
-    # join_key("D2", "D2", keys = c("V", "W")),
+    # join_key("D2", "D2", keys = c("V", "W"))
   ),
   code = c(
     "D1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
@@ -121,7 +125,11 @@ data <- teal_data(
 join_keys(data)
 ```
 
-### Merge keys
+```{r, include=FALSE}
+# nolint end: commented_code_linter
+```
+
+### Merge keys with `teal_data`
 
 When passing multiple datasets to the `teal_data` function, dataset relationship are set using
 `join_keys` and `join_key` and these are used to merge datasets together
@@ -131,7 +139,7 @@ columns are present in the parent table.
 
 For example:
 
-```{r, eval=FALSE}
+```{r, collapse=TRUE}
 library(teal.data)
 
 data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
@@ -152,6 +160,8 @@ data <- teal_data(
     "D3 <- data.frame(V = factor(5:14), T = 4)"
   )
 )
+
+join_keys(data)
 ```
 
 ### Implicit relationships
