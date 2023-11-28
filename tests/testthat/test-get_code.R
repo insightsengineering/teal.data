@@ -1,13 +1,13 @@
-warning <- "warning('Code was not verified for reproducibility.')"
+warning_message <- "warning('Code was not verified for reproducibility.')"
 
 testthat::test_that("get_code with datanames does not brake for empty code", {
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = character(0)), datanames = "a"),
-    warning
+    warning_message
   )
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = ""), datanames = "a"),
-    c(warning, "")
+    c(warning_message, "")
   )
 })
 
@@ -413,11 +413,12 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
     "a@x <- a@x + 2",
     "a@x <- x@a"
   )
-  tdata <- eval_code(teal_data(), code)
+  tdata <- teal_data(x = 1, a = 1, code = code)
   datanames(tdata) <- c('x', 'a')
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     c(
+      warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
       'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)'
     )
@@ -425,6 +426,7 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     c(
+      warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
       'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
       'a <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
