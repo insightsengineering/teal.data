@@ -289,7 +289,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 #' @keywords internal
 #' @noMd
 assert_classes <- function(code, names) {
-  checkmate::assert_multi_class(code, classes = c("character", "expression"))
+  checkmate::assert_class(code, classes = "character")
   checkmate::assert_character(names)
 }
 
