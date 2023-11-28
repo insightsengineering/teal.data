@@ -28,24 +28,26 @@ articles:
       - teal-data-reproducibility
 
 reference:
-  - title: Data Constructors
-    desc: For creating data objects.
+  - title: Reproducible data class
+    desc: Functions to create and manage teal_data class.
     contents:
       - cdisc_data
-      - teal_data
-      - show,teal_data-method
-  - title: Dataset Functions
-    desc: For loading and modifying data objects.
-    contents:
-      - get_cdisc_keys
+      - datanames
+      - datanames<-
       - get_code,teal_data-method
       - get_join_keys
+      - join_key
+      - join_keys
+      - join_keys<-
+      - names<-.join_keys
+      - parents
+      - parents<-
+      - show,teal_data-method
+      - teal_data
       - verify
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:
-      - datanames
-      - datanames<-
       - default_cdisc_join_keys
       - col_labels
       - col_labels<-
@@ -53,13 +55,8 @@ reference:
       - data_label
       - data_label<-
       - example_cdisc_data
+      - get_cdisc_keys
       - get_labels
-      - join_key
-      - join_keys
-      - join_keys<-
-      - names<-.join_keys
-      - parents
-      - parents<-
   - title: Deprecated functions and methods
     desc: Functions deprecated in teal.data v0.3.1
     contents:
