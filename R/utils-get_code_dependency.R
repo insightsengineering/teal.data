@@ -15,13 +15,22 @@
 #'
 #' @keywords internal
 get_code_dependency <- function(code, names) {
-  assert_classes(code, names)
+  checkmate::assert_class(code, classes = "character")
+  checkmate::assert_character(names)
 
-  if (is_empty(code)) return(code)
+  if (identical(code, character(0)) || identical(trimws(code), "")) return(code)
 
-  code <- parse(code, keep.source = TRUE) 
+  code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
-  assert_names(names, pd)
+
+  # Assert names are actually in code.
+  symbols <- unique(pd[pd$token == "SYMBOL", "text"])
+  if (!all(names %in% symbols)) {
+    warning(
+      "Object(s) not found in code: ",
+      toString(setdiff(names, symbols))
+    )
+  }
 
   calls_pd <- extract_calls(pd)
 
@@ -139,7 +148,7 @@ extract_occurrence <- function(calls_pd) {
     names(symbols_table[symbols_table == 2])
   }
 
-  functions <- extract_functions(calls_pd)
+  functions <- extract_function_names(calls_pd)
 
   lapply(
     calls_pd,
@@ -284,52 +293,8 @@ graph_parser <- function(x, graph, skip = NULL) {
 
 }
 
-# utils -----------------------------------------------------------------------------------------------------------
-
-#' @keywords internal
-#' @noMd
-assert_classes <- function(code, names) {
-  checkmate::assert_class(code, classes = "character")
-  checkmate::assert_character(names)
-}
-
-#' @keywords internal
-#' @noMd
-assert_code <- function(code) {
-  if (is.expression(code)) {
-    if (!is.null(attr(code, "srcref"))) {
-      parsed_code <- code
-    } else {
-      stop("The 'expression' code input does not contain 'srcref' attribute.")
-    }
-  }
-
-  if (is.character(code)) {
-    parsed_code <- parse(text = code, keep.source = TRUE)
-  }
-  parsed_code
-}
-
-#' @keywords internal
-#' @noMd
-assert_names <- function(names, pd) {
-  symbols <- unique(pd[pd$token == "SYMBOL", "text"])
-  if (!all(names %in% symbols)) {
-    warning(
-      "Object(s) not found in code: ",
-      toString(setdiff(names, symbols))
-    )
-  }
-}
-
-#' @keywords internal
-#' @noMd
-is_empty <- function(code){
-  identical(code, character(0)) || identical(trimws(code), "")
-}
-
 # # # examples and test -----------------------------------------------------------------------------------------------
-#
+# # TOBE REMOVED BEFORE THE MERGE
 # code <- "
 #
 #   a <- 5
@@ -410,17 +375,17 @@ is_empty <- function(code){
 #   code_graph(calls_pd)
 # }
 #
-# code <- assert_code(code)
-# graph <- make_graph(code)
+# parsed_code <- parse(text = code, keep.source = TRUE)
+# graph <- make_graph(parsed_code)
 #
-# code_2 <- assert_code(code_2)
-# graph_2 <- make_graph(code_2)
+# parsed_code_2 <- parse(text = code_2, keep.source = TRUE)
+# graph_2 <- make_graph(parsed_code_2)
 #
-# code_3 <- assert_code(code_3)
-# graph_3 <- make_graph(code_3)
+# parsed_code_3 <- parse(text = code_3, keep.source = TRUE)
+# graph_3 <- make_graph(parsed_code_3)
 #
-# code_4 <- assert_code(code_4)
-# graph_4 <- make_graph(code_4)
+# parsed_code_4 <- parse(text = code_4, keep.source = TRUE)
+# graph_4 <- make_graph(parsed_code_4)
 #
 # testthat::test_that("code_graph returns proper structure of the dependency graph", {
 #
@@ -451,28 +416,28 @@ is_empty <- function(code){
 #   names <- 'a'
 #   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
 #   testthat::expect_identical(
-#     as.character(code[indexes]),
+#     as.character(parsed_code[indexes]),
 #     code_a_expected
 #   )
 #
 #   names <- 'b'
 #   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_2)))
 #   testthat::expect_identical(
-#     as.character(code_2[indexes]),
+#     as.character(parsed_code_2[indexes]),
 #     code_b_expected_2
 #   )
 #
 #   names <- 'b'
 #   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_3)))
 #   testthat::expect_identical(
-#     as.character(code_3[indexes]),
+#     as.character(parsed_code_3[indexes]),
 #     code_b_expected_3
 #   )
 #
 #   names <- 'classes'
 #   indexes <- unlist(lapply(names, function(x) graph_parser(x, graph_4)))
 #   testthat::expect_identical(
-#     as.character(code_4[indexes]),
+#     as.character(parsed_code_4[indexes]),
 #     code_c_expected_4
 #   )
 #
