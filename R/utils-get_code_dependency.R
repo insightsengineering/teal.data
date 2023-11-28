@@ -131,8 +131,8 @@ extract_occurrence <- function(calls_pd) {
     )
   }
 
-  extract_functions <- function(calls_pd) {
-    # Detect functions created within code.
+  extract_function_names <- function(calls_pd) {
+    # returns function names which are created within code and called
     pd <- do.call(rbind, calls_pd)
     symbols <- pd[pd$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"), c('token', 'text')]
     symbols_table <- table(unique(symbols)$text)
