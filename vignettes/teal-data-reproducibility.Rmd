@@ -10,11 +10,11 @@ vignette: >
 
 # Reproducibility of `teal_data` objects
 
-Reproducibility is a primary function of the `qenv` class which `teal_data` inherits from. Every data modification in `teal_data` object is performed in a encapsulated environment, separate from the global environment. It's important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) can't be verified properly by the `teal_data`.
+Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from. Every data modification in `teal_data` object is performed in an encapsulated environment, separate from the global environment. It's important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) cannot be verified properly by the `teal_data`.
 
 ## Verification status
 
-`teal_data` objects that are instantiated empty are created as _verified_. Object can be modified only through `eval_code()` and `within()` functions to make sure that the code is saved in the object and always evaluated in the correct environment. Evaluating code in a `teal_data` object _does not_ change its verification status.
+`teal_data` objects that are instantiated empty are created as _verified_. Objects can be modified only through `eval_code()` and `within()` functions to ensure that the code is saved in the object and always evaluated in the correct environment. Evaluating code in a `teal_data` object _does not_ change its verification status.
 
 ```{r, message=FALSE, error=TRUE}
 library(teal.data)
