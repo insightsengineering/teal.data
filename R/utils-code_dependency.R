@@ -313,7 +313,7 @@ get_code_dependency <- function(code, names) {
   checkmate::assert_multi_class(code, classes = c("character", "expression"))
   checkmate::assert_character(names)
 
-  if (identical(code, character(0)) || identical(code, "")) {
+  if (identical(code, character(0)) || identical(trimws(code), "")) {
     return(code)
   }
 
