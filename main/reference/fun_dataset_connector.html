@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9015</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,16 +48,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -216,17 +206,17 @@ with keys and parent name assigned automatically by <code>dataname</code>.</p>
 <span class="r-in"><span><span class="va">y</span><span class="op">$</span><span class="fu">pull</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="get_raw_data.html">get_raw_data</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        ID        var1         var2        var3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1 -1.25274099 -0.002391832 -1.40993917</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2 -0.25480344 -1.500396829  1.80301335</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3 -1.89852342 -0.383072631  0.17849392</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4  0.08068594  0.641814620 -1.14724995</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5 -0.12726089 -0.713488867 -0.30360482</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6  0.77145214 -1.508966849 -0.02622895</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7  0.65266972  1.715722373 -1.29327962</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8 -0.86094393 -0.553563773  0.35864824</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9 -0.53853951  0.574342586  0.98403753</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10  1.09173304  0.902630350  1.02108396</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        ID       var1        var2        var3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   ABC_1  0.5273186  0.02131993 -0.22391097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   ABC_2  0.1589216  1.35901835 -0.61335616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   ABC_3  1.4066697 -0.18060841  0.05487778</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   ABC_4 -0.2694883 -0.01406845 -0.39322732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   ABC_5  0.5543402 -0.74763559  2.28625364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   ABC_6 -0.3840456  0.17739433  0.26570412</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   ABC_7 -0.2864546 -0.86929494  1.11459044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   ABC_8  0.9820955 -0.53693519 -0.39886623</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   ABC_9  0.1555984 -1.01420178  0.77739763</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABC_10 -0.6114697  0.20438611 -0.46446430</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
