@@ -74,7 +74,7 @@ jk
 
 ### Primary key with _teal_data_
 
-The simplest method to define the join keys when calling the `teal_data` function is to use the `join_keys` argument.
+When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
 
 ```{r, include=FALSE}
