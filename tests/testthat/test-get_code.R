@@ -323,10 +323,10 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
 })
 
 testthat::test_that("get_code with datanames does not ignore occurrence in function body if object exsits in env", {
-  skip("TODO: This needs to be fixed - we ca not remove whole function bodies!")
+  skip("This is not urgent and can be ommitted with @linksto tag.")
   code <- c(
     "a <- list(a = 1, b = 2, c = 3)",
-    "p <- 5",
+    "p <- 5", # This is not extracted, even though is used in the next line.
     "b <- lapply(a, FUN = function(x) { x <- x + p })",
     "b <- Filter(function(x) x > 2, b)"
   )
@@ -357,7 +357,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
 })
 
 testthat::test_that("get_code with datanames returns custom function calls on object", {
-  skip("TODO: This does not yet return foo(b)")
+
   code <- c(
     "b <- 2",
     "foo <- function(b) { b <- b + 2 }",
