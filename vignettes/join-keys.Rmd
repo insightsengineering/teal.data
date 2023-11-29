@@ -4,6 +4,10 @@ author: "NEST CoreDev"
 output: 
   rmarkdown::html_vignette:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{Join Keys}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Overview
@@ -19,7 +23,8 @@ Typically, an application developer manually specifies these keys. However, for 
 
 ### Anatomy of Join Keys
 
-A new `join_keys` can be created by defining a set of primary and foreign keys. The `join_keys` object can also be extended by establishing parent-child relationships between datasets and adding/modifying/removing keys.
+A new `join_keys` can be created by defining a set of primary and foreign keys. 
+The `join_keys` object can also be extended by establishing parent-child relationships between datasets and adding/modifying/removing keys.
 
 The `join_keys` function is used to specify keys:
 
@@ -69,8 +74,8 @@ jk
 
 ### Primary key with _teal_data_
 
-When using the teal_data function, the simplest method to define the join keys is to use the join_keys argument. 
-We can specify the column(s) of the dataset that (together) uniquely identify rows in the dataset.
+When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
+We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
 
 ```{r, include=FALSE}
 # nolint start: commented_code_linter.
@@ -127,7 +132,7 @@ join_keys(data)
 
 ### Foreign keys with _teal_data_
 
-When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within teal apps.
+When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
 For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
 
 For example:
