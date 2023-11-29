@@ -4,37 +4,31 @@ author: "NEST CoreDev"
 output: 
   rmarkdown::html_vignette:
     toc: true
-vignette: >
-  %\VignetteIndexEntry{Join Keys}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ## Overview
 
-`teal.data` gives the possibility to define primary keys of a dataset and to define the relations to other datasets.
+The `teal.data` package provides a way to define primary keys for a dataset and establish relationships with other datasets.
 
-Each dataset can have a set of keys that inform its structure and relation to other tables by specifying:
+Each dataset can be characterized by:
 
-- Columns consisting of the primary key
-- Merge keys, a concept similar to `SQL`'s foreign key.
+- Columns constituting the primary key
+- Merge keys, analogous to `SQL` foreign keys
 
-Usually, an application developer needs to specify the keys manually, but in case of datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own via `default_cdisc_join_keys` object.
-See section called ["`ADaM` `join_keys`"](#adam-join_keys) below on how to use this object to select specific datasets.
+Typically, an application developer manually specifies these keys. However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object. Refer to the section ["`ADaM` `join_keys`"](#adam-join_keys) for details on using this object to select specific datasets.
 
 ### Anatomy of Join Keys
 
-A new `join_keys` can be created by defining a set of primary and foreign keys _(it can also be created empty and then modified)_.
-The `join_keys` object can be further extended by defining a parent-child relationship between datasets, as well as adding/modifying/removing keys.
+A new `join_keys` can be created by defining a set of primary and foreign keys. The `join_keys` object can also be extended by establishing parent-child relationships between datasets and adding/modifying/removing keys.
 
 The `join_keys` function is used to specify keys:
 
 - `join_keys(...)` is a collection of multiple `join_key` entries
 - `join_key(...)` specifies the relation between two datasets:
-  - `dataset_1`, `dataset_2` - name of each datasets (if `dataset_2` is the same as `dataset_1` then it creates a primary key)
-  - `key` - (optionally) named vector of column names
+  - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
+  - `key` (optional): named vector of column names
 
-Note that it is assumed that join keys are symmetric, i.e. `join_key("x", "y", c("x_col" = "y_col"))` will set relationship from "x" to "y" and vice versa.
+Note that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
 
 ```{r, eval=FALSE}
 jk <- join_keys(
@@ -53,6 +47,7 @@ jk <- join_keys(
 parents(jk) <- list(ds2 = "ds1", ds3 = "ds1")
 
 jk
+
 ```
 
 | Output of `print(jk)`              | Output annotation                    |
