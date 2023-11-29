@@ -11,7 +11,7 @@
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #' @return
-#' Either string or expression representing code used to create the requested data sets.
+#' Either string or an expression representing code used to create the requested data sets.
 #' @examples
 #'
 #' tdata1 <- teal_data()
