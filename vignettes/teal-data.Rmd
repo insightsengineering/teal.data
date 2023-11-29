@@ -11,44 +11,77 @@ vignette: >
 # Introduction
 
 The `teal.data` package enables `teal` application developers to convert their data into a format which can be used
-inside `teal` applications.
+inside `teal` applications. `teal_data` class inherits from [`qenv`](https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html) and is meant to be used for reproducibility purposes. 
 
 ## Quick Start
 
-For creating `ADaM` clinical trial data please use the `cdisc_data` and `cdisc_dataset` functions:
+To create a `teal_data` class object, use the `teal_data` function. `teal_data` has a number of methods which allow 
+to set and get relevant information from private class slots.
 
-```{r, message=FALSE}
+```{r, results = 'hide'}
 library(teal.data)
 
-# create some dummy data
-adsl <- teal.data::example_cdisc_data("ADSL")
-adtte <- teal.data::example_cdisc_data("ADTTE")
-
-my_data <- cdisc_data(
-  ADSL = adsl,
-  ADTTE = adtte
+my_data <- teal_data()
+my_data <- within(
+  my_data,
+  {
+    data1 <- data.frame(id = 1:10, x = 11:20)
+    data2 <- data.frame(id = 1:10, x = 21:30)
+  }
 )
+
+# get variables from teal_data environment
+my_data[["data1"]]
+my_data[["data1"]]
+
+# get reproducible code
+get_code(my_data)
+
+# set/get datanames
+datanames(my_data) <- c("data1", "data2")
+datanames(my_data)
+
+# concise print
+print(my_data)
 ```
 
-For more general data use the `teal_data` and `dataset` functions:
+
+## `teal_data` characteristics
+
+`teal_data` class object keeps the following information:
+- `data` - an environment containing data. 
+- `code` - a string containing code to reproduce the `data` (details in [teal_data reproducibility ](teal-data-reproducibility.html)).
+- `datanames` - a character vector with names of datasets.
+- `join_keys` - a `join_keys` object defining relationships between datasets (details in [Join Keys](join-keys.html)).
+
+### Reproducibility
+
+Primary function of `teal_data` is to provide reproducibility of data. We recommend to initialize empty `teal_data` which marks object as _verified_. Read more in [teal_data Reproducibility](teal-data-reproducibility.html).
 
 ```{r}
-my_general_data <- teal_data(
-  iris = iris,
-  mtcars = mtcars
-)
+my_data <- teal_data()
+my_data <- within(my_data, data <- data.frame(x = 11:20))
+my_data <- within(my_data, data$id <- seq_len(nrow(data)))
+my_data # is verified
 ```
 
-## Additional functionality
 
-The `teal.data` package provides many features to help specify your data:
+### Relational data models
 
-- [Specifying `ADaM` data](https://insightsengineering.github.io/teal/latest-tag/articles/including-adam-data-in-teal.html)
-- [Specifying `MultiAssayExperiment` data](https://insightsengineering.github.io/teal/latest-tag/articles/including-mae-data-in-teal.html)
-- [Specifying general relational data](https://insightsengineering.github.io/teal/latest-tag/articles/including-general-data-in-teal.html)
-- [Specifying relationships between your datasets](join-keys.html)
-- [Dynamically loading your data (`DDL`)](using-delayed-data-basic.html)
-- [Pre-processing data](preprocessing-data.html)
-- [Pre-processing `DDL` data ](preprocessing-delayed-data.html)
-- [Checking for reproducibility](reproducibility.html)
-- [Using python to create your data](teal.data-with-python.html)
+`teal_data` class can be extended to support relational data. `join_keys` function can be used to specify relationships between datasets. See more in [join_keys](join-keys.html).
+
+```{r}
+my_data <- teal_data()
+my_data <- within(my_data, {
+  data <- data.frame(id = 1:10, x = 11:20)
+  child <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
+})
+
+join_keys(my_data) <- join_keys(
+  join_key("data", "data", key = "id"),
+  join_key("child", "child", key = "id"),
+  join_key("child", "data", key = c("data_id" = "id"))
+)
+
+join_keys(my_data)
+```

@@ -6,7 +6,7 @@
 #'
 #' @name TealData
 #'
-#' @param ... any argument supported in `TealData` api.
+#' @param ... any argument supported in `TealData` related functions.
 #'
 #' @return nothing
 #'
