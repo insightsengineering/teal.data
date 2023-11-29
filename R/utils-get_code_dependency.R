@@ -18,7 +18,9 @@ get_code_dependency <- function(code, names) {
   checkmate::assert_class(code, classes = "character")
   checkmate::assert_character(names)
 
-  if (identical(code, character(0)) || identical(trimws(code), "")) return(code)
+  if (identical(code, character(0)) || identical(trimws(code), "")) {
+    return(code)
+  }
 
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
@@ -66,10 +68,10 @@ extract_calls <- function(pd) {
 fix_comments <- function(calls) {
   # If the first token is a COMMENT, then it belongs to the previous call.
   if (length(calls) >= 2) {
-    for(i in 2:length(calls)){
+    for (i in 2:length(calls)) {
       if (grepl("@linksto", calls[[i]][1, "text"])) {
-        calls[[i-1]] <- rbind(calls[[i-1]], calls[[i]][ 1, ])
-        calls[[i  ]] <-                     calls[[i]][-1, ]
+        calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1, ])
+        calls[[i]] <- calls[[i]][-1, ]
       }
     }
   }
@@ -95,7 +97,6 @@ fix_comments <- function(calls) {
 #' @keywords internal
 #' @noRd
 code_graph <- function(calls_pd) {
-
   cooccurence <- extract_occurrence(calls_pd)
 
   side_effects <- extract_side_effects(calls_pd)
@@ -103,7 +104,6 @@ code_graph <- function(calls_pd) {
   graph <- mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
 
   remove_graph_duplicates(graph)
-
 }
 
 #' Extract Object Occurrence
@@ -120,22 +120,21 @@ code_graph <- function(calls_pd) {
 #' @keywords internal
 #' @noRd
 extract_occurrence <- function(calls_pd) {
-
   used_in_function <- function(call, rows) {
-
     # If an object is a function parameter,
     # then in calls_pd there is a `SYMBOL_FORMALS` entry for that object.
     objects <- sapply(rows, function(row) call$text[row])
 
-    vapply(objects, function(object) {
-      if (any(call[call$token == "SYMBOL_FORMALS", "text"] == object) && any(call$token == "FUNCTION")) {
-        object_sf_ids <- call[call$text == object & call$token == "SYMBOL", "id"]
-        function_start_id <- call[call$token == "FUNCTION", "id"]
-        all(object_sf_ids > function_start_id)
-      } else {
-        FALSE
-      }
-    },
+    vapply(
+      objects, function(object) {
+        if (any(call[call$token == "SYMBOL_FORMALS", "text"] == object) && any(call$token == "FUNCTION")) {
+          object_sf_ids <- call[call$text == object & call$token == "SYMBOL", "id"]
+          function_start_id <- call[call$token == "FUNCTION", "id"]
+          all(object_sf_ids > function_start_id)
+        } else {
+          FALSE
+        }
+      },
       logical(1)
     )
   }
@@ -143,7 +142,7 @@ extract_occurrence <- function(calls_pd) {
   extract_function_names <- function(calls_pd) {
     # Returns function names which are created within code and called.
     pd <- do.call(rbind, calls_pd)
-    symbols <- pd[pd$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"), c('token', 'text')]
+    symbols <- pd[pd$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"), c("token", "text")]
     symbols_table <- table(unique(symbols)$text)
     names(symbols_table[symbols_table == 2])
   }
@@ -236,7 +235,6 @@ remove_graph_duplicates <- function(graph) {
       }
     }
   )
-
 }
 
 # graph_parser ----
@@ -253,24 +251,24 @@ remove_graph_duplicates <- function(graph) {
 #' @keywords internal
 #' @noRd
 graph_parser <- function(x, graph, skip = NULL) {
-
   skip <- c(x, skip)
 
   occurence <-
-    vapply(graph, function(call) {
-      if (":" %in% call) {
-        call <- call[1:(which(":" == call)-1)]
-      }
-      x %in% call
-    },
-    logical(1)
-  )
+    vapply(
+      graph, function(call) {
+        if (":" %in% call) {
+          call <- call[1:(which(":" == call) - 1)]
+        }
+        x %in% call
+      },
+      logical(1)
+    )
 
   influencers <-
     unlist(
       lapply(graph[occurence], function(call) {
         if (":" %in% call) {
-          call[(which(":" == call)+1):length(call)]
+          call[(which(":" == call) + 1):length(call)]
         }
       })
     )
@@ -278,7 +276,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 
   if (length(influencers)) {
     influencers_ids <-
-      lapply(influencers, function(influencer){
+      lapply(influencers, function(influencer) {
         graph_parser(influencer, graph[1:max(which(occurence))], skip)
       })
 
@@ -286,7 +284,6 @@ graph_parser <- function(x, graph, skip = NULL) {
   } else {
     which(occurence)
   }
-
 }
 
 # # # examples and test -----------------------------------------------------------------------------------------------

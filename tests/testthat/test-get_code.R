@@ -17,7 +17,7 @@ testthat::test_that("get_code with datanames extracts code of a binding from a s
     "b <- 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     "a <- 1"
@@ -34,7 +34,7 @@ testthat::test_that("get_code with datanames warns if binding doesn't exist in a
     "b <- 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_error(
     get_code(tdata, datanames = "c"),
     "Assertion on 'datanames' failed"
@@ -51,7 +51,7 @@ testthat::test_that(
       "a <- 2"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('a', 'b')
+    datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
       c("a <- 1", "b <- a")
@@ -66,7 +66,7 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
     "a <- 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("a <- 1", "b <- identity(x = a)")
@@ -80,7 +80,7 @@ testthat::test_that("get_code with datanames is possible to output the code for 
     "c <- 3"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b', 'c')
+  datanames(tdata) <- c("a", "b", "c")
   testthat::expect_identical(
     get_code(tdata, datanames = c("a", "b")),
     c("a <- 1", "b <- 2")
@@ -94,7 +94,7 @@ testthat::test_that("get_code with datanames can't extract the code when no assi
     "b <- b + 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     "b <- b + 2"
@@ -108,7 +108,7 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
     "b <- b + 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("assign(\"b\", 5)", "b <- b + 2")
@@ -123,7 +123,7 @@ testthat::test_that(
       "iris2 <- head(iris)"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('iris2')
+    datanames(tdata) <- c("iris2")
     testthat::expect_identical(
       get_code(tdata, datanames = "iris2"),
       c("data(iris)", "iris2 <- head(iris)")
@@ -138,7 +138,7 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
     "b <<- b + 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("a <- 1", "b <- a", "b <<- b + 2")
@@ -152,7 +152,7 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
     "eval(expression({b <- b + 2}))"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("b <- 2", "eval(expression({\n    b <- b + 2\n}))")
@@ -168,7 +168,7 @@ testthat::test_that("@linksto cause to return this line for affected binding", {
   b <- 2
   "
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("a <- 1", "b <- 2")
@@ -184,7 +184,7 @@ testthat::test_that(
       "b <- 2"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('a', 'b')
+    datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
       c("a <- 1", "b <- 2")
@@ -201,7 +201,7 @@ testthat::test_that(
       "b <- 2 # @linksto a"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('a', 'b')
+    datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
       c("a <- 1", "b <- 2")
@@ -218,7 +218,7 @@ testthat::test_that(
       "a <- 3"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('a', 'b')
+    datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
       c("a <- 1", "b <- a")
@@ -237,7 +237,7 @@ testthat::test_that(
       "b <- b + 1"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('a', 'b')
+    datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
       c("a <- 1", "b <- 2", "a <- a + 1")
@@ -258,7 +258,7 @@ testthat::test_that(
       classes <- lapply(iris2, class)
     "
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('iris2', 'iris_head', 'classes')
+    datanames(tdata) <- c("iris2", "iris_head", "classes")
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
       c("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "classes <- lapply(iris2, class)")
@@ -276,7 +276,7 @@ testthat::test_that(
       classes <- lapply(iris2, class)
     "
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('iris2', 'iris_head', 'iris3', 'classes')
+    datanames(tdata) <- c("iris2", "iris_head", "iris3", "classes")
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
       c("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "iris3 <- iris_head[1, ]", "classes <- lapply(iris2, class)")
@@ -292,7 +292,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
     "foo <- function(b) { b <- b + 2 }"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('b', 'foo')
+  datanames(tdata) <- c("b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     "b <- 2"
@@ -309,7 +309,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
     "foo <- function(b) b <- b + 2 "
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('b', 'foo')
+  datanames(tdata) <- c("b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "foo"),
     "foo <- function(b) b <- b + 2"
@@ -326,7 +326,7 @@ testthat::test_that("get_code with datanames ignores effect of the object which 
     "foo <- function(b) { b <- b + 2 }"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('b', 'foo')
+  datanames(tdata) <- c("b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("b <- 2")
@@ -341,7 +341,7 @@ testthat::test_that("get_code with datanames detects occurrence of the function 
     "b <- foo(a)"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b', 'foo')
+  datanames(tdata) <- c("a", "b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("a <- 1", "b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "b <- foo(a)")
@@ -357,7 +357,7 @@ testthat::test_that(
       "a <- foo(x)"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c('x', 'foo', 'a')
+    datanames(tdata) <- c("x", "foo", "a")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
       c("x <- 1", "foo <- function(foo = 1) \"text\"", "a <- foo(x)")
@@ -376,7 +376,7 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
     "a$x <- x$a"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('x', 'a')
+  datanames(tdata) <- c("x", "a")
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     c("x <- data.frame(a = 1:3)")
@@ -394,7 +394,7 @@ testthat::test_that("get_code with datanames detects cooccurrence properly even 
     "b[[a]] <- 3"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c('a', 'b')
+  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     c("a <- 1", "b <- list(c = 2)", "b[[a]] <- 3")
@@ -414,7 +414,7 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
     "a@x <- x@a"
   )
   tdata <- teal_data(x = 1, a = 1, code = code)
-  datanames(tdata) <- c('x', 'a')
+  datanames(tdata) <- c("x", "a")
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     c(
