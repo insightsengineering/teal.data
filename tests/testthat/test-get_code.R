@@ -305,6 +305,40 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
+testthat::test_that("get_code with datanames ignores occurrence in function definition in lapply", {
+  code <- c(
+    "a <- list(a = 1, b = 2, c = 3)",
+    "b <- lapply(a, FUN = function(x) { x <- x + 1 })",
+    "b <- Filter(function(x) x > 2, b)",
+    "x <- 1",
+    "print(x)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "b", "x")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    c("x <- 1", "print(x)")
+  )
+
+})
+
+testthat::test_that("get_code with datanames does not ignore occurrence in function body if object exsits in env", {
+  skip("TODO: This needs to be fixed - we ca not remove whole function bodies!")
+  code <- c(
+    "a <- list(a = 1, b = 2, c = 3)",
+    "p <- 5",
+    "b <- lapply(a, FUN = function(x) { x <- x + p })",
+    "b <- Filter(function(x) x > 2, b)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "p", "b")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    code
+  )
+
+})
+
 testthat::test_that("get_code with datanames ignores occurrence in function definition without { curly brackets", {
   code <- c(
     "b <- 2",
