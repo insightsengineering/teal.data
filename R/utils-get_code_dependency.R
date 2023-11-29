@@ -50,19 +50,20 @@ get_code_dependency <- function(code, names) {
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
-  get_children <- function(pd, parent) {
-    idx_children <- abs(pd$parent) == parent
-    children <- pd[idx_children, c("token", "text", "id")]
-    if (nrow(children) == 0) {
-      return(NULL)
-    }
-
-    if (parent > 0) {
-      do.call(rbind, c(list(children), lapply(children$id, get_children, pd = pd)))
-    }
-  }
   calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
   fix_comments(calls)
+}
+
+get_children <- function(pd, parent) {
+  idx_children <- abs(pd$parent) == parent
+  children <- pd[idx_children, c("token", "text", "id", "parent")]
+  if (nrow(children) == 0) {
+    return(NULL)
+  }
+
+  if (parent > 0) {
+    do.call(rbind, c(list(children), lapply(children$id, get_children, pd = pd)))
+  }
 }
 
 fix_comments <- function(calls) {
@@ -120,40 +121,23 @@ code_graph <- function(calls_pd) {
 #' @keywords internal
 #' @noRd
 extract_occurrence <- function(calls_pd) {
-  used_in_function <- function(call, rows) {
+  is_in_function <- function(x) {
     # If an object is a function parameter,
     # then in calls_pd there is a `SYMBOL_FORMALS` entry for that object.
-    objects <- sapply(rows, function(row) call$text[row])
-
-    vapply(
-      objects, function(object) {
-        if (any(call[call$token == "SYMBOL_FORMALS", "text"] == object) && any(call$token == "FUNCTION")) {
-          object_sf_ids <- call[call$text == object & call$token == "SYMBOL", "id"]
-          function_start_id <- call[call$token == "FUNCTION", "id"]
-          all(object_sf_ids > function_start_id)
-        } else {
-          FALSE
-        }
-      },
-      logical(1)
-    )
+    function_id <- x[x$token == "FUNCTION", "parent"]
+    if (length(function_id)) {
+      x$id %in% get_children(x, function_id)$id
+    } else {
+      rep(FALSE, nrow(x))
+    }
   }
-
-  extract_function_names <- function(calls_pd) {
-    # Returns function names which are created within code and called.
-    pd <- do.call(rbind, calls_pd)
-    symbols <- pd[pd$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"), c("token", "text")]
-    symbols_table <- table(unique(symbols)$text)
-    names(symbols_table[symbols_table == 2])
-  }
-
-  functions <- extract_function_names(calls_pd)
-
   lapply(
     calls_pd,
-    function(x) {
-      sym_cond <- which(x$token == "SYMBOL" | (x$token == "SYMBOL_FUNCTION_CALL" & x$text %in% functions))
-      sym_cond <- sym_cond[!used_in_function(x, sym_cond)]
+    function(call_pd) {
+
+      # what occurs in a function body is not tracked
+      x <- call_pd[!is_in_function(call_pd), ]
+      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
       # Watch out for SYMBOLS after $ and @. For x$a x@a: x is object, a is not.
       # For x$a, a's ID is $'s ID-2 so we need to remove all IDs that have ID = $ID - 2.
@@ -319,7 +303,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 #
 # graph_expected_2 <- list(
 #   c("a"),
-#   c("b", ":", "a"),
+#   c("b", ":", "identity", "a"),
 #   c("a")
 # )
 #
@@ -335,7 +319,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 #
 # graph_expected_3 <- list(
 #   c("a"),
-#   c("b"),
+#   c("b", "assign"),
 #   c("b", ":", "b")
 # )
 #
@@ -352,7 +336,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 #   c("iris2", ":", "iris"),
 #   c("iris3", "iris_head", ":", "iris"),
 #   c("iris2", "iris3", ":", "iris_head"),
-#   c("classes", ":", "iris2", "class")
+#   c("classes", ":", "lapply", "iris2", "class")
 # )
 #
 # code_c_expected_4 <- c(
