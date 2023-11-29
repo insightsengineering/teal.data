@@ -20,9 +20,9 @@ Each dataset can have a set of keys that inform its structure and relation to ot
 - Merge keys, a concept similar to `SQL`'s foreign key.
 
 Usually, an application developer needs to specify the keys manually, but in the case of datasets named according to the _ADaM_ standard, `teal.data` can assign the keys on its own via `default_cdisc_join_keys` object.
-See the section called _["ADaM join_keys"](#adam-join_keys)_ below on how to use this object to select specific datasets.
+See the section called _["ADaM join_keys"](#adam-join_keys)_ below on how to use this object to select specific _ADaM_ datasets.
 
-##### Uses of `join_keys` in `teal` applications
+##### Uses of _join_keys_ in _teal_ applications
 
 The primary function of `join_keys` in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
@@ -46,11 +46,11 @@ Note that it is assumed that join keys are symmetric, i.e. `join_key("x", "y", c
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
 jk <- join_keys(
-  join_key("ds1", keys = "id1"),           # ds1: [id1]
-  join_key("ds2", keys = c("id1", "id2")), # ds2: [id1, id2]
-  join_key("ds3", keys = c("id1", "id3")), # ds3: [id1, id3]
-  join_key("ds1", "ds2", keys = "id1"), # ds1 <--> ds2
-  join_key("ds1", "ds3", keys = "id1"), # ds1 <--> ds3
+  join_key("ds1", keys = "id1"),                  # ds1: [id1]
+  join_key("ds2", keys = c("id1", "id2")),        # ds2: [id1, id2]
+  join_key("ds3", keys = c("id1", "id3")),        # ds3: [id1, id3]
+  join_key("ds1", "ds2", keys = "id1"),           # ds1 <--> ds2
+  join_key("ds1", "ds3", keys = "id1"),           # ds1 <--> ds3
   join_key("ds4", "ds5", keys = c("id4" = "id5")) # ds4 <--> ds5
 )
 
@@ -80,11 +80,11 @@ jk
 | `## ds5: [no primary keys]`    |                                                                               | 
 | `##   <-> ds4: [id4] `         |                                                                               | 
 
-## Accessing and adding/changing keys
+## Accessing and Modifying keys
 
-The `join_keys` object behaves like a list and the preferred method to get a specific key to use the _subset_ operator with 2 indices.
+The `join_keys` object behaves like a list and the preferred method to get a specific key to use the _subset_ operator with 2 indices. 
 
-```{r, message=FALSE}
+```{r}
 # Using the jk object defined on "Anatomy of Join Keys"
 jk
 
@@ -98,13 +98,23 @@ jk["ds4", "ds5"]
 jk["ds5", "ds4"]
 ```
 
+Modifying or adding a key uses the same notation with the assignment operator `<-`. This will ensure symmetry as it will create both relationships. Assigning `NULL` value will delete the relation.
+
+```{r}
+# Adding a new ds5 <-> ds1 key
+jk["ds5", "ds1"] <- "a_key"
+
+# Removing an existing key
+jk["ds4", "ds5"] <- NULL
+```
+
 ## Join Keys Relationships
 
 There are 2 types of relationships encoded with `join_keys` described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the `join_key` function.
 
 Additionally, the `join_keys` object detects implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relations are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
-### Primary key with _teal_data_
+### Primary Key with _teal_data_
 
 When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
@@ -162,7 +172,7 @@ join_keys(data)
 # nolint end: commented_code_linter.
 ```
 
-### Foreign keys with _teal_data_
+### Foreign Keys with _teal_data_
 
 When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
 For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
@@ -194,7 +204,7 @@ data <- teal_data(
 join_keys(data)
 ```
 
-### Implicit relationships
+### Implicit Relationships
 
 This is a special inferred relationship from existing `join_keys` that does not need to be explicitly defined, however, as any other it can be overwritten.
 If two datasets share common _foreign_ keys to the same _parent_ dataset, then there is an implicit relationship between them which is seamlessly accessible via the `join_keys` getter.
