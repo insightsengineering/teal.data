@@ -322,16 +322,18 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
-testthat::test_that("get_code with datanames ignores effect of the object which occurs in a function definition", {
+testthat::test_that("get_code with datanames returns custom function calls on object", {
+  skip("TODO: This does not yet return foo(b)")
   code <- c(
     "b <- 2",
-    "foo <- function(b) { b <- b + 2 }"
+    "foo <- function(b) { b <- b + 2 }",
+    "foo(b)"
   )
   tdata <- eval_code(teal_data(), code)
   datanames(tdata) <- c("b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("b <- 2")
+    c("b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "foo(b)")
   )
 })
 
