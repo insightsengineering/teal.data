@@ -52,7 +52,7 @@ print(my_data)
 - `data` - an environment containing data. 
 - `code` - a string containing code to reproduce the `data` (details in [teal_data reproducibility ](teal-data-reproducibility.html)).
 - `datanames` - a character vector with names of datasets.
-- `join_keys` - a `join_keys` object defining relationships between datasets (details in [Relational data](relational-data.html)).
+- `join_keys` - a `join_keys` object defining relationships between datasets (details in [Join Keys](join-keys.html)).
 
 ### Reproducibility
 
