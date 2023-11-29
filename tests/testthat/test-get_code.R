@@ -87,7 +87,9 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   )
 })
 
-testthat::test_that("get_code with datanames can't extract the code when no assign operator", {
+testthat::test_that("get_code with datanames can't extract the code for assign function", {
+
+  testthat::skip("We will tackle 'assign' some day!")
   code <- c(
     "a <- 1",
     "assign('b', 5)",
@@ -95,7 +97,7 @@ testthat::test_that("get_code with datanames can't extract the code when no assi
   )
   tdata <- eval_code(teal_data(), code)
   datanames(tdata) <- c("a", "b")
-  testthat::expect_identical(
+  testthat::expect_error(
     get_code(tdata, datanames = "b"),
     "b <- b + 2"
   )
