@@ -2,7 +2,8 @@
 
 #' Return the lines of code (with side-effects) needed to reproduce the object
 #'
-#' @details This function assumes that object relationships are established using the `<-`, `=`, or `->` assignment
+#' @section Notes:
+#' This function assumes that object relationships are established using the `<-`, `=`, or `->` assignment
 #' operators. It does not support other object creation methods like `assign` or `<<-`, nor non-standard-evaluation
 #' methods. To specify relationships between side-effects and objects, you can use the comment tag
 #' `# @linksto object_name` at the end of a line where the side-effect occurs.
