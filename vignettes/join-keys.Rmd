@@ -22,7 +22,7 @@ Each dataset can have a set of keys that inform its structure and relation to ot
 Usually, an application developer needs to specify the keys manually, but in case of datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own via `default_cdisc_join_keys` object.
 See section called ["`ADaM` `join_keys`"](#adam-join_keys) below on how to use this object to select specific datasets.
 
-### Anatomy of `join_keys`
+### Anatomy of Join Keys
 
 A new `join_keys` can be created by defining a set of primary and foreign keys _(it can also be created empty and then modified)_.
 The `join_keys` object can be further extended by defining a parent-child relationship between datasets, as well as adding/modifying/removing keys.
@@ -72,7 +72,7 @@ jk
 | `## ds5: [no primary keys]`    |                                                                               | 
 | `##   <-> ds4: [id4] `         |                                                                               | 
 
-### Primary key with `teal_data`
+### Primary key with _teal_data_
 
 The simplest method to define the join keys when calling the `teal_data` function is to use the `join_keys` argument.
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
@@ -93,7 +93,7 @@ td <- teal_data(
   join_keys = join_keys(join_key("IRIS", keys = "id"))
 
   ## Alternatively, when only a single primary key is defined the `join_keys()`
-  ##  wrapper can be skipped
+  ## wrapper can be skipped
   # join_keys = join_key("IRIS", keys = "id")
 )
 
@@ -130,7 +130,7 @@ join_keys(data)
 # nolint end: commented_code_linter.
 ```
 
-### Foreign keys with `teal_data`
+### Foreign keys with _teal_data_
 
 When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
 For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
@@ -186,9 +186,18 @@ jk["ds3", "ds2"]
 
 _note_: the definition above contains no `join_key` for `"ds2" <-> "ds3"`
 
-### `ADaM` `join_keys`
+### _ADaM_ Join Keys
 
-When working with datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own using the `teal.data::default_cdisc_join_keys` that contains primary and foreign keys for standard datasets (`r paste("\u0060", names(default_cdisc_join_keys), "\u0060", collapse = ", ", sep = "")`).
+When working with datasets named according to the `ADaM` standard, `teal.data` can assign the keys on its own using the `teal.data::default_cdisc_join_keys` that contains primary and foreign keys for standard datasets as mentioned below.
+
+```{r echo=FALSE}
+cat(
+  length(default_cdisc_join_keys),
+  "datasets:",
+  names(default_cdisc_join_keys) |> sort() |> paste(collapse = ", "),
+  "\n"
+)
+```
 
 The full set of join keys can be used, or a subset of those.
 Please note, that if the subsetted dataset has a parent, that will also be returned.
@@ -201,7 +210,7 @@ default_cdisc_join_keys["ADTTE"]
 default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 ```
 
-#### The full set of `ADaM` `join_keys`
+#### The full set of _ADaM_ Join Keys
 
 ```{r}
 default_cdisc_join_keys
