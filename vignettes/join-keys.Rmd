@@ -69,8 +69,8 @@ jk
 
 ### Primary key with _teal_data_
 
-When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
-We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
+When using the teal_data function, the simplest method to define the join keys is to use the join_keys argument. 
+We can specify the column(s) of the dataset that (together) uniquely identify rows in the dataset.
 
 ```{r, include=FALSE}
 # nolint start: commented_code_linter.
@@ -127,7 +127,7 @@ join_keys(data)
 
 ### Foreign keys with _teal_data_
 
-When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
+When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within teal apps.
 For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
 
 For example:
