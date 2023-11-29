@@ -97,9 +97,9 @@ testthat::test_that("get_code with datanames can't extract the code for assign f
   )
   tdata <- eval_code(teal_data(), code)
   datanames(tdata) <- c("a", "b")
-  testthat::expect_error(
+  testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    "b <- b + 2"
+    c("assign('b', 5)", "b <- b + 2")
   )
 })
 
