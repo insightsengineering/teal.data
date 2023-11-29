@@ -2,6 +2,7 @@
 % Please edit documentation in R/teal_data-get_code.R
 \name{get_code,teal_data-method}
 \alias{get_code,teal_data-method}
+\alias{get_code}
 \title{Get Code from \code{teal_data}}
 \usage{
 \S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)

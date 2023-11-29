@@ -29,6 +29,7 @@
 #' get_code(tdata2)
 #' get_code(verify(tdata2))
 #' @aliases get_code,teal_data-method
+#' @aliases get_code
 #' @export
 setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
