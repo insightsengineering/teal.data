@@ -71,7 +71,7 @@ new_teal_data <- function(data,
   }
 
   if (is.language(code)) {
-    code <- format_expression(code)
+    code <- paste(lang2calls(code), collapse = "\n")
   }
   if (length(code)) {
     code <- paste(code, collapse = "\n")

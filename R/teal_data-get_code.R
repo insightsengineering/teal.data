@@ -11,7 +11,7 @@
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #' @return
-#' Either a character vector or expression representing code used to create the requested data sets.
+#' Either string or an expression representing code used to create the requested data sets.
 #' @examples
 #'
 #' tdata1 <- teal_data()
@@ -46,8 +46,12 @@ setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE,
   }
 
   if (deparse) {
-    code
+    if (length(code) == 0) {
+      code
+    } else {
+      paste(code, collapse = "\n")
+    }
   } else {
-    parse(text = code, keep.source = TRUE)
+    parse(text = paste(c("{", code, "}"), collapse = "\n"), keep.source = TRUE)
   }
 })
