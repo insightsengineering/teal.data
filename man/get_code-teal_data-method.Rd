@@ -15,7 +15,7 @@
 \item{datanames}{(\code{character}) vector of data set names to return the code for.}
 }
 \value{
-Either string or expression representing code used to create the requested data sets.
+Either string or an expression representing code used to create the requested data sets.
 }
 \description{
 Retrieve code from \code{teal_data} object.
