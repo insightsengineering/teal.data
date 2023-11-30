@@ -46,12 +46,12 @@ Note that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
 jk <- join_keys(
-  join_key("ds1", keys = "id1"),                  # ds1: [id1]
-  join_key("ds2", keys = c("id1", "id2")),        # ds2: [id1, id2]
-  join_key("ds3", keys = c("id1", "id3")),        # ds3: [id1, id3]
-  join_key("ds1", "ds2", keys = "id1"),           # ds1 <--> ds2
-  join_key("ds1", "ds3", keys = "id1"),           # ds1 <--> ds3
-  join_key("ds4", "ds5", keys = c("id4" = "id5")) # ds4 <--> ds5
+  join_key("ds1", keys = "col_1"),                    # ds1: [col_1]
+  join_key("ds2", keys = c("col_1", "col_2")),        # ds2: [col_1, col_2]
+  join_key("ds3", keys = c("col_1", "col_3")),        # ds3: [col_1, col_3]
+  join_key("ds1", "ds2", keys = "col_1"),             # ds1 <--> ds2
+  join_key("ds1", "ds3", keys = "col_1"),             # ds1 <--> ds3
+  join_key("ds4", "ds5", keys = c("col_4" = "col_5")) # ds4 <--> ds5
 )
 
 # The parent of ds2 and ds3 is ds1
@@ -67,19 +67,19 @@ jk
 | Output of `print(jk)`              | Output annotation                    |
 | ---------------------------------- |:----------------------------------------:|
 | `## A join_keys object containing foreign keys between 3 datasets:` |  **Title** |
-| `## ds1: [id1]`                |  **Primary keys**<br />_\<dataset name\>_: [_\<primary_keys\>_]                                          | 
-| `##   <-- ds2: [id1]`          | **Foreign keys**<br /> _(arrow `<--` denotes `ds1` is the parent of `ds2`)_                    | 
-| `##   <-- ds3: [id1]`          |                                                                               | 
-| `## ds2: [id1, id2]`           |                                                                               | 
-| `##   --> ds1: [id1]`          | arrow `-->` denotes `ds2` is a child of `ds1`                                                                              | 
+| `## ds1: [col_1]`                |  **Primary keys**<br />_\<dataset name\>_: [_\<primary_keys\>_]                                          | 
+| `##   <-- ds2: [col_1]`          | **Foreign keys**<br /> _(arrow `<--` denotes `ds1` is the parent of `ds2`)_                    | 
+| `##   <-- ds3: [col_1]`          |                                                                               | 
+| `## ds2: [col_1, col_2]`           |                                                                               | 
+| `##   --> ds1: [col_1]`          | arrow `-->` denotes `ds2` is a child of `ds1`                                                                              | 
 | `##   --* (implicit via parent with): ds3` |  **Implicit relationship between `ds2` & `ds3`**<br />_(given that they share common keys with same parent)_    |
-| `## ds3: [id1, id3]`           |                                                                               | 
-| `##   --> ds1: [id1]`          |                                                                               | 
+| `## ds3: [col_1, col_3]`           |                                                                               | 
+| `##   --> ds1: [col_1]`          |                                                                               | 
 | `##   --* (implicit via parent with): ds2` |                                                                               | 
 | `## ds4: [no primary keys]`    |                                                                               | 
-| `##   <-> ds5: [id5]`          |  **Foreign keys** <br />_(arrow `<->` denotes no parent definition between datasets)_      | 
+| `##   <-> ds5: [col_5]`          |  **Foreign keys** <br />_(arrow `<->` denotes no parent definition between datasets)_      | 
 | `## ds5: [no primary keys]`    |                                                                               | 
-| `##   <-> ds4: [id4] `         |                                                                               | 
+| `##   <-> ds4: [col_4] `         |                                                                               | 
 
 ## Accessing and Modifying keys
 
@@ -103,7 +103,7 @@ Modifying or adding a key uses the same notation with the assignment operator `<
 
 ```{r}
 # Adding a new ds5 <-> ds1 key
-jk["ds5", "ds1"] <- "a_key"
+jk["ds5", "ds1"] <- "a_column"
 
 # Removing an existing key
 jk["ds4", "ds5"] <- NULL
@@ -128,16 +128,16 @@ We can specify the column(s) of the dataset that _(together)_ uniquely identify 
 library(teal.data)
 library(dplyr)
 
-iris_with_keys <- mutate(iris, id = factor(row_number()))
+ds1 <- mutate(iris, id = factor(row_number()))
 
 td <- teal_data(
-  IRIS = iris_with_keys,
-  code = "IRIS <- iris %>% mutate(id = factor(row_number()))",
-  join_keys = join_keys(join_key("IRIS", keys = "id"))
+  ds1 = ds1,
+  code = "ds1 <- iris %>% mutate(id = factor(row_number()))",
+  join_keys = join_keys(join_key("ds1", keys = "id"))
 
   ## Alternatively, when only a single primary key is defined the `join_keys()`
   ## wrapper can be skipped
-  # join_keys = join_key("IRIS", keys = "id")
+  # join_keys = join_key("ds1", keys = "id")
 )
 
 join_keys(td)
@@ -152,17 +152,17 @@ data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
 data_2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
 
 data <- teal_data(
-  D1 = data_1,
-  D2 = data_2,
+  ds1 = data_1,
+  ds2 = data_2,
   join_keys = join_keys(
-    join_key("D1", keys = c("X")),
-    join_key("D2", keys = c("V", "W"))
+    join_key("ds1", keys = c("X")),
+    join_key("ds2", keys = c("V", "W"))
     ## equivalent to using primary_key
-    # join_key("D2", "D2", keys = c("V", "W"))
+    # join_key("ds2", "ds2", keys = c("V", "W"))
   ),
   code = c(
-    "D1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
-    "D2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))"
+    "ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
+    "ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))"
   )
 )
 
@@ -188,17 +188,17 @@ data_2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
 data_3 <- data.frame(V = factor(5:14), T = 4)
 
 data <- teal_data(
-  D1 = data_1,
-  D2 = data_2,
-  D3 = data_3,
+  ds1 = data_1,
+  ds2 = data_2,
+  ds3 = data_3,
   join_keys = join_keys(
-    join_key("D1", "D2", c("X" = "W")),
-    join_key("D2", "D3", c("V" = "V"))
+    join_key("ds1", "ds2", c("X" = "W")),
+    join_key("ds2", "ds3", c("V" = "V"))
   ),
   code = c(
-    "D1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
-    "D2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))",
-    "D3 <- data.frame(V = factor(5:14), T = 4)"
+    "ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
+    "ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))",
+    "ds3 <- data.frame(V = factor(5:14), T = 4)"
   )
 )
 
@@ -214,11 +214,11 @@ These implicit relationships can be used to merge 2 datasets together, just as i
 
 ```{r}
 jk <- join_keys(
-  join_key("ds1", keys = "id1"),
-  join_key("ds2", keys = c("id1", "id2")),
-  join_key("ds3", keys = c("id1", "id3")),
-  join_key("ds1", "ds2", keys = "id1"),
-  join_key("ds1", "ds3", keys = "id1")
+  join_key("ds1", keys = "col_1"),
+  join_key("ds2", keys = c("col_1", "col_2")),
+  join_key("ds3", keys = c("col_1", "col_3")),
+  join_key("ds1", "ds2", keys = "col_1"),
+  join_key("ds1", "ds3", keys = "col_1")
 )
 
 # The parent of ds2 and ds3 is ds1
