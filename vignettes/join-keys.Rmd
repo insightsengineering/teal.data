@@ -128,17 +128,16 @@ We can specify the column(s) of the dataset that _(together)_ uniquely identify 
 library(teal.data)
 library(dplyr)
 
-ds1 <- mutate(iris, id = factor(row_number()))
-
-td <- teal_data(
-  ds1 = ds1,
-  code = "ds1 <- iris %>% mutate(id = factor(row_number()))",
-  join_keys = join_keys(join_key("ds1", keys = "id"))
-
-  ## Alternatively, when only a single primary key is defined the `join_keys()`
-  ## wrapper can be skipped
-  # join_keys = join_key("ds1", keys = "id")
+td <- within(
+  teal_data(),
+  ds1 <- mutate(iris, id = factor(row_number()))
 )
+datanames(td) <- c("ds1")
+
+join_keys(td) <- join_keys(join_key("ds1", keys = "id"))
+## Alternatively, when only a single primary key is defined the `join_keys()`
+## the wrapper can be skipped
+# join_keys(td) <- join_key("ds1", keys = "id")
 
 join_keys(td)
 ```
@@ -148,25 +147,23 @@ We can extend the previous example and define primary keys for multiple datasets
 ```{r, message=FALSE}
 library(teal.data)
 
-data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
-data_2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
+td <- within(
+  teal_data(),
+  {
+    ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
+    ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
+  }
+)
+datanames(td)
 
-data <- teal_data(
-  ds1 = data_1,
-  ds2 = data_2,
-  join_keys = join_keys(
-    join_key("ds1", keys = c("X")),
-    join_key("ds2", keys = c("V", "W"))
-    ## equivalent to using primary_key
-    # join_key("ds2", "ds2", keys = c("V", "W"))
-  ),
-  code = c(
-    "ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
-    "ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))"
-  )
+join_keys(td) <- join_keys(
+  join_key("ds1", keys = c("X")),
+  join_key("ds2", keys = c("V", "W"))
+  ## equivalent to using primary_key
+  # join_key("ds2", "ds2", keys = c("V", "W"))
 )
 
-join_keys(data)
+join_keys(td)
 ```
 
 ```{r, include=FALSE}
@@ -183,26 +180,22 @@ For example:
 ```{r}
 library(teal.data)
 
-data_1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
-data_2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
-data_3 <- data.frame(V = factor(5:14), T = 4)
+td <- within(
+  teal_data(),
+  {
+    ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
+    ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
+    ds3 <- data.frame(V = factor(5:14), T = 4)
+  }
+)
+datanames(td) <- c("ds1", "ds2", "ds3")
 
-data <- teal_data(
-  ds1 = data_1,
-  ds2 = data_2,
-  ds3 = data_3,
-  join_keys = join_keys(
-    join_key("ds1", "ds2", c("X" = "W")),
-    join_key("ds2", "ds3", c("V" = "V"))
-  ),
-  code = c(
-    "ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)",
-    "ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))",
-    "ds3 <- data.frame(V = factor(5:14), T = 4)"
-  )
+join_keys(td) <- join_keys(
+  join_key("ds1", "ds2", c("X" = "W")),
+  join_key("ds2", "ds3", c("V" = "V"))
 )
 
-join_keys(data)
+join_keys(td)
 ```
 
 ### Implicit Relationships
@@ -231,15 +224,10 @@ _note_: the definition above contains no `join_key` for `"ds2" <-> "ds3"`
 
 ## _ADaM_ Join Keys
 
-When working with datasets named according to the _ADaM_ standard, `teal.data` can assign the keys on its own using the `teal.data::default_cdisc_join_keys` that contains primary and foreign keys for standard datasets as mentioned below.
+When working with datasets named according to the _ADaM_ standard, `teal.data` offers `default_cdisc_join_keys` object that contains primary and foreign keys for standard datasets.
 
-```{r echo=FALSE}
-cat(
-  length(default_cdisc_join_keys),
-  "datasets:",
-  names(default_cdisc_join_keys) |> sort() |> paste(collapse = ", "),
-  "\n"
-)
+```{r}
+names(default_cdisc_join_keys) |> sort()
 ```
 
 The full set of join keys can be used, or a subset of those.
