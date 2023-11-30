@@ -41,7 +41,7 @@ The `join_keys` function is used to specify keys:
   - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
   - `key` (optional): named vector of column names
 
-Note that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
+_Note_ that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
 
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
@@ -128,18 +128,18 @@ We can specify the column(s) of the dataset that _(together)_ uniquely identify 
 library(teal.data)
 library(dplyr)
 
-td <- within(
+td_pk <- within(
   teal_data(),
   ds1 <- mutate(iris, id = factor(row_number()))
 )
-datanames(td) <- c("ds1")
+datanames(td_pk) <- c("ds1")
 
-join_keys(td) <- join_keys(join_key("ds1", keys = "id"))
+join_keys(td_pk) <- join_keys(join_key("ds1", keys = "id"))
 ## Alternatively, when only a single primary key is defined the `join_keys()`
 ## the wrapper can be skipped
-# join_keys(td) <- join_key("ds1", keys = "id")
+# join_keys(td_pk) <- join_key("ds1", keys = "id")
 
-join_keys(td)
+join_keys(td_pk)
 ```
 
 We can extend the previous example and define primary keys for multiple datasets:
@@ -147,23 +147,19 @@ We can extend the previous example and define primary keys for multiple datasets
 ```{r, message=FALSE}
 library(teal.data)
 
-td <- within(
-  teal_data(),
+td_pk <- within(
+  td_pk,
   {
-    ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
-    ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
+    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
+    ds3 <- data.frame(V = 5:14, N = 4)
   }
 )
-datanames(td)
+datanames(td_pk) <- c(datanames(td_pk), "ds2", "ds3")
 
-join_keys(td) <- join_keys(
-  join_key("ds1", keys = c("X")),
-  join_key("ds2", keys = c("V", "W"))
-  ## equivalent to using primary_key
-  # join_key("ds2", "ds2", keys = c("V", "W"))
-)
+join_keys(td_pk)["ds2", "ds2"] <- c("V", "W")
+join_keys(td_pk)["ds3", "ds3"] <- c("V", "W")
 
-join_keys(td)
+join_keys(td_pk)
 ```
 
 ```{r, include=FALSE}
@@ -180,22 +176,30 @@ For example:
 ```{r}
 library(teal.data)
 
-td <- within(
+td_fk <- within(
   teal_data(),
   {
-    ds1 <- data.frame(X = factor(1:10), Y = 21:30, Z = 1:10)
-    ds2 <- data.frame(W = factor(10:1), V = factor(5:14), M = rep(1:5, 2))
-    ds3 <- data.frame(V = factor(5:14), T = 4)
+    ds1 <- data.frame(X = 1:10, Y = 21:30, Z = 1:10)
+    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
+    ds3 <- data.frame(V = 5:14, N = 4)
   }
 )
-datanames(td) <- c("ds1", "ds2", "ds3")
+datanames(td_fk) <- c("ds1", "ds2", "ds3")
 
-join_keys(td) <- join_keys(
-  join_key("ds1", "ds2", c("X" = "W")),
-  join_key("ds2", "ds3", c("V" = "V"))
+join_keys(td_fk) <- join_keys(
+  # Primary keys
+  join_key("ds1", keys = c("X")),
+  join_key("ds2", keys = c("V", "W")),
+  join_key("ds3", keys = c("V")),
+  # Foreign keys
+  join_key("ds2", "ds1", c("W" = "X")),
+  join_key("ds3", "ds2", c("V" = "V"))
 )
 
-join_keys(td)
+# The parent of ds2 and ds3 is ds1
+parents(td_fk) <- list(ds2 = "ds1", ds3 = "ds2")
+
+join_keys(td_fk)
 ```
 
 ### Implicit Relationships
@@ -206,21 +210,40 @@ If two datasets share common _foreign_ keys to the same _parent_ dataset, then t
 These implicit relationships can be used to merge 2 datasets together, just as if they were defined manually.
 
 ```{r}
-jk <- join_keys(
-  join_key("ds1", keys = "col_1"),
-  join_key("ds2", keys = c("col_1", "col_2")),
-  join_key("ds3", keys = c("col_1", "col_3")),
-  join_key("ds1", "ds2", keys = "col_1"),
-  join_key("ds1", "ds3", keys = "col_1")
+library(teal.data)
+
+td <- within(
+  teal_data(),
+  {
+    ds1 <- data.frame(X = 1:10, Y = 21:30, Z = 1:10)
+    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
+    ds3 <- data.frame(V = 5:14, N = 4)
+    ds4 <- data.frame(V = 5:14, R = rnorm(10))
+  }
+)
+datanames(td) <- c("ds1", "ds2", "ds3", "ds4")
+
+join_keys(td) <- join_keys(
+  # Primary keys
+  join_key("ds1", keys = c("X")),
+  join_key("ds2", keys = c("V", "W")),
+  join_key("ds3", keys = c("V")),
+  join_key("ds4", keys = c("V")),
+  # Foreign keys
+  join_key("ds2", "ds1", c("W" = "X")),
+  join_key("ds3", "ds2", c("V" = "V")),
+  join_key("ds4", "ds1", c("V" = "X"))
 )
 
 # The parent of ds2 and ds3 is ds1
-parents(jk) <- list(ds2 = "ds1", ds3 = "ds1")
+parents(td) <- list(ds2 = "ds1", ds3 = "ds2", ds4 = "ds1")
 
-jk["ds3", "ds2"]
+join_keys(td)
+
+join_keys(td)["ds2", "ds4"]
 ```
 
-_note_: the definition above contains no `join_key` for `"ds2" <-> "ds3"`
+_Note_ that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 
 ## _ADaM_ Join Keys
 
@@ -241,7 +264,7 @@ default_cdisc_join_keys["ADTTE"]
 default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 ```
 
-#### The full set of _ADaM_ Join Keys
+##### The full set of _ADaM_ Join Keys
 
 ```{r}
 default_cdisc_join_keys
