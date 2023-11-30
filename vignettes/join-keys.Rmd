@@ -135,9 +135,6 @@ td_pk <- within(
 datanames(td_pk) <- c("ds1")
 
 join_keys(td_pk) <- join_keys(join_key("ds1", keys = "id"))
-## Alternatively, when only a single primary key is defined the `join_keys()`
-## the wrapper can be skipped
-# join_keys(td_pk) <- join_key("ds1", keys = "id")
 
 join_keys(td_pk)
 ```
