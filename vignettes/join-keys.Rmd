@@ -257,17 +257,11 @@ The full set of join keys can be used, or a subset of those.
 Please note, that if the subsetted dataset has a parent, that will also be returned.
 
 ```{r}
+default_cdisc_join_keys
+
 default_cdisc_join_keys["ADSL"]
 
 default_cdisc_join_keys["ADTTE"]
 
 default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 ```
-
-##### The full set of _ADaM_ Join Keys
-
-```{r}
-default_cdisc_join_keys
-```
-
-
