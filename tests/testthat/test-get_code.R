@@ -11,6 +11,20 @@ testthat::test_that("get_code with datanames does not brake for empty code", {
   )
 })
 
+testthat::test_that("get_code with datanames does not brake for code without symbols", {
+  code <- c(
+    "1 + 1",
+    "a <- 5",
+    "501"
+  )
+
+  testthat::expect_identical(
+    get_code(teal_data(a = 5, code = code), datanames = "a"),
+    paste(warning_message, "a <- 5", sep = "\n")
+  )
+
+})
+
 testthat::test_that("get_code with datanames extracts code of a binding from a simple code put in a character", {
   code <- c(
     "a <- 1",
