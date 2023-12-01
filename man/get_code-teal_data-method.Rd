@@ -24,16 +24,9 @@ Retrieve code from \code{teal_data} object.
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
 Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datanames}.
-If the code has not passed verification, a warning will be prepended.
+If the code has not passed verification (with \code{\link[=verify]{verify()}}), a warning will be prepended. You can read more
+on how to prepare the code for reproducible extraction here \code{\link[=get_code_dependency]{get_code_dependency()}}.
 }
-\section{Notes}{
-
-This function assumes that object relationships are established using the \verb{<-}, \code{=}, or \verb{->} assignment
-operators. It does not support other object creation methods like \code{assign} or \verb{<<-}, nor non-standard-evaluation
-methods. To specify relationships between side-effects and objects, you can use the comment tag
-\verb{# @linksto object_name} at the end of a line where the side-effect occurs.
-}
-
 \examples{
 
 tdata1 <- teal_data()

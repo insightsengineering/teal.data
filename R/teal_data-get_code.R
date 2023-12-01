@@ -4,9 +4,8 @@
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
 #' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datanames`.
-#' If the code has not passed verification, a warning will be prepended.
-#'
-#' @inheritSection get_code_dependency Notes
+#' If the code has not passed verification (with [`verify()`]), a warning will be prepended. You can read more
+#' on how to prepare the code for reproducible extraction here [`get_code_dependency()`].
 #'
 #' @param object (`teal_data`)
 #' @param datanames (`character`) vector of data set names to return the code for.
