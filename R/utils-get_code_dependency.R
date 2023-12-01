@@ -252,7 +252,7 @@ graph_parser <- function(x, graph) {
     )
   influencers <- setdiff(influencers, x)
 
-  if (length(influencers)) {
+  if (length(influencers) && any(occurrence)) {
     influencers_ids <-
       lapply(influencers, function(influencer) {
         graph_parser(influencer, graph[1:max(which(occurrence))])
