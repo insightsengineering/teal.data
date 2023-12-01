@@ -143,7 +143,7 @@ to_relational_data(...)
 validate_metadata(...)
 }
 \arguments{
-\item{...}{any argument supported in \code{TealData} api.}
+\item{...}{any argument supported in \code{TealData} related functions.}
 }
 \value{
 nothing

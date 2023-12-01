@@ -2,6 +2,7 @@
 % Please edit documentation in R/teal_data-get_code.R
 \name{get_code,teal_data-method}
 \alias{get_code,teal_data-method}
+\alias{get_code}
 \title{Get Code from \code{teal_data}}
 \usage{
 \S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
@@ -15,7 +16,7 @@
 \item{datanames}{(\code{character}) vector of data set names to return the code for.}
 }
 \value{
-Either a character vector or expression representing code used to create the requested data sets.
+Either string or an expression representing code used to create the requested data sets.
 }
 \description{
 Retrieve code from \code{teal_data} object.
