@@ -18,12 +18,10 @@ influencing objects having and impact on the \code{object}
 \description{
 Return the lines of code (with side-effects) needed to reproduce the object
 }
-\section{Notes}{
-
+\details{
 This function assumes that object relationships are established using the \verb{<-}, \code{=}, or \verb{->} assignment
 operators. It does not support other object creation methods like \code{assign} or \verb{<<-}, nor non-standard-evaluation
 methods. To specify relationships between side-effects and objects, you can use the comment tag
 \verb{# @linksto object_name} at the end of a line where the side-effect occurs.
 }
-
 \keyword{internal}
