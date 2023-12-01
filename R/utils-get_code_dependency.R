@@ -98,11 +98,11 @@ fix_comments <- function(calls) {
 #' @keywords internal
 #' @noRd
 code_graph <- function(calls_pd) {
-  cooccurence <- extract_occurrence(calls_pd)
+  cooccurrence <- extract_occurrence(calls_pd)
 
   side_effects <- extract_side_effects(calls_pd)
 
-  graph <- mapply(c, side_effects, cooccurence, SIMPLIFY = FALSE)
+  graph <- mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
 
   remove_graph_duplicates(graph)
 }
@@ -232,7 +232,7 @@ remove_graph_duplicates <- function(graph) {
 graph_parser <- function(x, graph, skip = NULL) {
   skip <- c(x, skip)
 
-  occurence <-
+  occurrence <-
     vapply(
       graph, function(call) {
         if (":" %in% call) {
@@ -245,7 +245,7 @@ graph_parser <- function(x, graph, skip = NULL) {
 
   influencers <-
     unlist(
-      lapply(graph[occurence], function(call) {
+      lapply(graph[occurrence], function(call) {
         if (":" %in% call) {
           call[(which(":" == call) + 1):length(call)]
         }
@@ -256,11 +256,11 @@ graph_parser <- function(x, graph, skip = NULL) {
   if (length(influencers)) {
     influencers_ids <-
       lapply(influencers, function(influencer) {
-        graph_parser(influencer, graph[1:max(which(occurence))], skip)
+        graph_parser(influencer, graph[1:max(which(occurrence))], skip)
       })
 
-    sort(unique(c(which(occurence), unlist(influencers_ids))))
+    sort(unique(c(which(occurrence), unlist(influencers_ids))))
   } else {
-    which(occurence)
+    which(occurrence)
   }
 }
