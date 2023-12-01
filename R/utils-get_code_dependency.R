@@ -156,7 +156,7 @@ extract_occurrence <- function(calls_pd) {
       if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE(3)
           sym_cond <- rev(sym_cond)
       }
-      append(x[sym_cond, "text"], ":", after = 1)
+      append(unique(x[sym_cond, "text"]), ":", after = 1)
 
       ### NOTE(3): What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
       ### NOTE(2): For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
