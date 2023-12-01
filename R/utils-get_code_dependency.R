@@ -104,9 +104,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  graph <- mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
-
-  remove_graph_duplicates(graph)
+  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract Object Occurrence
@@ -192,29 +190,6 @@ extract_side_effects <- function(calls_pd) {
     function(x) {
       linksto <- grep("@linksto", x[x$token == "COMMENT", "text"], value = TRUE)
       unlist(strsplit(sub("\\s*#\\s*@linksto\\s+", "", linksto), "\\s+"))
-    }
-  )
-}
-
-#' @keywords internal
-#' @noRd
-remove_graph_duplicates <- function(graph) {
-  # This function is just a nice to have.
-  # This is not crucial for the implementation.
-  # Purpose: remove duplicates before ":" and after, in each element of list.
-
-  lapply(
-    lapply(graph, paste, collapse = "***"),
-    function(x) {
-      split <- strsplit(x, split = "<-", fixed = TRUE)[[1]]
-      deps <- strsplit(split[1], split = "***", fixed = TRUE)[[1]]
-
-      if (length(split) == 1) {
-        unique(deps)
-      } else if (length(split) == 2) {
-        infl <- strsplit(split[2], split = "***", fixed = TRUE)[[1]][-1]
-        c(unique(deps), "<-", unique(infl))
-      }
     }
   )
 }
