@@ -142,6 +142,7 @@ extract_occurrence <- function(calls_pd) {
       x <- call_pd[!is_in_function(call_pd), ]
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
+      if (length(sym_cond) == 0) {return(character(0))}
       # Watch out for SYMBOLS after $ and @. For x$a x@a: x is object, a is not.
       # For x$a, a's ID is $'s ID-2 so we need to remove all IDs that have ID = $ID - 2.
       dollar_ids <- x[x$token %in% c("'$'", "'@'"), "id"]
