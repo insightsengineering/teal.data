@@ -42,6 +42,19 @@ testthat::test_that("get_code with datanames extracts code of a binding from a s
   )
 })
 
+testthat::test_that("get_code works for datanames of length > 1", {
+  code <- c(
+    "a <- 1",
+    "b <- 2"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "b")
+  testthat::expect_identical(
+    get_code(tdata, datanames = c("a", "b")),
+    paste("a <- 1", "b <- 2", sep = "\n")
+  )
+})
+
 testthat::test_that("get_code with datanames warns if binding doesn't exist in a code", {
   code <- c(
     "a <- 1",

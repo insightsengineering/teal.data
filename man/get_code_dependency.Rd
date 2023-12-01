@@ -13,7 +13,7 @@ get_code_dependency(code, names)
 }
 \value{
 \code{character} vector of elements of \code{code} calls that were required to build the side-effects and
-influencing objects having and impact on the \code{object}
+influencing objects having and impact on \code{objects} passed via \code{names}.
 }
 \description{
 Return the lines of code (with side-effects) needed to reproduce the object

@@ -11,7 +11,7 @@
 #' @param names `character` vector of object names.
 #'
 #' @return `character` vector of elements of `code` calls that were required to build the side-effects and
-#' influencing objects having and impact on the `object`
+#' influencing objects having and impact on `objects` passed via `names`.
 #'
 #' @keywords internal
 get_code_dependency <- function(code, names) {
@@ -70,7 +70,7 @@ fix_comments <- function(calls) {
       if (grepl("@linksto", calls[[i]][1, "text"])) {
         calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1, ])
         calls[[i]] <- calls[[i]][-1, ]
-      } 
+      }
     }
   }
   calls
