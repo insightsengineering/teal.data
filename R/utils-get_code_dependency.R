@@ -29,10 +29,7 @@ get_code_dependency <- function(code, names) {
   # Assert names are actually in code.
   symbols <- unique(pd[pd$token == "SYMBOL", "text"])
   if (!all(names %in% symbols)) {
-    warning(
-      "Object(s) not found in code: ",
-      toString(setdiff(names, symbols))
-    )
+    warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
   }
 
   calls_pd <- extract_calls(pd)
