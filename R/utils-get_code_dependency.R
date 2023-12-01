@@ -44,7 +44,7 @@ get_code_dependency <- function(code, names) {
 #'
 #' @return
 #' A `list` of `data.frame`s. Each element is a subset of `pd` corresponding to one call in the original code
-#' from which `pd` was obtained. Only three columns (`"token"`, `"text"`, `"id"`) are kept, the rest is discarded.
+#' from which `pd` was obtained. Only four columns (`"token"`, `"text"`, `"id"`, `"parent"`) are kept, the rest is discarded.
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
