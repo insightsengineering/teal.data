@@ -90,10 +90,10 @@ fix_comments <- function(calls) {
 #' A result of `extract_calls()` function.
 #'
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
-#' character vector containing names of objects that were influenced by this call, and names of objects influencing this
-#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call influenced object named `a`,
-#' and the object was influenced by objects named `b` and `c`. If an object was marked with `@linksto` side effects tag
-#' then it appears as an influenced object at the beginning of a vector.
+#' character vector containing names of objects that were affected by this call, and names of objects influencing this
+#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call affected object named `a`,
+#' and the object was affected by objects named `b` and `c`. If an object was marked with `@linksto` side effects tag
+#' then it appears as an affected object at the beginning of a vector.
 #'
 #' @keywords internal
 #' @noRd
@@ -110,14 +110,14 @@ code_graph <- function(calls_pd) {
 #' Extract Object Occurrence
 #'
 #' @description Extract objects occurrence within calls passed by `calls_pd`. It also detects which objects are
-#' influenced by others within a call, and which are influencers.
+#' affected by others within a call, and which are influencers.
 #'
 #' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
 #' A result of `extract_calls()` function.
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
-#' character vector containing names of objects that were influenced by this call, and names of objects influencing this
-#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call influenced object named `a`,
-#' and the object was influenced by objects named `b` and `c`.
+#' character vector containing names of objects that were affected by this call, and names of objects influencing this
+#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call affected object named `a`,
+#' and the object was affected by objects named `b` and `c`.
 #' @keywords internal
 #' @noRd
 extract_occurrence <- function(calls_pd) {
@@ -180,7 +180,7 @@ extract_occurrence <- function(calls_pd) {
 #' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
 #' A result of `extract_calls()` function.
 #' @return A `list` of length equal to the lenght of `calls_pd` of character vectors of names of objects that are
-#' influenced by `@linksto` tag in a corresponding `call` element of `calls_pd`.
+#' affected by `@linksto` tag in a corresponding `call` element of `calls_pd`.
 #' @keywords internal
 #' @noRd
 extract_side_effects <- function(calls_pd) {
