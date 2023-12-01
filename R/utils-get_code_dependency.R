@@ -26,7 +26,7 @@ get_code_dependency <- function(code, names) {
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
 
-  # Assert names are actually in code.
+  # Detect if names are actually in code.
   symbols <- unique(pd[pd$token == "SYMBOL", "text"])
   if (!all(names %in% symbols)) {
     warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
