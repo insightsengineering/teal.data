@@ -179,7 +179,7 @@ extract_occurrence <- function(calls_pd) {
 #'
 #' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
 #' A result of `extract_calls()` function.
-#' @return A `list` of length equal to the lenght of `calls_pd` of character vectors of names of objects that are
+#' @return A `list` of length equal to the length of `calls_pd` of character vectors of names of objects that are
 #' affected by `@linksto` tag in a corresponding `call` element of `calls_pd`.
 #' @keywords internal
 #' @noRd
