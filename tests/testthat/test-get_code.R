@@ -55,6 +55,29 @@ testthat::test_that("get_code with datanames warns if binding doesn't exist in a
   )
 })
 
+testthat::test_that("get_code with datanames does not fall into a loop", {
+  code <- c(
+    "a <- 1",
+    "b <- a",
+    "c <- b",
+    "a <- c"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "b", "c")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    paste(code, collapse = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste(code[1:2], collapse = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "c"),
+    paste(code[1:3], collapse = "\n")
+  )
+})
+
 
 testthat::test_that(
   "get_code with datanames extracts code of a parent binding but only those evaluated before coocurence",

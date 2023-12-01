@@ -225,15 +225,12 @@ remove_graph_duplicates <- function(graph) {
 #'
 #' @param x The name of the object to return code for.
 #' @param graph A result of `code_graph()`.
-#' @param skip `NULL` or `character` vector. In a recursive call, it is needed to drop parent object to omit dependency
-#' cycles.
 #'
 #' @return `numeric` vector indicating which calls of `graph` are required to build the object passed by name in `x`.
 #'
 #' @keywords internal
 #' @noRd
-graph_parser <- function(x, graph, skip = NULL) {
-  skip <- c(x, skip)
+graph_parser <- function(x, graph) {
 
   occurrence <-
     vapply(
@@ -253,12 +250,12 @@ graph_parser <- function(x, graph, skip = NULL) {
         }
       })
     )
-  influencers <- setdiff(influencers, skip)
+  influencers <- setdiff(influencers, x)
 
   if (length(influencers)) {
     influencers_ids <-
       lapply(influencers, function(influencer) {
-        graph_parser(influencer, graph[1:max(which(occurrence))], skip)
+        graph_parser(influencer, graph[1:max(which(occurrence))])
       })
 
     sort(unique(c(which(occurrence), unlist(influencers_ids))))
