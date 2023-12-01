@@ -93,7 +93,7 @@ fix_comments <- function(calls) {
 #'
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
 #' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call affected object named `a`,
+#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means a call affected object named `a`,
 #' and the object was affected by objects named `b` and `c`. If an object was marked with `@linksto` side effects tag
 #' then it appears as an affected object at the beginning of a vector.
 #'
@@ -118,7 +118,7 @@ code_graph <- function(calls_pd) {
 #' A result of `extract_calls()` function.
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
 #' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `":"` string, e.g. `c("a", ":", "b", "c")` means a call affected object named `a`,
+#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means a call affected object named `a`,
 #' and the object was affected by objects named `b` and `c`.
 #' @keywords internal
 #' @noRd
@@ -159,12 +159,12 @@ extract_occurrence <- function(calls_pd) {
       if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE(3)
           sym_cond <- rev(sym_cond)
       }
-      append(unique(x[sym_cond, "text"]), ":", after = 1)
+      append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
       ### NOTE(3): What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
       ### NOTE(2): For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
       ### NOTE(1): Cases like 'data(iris)' that do not have an assignment operator.
-      ### NOTE(1): Then they are parsed as c("iris", ":", "data")
+      ### NOTE(1): Then they are parsed as c("iris", "<-", "data")
     }
   )
 }
@@ -206,14 +206,14 @@ remove_graph_duplicates <- function(graph) {
   lapply(
     lapply(graph, paste, collapse = "***"),
     function(x) {
-      split <- strsplit(x, split = ":", fixed = TRUE)[[1]]
+      split <- strsplit(x, split = "<-", fixed = TRUE)[[1]]
       deps <- strsplit(split[1], split = "***", fixed = TRUE)[[1]]
 
       if (length(split) == 1) {
         unique(deps)
       } else if (length(split) == 2) {
         infl <- strsplit(split[2], split = "***", fixed = TRUE)[[1]][-1]
-        c(unique(deps), ":", unique(infl))
+        c(unique(deps), "<-", unique(infl))
       }
     }
   )
@@ -238,7 +238,7 @@ graph_parser <- function(x, graph, skip = NULL) {
   occurrence <-
     vapply(
       graph, function(call) {
-        ind <- match(":", call, nomatch = length(call) +1L)
+        ind <- match("<-", call, nomatch = length(call) +1L)
         x %in% call[seq_len(ind - 1L)]
       },
       logical(1)
@@ -247,8 +247,10 @@ graph_parser <- function(x, graph, skip = NULL) {
   influencers <-
     unlist(
       lapply(graph[occurrence], function(call) {
-        ind <- match(":", call, nomatch = 0L)
-        x %in% call[seq_len(ind + 1L)]
+        if ("<-" %in% call) {
+          ind <- match("<-", call)
+          call[(ind + 1L):length(call)]
+        }
       })
     )
   influencers <- setdiff(influencers, skip)
