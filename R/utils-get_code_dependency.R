@@ -35,8 +35,8 @@ get_code_dependency <- function(code, names) {
   calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
-  indexes <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  as.character(code[unique(indexes)])
+  ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
+  as.character(code[unique(ind)])
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
