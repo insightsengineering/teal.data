@@ -66,6 +66,7 @@ get_children <- function(pd, parent) {
 
 fix_comments <- function(calls) {
   # If the first token is a COMMENT, then it belongs to the previous call.
+
   if (length(calls) >= 2) {
     calls_new <- list()
     calls_new[[1]] <- calls[[1]]
@@ -73,6 +74,8 @@ fix_comments <- function(calls) {
       if (grepl("@linksto", calls[[i]][1, "text"])) {
         calls_new[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1, ])
         calls[[i]] <- calls[[i]][-1, ]
+      } else {
+        calls_new[[i]] <- calls[[i]]
       }
     }
   }
