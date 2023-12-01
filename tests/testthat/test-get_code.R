@@ -7,7 +7,7 @@ testthat::test_that("get_code with datanames does not brake for empty code", {
   )
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = ""), datanames = "a"),
-    c(warning_message, "")
+    paste0(warning_message, "\n")
   )
 })
 
@@ -54,7 +54,7 @@ testthat::test_that(
     datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
-      c("a <- 1", "b <- a")
+      paste("a <- 1", "b <- a", sep = "\n")
     )
   }
 )
@@ -69,7 +69,7 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("a <- 1", "b <- identity(x = a)")
+    paste("a <- 1", "b <- identity(x = a)", sep = "\n")
   )
 })
 
@@ -83,7 +83,7 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   datanames(tdata) <- c("a", "b", "c")
   testthat::expect_identical(
     get_code(tdata, datanames = c("a", "b")),
-    c("a <- 1", "b <- 2")
+    paste("a <- 1", "b <- 2", sep = "\n")
   )
 })
 
@@ -99,7 +99,7 @@ testthat::test_that("get_code with datanames can't extract the code for assign f
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("assign('b', 5)", "b <- b + 2")
+    paste("assign('b', 5)", "b <- b + 2", sep = "\n")
   )
 })
 
@@ -113,7 +113,7 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("assign(\"b\", 5)", "b <- b + 2")
+    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
   )
 })
 
@@ -128,7 +128,7 @@ testthat::test_that(
     datanames(tdata) <- c("iris2")
     testthat::expect_identical(
       get_code(tdata, datanames = "iris2"),
-      c("data(iris)", "iris2 <- head(iris)")
+      paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
     )
   }
 )
@@ -143,7 +143,7 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("a <- 1", "b <- a", "b <<- b + 2")
+    paste("a <- 1", "b <- a", "b <<- b + 2", sep = "\n")
   )
 })
 
@@ -157,7 +157,7 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("b <- 2", "eval(expression({\n    b <- b + 2\n}))")
+    paste("b <- 2", "eval(expression({\n    b <- b + 2\n}))", sep = "\n")
   )
 })
 
@@ -173,7 +173,7 @@ testthat::test_that("@linksto cause to return this line for affected binding", {
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("a <- 1", "b <- 2")
+    paste("a <- 1", "b <- 2", sep = "\n")
   )
 })
 
@@ -189,7 +189,7 @@ testthat::test_that(
     datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
-      c("a <- 1", "b <- 2")
+      paste("a <- 1", "b <- 2", sep = "\n")
     )
   }
 )
@@ -206,7 +206,7 @@ testthat::test_that(
     datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
-      c("a <- 1", "b <- 2")
+      paste("a <- 1", "b <- 2", sep = "\n")
     )
   }
 )
@@ -223,7 +223,7 @@ testthat::test_that(
     datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
-      c("a <- 1", "b <- a")
+      paste("a <- 1", "b <- a", sep = "\n")
     )
   }
 )
@@ -242,11 +242,11 @@ testthat::test_that(
     datanames(tdata) <- c("a", "b")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
-      c("a <- 1", "b <- 2", "a <- a + 1")
+      paste("a <- 1", "b <- 2", "a <- a + 1", sep = "\n")
     )
     testthat::expect_identical(
       get_code(tdata, datanames = "b"),
-      c("b <- 2", "b <- b + 1")
+      paste("b <- 2", "b <- b + 1", sep = "\n")
     )
   }
 )
@@ -263,7 +263,7 @@ testthat::test_that(
     datanames(tdata) <- c("iris2", "iris_head", "classes")
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
-      c("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "classes <- lapply(iris2, class)")
+      paste("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "classes <- lapply(iris2, class)", sep = "\n")
     )
   }
 )
@@ -281,7 +281,11 @@ testthat::test_that(
     datanames(tdata) <- c("iris2", "iris_head", "iris3", "classes")
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
-      c("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "iris3 <- iris_head[1, ]", "classes <- lapply(iris2, class)")
+      paste("iris2 <- iris[1:5, ]",
+            "iris_head <- head(iris)",
+            "iris3 <- iris_head[1, ]",
+            "classes <- lapply(iris2, class)",
+            sep = "\n")
     )
   }
 )
@@ -317,7 +321,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   datanames(tdata) <- c("a", "b", "x")
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    c("x <- 1", "print(x)")
+    paste("x <- 1", "print(x)", sep = "\n")
   )
 
 })
@@ -334,7 +338,7 @@ testthat::test_that("get_code with datanames does not ignore occurrence in funct
   datanames(tdata) <- c("a", "p", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    code
+    paste(code, sep = "\n")
   )
 
 })
@@ -367,7 +371,7 @@ testthat::test_that("get_code with datanames returns custom function calls on ob
   datanames(tdata) <- c("b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "foo(b)")
+    paste("b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "foo(b)", sep = "\n")
   )
 })
 
@@ -382,7 +386,7 @@ testthat::test_that("get_code with datanames detects occurrence of the function 
   datanames(tdata) <- c("a", "b", "foo")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("a <- 1", "b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "b <- foo(a)")
+    paste("a <- 1", "b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "b <- foo(a)", sep = "\n")
   )
 })
 
@@ -398,7 +402,7 @@ testthat::test_that(
     datanames(tdata) <- c("x", "foo", "a")
     testthat::expect_identical(
       get_code(tdata, datanames = "a"),
-      c("x <- 1", "foo <- function(foo = 1) \"text\"", "a <- foo(x)")
+      paste("x <- 1", "foo <- function(foo = 1) \"text\"", "a <- foo(x)", sep = "\n")
     )
   }
 )
@@ -417,11 +421,16 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
   datanames(tdata) <- c("x", "a")
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    c("x <- data.frame(a = 1:3)")
+    "x <- data.frame(a = 1:3)"
   )
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
-    c("x <- data.frame(a = 1:3)", "a <- data.frame(y = 1:3)", "a$x <- a$y", "a$x <- a$x + 2", "a$x <- x$a")
+    paste("x <- data.frame(a = 1:3)",
+          "a <- data.frame(y = 1:3)",
+          "a$x <- a$y",
+          "a$x <- a$x + 2",
+          "a$x <- x$a",
+          sep = "\n")
   )
 })
 
@@ -435,7 +444,7 @@ testthat::test_that("get_code with datanames detects cooccurrence properly even 
   datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    c("a <- 1", "b <- list(c = 2)", "b[[a]] <- 3")
+    paste("a <- 1", "b <- list(c = 2)", "b[[a]] <- 3", sep = "\n")
   )
 })
 
@@ -455,22 +464,24 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
   datanames(tdata) <- c("x", "a")
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    c(
+    paste(
       warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
-      'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)'
+      'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
+      sep = "\n"
     )
   )
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
-    c(
+    paste(
       warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
       'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
       'a <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
       "a@x <- a@y",
       "a@x <- a@x + 2",
-      "a@x <- x@a"
+      "a@x <- x@a",
+      sep = "\n"
     )
   )
 })
