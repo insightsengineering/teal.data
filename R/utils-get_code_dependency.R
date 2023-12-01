@@ -8,7 +8,7 @@
 #' methods. To specify relationships between side-effects and objects, you can use the comment tag
 #' `# @linksto object_name` at the end of a line where the side-effect occurs.
 #'
-#' @param code An `expression` with `srcref` attribute or a `character` with the code.
+#' @param code `character` with the code.
 #' @param names `character` vector of object names.
 #'
 #' @return `character` vector of elements of `code` calls that were required to build the side-effects and

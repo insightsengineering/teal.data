@@ -7,9 +7,9 @@
 get_code_dependency(code, names)
 }
 \arguments{
-\item{code}{An \code{expression} with \code{srcref} attribute or a \code{character} with the code.}
+\item{code}{\code{character} with the code.}
 
-\item{names}{A \code{character(n)} with object names.}
+\item{names}{\code{character} vector of object names.}
 }
 \value{
 \code{character} vector of elements of \code{code} calls that were required to build the side-effects and
