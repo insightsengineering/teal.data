@@ -16,7 +16,7 @@
 #'
 #' @keywords internal
 get_code_dependency <- function(code, names) {
-  checkmate::assert_class(code, classes = "character")
+  checkmate::assert_character(code)
   checkmate::assert_character(names)
 
   if (identical(code, character(0)) || identical(trimws(code), "")) {
