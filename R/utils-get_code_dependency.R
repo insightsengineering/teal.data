@@ -238,10 +238,8 @@ graph_parser <- function(x, graph, skip = NULL) {
   occurrence <-
     vapply(
       graph, function(call) {
-        if (":" %in% call) {
-          call <- call[1:(which(":" == call) - 1)]
-        }
-        x %in% call
+        ind <- match(":", call, nomatch = length(call) +1L)
+        x %in% call[seq_len(ind - 1L)]
       },
       logical(1)
     )
@@ -249,9 +247,8 @@ graph_parser <- function(x, graph, skip = NULL) {
   influencers <-
     unlist(
       lapply(graph[occurrence], function(call) {
-        if (":" %in% call) {
-          call[(which(":" == call) + 1):length(call)]
-        }
+        ind <- match(":", call, nomatch = 0L)
+        x %in% call[seq_len(ind + 1L)]
       })
     )
   influencers <- setdiff(influencers, skip)
