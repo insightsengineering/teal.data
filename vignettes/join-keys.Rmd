@@ -20,9 +20,9 @@ Each dataset can be characterized by:
 - Merge keys, analogous to `SQL` foreign keys
 
 Typically, an application developer specifies these keys manually. However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
-Refer to the section ["`ADaM` `join_keys`"](#adam-join_keys) for details on using this object to select specific datasets.
+Refer to the section ["`ADaM` `join_keys`"](#adam-join-keys) for details on using this object to select specific datasets.
 
-##### Uses of _join_keys_ in _teal_ applications
+##### Uses of _join_keys_ class in _teal_ applications
 
 The primary function of `join_keys` in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
@@ -37,7 +37,7 @@ The `join_keys` object can also be extended by establishing parent-child relatio
 The `join_keys` function is used to specify keys:
 
 - `join_keys(...)` is a collection of multiple `join_key` entries
-- `join_key(...)` specifies the relation between two datasets:
+- `join_key(...)` specifies the relationship between two datasets:
   - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
   - `key` (optional): named vector of column names
 
@@ -99,7 +99,7 @@ jk["ds4", "ds5"]
 jk["ds5", "ds4"]
 ```
 
-Modifying or adding a key uses the same notation with the assignment operator `<-`. This will ensure symmetry as it will create both relationships. Assigning `NULL` value will delete the relation.
+Modifying or adding a key uses the same notation with the assignment operator `<-`. This will ensure symmetry as it will create both relationships. Assigning `NULL` value will delete the relationship.
 
 ```{r}
 # Adding a new ds5 <-> ds1 key
@@ -113,7 +113,7 @@ jk["ds4", "ds5"] <- NULL
 
 There are 2 types of relationships encoded with `join_keys` described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the `join_key` function.
 
-Additionally, the `join_keys` object detects implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relations are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
+Additionally, the `join_keys` object detects implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
 ### Primary Key with _teal_data_
 
