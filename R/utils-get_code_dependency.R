@@ -52,8 +52,10 @@ get_code_dependency <- function(code, names) {
 #' @param pd (`data.frame`) A result of `utils::getParseData()`.
 #'
 #' @return
-#' A `list` of `data.frame`s. Each element is a subset of `pd` corresponding to one call in the original code
-#' from which `pd` was obtained. Only four columns (`"token"`, `"text"`, `"id"`, `"parent"`) are kept, the rest is discarded.
+#' A `list` of `data.frame`s.
+#' Each element is a subset of `pd` corresponding to one call in the original code
+#' from which `pd` was obtained.
+#' Only four columns (`"token"`, `"text"`, `"id"`, `"parent"`) are kept, the rest is discarded.
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
