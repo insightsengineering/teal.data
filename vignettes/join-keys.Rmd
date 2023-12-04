@@ -41,7 +41,7 @@ The `join_keys` function is used to specify keys:
   - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
   - `key` (optional): named vector of column names
 
-_Note_ that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
+Note that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
 
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
@@ -240,7 +240,7 @@ join_keys(td)
 join_keys(td)["ds2", "ds4"]
 ```
 
-_Note_ that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
+Note that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 
 ## _Join Keys_ in `ADaM` Datasets
 
