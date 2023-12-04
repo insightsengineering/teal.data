@@ -27,7 +27,7 @@ Refer to the section ["Joining Keys with `ADaM` Datasets"](#join-keys-in-adam-da
 The primary function of `join_keys` in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
 Additionally, it plays a role on the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/main/articles/filter-panel.html)_ in a `teal` application.
-The filtering of a _(parent)_ dataset triggers additional background actions that will look for all datasets in which foreign keys target that _parent_ and then filter those accordingly.
+The filters applied to a _(parent)_ dataset are also applied to their children.
 
 ## Anatomy of Join Keys
 
