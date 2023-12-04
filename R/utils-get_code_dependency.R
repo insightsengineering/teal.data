@@ -1,17 +1,27 @@
 # get_code_dependency ----
 
-#' Return the lines of code (with side-effects) needed to reproduce the object
+#' Get Code Dependency of an Object
 #'
-#' @details This function assumes that object relationships are established using the `<-`, `=`, or `->` assignment
-#' operators. It does not support other object creation methods like `assign` or `<<-`, nor non-standard-evaluation
-#' methods. To specify relationships between side-effects and objects, you can use the comment tag
-#' `# @linksto object_name` at the end of a line where the side-effect occurs.
+#' Extract subset of code required to reproduce specific object(s), including code producing side-effects.
+#'
+#' Given a character vector with code, this function will extract the part of the code responsible for creating
+#' the variables specified by `names`.
+#' This includes the final call that creates the variable(s) in question as well as all _parent calls_,
+#' _i.e._ calls that create variables used in the final call and their parents, etc.
+#' Also included are calls that create side-effects like establishing connections.
+#'
+#' It is assumed that object relationships are established using three assignment operators: `<-`, `=`, and `->` .
+#' Other assignment methods (`assign`, `<<-`) or non-standard-evaluation methods are not supported.
+#'
+#' Side-effects are not detected automatically and must be marked in the code.
+#' Add `# @linksto object` at the end of a line where a side-effect occurs to specify that this line is required
+#' to reproduce a variable called `object`.
 #'
 #' @param code `character` with the code.
 #' @param names `character` vector of object names.
 #'
-#' @return `character` vector of elements of `code` calls that were required to build the side-effects and
-#' influencing objects having and impact on `objects` passed via `names`.
+#' @return Character vector, a subset of `code`.
+#' Note that subsetting is actually done on the calls `code`, not necessarily on the elements of the vector.
 #'
 #' @keywords internal
 get_code_dependency <- function(code, names) {

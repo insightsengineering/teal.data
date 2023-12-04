@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-get_code_dependency.R
 \name{get_code_dependency}
 \alias{get_code_dependency}
-\title{Return the lines of code (with side-effects) needed to reproduce the object}
+\title{Get Code Dependency of an Object}
 \usage{
 get_code_dependency(code, names)
 }
@@ -12,16 +12,24 @@ get_code_dependency(code, names)
 \item{names}{\code{character} vector of object names.}
 }
 \value{
-\code{character} vector of elements of \code{code} calls that were required to build the side-effects and
-influencing objects having and impact on \code{objects} passed via \code{names}.
+Character vector, a subset of \code{code}.
+Note that subsetting is actually done on the calls \code{code}, not necessarily on the elements of the vector.
 }
 \description{
-Return the lines of code (with side-effects) needed to reproduce the object
+Extract subset of code required to reproduce specific object(s), including code producing side-effects.
 }
 \details{
-This function assumes that object relationships are established using the \verb{<-}, \code{=}, or \verb{->} assignment
-operators. It does not support other object creation methods like \code{assign} or \verb{<<-}, nor non-standard-evaluation
-methods. To specify relationships between side-effects and objects, you can use the comment tag
-\verb{# @linksto object_name} at the end of a line where the side-effect occurs.
+Given a character vector with code, this function will extract the part of the code responsible for creating
+the variables specified by \code{names}.
+This includes the final call that creates the variable(s) in question as well as all \emph{parent calls},
+\emph{i.e.} calls that create variables used in the final call and their parents, etc.
+Also included are calls that create side-effects like establishing connections.
+
+It is assumed that object relationships are established using three assignment operators: \verb{<-}, \code{=}, and \verb{->} .
+Other assignment methods (\code{assign}, \verb{<<-}) or non-standard-evaluation methods are not supported.
+
+Side-effects are not detected automatically and must be marked in the code.
+Add \verb{# @linksto object} at the end of a line where a side-effect occurs to specify that this line is required
+to reproduce a variable called \code{object}.
 }
 \keyword{internal}
