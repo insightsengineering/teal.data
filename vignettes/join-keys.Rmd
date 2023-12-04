@@ -115,7 +115,7 @@ There are 2 types of relationships encoded with `join_keys` described in the fol
 
 Additionally, the `join_keys` object detects implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
-### Primary Key with _teal_data_
+### Primary Key with `teal_data`
 
 When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
 We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
@@ -163,7 +163,7 @@ join_keys(td_pk)
 # nolint end: commented_code_linter.
 ```
 
-### Foreign Keys with _teal_data_
+### Foreign Keys with `teal_data`
 
 When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
 For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
@@ -242,7 +242,7 @@ join_keys(td)["ds2", "ds4"]
 
 _Note_ that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 
-## _Join Keys_ in _ADaM_ Datasets
+## _Join Keys_ in `ADaM` Datasets
 
 `teal.data` provides a set of default join keys (primary and foreign) for datasets named according to the _ADaM_ standard. They are stored in `default_cdisc_join_keys`.
 
