@@ -244,13 +244,13 @@ _Note_ that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 
 ## _ADaM_ Join Keys
 
-When working with datasets named according to the _ADaM_ standard, `teal.data` offers `default_cdisc_join_keys` object that contains primary and foreign keys for standard datasets.
+`teal.data` provides a set of default join keys (primary and foreign) for datasets named according to the _ADaM_ standard. They are stored in `default_cdisc_join_keys`.
 
 ```{r}
 names(default_cdisc_join_keys) |> sort()
 ```
 
-The full set of join keys can be used, or a subset of those.
+If not all default keys are required, a subset can be used.
 Please note, that if the subsetted dataset has a parent, that will also be returned.
 
 ```{r}
