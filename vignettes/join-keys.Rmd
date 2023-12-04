@@ -19,7 +19,7 @@ Each dataset can be characterized by:
 - Columns constituting the primary key
 - Merge keys, analogous to `SQL` foreign keys
 
-Typically, an application developer manually specifies these keys. However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
+Typically, an application developer specifies these keys manually. However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
 Refer to the section ["`ADaM` `join_keys`"](#adam-join_keys) for details on using this object to select specific datasets.
 
 ##### Uses of _join_keys_ in _teal_ applications
@@ -132,7 +132,7 @@ td_pk <- within(
   teal_data(),
   ds1 <- mutate(iris, id = factor(row_number()))
 )
-datanames(td_pk) <- c("ds1")
+datanames(td_pk) <- "ds1"
 
 join_keys(td_pk) <- join_keys(join_key("ds1", keys = "id"))
 
