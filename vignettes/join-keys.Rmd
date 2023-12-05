@@ -31,17 +31,23 @@ The filters applied to a _(parent)_ dataset are also applied to their children.
 
 ## Anatomy of Join Keys
 
-A new `join_keys` can be created by defining a set of primary and foreign keys. 
-The `join_keys` object can also be extended by establishing parent-child relationships between datasets and adding/modifying/removing keys.
+The `join_keys` object contains information about the foreign/primary keys of multiple datasets.
+Each key is represented by a pair of datasets _(by `dataname` reference)_ and a character vector that encodes how to match column name between the two datasets.
+In addition, a foreign key also contains a _parent-child_ attribute that is used in the "Filter Panel" as we mentioned above.
 
-The `join_keys` function is used to specify keys:
+A new `join_keys` can be created by defining a set of primary and foreign keys.
+That initial object can be extended by adding/modifying/removing keys and by establishing parent-child relationships between datasets.
 
-- `join_keys(...)` is a collection of multiple `join_key` entries
-- `join_key(...)` specifies the relationship between two datasets:
+The `join_keys` function is used both as a constructor and as a getter.
+As the getter it is used to retrieve the `join_keys` that is contained in other objects, such as `teal_data` or to return itself.
+
+As the constructor it is used to specify keys `join_keys(...)` as a collection of multiple `join_key` entries:
+
+- `join_key(dataset_1, dataset_2, key)`: specifies the relationship between two datasets:
   - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
-  - `key` (optional): named vector of column names
+  - `key` _(optional)_: named vector of column names
 
-Note that join keys are assumed to be symmetric, i.e., `join_key("x", "y", c("x_col" = "y_col"))` establishes a relationship from "x" to "y and vice versa.
+Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c("ds1_col" = "ds2_col"))` establishes a relationship from "x" to "y" and vice versa.
 
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
@@ -61,7 +67,6 @@ jk <- join_keys(
 parents(jk) <- list(ds2 = "ds1", ds3 = "ds1")
 
 jk
-
 ```
 
 | Output of `print(jk)`              | Output annotation                    |
@@ -83,7 +88,8 @@ jk
 
 ## Accessing and Modifying keys
 
-The `join_keys` object behaves like a list and the preferred method to get a specific key to use the _subset_ operator with 2 indices. 
+The _subset_ operator with 2 indices is used to retrieve the primary/foreign keys in a `join_keys`.
+Both indices must be a string.
 
 ```{r}
 # Using the jk object defined on "Anatomy of Join Keys"
@@ -92,12 +98,28 @@ jk
 # Getting primary key of "ds1"
 jk["ds1", "ds1"]
 
-# Getting foreign keys between "ds2" and "ds1"
+# Getting foreign keys between "ds4" and "ds5"
 jk["ds4", "ds5"]
+```
 
-# Note the symmetry on the keys
+Note that there is a symmetry between `ds4` and `ds5` relationship:
+
+```{r}
+jk["ds5", "ds4"]
 jk["ds5", "ds4"]
 ```
+
+
+When only 1 argument is used this operator will return a `join_keys` object that is filtered accordingly.
+
+```{r}
+# Using the jk object defined on "Anatomy of Join Keys"
+jk
+
+# Getting primary key of "ds1"
+jk["ds1"]
+```
+
 
 Modifying or adding a key uses the same notation with the assignment operator `<-`. This will ensure symmetry as it will create both relationships. Assigning `NULL` value will delete the relationship.
 
