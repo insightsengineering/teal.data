@@ -24,8 +24,14 @@ Retrieve code from \code{teal_data} object.
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
 Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datanames}.
-If the code has not passed verification, a warning will be prepended.
+If the code has not passed verification (with \code{\link[=verify]{verify()}}), a warning will be prepended.
 }
+\section{Notes for Developers}{
+
+To learn more about how a subset of code needed to reproduce a specific data set is extracted from all code,
+see \code{\link[=get_code_dependency]{get_code_dependency()}}.
+}
+
 \examples{
 
 tdata1 <- teal_data()
