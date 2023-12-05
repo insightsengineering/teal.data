@@ -275,8 +275,8 @@ Note that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 names(default_cdisc_join_keys) |> sort()
 ```
 
-If not all default keys are required, a subset can be used.
-Please note, that if the subsetted dataset has a parent, that will also be returned.
+When not all default keys are required users can select a smaller set of datasets by subsetting (for example: `default_cdisc_join_keys[c("ADSL", "ADTTE")]`).
+Please note, that for every element that is selected, its parent will also be returned (if it has one) as well as any pair-wise relationships in the resulting selection.
 
 ```{r}
 default_cdisc_join_keys
