@@ -3,7 +3,7 @@ title: "teal_data reproducibility"
 author: "NEST CoreDev"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{`teal_data` reproducibility}
+  %\VignetteIndexEntry{teal_data reproducibility}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
