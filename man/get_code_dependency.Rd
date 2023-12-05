@@ -25,7 +25,7 @@ This includes the final call that creates the variable(s) in question as well as
 \emph{i.e.} calls that create variables used in the final call and their parents, etc.
 Also included are calls that create side-effects like establishing connections.
 
-It is assumed that object relationships are established using three assignment operators: \verb{<-}, \code{=}, and \verb{->} .
+It is assumed that object dependency is established by using three assignment operators: \verb{<-}, \code{=}, and \verb{->} .
 Other assignment methods (\code{assign}, \verb{<<-}) or non-standard-evaluation methods are not supported.
 
 Side-effects are not detected automatically and must be marked in the code.

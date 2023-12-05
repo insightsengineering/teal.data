@@ -10,7 +10,7 @@
 #' _i.e._ calls that create variables used in the final call and their parents, etc.
 #' Also included are calls that create side-effects like establishing connections.
 #'
-#' It is assumed that object relationships are established using three assignment operators: `<-`, `=`, and `->` .
+#' It is assumed that object dependency is established by using three assignment operators: `<-`, `=`, and `->` .
 #' Other assignment methods (`assign`, `<<-`) or non-standard-evaluation methods are not supported.
 #'
 #' Side-effects are not detected automatically and must be marked in the code.
@@ -49,13 +49,14 @@ get_code_dependency <- function(code, names) {
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
+#'
 #' @param pd (`data.frame`) A result of `utils::getParseData()`.
 #'
 #' @return
 #' A `list` of `data.frame`s.
-#' Each element is a subset of `pd` corresponding to one call in the original code
-#' from which `pd` was obtained.
+#' Each element is a subset of `pd` corresponding to one call in the original code from which `pd` was obtained.
 #' Only four columns (`"token"`, `"text"`, `"id"`, `"parent"`) are kept, the rest is discarded.
+#'
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
@@ -92,18 +93,21 @@ fix_comments <- function(calls) {
 
 #' Create Object Dependencies Graph Within Parsed Code
 #'
-#' @description Builds dependency graph that identifies relationships between objects in parsed code.
-#' Helpful in understanding which objects are needed to recreate a specific object.
+#' @description
+#' Builds dependency graph that identifies dependencies between objects in parsed code.
+#' Helps understand which objects depend on which.
 #'
 #' @param calls_pd `list` of `data.frame`s;
 #'  result of `utils::getParseData()` split into subsets representing individual calls;
 #'  created by `extract_calls()` function
 #'
-#' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
-#' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
-#' was affected by objects named `b` and `c`.
-#' If a code line is tagged with `@linksto a`, then the variables in that line are understood to affect object `a`.
+#' @return
+#' A list (of length of input `calls_pd`) where each element represents one call.
+#' Each element is a character vector listing names of objects that depend on this call
+#' and names of objects that this call depends on.
+#' Dependencies are listed after the `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
+#' depends on objects `b` and `c`.
+#' If a call is tagged with `@linksto a`, then object `a` is understood to depend on that call.
 #'
 #' @keywords internal
 #' @noRd
@@ -118,17 +122,19 @@ code_graph <- function(calls_pd) {
 #' Extract Object Occurrence
 #'
 #' @description Extracts objects occurrence within calls passed by `calls_pd`.
-#' Also detects which objects are affected by others within a call, and which are influencers.
+#' Also detects which objects depend on which within a call.
 #'
 #' @param calls_pd `list` of `data.frame`s;
 #'  result of `utils::getParseData()` split into subsets representing individual calls;
 #'  created by `extract_calls()` function
 #'
-#' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
-#' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
-#' was affected by objects named `b` and `c`.
-#' If a code line is tagged with `@linksto a`, then the variables in that line are understood to affect object `a`.
+#' @return
+#' A list (of length of input `calls_pd`) where each element represents one call.
+#' Each element is a character vector listing names of objects that depend on this call
+#' and names of objects that this call depends on.
+#' Dependencies are listed after the `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
+#' depends on objects `b` and `c`.
+#' If a call is tagged with `@linksto a`, then object `a` is understood to depend on that call.
 #'
 #' @keywords internal
 #' @noRd
@@ -195,8 +201,8 @@ extract_occurrence <- function(calls_pd) {
 #'  created by `extract_calls()` function
 #'
 #' @return
-#' A list of length equal to that of `calls_pd`, each element a character vector of names of objects
-#' affected by a `@linksto` tag in a corresponding element of `calls_pd`.
+#' A list of length equal to that of `calls_pd`, where each element is a character vector of names of objects
+#' depending a call tagged with `@linksto` in a corresponding element of `calls_pd`.
 #'
 #' @keywords internal
 #' @noRd
@@ -233,7 +239,7 @@ graph_parser <- function(x, graph) {
       logical(1)
     )
 
-  influencers <-
+  dependencies <-
     unlist(
       lapply(graph[occurrence], function(call) {
         if ("<-" %in% call) {
@@ -242,15 +248,15 @@ graph_parser <- function(x, graph) {
         }
       })
     )
-  influencers <- setdiff(influencers, x)
+  dependencies <- setdiff(dependencies, x)
 
-  if (length(influencers) && any(occurrence)) {
-    influencers_ids <-
-      lapply(influencers, function(influencer) {
-        graph_parser(influencer, graph[1:max(which(occurrence))])
+  if (length(dependencies) && any(occurrence)) {
+    dependency_ids <-
+      lapply(dependencies, function(dependency) {
+        graph_parser(dependency, graph[1:max(which(occurrence))])
       })
 
-    sort(unique(c(which(occurrence), unlist(influencers_ids))))
+    sort(unique(c(which(occurrence), unlist(dependency_ids))))
   } else {
     which(occurrence)
   }
