@@ -212,12 +212,13 @@ extract_side_effects <- function(calls_pd) {
 
 # graph_parser ----
 
-#' Return the indexes of calls of code needed to reproduce the object
+#' Return the indices of calls needed to reproduce an object
 #'
 #' @param x The name of the object to return code for.
 #' @param graph A result of `code_graph()`.
 #'
-#' @return `numeric` vector indicating which calls of `graph` are required to build the object passed by name in `x`.
+#' @return
+#' Integer vector of indices that can be applied to `graph` to obtain all calls required to reproduce object `x`.
 #'
 #' @keywords internal
 #' @noRd
