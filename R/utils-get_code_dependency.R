@@ -181,19 +181,23 @@ extract_occurrence <- function(calls_pd) {
 
 #' Extract Side Effects
 #'
-#' @description Extract all object names from the code that are marked with `@linksto` tag.
+#' @description Extracts all object names from the code that are marked with `@linksto` tag.
 #'
-#' @details The code sometimes consists of functions calls that create side effects. Those are actions that modify the
-#' environment outside of the function environment. Sometimes there is no way to understand, just based on static code
-#' analysis, which objects are modified or created by a function call that has side effects. To allow to point to
-#' objects that are modified or created by function calls with side effects, a `@linksto` comment tag was introduced.
-#' This tag enables to restore the reproducible code for an object, with all side effects that do not directly change
-#' this object. Read more about side effects and the usage of `@linksto` tag in [`get_code_dependencies()`] function.
+#' @details
+#' The code may contain functions calls that create side effects, e.g. modify the environment.
+#' Static code analysis may be insufficient to determine which objects are created or modified by such a function call.
+#' The `@linksto` comment tag is introduced to mark a call as having a (side) effect on one or more objects.
+#' With this tag a complete object dependency structure can be established.
+#' Read more about side effects and the usage of `@linksto` tag in [`get_code_dependencies()`] function.
 #'
-#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
-#' A result of `extract_calls()` function.
-#' @return A `list` of length equal to the length of `calls_pd` of character vectors of names of objects that are
-#' affected by `@linksto` tag in a corresponding `call` element of `calls_pd`.
+#' @param calls_pd `list` of `data.frame`s;
+#'  result of `utils::getParseData()` split into subsets representing individual calls;
+#'  created by `extract_calls()` function
+#'
+#' @return
+#' A list of length equal to that of `calls_pd`, each element a character vector of names of objects
+#' affected by a `@linksto` tag in a corresponding element of `calls_pd`.
+#'
 #' @keywords internal
 #' @noRd
 extract_side_effects <- function(calls_pd) {
