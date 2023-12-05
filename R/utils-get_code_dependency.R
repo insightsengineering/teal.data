@@ -92,17 +92,18 @@ fix_comments <- function(calls) {
 
 #' Create Object Dependencies Graph Within Parsed Code
 #'
-#' @description This function constructs a dependency graph that identifies the relationships between objects in
-#' parsed code. It helps you understand which objects are needed to recreate a specific object.
+#' @description Builds dependency graph that identifies relationships between objects in parsed code.
+#' Helpful in understanding which objects are needed to recreate a specific object.
 #'
-#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
-#' A result of `extract_calls()` function.
+#' @param calls_pd `list` of `data.frame`s;
+#'  result of `utils::getParseData()` split into subsets representing individual calls;
+#'  created by `extract_calls()` function
 #'
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
 #' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means a call affected object named `a`,
-#' and the object was affected by objects named `b` and `c`. If an object was marked with `@linksto` side effects tag
-#' then it appears as an affected object at the beginning of a vector.
+#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
+#' was affected by objects named `b` and `c`.
+#' If a code line is tagged with `@linksto a`, then the variables in that line are understood to affect object `a`.
 #'
 #' @keywords internal
 #' @noRd
@@ -116,15 +117,19 @@ code_graph <- function(calls_pd) {
 
 #' Extract Object Occurrence
 #'
-#' @description Extract objects occurrence within calls passed by `calls_pd`. It also detects which objects are
-#' affected by others within a call, and which are influencers.
+#' @description Extracts objects occurrence within calls passed by `calls_pd`.
+#' Also detects which objects are affected by others within a call, and which are influencers.
 #'
-#' @param calls_pd A `list` of `data.frame`s, which is a result of `utils::getParseData()` grouped into separate calls.
-#' A result of `extract_calls()` function.
+#' @param calls_pd `list` of `data.frame`s;
+#'  result of `utils::getParseData()` split into subsets representing individual calls;
+#'  created by `extract_calls()` function
+#'
 #' @return A `list` (of length of input `calls_pd`) where each element represents one call. Each element consists of a
 #' character vector containing names of objects that were affected by this call, and names of objects influencing this
-#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means a call affected object named `a`,
-#' and the object was affected by objects named `b` and `c`.
+#' call. Influencers appear after `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
+#' was affected by objects named `b` and `c`.
+#' If a code line is tagged with `@linksto a`, then the variables in that line are understood to affect object `a`.
+#'
 #' @keywords internal
 #' @noRd
 extract_occurrence <- function(calls_pd) {
