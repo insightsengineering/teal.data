@@ -242,10 +242,8 @@ graph_parser <- function(x, graph) {
   dependencies <-
     unlist(
       lapply(graph[occurrence], function(call) {
-        if ("<-" %in% call) {
-          ind <- match("<-", call)
-          call[(ind + 1L):length(call)]
-        }
+        ind <- match("<-", call, nomatch = 0L)
+        call[(ind + 1L):length(call)]
       })
     )
   dependencies <- setdiff(dependencies, x)
