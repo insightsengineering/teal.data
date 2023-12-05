@@ -230,30 +230,22 @@ extract_side_effects <- function(calls_pd) {
 #' @noRd
 graph_parser <- function(x, graph) {
 
-  occurrence <-
-    vapply(
-      graph, function(call) {
-        ind <- match("<-", call, nomatch = length(call) +1L)
-        x %in% call[seq_len(ind - 1L)]
-      },
-      logical(1)
-    )
+  occurrence <- vapply(graph, function(call) {
+    ind <- match("<-", call, nomatch = length(call) +1L)
+    x %in% call[seq_len(ind - 1L)]
+  },
+  logical(1))
 
-  dependencies <-
-    unlist(
-      lapply(graph[occurrence], function(call) {
-        ind <- match("<-", call, nomatch = 0L)
-        call[(ind + 1L):length(call)]
-      })
-    )
-  dependencies <- setdiff(dependencies, x)
+  dependencies <- lapply(graph[occurrence], function(call) {
+    ind <- match("<-", call, nomatch = 0L)
+    call[(ind + 1L):length(call)]
+  })
+  dependencies <- setdiff(unlist(dependencies), x)
 
   if (length(dependencies) && any(occurrence)) {
-    dependency_ids <-
-      lapply(dependencies, function(dependency) {
-        graph_parser(dependency, graph[1:max(which(occurrence))])
-      })
-
+    dependency_ids <- lapply(dependencies, function(dependency) {
+      graph_parser(dependency, graph[1:max(which(occurrence))])
+    })
     sort(unique(c(which(occurrence), unlist(dependency_ids))))
   } else {
     which(occurrence)
