@@ -32,14 +32,14 @@ The filters applied to a _(parent)_ dataset are also applied to their children.
 ## Anatomy of Join Keys
 
 The `join_keys` object contains information about the foreign/primary keys of multiple datasets.
-Each key is represented by a pair of datasets _(by `dataname` reference)_ and a character vector that encodes how to match column name between the two datasets.
+Each key is represented by a pair of datasets _(by name reference)_ and a named character vector that encodes the match column name between the two datasets.
 In addition, a foreign key also contains a _parent-child_ attribute that is used in the "Filter Panel" as we mentioned above.
 
-A new `join_keys` can be created by defining a set of primary and foreign keys.
+A new `join_keys` can be created as empty or by defining an initial set of primary and foreign keys.
 That initial object can be extended by adding/modifying/removing keys and by establishing parent-child relationships between datasets.
 
 The `join_keys` function is used both as a constructor and as a getter.
-As the getter it is used to retrieve the `join_keys` that is contained in other objects, such as `teal_data` or to return itself.
+As the getter it is used to retrieve the `join_keys` that is contained in other objects, such as `teal_data`.
 
 As the constructor it is used to specify keys `join_keys(...)` as a collection of multiple `join_key` entries:
 
