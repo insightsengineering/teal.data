@@ -121,7 +121,9 @@ jk["ds1"]
 ```
 
 
-Modifying or adding a key uses the same notation with the assignment operator `<-`. This will ensure symmetry as it will create both relationships. Assigning `NULL` value will delete the relationship.
+Modifying or adding a key uses the same notation with the assignment operator `<-`.
+A symmetric relationship will be created automatically.
+Assigning `NULL` value will delete the relationship.
 
 ```{r}
 # Adding a new ds5 <-> ds1 key
