@@ -148,11 +148,10 @@ We can specify the column(s) of the dataset that _(together)_ uniquely identify 
 
 ```{r, message=FALSE}
 library(teal.data)
-library(dplyr)
 
 td_pk <- within(
   teal_data(),
-  ds1 <- mutate(iris, id = factor(row_number()))
+  ds1 <- dplyr::mutate(iris, id = factor(dplyr::row_number()))
 )
 datanames(td_pk) <- "ds1"
 
