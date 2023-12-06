@@ -13,10 +13,10 @@ example_cdisc_data(dataname)
 \code{cdisc_data}
 }
 \description{
-It is not meant to retrieve the SCDA dataset, and the dataset itself is not maintained here.
+It is not meant to retrieve the \code{SCDA} dataset, and the dataset itself is not maintained here.
 }
 \details{
-This function creates a copy of the SCDA data for testing purposes.
+This function creates a copy of the \code{SCDA} data for testing purposes.
 
-CDISC data includes \code{ADSL}, \code{ADAE}, \code{ADLB}, \code{ADCM}, \code{ADEX}, \code{ADRS}, \code{ADTR} and \code{ADTTE}.
+\code{CDISC} data includes \code{ADSL}, \code{ADAE}, \code{ADLB}, \code{ADCM}, \code{ADEX}, \code{ADRS}, \code{ADTR} and \code{ADTTE}.
 }
