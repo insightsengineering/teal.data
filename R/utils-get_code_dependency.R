@@ -152,12 +152,13 @@ extract_occurrence <- function(calls_pd) {
   lapply(
     calls_pd,
     function(call_pd) {
-
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
-      if (length(sym_cond) == 0) {return(character(0))}
+      if (length(sym_cond) == 0) {
+        return(character(0))
+      }
       # Watch out for SYMBOLS after $ and @. For x$a x@a: x is object, a is not.
       # For x$a, a's ID is $'s ID-2 so we need to remove all IDs that have ID = $ID - 2.
       dollar_ids <- x[x$token %in% c("'$'", "'@'"), "id"]
@@ -173,7 +174,7 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE(2)
       }
       if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE(3)
-          sym_cond <- rev(sym_cond)
+        sym_cond <- rev(sym_cond)
       }
       append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
@@ -229,12 +230,13 @@ extract_side_effects <- function(calls_pd) {
 #' @keywords internal
 #' @noRd
 graph_parser <- function(x, graph) {
-
-  occurrence <- vapply(graph, function(call) {
-    ind <- match("<-", call, nomatch = length(call) +1L)
-    x %in% call[seq_len(ind - 1L)]
-  },
-  logical(1))
+  occurrence <- vapply(
+    graph, function(call) {
+      ind <- match("<-", call, nomatch = length(call) + 1L)
+      x %in% call[seq_len(ind - 1L)]
+    },
+    logical(1)
+  )
 
   dependencies <- lapply(graph[occurrence], function(call) {
     ind <- match("<-", call, nomatch = 0L)

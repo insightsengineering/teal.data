@@ -22,7 +22,6 @@ testthat::test_that("get_code with datanames does not brake for code without sym
     get_code(teal_data(a = 5, code = code), datanames = "a"),
     paste(warning_message, "a <- 5", sep = "\n")
   )
-
 })
 
 testthat::test_that("get_code with datanames extracts code of a binding from a simple code put in a character", {
@@ -138,7 +137,6 @@ testthat::test_that("get_code with datanames is possible to output the code for 
 })
 
 testthat::test_that("get_code with datanames can't extract the code for assign function", {
-
   testthat::skip("We will tackle 'assign' some day!")
   code <- c(
     "a <- 1",
@@ -154,7 +152,6 @@ testthat::test_that("get_code with datanames can't extract the code for assign f
 })
 
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
-
   code <- c(
     "a <- 1",
     "assign('b', 5) # @linksto b",
@@ -333,10 +330,11 @@ testthat::test_that(
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
       paste("iris2 <- iris[1:5, ]",
-            "iris_head <- head(iris)",
-            "iris3 <- iris_head[1, ]",
-            "classes <- lapply(iris2, class)",
-            sep = "\n")
+        "iris_head <- head(iris)",
+        "iris3 <- iris_head[1, ]",
+        "classes <- lapply(iris2, class)",
+        sep = "\n"
+      )
     )
   }
 )
@@ -374,7 +372,6 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
     get_code(tdata, datanames = "x"),
     paste("x <- 1", "print(x)", sep = "\n")
   )
-
 })
 
 testthat::test_that("get_code with datanames does not ignore occurrence in function body if object exsits in env", {
@@ -391,7 +388,6 @@ testthat::test_that("get_code with datanames does not ignore occurrence in funct
     get_code(tdata, datanames = "b"),
     paste(code, sep = "\n")
   )
-
 })
 
 testthat::test_that("get_code with datanames ignores occurrence in function definition without { curly brackets", {
@@ -412,7 +408,6 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
 })
 
 testthat::test_that("get_code with datanames returns custom function calls on object", {
-
   code <- c(
     "b <- 2",
     "foo <- function(b) { b <- b + 2 }",
@@ -477,11 +472,12 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     paste("x <- data.frame(a = 1:3)",
-          "a <- data.frame(y = 1:3)",
-          "a$x <- a$y",
-          "a$x <- a$x + 2",
-          "a$x <- x$a",
-          sep = "\n")
+      "a <- data.frame(y = 1:3)",
+      "a$x <- a$y",
+      "a$x <- a$x + 2",
+      "a$x <- x$a",
+      sep = "\n"
+    )
   )
 })
 
