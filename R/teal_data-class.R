@@ -14,32 +14,34 @@ setOldClass("join_keys")
 #' @name teal_data-class
 #' @rdname teal_data-class
 #'
-#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables
+#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables.
 #'  Access variables with [get_var()] or [`[[`].
 #'  No setter provided. Evaluate code to add variables into `@env`.
-#' @slot code (`character`) representing code necessary to reproduce the contents of `@env`.
+#' @slot code (`character`) vector representing code necessary to reproduce the contents of `@env`.
 #'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
-#' @slot id (`integer`) random identifier assigned to each line of code in `@code`. Used internally.
-#' @slot warnings (`character`) the warnings output when evaluating the code.
-#' @slot warnings (`character`) warnings raised when evaluating code.
+#' @slot id (`integer`) random identifier assigned to each element of `@code`. Used internally.
+#' @slot warnings (`character`) vector of warnings raised when evaluating code.
 #'  Access with [get_warnings()].
-#' @slot messages (`character`) messages raised when evaluating code.
+#' @slot messages (`character`) vector of messages raised when evaluating code.
 #' @slot join_keys (`join_keys`) object specifying joining keys for data sets in `@env`.
 #'  Access or modify with [join_keys()].
 #' @slot datanames (`character`) vector of names of data sets in `@env`.
 #'  Used internally to distinguish them from auxiliary variables.
 #'  Access or modify with [datanames()].
+#' @slot verified (`logical(1)`) flag signifying that code in `@code` has been proven to yield contents of `@env`.
+#'  Used internally. See [`verify()`] for more details.
 #'
 #' @import teal.code
 #' @keywords internal
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "join_keys", datanames = "character"),
+  slots = c(join_keys = "join_keys", datanames = "character", verified = "logical"),
   prototype = list(
     join_keys = join_keys(),
-    datanames = character(0)
+    datanames = character(0),
+    verified = logical(0)
   )
 )
 
@@ -69,11 +71,12 @@ new_teal_data <- function(data,
   }
 
   if (is.language(code)) {
-    code <- format_expression(code)
+    code <- paste(lang2calls(code), collapse = "\n")
   }
   if (length(code)) {
     code <- paste(code, collapse = "\n")
   }
+  verified <- (length(code) == 0L && length(data) == 0L)
 
   id <- sample.int(.Machine$integer.max, size = length(code))
 
@@ -88,6 +91,7 @@ new_teal_data <- function(data,
     messages = rep("", length(code)),
     id = id,
     join_keys = join_keys,
-    datanames = datanames
+    datanames = datanames,
+    verified = verified
   )
 }

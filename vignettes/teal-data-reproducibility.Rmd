@@ -1,0 +1,68 @@
+---
+title: "teal_data reproducibility"
+author: "NEST CoreDev"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{teal_data reproducibility}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Reproducibility of `teal_data` objects
+
+Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from. Every data modification in `teal_data` object is performed in an encapsulated environment, separate from the global environment. It's important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) cannot be verified properly by the `teal_data`.
+
+## Verification status
+
+`teal_data` objects that are instantiated empty are created as _verified_. Objects can be modified only through `eval_code()` and `within()` functions to ensure that the code is saved in the object and always evaluated in the correct environment. Evaluating code in a `teal_data` object _does not_ change its verification status.
+
+```{r, message=FALSE, error=TRUE}
+library(teal.data)
+
+my_data <- teal_data()
+my_data <- within(my_data, data <- data.frame(x = 11:20))
+my_data <- within(my_data, data$id <- seq_len(nrow(data)))
+my_data # is verified
+```
+
+Find out more in the `teal_data()` documentation.
+
+## Verification
+
+`teal_data` objects instantiated with data and code run the risk of the code not being reproducible.
+Such objects will be created in an _unverified_ state. 
+To confirm that the code exactly reproduces the variables stored in the object, one must run the `verify()`.
+If the verification succeeds, the object's state will be changed to _verified_, otherwise an error will be raised.
+When retrieving code, unverified objects will always add a warning to the code stating that it has not passed verification.
+
+### verified
+
+```{r}
+library(teal.data)
+library(magrittr)
+
+data <- data.frame(x = 11:20)
+data$id <- seq_len(nrow(data))
+
+data_right <- teal_data(
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+    data$id <- seq_len(nrow(data))
+  })
+)
+(data_right_verified <- verify(data_right)) # returns verified object
+```
+
+### unverified
+
+```{r, message=FALSE, error=TRUE}
+data_wrong <- teal_data(
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+  })
+)
+verify(data_wrong) # fails verification, raises error
+```
+

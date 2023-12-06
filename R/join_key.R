@@ -76,10 +76,3 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     class = "join_key_set"
   )
 }
-
-#' @keywords internal
-get_keys.join_key_set <- function(join_key_set_object) {
-  join_key_set_object[[1]][[1]]
-}
-# Remove this once generic `get_keys` is removed (and rename non-exported function to `get_keys`)
-.S3method("get_keys", "join_key_set", get_keys.join_key_set)

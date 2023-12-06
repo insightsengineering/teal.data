@@ -25,90 +25,29 @@ articles:
     navbar: Getting Started
     contents:
       - teal-data
-      - preprocessing-data
-      - reproducibility
-      - join-keys
-  - title: Delayed Data Loading
-    navbar: Delayed Data Loading
-    contents:
-      - preprocessing-delayed-data
-      - using-delayed-data-basic
-      - using-delayed-data-advanced
-      - testing-delayed-data
-  - title: Other Dataset Connectors
-    navbar: Other Dataset Connectors
-    contents:
-      - teal.data-with-python
+      - teal-data-reproducibility
 
 reference:
-  - title: Delayed Dataset Constructors
-    desc: For creating delayed dataset objects.
-    contents:
-      - cdisc_dataset
-      - cdisc_dataset_file
-      - dataset
-      - dataset_file
-      - mae_dataset
-  - title: Delayed Dataset Connectors Constructors
-    desc: For creating delayed dataset connector objects.
-    contents:
-      - cdisc_data_connector
-      - cdisc_dataset_connector
-      - cdisc_dataset_connector_file
-      - code_cdisc_dataset_connector
-      - code_dataset_connector
-      - csv_cdisc_dataset_connector
-      - csv_dataset_connector
-      - data_connection
-      - dataset_connector
-      - dataset_connector_file
-      - fun_cdisc_dataset_connector
-      - fun_dataset_connector
-      - python_cdisc_dataset_connector
-      - python_dataset_connector
-      - rds_cdisc_dataset_connector
-      - rds_dataset_connector
-      - relational_data_connector
-      - cdisc_dataset_connector
-      - script_cdisc_dataset_connector
-      - script_dataset_connector
-  - title: Delayed Data Constructors
-    desc: For creating delayed data objects.
+  - title: Reproducible data class
+    desc: Functions to create and manage teal_data class.
     contents:
       - cdisc_data
-      - cdisc_data_file
-      - teal_data
-      - teal_data_file
-      - to_relational_data
-      - new_teal_data
-  - title: Delayed Dataset Functions
-    desc: For loading and modifying delayed data objects.
-    contents:
-      - as_cdisc
-      - callable_code
-      - callable_function
-      - get_attrs
-      - get_cdisc_keys
-      - get_code
-      - get_dataname
-      - get_dataset
-      - get_dataset_label
-      - get_datasets
-      - get_keys
+      - datanames
+      - datanames<-
+      - get_code,teal_data-method
       - get_join_keys
-      - get_raw_data
-      - is_pulled
-      - load_dataset
-      - load_datasets
-      - mutate_data
-      - mutate_dataset
-      - set_args
-      - set_keys
+      - join_key
+      - join_keys
+      - join_keys<-
+      - names<-.join_keys
+      - parents
+      - parents<-
+      - show,teal_data-method
+      - teal_data
+      - verify
   - title: Helpers
     desc: Other useful functions for users and developers.
     contents:
-      - datanames
-      - datanames<-
       - default_cdisc_join_keys
       - col_labels
       - col_labels<-
@@ -116,34 +55,9 @@ reference:
       - data_label
       - data_label<-
       - example_cdisc_data
-      - get_key_duplicates
-      - get_key_duplicates.data.frame
-      - get_key_duplicates.TealDataset
+      - get_cdisc_keys
       - get_labels
-      - join_key
-      - join_keys
-      - join_keys<-
-      - names<-.join_keys
-      - parent
-      - parents
-      - parents<-
-      - python_code
-      - read_script
-      - update_keys_given_parents
-      - validate_metadata
-  - title: For Developers
-    subtitle: R6 Classes
-    desc: Abstract and concrete classes used to build teal functionality.
+  - title: Deprecated functions and methods
+    desc: Functions deprecated in teal.data v0.3.1
     contents:
-      - CallableCode
-      - CallablePythonCode
-      - CDISCTealDataConnector
-      - CDISCTealDataset
-      - CDISCTealDatasetConnector
-      - MAETealDataset
-      - PythonCodeClass
       - TealData
-      - TealDataConnection
-      - TealDataConnector
-      - TealDataset
-      - TealDatasetConnector
