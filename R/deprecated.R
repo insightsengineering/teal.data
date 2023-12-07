@@ -194,30 +194,6 @@ get_dataname <- function(...) {
   .deprecate_teal_data("get_dataname()")
 }
 
-#' Function to get join keys from a `` object
-#' @param data `` - object to extract the join keys
-#' @return Either `join_keys` object or `NULL` if no join keys
-#' @export
-get_join_keys <- function(data) {
-  lifecycle::deprecate_stop(
-    when = " 0.3.1",
-    what = "get_join_keys(data)",
-    details = "Use `join_keys(data)` instead."
-  )
-}
-
-#' @rdname get_join_keys
-#' @inheritParams join_key
-#' @param value value to assign
-#' @export
-`get_join_keys<-` <- function(data, dataset_1, dataset_2 = NULL, value) {
-  lifecycle::deprecate_stop(
-    when = " 0.3.1",
-    what = "`get_join_keys<-`()",
-    details = "Use `join_keys(x) <- ...`"
-  )
-}
-
 #' @rdname TealData
 #' @export
 get_key_duplicates <- function(...) {
@@ -318,4 +294,46 @@ to_relational_data <- function(...) {
 #' @export
 validate_metadata <- function(...) {
   .deprecate_teal_data("validate_metadata()")
+}
+
+#' @rdname TealData
+#' @export
+get_cdisc_keys <- function(...) {
+  .deprecate_teal_data("get_cdisc_keys()")
+}
+
+#' @rdname TealData
+#' @export
+cdisc_data_file <- function(...) {
+  .deprecate_teal_data("cdisc_data_file()")
+}
+
+#' @rdname TealData
+#' @export
+teal_data_file <- function(...) {
+  .deprecate_teal_data("teal_data_file()")
+}
+
+#' Function to get join keys from a `` object
+#' @param data `` - object to extract the join keys
+#' @return Either `join_keys` object or `NULL` if no join keys
+#' @export
+get_join_keys <- function(data) {
+  lifecycle::deprecate_stop(
+    when = " 0.3.1",
+    what = "get_join_keys(data)",
+    details = "Use `join_keys(data)` instead."
+  )
+}
+
+#' @rdname get_join_keys
+#' @inheritParams join_key
+#' @param value value to assign
+#' @export
+`get_join_keys<-` <- function(data, dataset_1, dataset_2 = NULL, value) {
+  lifecycle::deprecate_stop(
+    when = " 0.3.1",
+    what = "`get_join_keys<-`()",
+    details = "Use `join_keys(x) <- ...`"
+  )
 }

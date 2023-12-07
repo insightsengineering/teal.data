@@ -48,6 +48,9 @@
 \alias{read_script}
 \alias{to_relational_data}
 \alias{validate_metadata}
+\alias{get_cdisc_keys}
+\alias{cdisc_data_file}
+\alias{teal_data_file}
 \title{Deprecated \code{TealData} class and related functions}
 \usage{
 as_cdisc(...)
@@ -141,6 +144,12 @@ read_script(...)
 to_relational_data(...)
 
 validate_metadata(...)
+
+get_cdisc_keys(...)
+
+cdisc_data_file(...)
+
+teal_data_file(...)
 }
 \arguments{
 \item{...}{any argument supported in \code{TealData} related functions.}
