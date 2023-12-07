@@ -39,7 +39,6 @@ When retrieving code, unverified objects will always add a warning to the code s
 
 ```{r}
 library(teal.data)
-library(magrittr)
 
 data <- data.frame(x = 11:20)
 data$id <- seq_len(nrow(data))
