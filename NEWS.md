@@ -1,18 +1,19 @@
 # teal.data 0.3.0.9017
 
 ### Enhancements
+
 * Simplified `join_key` to better support primary keys.
 * `JoinKey` `R6` object was removed in favor of a list-like object with class name `join_keys`. Subset operators and assignments are supported (`[`, `[[`, `[<-` and `[[<-`)
 * `join_keys` function works as a constructor, getter and setter.
 
 ### Breaking changes
 
-* Introduced new data class (`teal_data`) which replaces deprecated `TealData`. New data class becomes a standard input for whole `teal` framework.
-* Deprecated `teal_data` constructor when `TealDataset`, `TealDatasetConnector` or `TealDataConnector` objects are provided. New delayed data loading functions introduced in `teal` package.
-* `JoinKeySet` class was renamed to `join_key_set`.
-* `JoinKeys` class was renamed to `join_keys`
+* `teal_data()` and `cdisc_data()` return now `teal_data` class object which replaces `TealData` class object. `teal_data` becomes a standard input for whole `teal` framework.
+* `TealDataset`, `TealDatasetConnector` or `TealDataConnector` classes have been removed. Delayed-data-loading is no longer supported by `teal.data`. So called connectors are now supported by `teal` package (see `?teal::teal_data_module`).
+* `join_keys()` and `join_key()` return now `join_keys` object which replace `JoinKeys` class.
 
 ### Miscellaneous
+
 * Specified minimal version of package dependencies.
 
 # teal.data 0.3.0

@@ -170,18 +170,18 @@ extract_occurrence <- function(calls_pd) {
 
       # If there was an assignment operation detect direction of it.
       ass_cond <- grep("ASSIGN", x$token)
-      if (length(ass_cond)) { # NOTE(1)
-        sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE(2)
+      if (length(ass_cond)) { # NOTE 1
+        sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 2
       }
-      if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE(3)
+      if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE 3
         sym_cond <- rev(sym_cond)
       }
       append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
-      ### NOTE(3): What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
-      ### NOTE(2): For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
-      ### NOTE(1): Cases like 'data(iris)' that do not have an assignment operator.
-      ### NOTE(1): Then they are parsed as c("iris", "<-", "data")
+      ### NOTE 3: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
+      ### NOTE 2: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
+      ### NOTE 1: Cases like 'data(iris)' that do not have an assignment operator.
+      ### NOTE 1: Then they are parsed as c("iris", "<-", "data")
     }
   )
 }
