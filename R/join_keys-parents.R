@@ -25,7 +25,7 @@ parents <- function(x) {
 #' jk <- default_cdisc_join_keys["ADEX"]
 #' parents(jk)
 parents.join_keys <- function(x) {
-  if (is.null(attr(x, "__parents__"))) list() else attr(x, "__parents__")
+  if (is.null(attr(x, "parents"))) list() else attr(x, "parents")
 }
 
 #' @describeIn parents Retrieves parents of `join_keys` inside `teal_data` object.
@@ -97,7 +97,7 @@ parents.teal_data <- function(x) {
     stop("Cycle detected in a parent and child dataset graph.")
   }
 
-  attr(x, "__parents__") <- new_parents # nolint: object_name_linter
+  attr(x, "parents") <- new_parents
 
   assert_parent_child(x)
   x

@@ -27,10 +27,10 @@ all.equal.join_keys <- function(target, current, ...) {
     old_attributes[["names"]] <- NULL
     old_attributes[["original_class"]] <- old_attributes[["class"]]
     old_attributes[["class"]] <- NULL
-    old_attributes[["__parents__"]] <- if (!length(old_attributes[["__parents__"]])) {
+    old_attributes[["parents"]] <- if (!length(old_attributes[["parents"]])) {
       list()
     } else {
-      old_attributes[["__parents__"]][order(names(old_attributes[["__parents__"]]))]
+      old_attributes[["parents"]][order(names(old_attributes[["parents"]]))]
     }
     attr(.x, "class") <- "list"
 
