@@ -149,7 +149,7 @@ validate_metadata(...)
 nothing
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\br
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
 This function has been deprecated. Please see \code{\link[=teal_data]{teal_data()}} and \code{\link[=cdisc_data]{cdisc_data()}} instead.
 Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
 }
