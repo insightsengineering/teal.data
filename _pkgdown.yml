@@ -26,6 +26,7 @@ articles:
     contents:
       - teal-data
       - teal-data-reproducibility
+      - join-keys
 
 reference:
   - title: Reproducible data class
