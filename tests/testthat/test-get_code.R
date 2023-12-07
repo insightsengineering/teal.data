@@ -1,6 +1,6 @@
 warning_message <- "warning('Code was not verified for reproducibility.')"
 
-testthat::test_that("get_code with datanames does not brake for empty code", {
+testthat::test_that("get_code with datanames handles empty @code slot", {
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = character(0)), datanames = "a"),
     warning_message
@@ -11,7 +11,7 @@ testthat::test_that("get_code with datanames does not brake for empty code", {
   )
 })
 
-testthat::test_that("get_code with datanames does not brake for code without symbols", {
+testthat::test_that("get_code with datanames handles code without symbols in RHS", {
   code <- c(
     "1 + 1",
     "a <- 5",
@@ -24,7 +24,7 @@ testthat::test_that("get_code with datanames does not brake for code without sym
   )
 })
 
-testthat::test_that("get_code with datanames extracts code of a binding from a simple code put in a character", {
+testthat::test_that("get_code with datanames extracts code of a binding from character vector containing simple code", {
   code <- c(
     "a <- 1",
     "b <- 2"
@@ -54,7 +54,7 @@ testthat::test_that("get_code works for datanames of length > 1", {
   )
 })
 
-testthat::test_that("get_code with datanames warns if binding doesn't exist in a code", {
+testthat::test_that("get_code with datanames warns if binding doesn't exist in code", {
   code <- c(
     "a <- 1",
     "b <- 2"
