@@ -10,7 +10,9 @@ vignette: >
 
 # Reproducibility of `teal_data` objects
 
-Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from. Every data modification in `teal_data` object is performed in an encapsulated environment, separate from the global environment. It's important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) cannot be verified properly by the `teal_data`.
+Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from. Every data modification in `teal_data` object is performed in an encapsulated environment, separate from the global environment.
+
+It is important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) cannot be verified properly by the `teal_data`.
 
 ## Verification status
 
@@ -31,7 +33,7 @@ Find out more in the `teal_data()` documentation.
 
 `teal_data` objects instantiated with data and code run the risk of the code not being reproducible.
 Such objects will be created in an _unverified_ state. 
-To confirm that the code exactly reproduces the variables stored in the object, one must run the `verify()`.
+To confirm that the code exactly reproduces the variables stored in the object, one must run the `verify()` function.
 If the verification succeeds, the object's state will be changed to _verified_, otherwise an error will be raised.
 When retrieving code, unverified objects will always add a warning to the code stating that it has not passed verification.
 

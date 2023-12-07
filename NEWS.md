@@ -8,7 +8,7 @@
 
 ### Breaking changes
 
-* `teal_data()` and `cdisc_data()` return now `teal_data` class object which replaces `TealData` class object. `teal_data` becomes a standard input for whole `teal` framework.
+* `teal_data()` and `cdisc_data()` return now `teal_data` class object which replaces `TealData` class object. `teal_data` becomes a standard input for the entire `teal` framework.
 * `TealDataset`, `TealDatasetConnector` or `TealDataConnector` classes have been removed. Delayed-data-loading is no longer supported by `teal.data`. So called connectors are now supported by `teal` package (see `?teal::teal_data_module`).
 * `join_keys()` and `join_key()` return now `join_keys` object which replace `JoinKeys` class.
 

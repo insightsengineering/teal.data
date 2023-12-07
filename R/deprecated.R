@@ -1,6 +1,6 @@
 #' Deprecated `TealData` class and related functions
 #'
-#' @description `r lifecycle::badge("deprecated")`
+#' @description `r lifecycle::badge("deprecated")`\br
 #' This function has been deprecated. Please see [teal_data()] and [cdisc_data()] instead.
 #' Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
 #'
