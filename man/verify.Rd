@@ -4,7 +4,7 @@
 \alias{verify}
 \alias{verify,teal_data-method}
 \alias{verify,qenv.error-method}
-\title{Check Code Reproducibility}
+\title{Verify Code Reproducibility}
 \usage{
 verify(x)
 }
@@ -18,7 +18,7 @@ Input \code{teal_data} object or error.
 Checks whether code in \code{teal_data} reproduces the stored objects.
 }
 \details{
-If objects returned by the \verb{@code} slot in the input \code{teal_data} exactly match objects in \code{teal_data@env},
+If objects created by code in the \verb{@code} slot of \code{x} are \code{all_equal} to the contents of the \verb{@env} slot,
 the function updates the \verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object. Once verified, the slot
 will always be set to \code{TRUE}.
 If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is raised.
