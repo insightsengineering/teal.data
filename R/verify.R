@@ -57,7 +57,7 @@
 #'
 #' @export
 setGeneric("verify", function(x) standardGeneric("verify"))
-setMethod("verify", "teal_data", definition = function(x) {
+setMethod("verify", signature = "teal_data", definition = function(x) {
   if (x@verified) {
     return(x)
   }
