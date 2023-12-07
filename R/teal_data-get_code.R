@@ -57,6 +57,6 @@ setMethod("get_code", "teal_data", definition = function(object, deparse = TRUE,
       paste(code, collapse = "\n")
     }
   } else {
-    parse(text = paste(c("{", code, "}"), collapse = "\n"), keep.source = TRUE)
+    parse(text = code, keep.source = TRUE)
   }
 })
