@@ -8,7 +8,6 @@ format.join_keys <- function(x, ...) {
     names <- union(names_sorted, names(x))
     x_implicit <- update_keys_given_parents(x)
     out <- lapply(names, function(i) {
-      this_parent <- my_parents[[i]]
       out_i <- lapply(union(i, names(x[[i]])), function(j) {
         direction <- if (identical(my_parents[[j]], i)) {
           "  <-- "

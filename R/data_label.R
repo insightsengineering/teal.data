@@ -29,7 +29,7 @@ data_label <- function(data) {
 #' x <- teal.data::example_cdisc_data("ADSL")
 #' data_label(x) <- "My custom label"
 #' data_label(x)
-`data_label<-` <- function(x, value) { # nolint
+`data_label<-` <- function(x, value) {
   stopifnot(is.data.frame(x))
   checkmate::assert_string(value)
 

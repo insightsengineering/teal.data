@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) { # nolint
+.onLoad <- function(libname, pkgname) {
   # expose default CDISC dataset names
   # copy from excel file
   default_cdisc_keys <- yaml::yaml.load_file(
