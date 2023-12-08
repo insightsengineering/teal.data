@@ -29,11 +29,17 @@
 check_simple_name <- function(name) {
   checkmate::assert_character(name, min.len = 1, any.missing = FALSE)
   if (!grepl("^[[:alpha:]][a-zA-Z0-9_]*$", name, perl = TRUE)) {
-    stop(
-      "name '",
+    checkmate::makeAssertion(
       name,
-      "' must only contain alphanumeric characters (with underscores)",
-      " and the first character must be an alphabetic character"
+      paste0(
+        "'",
+        name,
+        "' ",
+        "must only contain alphanumeric characters (with underscores)",
+        " and the first character must be an alphabetic character"
+      ),
+      var.name = "name",
+      NULL
     )
   }
 }
