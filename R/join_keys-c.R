@@ -28,13 +28,13 @@ c.join_keys <- function(...) {
     f = function(.x, .y) {
       assert_compatible_keys2(.x, .y)
       out <- utils::modifyList(.x, .y, keep.null = FALSE)
-      attr(out, "__parents__") <- .merge_parents(.x, .y)
+      attr(out, "parents") <- .merge_parents(.x, .y)
       out
     }
   )
 
   out <- utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
-  attr(out, "__parents__") <- .merge_parents(join_keys_obj, x_merged)
+  attr(out, "parents") <- .merge_parents(join_keys_obj, x_merged)
   out
 }
 
@@ -65,11 +65,11 @@ c.join_key_set <- function(...) {
 .merge_parents <- function(x, y) {
   x_parent <- list()
   y_parent <- list()
-  if (length(attr(x, "__parents__"))) {
-    x_parent <- attr(x, "__parents__")
+  if (length(attr(x, "parents"))) {
+    x_parent <- attr(x, "parents")
   }
-  if (length(attr(y, "__parents__"))) {
-    y_parent <- attr(y, "__parents__")
+  if (length(attr(y, "parents"))) {
+    y_parent <- attr(y, "parents")
   }
   utils::modifyList(x_parent, y_parent, keep.null = FALSE)
 }

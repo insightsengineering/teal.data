@@ -52,11 +52,11 @@ Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
 jk <- join_keys(
-  join_key("ds1", keys = "col_1"),                    # ds1: [col_1]
-  join_key("ds2", keys = c("col_1", "col_2")),        # ds2: [col_1, col_2]
-  join_key("ds3", keys = c("col_1", "col_3")),        # ds3: [col_1, col_3]
-  join_key("ds1", "ds2", keys = "col_1"),             # ds1 <--> ds2
-  join_key("ds1", "ds3", keys = "col_1"),             # ds1 <--> ds3
+  join_key("ds1", keys = "col_1"), # ds1: [col_1]
+  join_key("ds2", keys = c("col_1", "col_2")), # ds2: [col_1, col_2]
+  join_key("ds3", keys = c("col_1", "col_3")), # ds3: [col_1, col_3]
+  join_key("ds1", "ds2", keys = "col_1"), # ds1 <--> ds2
+  join_key("ds1", "ds3", keys = "col_1"), # ds1 <--> ds3
   join_key("ds4", "ds5", keys = c("col_4" = "col_5")) # ds4 <--> ds5
 )
 
@@ -153,7 +153,7 @@ library(teal.data)
 
 td_pk <- within(
   teal_data(),
-  ds1 <- dplyr::mutate(iris, id = factor(dplyr::row_number()))
+  ds1 <- transform(iris, id = seq_len(nrow(iris)))
 )
 datanames(td_pk) <- "ds1"
 

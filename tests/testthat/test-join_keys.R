@@ -31,7 +31,7 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
         d2 = list(d2 = c(test = "test"))
       ),
       class = c("join_keys", "list"),
-      "__parents__" = list()
+      "parents" = list()
     )
   )
 

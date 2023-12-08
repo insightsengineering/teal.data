@@ -22,7 +22,7 @@
       names(parent_list)[names(parent_list) == old_name] <- new_name
       ind <- vapply(parent_list, identical, logical(1), old_name)
       parent_list[ind] <- new_name
-      attr(new_x, "__parents__") <- parent_list
+      attr(new_x, "parents") <- parent_list
     }
   }
 
