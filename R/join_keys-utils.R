@@ -115,7 +115,7 @@ update_keys_given_parents <- function(x) {
     d1_pk <- jk[[d1]][[d1]]
     d1_parent <- parent(jk, d1)
     for (d2 in datanames) {
-      if (paste(d2, d1) %in% duplicate_pairs) {
+      if (identical(d2, d1) || paste(d2, d1) %in% duplicate_pairs) {
         next
       }
       if (length(jk[[d1]][[d2]]) == 0) {

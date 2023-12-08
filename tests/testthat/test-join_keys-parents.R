@@ -19,8 +19,8 @@ testthat::test_that("parents<- accepts a named list containing (non-empty, non-m
 
 testthat::test_that("parents<- single parent can be changed utilizing list functionality with [[<-", {
   jk <- join_keys(
-    join_key("a", "b", "ab"),
-    join_key("c", "d", "cd")
+    join_key("a", "b", "ab", parent = "none"),
+    join_key("c", "d", "cd", parent = "none")
   )
   parents(jk)[["a"]] <- "b"
   parents(jk)[["c"]] <- "d"
@@ -29,16 +29,16 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 
 testthat::test_that("parents<- dataset can't be own parent", {
   jk <- join_keys(
-    join_key("a", "b", "ab"),
-    join_key("c", "d", "cd")
+    join_key("a", "b", "ab", parent = "none"),
+    join_key("c", "d", "cd", parent = "none")
   )
   testthat::expect_error(parents(jk) <- list(a = "a"))
 })
 
 testthat::test_that("parents<- setting parent-child relationship fails when no foreign keys between datasets", {
   jk <- join_keys(
-    join_key("a", "1", "aa"),
-    join_key("b", "b", "bb")
+    join_key("a", "1", "aa", parent = "none"),
+    join_key("b", "b", "bb", parent = "none")
   )
   testthat::expect_error(parents(jk) <- list(a = "b"))
 })
@@ -57,8 +57,8 @@ testthat::test_that("parents<- ensures it is a directed acyclical graph (DAG)", 
 
 testthat::test_that("parents<- single parent can be changed utilizing list functionality with [[<-", {
   jk <- join_keys(
-    join_key("a", "b", "ab"),
-    join_key("c", "d", "cd")
+    join_key("a", "b", "ab", parent = "none"),
+    join_key("c", "d", "cd", parent = "none")
   )
   parents(jk)[["a"]] <- "b"
   parents(jk)[["c"]] <- "d"
@@ -67,7 +67,7 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 })
 
 testthat::test_that("parents<- fails when value isn't a list (non-empty, non-missing) character", {
-  jk <- join_keys(join_key("a", "b", "test"))
+  jk <- join_keys(join_key("a", "b", "test", parent = "none"))
   testthat::expect_error(parents(jk) <- list(b = 1))
   testthat::expect_error(parents(jk) <- list(b = NA_character_))
   testthat::expect_error(parents(jk) <- list(b = NULL))
@@ -94,7 +94,7 @@ testthat::test_that("parents<- sets parent datasets to join_keys kept in teal_da
 testthat::test_that("parents<- setting parents changes join_keys object", {
   jk <- join_keys(join_key("a", "b", "ab"))
   jk2 <- jk
-  parents <- list(b = "a")
+  parents <- list(a = "b")
   parents(jk) <- parents
 
   testthat::expect_failure(testthat::expect_identical(jk, jk2))

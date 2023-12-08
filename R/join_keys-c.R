@@ -10,7 +10,7 @@
 #'   jk,
 #'   join_keys(
 #'     join_key("ds4", keys = c("pk4", "pk4_2")),
-#'     join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+#'     join_key("ds3", "ds4", c(pk3 = "pk4_2"))
 #'   )
 #' )
 c.join_keys <- function(...) {
@@ -50,7 +50,7 @@ c.join_keys <- function(...) {
 #' jk_merged <- c(
 #'   jk_merged,
 #'   join_key("ds5", keys = "pk5"),
-#'   join_key("ds5", "ds1", c(pk5 = "pk1"))
+#'   join_key("ds1", "ds5", c(pk1 = "pk5"))
 #' )
 c.join_key_set <- function(...) {
   c.join_keys(...)

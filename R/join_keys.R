@@ -41,8 +41,8 @@
 #'   join_key("ds1", "ds1", "pk1"),
 #'   join_key("ds2", "ds2", "pk2"),
 #'   join_key("ds3", "ds3", "pk3"),
-#'   join_key("ds2", "ds1", c(pk2 = "pk1")),
-#'   join_key("ds3", "ds1", c(pk3 = "pk1"))
+#'   join_key("ds1", "ds2", c(pk1 = "pk2")),
+#'   join_key("ds1", "ds3", c(pk1 = "pk3"))
 #' )
 #'
 #' jk
@@ -114,8 +114,8 @@ join_keys.teal_data <- function(...) {
 #' join_keys(obj)["ds1", "ds1"] <- "pk1"
 #' join_keys(obj)["ds2", "ds2"] <- "pk2"
 #' join_keys(obj)["ds3", "ds3"] <- "pk3"
-#' join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
-#' join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+#' join_keys(obj)["ds1", "ds2"] <- c(pk1 = "pk2")
+#' join_keys(obj)["ds1", "ds3"] <- c(pk1 = "pk3")
 #'
 #' identical(jk, join_keys(obj))
 `join_keys<-.join_keys` <- function(x, value) {

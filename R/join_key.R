@@ -25,7 +25,8 @@
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
-join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = "dataset_1") {
+  checkmate::assert_choice(parent, choices = c("dataset_1", "dataset_2", "none"))
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
@@ -65,6 +66,16 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     keys <- NULL
   }
 
+  if (dataset_1 == dataset_2) {
+    parent <- "none"
+  }
+
+  new_parents <- switch(parent,
+    dataset_1 = structure(list(dataset_1), names = dataset_2),
+    dataset_2 = structure(list(dataset_2), names = dataset_1),
+    list()
+  )
+
   structure(
     list(
       structure(
@@ -73,6 +84,7 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
       )
     ),
     names = dataset_1,
-    class = "join_key_set"
+    class = "join_key_set",
+    parents = new_parents
   )
 }

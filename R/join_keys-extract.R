@@ -134,12 +134,13 @@
 #'
 #' # Setting a single relationship pair ---
 #'
-#' jk["ds4", "ds1"] <- c("pk4" = "pk1")
+#' jk["ds1", "ds4"] <- c("pk1" = "pk4")
 #'
 #' # Removing a key ---
 #'
 #' jk["ds5", "ds5"] <- NULL
-`[<-.join_keys` <- function(x, i, j, value) {
+`[<-.join_keys` <- function(x, i, j, value, parent = "i") {
+  checkmate::assert_choice(parent, choices = c("i", "j", "none"))
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
   } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
@@ -163,8 +164,13 @@
     )
   }
 
-  x[[i]][[j]] <- value
-  x
+  parent_conversion <- switch(parent,
+    i = "dataset_1",
+    j = "dataset_2",
+    "none"
+  )
+
+  c(x, join_key(i, j, value, parent_conversion))
 }
 
 #' @noRd
@@ -234,9 +240,14 @@
   # Remove classes to use list-based get/assign operations
   new_x <- unclass(x)
 
-  # In case a pair is removed, also remove the symmetric pair
+  # In case a pair is removed, also remove the symmetric pair and update parents
   removed_names <- setdiff(names(new_x[[i]]), names(norm_value))
-  for (.x in removed_names) new_x[[.x]][[i]] <- NULL
+  for (.x in removed_names) {
+    if (identical(parent(x, .x), i)) attr(new_x, "parents")[[.x]] <- NULL
+    if (identical(parent(x, i), .x)) attr(new_x, "parents")[[i]] <- NULL
+
+    new_x[[.x]][[i]] <- NULL
+  }
 
   new_x[[i]] <- norm_value
 

@@ -28,7 +28,7 @@ join_keys(...)
 
 \method{[}{join_keys}(x, i, j)
 
-\method{[}{join_keys}(x, i, j) <- value
+\method{[}{join_keys}(x, i, j, parent = "i") <- value
 
 \method{c}{join_keys}(...)
 
@@ -115,8 +115,8 @@ jk <- join_keys(
   join_key("ds1", "ds1", "pk1"),
   join_key("ds2", "ds2", "pk2"),
   join_key("ds3", "ds3", "pk3"),
-  join_key("ds2", "ds1", c(pk2 = "pk1")),
-  join_key("ds3", "ds1", c(pk3 = "pk1"))
+  join_key("ds1", "ds2", c(pk1 = "pk2")),
+  join_key("ds1", "ds3", c(pk1 = "pk3"))
 )
 
 jk
@@ -138,7 +138,7 @@ jk["ds5", "ds5"] <- "pk5"
 
 # Setting a single relationship pair ---
 
-jk["ds4", "ds1"] <- c("pk4" = "pk1")
+jk["ds1", "ds4"] <- c("pk1" = "pk4")
 
 # Removing a key ---
 
@@ -150,7 +150,7 @@ jk_merged <- c(
   jk,
   join_keys(
     join_key("ds4", keys = c("pk4", "pk4_2")),
-    join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+    join_key("ds3", "ds4", c(pk3 = "pk4_2"))
   )
 )
 
@@ -159,7 +159,7 @@ jk_merged <- c(
 jk_merged <- c(
   jk_merged,
   join_key("ds5", keys = "pk5"),
-  join_key("ds5", "ds1", c(pk5 = "pk1"))
+  join_key("ds1", "ds5", c(pk1 = "pk5"))
 )
 
 # Assigning keys via join_keys(x)[i, j] <- value ----
@@ -171,8 +171,8 @@ obj <- teal_data()
 join_keys(obj)["ds1", "ds1"] <- "pk1"
 join_keys(obj)["ds2", "ds2"] <- "pk2"
 join_keys(obj)["ds3", "ds3"] <- "pk3"
-join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
-join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+join_keys(obj)["ds1", "ds2"] <- c(pk1 = "pk2")
+join_keys(obj)["ds1", "ds3"] <- c(pk1 = "pk3")
 
 identical(jk, join_keys(obj))
 

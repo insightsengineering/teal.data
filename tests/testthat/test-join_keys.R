@@ -98,25 +98,22 @@ testthat::test_that("join_keys fails when provided foreign key pairs have incomp
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
   my_keys <- join_keys(join_key("d1", "d2", "a"))
-  testthat::expect_identical(
+  testthat::expect_equal(
     my_keys,
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "a"))
+    join_keys(join_key("d2", "d1", "a", parent = "dataset_2"))
   )
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (named) foreign key", {
-  testthat::expect_identical(
+  testthat::expect_equal(
     join_keys(
       join_key("d1", "d2", c(a = "b"))
     ),
     join_keys(
-      join_key("d1", "d2", c(a = "b")),
-      join_key("d2", "d1", c(b = "a"))
+      join_key("d2", "d1", c(b = "a"), parent = "dataset_2")
     )
   )
 })
-
-
 
 # join_keys.<- ----------------------------------------------------------------
 testthat::test_that("join_keys<-.join_keys overwrites existing join_keys", {
