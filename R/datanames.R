@@ -28,23 +28,23 @@
 #' @rdname datanames
 #' @export
 setGeneric("datanames", function(x) standardGeneric("datanames"))
-setMethod("datanames", "teal_data", definition = function(x) {
+setMethod("datanames", signature = "teal_data", definition = function(x) {
   x@datanames
 })
-setMethod("datanames", "qenv.error", definition = function(x) {
+setMethod("datanames", signature = "qenv.error", definition = function(x) {
   NULL
 })
 
 #' @rdname datanames
 #' @export
 setGeneric("datanames<-", function(x, value) standardGeneric("datanames<-"))
-setMethod("datanames<-", c("teal_data", "character"), definition = function(x, value) {
+setMethod("datanames<-", signature = c("teal_data", "character"), definition = function(x, value) {
   checkmate::assert_subset(value, names(x@env))
   x@datanames <- value
   methods::validObject(x)
   x
 })
-setMethod("datanames<-", c("qenv.error", "character"), definition = function(x, value) {
+setMethod("datanames<-", signature = c("qenv.error", "character"), definition = function(x, value) {
   methods::validObject(x)
   x
 })

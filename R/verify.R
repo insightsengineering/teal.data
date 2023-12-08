@@ -112,6 +112,6 @@ setMethod("verify", signature = "teal_data", definition = function(x) {
     stop(paste(error, collapse = "\n"), call. = FALSE)
   }
 })
-setMethod("verify", "qenv.error", definition = function(x) {
+setMethod("verify", signature = "qenv.error", definition = function(x) {
   stop(conditionMessage(x), call. = FALSE)
 })

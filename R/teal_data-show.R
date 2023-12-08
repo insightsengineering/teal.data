@@ -9,7 +9,7 @@
 #' teal_data(x = iris, code = "x = iris")
 #' verify(teal_data(x = iris, code = "x = iris"))
 #' @export
-setMethod("show", "teal_data", function(object) {
+setMethod("show", signature = "teal_data", function(object) {
   if (object@verified) {
     cat("\u2705\ufe0e", "verified teal_data object\n")
   } else {
