@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9016</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9017</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,33 +29,13 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Getting Started</h6>
     <a class="dropdown-item" href="../articles/teal-data.html">Introduction to teal.data</a>
-    <a class="dropdown-item" href="../articles/preprocessing-data.html">Pre-processing data</a>
-    <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
+    <a class="dropdown-item" href="../articles/teal-data-reproducibility.html">teal_data reproducibility</a>
     <a class="dropdown-item" href="../articles/join-keys.html">Join Keys</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Delayed Data Loading</h6>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
-    <a class="dropdown-item" href="../articles/using-delayed-data-basic.html">Using Delayed Data Loading (Basic)</a>
-    <a class="dropdown-item" href="../articles/using-delayed-data-advanced.html">Creating Delayed Data Classes (Advanced)</a>
-    <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Other Dataset Connectors</h6>
-    <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -102,32 +82,28 @@ If errors are raised, a <code>qenv.error</code> object is returned.</p>
     
 
 <dl><dt><code>env</code></dt>
-<dd><p>(<code>environment</code>) environment containing data sets and possibly auxiliary variables
+<dd><p>(<code>environment</code>) environment containing data sets and possibly auxiliary variables.
 Access variables with <code>get_var()</code> or [<code>[[</code>].
 No setter provided. Evaluate code to add variables into <code>@env</code>.</p></dd>
 
 
 <dt><code>code</code></dt>
-<dd><p>(<code>character</code>) representing code necessary to reproduce the contents of <code>@env</code>.
-Access with <code><a href="get_code.html">get_code()</a></code>.
+<dd><p>(<code>character</code>) vector representing code necessary to reproduce the contents of <code>@env</code>.
+Access with <code><a href="get_code-teal_data-method.html">get_code()</a></code>.
 No setter provided. Evaluate code to append code to the slot.</p></dd>
 
 
 <dt><code>id</code></dt>
-<dd><p>(<code>integer</code>) random identifier assigned to each line of code in <code>@code</code>. Used internally.</p></dd>
+<dd><p>(<code>integer</code>) random identifier assigned to each element of <code>@code</code>. Used internally.</p></dd>
 
 
 <dt><code>warnings</code></dt>
-<dd><p>(<code>character</code>) the warnings output when evaluating the code.</p></dd>
-
-
-<dt><code>warnings</code></dt>
-<dd><p>(<code>character</code>) warnings raised when evaluating code.
+<dd><p>(<code>character</code>) vector of warnings raised when evaluating code.
 Access with <code>get_warnings()</code>.</p></dd>
 
 
 <dt><code>messages</code></dt>
-<dd><p>(<code>character</code>) messages raised when evaluating code.</p></dd>
+<dd><p>(<code>character</code>) vector of messages raised when evaluating code.</p></dd>
 
 
 <dt><code>join_keys</code></dt>
@@ -139,6 +115,11 @@ Access or modify with <code><a href="join_keys.html">join_keys()</a></code>.</p>
 <dd><p>(<code>character</code>) vector of names of data sets in <code>@env</code>.
 Used internally to distinguish them from auxiliary variables.
 Access or modify with <code><a href="datanames.html">datanames()</a></code>.</p></dd>
+
+
+<dt><code>verified</code></dt>
+<dd><p>(<code>logical(1)</code>) flag signifying that code in <code>@code</code> has been proven to yield contents of <code>@env</code>.
+Used internally. See <code><a href="verify.html">verify()</a></code> for more details.</p></dd>
 
 
 </dl></div>

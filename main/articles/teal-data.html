@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9016</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9017</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,33 +47,13 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Getting Started</h6>
     <a class="dropdown-item" href="../articles/teal-data.html">Introduction to teal.data</a>
-    <a class="dropdown-item" href="../articles/preprocessing-data.html">Pre-processing data</a>
-    <a class="dropdown-item" href="../articles/reproducibility.html">Reproducibility check</a>
+    <a class="dropdown-item" href="../articles/teal-data-reproducibility.html">teal_data reproducibility</a>
     <a class="dropdown-item" href="../articles/join-keys.html">Join Keys</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Delayed Data Loading</h6>
-    <a class="dropdown-item" href="../articles/preprocessing-delayed-data.html">Pre-processing Delayed Data</a>
-    <a class="dropdown-item" href="../articles/using-delayed-data-basic.html">Using Delayed Data Loading (Basic)</a>
-    <a class="dropdown-item" href="../articles/using-delayed-data-advanced.html">Creating Delayed Data Classes (Advanced)</a>
-    <a class="dropdown-item" href="../articles/testing-delayed-data.html">Examining Delayed Data Objects</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Other Dataset Connectors</h6>
-    <a class="dropdown-item" href="../articles/teal.data-with-python.html">teal.data with Python</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -121,54 +101,98 @@ CoreDev</h4>
 </h2>
 <p>The <code>teal.data</code> package enables <code>teal</code>
 application developers to convert their data into a format which can be
-used inside <code>teal</code> applications.</p>
+used inside <code>teal</code> applications. <code>teal_data</code> class
+inherits from <a href="https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html" class="external-link"><code>qenv</code></a>
+and is meant to be used for reproducibility purposes.</p>
 <div class="section level3">
 <h3 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h3>
-<p>For creating <code>ADaM</code> clinical trial data please use the
-<code>cdisc_data</code> and <code>cdisc_dataset</code> functions:</p>
+<p>To create a <code>teal_data</code> class object, use the
+<code>teal_data</code> function. <code>teal_data</code> has a number of
+methods which allow to set and get relevant information from private
+class slots.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/teal.data/">teal.data</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># create some dummy data</span></span>
-<span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span>
-<span><span class="va">adtte</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="../reference/example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADTTE"</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span></span>
+<span>  <span class="va">my_data</span>,</span>
+<span>  <span class="op">{</span></span>
+<span>    <span class="va">data1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span>    <span class="va">data2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">21</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdisc_data.html">cdisc_data</a></span><span class="op">(</span></span>
-<span>  ADSL <span class="op">=</span> <span class="va">adsl</span>,</span>
-<span>  ADTTE <span class="op">=</span> <span class="va">adtte</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>For more general data use the <code>teal_data</code> and
-<code>dataset</code> functions:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_general_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span></span>
-<span>  iris <span class="op">=</span> <span class="va">iris</span>,</span>
-<span>  mtcars <span class="op">=</span> <span class="va">mtcars</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># get variables from teal_data environment</span></span>
+<span><span class="va">my_data</span><span class="op">[[</span><span class="st">"data1"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">my_data</span><span class="op">[[</span><span class="st">"data1"</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># get reproducible code</span></span>
+<span><span class="fu"><a href="../reference/get_code-teal_data-method.html">get_code</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set/get datanames</span></span>
+<span><span class="fu"><a href="../reference/datanames.html">datanames</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data1"</span>, <span class="st">"data2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/datanames.html">datanames</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># concise print</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="additional-functionality">Additional functionality<a class="anchor" aria-label="anchor" href="#additional-functionality"></a>
+<h3 id="teal_data-characteristics">
+<code>teal_data</code> characteristics<a class="anchor" aria-label="anchor" href="#teal_data-characteristics"></a>
 </h3>
-<p>The <code>teal.data</code> package provides many features to help
-specify your data:</p>
-<ul>
-<li><a href="https://insightsengineering.github.io/teal/latest-tag/articles/including-adam-data-in-teal.html" class="external-link">Specifying
-<code>ADaM</code> data</a></li>
-<li><a href="https://insightsengineering.github.io/teal/latest-tag/articles/including-mae-data-in-teal.html" class="external-link">Specifying
-<code>MultiAssayExperiment</code> data</a></li>
-<li><a href="https://insightsengineering.github.io/teal/latest-tag/articles/including-general-data-in-teal.html" class="external-link">Specifying
-general relational data</a></li>
-<li><a href="join-keys.html">Specifying relationships between your
-datasets</a></li>
-<li><a href="using-delayed-data-basic.html">Dynamically loading your
-data (<code>DDL</code>)</a></li>
-<li><a href="preprocessing-data.html">Pre-processing data</a></li>
-<li><a href="preprocessing-delayed-data.html">Pre-processing
-<code>DDL</code> data</a></li>
-<li><a href="reproducibility.html">Checking for reproducibility</a></li>
-<li><a href="teal.data-with-python.html">Using python to create your
-data</a></li>
-</ul>
+<p><code>teal_data</code> class object keeps the following information:
+- <code>env</code> - an environment containing data. - <code>code</code>
+- a string containing code to reproduce <code>env</code> (details in <a href="teal-data-reproducibility.html">teal_data reproducibility</a>). -
+<code>datanames</code> - a character vector with names of datasets. -
+<code>join_keys</code> - a <code>join_keys</code> object defining
+relationships between datasets (details in <a href="join-keys.html">Join
+Keys</a>).</p>
+<div class="section level4">
+<h4 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
+</h4>
+<p>The primary function of <code>teal_data</code> is to provide
+reproducibility of data. We recommend to initialize empty
+<code>teal_data</code>, which marks object as <em>verified</em>, and
+create data sets with code evaluated in the object, using
+<code>within</code> or <code>eval_code</code>. Read more in <a href="teal-data-reproducibility.html">teal_data Reproducibility</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="va">data</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="co"># is verified</span></span></code></pre></div>
+<pre><code><span><span class="co">## ✅︎ verified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x5579c18f73d8&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
+<span><span class="co">## Bindings:</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> data: &lt;df[,2]&gt; [L]</span></span></code></pre>
+</div>
+<div class="section level4">
+<h4 id="relational-data-models">Relational data models<a class="anchor" aria-label="anchor" href="#relational-data-models"></a>
+</h4>
+<p>The <code>teal_data</code> class can be extended to support
+relational data. The <code>join_keys</code> function can be used to
+specify relationships between datasets. See more in <a href="join-keys.html">join_keys</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="op">{</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
+<span>  <span class="va">child</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, data_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">21</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/join_keys.html">join_keys</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/join_keys.html">join_keys</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/join_key.html">join_key</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"data"</span>, key <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/join_key.html">join_key</a></span><span class="op">(</span><span class="st">"child"</span>, <span class="st">"child"</span>, key <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/join_key.html">join_key</a></span><span class="op">(</span><span class="st">"child"</span>, <span class="st">"data"</span>, key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data_id"</span> <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/join_keys.html">join_keys</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## A join_keys object containing foreign keys between 2 datasets:</span></span>
+<span><span class="co">## data: [id]</span></span>
+<span><span class="co">##   &lt;-&gt; child: [data_id]</span></span>
+<span><span class="co">## child: [id]</span></span>
+<span><span class="co">##   &lt;-&gt; data: [id]</span></span></code></pre>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
