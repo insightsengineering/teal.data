@@ -15,6 +15,7 @@
 ### Miscellaneous
 
 * Specified minimal version of package dependencies.
+* Upgraded `teal.code` dependency from `Imports` to `Depends`.
 
 # teal.data 0.3.0
 
