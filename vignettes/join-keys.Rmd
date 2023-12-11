@@ -49,23 +49,20 @@ As the constructor it is used to specify keys `join_keys(...)` as a collection o
 
 Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c("ds1_col" = "ds2_col"))` establishes a relationship from "x" to "y" and vice versa.
 
+By default the new joining key will set the dataset defined in the first index as the parent.
+
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
 jk <- join_keys(
   join_key("ds1", keys = "col_1"), # ds1: [col_1]
   join_key("ds2", keys = c("col_1", "col_2")), # ds2: [col_1, col_2]
   join_key("ds3", keys = c("col_1", "col_3")), # ds3: [col_1, col_3]
-  join_key("ds1", "ds2", keys = "col_1"), # ds1 <--> ds2
-  join_key("ds1", "ds3", keys = "col_1"), # ds1 <--> ds3
-  join_key("ds4", "ds5", keys = c("col_4" = "col_5")) # ds4 <--> ds5
+  join_key("ds1", "ds2", keys = "col_1"), # ds1 <-- ds2
+  join_key("ds1", "ds3", keys = "col_1"), # ds1 <-- ds3
+  join_key("ds4", "ds5", keys = c("col_4" = "col_5"), parent = "none") # ds4 <--> ds5
 )
 
-# The parent of ds2 and ds3 is ds1
-# converts relationship to child-parent
-#  ds1 <--> ds2 becomes ds1 <-- ds2
-#  ds1 <--> ds3 becomes ds1 <-- ds3
-parents(jk) <- list(ds2 = "ds1", ds3 = "ds1")
-
+# The parent-child relationships are created automatically (unless 'parent' parameter is "none")
 jk
 ```
 
@@ -102,13 +99,12 @@ jk["ds1", "ds1"]
 jk["ds4", "ds5"]
 ```
 
-Note that there is a symmetry between `ds4` and `ds5` relationship:
+Note that there is a symmetry in the keys between `ds4` and `ds5` relationship:
 
 ```{r}
 jk["ds5", "ds4"]
 jk["ds5", "ds4"]
 ```
-
 
 When only 1 argument is used this operator will return a `join_keys` object that is filtered accordingly.
 
@@ -120,14 +116,13 @@ jk
 jk["ds1"]
 ```
 
-
 Modifying or adding a key uses the same notation with the assignment operator `<-`.
-A symmetric relationship will be created automatically.
+A symmetric relationship will be created automatically, where the parent (by default) will be the dataset defined on the first index.
 Assigning `NULL` value will delete the relationship.
 
 ```{r}
-# Adding a new ds5 <-> ds1 key
-jk["ds5", "ds1"] <- "a_column"
+# Adding a new ds5 <-- ds1 key
+jk["ds1", "ds5"] <- "a_column"
 
 # Removing an existing key
 jk["ds4", "ds5"] <- NULL

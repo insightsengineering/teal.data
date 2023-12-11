@@ -168,6 +168,12 @@
     )
   }
 
+  # Handle join key removal separately
+  if (is.null(value)) {
+    x[[i]][[j]] <- NULL
+    return(x)
+  }
+
   parent_conversion <- switch(parent,
     i = "dataset_1",
     j = "dataset_2",
