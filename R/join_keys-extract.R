@@ -144,8 +144,7 @@
 #'
 #' jk["ds5", "ds5"] <- NULL
 `[<-.join_keys` <- function(x, i, j, value, parent = c("i", "j", "none")) {
-  parent <- tryCatch(match.arg(parent), error = function(err) parent)
-  checkmate::assert_choice(parent, choices = c("i", "j", "none"))
+  parent <- checkmate::matchArg(parent, choices = c("i", "j", "none"), .var.name = "parent")
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
   } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
