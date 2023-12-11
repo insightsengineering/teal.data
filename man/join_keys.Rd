@@ -57,12 +57,14 @@ or \code{join_keys(x) <- value} then it can also take a supported class (\code{t
 \item{i, j}{indices specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
-\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
-to \code{join_keys} list.}
-
 \item{parent}{(\code{character(1)}) indicates which dataset is the parent in the
 relationship or \code{none} if it is an undirected relationship. One of \code{i},
 \code{j} or \code{none}.}
+
+\item{value}{(named/unnamed \code{character}) key.
+
+[for \code{join_keys(x) <- value}]: (\code{join_key_set} or list of \code{join_key_set}) relationship
+pairs to add to \code{join_keys} list.}
 }
 \value{
 \code{join_keys} object.

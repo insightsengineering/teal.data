@@ -24,6 +24,11 @@
 #'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
 #'  or any number of `join_key_set` objects to create `join_keys`, \cr
 #'  or nothing to create an empty `join_keys`
+#' @param value (named/unnamed `character`) key.
+#'
+#' \[for `join_keys(x) <- value`\]: (`join_key_set` or list of `join_key_set`) relationship
+#' pairs to add to `join_keys` list.
+#'
 #'
 #' @return `join_keys` object.
 #'
@@ -91,8 +96,6 @@ join_keys.teal_data <- function(...) {
 #' @param x (`join_keys`) empty object to set the new relationship pairs.
 #' `x` is typically an object of `join_keys` class. When called with the `join_keys(x)`
 #' or `join_keys(x) <- value` then it can also take a supported class (`teal_data`, `join_keys`)
-#' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
-#' to `join_keys` list.
 #'
 #' @export
 `join_keys<-` <- function(x, value) {
