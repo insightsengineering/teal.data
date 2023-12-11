@@ -16,14 +16,11 @@ repos:
         name: Regenerate package documentation
         additional_dependencies:
           - checkmate
-          - digest
           - lifecycle
           - methods
-          - R6
           - rlang
-          - shiny
-          - shinyjs
           - stats
+          - teal.code
           - utils
           - yaml
       - id: spell-check
