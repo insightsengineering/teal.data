@@ -48,6 +48,16 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
   )
 })
 
+testthat::test_that("join_keys cannot create acyclical graph", {
+  expect_error(
+    join_keys(
+      join_key("d1", "d2", "A"),
+      join_key("d2", "d1", "A")
+    ),
+    "Cycle detected in a parent and child dataset graph"
+  )
+})
+
 testthat::test_that("join_keys.teal_data returns join_keys object from teal_data", {
   obj <- teal_data(join_keys = join_keys(join_key("d1", "d1", "a")))
   testthat::expect_identical(obj@join_keys, join_keys(obj))
@@ -60,7 +70,13 @@ testthat::test_that("join_keys.join_keys returns itself", {
 
 testthat::test_that("join_keys accepts duplicated join_key", {
   testthat::expect_no_error(
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "a"))
+    join_keys(join_key("d1", "d2", "a"), join_key("d1", "d2", "a"))
+  )
+})
+
+testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
+  testthat::expect_no_error(
+    join_keys(join_key("d1", "d2", "a", parent = "none"), join_key("d1", "d2", "a", parent = "none"))
   )
 })
 

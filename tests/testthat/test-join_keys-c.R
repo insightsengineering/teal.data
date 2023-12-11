@@ -224,3 +224,9 @@ testthat::test_that("c.join_keys merges existing parents are overwritten", {
 
   testthat::expect_identical(c(jk1, jk2), expected)
 })
+
+testthat::test_that("c.join_keys throws error when merge produces acyclical graph", {
+  jk1 <- join_keys(join_key("d1", "d2", "a"))
+  jk2 <- join_keys(join_key("d2", "d1", "a"))
+  expect_error(c(jk1, jk2), "Cycle detected in a parent and child dataset graph")
+})

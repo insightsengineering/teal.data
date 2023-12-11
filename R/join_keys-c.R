@@ -28,13 +28,13 @@ c.join_keys <- function(...) {
     f = function(.x, .y) {
       assert_compatible_keys2(.x, .y)
       out <- utils::modifyList(.x, .y, keep.null = FALSE)
-      attr(out, "parents") <- .merge_parents(.x, .y)
+      parents(out) <- .merge_parents(.x, .y)
       out
     }
   )
 
   out <- utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
-  attr(out, "parents") <- .merge_parents(join_keys_obj, x_merged)
+  parents(out) <- .merge_parents(join_keys_obj, x_merged)
   out
 }
 

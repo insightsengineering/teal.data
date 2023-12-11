@@ -45,9 +45,9 @@ testthat::test_that("parents<- setting parent-child relationship fails when no f
 
 testthat::test_that("parents<- ensures it is a directed acyclical graph (DAG)", {
   cyclic_jk <- join_keys(
-    join_key("a", "b", "id"),
-    join_key("b", "c", "id"),
-    join_key("c", "a", "id")
+    join_key("a", "b", "id", parent = "none"),
+    join_key("b", "c", "id", parent = "none"),
+    join_key("c", "a", "id", parent = "none")
   )
   testthat::expect_error(
     parents(cyclic_jk) <- list(a = "b", b = "c", c = "a"),
@@ -68,10 +68,10 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 
 testthat::test_that("parents<- fails when value isn't a list (non-empty, non-missing) character", {
   jk <- join_keys(join_key("a", "b", "test", parent = "none"))
-  testthat::expect_error(parents(jk) <- list(b = 1))
-  testthat::expect_error(parents(jk) <- list(b = NA_character_))
-  testthat::expect_error(parents(jk) <- list(b = NULL))
-  testthat::expect_error(parents(jk) <- NULL)
+  testthat::expect_error(parents(jk) <- list(b = 1), "May only contain the following types")
+  testthat::expect_error(parents(jk) <- list(b = NA_character_), "May not contain")
+  testthat::expect_error(parents(jk) <- list(b = NULL), "May only contain the following types")
+  testthat::expect_error(parents(jk) <- NULL, "Must be of type 'list'")
 })
 
 testthat::test_that("parents<- setting parents again overwrites previous state", {

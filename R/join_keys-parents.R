@@ -78,6 +78,10 @@ parents.teal_data <- function(x) {
   new_parents <- list()
 
   for (dataset in names(value)) {
+    if (checkmate::test_scalar_na(value[[dataset]])) {
+      checkmate::assert("May not contain `NA_character_`", .var.name = "value")
+    }
+
     parent <- new_parents[[dataset]]
     checkmate::assert(
       checkmate::check_null(parent),
