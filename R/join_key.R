@@ -14,6 +14,9 @@
 #'
 #' If any element of the `keys` vector is empty with a non-empty name, then the name is
 #' used for both datasets.
+#' @param parent (`character(1)`) indicates which dataset is the parent in the
+#' relationship or `none` if it is an undirected relationship. One of `dataset_1`,
+#' `dataset_2` or `none`.
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
@@ -25,7 +28,8 @@
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
-join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = "dataset_1") {
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = c("dataset_1", "dataset_2", "none")) {
+  parent <- tryCatch(match.arg(parent), error = function(err) parent)
   checkmate::assert_choice(parent, choices = c("dataset_1", "dataset_2", "none"))
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)

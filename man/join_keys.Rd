@@ -28,7 +28,7 @@ join_keys(...)
 
 \method{[}{join_keys}(x, i, j)
 
-\method{[}{join_keys}(x, i, j, parent = "i") <- value
+\method{[}{join_keys}(x, i, j, parent = c("i", "j", "none")) <- value
 
 \method{c}{join_keys}(...)
 
@@ -59,6 +59,10 @@ a character vector, but it can also take numeric, logical, \code{NULL} or missin
 
 \item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
 to \code{join_keys} list.}
+
+\item{parent}{(\code{character(1)}) indicates which dataset is the parent in the
+relationship or \code{none} if it is an undirected relationship. One of \code{i},
+\code{j} or \code{none}.}
 }
 \value{
 \code{join_keys} object.

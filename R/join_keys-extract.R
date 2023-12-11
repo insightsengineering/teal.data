@@ -117,6 +117,10 @@
 #' @rdname join_keys
 #' @order 2
 #'
+#' @param parent (`character(1)`) indicates which dataset is the parent in the
+#' relationship or `none` if it is an undirected relationship. One of `i`,
+#' `j` or `none`.
+#'
 #' @section Functions:
 #' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
 #' - `x[i] <- value`: This (without `j` parameter) **is not** a supported
@@ -139,7 +143,8 @@
 #' # Removing a key ---
 #'
 #' jk["ds5", "ds5"] <- NULL
-`[<-.join_keys` <- function(x, i, j, value, parent = "i") {
+`[<-.join_keys` <- function(x, i, j, value, parent = c("i", "j", "none")) {
+  parent <- tryCatch(match.arg(parent), error = function(err) parent)
   checkmate::assert_choice(parent, choices = c("i", "j", "none"))
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
