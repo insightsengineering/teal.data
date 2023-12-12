@@ -16,16 +16,16 @@ The `teal.data` package provides a way to define primary keys for a dataset and 
 
 Each dataset _joining keys_ can be characterized by:
 
-- Columns constituting the primary key
-- Foreign/merge keys, analogous to `SQL` foreign keys
+- Columns constituting the primary key;
+- Foreign/merge keys, analogous to `SQL` foreign keys.
 
 Typically, an application developer specifies these keys manually.
 However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
 Refer to the section ["Joining Keys with `ADaM` Datasets"](#join-keys-in-adam-datasets) for details on using this object to select specific datasets.
 
-##### Uses of _join_keys_ class in _teal_ applications
+##### Uses of `join_keys` class in _teal_ applications
 
-The primary function of _joining keys_ in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
+The primary function of the `join_keys` class in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
 Additionally, it plays a role on the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/main/articles/filter-panel.html)_ in a `teal` application.
 The filters applied to a (parent) dataset are also applied to their children.
@@ -36,24 +36,24 @@ The `join_keys` object contains information about the foreign/primary keys of mu
 Each key is represented by a pair of datasets (by name reference) and a named character vector that encodes the column name mapping between the two datasets.
 In addition, a foreign key may also contain a _parent-child_ attribute that is used in the "Filter Panel" as we mentioned above.
 
-A new joining key can be created as an empty object, or by defining an initial set of primary and foreign keys.
+A new join keys can be created as an empty object, or by defining an initial set of primary and foreign keys.
 
 That initial object can be extended by adding/modifying/removing keys and by establishing parent-child relationships between datasets.
 
-##### `join_keys(...)`: Joining Keys Constructor / Getter / Setter
+##### `join_keys(...)`: Join Keys Constructor / Getter / Setter
 
-Convenient function that is used both as the constructor and as the getter for joining keys.
+Convenient function that is used both as the constructor and as the getter for _join_keys_ objects.
 
-As the _Getter_ it is used to retrieve the joining keys that are contained in other objects, such as `teal_data`.
+As the _Getter_ it is used to retrieve the _joining keys_ that are contained in other objects, such as a `teal_data` object.
 
-As the _Constructor_ it is used to specify a collection of multiple individual keys (via `join_key` function).
+As the _Constructor_ it is used to specify a collection of multiple individual keys (via `join_key` function described below).
 
-##### `join_key(dataset_1, dataset_2, key, parent)`: Individual Joining Key Constructor
+##### `join_key(dataset_1, dataset_2, key, parent)`: Single Join Key Constructor
 
-Specifies the relationship between two datasets.
+Specifies a primary key or a relationship between two datasets.
 
-- `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1` or is omitted, it creates a primary key)
-- `key` (optional): named vector of column names
+- `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1` or is omitted, it creates a primary key);
+- `key` (optional): named vector of column names;
 - `parent` (optional): indicates which dataset (`"dataset_1"` or `"dataset_2"`) is the parent in a _parent-child_ relationship, or `"none"` for an undirected relationship.
 
 Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c("ds1_col" = "ds2_col"))` establishes a relationship from "x" to "y" and vice versa.
@@ -96,7 +96,7 @@ jk
 
 ## Accessing and Modifying keys
 
-The _subset_ operator with 2 indices (`x[i, j]`) is used to retrieve the primary/foreign keys in joining keys.
+The _subset_ operator with 2 indices (`x[i, j]`) is used to retrieve the primary/foreign keys.
 Both indices must be a string denoting the dataset name.
 
 ```{r}
@@ -144,7 +144,7 @@ jk["ds4", "ds5"] <- NULL
 
 ## Join Keys Relationships
 
-There are 2 types of relationships encoded with joining keys that are described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the constructor for individual keys (`join_key`).
+There are 2 types of relationships encoded with _joining keys_ that are described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the constructor for individual keys (`join_key`).
 
 Additionally, the `join_keys` object infers implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
@@ -228,7 +228,7 @@ join_keys(td_fk)
 
 ### Implicit Relationships
 
-Two datasets that share common _foreign_ keys to the same _parent_ dataset have an implicit relationship between them that is modeled and accessible in joining keys.
+Two datasets that share common _foreign_ keys to the same _parent_ dataset have an implicit relationship between them that is modeled and accessible in _joining keys_.
 
 This is a special inferred relationship from existing foreign keys that does not need to be explicitly defined and can be seamlessly accessible just as any other foreign key.
 As any other foreign key they can be overwritten.
