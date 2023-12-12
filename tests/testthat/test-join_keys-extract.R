@@ -260,6 +260,23 @@ testthat::test_that("join_keys[i,j]<- throws when i or j are longer than 1", {
   testthat::expect_error(my_keys["a", c("a", "b")] <- "new key")
 })
 
+testthat::test_that("join_keys[i,j]<- removes keys with NULL", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "A"),
+    join_key("d2", "d2", "B"),
+    join_key("d1", "d2", c("A" = "B"))
+  )
+  my_keys["d2", "d1"] <- NULL
+
+  testthat::expect_equal(
+    my_keys,
+    join_keys(
+      join_key("d1", "d1", "A"),
+      join_key("d2", "d2", "B")
+    )
+  )
+})
+
 # [[<-.join_keys ------------------------------------------------
 testthat::test_that("[[<-.join_keys accepts named list where each containing character", {
   jk <- join_keys()

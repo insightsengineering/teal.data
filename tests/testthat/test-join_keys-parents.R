@@ -4,6 +4,12 @@ testthat::test_that("parents will return empty list when empty/not set", {
   testthat::expect_identical(parents(jk), list())
 })
 
+testthat::test_that("parents will return empty list when attribute does not exist", {
+  jk <- join_keys()
+  attr(jk, "parents") <- NULL
+  testthat::expect_identical(parents(jk), list())
+})
+
 testthat::test_that("parents returns the same list as used in parents<-", {
   jk <- join_keys(join_key("a", "b", "ab"))
   parents <- list(b = "a")
