@@ -14,42 +14,53 @@ vignette: >
 
 The `teal.data` package provides a way to define primary keys for a dataset and establish relationships with other datasets.
 
-Each dataset can be characterized by:
+Each dataset _joining keys_ can be characterized by:
 
 - Columns constituting the primary key
-- Merge keys, analogous to `SQL` foreign keys
+- Foreign/merge keys, analogous to `SQL` foreign keys
 
-Typically, an application developer specifies these keys manually. However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
+Typically, an application developer specifies these keys manually.
+However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
 Refer to the section ["Joining Keys with `ADaM` Datasets"](#join-keys-in-adam-datasets) for details on using this object to select specific datasets.
 
 ##### Uses of _join_keys_ class in _teal_ applications
 
-The primary function of `join_keys` in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
+The primary function of _joining keys_ in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
 Additionally, it plays a role on the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/main/articles/filter-panel.html)_ in a `teal` application.
-The filters applied to a _(parent)_ dataset are also applied to their children.
+The filters applied to a (parent) dataset are also applied to their children.
 
 ## Anatomy of Join Keys
 
 The `join_keys` object contains information about the foreign/primary keys of multiple datasets.
-Each key is represented by a pair of datasets _(by name reference)_ and a named character vector that encodes the match column name between the two datasets.
-In addition, a foreign key also contains a _parent-child_ attribute that is used in the "Filter Panel" as we mentioned above.
+Each key is represented by a pair of datasets (by name reference) and a named character vector that encodes the column name mapping between the two datasets.
+In addition, a foreign key may also contain a _parent-child_ attribute that is used in the "Filter Panel" as we mentioned above.
 
-A new `join_keys` can be created as empty or by defining an initial set of primary and foreign keys.
+A new joining key can be created as an empty object, or by defining an initial set of primary and foreign keys.
+
 That initial object can be extended by adding/modifying/removing keys and by establishing parent-child relationships between datasets.
 
-The `join_keys` function is used both as a constructor and as a getter.
-As the getter it is used to retrieve the `join_keys` that is contained in other objects, such as `teal_data`.
+##### `join_keys(...)`: Joining Keys Constructor / Getter / Setter
 
-As the constructor it is used to specify keys `join_keys(...)` as a collection of multiple `join_key` entries:
+Convenient function that is used both as the constructor and as the getter for joining keys.
 
-- `join_key(dataset_1, dataset_2, key)`: specifies the relationship between two datasets:
-  - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1`, it creates a primary key)
-  - `key` _(optional)_: named vector of column names
+As the _Getter_ it is used to retrieve the joining keys that are contained in other objects, such as `teal_data`.
+
+As the _Constructor_ it is used to specify a collection of multiple individual keys (via `join_key` function).
+
+##### `join_key(dataset_1, dataset_2, key, parent)`: Individual Joining Key Constructor
+
+Specifies the relationship between two datasets.
+
+- `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1` or is omitted, it creates a primary key)
+- `key` (optional): named vector of column names
+- `parent` (optional): indicates which dataset (`"dataset_1"` or `"dataset_2"`) is the parent in a _parent-child_ relationship, or `"none"` for an undirected relationship.
 
 Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c("ds1_col" = "ds2_col"))` establishes a relationship from "x" to "y" and vice versa.
 
-By default the new joining key will set the dataset defined in the first index as the parent.
+By default the new joining key will set the `dataset_1` as the parent.
+
+##### Example & Output
 
 ```{r, results="hide", message=FALSE, tidy=FALSE}
 library(teal.data)
@@ -85,8 +96,8 @@ jk
 
 ## Accessing and Modifying keys
 
-The _subset_ operator with 2 indices is used to retrieve the primary/foreign keys in a `join_keys`.
-Both indices must be a string.
+The _subset_ operator with 2 indices (`x[i, j]`) is used to retrieve the primary/foreign keys in joining keys.
+Both indices must be a string denoting the dataset name.
 
 ```{r}
 # Using the jk object defined on "Anatomy of Join Keys"
@@ -114,6 +125,9 @@ jk
 
 # Getting primary key of "ds1"
 jk["ds1"]
+
+# Getting keys of "ds1" and "ds2"
+jk[c("ds1", "ds2")]
 ```
 
 Modifying or adding a key uses the same notation with the assignment operator `<-`.
@@ -130,14 +144,14 @@ jk["ds4", "ds5"] <- NULL
 
 ## Join Keys Relationships
 
-There are 2 types of relationships encoded with `join_keys` described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the `join_key` function.
+There are 2 types of relationships encoded with joining keys that are described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the constructor for individual keys (`join_key`).
 
-Additionally, the `join_keys` object detects implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
+Additionally, the `join_keys` object infers implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
 ### Primary Key with `teal_data`
 
 When using the `teal_data` function, the simplest method to define the join keys  is to use the `join_keys` argument.
-We can specify the column(s) of the dataset that _(together)_ uniquely identify rows in the dataset.
+We can specify the column(s) of the dataset that (together) uniquely identify rows in the dataset.
 
 ```{r, include=FALSE}
 # nolint start: commented_code_linter.
@@ -160,8 +174,6 @@ join_keys(td_pk)
 We can extend the previous example and define primary keys for multiple datasets:
 
 ```{r, message=FALSE}
-library(teal.data)
-
 td_pk <- within(
   td_pk,
   {
@@ -183,8 +195,8 @@ join_keys(td_pk)
 
 ### Foreign Keys with `teal_data`
 
-When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` and these are used to merge datasets together within `teal` apps.
-For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values inserted into foreign key columns are present in the parent table.
+When passing multiple datasets to the `teal_data` function, dataset relationships are set using `join_keys` and `join_key` functions, which then can be used to merge datasets together within `teal` apps.
+For users familiar with `SQL` database schema, these relationships are symmetric and not as strict as `SQL` foreign key relationships as `teal` does not validate whether the values defined as foreign key columns are present in the table.
 
 For example:
 
@@ -207,22 +219,19 @@ join_keys(td_fk) <- join_keys(
   join_key("ds2", keys = c("V", "W")),
   join_key("ds3", keys = c("V")),
   # Foreign keys
-  join_key("ds2", "ds1", c("W" = "X")),
-  join_key("ds3", "ds2", c("V" = "V"))
+  join_key("ds1", "ds2", c("X" = "W")),
+  join_key("ds2", "ds3", c("V" = "V"))
 )
-
-# The parent of ds2 and ds3 is ds1
-parents(td_fk) <- list(ds2 = "ds1", ds3 = "ds2")
 
 join_keys(td_fk)
 ```
 
 ### Implicit Relationships
 
-Two datasets that share common _foreign_ keys to the same _parent_ dataset have an implicit relationship between them that is modeled and accessible in `join_keys`.
+Two datasets that share common _foreign_ keys to the same _parent_ dataset have an implicit relationship between them that is modeled and accessible in joining keys.
 
-This is a special inferred relationship from existing `join_keys` that does not need to be explicitly defined and can be seamlessly accessible just as any other foreign key.
-As any other foreign key it can be overwritten.
+This is a special inferred relationship from existing foreign keys that does not need to be explicitly defined and can be seamlessly accessible just as any other foreign key.
+As any other foreign key they can be overwritten.
 
 These implicit relationships can be used to merge 2 datasets together, just as if they were defined manually.
 
@@ -247,13 +256,10 @@ join_keys(td) <- join_keys(
   join_key("ds3", keys = c("V")),
   join_key("ds4", keys = c("V")),
   # Foreign keys
-  join_key("ds2", "ds1", c("W" = "X")),
-  join_key("ds3", "ds2", c("V" = "V")),
-  join_key("ds4", "ds1", c("V" = "X"))
+  join_key("ds1", "ds2", c("X" = "W")),
+  join_key("ds2", "ds3", c("V" = "V")),
+  join_key("ds1", "ds4", c("X" = "B"))
 )
-
-# The parent of ds2 and ds3 is ds1
-parents(td) <- list(ds2 = "ds1", ds3 = "ds2", ds4 = "ds1")
 
 join_keys(td)
 

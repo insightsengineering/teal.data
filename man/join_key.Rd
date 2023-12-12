@@ -12,30 +12,29 @@ join_key(
 )
 }
 \arguments{
-\item{dataset_1, dataset_2}{(\code{character(1)}) dataset names. If \code{dataset_2} is omitted,
+\item{dataset_1, dataset_2}{(\code{character(1)}) Dataset names. When \code{dataset_2} is omitted,
 a primary key for \code{dataset_1} is created.}
 
-\item{keys}{(optionally named \code{character}) where \code{names(keys)} are columns in \code{dataset_1}
-corresponding to columns of \code{dataset_2} given by the elements of \code{keys}.
+\item{keys}{(optionally named \code{character}) Column mapping between the datasets,
+where \code{names(keys)} maps columns in \code{dataset_1} corresponding to columns of
+\code{dataset_2} given by the elements of \code{keys}.
 
 If unnamed, the same column names are used for both datasets.
 
 If any element of the \code{keys} vector is empty with a non-empty name, then the name is
 used for both datasets.}
 
-\item{parent}{(\code{character(1)}) indicates which dataset is the parent in the
-relationship or \code{none} if it is an undirected relationship. One of \code{dataset_1},
-\code{dataset_2} or \code{none}.}
+\item{parent}{(\code{character(1)}) Indicates the parent dataset in a parent-child
+relationship or \code{none} if it is an undirected relationship.
+One of \code{dataset_1}, \code{dataset_2} or \code{none}.}
 }
 \value{
 object of class \code{join_key_set} to be passed into \code{join_keys} function.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-}
-\details{
-\code{join_key()} will create a relationship for the variables on a pair
-of datasets.
+
+\verb{Create a relationship for the variables on a pair of datasets. It is directed by default with }dataset_1` being the parent.
 }
 \examples{
 join_key("d1", "d2", c("A"))
@@ -43,5 +42,5 @@ join_key("d1", "d2", c("A" = "B"))
 join_key("d1", "d2", c("A" = "B", "C"))
 }
 \seealso{
-\code{\link[=join_keys]{join_keys()}}
+\code{\link[=join_keys]{join_keys()}}, \code{\link[=parents]{parents()}}
 }

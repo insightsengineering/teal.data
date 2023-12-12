@@ -6,13 +6,15 @@
 #' join_keys(...)
 #'
 #' @description
-#' `join_keys()` facilitates the creation and retrieval of relationships between datasets.
-#' `join_keys` class extends a list and contains keys connecting pairs of datasets. Each element
-#' of the list contains keys for specific dataset. Each dataset can have a relationship with
-#' itself (primary key) and with other datasets.
+#' Facilitates the creation and retrieval of relationships between datasets.
+#' `join_keys` class extends a list and contains keys connecting pairs of datasets.
+#' Each element of the list contains keys for specific dataset.
+#' Each dataset can have a relationship with itself (primary key) and with other datasets.
 #'
-#' Note that `join_keys` list is symmetrical, that is, when keys are set between `dat1` and `dat2` it
-#' is automatically mirrored between `dat2` and `dat1`.
+#' Note that `join_keys` list is symmetrical and assumes a default direction, that is:
+#' when keys are set between `ds1` and `ds2`, it defines `ds1` as the parent
+#' in a parent-child relationship and the mapping is automatically mirrored between
+#' `ds2` and `ds1`.
 #'
 #' @section Methods (by class):
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
@@ -24,9 +26,9 @@
 #'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
 #'  or any number of `join_key_set` objects to create `join_keys`, \cr
 #'  or nothing to create an empty `join_keys`
-#' @param value (named/unnamed `character`) key.
+#' @param value For `x[i, j, parent = "i")] <- value` (named/unnamed `character`) Column mapping between datasets.
 #'
-#' \[for `join_keys(x) <- value`\]: (`join_key_set` or list of `join_key_set`) relationship
+#' For `join_keys(x) <- value`: (`join_key_set` or list of `join_key_set`) relationship
 #' pairs to add to `join_keys` list.
 #'
 #'

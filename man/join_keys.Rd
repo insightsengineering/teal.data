@@ -61,22 +61,26 @@ a character vector, but it can also take numeric, logical, \code{NULL} or missin
 relationship or \code{none} if it is an undirected relationship. One of \code{i},
 \code{j} or \code{none}.}
 
-\item{value}{(named/unnamed \code{character}) key.
+\item{value}{For \verb{x[i, j, parent = "i")] <- value} (named/unnamed \code{character}) Column mapping between datasets.
 
-[for \code{join_keys(x) <- value}]: (\code{join_key_set} or list of \code{join_key_set}) relationship
-pairs to add to \code{join_keys} list.}
+For \code{join_keys(x) <- value}: (\code{join_key_set} or list of \code{join_key_set}) relationship
+pairs to add to \code{join_keys} list.
+
+[i, j, parent = "i")]: R:i,\%20j,\%20parent\%20=\%20\%22i\%22)}
 }
 \value{
 \code{join_keys} object.
 }
 \description{
-\code{join_keys()} facilitates the creation and retrieval of relationships between datasets.
-\code{join_keys} class extends a list and contains keys connecting pairs of datasets. Each element
-of the list contains keys for specific dataset. Each dataset can have a relationship with
-itself (primary key) and with other datasets.
+Facilitates the creation and retrieval of relationships between datasets.
+\code{join_keys} class extends a list and contains keys connecting pairs of datasets.
+Each element of the list contains keys for specific dataset.
+Each dataset can have a relationship with itself (primary key) and with other datasets.
 
-Note that \code{join_keys} list is symmetrical, that is, when keys are set between \code{dat1} and \code{dat2} it
-is automatically mirrored between \code{dat2} and \code{dat1}.
+Note that \code{join_keys} list is symmetrical and assumes a default direction, that is:
+when keys are set between \code{ds1} and \code{ds2}, it defines \code{ds1} as the parent
+in a parent-child relationship and the mapping is automatically mirrored between
+\code{ds2} and \code{ds1}.
 }
 \section{Methods (by class)}{
 
