@@ -1,4 +1,4 @@
-# teal.data 0.3.0.9020
+# teal.data 0.3.0.9021
 
 ### Enhancements
 
@@ -15,6 +15,7 @@
 ### Miscellaneous
 
 * Specified minimal version of package dependencies.
+* Upgraded `teal.code` dependency from `Imports` to `Depends`.
 
 # teal.data 0.3.0
 
