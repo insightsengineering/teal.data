@@ -49,6 +49,15 @@ teal_data <- function(...,
     if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
+
+    if(length(data_objects) > 0 && length(code) == 0) {
+      arg_list <- match.call(expand.dots = FALSE)$`...`
+      code_string <- sapply(names(data_objects), function(name) {
+        argument_string <- arg_list[[name]]
+        paste0(name, " <- ", argument_string)
+      }, USE.NAMES = FALSE)
+      code <- paste(code_string, collapse = "\n")
+    }
     new_teal_data(
       data = data_objects,
       code = code,
