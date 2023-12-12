@@ -3,7 +3,7 @@ warning_message <- "warning('Code was not verified for reproducibility.')"
 testthat::test_that("get_code with datanames handles empty @code slot", {
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = character(0)), datanames = "a"),
-    paste(warning_message, "a <- 1", sep  = "\n")
+    paste(warning_message, "a <- 1", sep = "\n")
   )
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = ""), datanames = "a"),

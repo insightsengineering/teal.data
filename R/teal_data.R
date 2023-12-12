@@ -50,7 +50,7 @@ teal_data <- function(...,
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
 
-    if(length(data_objects) > 0 && length(code) == 0) {
+    if (length(data_objects) > 0 && length(code) == 0) {
       arg_list <- match.call(expand.dots = FALSE)$`...`
       code_string <- sapply(names(data_objects), function(name) {
         argument_string <- arg_list[[name]]
