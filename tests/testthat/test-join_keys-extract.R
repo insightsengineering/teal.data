@@ -55,17 +55,15 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset inc
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
-    join_key("d2", "d1", "ab"),
-    join_key("d3", "d1", "ac")
+    join_key("d1", "d2", "ab"),
+    join_key("d1", "d3", "ac")
   )
-  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d2", "d1", "ab")
+    join_key("d1", "d2", "ab")
   )
-  parents(expected) <- list("d2" = "d1")
 
   testthat::expect_equal(my_keys["d2"], expected)
 })
@@ -75,17 +73,15 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset and
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
-    join_key("d2", "d1", "ab"),
-    join_key("d3", "d1", "ac")
+    join_key("d1", "d2", "ab"),
+    join_key("d1", "d3", "ac")
   )
-  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d2", "d1", "ab")
+    join_key("d1", "d2", "ab")
   )
-  parents(expected) <- list("d2" = "d1")
 
   testthat::expect_equal(my_keys["d2"], expected)
 })
@@ -163,10 +159,9 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c(child = "a1")),
-      join_key("c", "a", c(child = "a2"))
+      join_key("a", "b", c("a1" = "aa")),
+      join_key("a", "c", c("a2" = "aa"))
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a")
     testthat::expect_null(my_keys["b", "c"])
   }
 )
@@ -178,12 +173,11 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", "child-parent"),
-      join_key("c", "a", "child-parent"),
-      join_key("d", "b", "grandchild-child"),
-      join_key("e", "c", "grandchild-child")
+      join_key("a", "b", "child-parent"),
+      join_key("a", "c", "child-parent"),
+      join_key("b", "d", "grandchild-child"),
+      join_key("c", "e", "grandchild-child")
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a", "d" = "b", "e" = "c")
     testthat::expect_null(my_keys["d", "e"])
   }
 )
@@ -195,10 +189,9 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c(bb = "aa")),
-      join_key("c", "a", c(cc = "aa"))
+      join_key("a", "b", c("aa" = "bb")),
+      join_key("a", "c", c("aa" = "cc"))
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a")
     # "bb" and "cc" are the names in child datasets, "aa" is the name in parent dataset
     testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
   }
