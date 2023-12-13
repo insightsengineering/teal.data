@@ -30,7 +30,7 @@
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = c("dataset_1", "dataset_2", "none")) {
-  parent <- checkmate::matchArg(parent, choices = c("dataset_1", "dataset_2", "none"), .var.name = "parent")
+  parent <- match.arg(parent)
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
