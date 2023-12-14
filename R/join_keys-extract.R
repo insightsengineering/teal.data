@@ -117,10 +117,10 @@
 #' @rdname join_keys
 #' @order 2
 #'
-#' @param directed (`logical(1)`) Flag that indicates whether `dataset_1` is
-#' defined as the parent of `dataset_2` in the relationship. When `FALSE` the
-#' relationship becomes undirected.
-#'
+#' @param directed (`logical(1)`) Flag that indicates whether it should create
+#' a parent-child relationship between the datasets.\cr
+#'  - `TRUE` (default) `dataset_1` is the parent of `dataset_2`;
+#'  - `FALSE` when the relationship is undirected.
 #' @section Functions:
 #' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
 #' - `x[i] <- value`: This (without `j` parameter) **is not** a supported

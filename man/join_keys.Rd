@@ -57,9 +57,12 @@ or \code{join_keys(x) <- value} then it can also take a supported class (\code{t
 \item{i, j}{indices specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
-\item{directed}{(\code{logical(1)}) Flag that indicates whether \code{dataset_1} is
-defined as the parent of \code{dataset_2} in the relationship. When \code{FALSE} the
-relationship becomes undirected.}
+\item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
+a parent-child relationship between the datasets.\cr
+\itemize{
+\item \code{TRUE} (default) \code{dataset_1} is the parent of \code{dataset_2};
+\item \code{FALSE} when the relationship is undirected.
+}}
 
 \item{value}{For \verb{x[i, j, directed = TRUE)] <- value} (named/unnamed \code{character})
 Column mapping between datasets.

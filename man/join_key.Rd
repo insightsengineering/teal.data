@@ -19,9 +19,12 @@ If unnamed, the same column names are used for both datasets.
 If any element of the \code{keys} vector is empty with a non-empty name, then the name is
 used for both datasets.}
 
-\item{directed}{(\code{logical(1)}) Flag that indicates whether \code{dataset_1} is
-defined as the parent of \code{dataset_2} in the relationship. When \code{FALSE} the
-relationship becomes undirected.}
+\item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
+a parent-child relationship between the datasets.\cr
+\itemize{
+\item \code{TRUE} (default) \code{dataset_1} is the parent of \code{dataset_2};
+\item \code{FALSE} when the relationship is undirected.
+}}
 }
 \value{
 object of class \code{join_key_set} to be passed into \code{join_keys} function.
