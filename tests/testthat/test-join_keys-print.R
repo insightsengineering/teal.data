@@ -5,11 +5,11 @@ testthat::test_that("format.join_keys for empty set", {
 
 testthat::test_that("format.join_keys with empty parents", {
   my_keys <- join_keys(
-    join_key("d1", "d1", "a", parent = "none"),
-    join_key("d2", "d2", "b", parent = "none"),
-    join_key("d3", "d3", "c", parent = "none"),
-    join_key("d1", "d2", "ab", parent = "none"),
-    join_key("d2", "d3", "ac", parent = "none")
+    join_key("d1", "d1", "a", directed = FALSE),
+    join_key("d2", "d2", "b", directed = FALSE),
+    join_key("d3", "d3", "c", directed = FALSE),
+    join_key("d1", "d2", "ab", directed = FALSE),
+    join_key("d2", "d3", "ac", directed = FALSE)
   )
   testthat::expect_identical(
     format(my_keys),

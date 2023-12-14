@@ -125,7 +125,7 @@ testthat::test_that("c.join_key_set merges with empty and non-empty parents", {
     join_key("d1", "d1", "a"),
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d3", "d4", "cd", parent = "none")
+    join_key("d3", "d4", "cd", directed = FALSE)
   )
   parents(expected) <- list(d4 = "d3")
 
@@ -151,7 +151,7 @@ testthat::test_that("c.join_key_set merges parents also", {
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d1", "d2", "ab", parent = "none"),
+    join_key("d1", "d2", "ab", directed = FALSE),
     join_key("d3", "d3", "c")
   )
   parents(expected) <- list(d2 = "d1")
@@ -178,10 +178,10 @@ testthat::test_that("c.join_keys merges parents also", {
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d1", "d2", "ab", parent = "none"),
+    join_key("d1", "d2", "ab", directed = FALSE),
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d3", "d4", "cd", parent = "none")
+    join_key("d3", "d4", "cd", directed = FALSE)
   )
   parents(expected) <- list(d2 = "d1", d4 = "d3")
 
@@ -211,9 +211,9 @@ testthat::test_that("c.join_keys merges existing parents are overwritten", {
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d1", "d2", "ab", parent = "none"),
-    join_key("d3", "d4", "cd", parent = "none"),
-    join_key("d2", "d3", "cb", parent = "none")
+    join_key("d1", "d2", "ab", directed = FALSE),
+    join_key("d3", "d4", "cd", directed = FALSE),
+    join_key("d2", "d3", "cb", directed = FALSE)
   )
   parents(expected) <- list(d2 = "d1", d3 = "d2", d4 = "d3")
 

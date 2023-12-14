@@ -4,12 +4,7 @@
 \alias{join_key}
 \title{Create a relationship between a pair of datasets}
 \usage{
-join_key(
-  dataset_1,
-  dataset_2 = dataset_1,
-  keys,
-  parent = c("dataset_1", "dataset_2", "none")
-)
+join_key(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE)
 }
 \arguments{
 \item{dataset_1, dataset_2}{(\code{character(1)}) Dataset names. When \code{dataset_2} is omitted,
@@ -24,9 +19,9 @@ If unnamed, the same column names are used for both datasets.
 If any element of the \code{keys} vector is empty with a non-empty name, then the name is
 used for both datasets.}
 
-\item{parent}{(\code{character(1)}) Indicates the parent dataset in a parent-child
-relationship or \code{none} if it is an undirected relationship.
-One of \code{dataset_1}, \code{dataset_2} or \code{none}.}
+\item{directed}{(\code{logical(1)}) Flag that indicates whether \code{dataset_1} is
+defined as the parent of \code{dataset_2} in the relationship. When \code{FALSE} the
+relationship becomes undirected.}
 }
 \value{
 object of class \code{join_key_set} to be passed into \code{join_keys} function.

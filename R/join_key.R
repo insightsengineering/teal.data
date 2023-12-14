@@ -16,9 +16,9 @@
 #'
 #' If any element of the `keys` vector is empty with a non-empty name, then the name is
 #' used for both datasets.
-#' @param parent (`character(1)`) Indicates the parent dataset in a parent-child
-#' relationship or `none` if it is an undirected relationship.
-#' One of `dataset_1`, `dataset_2` or `none`.
+#' @param directed (`logical(1)`) Flag that indicates whether `dataset_1` is
+#' defined as the parent of `dataset_2` in the relationship. When `FALSE` the
+#' relationship becomes undirected.
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
@@ -30,11 +30,11 @@
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
-join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = c("dataset_1", "dataset_2", "none")) {
-  parent <- match.arg(parent)
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
+  checkmate::assert_logical(directed)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
@@ -71,15 +71,11 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = c("dataset
     keys <- NULL
   }
 
-  if (dataset_1 == dataset_2) {
-    parent <- "none"
-  }
-
-  new_parents <- switch(parent,
-    dataset_1 = structure(list(dataset_1), names = dataset_2),
-    dataset_2 = structure(list(dataset_2), names = dataset_1),
+  parents <- if (directed && dataset_1 != dataset_2) {
+    structure(list(dataset_1), names = dataset_2)
+  } else {
     list()
-  )
+  }
 
   structure(
     list(
@@ -90,6 +86,6 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys, parent = c("dataset
     ),
     names = dataset_1,
     class = "join_key_set",
-    parents = new_parents
+    parents = parents
   )
 }

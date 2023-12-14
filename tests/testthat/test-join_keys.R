@@ -76,7 +76,7 @@ testthat::test_that("join_keys accepts duplicated join_key", {
 
 testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
   testthat::expect_no_error(
-    join_keys(join_key("d1", "d2", "a", parent = "none"), join_key("d1", "d2", "a", parent = "none"))
+    join_keys(join_key("d1", "d2", "a", directed = FALSE), join_key("d1", "d2", "a", directed = FALSE))
   )
 })
 
@@ -114,20 +114,21 @@ testthat::test_that("join_keys fails when provided foreign key pairs have incomp
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
   my_keys <- join_keys(join_key("d1", "d2", "a"))
-  testthat::expect_equal(
-    my_keys,
-    join_keys(join_key("d2", "d1", "a", parent = "dataset_2"))
-  )
+  expected_keys <- join_keys(join_key("d2", "d1", "a", directed = FALSE))
+  parents(expected_keys) <- list(d2 = "d1")
+
+  testthat::expect_equal(my_keys, expected_keys)
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (named) foreign key", {
+  expected_keys <- join_keys(join_key("d2", "d1", c(b = "a"), directed = FALSE))
+  parents(expected_keys) <- list(d2 = "d1")
+
   testthat::expect_equal(
     join_keys(
       join_key("d1", "d2", c(a = "b"))
     ),
-    join_keys(
-      join_key("d2", "d1", c(b = "a"), parent = "dataset_2")
-    )
+    expected_keys
   )
 })
 

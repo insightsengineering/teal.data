@@ -74,7 +74,7 @@ jk <- join_keys(
   join_key("ds3", keys = c("col_1", "col_3")), # ds3: [col_1, col_3]
   join_key("ds1", "ds2", keys = "col_1"), # ds1 <-- ds2
   join_key("ds1", "ds3", keys = "col_1"), # ds1 <-- ds3
-  join_key("ds4", "ds5", keys = c("col_4" = "col_5"), parent = "none") # ds4 <--> ds5
+  join_key("ds4", "ds5", keys = c("col_4" = "col_5"), directed = FALSE) # ds4 <--> ds5
 )
 
 # The parent-child relationships are created automatically (unless 'parent' parameter is "none")

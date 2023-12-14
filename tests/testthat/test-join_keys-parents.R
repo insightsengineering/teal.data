@@ -25,8 +25,8 @@ testthat::test_that("parents<- accepts a named list containing (non-empty, non-m
 
 testthat::test_that("parents<- single parent can be changed utilizing list functionality with [[<-", {
   jk <- join_keys(
-    join_key("a", "b", "ab", parent = "none"),
-    join_key("c", "d", "cd", parent = "none")
+    join_key("a", "b", "ab", directed = FALSE),
+    join_key("c", "d", "cd", directed = FALSE)
   )
   parents(jk)[["a"]] <- "b"
   parents(jk)[["c"]] <- "d"
@@ -35,25 +35,25 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 
 testthat::test_that("parents<- dataset can't be own parent", {
   jk <- join_keys(
-    join_key("a", "b", "ab", parent = "none"),
-    join_key("c", "d", "cd", parent = "none")
+    join_key("a", "b", "ab", directed = FALSE),
+    join_key("c", "d", "cd", directed = FALSE)
   )
   testthat::expect_error(parents(jk) <- list(a = "a"))
 })
 
 testthat::test_that("parents<- setting parent-child relationship fails when no foreign keys between datasets", {
   jk <- join_keys(
-    join_key("a", "1", "aa", parent = "none"),
-    join_key("b", "b", "bb", parent = "none")
+    join_key("a", "1", "aa", directed = FALSE),
+    join_key("b", "b", "bb", directed = FALSE)
   )
   testthat::expect_error(parents(jk) <- list(a = "b"))
 })
 
 testthat::test_that("parents<- ensures it is a directed acyclical graph (DAG)", {
   cyclic_jk <- join_keys(
-    join_key("a", "b", "id", parent = "none"),
-    join_key("b", "c", "id", parent = "none"),
-    join_key("c", "a", "id", parent = "none")
+    join_key("a", "b", "id", directed = FALSE),
+    join_key("b", "c", "id", directed = FALSE),
+    join_key("c", "a", "id", directed = FALSE)
   )
   testthat::expect_error(
     parents(cyclic_jk) <- list(a = "b", b = "c", c = "a"),
@@ -63,8 +63,8 @@ testthat::test_that("parents<- ensures it is a directed acyclical graph (DAG)", 
 
 testthat::test_that("parents<- single parent can be changed utilizing list functionality with [[<-", {
   jk <- join_keys(
-    join_key("a", "b", "ab", parent = "none"),
-    join_key("c", "d", "cd", parent = "none")
+    join_key("a", "b", "ab", directed = FALSE),
+    join_key("c", "d", "cd", directed = FALSE)
   )
   parents(jk)[["a"]] <- "b"
   parents(jk)[["c"]] <- "d"
@@ -73,7 +73,7 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 })
 
 testthat::test_that("parents<- fails when value isn't a list (non-empty, non-missing) character", {
-  jk <- join_keys(join_key("a", "b", "test", parent = "none"))
+  jk <- join_keys(join_key("a", "b", "test", directed = FALSE))
   testthat::expect_error(parents(jk) <- list(b = 1), "May only contain the following types")
   testthat::expect_error(parents(jk) <- list(b = NA_character_), "May not contain")
   testthat::expect_error(parents(jk) <- list(b = NULL), "May only contain the following types")

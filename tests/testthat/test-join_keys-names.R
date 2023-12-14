@@ -29,9 +29,9 @@ testthat::test_that("names<-.join_keys will replace names at all levels of the j
 
   expected <- join_keys(
     join_key("a", "a", "a"),
-    join_key("B", "a", "ba", parent = "none"),
-    join_key("c", "a", "ca", parent = "none"),
-    join_key("d", "B", "db", parent = "none")
+    join_key("B", "a", "ba", directed = FALSE),
+    join_key("c", "a", "ca", directed = FALSE),
+    join_key("d", "B", "db", directed = FALSE)
   )
   parents(expected) <- list(B = "a", c = "a", d = "B")
 

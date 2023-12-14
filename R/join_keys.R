@@ -26,7 +26,8 @@
 #'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
 #'  or any number of `join_key_set` objects to create `join_keys`, \cr
 #'  or nothing to create an empty `join_keys`
-#' @param value For `x[i, j, parent = "i")] <- value` (named/unnamed `character`) Column mapping between datasets.
+#' @param value For `x[i, j, directed = TRUE)] <- value` (named/unnamed `character`)
+#' Column mapping between datasets.
 #'
 #' For `join_keys(x) <- value`: (`join_key_set` or list of `join_key_set`) relationship
 #' pairs to add to `join_keys` list.

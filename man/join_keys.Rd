@@ -28,7 +28,7 @@ join_keys(...)
 
 \method{[}{join_keys}(x, i, j)
 
-\method{[}{join_keys}(x, i, j, parent = c("i", "j", "none")) <- value
+\method{[}{join_keys}(x, i, j, directed = TRUE) <- value
 
 \method{c}{join_keys}(...)
 
@@ -57,16 +57,17 @@ or \code{join_keys(x) <- value} then it can also take a supported class (\code{t
 \item{i, j}{indices specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
-\item{parent}{(\code{character(1)}) indicates which dataset is the parent in the
-relationship or \code{none} if it is an undirected relationship. One of \code{i},
-\code{j} or \code{none}.}
+\item{directed}{(\code{logical(1)}) Flag that indicates whether \code{dataset_1} is
+defined as the parent of \code{dataset_2} in the relationship. When \code{FALSE} the
+relationship becomes undirected.}
 
-\item{value}{For \verb{x[i, j, parent = "i")] <- value} (named/unnamed \code{character}) Column mapping between datasets.
+\item{value}{For \verb{x[i, j, directed = TRUE)] <- value} (named/unnamed \code{character})
+Column mapping between datasets.
 
 For \code{join_keys(x) <- value}: (\code{join_key_set} or list of \code{join_key_set}) relationship
 pairs to add to \code{join_keys} list.
 
-[i, j, parent = "i")]: R:i,\%20j,\%20parent\%20=\%20\%22i\%22)}
+[i, j, directed = TRUE)]: R:i,\%20j,\%20directed\%20=\%20TRUE)}
 }
 \value{
 \code{join_keys} object.

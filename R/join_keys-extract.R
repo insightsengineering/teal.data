@@ -117,9 +117,9 @@
 #' @rdname join_keys
 #' @order 2
 #'
-#' @param parent (`character(1)`) indicates which dataset is the parent in the
-#' relationship or `none` if it is an undirected relationship. One of `i`,
-#' `j` or `none`.
+#' @param directed (`logical(1)`) Flag that indicates whether `dataset_1` is
+#' defined as the parent of `dataset_2` in the relationship. When `FALSE` the
+#' relationship becomes undirected.
 #'
 #' @section Functions:
 #' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
@@ -143,8 +143,8 @@
 #' # Removing a key ---
 #'
 #' jk["ds5", "ds5"] <- NULL
-`[<-.join_keys` <- function(x, i, j, parent = c("i", "j", "none"), value) {
-  parent <- match.arg(parent)
+`[<-.join_keys` <- function(x, i, j, directed = TRUE, value) {
+  checkmate::assert_logical(directed)
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
   } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
@@ -174,13 +174,7 @@
     return(x)
   }
 
-  parent_conversion <- switch(parent,
-    i = "dataset_1",
-    j = "dataset_2",
-    "none"
-  )
-
-  c(x, join_key(i, j, value, parent_conversion))
+  c(x, join_key(i, j, value, directed))
 }
 
 #' @noRd

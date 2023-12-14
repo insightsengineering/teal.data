@@ -359,7 +359,7 @@ testthat::test_that("[[<- mutating non-existing keys adds them", {
     my_keys,
     join_keys(
       join_key("d1", "d2", "A"),
-      join_key("d2", "d3", "B", parent = "none") # [[<- doesn't set parent
+      join_key("d2", "d3", "B", directed = FALSE) # [[<- doesn't set parent
     )
   )
 })
@@ -440,5 +440,5 @@ testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for sa
 testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for same datasets and same keys", {
   jk <- join_keys()
   testthat::expect_silent(jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new")))
-  testthat::expect_equal(jk, join_keys(join_key("ds1", "ds2", "new", parent = "none")))
+  testthat::expect_equal(jk, join_keys(join_key("ds1", "ds2", "new", directed = FALSE)))
 })
