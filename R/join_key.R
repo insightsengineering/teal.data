@@ -2,8 +2,9 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @description `Create a relationship for the variables on a pair of datasets.
-#' It is directed by default with `dataset_1` being the parent.
+#' @description Create a relationship between two datasets, `dataset_1` and `dataset_2`.
+#' By default, this function establishes a directed relationship with `dataset_1` as the parent.
+#' If `dataset_2` is not specified, the function creates a primary key for `dataset_1`.
 #'
 #' @param dataset_1,dataset_2 (`character(1)`) Dataset names. When `dataset_2` is omitted,
 #' a primary key for `dataset_1` is created.
