@@ -19,12 +19,13 @@
 #'
 #' @param code `character` with the code.
 #' @param names `character` vector of object names.
+#' @param check_names `logical(1)` flag specifying if a warning for non-existing names should be displayed.
 #'
 #' @return Character vector, a subset of `code`.
 #' Note that subsetting is actually done on the calls `code`, not necessarily on the elements of the vector.
 #'
 #' @keywords internal
-get_code_dependency <- function(code, names) {
+get_code_dependency <- function(code, names, check_names = TRUE) {
   checkmate::assert_character(code)
   checkmate::assert_character(names, any.missing = FALSE)
 
@@ -35,10 +36,12 @@ get_code_dependency <- function(code, names) {
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
 
-  # Detect if names are actually in code.
-  symbols <- unique(pd[pd$token == "SYMBOL", "text"])
-  if (!all(names %in% symbols)) {
-    warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
+  if (check_names) {
+    # Detect if names are actually in code.
+    symbols <- unique(pd[pd$token == "SYMBOL", "text"])
+    if (!all(names %in% symbols)) {
+      warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
+    }
   }
 
   calls_pd <- extract_calls(pd)
