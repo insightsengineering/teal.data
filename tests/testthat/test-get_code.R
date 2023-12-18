@@ -209,7 +209,7 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
   )
 })
 
-testthat::test_that("get_code returns result of length for non-empty input"{
+testthat::test_that("get_code returns result of length for non-empty input",{
 
   tdata1 <- teal_data()
   tdata1 <- within(tdata1, {
