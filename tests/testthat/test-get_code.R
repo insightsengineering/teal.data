@@ -209,6 +209,20 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
   )
 })
 
+testthat::test_that("get_code returns result of length for non-empty input",{
+
+  tdata1 <- teal_data()
+  tdata1 <- within(tdata1, {
+    a <- 1
+    b <- a^5
+    c <- list(x = 2)
+  })
+
+  testthat::expect_length(get_code(tdata1, deparse = FALSE), 1)
+  testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
+
+})
+
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
