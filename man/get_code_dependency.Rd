@@ -4,12 +4,14 @@
 \alias{get_code_dependency}
 \title{Get Code Dependency of an Object}
 \usage{
-get_code_dependency(code, names)
+get_code_dependency(code, names, check_names = TRUE)
 }
 \arguments{
 \item{code}{\code{character} with the code.}
 
 \item{names}{\code{character} vector of object names.}
+
+\item{check_names}{\code{logical(1)} flag specifying if a warning for non-existing names should be displayed.}
 }
 \value{
 Character vector, a subset of \code{code}.
