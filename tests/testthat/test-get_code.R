@@ -532,3 +532,33 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
     )
   )
 })
+
+
+
+# libraries -------------------------------------------------------------------------------------------------------
+
+testthat::test_that("library() and data() are always returned", {
+
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "library(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data(miniACC, envir = environment())",
+    "x <- 5",
+    "y <- 6"
+  )
+  tdata <- teal_data(x = 5, y = 6, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = 'x'),
+    paste(
+      warning_message,
+      "library(scda)",
+      "library(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(miniACC, envir = environment())",
+      "x <- 5",
+      sep = "\n"
+    )
+  )
+})

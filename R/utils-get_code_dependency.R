@@ -48,7 +48,10 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   graph <- code_graph(calls_pd)
   ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  as.character(code[unique(ind)])
+
+  se_ind <- default_side_effects(calls_pd)
+
+  as.character(code[unique(c(se_ind, ind))])
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
@@ -255,4 +258,37 @@ graph_parser <- function(x, graph) {
   } else {
     which(occurrence)
   }
+}
+
+
+# default_side_effects --------------------------------------------------------------------------------------------
+
+#' Detect Default Side Effects
+#'
+#' Detect default function calls that have side effects on all objects. Currently detects `library`, `require()` and
+#' `data()` functions.
+#'
+#' @param calls_pd `list` of `data.frame`s;
+#'  result of `utils::getParseData()` split into subsets representing individual calls;
+#'  created by `extract_calls()` function
+#'
+#' @return
+#' Integer vector of indices that can be applied to `graph` to obtain all calls containing default functions calls that
+#' are always returned for reproducibility.
+#'
+#' @keywords internal
+#' @noRd
+default_side_effects <- function(calls_pd) {
+
+  defaults <- c('library', 'data', 'require')
+
+  which(
+    vapply(
+      calls_pd,
+      function(call) {
+        any(call$token == "SYMBOL_FUNCTION_CALL" & call$text %in% defaults)
+      },
+      logical(1)
+    )
+  )
 }
