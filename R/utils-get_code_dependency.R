@@ -279,8 +279,7 @@ graph_parser <- function(x, graph) {
 #' @keywords internal
 #' @noRd
 default_side_effects <- function(calls_pd) {
-
-  defaults <- c('library', 'data', 'require')
+  defaults <- c("library", "data", "require")
 
   which(
     vapply(
