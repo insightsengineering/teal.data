@@ -537,13 +537,12 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
 
 # libraries -------------------------------------------------------------------------------------------------------
 
-testthat::test_that("library() and data() are always returned", {
+testthat::test_that("library() and require() are always returned", {
   code <- c(
     "set.seed(1)",
     "library(scda)",
-    "library(dplyr)",
+    "require(dplyr)",
     "library(MultiAssayExperiment)",
-    "data(miniACC, envir = environment())",
     "x <- 5",
     "y <- 6"
   )
@@ -553,10 +552,65 @@ testthat::test_that("library() and data() are always returned", {
     paste(
       warning_message,
       "library(scda)",
-      "library(dplyr)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "x <- 5",
+      sep = "\n"
+    )
+  )
+})
+
+
+# data() ----------------------------------------------------------------------------------------------------------
+
+testthat::test_that("data() is returned without @linksto tag for proper object", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data(miniACC, envir = environment())",
+    "data(iris)",
+    "data('mtcars')",
+    "x <- miniACC",
+    "y <- iris",
+    "z <- mtcars"
+  )
+  tdata <- teal_data(x = 0, y = 0, z = 0, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
       "library(MultiAssayExperiment)",
       "data(miniACC, envir = environment())",
-      "x <- 5",
+      "x <- miniACC",
+      sep = "\n"
+    )
+  )
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(iris)",
+      "y <- iris",
+      sep = "\n"
+    )
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "z"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(\"mtcars\")",
+      "z <- mtcars",
       sep = "\n"
     )
   )

@@ -158,6 +158,13 @@ extract_occurrence <- function(calls_pd) {
   lapply(
     calls_pd,
     function(call_pd) {
+      # Handle data(object)/data("object")/data(object, envir = ) independently.
+      data_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "data"
+      if (any(data_call)) {
+        sym <- call_pd[which(data_call) + 1, 'text']
+        return(c(gsub("'", "", sym), '<-', 'data'))
+      }
+
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
