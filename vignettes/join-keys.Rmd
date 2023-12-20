@@ -238,8 +238,8 @@ join_keys(td_fk)
 
 Two datasets that share common _foreign_ keys to the same _parent_ dataset have an implicit relationship between them that is modeled and accessible in _joining keys_.
 
-This is a special inferred relationship from existing foreign keys that does not need to be explicitly defined and can be seamlessly accessible just as any other foreign key.
-As any other foreign key they can be overwritten.
+This is a special relationship that is inferred from existing foreign keys.
+It does not need to be explicitly defined but it can be accessed and overwritten just as any other foreign key.
 
 These implicit relationships can be used to merge 2 datasets together, just as if they were defined manually.
 

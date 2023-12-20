@@ -7,7 +7,7 @@
 #'
 #' @description
 #' Facilitates the creation and retrieval of relationships between datasets.
-#' `join_keys` class extends a list and contains keys connecting pairs of datasets.
+#' `join_keys` class extends `list` and contains keys connecting pairs of datasets.
 #' Each element of the list contains keys for specific dataset.
 #' Each dataset can have a relationship with itself (primary key) and with other datasets.
 #'

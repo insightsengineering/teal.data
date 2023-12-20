@@ -73,7 +73,7 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   }
 
   parents <- if (directed && dataset_1 != dataset_2) {
-    setNames(list(dataset_1), dataset_2)
+    stats::setNames(list(dataset_1), dataset_2)
   } else {
     list()
   }
