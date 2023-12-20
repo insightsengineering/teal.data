@@ -77,7 +77,7 @@ pairs to add to \code{join_keys} list.
 }
 \description{
 Facilitates the creation and retrieval of relationships between datasets.
-\code{join_keys} class extends a list and contains keys connecting pairs of datasets.
+\code{join_keys} class extends \code{list} and contains keys connecting pairs of datasets.
 Each element of the list contains keys for specific dataset.
 Each dataset can have a relationship with itself (primary key) and with other datasets.
 
