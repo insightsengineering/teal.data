@@ -73,7 +73,7 @@ parents.teal_data <- function(x) {
 #' parents(jk)["ds6"] <- "ds5"
 #' parents(jk)["ds7"] <- "ds6"
 `parents<-.join_keys` <- function(x, value) {
-  checkmate::assert_list(value, types = c("character"), names = "named")
+  checkmate::assert_list(value, types = "character", names = "named")
 
   new_parents <- list()
 

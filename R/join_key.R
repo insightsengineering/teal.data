@@ -35,7 +35,7 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
-  checkmate::assert_logical(directed)
+  checkmate::assert_flag(directed)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
@@ -73,7 +73,7 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   }
 
   parents <- if (directed && dataset_1 != dataset_2) {
-    structure(list(dataset_1), names = dataset_2)
+    setNames(list(dataset_1), dataset_2)
   } else {
     list()
   }

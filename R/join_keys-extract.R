@@ -144,7 +144,7 @@
 #'
 #' jk["ds5", "ds5"] <- NULL
 `[<-.join_keys` <- function(x, i, j, directed = TRUE, value) {
-  checkmate::assert_logical(directed)
+  checkmate::assert_flag(directed)
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
   } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
