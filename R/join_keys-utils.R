@@ -110,7 +110,6 @@ update_keys_given_parents <- function(x) {
   checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(x))
 
   datanames <- names(jk)
-  duplicate_pairs <- list()
   for (d1_ix in seq_along(datanames)) {
     d1 <- datanames[[d1_ix]]
     d1_pk <- jk[[d1]][[d1]]
@@ -137,7 +136,6 @@ update_keys_given_parents <- function(x) {
           names = names(keys_d1_parent)[common_ix_1]
         )
         jk[[d1]][[d2]] <- fk # mutate join key
-        duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
       }
     }
   }
