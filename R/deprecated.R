@@ -337,3 +337,14 @@ get_join_keys <- function(data) {
     details = "Use `join_keys(x) <- ...`"
   )
 }
+
+#' @rdname col_labels
+#' @inheritParams col_labels
+#' @export
+get_labels <- function(data, fill = TRUE) {
+  lifecycle::deprecate_stop(
+    when = " 0.3.1",
+    what = "get_labels(data)",
+    details = "Use col_labels(data)"
+  )
+}

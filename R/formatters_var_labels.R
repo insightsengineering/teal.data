@@ -25,7 +25,7 @@
 #' col_labels(x) <- paste("label for", names(iris))
 #' col_labels(x)
 col_labels <- function(x, fill = FALSE) {
-  stopifnot(is.data.frame(x))
+  checkmate::assert_character(colnames(x), min.chars = 1L, null.ok = FALSE, any.missing = FALSE)
   if (NCOL(x) == 0) {
     return(character())
   }
@@ -84,6 +84,10 @@ col_labels <- function(x, fill = FALSE) {
 #'   View(x) # in RStudio data viewer labels are displayed
 #' }
 `col_labels<-` <- function(x, value) {
+  checkmate::assert_character(colnames(x), null.ok = FALSE, any.missing = FALSE)
+  checkmate::assert_character(value, null.ok = FALSE, any.missing = FALSE)
+ # assert(length(colnames(x)) == length(value),
+
   stopifnot(
     is.data.frame(x),
     is.character(value),
