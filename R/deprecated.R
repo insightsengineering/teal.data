@@ -340,6 +340,7 @@ get_join_keys <- function(data) {
 
 #' @rdname col_labels
 #' @inheritParams col_labels
+#' @param data a data.frame object
 #' @export
 get_labels <- function(data, fill = TRUE) {
   lifecycle::deprecate_stop(
