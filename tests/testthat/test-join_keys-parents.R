@@ -75,7 +75,7 @@ testthat::test_that("parents<- single parent can be changed utilizing list funct
 testthat::test_that("parents<- fails when value isn't a list (non-empty, non-missing) character", {
   jk <- join_keys(join_key("a", "b", "test", directed = FALSE))
   testthat::expect_error(parents(jk) <- list(b = 1), "May only contain the following types")
-  testthat::expect_error(parents(jk) <- list(b = NA_character_), "May not contain")
+  testthat::expect_error(parents(jk) <- list(b = NA_character_), "May not be NA")
   testthat::expect_error(parents(jk) <- list(b = NULL), "May only contain the following types")
   testthat::expect_error(parents(jk) <- NULL, "Must be of type 'list'")
 })
