@@ -575,20 +575,16 @@ testthat::test_that("library() and require() are always returned", {
 
 # data() ----------------------------------------------------------------------------------------------------------
 
-testthat::test_that("data() is returned without @linksto tag for proper object", {
+testthat::test_that("get_call returns data call for a datanames specified asis", {
   code <- c(
     "set.seed(1)",
     "library(scda)",
     "require(dplyr)",
     "library(MultiAssayExperiment)",
     "data(miniACC, envir = environment())",
-    "data(iris)",
-    "data('mtcars')",
-    "x <- miniACC",
-    "y <- iris",
-    "z <- mtcars"
+    "x <- miniACC"
   )
-  tdata <- teal_data(x = 0, y = 0, z = 0, code = code)
+  tdata <- teal_data(x = 1, code = code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     paste(
@@ -601,21 +597,19 @@ testthat::test_that("data() is returned without @linksto tag for proper object",
       sep = "\n"
     )
   )
-
-  testthat::expect_identical(
-    get_code(tdata, datanames = "y"),
-    paste(
-      warning_message,
-      "library(scda)",
-      "require(dplyr)",
-      "library(MultiAssayExperiment)",
-      "data(iris)",
-      "y <- iris",
-      sep = "\n"
-    )
-  )
 })
-testthat::test_that("get_call data call is returned when data name is provided as character" 
+
+testthat::test_that("get_call data call is returned when data name is provided as character", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data('mtcars')",
+    "z <- mtcars"
+  )
+  tdata <- teal_data(z = 1, code = code)
+  datanames(tdata) <- "z"
   testthat::expect_identical(
     get_code(tdata, datanames = "z"),
     paste(
