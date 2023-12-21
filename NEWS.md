@@ -1,4 +1,4 @@
-# teal.data 0.3.0.9025
+# teal.data 0.3.0.9026
 
 ### Enhancements
 
@@ -16,6 +16,7 @@
 
 * Specified minimal version of package dependencies.
 * Upgraded `teal.code` dependency from `Imports` to `Depends`.
+* Deprecated `get_labels` function and removed the supporting function `data_labels`.
 
 # teal.data 0.3.0
 
