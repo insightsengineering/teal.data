@@ -70,12 +70,6 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/col_relabel.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/data_label-set.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/data_label.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/datanames.html</loc>
   </url>
   <url>
@@ -95,9 +89,6 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_join_keys.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/get_labels.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/index.html</loc>
