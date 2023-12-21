@@ -22,7 +22,7 @@ c.join_keys <- function(...) {
     x = x,
     f = function(.x, .y) {
       out <- utils::modifyList(.x, .y, keep.null = FALSE)
-      parents(out) <- .merge_parents(.x, .y)
+      parents(out) <- utils::modifyList(attr(.x, "parents"), attr(.y, "parents"), keep.null = FALSE)
       out
     }
   )
@@ -44,22 +44,4 @@ c.join_keys <- function(...) {
 #' )
 c.join_key_set <- function(...) {
   c.join_keys(...)
-}
-
-#' Merge parents for 2 `join_keys` object
-#'
-#' @param x,y (`join_keys`) objects to merge their parents
-#'
-#' @return a list with parents merged from 2 `join_keys`. Not the object itself.
-#' @keywords internal
-.merge_parents <- function(x, y) {
-  x_parent <- list()
-  y_parent <- list()
-  if (length(attr(x, "parents"))) {
-    x_parent <- attr(x, "parents")
-  }
-  if (length(attr(y, "parents"))) {
-    y_parent <- attr(y, "parents")
-  }
-  utils::modifyList(x_parent, y_parent, keep.null = FALSE)
 }
