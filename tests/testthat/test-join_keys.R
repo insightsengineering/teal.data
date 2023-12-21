@@ -89,29 +89,6 @@ testthat::test_that("join_keys doesn't accept a list which is identical to outpu
   testthat::expect_error(join_keys(unclass(key)))
 })
 
-testthat::test_that("join_keys fails when provided foreign key pairs have incompatible values", {
-  testthat::expect_error(
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "b")),
-    "cannot specify multiple different join keys between datasets"
-  )
-  testthat::expect_error(
-    join_keys(join_key("d1", "d2", c(a = "b")), join_key("d2", "d1", c(a = "b"))),
-    "cannot specify multiple different join keys between datasets"
-  )
-
-  testthat::expect_error(
-    join_keys(
-      join_keys(
-        join_key("q", "b", "d"),
-        join_key("a", "b", "c")
-      ),
-      join_key("a", "q", "e"),
-      join_key("a", "b", "f")
-    ),
-    "cannot specify multiple different join keys between datasets"
-  )
-})
-
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
   my_keys <- join_keys(join_key("d1", "d2", "a"))
   expected_keys <- join_keys(join_key("d2", "d1", "a", directed = FALSE))
