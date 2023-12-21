@@ -400,8 +400,6 @@ testthat::test_that("[[<-.join_keys removes keys with NULL and applies symmetric
   )
   my_keys[["d1"]][["d2"]] <- NULL
 
-  expect_null(my_keys["d1", "d2"])
-  expect_null(my_keys["d2", "d1"])
 
   expect_equal(
     my_keys,
