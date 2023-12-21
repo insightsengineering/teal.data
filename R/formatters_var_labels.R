@@ -25,7 +25,7 @@
 #' col_labels(x) <- paste("label for", names(iris))
 #' col_labels(x)
 col_labels <- function(x, fill = FALSE) {
-  checkmate::assert_character(colnames(x), null.ok = FALSE, any.missing = FALSE)
+  checkmate::assert_character(colnames(x), any.missing = FALSE)
   if (NCOL(x) == 0) {
     return(character())
   }
@@ -84,8 +84,8 @@ col_labels <- function(x, fill = FALSE) {
 #'   View(x) # in RStudio data viewer labels are displayed
 #' }
 `col_labels<-` <- function(x, value) {
-  checkmate::assert_character(colnames(x), null.ok = FALSE, any.missing = FALSE)
-  checkmate::assert_character(value, null.ok = FALSE, any.missing = FALSE)
+  checkmate::assert_character(colnames(x), any.missing = FALSE)
+  checkmate::assert_character(value, any.missing = FALSE)
   checkmate::assert_true(ncol(x) == length(value))
 
   theseq <- if (!is.null(names(value))) names(value) else seq_along(x)
@@ -124,7 +124,7 @@ col_labels <- function(x, fill = FALSE) {
 #' col_labels(x)
 #'
 col_relabel <- function(x, ...) {
-  checkmate::assert_character(colnames(x), null.ok = FALSE, any.missing = FALSE)
+  checkmate::assert_character(colnames(x), any.missing = FALSE)
   if (missing(...)) {
     return(x)
   }
