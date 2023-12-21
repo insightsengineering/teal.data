@@ -614,6 +614,8 @@ testthat::test_that("data() is returned without @linksto tag for proper object",
       sep = "\n"
     )
   )
+})
+testthat::test_that("get_call data call is returned when data name is provided as character" 
   testthat::expect_identical(
     get_code(tdata, datanames = "z"),
     paste(
