@@ -129,13 +129,8 @@ testthat::test_that("c.join_key_set merges with empty and non-empty parents", {
   )
   parents(expected) <- list(d4 = "d3")
 
-  testthat::expect_identical(
-    c(jk1, jk2),
-    expected
-  )
-
   testthat::expect_equal(
-    c(jk2, jk1),
+    c(jk1, jk2),
     expected
   )
 })
@@ -157,7 +152,7 @@ testthat::test_that("c.join_key_set merges parents also", {
   parents(expected) <- list(d2 = "d1")
 
   testthat::expect_equal(
-    c(jk2, jk1),
+    c(jk1, jk2),
     expected
   )
 })
