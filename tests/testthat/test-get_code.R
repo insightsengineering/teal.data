@@ -136,20 +136,48 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   )
 })
 
-testthat::test_that("get_code with datanames can't extract the code for assign function", {
-  testthat::skip("We will tackle 'assign' some day!")
+testthat::test_that("get_code with datanames can extract the code for assign function", {
   code <- c(
     "a <- 1",
     "assign('b', 5)",
-    "b <- b + 2"
+    "assign(value = 7, x = 'c')",
+    "b <- b + 2",
+    "c <- b"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
+  datanames(tdata) <- c("a", "b", "c")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    paste("assign('b', 5)", "b <- b + 2", sep = "\n")
+    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "c"),
+    paste(
+      "assign(\"b\", 5)",
+      "assign(value = 7, x = \"c\")",
+      "b <- b + 2",
+      "c <- b",
+      sep = "\n"
+    )
   )
 })
+
+testthat::test_that(
+  "get_code with datanames can extract the code for assign function where \"x\" is variable", {
+  testthat::skip("We will tackle this some day!")
+  code <- c(
+    "x <- \"a\"",
+    "assign(x, 5)",
+    "b <- a"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("x", "a", "b")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste(code, sep = "\n")
+  )
+})
+
 
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
   code <- c(
@@ -540,6 +568,89 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
       "a@x <- a@y",
       "a@x <- a@x + 2",
       "a@x <- x@a",
+      sep = "\n"
+    )
+  )
+})
+
+
+
+# libraries -------------------------------------------------------------------------------------------------------
+
+testthat::test_that("library() and require() are always returned", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "x <- 5",
+    "y <- 6"
+  )
+  tdata <- teal_data(x = 5, y = 6, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "x <- 5",
+      sep = "\n"
+    )
+  )
+})
+
+
+# data() ----------------------------------------------------------------------------------------------------------
+
+testthat::test_that("data() is returned without @linksto tag for proper object", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data(miniACC, envir = environment())",
+    "data(iris)",
+    "data('mtcars')",
+    "x <- miniACC",
+    "y <- iris",
+    "z <- mtcars"
+  )
+  tdata <- teal_data(x = 0, y = 0, z = 0, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(miniACC, envir = environment())",
+      "x <- miniACC",
+      sep = "\n"
+    )
+  )
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(iris)",
+      "y <- iris",
+      sep = "\n"
+    )
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "z"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(\"mtcars\")",
+      "z <- mtcars",
       sep = "\n"
     )
   )
