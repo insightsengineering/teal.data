@@ -168,7 +168,7 @@ extract_occurrence <- function(calls_pd) {
       assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
       if (any(assign_call)) {
         call_pd_lim <- call_pd[-c(1:which(assign_call)), ]
-        sym <- call_pd_lim[call_pd_lim$token == 'STR_CONST', 'text']
+        sym <- call_pd_lim[call_pd_lim$token == "STR_CONST", "text"]
         return(c(gsub("'", "", sym), "<-", "assign"))
       }
 

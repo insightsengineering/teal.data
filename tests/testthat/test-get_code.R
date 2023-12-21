@@ -178,6 +178,7 @@ testthat::test_that(
   )
 })
 
+
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
   code <- c(
     "a <- 1",
