@@ -163,20 +163,22 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
 })
 
 testthat::test_that(
-  "get_code with datanames can extract the code for assign function where 'x' is variable", {
-  testthat::skip("We will tackle this some day!")
-  code <- c(
-    "x <- 'a'",
-    "assign(x, 5)",
-    "b <- a"
-  )
-  tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("x", "a", "b")
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste(code, sep = "\n")
-  )
-})
+  "get_code with datanames can extract the code for assign function where 'x' is variable",
+  {
+    testthat::skip("We will tackle this some day!")
+    code <- c(
+      "x <- 'a'",
+      "assign(x, 5)",
+      "b <- a"
+    )
+    tdata <- eval_code(teal_data(), code)
+    datanames(tdata) <- c("x", "a", "b")
+    testthat::expect_identical(
+      get_code(tdata, datanames = "b"),
+      paste(code, sep = "\n")
+    )
+  }
+)
 
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
   code <- c(
