@@ -122,7 +122,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
+  mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract Object Occurrence
