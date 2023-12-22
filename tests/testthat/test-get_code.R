@@ -544,3 +544,82 @@ testthat::test_that("get_code with datanames understands @ usage and do not trea
     )
   )
 })
+
+
+
+# libraries -------------------------------------------------------------------------------------------------------
+
+testthat::test_that("library() and require() are always returned", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "x <- 5",
+    "y <- 6"
+  )
+  tdata <- teal_data(x = 5, y = 6, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "x <- 5",
+      sep = "\n"
+    )
+  )
+})
+
+
+# data() ----------------------------------------------------------------------------------------------------------
+
+testthat::test_that("get_call returns data call for a datanames specified asis", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data(miniACC, envir = environment())",
+    "x <- miniACC"
+  )
+  tdata <- teal_data(x = 1, code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(miniACC, envir = environment())",
+      "x <- miniACC",
+      sep = "\n"
+    )
+  )
+})
+
+testthat::test_that("get_call data call is returned when data name is provided as character", {
+  code <- c(
+    "set.seed(1)",
+    "library(scda)",
+    "require(dplyr)",
+    "library(MultiAssayExperiment)",
+    "data('mtcars')",
+    "z <- mtcars"
+  )
+  tdata <- teal_data(z = 1, code = code)
+  datanames(tdata) <- "z"
+  testthat::expect_identical(
+    get_code(tdata, datanames = "z"),
+    paste(
+      warning_message,
+      "library(scda)",
+      "require(dplyr)",
+      "library(MultiAssayExperiment)",
+      "data(\"mtcars\")",
+      "z <- mtcars",
+      sep = "\n"
+    )
+  )
+})
