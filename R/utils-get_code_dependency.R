@@ -164,6 +164,13 @@ extract_occurrence <- function(calls_pd) {
         sym <- call_pd[which(data_call) + 1, "text"]
         return(c(gsub("'", "", sym), "<-", "data"))
       }
+      # Handle assign().
+      assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
+      if (any(assign_call)) {
+        call_pd_lim <- call_pd[-c(1:which(assign_call)), ]
+        sym <- call_pd_lim[call_pd_lim$token == "STR_CONST", "text"]
+        return(c(gsub("'", "", sym), "<-", "assign"))
+      }
 
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]

@@ -136,20 +136,50 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   )
 })
 
-testthat::test_that("get_code with datanames can't extract the code for assign function", {
-  testthat::skip("We will tackle 'assign' some day!")
+testthat::test_that("get_code with datanames can extract the code for assign function", {
   code <- c(
     "a <- 1",
     "assign('b', 5)",
-    "b <- b + 2"
+    "assign(value = 7, x = 'c')",
+    "b <- b + 2",
+    "c <- b"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
+  datanames(tdata) <- c("a", "b", "c")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    paste("assign('b', 5)", "b <- b + 2", sep = "\n")
+    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "c"),
+    paste(
+      "assign(\"b\", 5)",
+      "assign(value = 7, x = \"c\")",
+      "b <- b + 2",
+      "c <- b",
+      sep = "\n"
+    )
   )
 })
+
+testthat::test_that(
+  "get_code with datanames can extract the code for assign function where \"x\" is variable",
+  {
+    testthat::skip("We will tackle this some day!")
+    code <- c(
+      "x <- \"a\"",
+      "assign(x, 5)",
+      "b <- a"
+    )
+    tdata <- eval_code(teal_data(), code)
+    datanames(tdata) <- c("x", "a", "b")
+    testthat::expect_identical(
+      get_code(tdata, datanames = "b"),
+      paste(code, sep = "\n")
+    )
+  }
+)
+
 
 testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
   code <- c(
