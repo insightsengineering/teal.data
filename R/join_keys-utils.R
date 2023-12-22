@@ -112,12 +112,10 @@ update_keys_given_parents <- function(x) {
   datanames <- names(jk)
   for (d1_ix in seq_along(datanames)) {
     d1 <- datanames[[d1_ix]]
-    d1_pk <- jk[[d1]][[d1]]
     d1_parent <- parent(jk, d1)
     for (d2 in datanames[-1 * seq.int(d1_ix)]) {
       if (length(jk[[d1]][[d2]]) == 0) {
         d2_parent <- parent(jk, d2)
-        d2_pk <- jk[[d2]][[d2]]
 
         if (!identical(d1_parent, d2_parent) || length(d1_parent) == 0) next
 
