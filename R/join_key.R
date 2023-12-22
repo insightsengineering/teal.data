@@ -2,22 +2,28 @@
 #'
 #' @description `r lifecycle::badge("stable")`
 #'
-#' @details `join_key()` will create a relationship for the variables on a pair
-#' of datasets.
+#' @description Create a relationship between two datasets, `dataset_1` and `dataset_2`.
+#' By default, this function establishes a directed relationship with `dataset_1` as the parent.
+#' If `dataset_2` is not specified, the function creates a primary key for `dataset_1`.
 #'
-#' @param dataset_1,dataset_2 (`character(1)`) dataset names. If `dataset_2` is omitted,
-#'  a primary key for `dataset_1` is created.
-#' @param keys (optionally named `character`) where `names(keys)` are columns in `dataset_1`
-#' corresponding to columns of `dataset_2` given by the elements of `keys`.
+#' @param dataset_1,dataset_2 (`character(1)`) Dataset names. When `dataset_2` is omitted,
+#' a primary key for `dataset_1` is created.
+#' @param keys (optionally named `character`) Column mapping between the datasets,
+#' where `names(keys)` maps columns in `dataset_1` corresponding to columns of
+#' `dataset_2` given by the elements of `keys`.
 #'
 #' If unnamed, the same column names are used for both datasets.
 #'
 #' If any element of the `keys` vector is empty with a non-empty name, then the name is
 #' used for both datasets.
+#' @param directed (`logical(1)`) Flag that indicates whether it should create
+#' a parent-child relationship between the datasets.\cr
+#'  - `TRUE` (default) `dataset_1` is the parent of `dataset_2`;
+#'  - `FALSE` when the relationship is undirected.
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
-#' @seealso [join_keys()]
+#' @seealso [join_keys()], [parents()]
 #'
 #' @export
 #'
@@ -25,10 +31,11 @@
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
-join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
+join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)
   checkmate::assert_character(keys, any.missing = FALSE)
+  checkmate::assert_flag(directed)
 
   if (length(keys) > 0) {
     if (is.null(names(keys))) {
@@ -65,6 +72,12 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
     keys <- NULL
   }
 
+  parents <- if (directed && dataset_1 != dataset_2) {
+    stats::setNames(list(dataset_1), dataset_2)
+  } else {
+    list()
+  }
+
   structure(
     list(
       structure(
@@ -73,6 +86,7 @@ join_key <- function(dataset_1, dataset_2 = dataset_1, keys) {
       )
     ),
     names = dataset_1,
-    class = "join_key_set"
+    class = "join_key_set",
+    parents = parents
   )
 }

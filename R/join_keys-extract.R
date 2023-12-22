@@ -117,6 +117,10 @@
 #' @rdname join_keys
 #' @order 2
 #'
+#' @param directed (`logical(1)`) Flag that indicates whether it should create
+#' a parent-child relationship between the datasets.\cr
+#'  - `TRUE` (default) `dataset_1` is the parent of `dataset_2`;
+#'  - `FALSE` when the relationship is undirected.
 #' @section Functions:
 #' - `x[i, j] <- value`: Assignment of a key to pair `(i, j)`.
 #' - `x[i] <- value`: This (without `j` parameter) **is not** a supported
@@ -134,12 +138,13 @@
 #'
 #' # Setting a single relationship pair ---
 #'
-#' jk["ds4", "ds1"] <- c("pk4" = "pk1")
+#' jk["ds1", "ds4"] <- c("pk1" = "pk4")
 #'
 #' # Removing a key ---
 #'
 #' jk["ds5", "ds5"] <- NULL
-`[<-.join_keys` <- function(x, i, j, value) {
+`[<-.join_keys` <- function(x, i, j, directed = TRUE, value) {
+  checkmate::assert_flag(directed)
   if (missing(i) || missing(j)) {
     stop("join_keys[i, j] specify both indices to set a key pair.")
   } else if (!missing(i) && is.null(i) || !missing(j) && is.null(j)) {
@@ -163,8 +168,13 @@
     )
   }
 
-  x[[i]][[j]] <- value
-  x
+  # Handle join key removal separately
+  if (is.null(value)) {
+    x[[i]][[j]] <- NULL
+    return(x)
+  }
+
+  c(x, join_key(i, j, value, directed))
 }
 
 #' @noRd
@@ -234,9 +244,14 @@
   # Remove classes to use list-based get/assign operations
   new_x <- unclass(x)
 
-  # In case a pair is removed, also remove the symmetric pair
+  # In case a pair is removed, also remove the symmetric pair and update parents
   removed_names <- setdiff(names(new_x[[i]]), names(norm_value))
-  for (.x in removed_names) new_x[[.x]][[i]] <- NULL
+  for (.x in removed_names) {
+    if (identical(parent(x, .x), i)) attr(new_x, "parents")[[.x]] <- NULL
+    if (identical(parent(x, i), .x)) attr(new_x, "parents")[[i]] <- NULL
+
+    new_x[[.x]][[i]] <- NULL
+  }
 
   new_x[[i]] <- norm_value
 
