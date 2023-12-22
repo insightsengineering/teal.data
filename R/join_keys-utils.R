@@ -110,47 +110,30 @@ update_keys_given_parents <- function(x) {
   checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(x))
 
   datanames <- names(jk)
-  duplicate_pairs <- list()
-  for (d1 in datanames) {
-    d1_pk <- jk[[d1]][[d1]]
+  for (d1_ix in seq_along(datanames)) {
+    d1 <- datanames[[d1_ix]]
     d1_parent <- parent(jk, d1)
-    for (d2 in datanames) {
-      if (paste(d2, d1) %in% duplicate_pairs) {
-        next
-      }
+    for (d2 in datanames[-1 * seq.int(d1_ix)]) {
       if (length(jk[[d1]][[d2]]) == 0) {
         d2_parent <- parent(jk, d2)
-        d2_pk <- jk[[d2]][[d2]]
 
-        fk <- if (identical(d1, d2_parent)) {
-          # first is parent of second -> parent keys -> first keys
-          d1_pk
-        } else if (identical(d1_parent, d2)) {
-          # second is parent of first -> parent keys -> second keys
-          d2_pk
-        } else if (identical(d1_parent, d2_parent) && length(d1_parent) > 0) {
-          # both has the same parent -> common keys to parent
-          keys_d1_parent <- sort(jk[[d1]][[d1_parent]])
-          keys_d2_parent <- sort(jk[[d2]][[d2_parent]])
+        if (!identical(d1_parent, d2_parent) || length(d1_parent) == 0) next
 
-          common_ix_1 <- unname(keys_d1_parent) %in% unname(keys_d2_parent)
-          common_ix_2 <- unname(keys_d2_parent) %in% unname(keys_d1_parent)
+        # both has the same parent -> common keys to parent
+        keys_d1_parent <- sort(jk[[d1]][[d1_parent]])
+        keys_d2_parent <- sort(jk[[d2]][[d2_parent]])
 
-          if (all(!common_ix_1)) {
-            # No common keys between datasets - leave empty
-            next
-          }
+        common_ix_1 <- unname(keys_d1_parent) %in% unname(keys_d2_parent)
+        common_ix_2 <- unname(keys_d2_parent) %in% unname(keys_d1_parent)
 
-          structure(
-            names(keys_d2_parent)[common_ix_2],
-            names = names(keys_d1_parent)[common_ix_1]
-          )
-        } else {
-          # cant find connection - leave empty
-          next
-        }
+        # No common keys between datasets - leave empty
+        if (all(!common_ix_1)) next
+
+        fk <- structure(
+          names(keys_d2_parent)[common_ix_2],
+          names = names(keys_d1_parent)[common_ix_1]
+        )
         jk[[d1]][[d2]] <- fk # mutate join key
-        duplicate_pairs <- append(duplicate_pairs, paste(d1, d2))
       }
     }
   }

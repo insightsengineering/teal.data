@@ -78,38 +78,6 @@ testthat::test_that("c.join_keys doesn't throw when second object is empty join_
   testthat::expect_no_error(c(x, y))
 })
 
-testthat::test_that("c.join_keys throws on conflicting join_keys_set objects", {
-  obj <- join_keys()
-  testthat::expect_error(
-    c(
-      obj,
-      join_keys(join_key("a", "b", "aa")),
-      join_keys(join_key("b", "a", "bb"))
-    ),
-    "cannot specify multiple different join keys between datasets"
-  )
-
-  testthat::expect_error(
-    c(
-      obj,
-      join_key("a", "b", "aa"),
-      join_key("b", "a", "bb")
-    ),
-    "cannot specify multiple different join keys between datasets"
-  )
-})
-
-testthat::test_that("c.join_key_set throws on conflicting join_keys_set objects", {
-  testthat::expect_error(
-    c(
-      join_key("a", "b", "aa"),
-      join_key("a", "b", "ca"),
-      join_key("a", "b", "cc")
-    ),
-    "cannot specify multiple different join keys between datasets"
-  )
-})
-
 testthat::test_that("c.join_key_set merges with empty and non-empty parents", {
   jk1 <- join_keys(
     join_key("d1", "d1", "a")
@@ -118,25 +86,19 @@ testthat::test_that("c.join_key_set merges with empty and non-empty parents", {
   jk2 <- join_keys(
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d4", "d3", "cd")
+    join_key("d3", "d4", "cd")
   )
-  parents(jk2) <- list(d3 = "d4")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d3", "d4", "cd")
+    join_key("d3", "d4", "cd", directed = FALSE)
   )
-  parents(expected) <- list(d3 = "d4")
-
-  testthat::expect_identical(
-    c(jk1, jk2),
-    expected
-  )
+  parents(expected) <- list(d4 = "d3")
 
   testthat::expect_equal(
-    c(jk2, jk1),
+    c(jk1, jk2),
     expected
   )
 })
@@ -147,19 +109,18 @@ testthat::test_that("c.join_key_set merges parents also", {
     join_key("d2", "d2", "b"),
     join_key("d1", "d2", "ab")
   )
-  parents(jk1) <- list(d1 = "d2")
   jk2 <- join_key("d3", "d3", "c")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d1", "d2", "ab"),
+    join_key("d1", "d2", "ab", directed = FALSE),
     join_key("d3", "d3", "c")
   )
-  parents(expected) <- list(d1 = "d2")
+  parents(expected) <- list(d2 = "d1")
 
   testthat::expect_equal(
-    c(jk2, jk1),
+    c(jk1, jk2),
     expected
   )
 })
@@ -170,23 +131,22 @@ testthat::test_that("c.join_keys merges parents also", {
     join_key("d2", "d2", "b"),
     join_key("d1", "d2", "ab")
   )
-  parents(jk1) <- list(d1 = "d2")
-  jk2 <- join_keys(
-    join_key("d3", "d3", "c"),
-    join_key("d4", "d4", "d"),
-    join_key("d4", "d3", "cd")
-  )
-  parents(jk2) <- list(d3 = "d4")
 
-  expected <- join_keys(
-    join_key("d1", "d1", "a"),
-    join_key("d2", "d2", "b"),
-    join_key("d1", "d2", "ab"),
+  jk2 <- join_keys(
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
     join_key("d3", "d4", "cd")
   )
-  parents(expected) <- list(d1 = "d2", d3 = "d4")
+
+  expected <- join_keys(
+    join_key("d1", "d1", "a"),
+    join_key("d2", "d2", "b"),
+    join_key("d1", "d2", "ab", directed = FALSE),
+    join_key("d3", "d3", "c"),
+    join_key("d4", "d4", "d"),
+    join_key("d3", "d4", "cd", directed = FALSE)
+  )
+  parents(expected) <- list(d2 = "d1", d4 = "d3")
 
   testthat::expect_identical(
     c(jk1, jk2),
@@ -201,26 +161,30 @@ testthat::test_that("c.join_keys merges existing parents are overwritten", {
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
     join_key("d1", "d2", "ab"),
-    join_key("d4", "d3", "cd")
+    join_key("d3", "d4", "cd")
   )
-  parents(jk1) <- list(d1 = "d2", d3 = "d4")
 
   jk2 <- join_keys(
     join_key("d2", "d2", "b"),
-    join_key("d3", "d2", "cb")
+    join_key("d2", "d3", "cb")
   )
-  parents(jk2) <- list(d3 = "d2")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
     join_key("d4", "d4", "d"),
-    join_key("d1", "d2", "ab"),
-    join_key("d4", "d3", "cd"),
-    join_key("d3", "d2", "cb")
+    join_key("d1", "d2", "ab", directed = FALSE),
+    join_key("d3", "d4", "cd", directed = FALSE),
+    join_key("d2", "d3", "cb", directed = FALSE)
   )
-  parents(expected) <- list(d1 = "d2", d3 = "d2")
+  parents(expected) <- list(d2 = "d1", d3 = "d2", d4 = "d3")
 
-  testthat::expect_identical(c(jk1, jk2), expected)
+  testthat::expect_equal(c(jk1, jk2), expected)
+})
+
+testthat::test_that("c.join_keys throws error when merge produces acyclical graph", {
+  jk1 <- join_keys(join_key("d1", "d2", "a"))
+  jk2 <- join_keys(join_key("d2", "d1", "a"))
+  expect_error(c(jk1, jk2), "Cycle detected in a parent and child dataset graph")
 })

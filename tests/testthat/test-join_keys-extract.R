@@ -55,17 +55,15 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset inc
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
-    join_key("d2", "d1", "ab"),
-    join_key("d3", "d1", "ac")
+    join_key("d1", "d2", "ab"),
+    join_key("d1", "d3", "ac")
   )
-  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d2", "d1", "ab")
+    join_key("d1", "d2", "ab")
   )
-  parents(expected) <- list("d2" = "d1")
 
   testthat::expect_equal(my_keys["d2"], expected)
 })
@@ -75,17 +73,15 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset and
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
     join_key("d3", "d3", "c"),
-    join_key("d2", "d1", "ab"),
-    join_key("d3", "d1", "ac")
+    join_key("d1", "d2", "ab"),
+    join_key("d1", "d3", "ac")
   )
-  parents(my_keys) <- list("d2" = "d1", "d3" = "d1")
 
   expected <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d2", "d1", "ab")
+    join_key("d1", "d2", "ab")
   )
-  parents(expected) <- list("d2" = "d1")
 
   testthat::expect_equal(my_keys["d2"], expected)
 })
@@ -99,11 +95,14 @@ testthat::test_that("join_keys[i] ignores duplicate indexes - return only first 
   jk <- join_keys(
     join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
-    join_key("d3", "d2", "b")
+    join_key("d2", "d3", "b")
   )
   testthat::expect_equal(
     jk[c("d1", "d2", "d1")],
-    join_keys(join_key("d1", "d1", "a"), join_key("d2", "d2", "b"))
+    join_keys(
+      join_key("d1", "d1", "a"),
+      join_key("d2", "d2", "b")
+    )
   )
 })
 
@@ -160,10 +159,9 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c(child = "a1")),
-      join_key("c", "a", c(child = "a2"))
+      join_key("a", "b", c("a1" = "aa")),
+      join_key("a", "c", c("a2" = "aa"))
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a")
     testthat::expect_null(my_keys["b", "c"])
   }
 )
@@ -175,12 +173,11 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", "child-parent"),
-      join_key("c", "a", "child-parent"),
-      join_key("d", "b", "grandchild-child"),
-      join_key("e", "c", "grandchild-child")
+      join_key("a", "b", "child-parent"),
+      join_key("a", "c", "child-parent"),
+      join_key("b", "d", "grandchild-child"),
+      join_key("c", "e", "grandchild-child")
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a", "d" = "b", "e" = "c")
     testthat::expect_null(my_keys["d", "e"])
   }
 )
@@ -192,10 +189,9 @@ testthat::test_that(
       join_key("a", "a", "aa"),
       join_key("b", "b", "bb"),
       join_key("c", "c", "cc"),
-      join_key("b", "a", c(bb = "aa")),
-      join_key("c", "a", c(cc = "aa"))
+      join_key("a", "b", c("aa" = "bb")),
+      join_key("a", "c", c("aa" = "cc"))
     )
-    parents(my_keys) <- list("b" = "a", "c" = "a")
     # "bb" and "cc" are the names in child datasets, "aa" is the name in parent dataset
     testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
   }
@@ -264,6 +260,23 @@ testthat::test_that("join_keys[i,j]<- throws when i or j are longer than 1", {
   testthat::expect_error(my_keys["a", c("a", "b")] <- "new key")
 })
 
+testthat::test_that("join_keys[i,j]<- removes keys with NULL", {
+  my_keys <- join_keys(
+    join_key("d1", "d1", "A"),
+    join_key("d2", "d2", "B"),
+    join_key("d1", "d2", c("A" = "B"))
+  )
+  my_keys["d2", "d1"] <- NULL
+
+  testthat::expect_equal(
+    my_keys,
+    join_keys(
+      join_key("d1", "d1", "A"),
+      join_key("d2", "d2", "B")
+    )
+  )
+})
+
 # [[<-.join_keys ------------------------------------------------
 testthat::test_that("[[<-.join_keys accepts named list where each containing character", {
   jk <- join_keys()
@@ -313,15 +326,22 @@ testthat::test_that("[[<-.join_keys assigning NULL drops a key", {
   testthat::expect_null(jk[["d1"]])
 })
 
-testthat::test_that("[[<-.join_keys adds symmetrical change to the foreign dataset", {
+testthat::test_that("[[<-.join_keys adds symmetrical change without parents to the foreign dataset", {
   jk <- join_keys()
   jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
 
   testthat::expect_equal(
     jk,
-    join_keys(
-      join_key("d1", "d2", c("A" = "B", "C" = "C")),
-      join_key("d2", "d1", c("B" = "A", "C" = "C"))
+    structure(
+      list(
+        d1 = list(
+          d2 = c(c("A" = "B", "C" = "C"))
+        ),
+        d2 = list(
+          d1 = c("B" = "A", "C" = "C")
+        )
+      ),
+      class = c("join_keys", "list")
     )
   )
 })
@@ -339,7 +359,7 @@ testthat::test_that("[[<- mutating non-existing keys adds them", {
     my_keys,
     join_keys(
       join_key("d1", "d2", "A"),
-      join_key("d2", "d3", "B")
+      join_key("d2", "d3", "B", directed = FALSE) # [[<- doesn't set parent
     )
   )
 })
@@ -373,21 +393,17 @@ testthat::test_that("[[<-.join_keys removes keys with NULL", {
   )
 })
 
-testthat::test_that("[[<-.join_keys removes keys with NULL and applies summetrical changes", {
+testthat::test_that("[[<-.join_keys removes keys with NULL and applies symmetrical changes", {
   my_keys <- join_keys(
     join_key("d1", "d2", "A"),
-    join_key("d2", "d1", "A"),
-    join_key("d2", "d3", "B"),
-    join_key("d3", "d2", "B")
+    join_key("d2", "d3", "B")
   )
   my_keys[["d1"]][["d2"]] <- NULL
 
-  testthat::expect_identical(
+
+  expect_equal(
     my_keys,
-    join_keys(
-      join_key("d2", "d3", "B"),
-      join_key("d3", "d2", "B")
-    )
+    join_keys(join_key("d2", "d3", "B"))
   )
 })
 
@@ -422,5 +438,5 @@ testthat::test_that("[[<-.join_keys fails when provided foreign key pairs for sa
 testthat::test_that("[[<-.join_keys allows when provided foreign key pairs for same datasets and same keys", {
   jk <- join_keys()
   testthat::expect_silent(jk[["ds1"]] <- list(ds2 = "new", ds2 = c("new" = "new")))
-  testthat::expect_equal(jk, join_keys(join_key("ds1", "ds2", "new")))
+  testthat::expect_equal(jk, join_keys(join_key("ds1", "ds2", "new", directed = FALSE)))
 })
