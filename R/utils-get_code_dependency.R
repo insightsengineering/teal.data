@@ -35,16 +35,21 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
 
   if (check_names) {
     # Detect if names are actually in code.
-    symbols <- unique(pd[pd$token == "SYMBOL", "text"])
-    if (!all(names %in% symbols)) {
+    symbols <- unlist(lapply(calls_pd, function(call) call[call$token == "SYMBOL", "text"]))
+    if (any(pd$text == 'assign')) {
+      assign_calls <- Filter(function(call) any(call$token == "SYMBOL_FUNCTION_CALL" & call$text == "assign"), calls_pd)
+      ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
+      ass_str <- gsub("'", "", ass_str)
+      symbols <- c(ass_str, symbols)
+    }
+    if (!all(names %in% unique(symbols))) {
       warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
     }
   }
-
-  calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
   ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
@@ -167,8 +172,19 @@ extract_occurrence <- function(calls_pd) {
       # Handle assign().
       assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
       if (any(assign_call)) {
-        call_pd_lim <- call_pd[-c(1:which(assign_call)), ]
-        sym <- call_pd_lim[call_pd_lim$token == "STR_CONST", "text"]
+        # Check if parameters were named.
+        if (any(call_pd$token == "SYMBOL_SUB")) {
+          params <- call_pd[call_pd$token == "SYMBOL_SUB", "text"]
+          if ('x' %in% params) {
+            pos <- which(params == 'x')
+          } else {
+            pos <- length(params) + 1
+          }
+        } else {
+          # Object is the first entry after 'assign'.
+          pos <- 1
+        }
+        sym <- call_pd[which(assign_call) + pos, "text"]
         return(c(gsub("'", "", sym), "<-", "assign"))
       }
 
