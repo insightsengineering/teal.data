@@ -6,13 +6,15 @@
 #' join_keys(...)
 #'
 #' @description
-#' `join_keys()` facilitates the creation and retrieval of relationships between datasets.
-#' `join_keys` class extends a list and contains keys connecting pairs of datasets. Each element
-#' of the list contains keys for specific dataset. Each dataset can have a relationship with
-#' itself (primary key) and with other datasets.
+#' Facilitates the creation and retrieval of relationships between datasets.
+#' `join_keys` class extends `list` and contains keys connecting pairs of datasets.
+#' Each element of the list contains keys for specific dataset.
+#' Each dataset can have a relationship with itself (primary key) and with other datasets.
 #'
-#' Note that `join_keys` list is symmetrical, that is, when keys are set between `dat1` and `dat2` it
-#' is automatically mirrored between `dat2` and `dat1`.
+#' Note that `join_keys` list is symmetrical and assumes a default direction, that is:
+#' when keys are set between `ds1` and `ds2`, it defines `ds1` as the parent
+#' in a parent-child relationship and the mapping is automatically mirrored between
+#' `ds2` and `ds1`.
 #'
 #' @section Methods (by class):
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
@@ -24,6 +26,12 @@
 #'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
 #'  or any number of `join_key_set` objects to create `join_keys`, \cr
 #'  or nothing to create an empty `join_keys`
+#' @param value For `x[i, j, directed = TRUE)] <- value` (named/unnamed `character`)
+#' Column mapping between datasets.
+#'
+#' For `join_keys(x) <- value`: (`join_key_set` or list of `join_key_set`) relationship
+#' pairs to add to `join_keys` list.
+#'
 #'
 #' @return `join_keys` object.
 #'
@@ -41,8 +49,8 @@
 #'   join_key("ds1", "ds1", "pk1"),
 #'   join_key("ds2", "ds2", "pk2"),
 #'   join_key("ds3", "ds3", "pk3"),
-#'   join_key("ds2", "ds1", c(pk2 = "pk1")),
-#'   join_key("ds3", "ds1", c(pk3 = "pk1"))
+#'   join_key("ds1", "ds2", c(pk1 = "pk2")),
+#'   join_key("ds1", "ds3", c(pk1 = "pk3"))
 #' )
 #'
 #' jk
@@ -91,8 +99,6 @@ join_keys.teal_data <- function(...) {
 #' @param x (`join_keys`) empty object to set the new relationship pairs.
 #' `x` is typically an object of `join_keys` class. When called with the `join_keys(x)`
 #' or `join_keys(x) <- value` then it can also take a supported class (`teal_data`, `join_keys`)
-#' @param value (`join_key_set` or list of `join_key_set`) relationship pairs to add
-#' to `join_keys` list.
 #'
 #' @export
 `join_keys<-` <- function(x, value) {
@@ -114,8 +120,8 @@ join_keys.teal_data <- function(...) {
 #' join_keys(obj)["ds1", "ds1"] <- "pk1"
 #' join_keys(obj)["ds2", "ds2"] <- "pk2"
 #' join_keys(obj)["ds3", "ds3"] <- "pk3"
-#' join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
-#' join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+#' join_keys(obj)["ds1", "ds2"] <- c(pk1 = "pk2")
+#' join_keys(obj)["ds1", "ds3"] <- c(pk1 = "pk3")
 #'
 #' identical(jk, join_keys(obj))
 `join_keys<-.join_keys` <- function(x, value) {

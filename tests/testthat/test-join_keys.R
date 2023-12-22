@@ -48,6 +48,16 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
   )
 })
 
+testthat::test_that("join_keys cannot create acyclical graph", {
+  expect_error(
+    join_keys(
+      join_key("d1", "d2", "A"),
+      join_key("d2", "d1", "A")
+    ),
+    "Cycle detected in a parent and child dataset graph"
+  )
+})
+
 testthat::test_that("join_keys.teal_data returns join_keys object from teal_data", {
   obj <- teal_data(join_keys = join_keys(join_key("d1", "d1", "a")))
   testthat::expect_identical(obj@join_keys, join_keys(obj))
@@ -60,7 +70,13 @@ testthat::test_that("join_keys.join_keys returns itself", {
 
 testthat::test_that("join_keys accepts duplicated join_key", {
   testthat::expect_no_error(
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "a"))
+    join_keys(join_key("d1", "d2", "a"), join_key("d1", "d2", "a"))
+  )
+})
+
+testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
+  testthat::expect_no_error(
+    join_keys(join_key("d1", "d2", "a", directed = FALSE), join_key("d1", "d2", "a", directed = FALSE))
   )
 })
 
@@ -73,50 +89,25 @@ testthat::test_that("join_keys doesn't accept a list which is identical to outpu
   testthat::expect_error(join_keys(unclass(key)))
 })
 
-testthat::test_that("join_keys fails when provided foreign key pairs have incompatible values", {
-  testthat::expect_error(
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "b")),
-    "cannot specify multiple different join keys between datasets"
-  )
-  testthat::expect_error(
-    join_keys(join_key("d1", "d2", c(a = "b")), join_key("d2", "d1", c(a = "b"))),
-    "cannot specify multiple different join keys between datasets"
-  )
-
-  testthat::expect_error(
-    join_keys(
-      join_keys(
-        join_key("q", "b", "d"),
-        join_key("a", "b", "c")
-      ),
-      join_key("a", "q", "e"),
-      join_key("a", "b", "f")
-    ),
-    "cannot specify multiple different join keys between datasets"
-  )
-})
-
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
   my_keys <- join_keys(join_key("d1", "d2", "a"))
-  testthat::expect_identical(
-    my_keys,
-    join_keys(join_key("d1", "d2", "a"), join_key("d2", "d1", "a"))
-  )
+  expected_keys <- join_keys(join_key("d2", "d1", "a", directed = FALSE))
+  parents(expected_keys) <- list(d2 = "d1")
+
+  testthat::expect_equal(my_keys, expected_keys)
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (named) foreign key", {
-  testthat::expect_identical(
+  expected_keys <- join_keys(join_key("d2", "d1", c(b = "a"), directed = FALSE))
+  parents(expected_keys) <- list(d2 = "d1")
+
+  testthat::expect_equal(
     join_keys(
       join_key("d1", "d2", c(a = "b"))
     ),
-    join_keys(
-      join_key("d1", "d2", c(a = "b")),
-      join_key("d2", "d1", c(b = "a"))
-    )
+    expected_keys
   )
 })
-
-
 
 # join_keys.<- ----------------------------------------------------------------
 testthat::test_that("join_keys<-.join_keys overwrites existing join_keys", {

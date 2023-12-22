@@ -28,7 +28,7 @@ join_keys(...)
 
 \method{[}{join_keys}(x, i, j)
 
-\method{[}{join_keys}(x, i, j) <- value
+\method{[}{join_keys}(x, i, j, directed = TRUE) <- value
 
 \method{c}{join_keys}(...)
 
@@ -57,20 +57,34 @@ or \code{join_keys(x) <- value} then it can also take a supported class (\code{t
 \item{i, j}{indices specifying elements to extract or replace. Index should be a
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
-\item{value}{(\code{join_key_set} or list of \code{join_key_set}) relationship pairs to add
-to \code{join_keys} list.}
+\item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
+a parent-child relationship between the datasets.\cr
+\itemize{
+\item \code{TRUE} (default) \code{dataset_1} is the parent of \code{dataset_2};
+\item \code{FALSE} when the relationship is undirected.
+}}
+
+\item{value}{For \verb{x[i, j, directed = TRUE)] <- value} (named/unnamed \code{character})
+Column mapping between datasets.
+
+For \code{join_keys(x) <- value}: (\code{join_key_set} or list of \code{join_key_set}) relationship
+pairs to add to \code{join_keys} list.
+
+[i, j, directed = TRUE)]: R:i,\%20j,\%20directed\%20=\%20TRUE)}
 }
 \value{
 \code{join_keys} object.
 }
 \description{
-\code{join_keys()} facilitates the creation and retrieval of relationships between datasets.
-\code{join_keys} class extends a list and contains keys connecting pairs of datasets. Each element
-of the list contains keys for specific dataset. Each dataset can have a relationship with
-itself (primary key) and with other datasets.
+Facilitates the creation and retrieval of relationships between datasets.
+\code{join_keys} class extends \code{list} and contains keys connecting pairs of datasets.
+Each element of the list contains keys for specific dataset.
+Each dataset can have a relationship with itself (primary key) and with other datasets.
 
-Note that \code{join_keys} list is symmetrical, that is, when keys are set between \code{dat1} and \code{dat2} it
-is automatically mirrored between \code{dat2} and \code{dat1}.
+Note that \code{join_keys} list is symmetrical and assumes a default direction, that is:
+when keys are set between \code{ds1} and \code{ds2}, it defines \code{ds1} as the parent
+in a parent-child relationship and the mapping is automatically mirrored between
+\code{ds2} and \code{ds1}.
 }
 \section{Methods (by class)}{
 
@@ -115,8 +129,8 @@ jk <- join_keys(
   join_key("ds1", "ds1", "pk1"),
   join_key("ds2", "ds2", "pk2"),
   join_key("ds3", "ds3", "pk3"),
-  join_key("ds2", "ds1", c(pk2 = "pk1")),
-  join_key("ds3", "ds1", c(pk3 = "pk1"))
+  join_key("ds1", "ds2", c(pk1 = "pk2")),
+  join_key("ds1", "ds3", c(pk1 = "pk3"))
 )
 
 jk
@@ -138,7 +152,7 @@ jk["ds5", "ds5"] <- "pk5"
 
 # Setting a single relationship pair ---
 
-jk["ds4", "ds1"] <- c("pk4" = "pk1")
+jk["ds1", "ds4"] <- c("pk1" = "pk4")
 
 # Removing a key ---
 
@@ -150,7 +164,7 @@ jk_merged <- c(
   jk,
   join_keys(
     join_key("ds4", keys = c("pk4", "pk4_2")),
-    join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+    join_key("ds3", "ds4", c(pk3 = "pk4_2"))
   )
 )
 
@@ -159,7 +173,7 @@ jk_merged <- c(
 jk_merged <- c(
   jk_merged,
   join_key("ds5", keys = "pk5"),
-  join_key("ds5", "ds1", c(pk5 = "pk1"))
+  join_key("ds1", "ds5", c(pk1 = "pk5"))
 )
 
 # Assigning keys via join_keys(x)[i, j] <- value ----
@@ -171,8 +185,8 @@ obj <- teal_data()
 join_keys(obj)["ds1", "ds1"] <- "pk1"
 join_keys(obj)["ds2", "ds2"] <- "pk2"
 join_keys(obj)["ds3", "ds3"] <- "pk3"
-join_keys(obj)["ds2", "ds1"] <- c(pk2 = "pk1")
-join_keys(obj)["ds3", "ds1"] <- c(pk3 = "pk1")
+join_keys(obj)["ds1", "ds2"] <- c(pk1 = "pk2")
+join_keys(obj)["ds1", "ds3"] <- c(pk1 = "pk3")
 
 identical(jk, join_keys(obj))
 
