@@ -40,7 +40,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
   if (check_names) {
     # Detect if names are actually in code.
     symbols <- unlist(lapply(calls_pd, function(call) call[call$token == "SYMBOL", "text"]))
-    if (any(pd$text == 'assign')) {
+    if (any(pd$text == "assign")) {
       assign_calls <- Filter(function(call) any(call$token == "SYMBOL_FUNCTION_CALL" & call$text == "assign"), calls_pd)
       ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
       ass_str <- gsub("'", "", ass_str)
@@ -175,8 +175,8 @@ extract_occurrence <- function(calls_pd) {
         # Check if parameters were named.
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token == "SYMBOL_SUB", "text"]
-          if ('x' %in% params) {
-            pos <- which(params == 'x')
+          if ("x" %in% params) {
+            pos <- which(params == "x")
           } else {
             pos <- length(params) + 1
           }
