@@ -11,7 +11,7 @@
 #' see [`get_code_dependency()`].
 #'
 #' @param object (`teal_data`)
-#' @param datanames (`character`) vector of data set names to return the code for.
+#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #' @return

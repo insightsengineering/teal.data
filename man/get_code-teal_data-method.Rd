@@ -13,7 +13,7 @@
 \item{deparse}{(\code{logical}) flag specifying whether to return code as \code{character} (\code{deparse = TRUE}) or as
 \code{expression} (\code{deparse = FALSE}).}
 
-\item{datanames}{(\code{character}) vector of data set names to return the code for.}
+\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of data set names to return the code for.}
 }
 \value{
 Either string or an expression representing code used to create the requested data sets.
