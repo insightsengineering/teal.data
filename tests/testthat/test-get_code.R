@@ -136,81 +136,6 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   )
 })
 
-testthat::test_that("get_code with datanames can extract the code for assign function", {
-  code <- c(
-    "a <- 1",
-    "assign('b', 5)",
-    "assign(value = 7, x = 'c')",
-    "b <- b + 2",
-    "c <- b"
-  )
-  tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b", "c")
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
-  )
-  testthat::expect_identical(
-    get_code(tdata, datanames = "c"),
-    paste(
-      "assign(\"b\", 5)",
-      "assign(value = 7, x = \"c\")",
-      "b <- b + 2",
-      "c <- b",
-      sep = "\n"
-    )
-  )
-})
-
-testthat::test_that(
-  "get_code with datanames can extract the code for assign function where \"x\" is variable",
-  {
-    testthat::skip("We will tackle this some day!")
-    code <- c(
-      "x <- \"a\"",
-      "assign(x, 5)",
-      "b <- a"
-    )
-    tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c("x", "a", "b")
-    testthat::expect_identical(
-      get_code(tdata, datanames = "b"),
-      paste(code, sep = "\n")
-    )
-  }
-)
-
-
-testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
-  code <- c(
-    "a <- 1",
-    "assign('b', 5) # @linksto b",
-    "b <- b + 2"
-  )
-  tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
-  )
-})
-
-testthat::test_that(
-  "get_code with datanames can extract the code when function creates an object which is used only on rhs",
-  {
-    code <- c(
-      "data(iris)",
-      "iris2 <- head(iris)"
-    )
-    tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c("iris2")
-    testthat::expect_identical(
-      get_code(tdata, datanames = "iris2"),
-      paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
-    )
-  }
-)
-
 testthat::test_that("get_code with datanames can extract the code when using <<-", {
   code <- c(
     "a <- 1",
@@ -251,6 +176,78 @@ testthat::test_that("get_code returns result of length for non-empty input", {
   testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
 })
 
+
+# assign ----------------------------------------------------------------------------------------------------------
+
+testthat::test_that("get_code with datanames can extract the code for assign function", {
+  code <- c(
+    "a <- 1",
+    "assign('b', 5)",
+    "assign(value = 7, x = 'c')",
+    "b <- b + 2",
+    "c <- b"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "b", "c")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "c"),
+    paste(
+      "assign(\"b\", 5)",
+      "assign(value = 7, x = \"c\")",
+      "b <- b + 2",
+      "c <- b",
+      sep = "\n"
+    )
+  )
+})
+
+testthat::test_that(
+  "get_code with datanames can extract the code for assign function where \"x\" is variable",
+  {
+    testthat::skip("We will tackle this some day!")
+    code <- c(
+      "x <- \"a\"",
+      "assign(x, 5)",
+      "b <- a"
+    )
+    tdata <- eval_code(teal_data(), code)
+    datanames(tdata) <- c("x", "a", "b")
+    testthat::expect_identical(
+      get_code(tdata, datanames = "b"),
+      paste(code, collapse = "\n")
+    )
+  }
+)
+
+
+testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
+  code <- c(
+    "a <- 1",
+    "assign('b', 5) # @linksto b",
+    "b <- b + 2"
+  )
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("a", "b")
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
+  )
+})
+
+testthat::test_that("get_code extracts a line with assign where object is passed as character", {
+  code <- c("assign('adae', teal.data::rADAE)", "assign('adsl', teal.data::rADSL)")
+  tdata <- eval_code(teal_data(), code)
+  datanames(tdata) <- c("adsl", "adae")
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "adsl"),
+    gsub("'", "\"", code[2])
+  )
+})
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
@@ -653,3 +650,19 @@ testthat::test_that("get_call data call is returned when data name is provided a
     )
   )
 })
+
+testthat::test_that(
+  "get_code with datanames can extract the code when function creates an object which is used only on rhs",
+  {
+    code <- c(
+      "data(iris)",
+      "iris2 <- head(iris)"
+    )
+    tdata <- eval_code(teal_data(), code)
+    datanames(tdata) <- c("iris2")
+    testthat::expect_identical(
+      get_code(tdata, datanames = "iris2"),
+      paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
+    )
+  }
+)
