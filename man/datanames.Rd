@@ -35,6 +35,8 @@ Use this function to update the slot.
 td <- teal_data(iris = iris)
 td <- within(td, mtcars <- mtcars)
 datanames(td)
+
 datanames(td) <- c("iris", "mtcars")
+datanames(td)
 
 }

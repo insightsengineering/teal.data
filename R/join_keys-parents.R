@@ -35,9 +35,9 @@ parents.join_keys <- function(x) {
 #' # Get parents of join_keys inside teal_data object ---
 #'
 #' td <- teal_data(
-#'   ADSL = teal.data::rADSL,
-#'   ADTTE = teal.data::rADTTE,
-#'   ADRS = teal.data::rADRS,
+#'   ADSL = rADSL,
+#'   ADTTE = rADTTE,
+#'   ADRS = rADRS,
 #'   join_keys = default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 #' )
 #' parents(td)
@@ -58,7 +58,7 @@ parents.teal_data <- function(x) {
 #' @export
 #' @examples
 #'
-#' # Assigment of parents ---
+#' # Assignment of parents ---
 #'
 #' jk <- join_keys(
 #'   join_key("ds1", "ds2", "id"),
@@ -111,7 +111,7 @@ parents.teal_data <- function(x) {
 #' @export
 #' @examples
 #'
-#' # Assigment of parents of join_keys inside teal_data object ---
+#' # Assignment of parents of join_keys inside teal_data object ---
 #'
 #' parents(td) <- list("ADTTE" = "ADSL") # replace existing
 #' parents(td)["ADRS"] <- "ADSL" # add new parent

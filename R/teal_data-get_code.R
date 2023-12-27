@@ -16,6 +16,7 @@
 #' `expression` (`deparse = FALSE`).
 #' @return
 #' Either string or an expression representing code used to create the requested data sets.
+#'
 #' @examples
 #'
 #' tdata1 <- teal_data()

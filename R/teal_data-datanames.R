@@ -17,7 +17,9 @@
 #' td <- teal_data(iris = iris)
 #' td <- within(td, mtcars <- mtcars)
 #' datanames(td)
+#'
 #' datanames(td) <- c("iris", "mtcars")
+#' datanames(td)
 #'
 #' @name datanames
 #' @aliases datanames,teal_data-method

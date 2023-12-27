@@ -49,8 +49,8 @@ data <- cdisc_data(
 )
 
 data <- within(data, {
-  ADSL <- teal.data::example_cdisc_data("ADSL")
-  ADTTE <- teal.data::example_cdisc_data("ADTTE")
+  ADSL <- example_cdisc_data("ADSL")
+  ADTTE <- example_cdisc_data("ADTTE")
 })
 
 }

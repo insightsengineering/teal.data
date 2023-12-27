@@ -7,11 +7,6 @@
 #'
 #' @param graph (named `list`) list with node vector elements
 #' @keywords internal
-#'
-#' @examples
-#' teal.data:::topological_sort(list(A = c(), B = c("A"), C = c("B"), D = c("A")))
-#' teal.data:::topological_sort(list(D = c("A"), A = c(), B = c("A"), C = c("B")))
-#' teal.data:::topological_sort(list(D = c("A"), B = c("A"), C = c("B"), A = c()))
 topological_sort <- function(graph) {
   # compute in-degrees
   in_degrees <- list()

@@ -70,6 +70,8 @@ extract_calls <- function(pd) {
   fix_comments(calls)
 }
 
+#' @keywords internal
+#' @noRd
 get_children <- function(pd, parent) {
   idx_children <- abs(pd$parent) == parent
   children <- pd[idx_children, c("token", "text", "id", "parent")]
@@ -82,6 +84,8 @@ get_children <- function(pd, parent) {
   }
 }
 
+#' @keywords internal
+#' @noRd
 fix_comments <- function(calls) {
   # If the first token is a COMMENT, then it belongs to the previous call.
   if (length(calls) >= 2) {

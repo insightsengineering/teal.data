@@ -1,12 +1,12 @@
-#' Get Label Attributes of Variables in a \code{data.frame}
+#' Get Label Attributes of Variables in a `data.frame`
 #'
-#' Variable labels can be stored as a \code{label} attribute for each variable.
+#' Variable labels can be stored as a `label` attribute for each variable.
 #' This functions returns a named character vector with the variable labels
 #' (empty sting if not specified)
 #'
-#' @param x a \code{data.frame} object
-#' @param fill boolean in case the \code{label} attribute does not exist if
-#'   \code{TRUE} the variable names is returned, otherwise \code{NA}
+#' @param x a `data.frame` object
+#' @param fill (`logical(1)`) boolean in case the `label` attribute does not exist if
+#'   `TRUE` the variable names is returned, otherwise `NA`.Default is `FALSE`.
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
@@ -56,13 +56,13 @@ col_labels <- function(x, fill = FALSE) {
   labels
 }
 
-#' Set Label Attributes of All Variables in a \code{data.frame}
+#' Set Label Attributes of All Variables in a `data.frame`
 #'
-#' Variable labels can be stored as a \code{label} attribute for each variable.
-#' This functions sets all non-missing (non-NA) variable labels in a \code{data.frame}
+#' Variable labels can be stored as a `label` attribute for each variable.
+#' This functions sets all non-missing (non-NA) variable labels in a `data.frame`
 #'
 #' @inheritParams col_labels
-#' @param value new variable labels, \code{NA} removes the variable label
+#' @param value new variable labels, `NA` removes the variable label
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
@@ -70,7 +70,7 @@ col_labels <- function(x, fill = FALSE) {
 #'
 #' @seealso [col_labels()] [col_relabel()]
 #'
-#' @return modifies the variable labels of \code{x}
+#' @return modifies the variable labels of `x`
 #'
 #' @export
 #'
@@ -101,15 +101,15 @@ col_labels <- function(x, fill = FALSE) {
   x
 }
 
-#' Copy and Change Variable Labels of a \code{data.frame}
+#' Copy and Change Variable Labels of a `data.frame`
 #'
 #' Relabel a subset of the variables
 #'
 #' @inheritParams col_labels<-
 #' @param ... name-value pairs, where name corresponds to a variable name in
-#'   \code{x} and the value to the new variable label
+#'   `x` and the value to the new variable label
 #'
-#' @return a copy of \code{x} with changed labels according to \code{...}
+#' @return a copy of `x` with changed labels according to `...`
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of

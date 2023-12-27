@@ -181,7 +181,7 @@
 #' @rdname join_keys
 #'
 #' @order 1000
-#' @usage ## Prefered method is x[i, j] <- value
+#' @usage ## Preferred method is x[i, j] <- value
 #' x[[i]][[j]] <- value
 #'
 #' @section Functions:

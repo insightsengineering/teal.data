@@ -18,18 +18,4 @@ Therefore, we only allow alphanumeric characters with underscores.
 The first character of the \code{name} must be an alphabetic character
 and can be followed by alphanumeric characters.
 }
-\examples{
-teal.data:::check_simple_name("aas2df")
-teal.data:::check_simple_name("ADSL")
-teal.data:::check_simple_name("ADSLmodified")
-teal.data:::check_simple_name("ADSL_2")
-teal.data:::check_simple_name("a1")
-# the following fail
-\dontrun{
-teal.data:::check_simple_name("1a")
-teal.data:::check_simple_name("ADSL.modified")
-teal.data:::check_simple_name("ADSL_modified")
-teal.data:::check_simple_name("a1...")
-}
-}
 \keyword{internal}
