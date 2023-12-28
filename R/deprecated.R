@@ -339,8 +339,9 @@ get_join_keys <- function(data) {
 }
 
 #' @rdname col_labels
-#' @inheritParams col_labels
-#' @param data a data.frame object
+#' @param data a `data.frame` object
+#' @param fill (`logical(1)`) boolean in case the `label` attribute does not exist if
+#'   `TRUE` the variable names is returned, otherwise `NA`.Default is `FALSE`.
 #' @export
 get_labels <- function(data, fill = TRUE) {
   lifecycle::deprecate_stop(

@@ -15,7 +15,7 @@ get_labels(data, fill = TRUE)
 col_labels(x, fill = FALSE)
 }
 \arguments{
-\item{data}{a data.frame object}
+\item{data}{a \code{data.frame} object}
 
 \item{fill}{(\code{logical(1)}) boolean in case the \code{label} attribute does not exist if
 \code{TRUE} the variable names is returned, otherwise \code{NA}.Default is \code{FALSE}.}
