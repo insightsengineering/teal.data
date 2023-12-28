@@ -15,7 +15,7 @@
 \value{
 For \code{names}, it returns \code{NULL} or a character vector containing the names of datasets.\cr
 For \code{names<-.join_keys}, it returns the updated 'join_keys' object with the keys modified.
-(Note that the value of names(jk) <- value is that of the assignment,
+(Note that the value of names(x) <- value is that of the assignment,
 value, not the return value from the left-hand side.)
 }
 \description{
