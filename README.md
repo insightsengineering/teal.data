@@ -67,8 +67,10 @@ library(teal.data)
 my_data <- cdisc_data(
   ADSL = example_cdisc_data("ADSL"),
   ADTTE = example_cdisc_data("ADTTE"),
-  code = "ADSL = example_cdisc_data(\"ADSL\"),
-          ADTTE = example_cdisc_data(\"ADTTE\")"
+  code = quote({
+    ADSL <- example_cdisc_data("ADSL")
+    ADTTE <- example_cdisc_data("ADTTE")
+  })
 )
 
 # or 
