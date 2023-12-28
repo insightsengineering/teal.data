@@ -1,6 +1,11 @@
 # teal.data
 
 <!-- start badges -->
+[![CRAN Version](https://www.r-pkg.org/badges/version/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Month Downloads](http://cranlogs.r-pkg.org/badges/last-month/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Week Downloads](http://cranlogs.r-pkg.org/badges/last-week/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+
 [![Check 🛠](https://github.com/insightsengineering/teal.data/actions/workflows/check.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/main/unit-test-report/)
 [![Docs 📚](https://github.com/insightsengineering/teal.data/actions/workflows/docs.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/)
 [![Code Coverage 📔](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/badge.svg)](https://insightsengineering.github.io/teal.data/main/coverage-report/)
