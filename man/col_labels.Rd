@@ -39,10 +39,6 @@ x <- iris
 col_labels(x)
 col_labels(x) <- paste("label for", names(iris))
 col_labels(x)
-x <- iris
-col_labels(x)
-col_labels(x) <- paste("label for", names(iris))
-col_labels(x)
 
 if (interactive()) {
   View(x) # in RStudio data viewer labels are displayed

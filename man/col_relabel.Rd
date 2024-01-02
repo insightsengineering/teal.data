@@ -15,10 +15,10 @@ col_relabel(x, ...)
 \item{x}{\code{data.frame}}
 
 \item{...}{name-value pairs, where name corresponds to a variable name in
-\code{x} and the value to the new variable label}
+\code{data.frame} and the value to the new variable label}
 }
 \value{
-a copy of \code{x} with labels changed according to \code{...}
+a copy of \code{data.frame} with labels changed according to \code{...}
 }
 \description{
 Relabel a subset of the variables
@@ -29,5 +29,5 @@ col_labels(x)
 
 }
 \seealso{
-\code{\link[=col_labels]{col_labels()}} \code{\link{col_labels<-}}
+\code{\link[=col_labels]{col_labels()}}
 }
