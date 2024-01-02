@@ -3,23 +3,22 @@
 \name{get_join_keys}
 \alias{get_join_keys}
 \alias{get_join_keys<-}
-\title{Function to get join keys from a `` object}
+\title{Deprecated function to retrieve \code{join_keys} from dataset.}
 \usage{
-get_join_keys(data)
+get_join_keys(...)
 
-get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
+get_join_keys(...) <- value
 }
 \arguments{
-\item{data}{`` - object to extract the join keys}
-
-\item{dataset_1, dataset_2}{(\code{character(1)}) Dataset names. When \code{dataset_2} is omitted,
-a primary key for \code{dataset_1} is created.}
+\item{...}{data argument.}
 
 \item{value}{value to assign}
 }
 \value{
-Either \code{join_keys} object or \code{NULL} if no join keys
+nothing
 }
 \description{
-Function to get join keys from a `` object
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
+This function has been deprecated. Please see \code{\link[=join_keys]{join_keys()}} instead.
+Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
 }

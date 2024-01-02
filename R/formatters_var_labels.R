@@ -1,21 +1,21 @@
-#' Get Label Attributes of Variables in a `data.frame`
+#' Function Manages Label Attributes of Variables in a `data.frame`
 #'
 #' Variable labels can be stored as a `label` attribute for each variable.
-#' This functions returns a named character vector with the variable labels
-#' (empty sting if not specified)
+#' This functions either get named character vector with the variable labels
+#' (empty sting if not specified) or sets all non-missing (non-NA) variable labels in a `data.frame`.
 #'
 #' @param x `data.frame`
-#' @param fill (`logical(1)`) boolean in case the `label` attribute does not exist if
-#'   `TRUE` the variable names is returned, otherwise `NA`.Default is `FALSE`.
+#' @param fill (`logical(1)`) specifying what to return if `label` attribute does not exist
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [col_relabel()] [`col_labels<-`]
+#' @seealso [col_relabel()]
 #'
-#' @return a named character vector with the variable labels, the names
-#'   correspond to the variable names
+#' @return For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
+#' If the `label` attribute is missing, the vector elements will be the variable names themselves
+#' if `fill = TRUE` and `NA` if `fill = FALSE`.
 #'
 #' @export
 #'
@@ -24,6 +24,10 @@
 #' col_labels(x)
 #' col_labels(x) <- paste("label for", names(iris))
 #' col_labels(x)
+#'
+#' if (interactive()) {
+#'   View(x) # in RStudio data viewer labels are displayed
+#' }
 col_labels <- function(x, fill = FALSE) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)
   if (NCOL(x) == 0) {
@@ -56,33 +60,12 @@ col_labels <- function(x, fill = FALSE) {
   labels
 }
 
-#' Set Label Attributes of All Variables in a `data.frame`
-#'
-#' Variable labels can be stored as a `label` attribute for each variable.
-#' This function sets all non-missing (non-NA) variable labels in a `data.frame`.
-#'
-#' @inheritParams col_labels
+#' @rdname col_labels
 #' @param value (`character`) new variable labels; setting `NA` removes the variable label
-#'
-#' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
-#' the dependency tree.
-#'
-#' @seealso [col_labels()] [col_relabel()]
-#'
-#' @return modifies the variable labels of `x`
+#' @return For `col_labels<-`, modifies the variable labels of `data.frame`.(Note that the value of
+#' col_labels(x) <- value is that of the assignment, value, not the return value from the left-hand side.)
 #'
 #' @export
-#'
-#' @examples
-#' x <- iris
-#' col_labels(x)
-#' col_labels(x) <- paste("label for", names(iris))
-#' col_labels(x)
-#'
-#' if (interactive()) {
-#'   View(x) # in RStudio data viewer labels are displayed
-#' }
 `col_labels<-` <- function(x, value) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)
   checkmate::assert_character(value, any.missing = FALSE)
@@ -107,15 +90,15 @@ col_labels <- function(x, fill = FALSE) {
 #'
 #' @inheritParams col_labels<-
 #' @param ... name-value pairs, where name corresponds to a variable name in
-#'   `x` and the value to the new variable label
+#'   `data.frame` and the value to the new variable label
 #'
-#' @return a copy of `x` with labels changed according to `...`
+#' @return a copy of `data.frame` with labels changed according to `...`
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
 #' the dependency tree.
 #'
-#' @seealso [col_labels()] [`col_labels<-`]
+#' @seealso [col_labels()]
 #'
 #' @export
 #'

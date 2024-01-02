@@ -314,39 +314,44 @@ teal_data_file <- function(...) {
   .deprecate_teal_data("teal_data_file()")
 }
 
-#' Function to get join keys from a `` object
-#' @param data `` - object to extract the join keys
-#' @return Either `join_keys` object or `NULL` if no join keys
+#' Deprecated function to retrieve `join_keys` from dataset.
+#'
+#' @description `r lifecycle::badge("deprecated")`\cr
+#' This function has been deprecated. Please see [join_keys()] instead.
+#' Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
+#' @param ... data argument.
+#' @return nothing
 #' @export
-get_join_keys <- function(data) {
+get_join_keys <- function(...) {
   lifecycle::deprecate_stop(
-    when = " 0.3.1",
-    what = "get_join_keys(data)",
+    when = "0.3.1",
+    what = "get_join_keys()",
     details = "Use `join_keys(data)` instead."
   )
 }
 
 #' @rdname get_join_keys
-#' @inheritParams join_key
 #' @param value value to assign
 #' @export
-`get_join_keys<-` <- function(data, dataset_1, dataset_2 = NULL, value) {
+`get_join_keys<-` <- function(..., value) {
   lifecycle::deprecate_stop(
-    when = " 0.3.1",
+    when = "0.3.1",
     what = "`get_join_keys<-`()",
     details = "Use `join_keys(x) <- ...`"
   )
 }
 
-#' @rdname col_labels
-#' @param data a `data.frame` object
-#' @param fill (`logical(1)`) boolean in case the `label` attribute does not exist if
-#'   `TRUE` the variable names is returned, otherwise `NA`.Default is `FALSE`.
+#' Deprecated function to get label attributes of variables in a `data.frame`
+#'
+#' @description `r lifecycle::badge("deprecated")`\cr
+#' This function has been deprecated. Please see [col_labels()] instead.
+#' @param ... any arguments.
+#' @return nothing
 #' @export
-get_labels <- function(data, fill = TRUE) {
+get_labels <- function(...) {
   lifecycle::deprecate_stop(
-    when = " 0.3.1",
-    what = "get_labels(data)",
+    when = "0.3.1",
+    what = "get_labels()",
     details = "Use col_labels(data)"
   )
 }

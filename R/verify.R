@@ -24,6 +24,30 @@
 #' verify(tdata2)@verified
 #' tdata2@verified
 #'
+#' tdata3 <- teal_data()
+#' tdata3 <- within(tdata3, {
+#'   stop("error")
+#' })
+#' try(verify(tdata3)) # fails
+#'
+#'
+#' a <- 1
+#' b <- a + 2
+#' c <- list(x = 2)
+#' d <- 5
+#' tdata4 <- teal_data(
+#'   a = a, b = b, c = c, d = d,
+#'   code =
+#'     "
+#' a <- 1
+#' b <- a
+#' c <- list(x = 2)
+#' e <- 1
+#' "
+#' )
+#' tdata4
+#' try(verify(tdata4)) # fails
+#'
 #' @name verify
 #' @rdname verify
 #' @aliases verify,teal_data-method

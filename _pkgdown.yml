@@ -58,3 +58,4 @@ reference:
     desc: Functions deprecated in teal.data v0.3.1
     contents:
       - TealData
+      - get_labels
