@@ -62,7 +62,7 @@ col_labels <- function(x, fill = FALSE) {
 #' This function sets all non-missing (non-NA) variable labels in a `data.frame`.
 #'
 #' @inheritParams col_labels
-#' @param value new variable labels, `NA` removes the variable label
+#' @param value (`character`) new variable labels; setting `NA` removes the variable label
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
