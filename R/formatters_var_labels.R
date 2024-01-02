@@ -4,7 +4,7 @@
 #' This functions returns a named character vector with the variable labels
 #' (empty sting if not specified)
 #'
-#' @param x a `data.frame` object
+#' @param x `data.frame`
 #' @param fill (`logical(1)`) boolean in case the `label` attribute does not exist if
 #'   `TRUE` the variable names is returned, otherwise `NA`.Default is `FALSE`.
 #'
