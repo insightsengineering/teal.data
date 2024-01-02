@@ -1,9 +1,5 @@
 #' The Names of an `join_keys` Object
 #' @inheritParams base::`names<-`
-#' @return For `names`, it returns `NULL` or a character vector containing the names of datasets.\cr
-#' For `names<-.join_keys`, it returns the updated 'join_keys' object with the keys modified.
-#' (Note that the value of names(x) <- value is that of the assignment,
-#' value, not the return value from the left-hand side.)
 #' @export
 `names<-.join_keys` <- function(x, value) {
   new_x <- unclass(x)
