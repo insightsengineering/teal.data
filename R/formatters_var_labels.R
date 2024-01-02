@@ -109,7 +109,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @param ... name-value pairs, where name corresponds to a variable name in
 #'   `x` and the value to the new variable label
 #'
-#' @return a copy of `x` with changed labels according to `...`
+#' @return a copy of `x` with labels changed according to `...`
 #'
 #' @source This function was taken 1-1 from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
