@@ -59,7 +59,7 @@ col_labels <- function(x, fill = FALSE) {
 #' Set Label Attributes of All Variables in a `data.frame`
 #'
 #' Variable labels can be stored as a `label` attribute for each variable.
-#' This functions sets all non-missing (non-NA) variable labels in a `data.frame`
+#' This function sets all non-missing (non-NA) variable labels in a `data.frame`.
 #'
 #' @inheritParams col_labels
 #' @param value new variable labels, `NA` removes the variable label
