@@ -12,16 +12,16 @@ the dependency tree.
 col_labels(x) <- value
 }
 \arguments{
-\item{x}{a \code{data.frame} object}
+\item{x}{\code{data.frame}}
 
-\item{value}{new variable labels, \code{NA} removes the variable label}
+\item{value}{(\code{character}) new variable labels; setting \code{NA} removes the variable label}
 }
 \value{
 modifies the variable labels of \code{x}
 }
 \description{
 Variable labels can be stored as a \code{label} attribute for each variable.
-This functions sets all non-missing (non-NA) variable labels in a \code{data.frame}
+This function sets all non-missing (non-NA) variable labels in a \code{data.frame}.
 }
 \examples{
 x <- iris
