@@ -85,7 +85,7 @@ col_labels <- function(x, fill = FALSE) {
 #' }
 `col_labels<-` <- function(x, value) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)
-  checkmate::assert_character(value, any.missing = FALSE)
+  checkmate::assert_character(value)
   checkmate::assert_true(ncol(x) == length(value))
 
   theseq <- if (!is.null(names(value))) names(value) else seq_along(x)
