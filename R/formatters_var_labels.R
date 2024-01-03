@@ -27,9 +27,9 @@
 #' y <- col_relabel(x, Sepal.Length = "Sepal Length of iris flower")
 #' col_labels(y)
 #'
-#' @source This function was taken 1-1 from
+#' @source These functions were taken from
 #' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
-#' the dependency tree.
+#' the dependency tree and rewritten.
 #'
 #' @rdname col_labels
 #' @export
@@ -38,34 +38,28 @@ col_labels <- function(x, fill = FALSE) {
   checkmate::assert_data_frame(x)
   checkmate::assert_flag(fill)
 
-  if (NCOL(x) == 0) {
-    return(character())
+  if (ncol(x) == 0L) {
+    return(character(0L))
   }
 
-  y <- Map(function(col, colname) {
-    label <- attr(col, "label")
+  labels <- lapply(x, attr, "label")
 
-    if (is.null(label)) {
+  nulls <- vapply(labels, is.null, logical(1L))
+  if (any(nulls)) {
+    labels[nulls] <-
       if (fill) {
-        colname
+        colnames(x)[nulls]
       } else {
         NA_character_
       }
-    } else {
-      if (!is.character(label) && !(length(label) == 1)) {
-        stop("label for variable ", colname, "is not a character string")
-      }
-      as.vector(label)
-    }
-  }, x, colnames(x))
-
-  labels <- unlist(y, recursive = FALSE, use.names = TRUE)
-
-  if (!is.character(labels)) {
-    stop("label extraction failed")
   }
 
-  labels
+  not_char <- !vapply(labels, checkmate::test_string, logical(1L), na.ok = TRUE)
+  if (any(not_char)) {
+    stop("labels for variables ", toString(names(not_char[not_char])), "are not character strings")
+  }
+
+  unlist(labels, recursive = FALSE)
 }
 
 #' @rdname col_labels
@@ -78,16 +72,10 @@ col_labels <- function(x, fill = FALSE) {
     .var.name = "Length of value is equal to the number of columns"
   )
 
-  theseq <- if (!is.null(names(value))) names(value) else seq_along(x)
-  # across columns of x
-  for (j in theseq) {
-    attr(x[[j]], "label") <- if (!is.na(value[j])) {
-      value[j]
-    } else {
-      NULL
-    }
+  if (is.null(names(value))) {
+    names(value) <- names(x)
   }
-
+  x[names(value)] <- mapply(`attr<-`, x = x[names(value)], which = "label", value = value, SIMPLIFY = FALSE)
   x
 }
 
@@ -101,21 +89,10 @@ col_relabel <- function(x, ...) {
   }
   dots <- list(...)
   varnames <- names(dots)
-  checkmate::assert_character(varnames, null.ok = FALSE)
 
-  map_varnames <- match(varnames, colnames(x))
+  checkmate::assert_subset(varnames, names(x), .var.name = "names of ...")
+  lapply(dots, checkmate::assert_string, .var.name = "element of ...")
 
-  if (any(is.na(map_varnames))) {
-    stop("variables: ", paste(varnames[is.na(map_varnames)], collapse = ", "), " not found")
-  }
-
-  if (any(vapply(dots, Negate(is.character), logical(1)))) {
-    stop("all variable labels must be of type character")
-  }
-
-  for (i in seq_along(map_varnames)) {
-    attr(x[[map_varnames[[i]]]], "label") <- dots[[i]]
-  }
-
+  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = dots, SIMPLIFY = FALSE, USE.NAMES = FALSE)
   x
 }
