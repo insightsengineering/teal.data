@@ -22,9 +22,9 @@ col_labels(x) <- value
 \item{value}{(\code{character}) new variable labels; setting \code{NA} removes the variable label}
 }
 \value{
-For \code{col_labels}, named character vector of variable labels, the names being the corresponding variable names.
-If the \code{label} attribute is missing, the vector elements will be the variable names themselves
-if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.
+For \code{col_labels}, named character vector of variable labels, the names being
+the corresponding variable names. If the \code{label} attribute is missing, the vector elements
+will be the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.
 
 For \verb{col_labels<-}, modifies the variable labels of \code{data.frame}.(Note that the value of
 col_labels(x) <- value is that of the assignment, value, not the return value from the left-hand side.)

@@ -13,9 +13,9 @@
 #'
 #' @seealso [col_relabel()]
 #'
-#' @return For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
-#' If the `label` attribute is missing, the vector elements will be the variable names themselves
-#' if `fill = TRUE` and `NA` if `fill = FALSE`.
+#' @return For `col_labels`, named character vector of variable labels, the names being
+#' the corresponding variable names. If the `label` attribute is missing, the vector elements
+#' will be the variable names themselves if `fill = TRUE` and `NA` if `fill = FALSE`.
 #'
 #' @export
 #'
