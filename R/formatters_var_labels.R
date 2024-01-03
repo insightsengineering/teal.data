@@ -1,33 +1,37 @@
-#' Function Manages Label Attributes of Variables in a `data.frame`
+#' Variable Labels
 #'
-#' Variable labels can be stored as a `label` attribute for each variable.
-#' This functions either get named character vector with the variable labels
-#' (empty sting if not specified) or sets all non-missing (non-NA) variable labels in a `data.frame`.
+#' Get or set variable labels in a `data.frame`
+#'
+#' Variable labels can be stored as a `label` attribute set on individual variables.
+#' These functions get or set this attribute, either on all (`col_labels`) or some variables (`col_relabel`).
 #'
 #' @param x `data.frame`
-#' @param fill (`logical(1)`) specifying what to return if `label` attribute does not exist
+#' @param fill (`logical(1)`) specifying what to return if variable has no label
+#' @param value (`character`) character vector of variable labels; use `NA` to remove label from variable
+#' @param ... name-value pairs, where name corresponds to a variable name in `x`
+#'  and value is the new variable label
 #'
-#' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
-#' the dependency tree.
-#'
-#' @seealso [col_relabel()]
-#'
-#' @return For `col_labels`, named character vector of variable labels, the names being
-#' the corresponding variable names. If the `label` attribute is missing, the vector elements
-#' will be the variable names themselves if `fill = TRUE` and `NA` if `fill = FALSE`.
-#'
-#' @export
+#' @return
+#' For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
+#' If the `label` attribute is missing, the vector elements will be
+#' the variable names themselves if `fill = TRUE` and `NA` if `fill = FALSE`.\cr
+#' For `col_labels<-` and `col_relabel`, copy of `x` with variable labels modified.
 #'
 #' @examples
 #' x <- iris
 #' col_labels(x)
 #' col_labels(x) <- paste("label for", names(iris))
 #' col_labels(x)
+#' y <- col_relabel(x, Sepal.Length = "Sepal Length of iris flower")
+#' col_labels(y)
 #'
-#' if (interactive()) {
-#'   View(x) # in RStudio data viewer labels are displayed
-#' }
+#' @source This function was taken 1-1 from
+#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
+#' the dependency tree.
+#'
+#' @rdname col_labels
+#' @export
+#'
 col_labels <- function(x, fill = FALSE) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)
   if (NCOL(x) == 0) {
@@ -61,10 +65,6 @@ col_labels <- function(x, fill = FALSE) {
 }
 
 #' @rdname col_labels
-#' @param value (`character`) new variable labels; setting `NA` removes the variable label
-#' @return For `col_labels<-`, modifies the variable labels of `data.frame`.(Note that the value of
-#' col_labels(x) <- value is that of the assignment, value, not the return value from the left-hand side.)
-#'
 #' @export
 `col_labels<-` <- function(x, value) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)
@@ -84,27 +84,8 @@ col_labels <- function(x, fill = FALSE) {
   x
 }
 
-#' Copy and Change Variable Labels of a `data.frame`
-#'
-#' Relabel a subset of the variables
-#'
-#' @inheritParams col_labels<-
-#' @param ... name-value pairs, where name corresponds to a variable name in
-#'   `data.frame` and the value to the new variable label
-#'
-#' @return a copy of `data.frame` with labels changed according to `...`
-#'
-#' @source This function was taken 1-1 from
-#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
-#' the dependency tree.
-#'
-#' @seealso [col_labels()]
-#'
+#' @rdname col_labels
 #' @export
-#'
-#' @examples
-#' x <- col_relabel(iris, Sepal.Length = "Sepal Length of iris flower")
-#' col_labels(x)
 #'
 col_relabel <- function(x, ...) {
   checkmate::assert_character(colnames(x), any.missing = FALSE)

@@ -3,7 +3,8 @@
 \name{col_labels}
 \alias{col_labels}
 \alias{col_labels<-}
-\title{Function Manages Label Attributes of Variables in a \code{data.frame}}
+\alias{col_relabel}
+\title{Variable Labels}
 \source{
 This function was taken 1-1 from
 \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
@@ -13,26 +14,31 @@ the dependency tree.
 col_labels(x, fill = FALSE)
 
 col_labels(x) <- value
+
+col_relabel(x, ...)
 }
 \arguments{
 \item{x}{\code{data.frame}}
 
-\item{fill}{(\code{logical(1)}) specifying what to return if \code{label} attribute does not exist}
+\item{fill}{(\code{logical(1)}) specifying what to return if variable has no label}
 
-\item{value}{(\code{character}) new variable labels; setting \code{NA} removes the variable label}
+\item{value}{(\code{character}) character vector of variable labels; use \code{NA} to remove label from variable}
+
+\item{...}{name-value pairs, where name corresponds to a variable name in \code{x}
+and value is the new variable label}
 }
 \value{
 For \code{col_labels}, named character vector of variable labels, the names being
 the corresponding variable names. If the \code{label} attribute is missing, the vector elements
-will be the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.
-
-For \verb{col_labels<-}, modifies the variable labels of \code{data.frame}.(Note that the value of
-col_labels(x) <- value is that of the assignment, value, not the return value from the left-hand side.)
+will be the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.\cr
+For \verb{col_labels<-} and \code{col_relabel}, copy of \code{x} with variable labels modified.
 }
 \description{
-Variable labels can be stored as a \code{label} attribute for each variable.
-This functions either get named character vector with the variable labels
-(empty sting if not specified) or sets all non-missing (non-NA) variable labels in a \code{data.frame}.
+Get or set variable labels in a \code{data.frame}
+}
+\details{
+Variable labels can be stored as a \code{label} attribute set on individual variables.
+These functions get or set this attribute, either on all (\code{col_labels}) or some variables (\code{col_relabel}).
 }
 \examples{
 x <- iris
@@ -43,7 +49,7 @@ col_labels(x)
 if (interactive()) {
   View(x) # in RStudio data viewer labels are displayed
 }
-}
-\seealso{
-\code{\link[=col_relabel]{col_relabel()}}
+x <- col_relabel(iris, Sepal.Length = "Sepal Length of iris flower")
+col_labels(x)
+
 }
