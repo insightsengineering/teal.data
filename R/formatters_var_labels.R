@@ -35,7 +35,9 @@
 #' @export
 #'
 col_labels <- function(x, fill = FALSE) {
-  checkmate::assert_character(colnames(x), any.missing = FALSE)
+  checkmate::assert_data_frame(x)
+  checkmate::assert_flag(fill)
+
   if (NCOL(x) == 0) {
     return(character())
   }
@@ -69,9 +71,12 @@ col_labels <- function(x, fill = FALSE) {
 #' @rdname col_labels
 #' @export
 `col_labels<-` <- function(x, value) {
-  checkmate::assert_character(colnames(x), any.missing = FALSE)
-  checkmate::assert_character(value, any.missing = FALSE)
-  checkmate::assert_true(ncol(x) == length(value))
+  checkmate::assert_data_frame(x)
+  checkmate::assert_character(value)
+  checkmate::assert_true(
+    ncol(x) == length(value),
+    .var.name = "Length of value is equal to the number of columns"
+  )
 
   theseq <- if (!is.null(names(value))) names(value) else seq_along(x)
   # across columns of x
@@ -90,7 +95,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @export
 #'
 col_relabel <- function(x, ...) {
-  checkmate::assert_character(colnames(x), any.missing = FALSE)
+  checkmate::assert_data_frame(x)
   if (missing(...)) {
     return(x)
   }
