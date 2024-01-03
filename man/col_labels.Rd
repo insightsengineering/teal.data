@@ -22,15 +22,17 @@ col_relabel(x, ...)
 
 \item{fill}{(\code{logical(1)}) specifying what to return if variable has no label}
 
-\item{value}{(\code{character}) character vector of variable labels; use \code{NA} to remove label from variable}
+\item{value}{(\code{character}) vector of variable labels of length equal to number of columns in \code{x};
+if named, names must match variable names in \code{x} and will be used as key to set labels;
+use \code{NA} to remove label from variable}
 
 \item{...}{name-value pairs, where name corresponds to a variable name in \code{x}
 and value is the new variable label}
 }
 \value{
-For \code{col_labels}, named character vector of variable labels, the names being
-the corresponding variable names. If the \code{label} attribute is missing, the vector elements
-will be the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.\cr
+For \code{col_labels}, named character vector of variable labels, the names being the corresponding variable names.
+If the \code{label} attribute is missing, the vector elements will be
+the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.\cr
 For \verb{col_labels<-} and \code{col_relabel}, copy of \code{x} with variable labels modified.
 }
 \description{
@@ -45,11 +47,7 @@ x <- iris
 col_labels(x)
 col_labels(x) <- paste("label for", names(iris))
 col_labels(x)
-
-if (interactive()) {
-  View(x) # in RStudio data viewer labels are displayed
-}
-x <- col_relabel(iris, Sepal.Length = "Sepal Length of iris flower")
-col_labels(x)
+y <- col_relabel(x, Sepal.Length = "Sepal Length of iris flower")
+col_labels(y)
 
 }

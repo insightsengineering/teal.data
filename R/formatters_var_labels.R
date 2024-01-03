@@ -7,7 +7,9 @@
 #'
 #' @param x `data.frame`
 #' @param fill (`logical(1)`) specifying what to return if variable has no label
-#' @param value (`character`) character vector of variable labels; use `NA` to remove label from variable
+#' @param value (`character`) vector of variable labels of length equal to number of columns in `x`;
+#'  if named, names must match variable names in `x` and will be used as key to set labels;
+#'  use `NA` to remove label from variable
 #' @param ... name-value pairs, where name corresponds to a variable name in `x`
 #'  and value is the new variable label
 #'
