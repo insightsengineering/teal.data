@@ -37,13 +37,10 @@
 #' d <- 5
 #' tdata4 <- teal_data(
 #'   a = a, b = b, c = c, d = d,
-#'   code =
-#'     "
-#' a <- 1
-#' b <- a
-#' c <- list(x = 2)
-#' e <- 1
-#' "
+#'   code = "a <- 1
+#'           b <- a
+#'           c <- list(x = 2)
+#'           e <- 1"
 #' )
 #' tdata4
 #' try(verify(tdata4)) # fails
