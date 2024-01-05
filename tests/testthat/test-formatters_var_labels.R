@@ -28,7 +28,10 @@ test_that("col_relabel correctly changes column labels in a data frame", {
 })
 
 test_that("col_relabel throws an error for non-existent columns", {
-  testthat::expect_error(col_relabel(iris, NonExistentColumn = "Label"))
+  testthat::expect_error(
+    col_relabel(iris, NonExistentColumn = "Label"),
+    "variables: NonExistentColumn not found"
+  )
 })
 
 test_that("col_relabel returns the original data.frame when no new labels are specified", {
