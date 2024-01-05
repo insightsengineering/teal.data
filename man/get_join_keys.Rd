@@ -12,7 +12,7 @@ get_join_keys(data, dataset_1, dataset_2 = NULL) <- value
 \arguments{
 \item{data}{`` - object to extract the join keys}
 
-\item{dataset_1, dataset_2}{(\code{character(1)}) dataset names. If \code{dataset_2} is omitted,
+\item{dataset_1, dataset_2}{(\code{character(1)}) Dataset names. When \code{dataset_2} is omitted,
 a primary key for \code{dataset_1} is created.}
 
 \item{value}{value to assign}

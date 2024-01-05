@@ -10,32 +10,22 @@
 #'   jk,
 #'   join_keys(
 #'     join_key("ds4", keys = c("pk4", "pk4_2")),
-#'     join_key("ds4", "ds3", c(pk4_2 = "pk3"))
+#'     join_key("ds3", "ds4", c(pk3 = "pk4_2"))
 #'   )
 #' )
 c.join_keys <- function(...) {
-  join_keys_obj <- rlang::list2(...)[[1]]
-  x <- rlang::list2(...)[-1]
-  checkmate::assert_multi_class(join_keys_obj, classes = c("join_keys", "join_key_set"))
+  x <- rlang::list2(...)
   checkmate::assert_list(x, types = c("join_keys", "join_key_set"))
 
-  # Ensure base object has correct class when called from c.join_key_set
-  join_keys_obj <- join_keys(join_keys_obj)
-
-  x_merged <- Reduce(
+  Reduce(
     init = join_keys(),
     x = x,
     f = function(.x, .y) {
-      assert_compatible_keys2(.x, .y)
       out <- utils::modifyList(.x, .y, keep.null = FALSE)
-      attr(out, "parents") <- .merge_parents(.x, .y)
+      parents(out) <- utils::modifyList(attr(.x, "parents"), attr(.y, "parents"), keep.null = FALSE)
       out
     }
   )
-
-  out <- utils::modifyList(join_keys_obj, x_merged, keep.null = FALSE)
-  attr(out, "parents") <- .merge_parents(join_keys_obj, x_merged)
-  out
 }
 
 #' @rdname join_keys
@@ -50,26 +40,8 @@ c.join_keys <- function(...) {
 #' jk_merged <- c(
 #'   jk_merged,
 #'   join_key("ds5", keys = "pk5"),
-#'   join_key("ds5", "ds1", c(pk5 = "pk1"))
+#'   join_key("ds1", "ds5", c(pk1 = "pk5"))
 #' )
 c.join_key_set <- function(...) {
   c.join_keys(...)
-}
-
-#' Merge parents for 2 `join_keys` object
-#'
-#' @param x,y (`join_keys`) objects to merge their parents
-#'
-#' @return a list with parents merged from 2 `join_keys`. Not the object itself.
-#' @keywords internal
-.merge_parents <- function(x, y) {
-  x_parent <- list()
-  y_parent <- list()
-  if (length(attr(x, "parents"))) {
-    x_parent <- attr(x, "parents")
-  }
-  if (length(attr(y, "parents"))) {
-    y_parent <- attr(y, "parents")
-  }
-  utils::modifyList(x_parent, y_parent, keep.null = FALSE)
 }

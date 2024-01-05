@@ -19,12 +19,13 @@
 #'
 #' @param code `character` with the code.
 #' @param names `character` vector of object names.
+#' @param check_names `logical(1)` flag specifying if a warning for non-existing names should be displayed.
 #'
 #' @return Character vector, a subset of `code`.
 #' Note that subsetting is actually done on the calls `code`, not necessarily on the elements of the vector.
 #'
 #' @keywords internal
-get_code_dependency <- function(code, names) {
+get_code_dependency <- function(code, names, check_names = TRUE) {
   checkmate::assert_character(code)
   checkmate::assert_character(names, any.missing = FALSE)
 
@@ -35,17 +36,22 @@ get_code_dependency <- function(code, names) {
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
 
-  # Detect if names are actually in code.
-  symbols <- unique(pd[pd$token == "SYMBOL", "text"])
-  if (!all(names %in% symbols)) {
-    warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
+  if (check_names) {
+    # Detect if names are actually in code.
+    symbols <- unique(pd[pd$token == "SYMBOL", "text"])
+    if (!all(names %in% symbols)) {
+      warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
+    }
   }
 
   calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
   ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
-  as.character(code[unique(ind)])
+
+  lib_ind <- detect_libraries(calls_pd)
+
+  as.character(code[unique(c(lib_ind, ind))])
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
@@ -116,7 +122,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
+  mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract Object Occurrence
@@ -152,6 +158,20 @@ extract_occurrence <- function(calls_pd) {
   lapply(
     calls_pd,
     function(call_pd) {
+      # Handle data(object)/data("object")/data(object, envir = ) independently.
+      data_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "data"
+      if (any(data_call)) {
+        sym <- call_pd[which(data_call) + 1, "text"]
+        return(c(gsub("'", "", sym), "<-", "data"))
+      }
+      # Handle assign().
+      assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
+      if (any(assign_call)) {
+        call_pd_lim <- call_pd[-c(1:which(assign_call)), ]
+        sym <- call_pd_lim[call_pd_lim$token == "STR_CONST", "text"]
+        return(c(gsub("'", "", sym), "<-", "assign"))
+      }
+
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
@@ -252,4 +272,35 @@ graph_parser <- function(x, graph) {
   } else {
     which(occurrence)
   }
+}
+
+
+# default_side_effects --------------------------------------------------------------------------------------------
+
+#' Detect Library Calls
+#'
+#' Detects `library()` and `require()` function calls.
+#'
+#' @param calls_pd `list` of `data.frame`s;
+#'  result of `utils::getParseData()` split into subsets representing individual calls;
+#'  created by `extract_calls()` function
+#'
+#' @return
+#' Integer vector of indices that can be applied to `graph` (result of `code_graph()`) to obtain all calls containing
+#' `library()` or `require()` calls that are always returned for reproducibility.
+#'
+#' @keywords internal
+#' @noRd
+detect_libraries <- function(calls_pd) {
+  defaults <- c("library", "require")
+
+  which(
+    vapply(
+      calls_pd,
+      function(call) {
+        any(call$token == "SYMBOL_FUNCTION_CALL" & call$text %in% defaults)
+      },
+      logical(1)
+    )
+  )
 }

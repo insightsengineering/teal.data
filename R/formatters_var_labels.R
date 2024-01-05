@@ -25,7 +25,9 @@
 #' col_labels(x) <- paste("label for", names(iris))
 #' col_labels(x)
 col_labels <- function(x, fill = FALSE) {
-  stopifnot(is.data.frame(x))
+  checkmate::assert_data_frame(x)
+  checkmate::assert_flag(fill)
+
   if (NCOL(x) == 0) {
     return(character())
   }
@@ -84,10 +86,11 @@ col_labels <- function(x, fill = FALSE) {
 #'   View(x) # in RStudio data viewer labels are displayed
 #' }
 `col_labels<-` <- function(x, value) {
-  stopifnot(
-    is.data.frame(x),
-    is.character(value),
-    ncol(x) == length(value)
+  checkmate::assert_data_frame(x)
+  checkmate::assert_character(value)
+  checkmate::assert_true(
+    ncol(x) == length(value),
+    .var.name = "Length of value is equal to the number of columns"
   )
 
   theseq <- if (!is.null(names(value))) names(value) else seq_along(x)
@@ -126,13 +129,13 @@ col_labels <- function(x, fill = FALSE) {
 #' col_labels(x)
 #'
 col_relabel <- function(x, ...) {
-  stopifnot(is.data.frame(x))
+  checkmate::assert_data_frame(x)
   if (missing(...)) {
     return(x)
   }
   dots <- list(...)
   varnames <- names(dots)
-  stopifnot(!is.null(varnames))
+  checkmate::assert_character(varnames, null.ok = FALSE)
 
   map_varnames <- match(varnames, colnames(x))
 

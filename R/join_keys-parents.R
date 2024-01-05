@@ -78,6 +78,9 @@ parents.teal_data <- function(x) {
   new_parents <- list()
 
   for (dataset in names(value)) {
+    # Custom .var.name so it is verbose and helpful for users
+    checkmate::assert_string(value[[dataset]], .var.name = sprintf("value[[\"%s\"]]", dataset))
+
     parent <- new_parents[[dataset]]
     checkmate::assert(
       checkmate::check_null(parent),
@@ -86,7 +89,8 @@ parents.teal_data <- function(x) {
           length(value[[dataset]]) == 0
       ),
       checkmate::check_true(parent == value[[dataset]]),
-      "Please check the difference between provided datasets parents and provided join_keys parents."
+      "Please check the difference between provided datasets parents and provided join_keys parents.",
+      .var.name = "value"
     )
     if (is.null(parent)) {
       new_parents[[dataset]] <- value[[dataset]]

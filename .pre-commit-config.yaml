@@ -16,14 +16,11 @@ repos:
         name: Regenerate package documentation
         additional_dependencies:
           - checkmate
-          - digest
           - lifecycle
           - methods
-          - R6
           - rlang
-          - shiny
-          - shinyjs
           - stats
+          - teal.code
           - utils
           - yaml
       - id: spell-check
@@ -43,10 +40,10 @@ repos:
           .*\.sh|
           .*\.svg|
           .*\.xml|
-          .*/cdisc_datasets\.yaml|
-          (.*/|)\_pkgdown.y[a]ml|
+          .*/cdisc_datasets\.y[a]?ml|
+          (.*/|)\_pkgdown.y[a]?ml|
           (.*/|)\.gitignore|
-          (.*/|)\.gitlab-ci\.yml|
+          (.*/|)\.gitlab-ci\.y[a]?ml|
           (.*/|)\.lintr|
           (.*/|)\.pre-commit-.*|
           (.*/|)\.Rbuildignore|
@@ -56,9 +53,9 @@ repos:
           (.*/|)DESCRIPTION|
           (.*/|)LICENSE|
           (.*/|)NAMESPACE|
-          (.*/|)staged_dependencies\.yaml|
+          (.*/|)staged_dependencies\.y[a]?ml|
           (.*/|)WORDLIST|
-          \.github/.*\.yaml|
+          \.github/.*\.y[a]?ml|
           data/.*
           )$
       - id: no-browser-statement
