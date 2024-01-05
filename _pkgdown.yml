@@ -58,4 +58,3 @@ reference:
     contents:
       - TealData
       - get_labels
-      - get_join_keys

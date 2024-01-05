@@ -80,7 +80,7 @@ testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
   )
 })
 
-testthat::test_that("join_keys doesn't accept other objects than teal_data, TealData and join_key", {
+testthat::test_that("join_keys doesn't accept other objects than teal_data and join_key", {
   testthat::expect_error(join_keys("a")) # todo: add expected error message
 })
 

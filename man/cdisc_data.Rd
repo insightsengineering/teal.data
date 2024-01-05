@@ -12,9 +12,7 @@ cdisc_data(
 )
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
-Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
-or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
+\item{...}{any number of any objects provided as \code{name = value} pairs.}
 
 \item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
 (optional) object with datasets column names used for joining.
@@ -28,10 +26,7 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-\itemize{
-\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
-\item a \code{teal_data} object otherwise.
-}
+\code{teal_data} object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

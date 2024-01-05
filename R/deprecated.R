@@ -1,357 +1,338 @@
 #' Deprecated `TealData` class and related functions
 #'
 #' @description `r lifecycle::badge("deprecated")`\cr
-#' This function has been deprecated. Please see [teal_data()] and [cdisc_data()] instead.
-#' Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
+#' The TealData class and associated functions have been deprecated. Use [teal_data()] instead.
+#' See the \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide} for details.
 #'
 #' @name TealData
 #'
 #' @param ... any argument supported in `TealData` related functions.
 #'
 #' @return nothing
+#' @seealso  [cdisc_data()] , [join_keys()]
 #'
 NULL
 
-.deprecate_teal_data <- function(what) {
+.deprecate_function <- function(what, details) {
   lifecycle::deprecate_stop(
     when = "0.3.1",
     what = what,
-    details = "Find more information on https://github.com/insightsengineering/teal/discussions/945"
+    details = details
   )
 }
+
+deprecation_detail <- "Find more information on https://github.com/insightsengineering/teal/discussions/945"
 
 #' @rdname TealData
 #' @export
 as_cdisc <- function(...) {
-  .deprecate_teal_data("as_cdisc()")
+  .deprecate_function("as_cdisc()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 callable_code <- function(...) {
-  .deprecate_teal_data("callable_code()")
+  .deprecate_function("callable_code()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 callable_function <- function(...) {
-  .deprecate_teal_data("callable_function()")
+  .deprecate_function("callable_function()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 code_dataset_connector <- function(...) {
-  .deprecate_teal_data("code_dataset_connector()")
+  .deprecate_function("code_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 code_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("code_cdisc_dataset_connector()")
+  .deprecate_function("code_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 csv_dataset_connector <- function(...) {
-  .deprecate_teal_data("csv_dataset_connector()")
+  .deprecate_function("csv_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 csv_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("csv_cdisc_dataset_connector()")
+  .deprecate_function("csv_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 python_code <- function(...) {
-  .deprecate_teal_data("python_code()")
+  .deprecate_function("python_code()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 python_dataset_connector <- function(...) {
-  .deprecate_teal_data("python_dataset_connector()")
+  .deprecate_function("python_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 python_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("python_cdisc_dataset_connector()")
+  .deprecate_function("python_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_data_connector <- function(...) {
-  .deprecate_teal_data("cdisc_data_connector()")
+  .deprecate_function("cdisc_data_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_dataset <- function(...) {
-  .deprecate_teal_data("cdisc_dataset()")
+  .deprecate_function("cdisc_dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("cdisc_dataset_connector()")
+  .deprecate_function("cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_dataset_connector_file <- function(...) {
-  .deprecate_teal_data("cdisc_dataset_connector_file()")
+  .deprecate_function("cdisc_dataset_connector_file()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_dataset_file <- function(...) {
-  .deprecate_teal_data("cdisc_dataset_file()")
+  .deprecate_function("cdisc_dataset_file()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 dataset <- function(...) {
-  .deprecate_teal_data("dataset()")
+  .deprecate_function("dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 dataset_connector <- function(...) {
-  .deprecate_teal_data("dataset_connector()")
+  .deprecate_function("dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 dataset_connector_file <- function(...) {
-  .deprecate_teal_data("dataset_connector_file()")
+  .deprecate_function("dataset_connector_file()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 dataset_file <- function(...) {
-  .deprecate_teal_data("dataset_file()")
+  .deprecate_function("dataset_file()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 data_connection <- function(...) {
-  .deprecate_teal_data("data_connection()")
+  .deprecate_function("data_connection()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 fun_dataset_connector <- function(...) {
-  .deprecate_teal_data("fun_dataset_connector()")
+  .deprecate_function("fun_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 fun_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("fun_cdisc_dataset_connector()")
+  .deprecate_function("fun_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 relational_data_connector <- function(...) {
-  .deprecate_teal_data("relational_data_connector()")
+  .deprecate_function("relational_data_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 mae_dataset <- function(...) {
-  .deprecate_teal_data("mae_dataset()")
+  .deprecate_function("mae_dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_attrs <- function(...) {
-  .deprecate_teal_data("get_attrs()")
+  .deprecate_function("get_attrs()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_dataset_label <- function(...) {
-  .deprecate_teal_data("get_dataset_label()")
+  .deprecate_function("get_dataset_label()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_dataset <- function(...) {
-  .deprecate_teal_data("get_dataset()")
+  .deprecate_function("get_dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_datasets <- function(...) {
-  .deprecate_teal_data("get_datasets()")
+  .deprecate_function("get_datasets()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_dataname <- function(...) {
-  .deprecate_teal_data("get_dataname()")
+  .deprecate_function("get_dataname()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_key_duplicates <- function(...) {
-  .deprecate_teal_data("get_key_duplicates()")
+  .deprecate_function("get_key_duplicates()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_keys <- function(...) {
-  .deprecate_teal_data("get_keys()")
+  .deprecate_function("get_keys()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_raw_data <- function(...) {
-  .deprecate_teal_data("get_raw_data()")
+  .deprecate_function("get_raw_data()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 is_pulled <- function(...) {
-  .deprecate_teal_data("is_pulled()")
+  .deprecate_function("is_pulled()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 load_dataset <- function(...) {
-  .deprecate_teal_data("load_dataset()")
+  .deprecate_function("load_dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 load_datasets <- function(...) {
-  .deprecate_teal_data("load_datasets()")
+  .deprecate_function("load_datasets()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 mutate_data <- function(...) {
-  .deprecate_teal_data("mutate_data()")
+  .deprecate_function("mutate_data()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 mutate_dataset <- function(...) {
-  .deprecate_teal_data("mutate_dataset()")
+  .deprecate_function("mutate_dataset()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 set_args <- function(...) {
-  .deprecate_teal_data("set_args()")
+  .deprecate_function("set_args()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 rds_dataset_connector <- function(...) {
-  .deprecate_teal_data("rds_dataset_connector()")
+  .deprecate_function("rds_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 rds_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("rds_cdisc_dataset_connector()")
+  .deprecate_function("rds_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 script_dataset_connector <- function(...) {
-  .deprecate_teal_data("script_dataset_connector()")
+  .deprecate_function("script_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 script_cdisc_dataset_connector <- function(...) {
-  .deprecate_teal_data("script_cdisc_dataset_connector()")
+  .deprecate_function("script_cdisc_dataset_connector()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 set_keys <- function(...) {
-  .deprecate_teal_data("set_keys()")
+  .deprecate_function("set_keys()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 read_script <- function(...) {
-  .deprecate_teal_data("read_script()")
+  .deprecate_function("read_script()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 to_relational_data <- function(...) {
-  .deprecate_teal_data("to_relational_data()")
+  .deprecate_function("to_relational_data()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 validate_metadata <- function(...) {
-  .deprecate_teal_data("validate_metadata()")
+  .deprecate_function("validate_metadata()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 get_cdisc_keys <- function(...) {
-  .deprecate_teal_data("get_cdisc_keys()")
+  .deprecate_function("get_cdisc_keys()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 cdisc_data_file <- function(...) {
-  .deprecate_teal_data("cdisc_data_file()")
+  .deprecate_function("cdisc_data_file()", deprecation_detail)
 }
 
 #' @rdname TealData
 #' @export
 teal_data_file <- function(...) {
-  .deprecate_teal_data("teal_data_file()")
+  .deprecate_function("teal_data_file()", deprecation_detail)
 }
 
-#' Deprecated function to retrieve `join_keys` from dataset.
-#'
-#' @description `r lifecycle::badge("deprecated")`\cr
-#' This function has been deprecated. Please see [join_keys()] instead.
-#' Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
-#' @param ... data argument.
-#' @return nothing
+#' @rdname TealData
 #' @export
 get_join_keys <- function(...) {
-  lifecycle::deprecate_stop(
-    when = "0.3.1",
-    what = "get_join_keys()",
-    details = "Use `join_keys(data)` instead."
-  )
+  .deprecate_function("get_join_keys()", "Use `join_keys(data)` instead.")
 }
 
-#' @rdname get_join_keys
+#' @rdname TealData
 #' @param value value to assign
 #' @export
 `get_join_keys<-` <- function(..., value) {
-  lifecycle::deprecate_stop(
-    when = "0.3.1",
-    what = "`get_join_keys<-`()",
-    details = "Use `join_keys(x) <- ...`"
-  )
+  .deprecate_function("`get_join_keys<-`()", "Use `join_keys(x) <- ...`")
 }
 
-#' Deprecated function to get label attributes of variables in a `data.frame`
-#'
-#' @description `r lifecycle::badge("deprecated")`\cr
-#' This function has been deprecated. Please see [col_labels()] instead.
-#' @param ... any arguments.
-#' @return nothing
+#' @rdname col_labels
+#' @details `get_labels()` (`r lifecycle::badge("deprecated")` use `col_labels` instead)
 #' @export
 get_labels <- function(...) {
-  lifecycle::deprecate_stop(
-    when = "0.3.1",
-    what = "get_labels()",
-    details = "Use col_labels(data)"
-  )
+  .deprecate_function("get_labels()", "Use col_labels(data)")
 }

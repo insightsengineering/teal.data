@@ -51,6 +51,8 @@
 \alias{get_cdisc_keys}
 \alias{cdisc_data_file}
 \alias{teal_data_file}
+\alias{get_join_keys}
+\alias{get_join_keys<-}
 \title{Deprecated \code{TealData} class and related functions}
 \usage{
 as_cdisc(...)
@@ -150,15 +152,24 @@ get_cdisc_keys(...)
 cdisc_data_file(...)
 
 teal_data_file(...)
+
+get_join_keys(...)
+
+get_join_keys(...) <- value
 }
 \arguments{
 \item{...}{any argument supported in \code{TealData} related functions.}
+
+\item{value}{value to assign}
 }
 \value{
 nothing
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
-This function has been deprecated. Please see \code{\link[=teal_data]{teal_data()}} and \code{\link[=cdisc_data]{cdisc_data()}} instead.
-Find more information on \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide}.
+The TealData class and associated functions have been deprecated. Use \code{\link[=teal_data]{teal_data()}} instead.
+See the \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide} for details.
+}
+\seealso{
+\code{\link[=cdisc_data]{cdisc_data()}} , \code{\link[=join_keys]{join_keys()}}
 }
