@@ -331,7 +331,11 @@ get_join_keys <- function(...) {
 }
 
 #' @rdname col_labels
-#' @details `get_labels()` (`r lifecycle::badge("deprecated")` use `col_labels` instead)
+#' @include formatters_var_labels.R
+#' @details
+#' `r lifecycle::badge("deprecated")`\cr
+#' In previous versions fo `teal.gata` labels were managed with `get_labels()`.
+#' This function is deprecated as of `0.3.1`, use `col_labels` instead.
 #' @export
 get_labels <- function(...) {
   .deprecate_function("get_labels()", "Use col_labels(data)")
