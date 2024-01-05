@@ -23,8 +23,10 @@ testthat::test_that("col_labels returns a vector of column names when fill = TRU
 test_that("col_relabel correctly changes column labels in a data frame", {
   iris_df <- iris
   iris_df <- col_relabel(iris_df, Sepal.Length = "Sepal Length of iris flower")
-  testthat::expect_equal(col_labels(iris_df)[["Sepal.Length"]], "Sepal Length of iris flower")
-  testthat::expect_equal(col_labels(iris)[["Sepal.Length"]], NA_character_)
+  testthat::expect_identical(
+    col_labels(iris_df),
+    stats::setNames(c("Sepal Length of iris flower", rep(NA, 4)), nm = names(iris_df))
+  )
 })
 
 test_that("col_relabel throws an error for non-existent columns", {
