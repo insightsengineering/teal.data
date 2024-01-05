@@ -167,7 +167,7 @@ nothing
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
-The TealData class and associated functions have been deprecated. Use \code{\link[=teal_data]{teal_data()}} instead.
+The \code{TealData} class and associated functions have been deprecated. Use \code{\link[=teal_data]{teal_data()}} instead.
 See the \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide} for details.
 }
 \seealso{
