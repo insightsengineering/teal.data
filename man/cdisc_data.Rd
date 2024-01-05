@@ -12,7 +12,7 @@ cdisc_data(
 )
 }
 \arguments{
-\item{...}{any number of any objects provided as \code{name = value} pairs.}
+\item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
 \item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
 (optional) object with datasets column names used for joining.
@@ -26,7 +26,7 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-\code{teal_data} object
+A \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

@@ -46,7 +46,7 @@ Variable labels can be stored as a \code{label} attribute set on individual vari
 These functions get or set this attribute, either on all (\code{col_labels}) or some variables (\code{col_relabel}).
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
-In previous versions fo \code{teal.gata} labels were managed with \code{get_labels()}.
+In previous versions of \code{teal.data} labels were managed with \code{get_labels()}.
 This function is deprecated as of \verb{0.3.1}, use \code{col_labels} instead.
 }
 \examples{

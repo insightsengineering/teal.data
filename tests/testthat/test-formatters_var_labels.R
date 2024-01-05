@@ -1,19 +1,19 @@
 testthat::test_that("col_labels accepts an empty data.frame", {
-  testthat::expect_error(col_labels(data.frame()), regexp = NA)
+  testthat::expect_no_error(col_labels(data.frame()))
 })
 
-testthat::test_that("col_labels' returns empty character vector for a data.frame with no columns", {
+testthat::test_that("col_labels returns empty character vector for a data.frame with no columns", {
   testthat::expect_equal(col_labels(data.frame()[1:5, ], fill = TRUE), character(0))
 })
 
-testthat::test_that("col_labels' returns a named vector of NA when fill = FALSE and there are no labels", {
+testthat::test_that("col_labels returns a named vector of NA when fill = FALSE and there are no labels", {
   testthat::expect_equal(
     col_labels(iris, fill = FALSE),
     stats::setNames(rep(NA_character_, times = ncol(iris)), nm = colnames(iris))
   )
 })
 
-testthat::test_that("col_labels' returns a vector of column names when fill = TRUE and there are no labels", {
+testthat::test_that("col_labels returns a vector of column names when fill = TRUE and there are no labels", {
   testthat::expect_equal(
     col_labels(iris, fill = TRUE),
     stats::setNames(colnames(iris), nm = colnames(iris))

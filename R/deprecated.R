@@ -334,7 +334,7 @@ get_join_keys <- function(...) {
 #' @include formatters_var_labels.R
 #' @details
 #' `r lifecycle::badge("deprecated")`\cr
-#' In previous versions fo `teal.gata` labels were managed with `get_labels()`.
+#' In previous versions of `teal.data` labels were managed with `get_labels()`.
 #' This function is deprecated as of `0.3.1`, use `col_labels` instead.
 #' @export
 get_labels <- function(...) {

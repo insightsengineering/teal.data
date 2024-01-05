@@ -10,7 +10,7 @@
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys.
 #'   For ADAM datasets it would be automatically derived.
 #'
-#' @return `teal_data` object
+#' @return A `teal_data` object.
 #'
 #' @details This function checks if there were keys added to all data sets
 #'

@@ -3,7 +3,7 @@
 #' @description `r lifecycle::badge("stable")`
 #' Universal function to pass data to teal application.
 #'
-#' @param ... any number of any objects provided as `name = value` pairs.
+#' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.
 #' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
@@ -12,7 +12,7 @@
 #'  code included in the object definitions actually produces those objects.
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
 #'
-#' @return `teal_data` object.
+#' @return A `teal_data` object.
 #'
 #' @export
 #'

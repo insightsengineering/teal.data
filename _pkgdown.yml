@@ -53,8 +53,7 @@ reference:
       - col_labels<-
       - col_relabel
       - example_cdisc_data
-  - title: Deprecated functions and methods
-    desc: Functions deprecated in teal.data
+  - title: Deprecated
     contents:
       - TealData
       - get_labels
