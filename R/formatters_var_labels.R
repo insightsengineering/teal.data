@@ -5,7 +5,7 @@
 #' Variable labels can be stored as a `label` attribute set on individual variables.
 #' These functions get or set this attribute, either on all (`col_labels`) or some variables (`col_relabel`).
 #'
-#' @param x `data.frame`
+#' @param x (`data.frame` or `DataFrame`) data object
 #' @param fill (`logical(1)`) specifying what to return if variable has no label
 #' @param value (`character`) vector of variable labels of length equal to number of columns in `x`;
 #'  if named, names must match variable names in `x` and will be used as key to set labels;
@@ -35,7 +35,7 @@
 #' @export
 #'
 col_labels <- function(x, fill = FALSE) {
-  checkmate::assert_data_frame(x)
+  checkmate::test_multi_class(x, c("data.frame", "DataFrame"))
   checkmate::assert_flag(fill)
 
   if (ncol(x) == 0L) {
@@ -65,7 +65,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @rdname col_labels
 #' @export
 `col_labels<-` <- function(x, value) {
-  checkmate::assert_data_frame(x)
+  checkmate::test_multi_class(x, c("data.frame", "DataFrame"))
   checkmate::assert_character(value)
   checkmate::assert_true(
     ncol(x) == length(value),
@@ -83,7 +83,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @export
 #'
 col_relabel <- function(x, ...) {
-  checkmate::assert_data_frame(x)
+  checkmate::test_multi_class(DF, c("data.frame", "DataFrame"))
   if (missing(...)) {
     return(x)
   }

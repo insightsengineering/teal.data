@@ -18,7 +18,7 @@ col_labels(x) <- value
 col_relabel(x, ...)
 }
 \arguments{
-\item{x}{\code{data.frame}}
+\item{x}{(\code{data.frame} or \code{DataFrame}) data object}
 
 \item{fill}{(\code{logical(1)}) specifying what to return if variable has no label}
 
