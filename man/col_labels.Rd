@@ -7,9 +7,9 @@
 \alias{get_labels}
 \title{Variable Labels}
 \source{
-This function was taken 1-1 from
+These functions were taken from
 \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
-the dependency tree.
+the dependency tree and rewritten.
 }
 \usage{
 col_labels(x, fill = FALSE)
@@ -21,7 +21,7 @@ col_relabel(x, ...)
 get_labels(...)
 }
 \arguments{
-\item{x}{\code{data.frame}}
+\item{x}{(\code{data.frame} or \code{DataFrame}) data object}
 
 \item{fill}{(\code{logical(1)}) specifying what to return if variable has no label}
 
