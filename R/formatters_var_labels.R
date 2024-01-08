@@ -83,7 +83,7 @@ col_labels <- function(x, fill = FALSE) {
 #' @export
 #'
 col_relabel <- function(x, ...) {
-  checkmate::test_multi_class(DF, c("data.frame", "DataFrame"))
+  checkmate::test_multi_class(x, c("data.frame", "DataFrame"))
   if (missing(...)) {
     return(x)
   }
