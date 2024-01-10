@@ -1,11 +1,11 @@
-#' Data input for teal app
+#' Data input for `teal` app
 #'
 #' @description `r lifecycle::badge("stable")`
 #' Function is a wrapper around [teal_data()] and guesses `join_keys`
 #' for given datasets whose names match ADAM datasets names.
 #'
 #' @inheritParams teal_data
-#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
+#' @param join_keys (`join_keys`) object or a single (`join_key_set`) object\cr
 #'   (optional) object with datasets column names used for joining.
 #'   If empty then it would be automatically derived basing on intersection of datasets primary keys.
 #'   For ADAM datasets it would be automatically derived.

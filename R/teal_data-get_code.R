@@ -1,4 +1,4 @@
-#' Get Code from `teal_data`
+#' Get code from `teal_data` object
 #'
 #' Retrieve code from `teal_data` object.
 #'

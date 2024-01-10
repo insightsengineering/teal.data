@@ -2,7 +2,7 @@
 % Please edit documentation in R/testhat-helpers.R
 \name{all.equal.join_keys}
 \alias{all.equal.join_keys}
-\title{Test if Two Objects are (Nearly) Equal}
+\title{Test if two objects are (nearly) equal}
 \usage{
 \method{all}{equal.join_keys}(target, current, ...)
 }
@@ -20,7 +20,7 @@ and current testing \verb{near equality}.
 \details{
 If they are different, comparison is still made to some extent, and a report
 of the differences is returned.
-Do not use all.equal directly in if expressions—either use \code{isTRUE(all.equal(....))}
+Do not use \code{all.equal} directly in if expressions—either use \code{isTRUE(all.equal(....))}
 or identical if appropriate.
 
 The parents attribute comparison tolerates \code{NULL} and empty lists and will find

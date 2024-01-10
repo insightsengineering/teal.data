@@ -3,7 +3,7 @@
 \name{get_code,teal_data-method}
 \alias{get_code,teal_data-method}
 \alias{get_code}
-\title{Get Code from \code{teal_data}}
+\title{Get code from \code{teal_data} object}
 \usage{
 \S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
 }

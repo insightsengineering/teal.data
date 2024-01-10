@@ -14,7 +14,7 @@ internal
 rADAE
 }
 \description{
-Random adverse events
+Random adverse events.
 }
 \keyword{datasets}
 \keyword{internal}

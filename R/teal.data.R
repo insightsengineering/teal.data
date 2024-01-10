@@ -1,4 +1,4 @@
-#' teal.data: Reproducible data model for `teal` applications
+#' `teal.data`: Reproducible data model for `teal` applications
 #'
 #' This package extends `teal` applications by module which
 #' stores the data with they relationships (keys) and reproducible

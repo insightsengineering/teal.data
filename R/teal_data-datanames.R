@@ -1,4 +1,4 @@
-#' Names of Data Sets in `teal_data` Object
+#' Names of data sets in `teal_data` object
 #'
 #' Get or set the value of the `datanames` slot.
 #'
@@ -11,7 +11,7 @@
 #' @param x (`teal_data`) object to access or modify
 #' @param value (`character`) new value for `@datanames`; all elements must be names of variables existing in `@env`
 #'
-#' @return The contents of `@datanames` or `teal_data` with updated `@datanames`.
+#' @return The contents of `@datanames` or `teal_data` object with updated `@datanames`.
 #'
 #' @examples
 #' td <- teal_data(iris = iris)

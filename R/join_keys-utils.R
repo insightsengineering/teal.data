@@ -1,6 +1,6 @@
 #' Helper function to assert if two key sets contain incompatible keys
 #'
-#' return TRUE if compatible, throw error otherwise
+#' return TRUE if compatible, throw error otherwise.
 #' @keywords internal
 assert_compatible_keys <- function(join_key_1, join_key_2) {
   stop_message <- function(dataset_1, dataset_2) {
@@ -70,6 +70,10 @@ assert_parent_child <- function(x) {
   invisible(x)
 }
 
+#' Helper function to ensuring compatibility between two sets of keys
+#'
+#' return TRUE if compatible, throw error otherwise
+#' @keywords internal
 assert_compatible_keys2 <- function(x, y) {
   # Helper to flatten join_keys / join_key_set
   flatten_join_key_sets <- function(value) {
@@ -97,7 +101,7 @@ assert_compatible_keys2 <- function(x, y) {
   TRUE
 }
 
-#' Updates the keys of the datasets based on the parents.
+#' Updates the keys of the datasets based on the parents
 #'
 #' @param x (`join_keys`) object to update the keys.
 #'

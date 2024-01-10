@@ -1,6 +1,6 @@
 setOldClass("join_keys")
 
-#' Reproducible data.
+#' Reproducible data
 #'
 #' Reproducible data container class. Inherits code tracking behavior from [`teal.code::qenv-class`].
 #'
@@ -8,7 +8,7 @@ setOldClass("join_keys")
 #' The environment, code, data set names, and data joining keys are stored in their respective slots.
 #' These slots should never be accessed directly, use the provided get/set functions.
 #'
-#' As code is evaluated in `teal_data`, messages and warnings are stored in their respective slots.
+#' As code is evaluated in `teal_data` object, messages and warnings are stored in their respective slots.
 #' If errors are raised, a `qenv.error` object is returned.
 #'
 #' @name teal_data-class

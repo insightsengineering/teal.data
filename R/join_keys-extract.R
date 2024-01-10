@@ -126,7 +126,7 @@
 #' - `x[i] <- value`: This (without `j` parameter) **is not** a supported
 #' operation for `join_keys`.
 #' - `join_keys(x)[i, j] <- value`: Assignment to `join_keys` object stored in `x`,
-#' such as a `teal_data` or `join_keys` itself.
+#' such as a `teal_data` object or `join_keys` object itself.
 #'
 #' @export
 #' @examples

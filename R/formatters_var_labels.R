@@ -1,6 +1,6 @@
-#' Variable Labels
+#' Variable labels
 #'
-#' Get or set variable labels in a `data.frame`
+#' Get or set variable labels in a `data.frame`.
 #'
 #' @details Variable labels can be stored as a `label` attribute set on individual variables.
 #' These functions get or set this attribute, either on all (`col_labels`) or some variables (`col_relabel`).
@@ -81,7 +81,6 @@ col_labels <- function(x, fill = FALSE) {
 
 #' @rdname col_labels
 #' @export
-#'
 col_relabel <- function(x, ...) {
   checkmate::test_multi_class(x, c("data.frame", "DataFrame"))
   if (missing(...)) {

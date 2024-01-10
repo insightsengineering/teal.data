@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdisc_data.R
 \name{cdisc_data}
 \alias{cdisc_data}
-\title{Data input for teal app}
+\title{Data input for \code{teal} app}
 \usage{
 cdisc_data(
   ...,
@@ -14,7 +14,7 @@ cdisc_data(
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}

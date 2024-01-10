@@ -7,6 +7,6 @@
 assert_compatible_keys(join_key_1, join_key_2)
 }
 \description{
-return TRUE if compatible, throw error otherwise
+return TRUE if compatible, throw error otherwise.
 }
 \keyword{internal}

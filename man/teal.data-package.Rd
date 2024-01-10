@@ -4,7 +4,7 @@
 \name{teal.data-package}
 \alias{teal.data}
 \alias{teal.data-package}
-\title{teal.data: Reproducible data model for \code{teal} applications}
+\title{\code{teal.data}: Reproducible data model for \code{teal} applications}
 \description{
 This package extends \code{teal} applications by module which
 stores the data with they relationships (keys) and reproducible

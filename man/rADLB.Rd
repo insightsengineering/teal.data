@@ -14,7 +14,7 @@ internal
 rADLB
 }
 \description{
-Random lab analysis
+Random lab analysis.
 }
 \keyword{datasets}
 \keyword{internal}

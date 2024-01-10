@@ -2,7 +2,7 @@
 % Please edit documentation in R/dummy_function.R
 \name{example_cdisc_data}
 \alias{example_cdisc_data}
-\title{This function returns a dummy dataset for testing examples and should only be used within \code{teal.data}.}
+\title{Generate sample \code{CDISC} datasets for testing \code{teal} application}
 \usage{
 example_cdisc_data(dataname)
 }
@@ -13,6 +13,7 @@ example_cdisc_data(dataname)
 \code{cdisc_data}
 }
 \description{
+This function returns a dummy dataset for testing examples and should only be used within \code{teal.data}.
 It is not meant to retrieve the \code{SCDA} dataset, and the dataset itself is not maintained here.
 }
 \details{

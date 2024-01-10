@@ -14,7 +14,7 @@ internal
 rADEX
 }
 \description{
-Random Exposure
+Random exposure.
 }
 \keyword{datasets}
 \keyword{internal}

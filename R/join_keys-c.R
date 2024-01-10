@@ -4,7 +4,7 @@
 #'
 #' @examples
 #'
-#' # Merging multiple `join_keys` ---
+#' # Merging multiple `join_keys` objects ---
 #'
 #' jk_merged <- c(
 #'   jk,

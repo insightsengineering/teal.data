@@ -3,7 +3,7 @@
 \docType{class}
 \name{teal_data-class}
 \alias{teal_data-class}
-\title{Reproducible data.}
+\title{Reproducible data}
 \description{
 Reproducible data container class. Inherits code tracking behavior from \code{\link[teal.code:qenv-class]{teal.code::qenv}}.
 }
@@ -12,7 +12,7 @@ This class provides an isolated environment in which to store and process data w
 The environment, code, data set names, and data joining keys are stored in their respective slots.
 These slots should never be accessed directly, use the provided get/set functions.
 
-As code is evaluated in \code{teal_data}, messages and warnings are stored in their respective slots.
+As code is evaluated in \code{teal_data} object, messages and warnings are stored in their respective slots.
 If errors are raised, a \code{qenv.error} object is returned.
 }
 \section{Slots}{

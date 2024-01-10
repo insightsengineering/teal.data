@@ -7,7 +7,7 @@
 \alias{datanames,qenv.error-method}
 \alias{datanames<-,qenv.error,character-method}
 \alias{datanames<-}
-\title{Names of Data Sets in \code{teal_data} Object}
+\title{Names of data sets in \code{teal_data} object}
 \usage{
 datanames(x)
 
@@ -19,7 +19,7 @@ datanames(x) <- value
 \item{value}{(\code{character}) new value for \verb{@datanames}; all elements must be names of variables existing in \verb{@env}}
 }
 \value{
-The contents of \verb{@datanames} or \code{teal_data} with updated \verb{@datanames}.
+The contents of \verb{@datanames} or \code{teal_data} object with updated \verb{@datanames}.
 }
 \description{
 Get or set the value of the \code{datanames} slot.

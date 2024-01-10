@@ -5,7 +5,7 @@
 \alias{col_labels<-}
 \alias{col_relabel}
 \alias{get_labels}
-\title{Variable Labels}
+\title{Variable labels}
 \source{
 These functions were taken from
 \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
@@ -39,7 +39,7 @@ the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill 
 For \verb{col_labels<-} and \code{col_relabel}, copy of \code{x} with variable labels modified.
 }
 \description{
-Get or set variable labels in a \code{data.frame}
+Get or set variable labels in a \code{data.frame}.
 }
 \details{
 Variable labels can be stored as a \code{label} attribute set on individual variables.

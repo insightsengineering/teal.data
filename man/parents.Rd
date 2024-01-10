@@ -8,7 +8,7 @@
 \alias{parents<-.join_keys}
 \alias{parents<-.teal_data}
 \alias{parent}
-\title{Getter and setter functions for parents attribute of \code{join_keys}}
+\title{Getter and setter functions for parents attribute of \code{join_keys} object}
 \usage{
 parents(x)
 
@@ -58,7 +58,7 @@ Each element is defined by a list element, where \code{list("child" = "parent")}
 
 \item \code{parents(teal_data) <- value}: Assignment of parents of \code{join_keys} inside \code{teal_data} object.
 
-\item \code{parent()}: Getter for individual parent
+\item \code{parent()}: Getter for individual parent.
 
 }}
 \examples{

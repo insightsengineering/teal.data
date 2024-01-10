@@ -1,5 +1,6 @@
-#' This function returns a dummy dataset for testing examples and should only be used within `teal.data`.
+#' Generate sample `CDISC` datasets for testing `teal` application
 #'
+#' This function returns a dummy dataset for testing examples and should only be used within `teal.data`.
 #' It is not meant to retrieve the `SCDA` dataset, and the dataset itself is not maintained here.
 #'
 #' This function creates a copy of the `SCDA` data for testing purposes.

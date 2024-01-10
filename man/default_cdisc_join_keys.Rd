@@ -3,9 +3,9 @@
 \docType{data}
 \name{default_cdisc_join_keys}
 \alias{default_cdisc_join_keys}
-\title{List containing the default \code{CDISC} join keys}
+\title{List containing the default \code{CDISC} datasets \code{join_keys} objects}
 \description{
-List containing the default \code{CDISC} join keys
+List containing the default \code{CDISC} datasets \code{join_keys} objects
 }
 \details{
 This data object is created at loading time from \code{cdisc_datasets/cdisc_datasets.yaml}.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/teal_data.R
 \name{teal_data}
 \alias{teal_data}
-\title{Teal Data}
+\title{Comprehensive data integration function for \code{teal} applications}
 \usage{
 teal_data(
   ...,
@@ -14,7 +14,7 @@ teal_data(
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 

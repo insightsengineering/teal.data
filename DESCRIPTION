@@ -71,6 +71,5 @@ Collate:
     'testhat-helpers.R'
     'topological_sort.R'
     'utils-get_code_dependency.R'
-    'utils.R'
     'verify.R'
     'zzz.R'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_keys-utils.R
 \name{update_keys_given_parents}
 \alias{update_keys_given_parents}
-\title{Updates the keys of the datasets based on the parents.}
+\title{Updates the keys of the datasets based on the parents}
 \usage{
 update_keys_given_parents(x)
 }
@@ -13,6 +13,6 @@ update_keys_given_parents(x)
 (\code{self}) invisibly for chaining
 }
 \description{
-Updates the keys of the datasets based on the parents.
+Updates the keys of the datasets based on the parents
 }
 \keyword{internal}

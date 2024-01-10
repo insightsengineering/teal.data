@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-get_code_dependency.R
 \name{get_code_dependency}
 \alias{get_code_dependency}
-\title{Get Code Dependency of an Object}
+\title{Get code dependency of an object}
 \usage{
 get_code_dependency(code, names, check_names = TRUE)
 }

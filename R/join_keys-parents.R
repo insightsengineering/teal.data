@@ -1,4 +1,4 @@
-#' Getter and setter functions for parents attribute of `join_keys`
+#' Getter and setter functions for parents attribute of `join_keys` object
 #'
 #' @description
 #' `parents()` facilitates the creation of dependencies between datasets by
@@ -120,7 +120,7 @@ parents.teal_data <- function(x) {
   x
 }
 
-#' @describeIn parents Getter for individual parent
+#' @describeIn parents Getter for individual parent.
 #'
 #' @param dataset_name (`character(1)`) Name of dataset to query on their parent.
 #'

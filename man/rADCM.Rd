@@ -3,7 +3,7 @@
 \docType{data}
 \name{rADCM}
 \alias{rADCM}
-\title{Random Concomitant Medications}
+\title{Random concomitant medications}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 3685 rows and 83 columns.
 }
@@ -14,7 +14,7 @@ internal
 rADCM
 }
 \description{
-Random Concomitant Medications
+Random concomitant medications.
 }
 \keyword{datasets}
 \keyword{internal}
