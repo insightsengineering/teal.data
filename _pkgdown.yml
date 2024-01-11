@@ -21,8 +21,8 @@ navbar:
       href: https://github.com/insightsengineering/teal.data
 
 articles:
-  - title: Getting Started
-    navbar: Getting Started
+  - title: Get started
+    navbar: Get started
     contents:
       - teal-data
       - teal-data-reproducibility
