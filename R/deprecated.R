@@ -2,7 +2,7 @@
 #'
 #' @description `r lifecycle::badge("deprecated")`\cr
 #' The `TealData` class and associated functions have been deprecated. Use [teal_data()] instead.
-#' See the \href{https://github.com/insightsengineering/teal/discussions/945}{Migration guide} for details.
+#' See the [Migration guide](https://github.com/insightsengineering/teal/discussions/945) for details.
 #'
 #' @name TealData
 #'

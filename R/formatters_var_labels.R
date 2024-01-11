@@ -28,7 +28,7 @@
 #' col_labels(y)
 #'
 #' @source These functions were taken from
-#' \href{https://cran.r-project.org/package=formatters}{formatters} package, to reduce the complexity of
+#' [formatters](https://cran.r-project.org/package=formatters) package, to reduce the complexity of
 #' the dependency tree and rewritten.
 #'
 #' @rdname col_labels
