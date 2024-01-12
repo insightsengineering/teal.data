@@ -8,7 +8,7 @@
 \alias{parents<-.join_keys}
 \alias{parents<-.teal_data}
 \alias{parent}
-\title{Getter and setter functions for parents attribute of \code{join_keys} object}
+\title{Get and set parents in \code{join_keys} object}
 \usage{
 parents(x)
 

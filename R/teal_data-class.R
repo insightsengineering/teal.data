@@ -8,7 +8,7 @@ setOldClass("join_keys")
 #' The environment, code, data set names, and data joining keys are stored in their respective slots.
 #' These slots should never be accessed directly, use the provided get/set functions.
 #'
-#' As code is evaluated in `teal_data` object, messages and warnings are stored in their respective slots.
+#' As code is evaluated in `teal_data`, messages and warnings are stored in their respective slots.
 #' If errors are raised, a `qenv.error` object is returned.
 #'
 #' @name teal_data-class
@@ -50,7 +50,7 @@ setClass(
 #' Initialize `teal_data` object.
 #' @name new_teal_data
 #'
-#' @param data (named `list`) `list` of data.
+#' @param data (`named list`) of data objects.
 #' @param code (`character` or `language`) code to reproduce the `data`.
 #'   Accepts and stores comments also.
 #' @param join_keys (`join_keys`) object

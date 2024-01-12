@@ -8,10 +8,10 @@
 #' @description
 #' Facilitates the creation and retrieval of relationships between datasets.
 #' `join_keys` class extends `list` and contains keys connecting pairs of datasets.
-#' Each element of the `list` contains keys for specific dataset.
+#' Each element of the list contains keys for specific dataset.
 #' Each dataset can have a relationship with itself (primary key) and with other datasets.
 #'
-#' Note that `join_keys` `list` is symmetrical and assumes a default direction, that is:
+#' Note that `join_keys` list is symmetrical and assumes a default direction, that is:
 #' when keys are set between `ds1` and `ds2`, it defines `ds1` as the parent
 #' in a parent-child relationship and the mapping is automatically mirrored between
 #' `ds2` and `ds1`.
@@ -29,7 +29,7 @@
 #' @param value For `x[i, j, directed = TRUE)] <- value` (named/unnamed `character`)
 #' Column mapping between datasets.
 #'
-#' For `join_keys(x) <- value`: (`join_key_set` or `list` of `join_key_set`) relationship
+#' For `join_keys(x) <- value`: (`join_key_set` or list of `join_key_set`) relationship
 #' pairs to add to `join_keys` list.
 #'
 #'

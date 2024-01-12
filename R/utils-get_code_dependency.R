@@ -112,7 +112,7 @@ fix_comments <- function(calls) {
 #'  created by `extract_calls()` function
 #'
 #' @return
-#' A `list` (of length of input `calls_pd`) where each element represents one call.
+#' A list (of length of input `calls_pd`) where each element represents one call.
 #' Each element is a character vector listing names of objects that depend on this call
 #' and names of objects that this call depends on.
 #' Dependencies are listed after the `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
@@ -139,7 +139,7 @@ code_graph <- function(calls_pd) {
 #'  created by `extract_calls()` function
 #'
 #' @return
-#' A `list` (of length of input `calls_pd`) where each element represents one call.
+#' A list (of length of input `calls_pd`) where each element represents one call.
 #' Each element is a character vector listing names of objects that depend on this call
 #' and names of objects that this call depends on.
 #' Dependencies are listed after the `"<-"` string, e.g. `c("a", "<-", "b", "c")` means that in this call object `a`
@@ -226,7 +226,7 @@ extract_occurrence <- function(calls_pd) {
 #'  created by `extract_calls()` function
 #'
 #' @return
-#' A `list` of length equal to that of `calls_pd`, where each element is a character vector of names of objects
+#' A list of length equal to that of `calls_pd`, where each element is a character vector of names of objects
 #' depending a call tagged with `@linksto` in a corresponding element of `calls_pd`.
 #'
 #' @keywords internal

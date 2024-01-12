@@ -1,4 +1,4 @@
-#' The names of an `join_keys` object
+#' The names of a `join_keys` object
 #' @inheritParams base::`names<-`
 #' @export
 `names<-.join_keys` <- function(x, value) {

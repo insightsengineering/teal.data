@@ -7,7 +7,7 @@
 is_dag(graph)
 }
 \arguments{
-\item{graph}{(named \code{list}) \code{list }with node vector elements}
+\item{graph}{(\verb{named list}) with node vector elements}
 }
 \value{
 \code{logical(1)} \code{TRUE} if the graph is a \code{DAG}; \code{FALSE} otherwise

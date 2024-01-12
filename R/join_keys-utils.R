@@ -1,6 +1,6 @@
 #' Helper function to assert if two key sets contain incompatible keys
 #'
-#' return TRUE if compatible, throw error otherwise.
+#' @return Returns TRUE if successful, otherwise raises error.
 #' @keywords internal
 assert_compatible_keys <- function(join_key_1, join_key_2) {
   stop_message <- function(dataset_1, dataset_2) {

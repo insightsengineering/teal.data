@@ -5,7 +5,7 @@
 #'
 #' Implementation of `Kahn` algorithm with a modification to maintain the order of input elements.
 #'
-#' @param graph (named `list`) `list `with node vector elements
+#' @param graph (`named list`) with node vector elements
 #' @keywords internal
 topological_sort <- function(graph) {
   # compute in-degrees

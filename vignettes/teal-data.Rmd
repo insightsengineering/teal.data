@@ -46,7 +46,7 @@ print(my_data)
 ```
 
 
-## `teal_data` object characteristics
+## `teal_data` characteristics
 
 `teal_data` class object keeps the following information:
 - `env` - an environment containing data. 

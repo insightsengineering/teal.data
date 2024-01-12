@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_keys-names.R
 \name{names<-.join_keys}
 \alias{names<-.join_keys}
-\title{The names of an \code{join_keys} object}
+\title{The names of a \code{join_keys} object}
 \usage{
 \method{names}{join_keys}(x) <- value
 }
@@ -13,5 +13,5 @@
     \code{NULL}.}
 }
 \description{
-The names of an \code{join_keys} object
+The names of a \code{join_keys} object
 }

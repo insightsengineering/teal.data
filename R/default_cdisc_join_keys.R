@@ -1,4 +1,4 @@
-#' List containing the default `CDISC` datasets `join_keys` objects
+#' List containing default joining keys for `CDISC` datasets
 #'
 #' @details
 #' This data object is created at loading time from `cdisc_datasets/cdisc_datasets.yaml`.

@@ -1,4 +1,4 @@
-#' Getter and setter functions for parents attribute of `join_keys` object
+#' Get and set parents in `join_keys` object
 #'
 #' @description
 #' `parents()` facilitates the creation of dependencies between datasets by

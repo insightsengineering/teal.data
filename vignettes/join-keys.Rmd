@@ -30,7 +30,7 @@ The primary function of the `join_keys` class in `teal` applications is to facil
 Additionally, it plays a role in the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/latest-tag/articles/filter-panel.html)_ in a `teal` application.
 The filters applied to a (parent) dataset are also applied to their children.
 
-## Anatomy of Join Keys
+## Anatomy of `join_keys`
 
 The `join_keys` object contains information about the foreign/primary keys of multiple datasets.
 Each key is represented by a pair of datasets (by name reference) and a named character vector that encodes the column name mapping between the two datasets.

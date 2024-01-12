@@ -1,15 +1,13 @@
-#' Generate sample `CDISC` datasets for testing `teal` application
+#' Generate sample `CDISC` datasets
 #'
-#' This function returns a dummy dataset for testing examples and should only be used within `teal.data`.
-#' It is not meant to retrieve the `SCDA` dataset, and the dataset itself is not maintained here.
+#' Retrieves example `CDISC` datasets for use in examples and testing.
 #'
-#' This function creates a copy of the `SCDA` data for testing purposes.
+#' This function returns a dummy dataset and should only be used within `teal.data`.
+#' Note that the datasets are not created and maintained in `teal.data`, they are retrieved its dependencies.
 #'
-#' `CDISC` data includes `ADSL`, `ADAE`, `ADLB`, `ADCM`, `ADEX`, `ADRS`, `ADTR` and `ADTTE`.
+#' @param dataname (`character(1)`) name of a `CDISC` dataset
 #'
-#' @param dataname name of the `CDISC` dataset
-#'
-#' @return `cdisc_data`
+#' @return A `CDISC` dataset as a `data.frame`.
 #'
 #' @export
 example_cdisc_data <- function(dataname) {
