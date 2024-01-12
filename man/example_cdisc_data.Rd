@@ -4,7 +4,9 @@
 \alias{example_cdisc_data}
 \title{Generate sample \code{CDISC} datasets}
 \usage{
-example_cdisc_data(dataname)
+example_cdisc_data(
+  dataname = c("ADSL", "ADAE", "ADLB", "ADCM", "ADEX", "ADRS", "ADTR", "ADTTE", "ADVS")
+)
 }
 \arguments{
 \item{dataname}{(\code{character(1)}) name of a \code{CDISC} dataset}
