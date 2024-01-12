@@ -6,7 +6,10 @@
 \usage{
 assert_compatible_keys2(x, y)
 }
+\value{
+Return \code{TRUE} if compatible, throw error otherwise
+}
 \description{
-return TRUE if compatible, throw error otherwise
+Helper function to ensuring compatibility between two sets of keys
 }
 \keyword{internal}

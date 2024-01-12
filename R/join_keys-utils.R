@@ -72,7 +72,7 @@ assert_parent_child <- function(x) {
 
 #' Helper function to ensuring compatibility between two sets of keys
 #'
-#' return TRUE if compatible, throw error otherwise
+#' @return Return `TRUE` if compatible, throw error otherwise
 #' @keywords internal
 assert_compatible_keys2 <- function(x, y) {
   # Helper to flatten join_keys / join_key_set
