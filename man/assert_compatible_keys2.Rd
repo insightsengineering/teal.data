@@ -7,7 +7,7 @@
 assert_compatible_keys2(x, y)
 }
 \value{
-Return \code{TRUE} if compatible, throw error otherwise
+Returns TRUE if successful, otherwise raises error.
 }
 \description{
 Helper function to ensuring compatibility between two sets of keys
