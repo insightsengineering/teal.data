@@ -67,7 +67,7 @@ a parent-child relationship between the datasets.\cr
 \item{value}{For \verb{x[i, j, directed = TRUE)] <- value} (named/unnamed \code{character})
 Column mapping between datasets.
 
-For \code{join_keys(x) <- value}: (\code{join_key_set} or list of \code{join_key_set}) relationship
+For \code{join_keys(x) <- value}: (\code{join_key_set} or \code{list} of \code{join_key_set}) relationship
 pairs to add to \code{join_keys} list.
 
 [i, j, directed = TRUE)]: R:i,\%20j,\%20directed\%20=\%20TRUE)}
@@ -78,10 +78,10 @@ pairs to add to \code{join_keys} list.
 \description{
 Facilitates the creation and retrieval of relationships between datasets.
 \code{join_keys} class extends \code{list} and contains keys connecting pairs of datasets.
-Each element of the list contains keys for specific dataset.
+Each element of the \code{list} contains keys for specific dataset.
 Each dataset can have a relationship with itself (primary key) and with other datasets.
 
-Note that \code{join_keys} list is symmetrical and assumes a default direction, that is:
+Note that \code{join_keys} \code{list} is symmetrical and assumes a default direction, that is:
 when keys are set between \code{ds1} and \code{ds2}, it defines \code{ds1} as the parent
 in a parent-child relationship and the mapping is automatically mirrored between
 \code{ds2} and \code{ds1}.

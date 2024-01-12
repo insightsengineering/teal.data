@@ -12,7 +12,7 @@ new_teal_data(
 )
 }
 \arguments{
-\item{data}{(\verb{named list}) List of data.}
+\item{data}{(named \code{list}) \code{list} of data.}
 
 \item{code}{(\code{character} or \code{language}) code to reproduce the \code{data}.
 Accepts and stores comments also.}

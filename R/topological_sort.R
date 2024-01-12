@@ -1,11 +1,11 @@
 #' Topological graph sort
 #'
-#' Graph is a list which for each node contains a vector of child nodes
+#' Graph is a `list` which for each node contains a vector of child nodes
 #' in the returned list, parents appear before their children.
 #'
 #' Implementation of `Kahn` algorithm with a modification to maintain the order of input elements.
 #'
-#' @param graph (named `list`) list with node vector elements
+#' @param graph (named `list`) `list `with node vector elements
 #' @keywords internal
 topological_sort <- function(graph) {
   # compute in-degrees

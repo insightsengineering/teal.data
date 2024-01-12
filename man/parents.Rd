@@ -33,7 +33,7 @@ to retrieve or manipulate.}
 \item{dataset_name}{(\code{character(1)}) Name of dataset to query on their parent.}
 }
 \value{
-a list of \code{character} representing the parents.
+a \code{list} of \code{character} representing the parents.
 
 For \code{parent(x, dataset_name)} returns \code{NULL} if parent does not exist.
 }
@@ -41,7 +41,7 @@ For \code{parent(x, dataset_name)} returns \code{NULL} if parent does not exist.
 \code{parents()} facilitates the creation of dependencies between datasets by
 assigning a parent-child relationship.
 
-Each element is defined by a list element, where \code{list("child" = "parent")}.
+Each element is defined by a \code{list} element, where \code{list("child" = "parent")}.
 }
 \section{Methods (by class)}{
 \itemize{

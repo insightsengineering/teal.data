@@ -4,12 +4,12 @@
 #' `parents()` facilitates the creation of dependencies between datasets by
 #' assigning a parent-child relationship.
 #'
-#' Each element is defined by a list element, where `list("child" = "parent")`.
+#' Each element is defined by a `list` element, where `list("child" = "parent")`.
 #'
 #' @param x (`join_keys` or `teal_data`) object that contains "parents" information
 #' to retrieve or manipulate.
 #'
-#' @return a list of `character` representing the parents.
+#' @return a `list` of `character` representing the parents.
 #'
 #' @export
 #' @seealso [join_keys()]

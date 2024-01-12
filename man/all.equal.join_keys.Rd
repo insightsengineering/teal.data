@@ -26,7 +26,7 @@ or identical if appropriate.
 The parents attribute comparison tolerates \code{NULL} and empty lists and will find
 no difference.
 
-The list containing all the relationships is treated like a map and ignores
+The \code{list} containing all the relationships is treated like a map and ignores
 entries with \code{NULL} if they exist.
 }
 \seealso{

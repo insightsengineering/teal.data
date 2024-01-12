@@ -92,7 +92,7 @@ join_keys(my_data) <- default_cdisc_join_keys[datanames]
 ```r
 # quick start for general data
 my_general_data <- within(teal_data(), {
-  iris <- iris,
+  iris <- iris
   mtcars <- mtcars
 })
 ```

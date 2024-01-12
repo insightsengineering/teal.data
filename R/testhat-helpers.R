@@ -15,7 +15,7 @@
 #' The parents attribute comparison tolerates `NULL` and empty lists and will find
 #' no difference.
 #'
-#' The list containing all the relationships is treated like a map and ignores
+#' The `list` containing all the relationships is treated like a map and ignores
 #' entries with `NULL` if they exist.
 #'
 #' @seealso [base::all.equal()]
