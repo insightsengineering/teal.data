@@ -152,7 +152,7 @@ jk["ds4", "ds5"] <- NULL
 
 ## Merging Join Keys
 
-The consolidation of multiple _joining keys_ is achieved using the `c()` generic function, which generates a symmetric and valid `join_keys` object. When encountering identical relationship pairs, this operation retains the last occurrence of the pair within the specified argument order.
+The combining of multiple _joining keys_ is achieved using the `c()` generic function, which generates a symmetric and valid `join_keys` object. When encountering identical relationship pairs, this operation retains the last occurrence of the pair within the specified argument order.
 
 For added convenience, the function also accommodates `join_key_set` objects created through the `join_key` function. These objects can be provided as the initial argument or in any other position as needed.
 
