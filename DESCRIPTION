@@ -5,12 +5,17 @@ Version: 0.3.0.9033
 Date: 2024-01-11
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
+    person("Aleksander", "Chlebowski", , "aleksander.chlebowski@contractors.roche.com", role = "aut"),
+    person("Marcin", "Kosinski", , "marcin.kosinski.mk1@roche.com", role = "aut"),
+    person("Andre", "Verissimo", , "andre.verissimo@roche.com", role = "aut"),
     person("Pawel", "Rucki", , "pawel.rucki@roche.com", role = "aut"),
     person("Mahmoud", "Hallal", , "mahmoud.hallal@roche.com", role = "aut"),
     person("Nikolas", "Burkoff", role = "aut"),
     person("Maciej", "Nasinski", role = "aut"),
     person("Konrad", "Pagacz", role = "aut"),
     person("Junlue", "Zhao", role = "aut"),
+    person("Chendi", "Liao", , "chendi.liao@roche.com", role = "rev"),
+    person("Dony", "Unardi", , "unardid@gene.com", role = "rev"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
 Description: Utilities for data transformations compatible with 'teal'
