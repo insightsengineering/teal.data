@@ -7,7 +7,7 @@
 assert_compatible_keys(join_key_1, join_key_2)
 }
 \value{
-Returns TRUE if successful, otherwise raises error.
+Returns \code{TRUE} if successful, otherwise raises error.
 }
 \description{
 Helper function to assert if two key sets contain incompatible keys
