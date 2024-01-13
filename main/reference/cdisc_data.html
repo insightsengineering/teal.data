@@ -14,7 +14,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9032</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9033</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Getting Started</h6>
+    <h6 class="dropdown-header" data-toc-skip>Get started</h6>
     <a class="dropdown-item" href="../articles/teal-data.html">Introduction to teal.data</a>
     <a class="dropdown-item" href="../articles/teal-data-reproducibility.html">teal_data reproducibility</a>
     <a class="dropdown-item" href="../articles/join-keys.html">Join Keys</a>
@@ -40,16 +40,6 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -73,7 +63,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Data input for teal app</h1>
+      <img src="" class="logo" alt=""><h1>Data input for <code>teal</code> app</h1>
       <small class="dont-index">Source: <a href="https://github.com/insightsengineering/teal.data/blob/HEAD/R/cdisc_data.R" class="external-link"><code>R/cdisc_data.R</code></a></small>
       <div class="d-none name"><code>cdisc_data.Rd</code></div>
     </div>
@@ -97,13 +87,11 @@ for given datasets whose names match ADAM datasets names.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
-<dd><p>(<code>TealDataConnector</code>, <code>TealDataset</code>, <code>TealDatasetConnector</code>, <code>any</code>)<br>
-Either 1) an object of a <code>Teal*</code> class, which is deprecated and will be removed in next release,
-or 2) any number of any objects provided as <code>name = value</code> pairs, which is available from version <code>0.4.0</code>.</p></dd>
+<dd><p>any number of objects (presumably data objects) provided as <code>name = value</code> pairs.</p></dd>
 
 
 <dt>join_keys</dt>
-<dd><p>(<code>join_keys</code>) or a single (<code>join_key_set</code>)<br>
+<dd><p>(<code>join_keys</code>) object or a single (<code>join_key_set</code>) object<br>
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.</p></dd>
@@ -123,9 +111,8 @@ If <code>check</code> is true and preprocessing code is empty an error will be t
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<ul><li><p>a <code>TealData</code> object when <code>TealDataset</code> <code>TealDatasetConnector</code>, <code>TealDataConnector</code> is provided,</p></li>
-<li><p>a <code>teal_data</code> object otherwise.</p></li>
-</ul></div>
+<p>A <code>teal_data</code> object.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function checks if there were keys added to all data sets</p>
@@ -140,8 +127,8 @@ If <code>check</code> is true and preprocessing code is empty an error will be t
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">data</span>, <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">ADTTE</span> <span class="op">&lt;-</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADTTE"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">ADSL</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADSL"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">ADTTE</span> <span class="op">&lt;-</span> <span class="fu"><a href="example_cdisc_data.html">example_cdisc_data</a></span><span class="op">(</span><span class="st">"ADTTE"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

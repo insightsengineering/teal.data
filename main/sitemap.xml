@@ -49,6 +49,9 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/assert_compatible_keys.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/teal.data/reference/assert_compatible_keys2.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/assert_parent_child.html</loc>
   </url>
   <url>
@@ -58,13 +61,7 @@
     <loc>https://insightsengineering.github.io/teal.data/reference/cdisc_data.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/col_labels-set.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/col_labels.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/col_relabel.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/datanames.html</loc>
@@ -80,9 +77,6 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/get_code_dependency.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/teal.data/reference/get_join_keys.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/teal.data/reference/index.html</loc>
