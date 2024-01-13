@@ -2,21 +2,22 @@
 % Please edit documentation in R/dummy_function.R
 \name{example_cdisc_data}
 \alias{example_cdisc_data}
-\title{This function returns a dummy dataset for testing examples and should only be used within \code{teal.data}.}
+\title{Generate sample \code{CDISC} datasets}
 \usage{
-example_cdisc_data(dataname)
+example_cdisc_data(
+  dataname = c("ADSL", "ADAE", "ADLB", "ADCM", "ADEX", "ADRS", "ADTR", "ADTTE", "ADVS")
+)
 }
 \arguments{
-\item{dataname}{name of the \code{CDISC} dataset}
+\item{dataname}{(\code{character(1)}) name of a \code{CDISC} dataset}
 }
 \value{
-\code{cdisc_data}
+A \code{CDISC} dataset as a \code{data.frame}.
 }
 \description{
-It is not meant to retrieve the \code{SCDA} dataset, and the dataset itself is not maintained here.
+Retrieves example \code{CDISC} datasets for use in examples and testing.
 }
 \details{
-This function creates a copy of the \code{SCDA} data for testing purposes.
-
-\code{CDISC} data includes \code{ADSL}, \code{ADAE}, \code{ADLB}, \code{ADCM}, \code{ADEX}, \code{ADRS}, \code{ADTR} and \code{ADTTE}.
+This function returns a dummy dataset and should only be used within \code{teal.data}.
+Note that the datasets are not created and maintained in \code{teal.data}, they are retrieved its dependencies.
 }

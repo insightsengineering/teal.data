@@ -1,6 +1,6 @@
 # get_code_dependency ----
 
-#' Get Code Dependency of an Object
+#' Get code dependency of an object
 #'
 #' Extract subset of code required to reproduce specific object(s), including code producing side-effects.
 #'
@@ -70,6 +70,8 @@ extract_calls <- function(pd) {
   fix_comments(calls)
 }
 
+#' @keywords internal
+#' @noRd
 get_children <- function(pd, parent) {
   idx_children <- abs(pd$parent) == parent
   children <- pd[idx_children, c("token", "text", "id", "parent")]
@@ -82,6 +84,8 @@ get_children <- function(pd, parent) {
   }
 }
 
+#' @keywords internal
+#' @noRd
 fix_comments <- function(calls) {
   # If the first token is a COMMENT, then it belongs to the previous call.
   if (length(calls) >= 2) {
@@ -97,7 +101,7 @@ fix_comments <- function(calls) {
 
 # code_graph ----
 
-#' Create Object Dependencies Graph Within Parsed Code
+#' Create object dependencies graph within parsed code
 #'
 #' @description
 #' Builds dependency graph that identifies dependencies between objects in parsed code.
@@ -125,7 +129,7 @@ code_graph <- function(calls_pd) {
   mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
-#' Extract Object Occurrence
+#' Extract object occurrence
 #'
 #' @description Extracts objects occurrence within calls passed by `calls_pd`.
 #' Also detects which objects depend on which within a call.
@@ -206,7 +210,7 @@ extract_occurrence <- function(calls_pd) {
   )
 }
 
-#' Extract Side Effects
+#' Extract side effects
 #'
 #' @description Extracts all object names from the code that are marked with `@linksto` tag.
 #'
@@ -277,7 +281,7 @@ graph_parser <- function(x, graph) {
 
 # default_side_effects --------------------------------------------------------------------------------------------
 
-#' Detect Library Calls
+#' Detect library calls
 #'
 #' Detects `library()` and `require()` function calls.
 #'

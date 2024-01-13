@@ -4,7 +4,7 @@
 \name{teal.data-package}
 \alias{teal.data}
 \alias{teal.data-package}
-\title{teal.data: Reproducible data model for \code{teal} applications}
+\title{\code{teal.data}: Reproducible data model for \code{teal} applications}
 \description{
 This package extends \code{teal} applications by module which
 stores the data with they relationships (keys) and reproducible
@@ -25,6 +25,9 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Aleksander Chlebowski \email{aleksander.chlebowski@contractors.roche.com}
+  \item Marcin Kosinski \email{marcin.kosinski.mk1@roche.com}
+  \item Andre Verissimo \email{andre.verissimo@roche.com}
   \item Pawel Rucki \email{pawel.rucki@roche.com}
   \item Mahmoud Hallal \email{mahmoud.hallal@roche.com}
   \item Nikolas Burkoff
@@ -35,6 +38,8 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Chendi Liao \email{chendi.liao@roche.com} [reviewer]
+  \item Dony Unardi \email{unardid@gene.com} [reviewer]
   \item F. Hoffmann-La Roche AG [copyright holder, funder]
 }
 

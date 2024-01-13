@@ -1,6 +1,6 @@
 setOldClass("join_keys")
 
-#' Reproducible data.
+#' Reproducible data
 #'
 #' Reproducible data container class. Inherits code tracking behavior from [`teal.code::qenv-class`].
 #'
@@ -50,7 +50,7 @@ setClass(
 #' Initialize `teal_data` object.
 #' @name new_teal_data
 #'
-#' @param data (`named list`) List of data.
+#' @param data (`named list`) of data objects.
 #' @param code (`character` or `language`) code to reproduce the `data`.
 #'   Accepts and stores comments also.
 #' @param join_keys (`join_keys`) object

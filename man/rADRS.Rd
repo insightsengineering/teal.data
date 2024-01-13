@@ -14,7 +14,7 @@ internal
 rADRS
 }
 \description{
-Random response
+Random response.
 }
 \keyword{datasets}
 \keyword{internal}

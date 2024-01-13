@@ -6,7 +6,10 @@
 \usage{
 assert_compatible_keys(join_key_1, join_key_2)
 }
+\value{
+Returns \code{TRUE} if successful, otherwise raises error.
+}
 \description{
-return TRUE if compatible, throw error otherwise
+Helper function to assert if two key sets contain incompatible keys
 }
 \keyword{internal}

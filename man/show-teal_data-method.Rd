@@ -13,7 +13,7 @@
 Input \code{teal_data} object.
 }
 \description{
-Prints \code{teal_data} object
+Prints \code{teal_data} object.
 }
 \examples{
 teal_data()

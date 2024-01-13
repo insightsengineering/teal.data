@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdisc_data.R
 \name{cdisc_data}
 \alias{cdisc_data}
-\title{Data input for teal app}
+\title{Data input for \code{teal} app}
 \usage{
 cdisc_data(
   ...,
@@ -12,11 +12,9 @@ cdisc_data(
 )
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
-Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
-or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
+\item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}
@@ -28,10 +26,7 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-\itemize{
-\item a \code{TealData} object when \code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector} is provided,
-\item a \code{teal_data} object otherwise.
-}
+A \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
@@ -49,8 +44,8 @@ data <- cdisc_data(
 )
 
 data <- within(data, {
-  ADSL <- teal.data::example_cdisc_data("ADSL")
-  ADTTE <- teal.data::example_cdisc_data("ADTTE")
+  ADSL <- example_cdisc_data("ADSL")
+  ADTTE <- example_cdisc_data("ADTTE")
 })
 
 }

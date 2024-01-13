@@ -2,7 +2,7 @@
 % Please edit documentation in R/teal_data.R
 \name{teal_data}
 \alias{teal_data}
-\title{Teal Data}
+\title{Comprehensive data integration function for \code{teal} applications}
 \usage{
 teal_data(
   ...,
@@ -12,11 +12,9 @@ teal_data(
 )
 }
 \arguments{
-\item{...}{(\code{TealDataConnector}, \code{TealDataset}, \code{TealDatasetConnector}, \code{any})\cr
-Either 1) an object of a \verb{Teal*} class, which is deprecated and will be removed in next release,
-or 2) any number of any objects provided as \code{name = value} pairs, which is available from version \verb{0.4.0}.}
+\item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) or a single (\code{join_key_set})\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 
@@ -27,8 +25,7 @@ code included in the object definitions actually produces those objects.
 If \code{check} is true and preprocessing code is empty an error will be thrown.}
 }
 \value{
-If old data classes are provided (\code{TealDataset} \code{TealDatasetConnector}, \code{TealDataConnector}), a \code{TealData} object.
-Otherwise a \code{teal_data} object.
+A \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}

@@ -1,15 +1,15 @@
-#' Getter and setter functions for parents attribute of `join_keys`
+#' Get and set parents in `join_keys` object
 #'
 #' @description
 #' `parents()` facilitates the creation of dependencies between datasets by
 #' assigning a parent-child relationship.
 #'
-#' Each element is defined by a list element, where `list("child" = "parent")`.
+#' Each element is defined by a `list` element, where `list("child" = "parent")`.
 #'
 #' @param x (`join_keys` or `teal_data`) object that contains "parents" information
 #' to retrieve or manipulate.
 #'
-#' @return a list of `character` representing the parents.
+#' @return a `list` of `character` representing the parents.
 #'
 #' @export
 #' @seealso [join_keys()]
@@ -35,9 +35,9 @@ parents.join_keys <- function(x) {
 #' # Get parents of join_keys inside teal_data object ---
 #'
 #' td <- teal_data(
-#'   ADSL = teal.data::rADSL,
-#'   ADTTE = teal.data::rADTTE,
-#'   ADRS = teal.data::rADRS,
+#'   ADSL = rADSL,
+#'   ADTTE = rADTTE,
+#'   ADRS = rADRS,
 #'   join_keys = default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 #' )
 #' parents(td)
@@ -58,7 +58,7 @@ parents.teal_data <- function(x) {
 #' @export
 #' @examples
 #'
-#' # Assigment of parents ---
+#' # Assignment of parents ---
 #'
 #' jk <- join_keys(
 #'   join_key("ds1", "ds2", "id"),
@@ -111,7 +111,7 @@ parents.teal_data <- function(x) {
 #' @export
 #' @examples
 #'
-#' # Assigment of parents of join_keys inside teal_data object ---
+#' # Assignment of parents of join_keys inside teal_data object ---
 #'
 #' parents(td) <- list("ADTTE" = "ADSL") # replace existing
 #' parents(td)["ADRS"] <- "ADSL" # add new parent
@@ -120,7 +120,7 @@ parents.teal_data <- function(x) {
   x
 }
 
-#' @describeIn parents Getter for individual parent
+#' @describeIn parents Getter for individual parent.
 #'
 #' @param dataset_name (`character(1)`) Name of dataset to query on their parent.
 #'
