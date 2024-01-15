@@ -184,11 +184,13 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
     "a <- 1",
     "assign('b', 5)",
     "assign(value = 7, x = 'c')",
+    "assign(value = 15, x = \"d\")",
     "b <- b + 2",
-    "c <- b"
+    "c <- b",
+    "d <- d * 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b", "c")
+  datanames(tdata) <- c("a", "b", "c", "d")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
@@ -202,6 +204,10 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
       "c <- b",
       sep = "\n"
     )
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "d"),
+    paste("assign(value = 15, x = \"d\")", "d <- d * 2", sep = "\n")
   )
 })
 

@@ -43,7 +43,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
     if (any(pd$text == "assign")) {
       assign_calls <- Filter(function(call) any(call$token == "SYMBOL_FUNCTION_CALL" & call$text == "assign"), calls_pd)
       ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
-      ass_str <- gsub("'", "", ass_str)
+      ass_str <- gsub("^['\"]|['\"]$", "", ass_str)
       symbols <- c(ass_str, symbols)
     }
     if (!all(names %in% unique(symbols))) {
@@ -171,7 +171,7 @@ extract_occurrence <- function(calls_pd) {
       data_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "data"
       if (any(data_call)) {
         sym <- call_pd[which(data_call) + 1, "text"]
-        return(c(gsub("'", "", sym), "<-", "data"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
       }
       # Handle assign().
       assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
@@ -189,7 +189,7 @@ extract_occurrence <- function(calls_pd) {
           pos <- 1
         }
         sym <- call_pd[which(assign_call) + pos, "text"]
-        return(c(gsub("'", "", sym), "<-", "assign"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
       }
 
       # What occurs in a function body is not tracked.
