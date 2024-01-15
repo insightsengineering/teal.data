@@ -72,7 +72,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 is_symbol <- function(call_pd, symbol) {
   checkmate::check_string(symbol)
   checkmate::check_data_frame(call_pd)
-  checkmate::check_names(call_pd, must.include = c('token', 'text'))
+  checkmate::check_names(call_pd, must.include = c("token", "text"))
   call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == symbol
 }
 
