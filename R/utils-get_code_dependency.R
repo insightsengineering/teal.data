@@ -41,7 +41,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
     # Detect if names are actually in code.
     symbols <- unlist(lapply(calls_pd, function(call) call[call$token == "SYMBOL", "text"]))
     if (any(pd$text == "assign")) {
-      assign_calls <- Filter(function(call) any(call$token == "SYMBOL_FUNCTION_CALL" & call$text == "assign"), calls_pd)
+      assign_calls <- Filter(function(call) any(is_symbol(call, "assign")), calls_pd)
       ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
       ass_str <- gsub("^['\"]|['\"]$", "", ass_str)
       symbols <- c(ass_str, symbols)
@@ -57,6 +57,10 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
   lib_ind <- detect_libraries(calls_pd)
 
   as.character(code[unique(c(lib_ind, ind))])
+}
+
+is_symbol <- function(call_pd, symbol) {
+  call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == symbol
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
@@ -168,13 +172,13 @@ extract_occurrence <- function(calls_pd) {
     calls_pd,
     function(call_pd) {
       # Handle data(object)/data("object")/data(object, envir = ) independently.
-      data_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "data"
+      data_call <- is_symbol(call_pd, "data")
       if (any(data_call)) {
         sym <- call_pd[which(data_call) + 1, "text"]
         return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
       }
       # Handle assign().
-      assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
+      assign_call <- is_symbol(call_pd, "assign")
       if (any(assign_call)) {
         # Check if parameters were named.
         if (any(call_pd$token == "SYMBOL_SUB")) {
