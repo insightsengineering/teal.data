@@ -647,7 +647,7 @@ testthat::test_that("get_call data call is returned when data name is provided a
 })
 
 testthat::test_that(
-  "get_code with datanames can extract the code when function creates an object which is used only on rhs",
+  "get_code with datanames can extract the code for objects assigned with data function",
   {
     code <- c(
       "data(iris)",
