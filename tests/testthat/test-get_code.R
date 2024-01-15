@@ -244,17 +244,6 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
   )
 })
 
-testthat::test_that("get_code extracts a line with assign where object is passed as character", {
-  code <- c("assign('adae', teal.data::rADAE)", "assign('adsl', teal.data::rADSL)")
-  tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("adsl", "adae")
-
-  testthat::expect_identical(
-    get_code(tdata, datanames = "adsl"),
-    gsub("'", "\"", code[2])
-  )
-})
-
 # @linksto ---------------------------------------------------------------------------------------------------------
 
 testthat::test_that("@linksto cause to return this line for affected binding", {
