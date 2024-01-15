@@ -49,6 +49,7 @@ print(my_data)
 ## `teal_data` characteristics
 
 `teal_data` class object keeps the following information:
+
 - `env` - an environment containing data. 
 - `code` - a string containing code to reproduce `env` (details in [teal_data reproducibility ](teal-data-reproducibility.html)).
 - `datanames` - a character vector with names of datasets.
