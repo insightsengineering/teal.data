@@ -59,20 +59,25 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
   as.character(code[unique(c(lib_ind, ind))])
 }
 
-#' Determine which rows of input `call_pd` are `SYMBOL_FUNCTION_CALL` `tokens` of a specified `text` value.
+#' Locate function call tokens
+#'
+#' Determine rows of parsed data are specific `SYMBOL_FUNCTION_CALL` tokens.
 #'
 #' Useful to determine apperance of `assign` or `data` functions in an input call.
-#' @param call_pd A `data.frame`, which is one of elements of list returned by `extract_calls()` function. A result of
-#' `utils::getParseData()` split into subsets representing an individual calls.
-#' @param symbol The text, passed as `character(1)`, to be reviewed of appearance in `text` column of `call_pd`.
-#' @return A vector of logical values indicating which row of input `call_pd` has `symbol` in its `text` column and
-#' `SYMBOL_FUNCTION_CALL` in the `token` column.
+#'
+#' @param call_pd `data.frame` as returned by `extract_calls()`
+#' @param symbol `character(1)` to look for in `text` column of `call_pd`
+#'
+#' @return
+#' A logical index specifying rows in `call_pd` where `token` is `SYMBOL_FUNCTION_CALL` and `text` is `symbol`.
+#'
 #' @keywords internal
 #' @noRd
 is_symbol <- function(call_pd, symbol) {
-  checkmate::check_string(symbol)
   checkmate::check_data_frame(call_pd)
   checkmate::check_names(call_pd, must.include = c("token", "text"))
+  checkmate::check_string(symbol)
+
   call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == symbol
 }
 
