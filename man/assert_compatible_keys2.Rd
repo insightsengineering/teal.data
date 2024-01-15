@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_keys-utils.R
 \name{assert_compatible_keys2}
 \alias{assert_compatible_keys2}
-\title{Helper function to ensuring compatibility between two sets of keys}
+\title{Verify key set compatibility}
 \usage{
 assert_compatible_keys2(x, y)
 }

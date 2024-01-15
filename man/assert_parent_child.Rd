@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_keys-utils.R
 \name{assert_parent_child}
 \alias{assert_parent_child}
-\title{Helper function checks the parent-child relations are valid}
+\title{Validate parent-child key}
 \usage{
 assert_parent_child(x)
 }
@@ -13,6 +13,6 @@ assert_parent_child(x)
 \code{join_keys} invisibly
 }
 \description{
-Helper function checks the parent-child relations are valid
+Helper function checks the parent-child relations are valid.
 }
 \keyword{internal}

@@ -29,12 +29,12 @@ If \code{check} is true and preprocessing code is empty an error will be thrown.
 A \code{teal_data} object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}\cr
 Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
 for given datasets whose names match ADAM datasets names.
 }
 \details{
-This function checks if there were keys added to all data sets
+This function checks if there were keys added to all data sets.
 }
 \examples{
 data <- cdisc_data(

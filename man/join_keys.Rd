@@ -135,6 +135,7 @@ jk <- join_keys(
 
 jk
 
+
 # Getter for join_keys ---
 
 jk["ds1", "ds2"]
@@ -144,6 +145,7 @@ jk["ds1", "ds2"]
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
+
 
 # Setting a new primary key ---
 
@@ -157,7 +159,6 @@ jk["ds1", "ds4"] <- c("pk1" = "pk4")
 # Removing a key ---
 
 jk["ds5", "ds5"] <- NULL
-
 # Merging multiple `join_keys` objects ---
 
 jk_merged <- c(
@@ -167,7 +168,6 @@ jk_merged <- c(
     join_key("ds3", "ds4", c(pk3 = "pk4_2"))
   )
 )
-
 # note: merge can be performed with both join_keys and join_key_set
 
 jk_merged <- c(

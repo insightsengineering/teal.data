@@ -13,11 +13,11 @@ a primary key for \code{dataset_1} is created.}
 \item{keys}{(optionally named \code{character}) Column mapping between the datasets,
 where \code{names(keys)} maps columns in \code{dataset_1} corresponding to columns of
 \code{dataset_2} given by the elements of \code{keys}.
-
-If unnamed, the same column names are used for both datasets.
-
-If any element of the \code{keys} vector is empty with a non-empty name, then the name is
-used for both datasets.}
+\itemize{
+\item If unnamed, the same column names are used for both datasets.
+\item If any element of the \code{keys} vector is empty with a non-empty name, then the name is
+used for both datasets.
+}}
 
 \item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
 a parent-child relationship between the datasets.\cr
@@ -30,8 +30,7 @@ a parent-child relationship between the datasets.\cr
 object of class \code{join_key_set} to be passed into \code{join_keys} function.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}\cr
 Create a relationship between two datasets, \code{dataset_1} and \code{dataset_2}.
 By default, this function establishes a directed relationship with \code{dataset_1} as the parent.
 If \code{dataset_2} is not specified, the function creates a primary key for \code{dataset_1}.
@@ -40,6 +39,7 @@ If \code{dataset_2} is not specified, the function creates a primary key for \co
 join_key("d1", "d2", c("A"))
 join_key("d1", "d2", c("A" = "B"))
 join_key("d1", "d2", c("A" = "B", "C"))
+
 }
 \seealso{
 \code{\link[=join_keys]{join_keys()}}, \code{\link[=parents]{parents()}}

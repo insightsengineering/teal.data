@@ -1,9 +1,7 @@
 #' @rdname join_keys
 #' @order 4
 #' @export
-#'
 #' @examples
-#'
 #' # Merging multiple `join_keys` objects ---
 #'
 #' jk_merged <- c(
@@ -30,11 +28,8 @@ c.join_keys <- function(...) {
 
 #' @rdname join_keys
 #' @order 4
-#'
 #' @export
-#'
 #' @examples
-#'
 #' # note: merge can be performed with both join_keys and join_key_set
 #'
 #' jk_merged <- c(

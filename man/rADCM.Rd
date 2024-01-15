@@ -14,7 +14,7 @@ internal
 rADCM
 }
 \description{
-Random concomitant medications.
+Random concomitant medications
 }
 \keyword{datasets}
 \keyword{internal}

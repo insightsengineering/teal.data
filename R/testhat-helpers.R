@@ -8,18 +8,18 @@
 #' Do not use `all.equal` directly in if expressions—either use `isTRUE(all.equal(....))`
 #' or identical if appropriate.
 #'
-#' @inheritParams base::all.equal
-#' @param ... further arguments for different methods. Not used with `join_keys`.
-#'
-#' @details
 #' The parents attribute comparison tolerates `NULL` and empty lists and will find
 #' no difference.
 #'
 #' The list containing all the relationships is treated like a map and ignores
 #' entries with `NULL` if they exist.
 #'
+#' @inheritParams base::all.equal
+#' @param ... further arguments for different methods. Not used with `join_keys`.
+#'
 #' @seealso [base::all.equal()]
 #' @keywords internal
+#'
 all.equal.join_keys <- function(target, current, ...) {
   .as_map <- function(.x) {
     old_attributes <- attributes(.x)

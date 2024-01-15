@@ -1,6 +1,6 @@
 #' Data input for `teal` app
 #'
-#' @description `r lifecycle::badge("stable")`
+#' `r lifecycle::badge("stable")`\cr
 #' Function is a wrapper around [teal_data()] and guesses `join_keys`
 #' for given datasets whose names match ADAM datasets names.
 #'
@@ -12,9 +12,7 @@
 #'
 #' @return A `teal_data` object.
 #'
-#' @details This function checks if there were keys added to all data sets
-#'
-#' @export
+#' @details This function checks if there were keys added to all data sets.
 #'
 #' @examples
 #' data <- cdisc_data(
@@ -27,6 +25,8 @@
 #'   ADSL <- example_cdisc_data("ADSL")
 #'   ADTTE <- example_cdisc_data("ADTTE")
 #' })
+#'
+#' @export
 #'
 cdisc_data <- function(...,
                        join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],

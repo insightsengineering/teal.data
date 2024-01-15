@@ -47,7 +47,6 @@ setClass(
 
 #' Initialize `teal_data` object
 #'
-#' Initialize `teal_data` object.
 #' @name new_teal_data
 #'
 #' @param data (`named list`) of data objects.

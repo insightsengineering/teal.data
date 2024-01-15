@@ -1,8 +1,7 @@
 #' Create a relationship between a pair of datasets
 #'
-#' @description `r lifecycle::badge("stable")`
-#'
-#' @description Create a relationship between two datasets, `dataset_1` and `dataset_2`.
+#' `r lifecycle::badge("stable")`\cr
+#' Create a relationship between two datasets, `dataset_1` and `dataset_2`.
 #' By default, this function establishes a directed relationship with `dataset_1` as the parent.
 #' If `dataset_2` is not specified, the function creates a primary key for `dataset_1`.
 #'
@@ -12,9 +11,9 @@
 #' where `names(keys)` maps columns in `dataset_1` corresponding to columns of
 #' `dataset_2` given by the elements of `keys`.
 #'
-#' If unnamed, the same column names are used for both datasets.
+#' * If unnamed, the same column names are used for both datasets.
 #'
-#' If any element of the `keys` vector is empty with a non-empty name, then the name is
+#' * If any element of the `keys` vector is empty with a non-empty name, then the name is
 #' used for both datasets.
 #' @param directed (`logical(1)`) Flag that indicates whether it should create
 #' a parent-child relationship between the datasets.\cr
@@ -23,14 +22,14 @@
 #'
 #' @return object of class `join_key_set` to be passed into `join_keys` function.
 #'
-#' @seealso [join_keys()], [parents()]
-#'
-#' @export
-#'
 #' @examples
 #' join_key("d1", "d2", c("A"))
 #' join_key("d1", "d2", c("A" = "B"))
 #' join_key("d1", "d2", c("A" = "B", "C"))
+#'
+#' @export
+#' @seealso [join_keys()], [parents()]
+#'
 join_key <- function(dataset_1, dataset_2 = dataset_1, keys, directed = TRUE) {
   checkmate::assert_string(dataset_1)
   checkmate::assert_string(dataset_2)

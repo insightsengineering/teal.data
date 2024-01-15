@@ -103,7 +103,6 @@ fix_comments <- function(calls) {
 
 #' Create object dependencies graph within parsed code
 #'
-#' @description
 #' Builds dependency graph that identifies dependencies between objects in parsed code.
 #' Helps understand which objects depend on which.
 #'
@@ -131,7 +130,7 @@ code_graph <- function(calls_pd) {
 
 #' Extract object occurrence
 #'
-#' @description Extracts objects occurrence within calls passed by `calls_pd`.
+#' Extracts objects occurrence within calls passed by `calls_pd`.
 #' Also detects which objects depend on which within a call.
 #'
 #' @param calls_pd `list` of `data.frame`s;
@@ -212,9 +211,8 @@ extract_occurrence <- function(calls_pd) {
 
 #' Extract side effects
 #'
-#' @description Extracts all object names from the code that are marked with `@linksto` tag.
+#' Extracts all object names from the code that are marked with `@linksto` tag.
 #'
-#' @details
 #' The code may contain functions calls that create side effects, e.g. modify the environment.
 #' Static code analysis may be insufficient to determine which objects are created or modified by such a function call.
 #' The `@linksto` comment tag is introduced to mark a call as having a (side) effect on one or more objects.

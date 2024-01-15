@@ -1,6 +1,7 @@
 #' Show `teal_data` object
 #'
 #' Prints `teal_data` object.
+#'
 #' @param object (`teal_data`)
 #' @return Input `teal_data` object.
 #' @importFrom methods show

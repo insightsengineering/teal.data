@@ -35,13 +35,6 @@
 #'
 #' @return `join_keys` object.
 #'
-#' @export
-#'
-#' @seealso [join_key()] for creating `join_keys_set`,
-#' [parents()] for parent operations,
-#' [teal_data()] for `teal_data` constructor _and_
-#' [default_cdisc_join_keys] for default `CDISC` keys.
-#'
 #' @examples
 #' # Creating a new join keys ----
 #'
@@ -54,6 +47,14 @@
 #' )
 #'
 #' jk
+#'
+#' @export
+#'
+#' @seealso [join_key()] for creating `join_keys_set`,
+#' [parents()] for parent operations,
+#' [teal_data()] for `teal_data` constructor _and_
+#' [default_cdisc_join_keys] for default `CDISC` keys.
+#'
 join_keys <- function(...) {
   if (missing(...)) {
     return(new_join_keys())

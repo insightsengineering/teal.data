@@ -5,8 +5,5 @@
 \alias{default_cdisc_join_keys}
 \title{List containing default joining keys for \code{CDISC} datasets}
 \description{
-List containing default joining keys for \code{CDISC} datasets
-}
-\details{
 This data object is created at loading time from \code{cdisc_datasets/cdisc_datasets.yaml}.
 }

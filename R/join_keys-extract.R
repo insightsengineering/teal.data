@@ -24,6 +24,7 @@
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
+#'
 `[.join_keys` <- function(x, i, j) {
   if (missing(i) && missing(j)) {
     # because:
@@ -177,7 +178,6 @@
   c(x, join_key(i, j, value, directed))
 }
 
-#' @noRd
 #' @rdname join_keys
 #'
 #' @order 1000
@@ -198,6 +198,8 @@
 #' jk[["ds7"]][["ds7"]] <- NULL # removes key
 #'
 #' jk
+#'
+#' @noRd
 `[[<-.join_keys` <- function(x, i, value) {
   checkmate::assert(
     combine = "or",
