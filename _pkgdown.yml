@@ -21,8 +21,8 @@ navbar:
       href: https://github.com/insightsengineering/teal.data
 
 articles:
-  - title: Getting Started
-    navbar: Getting Started
+  - title: Get started
+    navbar: Get started
     contents:
       - teal-data
       - teal-data-reproducibility
@@ -36,7 +36,6 @@ reference:
       - datanames
       - datanames<-
       - get_code,teal_data-method
-      - get_join_keys
       - join_key
       - join_keys
       - join_keys<-
@@ -54,7 +53,7 @@ reference:
       - col_labels<-
       - col_relabel
       - example_cdisc_data
-  - title: Deprecated functions and methods
-    desc: Functions deprecated in teal.data v0.3.1
+  - title: Deprecated
     contents:
       - TealData
+      - get_labels

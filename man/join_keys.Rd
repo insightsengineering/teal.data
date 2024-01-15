@@ -46,7 +46,7 @@ join_keys(x) <- value
 }
 \arguments{
 \item{...}{(optional)\cr
-either \code{teal_data} or \code{join_keys} to extract \code{join_keys}, \cr
+either \code{teal_data} or \code{join_keys} object to extract \code{join_keys}, \cr
 or any number of \code{join_key_set} objects to create \code{join_keys}, \cr
 or nothing to create an empty \code{join_keys}}
 
@@ -91,7 +91,7 @@ in a parent-child relationship and the mapping is automatically mirrored between
 \itemize{
 \item \code{join_keys()}: Returns an empty \code{join_keys} object when called without arguments.
 \item \code{join_keys(join_keys)}: Returns itself.
-\item \code{join_keys(teal_data)}: Returns the \code{join_keys} object contained in \code{teal_data}.
+\item \code{join_keys(teal_data)}: Returns the \code{join_keys} object contained in \code{teal_data} object.
 \item \code{join_keys(...)}: Creates a new object with one or more \code{join_key_set} parameters.
 }
 }
@@ -112,7 +112,7 @@ including implicit keys inferred from their relationship with a parent.
 \item \code{x[i] <- value}: This (without \code{j} parameter) \strong{is not} a supported
 operation for \code{join_keys}.
 \item \code{join_keys(x)[i, j] <- value}: Assignment to \code{join_keys} object stored in \code{x},
-such as a \code{teal_data} or \code{join_keys} itself.
+such as a \code{teal_data} object or \code{join_keys} object itself.
 }
 
 
@@ -158,7 +158,7 @@ jk["ds1", "ds4"] <- c("pk1" = "pk4")
 
 jk["ds5", "ds5"] <- NULL
 
-# Merging multiple `join_keys` ---
+# Merging multiple `join_keys` objects ---
 
 jk_merged <- c(
   jk,

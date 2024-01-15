@@ -4,7 +4,7 @@
 \alias{verify}
 \alias{verify,teal_data-method}
 \alias{verify,qenv.error-method}
-\title{Verify Code Reproducibility}
+\title{Verify code reproducibility}
 \usage{
 verify(x)
 }
@@ -15,7 +15,7 @@ verify(x)
 Input \code{teal_data} object or error.
 }
 \description{
-Checks whether code in \code{teal_data} reproduces the stored objects.
+Checks whether code in \code{teal_data} object reproduces the stored objects.
 }
 \details{
 If objects created by code in the \verb{@code} slot of \code{x} are \code{all_equal} to the contents of the \verb{@env} slot,
@@ -37,12 +37,11 @@ verify(tdata2)
 verify(tdata2)@verified
 tdata2@verified
 
-\dontrun{
 tdata3 <- teal_data()
 tdata3 <- within(tdata3, {
   stop("error")
 })
-verify(tdata3)
+try(verify(tdata3)) # fails
 
 
 a <- 1
@@ -51,16 +50,12 @@ c <- list(x = 2)
 d <- 5
 tdata4 <- teal_data(
   a = a, b = b, c = c, d = d,
-  code =
-    "
-    a <- 1
-    b <- a
-    c <- list(x = 2)
-    e <- 1
-    "
+  code = "a <- 1
+          b <- a
+          c <- list(x = 2)
+          e <- 1"
 )
 tdata4
-verify(tdata4)
-}
+try(verify(tdata4)) # fails
 
 }

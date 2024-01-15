@@ -1,6 +1,11 @@
 # teal.data
 
 <!-- start badges -->
+[![CRAN Version](https://www.r-pkg.org/badges/version/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Month Downloads](http://cranlogs.r-pkg.org/badges/last-month/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Week Downloads](http://cranlogs.r-pkg.org/badges/last-week/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+
 [![Check 🛠](https://github.com/insightsengineering/teal.data/actions/workflows/check.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/main/unit-test-report/)
 [![Docs 📚](https://github.com/insightsengineering/teal.data/actions/workflows/docs.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/)
 [![Code Coverage 📔](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/badge.svg)](https://insightsengineering.github.io/teal.data/main/coverage-report/)
@@ -36,7 +41,7 @@ This package provides:
 
 ```r
 # stable versions
-install.packages('teal.data', repos = c('https://insightsengineering.r-universe.dev', getOption('repos')))
+install.packages('teal.data')
 
 # install.packages("pak")
 pak::pak("insightsengineering/teal.data@*release")
@@ -64,41 +69,54 @@ library(teal.data)
 
 ```r
 # quick start for clinical trial data
-adsl <- teal.data::example_cdisc_data("ADSL")
-adtte <- teal.data::example_cdisc_data("ADTTE")
-
 my_data <- cdisc_data(
-  cdisc_dataset("ADSL", adsl),
-  cdisc_dataset("ADTTE", adtte)
+  ADSL = example_cdisc_data("ADSL"),
+  ADTTE = example_cdisc_data("ADTTE"),
+  code = quote({
+    ADSL <- example_cdisc_data("ADSL")
+    ADTTE <- example_cdisc_data("ADTTE")
+  })
 )
+
+# or 
+
+my_data <- within(teal_data(), {
+  ADSL <- example_cdisc_data("ADSL")
+  ADTTE <- example_cdisc_data("ADTTE")
+})
+datanames <- c("ADSL", "ADTTE")
+datanames(my_data) <- datanames
+join_keys(my_data) <- default_cdisc_join_keys[datanames]
 ```
 
 ```r
 # quick start for general data
-my_general_data <- teal_data(
-  dataset("iris", iris),
-  dataset("mtcars", mtcars)
-)
+my_general_data <- within(teal_data(), {
+  iris <- iris
+  mtcars <- mtcars
+})
 ```
 
 ```r
 # reproducibility check
-data <- teal_data(dataset("iris", iris, code = "iris <- mtcars"), check = TRUE)
-#> Error in x$check_reproducibility() : Reproducibility check failed.
+data <- teal_data(iris = iris, code = "iris <- mtcars")
+verify(data)
+#> Error: Code verification failed.
+#>  Object(s) recreated with code that have different structure in data:
+#>  • iris
 
 ```
 
 ```r
 # code extraction
-iris2 <- iris[1:6, ]
-iris2_data <- teal_data(dataset("iris2", iris2, code = "iris2 <- iris[1:6, ]"))
-iris2_data$get_code()
+iris2_data <- within(teal_data(), {iris2 <- iris[1:6, ]})
+get_code(iris2_data)
 #> "iris2 <- iris[1:6, ]"
 ```
 
 ## Getting help
 
-If you encounter a bug or you have a feature request - please file an issue. For questions, discussions and staying up to date, please use the "teal" channel in the [`pharmaverse` slack workspace](https://pharmaverse.slack.com).
+If you encounter a bug or have a feature request, please file an issue. For questions, discussions, and staying up to date, please use the `teal` channel in the [`pharmaverse` slack workspace](https://pharmaverse.slack.com).
 
 ## Stargazers and Forkers
 

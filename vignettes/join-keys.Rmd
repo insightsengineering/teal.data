@@ -27,10 +27,10 @@ Refer to the section ["Joining Keys with `ADaM` Datasets"](#join-keys-in-adam-da
 
 The primary function of the `join_keys` class in `teal` applications is to facilitate the seamless [merging of datasets](https://insightsengineering.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
-Additionally, it plays a role on the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/main/articles/filter-panel.html)_ in a `teal` application.
+Additionally, it plays a role in the data filtering using the _[Filter Panel](https://insightsengineering.github.io/teal/latest-tag/articles/filter-panel.html)_ in a `teal` application.
 The filters applied to a (parent) dataset are also applied to their children.
 
-## Anatomy of Join Keys
+## Anatomy of `join_keys`
 
 The `join_keys` object contains information about the foreign/primary keys of multiple datasets.
 Each key is represented by a pair of datasets (by name reference) and a named character vector that encodes the column name mapping between the two datasets.
@@ -53,12 +53,12 @@ As the _Constructor_ it is used to specify a collection of multiple individual k
 Specifies a primary key or a relationship between two datasets.
 
 - `dataset_1`, `dataset_2`: names of the datasets (if `dataset_2` is the same as `dataset_1` or is omitted, it creates a primary key);
-- `key` (optional): named vector of column names;
-- `parent` (optional): indicates which dataset (`"dataset_1"` or `"dataset_2"`) is the parent in a _parent-child_ relationship, or `"none"` for an undirected relationship.
+- `key`: named `character` vector of column name mapping between datasets (unnamed vector assumes column names between datasets are the same);
+- `directed` (optional): flag that indicates whether there is a _parent-child_ directed relationship between `dataset_2` to `dataset_1` (latter as a parent).
 
 Note that join keys are assumed to be symmetric, i.e., `join_key("ds1", "ds2", c("ds1_col" = "ds2_col"))` establishes a relationship from "x" to "y" and vice versa.
 
-By default the new joining key will set the `dataset_1` as the parent.
+By default, the new joining key will set the `dataset_1` as the parent.
 
 ##### Example & Output
 
@@ -108,7 +108,7 @@ The _subset_ operator with 2 indices (`x[i, j]`) is used to retrieve the primary
 Both indices must be a string denoting the dataset name.
 
 ```{r}
-# Using the jk object defined on "Anatomy of Join Keys"
+# Using the jk object defined in "Anatomy of Join Keys"
 jk
 
 # Getting primary key of "ds1"
@@ -128,18 +128,18 @@ jk["ds5", "ds4"]
 When only 1 argument is used this operator will return a `join_keys` object that is filtered accordingly.
 
 ```{r}
-# Using the jk object defined on "Anatomy of Join Keys"
+# Using the jk object defined in "Anatomy of Join Keys"
 jk
 
 # Getting primary key of "ds1"
-jk["ds1"]
+jk["ds1", "ds1"]
 
 # Getting keys of "ds1" and "ds2"
 jk[c("ds1", "ds2")]
 ```
 
 Modifying or adding a key uses the same notation with the assignment operator `<-`.
-A symmetric relationship will be created automatically, where the parent (by default) will be the dataset defined on the first index.
+A symmetric relationship will be created automatically, where the parent (by default) will be the dataset defined in the first index.
 Assigning `NULL` value will delete the relationship.
 
 ```{r}
@@ -148,6 +148,26 @@ jk["ds1", "ds5"] <- "a_column"
 
 # Removing an existing key
 jk["ds4", "ds5"] <- NULL
+```
+
+## Merging Join Keys
+
+The combining of multiple _joining keys_ is achieved using the `c()` generic function, which generates a symmetric and valid `join_keys` object. When encountering identical relationship pairs, this operation retains the last occurrence of the pair within the specified argument order.
+
+For added convenience, the function also accommodates `join_key_set` objects created through the `join_key` function. These objects can be provided as the initial argument or in any other position as needed.
+
+```{r}
+jk1 <- join_keys(join_key("ds1", "ds1", "col_1"))
+jk2 <- join_keys(join_key("ds2", "ds2", "col_1"), join_key("ds1", "ds2", "col_1"))
+
+# Merging
+c(jk1, jk2)
+
+# Keeping last occurence
+c(jk1, jk2, join_keys(join_key("ds2", "ds2", "col_2"), join_key("ds1", "ds2", c("col_1" = "col_2"))))
+
+# Merges join_key and join_key_set objects (from join_key function)
+c(jk1, join_key("ds3", "ds3", "col_3"))
 ```
 
 ## Join Keys Relationships

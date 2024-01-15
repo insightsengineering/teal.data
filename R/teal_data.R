@@ -1,12 +1,10 @@
-#' Teal Data
+#' Comprehensive data integration function for `teal` applications
 #'
 #' @description `r lifecycle::badge("stable")`
 #' Universal function to pass data to teal application.
 #'
-#' @param ... (`TealDataConnector`, `TealDataset`, `TealDatasetConnector`, `any`)\cr
-#'  Either 1) an object of a `Teal*` class, which is deprecated and will be removed in next release,
-#'  or 2) any number of any objects provided as `name = value` pairs, which is available from version `0.4.0`.
-#' @param join_keys (`join_keys`) or a single (`join_key_set`)\cr
+#' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.
+#' @param join_keys (`join_keys`) object or a single (`join_key_set`) object\cr
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
 #' @param code (`character`, `language`) code to reproduce the datasets.
@@ -14,9 +12,7 @@
 #'  code included in the object definitions actually produces those objects.
 #'  If `check` is true and preprocessing code is empty an error will be thrown.
 #'
-#' @return
-#' If old data classes are provided (`TealDataset` `TealDatasetConnector`, `TealDataConnector`), a `TealData` object.
-#' Otherwise a `teal_data` object.
+#' @return A `teal_data` object.
 #'
 #' @export
 #'

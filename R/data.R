@@ -1,6 +1,6 @@
 #' Random adverse events
 #'
-#' @description Random adverse events
+#' @description Random adverse events.
 #' @docType data
 #'
 #' @usage rADAE
@@ -11,9 +11,9 @@
 #' @name rADAE
 "rADAE"
 
-#' Random Concomitant Medications
+#' Random concomitant medications
 #'
-#' @description Random Concomitant Medications
+#' @description Random concomitant medications.
 #' @docType data
 #'
 #' @usage rADCM
@@ -26,7 +26,7 @@
 
 #' Random response
 #'
-#' @description Random Exposure
+#' @description Random exposure.
 #' @docType data
 #'
 #' @usage rADEX
@@ -39,7 +39,7 @@
 
 #' Random lab analysis
 #'
-#' @description Random lab analysis
+#' @description Random lab analysis.
 #' @docType data
 #'
 #' @usage rADLB
@@ -52,7 +52,7 @@
 
 #' Random response
 #'
-#' @description Random response
+#' @description Random response.
 #' @docType data
 #'
 #' @usage rADRS
@@ -65,7 +65,7 @@
 
 #' Random patient listing
 #'
-#' @description Random patient listing
+#' @description Random patient listing.
 #' @docType data
 #'
 #' @usage rADSL
@@ -78,7 +78,7 @@
 
 #' Random data `rADTR`
 #'
-#' @description Random data `rADTR`
+#' @description Random data `rADTR`.
 #' @docType data
 #'
 #' @usage rADTR
@@ -89,9 +89,9 @@
 #' @name rADTR
 "rADTR"
 
-#' Random Time to Event Analysis Dataset
+#' Random time to event analysis dataset
 #'
-#' @description Random Time to Event Analysis Dataset
+#' @description Random time to event analysis dataset.
 #' @docType data
 #'
 #' @usage rADTTE
@@ -104,7 +104,7 @@
 
 #' Random data `rADVS`
 #'
-#' @description Random data `rADVS`
+#' @description Random data `rADVS`.
 #' @docType data
 #'
 #' @usage rADVS

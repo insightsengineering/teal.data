@@ -3,7 +3,7 @@
 \docType{class}
 \name{teal_data-class}
 \alias{teal_data-class}
-\title{Reproducible data.}
+\title{Reproducible data}
 \description{
 Reproducible data container class. Inherits code tracking behavior from \code{\link[teal.code:qenv-class]{teal.code::qenv}}.
 }

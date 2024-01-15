@@ -1,4 +1,4 @@
-#' Get Code from `teal_data`
+#' Get code from `teal_data` object
 #'
 #' Retrieve code from `teal_data` object.
 #'
@@ -14,8 +14,10 @@
 #' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of data set names to return the code for.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
+#'
 #' @return
 #' Either string or an expression representing code used to create the requested data sets.
+#'
 #' @examples
 #'
 #' tdata1 <- teal_data()

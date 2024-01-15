@@ -3,6 +3,24 @@ testthat::test_that("join_keys creates empty join_keys object by default", {
   testthat::expect_s3_class(join_keys(), "join_keys")
 })
 
+testthat::test_that("join_keys only accepts teal_data and join_key arguments", {
+  key <- join_key("a", "b", "test")
+  testthat::expect_no_error(join_keys(key))
+  testthat::expect_no_error(join_keys(teal_data()))
+  testthat::expect_error(
+    join_keys("a"),
+    "Assertion .* failed: May only contain the following types:"
+  )
+})
+
+testthat::test_that("join_keys doesn't accept a list which is identical to output of join_key function", {
+  key <- join_key("a", "b", "test")
+  testthat::expect_error(
+    join_keys(unclass(key)),
+    "Assertion .* failed: May only contain the following types:"
+  )
+})
+
 testthat::test_that("join_keys.join_key creates join_keys", {
   testthat::expect_s3_class(
     join_keys(
@@ -10,6 +28,18 @@ testthat::test_that("join_keys.join_key creates join_keys", {
       join_key("d2", keys = "test")
     ),
     c("join_keys", "list")
+  )
+})
+
+testthat::test_that("join_keys accepts duplicated join_key", {
+  testthat::expect_no_error(
+    join_keys(join_key("d1", "d2", "a"), join_key("d1", "d2", "a"))
+  )
+})
+
+testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
+  testthat::expect_no_error(
+    join_keys(join_key("d1", "d2", "a", directed = FALSE), join_key("d1", "d2", "a", directed = FALSE))
   )
 })
 
@@ -66,27 +96,6 @@ testthat::test_that("join_keys.teal_data returns join_keys object from teal_data
 testthat::test_that("join_keys.join_keys returns itself", {
   obj <- join_keys(join_key("d1", "d1", "a"))
   testthat::expect_identical(obj, join_keys(obj))
-})
-
-testthat::test_that("join_keys accepts duplicated join_key", {
-  testthat::expect_no_error(
-    join_keys(join_key("d1", "d2", "a"), join_key("d1", "d2", "a"))
-  )
-})
-
-testthat::test_that("join_keys accepts duplicated join_key (undirected)", {
-  testthat::expect_no_error(
-    join_keys(join_key("d1", "d2", "a", directed = FALSE), join_key("d1", "d2", "a", directed = FALSE))
-  )
-})
-
-testthat::test_that("join_keys doesn't accept other objects than teal_data, TealData and join_key", {
-  testthat::expect_error(join_keys("a")) # todo: add expected error message
-})
-
-testthat::test_that("join_keys doesn't accept a list which is identical to output of join_key function", {
-  key <- join_key("a", "b", "test")
-  testthat::expect_error(join_keys(unclass(key)))
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {

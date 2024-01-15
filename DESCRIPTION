@@ -1,16 +1,21 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.3.0.9030
-Date: 2023-12-22
+Version: 0.3.0.9034
+Date: 2024-01-13
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
+    person("Aleksander", "Chlebowski", , "aleksander.chlebowski@contractors.roche.com", role = "aut"),
+    person("Marcin", "Kosinski", , "marcin.kosinski.mk1@roche.com", role = "aut"),
+    person("Andre", "Verissimo", , "andre.verissimo@roche.com", role = "aut"),
     person("Pawel", "Rucki", , "pawel.rucki@roche.com", role = "aut"),
     person("Mahmoud", "Hallal", , "mahmoud.hallal@roche.com", role = "aut"),
     person("Nikolas", "Burkoff", role = "aut"),
     person("Maciej", "Nasinski", role = "aut"),
     person("Konrad", "Pagacz", role = "aut"),
     person("Junlue", "Zhao", role = "aut"),
+    person("Chendi", "Liao", , "chendi.liao@roche.com", role = "rev"),
+    person("Dony", "Unardi", , "unardid@gene.com", role = "rev"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
 Description: Utilities for data transformations compatible with 'teal'
@@ -21,7 +26,7 @@ URL: https://insightsengineering.github.io/teal.data/,
 BugReports: https://github.com/insightsengineering/teal.data/issues
 Depends:
     R (>= 4.0),
-    teal.code (>= 0.4.1.9009)
+    teal.code (>= 0.5.0)
 Imports:
     checkmate (>= 2.1.0),
     lifecycle (>= 0.2.0),
@@ -47,3 +52,29 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Collate: 
+    'cdisc_data.R'
+    'data.R'
+    'default_cdisc_join_keys.R'
+    'formatters_var_labels.R'
+    'deprecated.R'
+    'dummy_function.R'
+    'join_key.R'
+    'join_keys-c.R'
+    'join_keys-extract.R'
+    'join_keys-names.R'
+    'join_keys-parents.R'
+    'join_keys-print.R'
+    'join_keys-utils.R'
+    'join_keys.R'
+    'teal.data.R'
+    'teal_data-class.R'
+    'teal_data-datanames.R'
+    'teal_data-get_code.R'
+    'teal_data-show.R'
+    'teal_data.R'
+    'testhat-helpers.R'
+    'topological_sort.R'
+    'utils-get_code_dependency.R'
+    'verify.R'
+    'zzz.R'

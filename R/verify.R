@@ -1,6 +1,6 @@
-#' Verify Code Reproducibility
+#' Verify code reproducibility
 #'
-#' Checks whether code in `teal_data` reproduces the stored objects.
+#' Checks whether code in `teal_data` object reproduces the stored objects.
 #'
 #' If objects created by code in the `@code` slot of `x` are `all_equal` to the contents of the `@env` slot,
 #' the function updates the `@verified` slot to `TRUE` in the returned `teal_data` object. Once verified, the slot
@@ -24,12 +24,11 @@
 #' verify(tdata2)@verified
 #' tdata2@verified
 #'
-#' \dontrun{
 #' tdata3 <- teal_data()
 #' tdata3 <- within(tdata3, {
 #'   stop("error")
 #' })
-#' verify(tdata3)
+#' try(verify(tdata3)) # fails
 #'
 #'
 #' a <- 1
@@ -38,17 +37,13 @@
 #' d <- 5
 #' tdata4 <- teal_data(
 #'   a = a, b = b, c = c, d = d,
-#'   code =
-#'     "
-#'     a <- 1
-#'     b <- a
-#'     c <- list(x = 2)
-#'     e <- 1
-#'     "
+#'   code = "a <- 1
+#'           b <- a
+#'           c <- list(x = 2)
+#'           e <- 1"
 #' )
 #' tdata4
-#' verify(tdata4)
-#' }
+#' try(verify(tdata4)) # fails
 #'
 #' @name verify
 #' @rdname verify

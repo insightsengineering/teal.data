@@ -19,11 +19,11 @@
 #' @section Methods (by class):
 #' - `join_keys()`: Returns an empty `join_keys` object when called without arguments.
 #' - `join_keys(join_keys)`: Returns itself.
-#' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data`.
+#' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data` object.
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
 #'
 #' @param ... (optional)\cr
-#'  either `teal_data` or `join_keys` to extract `join_keys`, \cr
+#'  either `teal_data` or `join_keys` object to extract `join_keys`, \cr
 #'  or any number of `join_key_set` objects to create `join_keys`, \cr
 #'  or nothing to create an empty `join_keys`
 #' @param value For `x[i, j, directed = TRUE)] <- value` (named/unnamed `character`)

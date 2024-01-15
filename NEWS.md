@@ -1,4 +1,4 @@
-# teal.data 0.3.0.9030
+# teal.data 0.3.0.9034
 
 ### Enhancements
 
@@ -16,7 +16,7 @@
 
 * Specified minimal version of package dependencies.
 * Upgraded `teal.code` dependency from `Imports` to `Depends`.
-* Deprecated `get_labels` function and removed the supporting function `data_labels`.
+* Deprecated `get_labels` function and removed the supporting function `data_label`.
 
 # teal.data 0.3.0
 
@@ -41,8 +41,8 @@
 * Transferred data hashing step in `TealDataset` and `MAETealDataset` to `teal`.
 * Removed `CDISCTealData` class and updated `TealData` to account for the removed functionality.
 * Added datasets parents information to `JoinKeys` class.
-* Updated `cdisc_data` and `teal_data` wrappers to handle join_keys creation and updating instead of `CDISCTealData` and `TealData`.
-* Removed join_keys methods from `TealDataset`, `TealDatasetConnector`.
+* Updated `cdisc_data` and `teal_data` wrappers to handle `join_keys` creation and updating instead of `CDISCTealData` and `TealData`.
+* Removed `join_keys` methods from `TealDataset`, `TealDatasetConnector`.
 
 # teal.data 0.1.2
 
