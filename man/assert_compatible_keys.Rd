@@ -2,7 +2,7 @@
 % Please edit documentation in R/join_keys-utils.R
 \name{assert_compatible_keys}
 \alias{assert_compatible_keys}
-\title{Helper function to assert if two key sets contain incompatible keys}
+\title{Check Compatibility of keys}
 \usage{
 assert_compatible_keys(join_key_1, join_key_2)
 }
@@ -10,6 +10,6 @@ assert_compatible_keys(join_key_1, join_key_2)
 Returns \code{TRUE} if successful, otherwise raises error.
 }
 \description{
-Helper function to assert if two key sets contain incompatible keys
+Helper function to assert if two key sets contain incompatible keys.
 }
 \keyword{internal}

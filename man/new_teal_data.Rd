@@ -23,6 +23,6 @@ Accepts and stores comments also.}
 Needed when non-dataset objects are needed in the \code{env} slot.}
 }
 \description{
-Initialize \code{teal_data} object.
+Initialize \code{teal_data} object
 }
 \keyword{internal}

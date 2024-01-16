@@ -1,6 +1,5 @@
 #' Get and set parents in `join_keys` object
 #'
-#' @description
 #' `parents()` facilitates the creation of dependencies between datasets by
 #' assigning a parent-child relationship.
 #'

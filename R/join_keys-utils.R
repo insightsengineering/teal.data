@@ -1,4 +1,6 @@
-#' Helper function to assert if two key sets contain incompatible keys
+#' Check Compatibility of keys
+#'
+#' Helper function to assert if two key sets contain incompatible keys.
 #'
 #' @return Returns `TRUE` if successful, otherwise raises error.
 #' @keywords internal
@@ -41,7 +43,9 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
   return(TRUE)
 }
 
-#' Helper function checks the parent-child relations are valid
+#' Validate parent-child key
+#'
+#' Helper function checks the parent-child relations are valid.
 #'
 #' @param x (`join_keys`) object to assert validity of relations
 #'
@@ -70,6 +74,8 @@ assert_parent_child <- function(x) {
   invisible(x)
 }
 
+#' Verify key set compatibility
+#'
 #' Helper function to ensuring compatibility between two sets of keys
 #'
 #' @return Returns `TRUE` if successful, otherwise raises error.

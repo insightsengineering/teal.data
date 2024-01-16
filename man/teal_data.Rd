@@ -14,7 +14,8 @@ teal_data(
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object
+
 (optional) object with dataset column relationships used for joining.
 If empty then no joins between pairs of objects}
 
@@ -29,6 +30,7 @@ A \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Universal function to pass data to teal application.
 }
 \examples{

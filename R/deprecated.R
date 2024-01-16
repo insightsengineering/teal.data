@@ -1,6 +1,8 @@
 #' Deprecated `TealData` class and related functions
 #'
-#' @description `r lifecycle::badge("deprecated")`\cr
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
 #' The `TealData` class and associated functions have been deprecated. Use [teal_data()] instead.
 #' See the [Migration guide](https://github.com/insightsengineering/teal/discussions/945) for details.
 #'
@@ -333,7 +335,8 @@ get_join_keys <- function(...) {
 #' @rdname col_labels
 #' @include formatters_var_labels.R
 #' @details
-#' `r lifecycle::badge("deprecated")`\cr
+#' `r lifecycle::badge("deprecated")`
+#'
 #' In previous versions of `teal.data` labels were managed with `get_labels()`.
 #' This function is deprecated as of `0.3.1`, use `col_labels` instead.
 #' @export

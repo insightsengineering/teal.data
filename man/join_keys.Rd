@@ -45,10 +45,12 @@ join_keys(x) <- value
 \method{print}{join_keys}(x, ...)
 }
 \arguments{
-\item{...}{(optional)\cr
-either \code{teal_data} or \code{join_keys} object to extract \code{join_keys}, \cr
-or any number of \code{join_key_set} objects to create \code{join_keys}, \cr
-or nothing to create an empty \code{join_keys}}
+\item{...}{(optional)
+\itemize{
+\item either \code{teal_data} or \code{join_keys} object to extract \code{join_keys}
+\item or any number of \code{join_key_set} objects to create \code{join_keys}
+\item or nothing to create an empty \code{join_keys}
+}}
 
 \item{x}{(\code{join_keys}) empty object to set the new relationship pairs.
 \code{x} is typically an object of \code{join_keys} class. When called with the \code{join_keys(x)}
@@ -58,7 +60,7 @@ or \code{join_keys(x) <- value} then it can also take a supported class (\code{t
 a character vector, but it can also take numeric, logical, \code{NULL} or missing.}
 
 \item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
-a parent-child relationship between the datasets.\cr
+a parent-child relationship between the datasets.
 \itemize{
 \item \code{TRUE} (default) \code{dataset_1} is the parent of \code{dataset_2};
 \item \code{FALSE} when the relationship is undirected.
@@ -135,6 +137,7 @@ jk <- join_keys(
 
 jk
 
+
 # Getter for join_keys ---
 
 jk["ds1", "ds2"]
@@ -144,6 +147,7 @@ jk["ds1", "ds2"]
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
+
 
 # Setting a new primary key ---
 
@@ -157,7 +161,6 @@ jk["ds1", "ds4"] <- c("pk1" = "pk4")
 # Removing a key ---
 
 jk["ds5", "ds5"] <- NULL
-
 # Merging multiple `join_keys` objects ---
 
 jk_merged <- c(
@@ -167,7 +170,6 @@ jk_merged <- c(
     join_key("ds3", "ds4", c(pk3 = "pk4_2"))
   )
 )
-
 # note: merge can be performed with both join_keys and join_key_set
 
 jk_merged <- c(

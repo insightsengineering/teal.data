@@ -14,7 +14,7 @@ internal
 rADTR
 }
 \description{
-Random data \code{rADTR}.
+Random data \code{rADTR}
 }
 \keyword{datasets}
 \keyword{internal}
