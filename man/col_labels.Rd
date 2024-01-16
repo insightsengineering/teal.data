@@ -45,7 +45,8 @@ Get or set variable labels in a \code{data.frame}.
 Variable labels can be stored as a \code{label} attribute set on individual variables.
 These functions get or set this attribute, either on all (\code{col_labels}) or some variables (\code{col_relabel}).
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 In previous versions of \code{teal.data} labels were managed with \code{get_labels()}.
 This function is deprecated as of \verb{0.3.1}, use \code{col_labels} instead.
 }

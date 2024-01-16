@@ -1,6 +1,8 @@
 #' Comprehensive data integration function for `teal` applications
 #'
-#' `r lifecycle::badge("stable")`\cr
+#' @description
+#' `r lifecycle::badge("stable")`
+#'
 #' Universal function to pass data to teal application.
 #'
 #' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.

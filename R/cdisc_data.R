@@ -1,6 +1,8 @@
 #' Data input for `teal` app
 #'
-#' `r lifecycle::badge("stable")`\cr
+#' @description
+#' `r lifecycle::badge("stable")`
+#'
 #' Function is a wrapper around [teal_data()] and guesses `join_keys`
 #' for given datasets whose names match ADAM datasets names.
 #'

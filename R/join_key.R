@@ -1,6 +1,8 @@
 #' Create a relationship between a pair of datasets
 #'
-#' `r lifecycle::badge("stable")`\cr
+#' @description
+#' `r lifecycle::badge("stable")`
+#'
 #' Create a relationship between two datasets, `dataset_1` and `dataset_2`.
 #' By default, this function establishes a directed relationship with `dataset_1` as the parent.
 #' If `dataset_2` is not specified, the function creates a primary key for `dataset_1`.
