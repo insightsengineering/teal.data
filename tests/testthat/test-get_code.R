@@ -122,7 +122,7 @@ testthat::test_that("get_code with datanames is possible to output the code for 
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = c("a", "b")),
-    paste("a <- 1", "b <- 2", sep = "\n")
+    paste(code[1:2], collapse = "\n")
   )
 })
 
