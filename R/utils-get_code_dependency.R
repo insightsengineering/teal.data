@@ -35,16 +35,21 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
+  calls_pd <- extract_calls(pd)
 
   if (check_names) {
     # Detect if names are actually in code.
-    symbols <- unique(pd[pd$token == "SYMBOL", "text"])
-    if (!all(names %in% symbols)) {
+    symbols <- unlist(lapply(calls_pd, function(call) call[call$token == "SYMBOL", "text"]))
+    if (any(pd$text == "assign")) {
+      assign_calls <- Filter(function(call) find_call(call, "assign"), calls_pd)
+      ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
+      ass_str <- gsub("^['\"]|['\"]$", "", ass_str)
+      symbols <- c(ass_str, symbols)
+    }
+    if (!all(names %in% unique(symbols))) {
       warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
     }
   }
-
-  calls_pd <- extract_calls(pd)
 
   graph <- code_graph(calls_pd)
   ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
@@ -52,6 +57,34 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
   lib_ind <- detect_libraries(calls_pd)
 
   as.character(code[unique(c(lib_ind, ind))])
+}
+
+#' Locate function call token
+#'
+#' Determine which row of parsed data is specific `SYMBOL_FUNCTION_CALL` token.
+#'
+#' Useful for determining occurrence of `assign` or `data` functions in an input call.
+#'
+#' @param call_pd `data.frame` as returned by `extract_calls()`
+#' @param text `character(1)` to look for in `text` column of `call_pd`
+#'
+#' @return
+#' Single integer specifying row in `call_pd` where `token` is `SYMBOL_FUNCTION_CALL` and `text` is `text`.
+#' 0 if not found.
+#'
+#' @keywords internal
+#' @noRd
+find_call <- function(call_pd, text) {
+  checkmate::check_data_frame(call_pd)
+  checkmate::check_names(call_pd, must.include = c("token", "text"))
+  checkmate::check_string(text)
+
+  ans <- which(call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == text)
+  if (length(ans)) {
+    ans
+  } else {
+    0L
+  }
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
@@ -162,17 +195,24 @@ extract_occurrence <- function(calls_pd) {
     calls_pd,
     function(call_pd) {
       # Handle data(object)/data("object")/data(object, envir = ) independently.
-      data_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "data"
-      if (any(data_call)) {
-        sym <- call_pd[which(data_call) + 1, "text"]
-        return(c(gsub("'", "", sym), "<-", "data"))
+      data_call <- find_call(call_pd, "data")
+      if (data_call) {
+        sym <- call_pd[data_call + 1, "text"]
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
       }
       # Handle assign().
-      assign_call <- call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == "assign"
-      if (any(assign_call)) {
-        call_pd_lim <- call_pd[-c(1:which(assign_call)), ]
-        sym <- call_pd_lim[call_pd_lim$token == "STR_CONST", "text"]
-        return(c(gsub("'", "", sym), "<-", "assign"))
+      assign_call <- find_call(call_pd, "assign")
+      if (assign_call) {
+        # Check if parameters were named.
+        if (any(call_pd$token == "SYMBOL_SUB")) {
+          params <- call_pd[call_pd$token == "SYMBOL_SUB", "text"]
+          pos <- match("x", params, nomatch = length(params) + 1L)
+        } else {
+          # Object is the first entry after 'assign'.
+          pos <- 1
+        }
+        sym <- call_pd[assign_call + pos, "text"]
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
       }
 
       # What occurs in a function body is not tracked.
