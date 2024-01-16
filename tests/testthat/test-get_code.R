@@ -48,7 +48,7 @@ testthat::test_that("get_code works for datanames of length > 1", {
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = c("a", "b")),
-    paste("a <- 1", "b <- 2", sep = "\n")
+    paste(code, collapse = "\n")
   )
 })
 
