@@ -16,7 +16,7 @@ If dataset_2 is not specified, the function creates a primary key for dataset_1.
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9034</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9036</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,16 +42,6 @@ If dataset_2 is not specified, the function creates a primary key for dataset_1.
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -102,15 +92,15 @@ a primary key for <code>dataset_1</code> is created.</p></dd>
 <dt>keys</dt>
 <dd><p>(optionally named <code>character</code>) Column mapping between the datasets,
 where <code>names(keys)</code> maps columns in <code>dataset_1</code> corresponding to columns of
-<code>dataset_2</code> given by the elements of <code>keys</code>.</p>
-<p>If unnamed, the same column names are used for both datasets.</p>
-<p>If any element of the <code>keys</code> vector is empty with a non-empty name, then the name is
-used for both datasets.</p></dd>
+<code>dataset_2</code> given by the elements of <code>keys</code>.</p><ul><li><p>If unnamed, the same column names are used for both datasets.</p></li>
+<li><p>If any element of the <code>keys</code> vector is empty with a non-empty name, then the name is
+used for both datasets.</p></li>
+</ul></dd>
 
 
 <dt>directed</dt>
 <dd><p>(<code>logical(1)</code>) Flag that indicates whether it should create
-a parent-child relationship between the datasets.<br></p><ul><li><p><code>TRUE</code> (default) <code>dataset_1</code> is the parent of <code>dataset_2</code>;</p></li>
+a parent-child relationship between the datasets.</p><ul><li><p><code>TRUE</code> (default) <code>dataset_1</code> is the parent of <code>dataset_2</code>;</p></li>
 <li><p><code>FALSE</code> when the relationship is undirected.</p></li>
 </ul></dd>
 
@@ -167,6 +157,7 @@ a parent-child relationship between the datasets.<br></p><ul><li><p><code>TRUE</
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"parents")$d2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
