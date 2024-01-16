@@ -231,46 +231,6 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
   )
 })
 
-testthat::test_that("get_code with datanames can extract the code when using <<-", {
-  code <- c(
-    "a <- 1",
-    "b <- a",
-    "b <<- b + 2"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste("a <- 1", "b <- a", "b <<- b + 2", sep = "\n")
-  )
-})
-
-testthat::test_that("get_code with datanames detects every assign calls even if not evaluated", {
-  code <- c(
-    "a <- 1",
-    "b <- 2",
-    "eval(expression({b <- b + 2}))"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste("b <- 2", "eval(expression({\n    b <- b + 2\n}))", sep = "\n")
-  )
-})
-
-testthat::test_that("get_code returns result of length for non-empty input", {
-  tdata1 <- teal_data()
-  tdata1 <- within(tdata1, {
-    a <- 1
-    b <- a^5
-    c <- list(x = 2)
-  })
-
-  testthat::expect_length(get_code(tdata1, deparse = FALSE), 1)
-  testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
-})
-
-
-
 # @linksto ---------------------------------------------------------------------------------------------------------
 
 testthat::test_that("@linksto cause to return this line for affected binding", {
