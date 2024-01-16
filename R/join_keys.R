@@ -22,10 +22,10 @@
 #' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data` object.
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
 #'
-#' @param ... (optional)\cr
-#'  either `teal_data` or `join_keys` object to extract `join_keys`, \cr
-#'  or any number of `join_key_set` objects to create `join_keys`, \cr
-#'  or nothing to create an empty `join_keys`
+#' @param ... (optional)
+#' - either `teal_data` or `join_keys` object to extract `join_keys`
+#' - or any number of `join_key_set` objects to create `join_keys`
+#' - or nothing to create an empty `join_keys`
 #' @param value For `x[i, j, directed = TRUE)] <- value` (named/unnamed `character`)
 #' Column mapping between datasets.
 #'

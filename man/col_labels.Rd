@@ -35,7 +35,8 @@ and value is the new variable label}
 \value{
 For \code{col_labels}, named character vector of variable labels, the names being the corresponding variable names.
 If the \code{label} attribute is missing, the vector elements will be
-the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.\cr
+the variable names themselves if \code{fill = TRUE} and \code{NA} if \code{fill = FALSE}.
+
 For \verb{col_labels<-} and \code{col_relabel}, copy of \code{x} with variable labels modified.
 }
 \description{

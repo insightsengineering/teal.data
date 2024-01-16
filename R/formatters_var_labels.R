@@ -16,7 +16,8 @@
 #' @return
 #' For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
 #' If the `label` attribute is missing, the vector elements will be
-#' the variable names themselves if `fill = TRUE` and `NA` if `fill = FALSE`.\cr
+#' the variable names themselves if `fill = TRUE` and `NA` if `fill = FALSE`.
+#'
 #' For `col_labels<-` and `col_relabel`, copy of `x` with variable labels modified.
 #'
 #' @examples

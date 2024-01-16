@@ -20,7 +20,7 @@ used for both datasets.
 }}
 
 \item{directed}{(\code{logical(1)}) Flag that indicates whether it should create
-a parent-child relationship between the datasets.\cr
+a parent-child relationship between the datasets.
 \itemize{
 \item \code{TRUE} (default) \code{dataset_1} is the parent of \code{dataset_2};
 \item \code{FALSE} when the relationship is undirected.

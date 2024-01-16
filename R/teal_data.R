@@ -6,7 +6,8 @@
 #' Universal function to pass data to teal application.
 #'
 #' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.
-#' @param join_keys (`join_keys`) object or a single (`join_key_set`) object\cr
+#' @param join_keys (`join_keys`) object or a single (`join_key_set`) object
+#'
 #'   (optional) object with dataset column relationships used for joining.
 #'   If empty then no joins between pairs of objects
 #' @param code (`character`, `language`) code to reproduce the datasets.

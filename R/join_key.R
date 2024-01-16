@@ -12,12 +12,11 @@
 #' @param keys (optionally named `character`) Column mapping between the datasets,
 #' where `names(keys)` maps columns in `dataset_1` corresponding to columns of
 #' `dataset_2` given by the elements of `keys`.
-#'
 #' - If unnamed, the same column names are used for both datasets.
 #' - If any element of the `keys` vector is empty with a non-empty name, then the name is
 #' used for both datasets.
 #' @param directed (`logical(1)`) Flag that indicates whether it should create
-#' a parent-child relationship between the datasets.\cr
+#' a parent-child relationship between the datasets.
 #'  - `TRUE` (default) `dataset_1` is the parent of `dataset_2`;
 #'  - `FALSE` when the relationship is undirected.
 #'
