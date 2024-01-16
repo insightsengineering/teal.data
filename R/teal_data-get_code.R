@@ -27,7 +27,6 @@
 #'   c <- list(x = 2)
 #' })
 #' get_code(tdata1)
-#' datanames(tdata1) <- c("a", "b", "c")
 #' get_code(tdata1, datanames = "a")
 #' get_code(tdata1, datanames = "b")
 #'
@@ -39,7 +38,6 @@
 #' @export
 setMethod("get_code", signature = "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_subset(datanames, datanames(object))
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(datanames)) {
