@@ -51,7 +51,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
     }
   }
 
-  graph <- code_graph(calls_pd)
+  graph <- code_graph(calls_pd, code)
   ind <- unlist(lapply(names, function(x) graph_parser(x, graph)))
 
   lib_ind <- detect_libraries(calls_pd)
@@ -143,6 +143,7 @@ fix_comments <- function(calls) {
 #' @param calls_pd `list` of `data.frame`s;
 #'  result of `utils::getParseData()` split into subsets representing individual calls;
 #'  created by `extract_calls()` function
+#' @param code `expression(n)` containing the parsed code
 #'
 #' @return
 #' A list (of length of input `calls_pd`) where each element represents one call.
@@ -154,8 +155,8 @@ fix_comments <- function(calls) {
 #'
 #' @keywords internal
 #' @noRd
-code_graph <- function(calls_pd) {
-  cooccurrence <- extract_occurrence(calls_pd)
+code_graph <- function(calls_pd, code) {
+  cooccurrence <- extract_occurrence(calls_pd, code)
 
   side_effects <- extract_side_effects(calls_pd)
 
@@ -170,6 +171,7 @@ code_graph <- function(calls_pd) {
 #' @param calls_pd `list` of `data.frame`s;
 #'  result of `utils::getParseData()` split into subsets representing individual calls;
 #'  created by `extract_calls()` function
+#' @param code `expression(n)` containing the parsed code
 #'
 #' @return
 #' A list (of length of input `calls_pd`) where each element represents one call.
@@ -181,7 +183,7 @@ code_graph <- function(calls_pd) {
 #'
 #' @keywords internal
 #' @noRd
-extract_occurrence <- function(calls_pd) {
+extract_occurrence <- function(calls_pd, code) {
   is_in_function <- function(x) {
     # If an object is a function parameter,
     # then in calls_pd there is a `SYMBOL_FORMALS` entry for that object.
@@ -192,16 +194,25 @@ extract_occurrence <- function(calls_pd) {
       rep(FALSE, nrow(x))
     }
   }
-  lapply(
+  occurrence <- lapply(
     calls_pd,
     function(call_pd) {
       # Handle data(object)/data("object")/data(object, envir = ) independently.
       data_call <- find_call(call_pd, "data")
       if (data_call) {
         sym <- call_pd[data_call + 1, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
-      # Handle assign().
+      # Handle assign(x = ).
+      # 0. x is the name of the first argument responsible for object name.
+      # 1. Check if there was $token="SYMBOL_FUNCTION_CALL" & $text = "assign".
+      # 2. Check if parameters were named $token="SYMBOL_SUB", "text"].
+      # 3. Check first thing after 'assign' unless.
+      # 3.a) x was in named parameters - then check it's position.
+      # 3.b) x was not in named parameters - then check length(SYMBOL_SUB) + 1.
+      # 4. Check if x was a string or a variable.
+      # 4a). If x was a string return c("name", "<-").
+      # 4b). If x was a variable return c("<-", "name").
       assign_call <- find_call(call_pd, "assign")
       if (assign_call) {
         # Check if parameters were named.
@@ -213,7 +224,10 @@ extract_occurrence <- function(calls_pd) {
           pos <- 1
         }
         sym <- call_pd[assign_call + pos, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
+        is_variable <- call_pd[assign_call + pos, "token"] == "SYMBOL"
+        ans <- c(gsub("^['\"]|['\"]$", "", sym), "<-")
+        if (is_variable) ans <- rev(ans)
+        return(ans)
       }
 
       # What occurs in a function body is not tracked.
@@ -245,9 +259,25 @@ extract_occurrence <- function(calls_pd) {
       ### NOTE 3: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
       ### NOTE 2: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
       ### NOTE 1: Cases like 'data(iris)' that do not have an assignment operator.
-      ### NOTE 1: Then they are parsed as c("iris", "<-", "data")
+      ### NOTE 1: Then they are parsed as c("iris", "<-") in final code graph.
     }
   )
+
+  # If there is any entry that starts with "<-" in final code graph,
+  # this means x parameter in assign function was a variable.
+  # Then include x's value.
+  if (length(occurrence) >= 2) {
+    for (i in 2:length(occurrence)) {
+      if (occurrence[[i]][1] == "<-") {
+        name <- occurrence[[i]][2]
+        env <- new.env()
+        eval(code[1:(i-1)], envir = env)
+        value <- get(name, envir = env)
+        occurrence[[i]] <- c(value, occurrence[[i]])
+      }
+    }
+  }
+  occurrence
 }
 
 #' Extract side effects
