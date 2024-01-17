@@ -41,7 +41,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
     # Detect if names are actually in code.
     symbols <- unlist(lapply(calls_pd, function(call) call[call$token == "SYMBOL", "text"]))
     if (any(pd$text == "assign")) {
-      assign_calls <- Filter(function(call) any(is_symbol(call, "assign")), calls_pd)
+      assign_calls <- Filter(function(call) find_call(call, "assign"), calls_pd)
       ass_str <- unlist(lapply(assign_calls, function(call) call[call$token == "STR_CONST", "text"]))
       ass_str <- gsub("^['\"]|['\"]$", "", ass_str)
       symbols <- c(ass_str, symbols)
@@ -59,26 +59,32 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
   as.character(code[unique(c(lib_ind, ind))])
 }
 
-#' Locate function call tokens
+#' Locate function call token
 #'
-#' Determine rows of parsed data are specific `SYMBOL_FUNCTION_CALL` tokens.
+#' Determine which row of parsed data is specific `SYMBOL_FUNCTION_CALL` token.
 #'
-#' Useful to determine apperance of `assign` or `data` functions in an input call.
+#' Useful for determining occurrence of `assign` or `data` functions in an input call.
 #'
 #' @param call_pd `data.frame` as returned by `extract_calls()`
-#' @param symbol `character(1)` to look for in `text` column of `call_pd`
+#' @param text `character(1)` to look for in `text` column of `call_pd`
 #'
 #' @return
-#' A logical index specifying rows in `call_pd` where `token` is `SYMBOL_FUNCTION_CALL` and `text` is `symbol`.
+#' Single integer specifying row in `call_pd` where `token` is `SYMBOL_FUNCTION_CALL` and `text` is `text`.
+#' 0 if not found.
 #'
 #' @keywords internal
 #' @noRd
-is_symbol <- function(call_pd, symbol) {
+find_call <- function(call_pd, text) {
   checkmate::check_data_frame(call_pd)
   checkmate::check_names(call_pd, must.include = c("token", "text"))
-  checkmate::check_string(symbol)
+  checkmate::check_string(text)
 
-  call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == symbol
+  ans <- which(call_pd$token == "SYMBOL_FUNCTION_CALL" & call_pd$text == text)
+  if (length(ans)) {
+    ans
+  } else {
+    0L
+  }
 }
 
 #' Split the result of `utils::getParseData()` into separate calls
@@ -130,7 +136,6 @@ fix_comments <- function(calls) {
 
 #' Create object dependencies graph within parsed code
 #'
-#' @description
 #' Builds dependency graph that identifies dependencies between objects in parsed code.
 #' Helps understand which objects depend on which.
 #'
@@ -158,7 +163,7 @@ code_graph <- function(calls_pd) {
 
 #' Extract object occurrence
 #'
-#' @description Extracts objects occurrence within calls passed by `calls_pd`.
+#' Extracts objects occurrence within calls passed by `calls_pd`.
 #' Also detects which objects depend on which within a call.
 #'
 #' @param calls_pd `list` of `data.frame`s;
@@ -190,14 +195,14 @@ extract_occurrence <- function(calls_pd) {
     calls_pd,
     function(call_pd) {
       # Handle data(object)/data("object")/data(object, envir = ) independently.
-      data_call <- is_symbol(call_pd, "data")
-      if (any(data_call)) {
-        sym <- call_pd[which(data_call) + 1, "text"]
+      data_call <- find_call(call_pd, "data")
+      if (data_call) {
+        sym <- call_pd[data_call + 1, "text"]
         return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
       }
       # Handle assign().
-      assign_call <- is_symbol(call_pd, "assign")
-      if (any(assign_call)) {
+      assign_call <- find_call(call_pd, "assign")
+      if (assign_call) {
         # Check if parameters were named.
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token == "SYMBOL_SUB", "text"]
@@ -206,7 +211,7 @@ extract_occurrence <- function(calls_pd) {
           # Object is the first entry after 'assign'.
           pos <- 1
         }
-        sym <- call_pd[which(assign_call) + pos, "text"]
+        sym <- call_pd[assign_call + pos, "text"]
         return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
       }
 
@@ -246,9 +251,8 @@ extract_occurrence <- function(calls_pd) {
 
 #' Extract side effects
 #'
-#' @description Extracts all object names from the code that are marked with `@linksto` tag.
+#' Extracts all object names from the code that are marked with `@linksto` tag.
 #'
-#' @details
 #' The code may contain functions calls that create side effects, e.g. modify the environment.
 #' Static code analysis may be insufficient to determine which objects are created or modified by such a function call.
 #' The `@linksto` comment tag is introduced to mark a call as having a (side) effect on one or more objects.

@@ -19,8 +19,8 @@ Checks whether code in \code{teal_data} object reproduces the stored objects.
 }
 \details{
 If objects created by code in the \verb{@code} slot of \code{x} are \code{all_equal} to the contents of the \verb{@env} slot,
-the function updates the \verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object. Once verified, the slot
-will always be set to \code{TRUE}.
+the function updates the \verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object.
+Once verified, the slot will always be set to \code{TRUE}.
 If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is raised.
 }
 \examples{

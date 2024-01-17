@@ -14,7 +14,8 @@ cdisc_data(
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object\cr
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object
+
 (optional) object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}
@@ -30,11 +31,12 @@ A \code{teal_data} object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+
 Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
 for given datasets whose names match ADAM datasets names.
 }
 \details{
-This function checks if there were keys added to all data sets
+This function checks if there were keys added to all data sets.
 }
 \examples{
 data <- cdisc_data(

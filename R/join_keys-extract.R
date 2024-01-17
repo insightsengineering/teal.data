@@ -24,6 +24,7 @@
 #' jk["ds1"]
 #' jk[1:2]
 #' jk[c("ds1", "ds2")]
+#'
 `[.join_keys` <- function(x, i, j) {
   if (missing(i) && missing(j)) {
     # because:
@@ -118,7 +119,7 @@
 #' @order 2
 #'
 #' @param directed (`logical(1)`) Flag that indicates whether it should create
-#' a parent-child relationship between the datasets.\cr
+#' a parent-child relationship between the datasets.
 #'  - `TRUE` (default) `dataset_1` is the parent of `dataset_2`;
 #'  - `FALSE` when the relationship is undirected.
 #' @section Functions:
@@ -177,7 +178,6 @@
   c(x, join_key(i, j, value, directed))
 }
 
-#' @noRd
 #' @rdname join_keys
 #'
 #' @order 1000
@@ -198,6 +198,8 @@
 #' jk[["ds7"]][["ds7"]] <- NULL # removes key
 #'
 #' jk
+#'
+#' @noRd
 `[[<-.join_keys` <- function(x, i, value) {
   checkmate::assert(
     combine = "or",

@@ -14,7 +14,7 @@ internal
 rADVS
 }
 \description{
-Random data \code{rADVS}.
+Random data \code{rADVS}
 }
 \keyword{datasets}
 \keyword{internal}

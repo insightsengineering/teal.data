@@ -14,7 +14,7 @@ internal
 rADTTE
 }
 \description{
-Random time to event analysis dataset.
+Random time to event analysis dataset
 }
 \keyword{datasets}
 \keyword{internal}

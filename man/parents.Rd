@@ -40,7 +40,8 @@ For \code{parent(x, dataset_name)} returns \code{NULL} if parent does not exist.
 \description{
 \code{parents()} facilitates the creation of dependencies between datasets by
 assigning a parent-child relationship.
-
+}
+\details{
 Each element is defined by a \code{list} element, where \code{list("child" = "parent")}.
 }
 \section{Methods (by class)}{

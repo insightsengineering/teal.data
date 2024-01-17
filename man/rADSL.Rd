@@ -14,7 +14,7 @@ internal
 rADSL
 }
 \description{
-Random patient listing.
+Random patient listing
 }
 \keyword{datasets}
 \keyword{internal}
