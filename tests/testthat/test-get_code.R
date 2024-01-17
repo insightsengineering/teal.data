@@ -133,7 +133,6 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
     "b <<- b + 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     paste("a <- 1", "b <- a", "b <<- b + 2", sep = "\n")
@@ -147,7 +146,6 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
     "eval(expression({b <- b + 2}))"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     paste("b <- 2", "eval(expression({\n    b <- b + 2\n}))", sep = "\n")
@@ -164,6 +162,17 @@ testthat::test_that("get_code returns result of length 1 for non-empty input", {
 
   testthat::expect_length(get_code(tdata1, deparse = FALSE), 1)
   testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
+})
+
+testthat::test_that("get_code does not break if code is separated by ;", {
+  code <- c(
+    "a <- 1;a <- a + 1"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    gsub(";", "\n", code, fixed = TRUE)
+  )
 })
 
 
@@ -623,7 +632,6 @@ testthat::test_that(
       "iris2 <- head(iris)"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c("iris2")
     testthat::expect_identical(
       get_code(tdata, datanames = "iris2"),
       paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
