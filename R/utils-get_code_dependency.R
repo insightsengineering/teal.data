@@ -268,7 +268,7 @@ extract_occurrence <- function(calls_pd, code) {
   # Then include x's value.
   if (length(occurrence) >= 2) {
     for (i in 2:length(occurrence)) {
-      if (occurrence[[i]][1] == "<-") {
+      if (length(occurrence[[i]]) && occurrence[[i]][1] == "<-") {
         name <- occurrence[[i]][2]
         env <- new.env()
         eval(code[1:(i - 1)], envir = env)
