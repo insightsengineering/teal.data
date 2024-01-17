@@ -352,10 +352,10 @@ testthat::test_that(
     testthat::expect_identical(
       get_code(tdata, datanames = "classes"),
       paste("iris2 <- iris[1:5, ]",
-            "iris_head <- head(iris)",
-            "iris3 <- iris_head[1, ]",
-            "classes <- lapply(iris2, class)",
-            sep = "\n"
+        "iris_head <- head(iris)",
+        "iris3 <- iris_head[1, ]",
+        "classes <- lapply(iris2, class)",
+        sep = "\n"
       )
     )
   }
@@ -486,11 +486,11 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     paste("x <- data.frame(a = 1:3)",
-          "a <- data.frame(y = 1:3)",
-          "a$x <- a$y",
-          "a$x <- a$x + 2",
-          "a$x <- x$a",
-          sep = "\n"
+      "a <- data.frame(y = 1:3)",
+      "a$x <- a$y",
+      "a$x <- a$x + 2",
+      "a$x <- x$a",
+      sep = "\n"
     )
   )
 })
