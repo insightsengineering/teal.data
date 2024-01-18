@@ -166,6 +166,16 @@ testthat::test_that("get_code returns result of length 1 for non-empty input", {
   testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
 })
 
+testthat::test_that("get_code does not break if code is separated by ;", {
+  code <- c(
+    "a <- 1;a <- a + 1"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    gsub(";", "\n", code, fixed = TRUE)
+  )
+})
 
 # assign ----------------------------------------------------------------------------------------------------------
 
