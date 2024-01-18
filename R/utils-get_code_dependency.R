@@ -100,6 +100,7 @@ find_call <- function(call_pd, text) {
 #' @noRd
 extract_calls <- function(pd) {
   calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  calls <- Filter(Negate(is.null), calls)
   fix_comments(calls)
 }
 
