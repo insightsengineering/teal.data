@@ -177,7 +177,6 @@ testthat::test_that("get_code does not break if code is separated by ;", {
   )
 })
 
-
 # assign ----------------------------------------------------------------------------------------------------------
 
 testthat::test_that("get_code with datanames can extract the code for assign function", {
