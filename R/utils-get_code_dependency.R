@@ -99,7 +99,15 @@ find_call <- function(call_pd, text) {
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
-  calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  calls <- lapply(
+    pd[pd$parent == 0, "id"],
+    function(parent) {
+      rbind(
+        pd[pd$id == parent, c("token", "text", "id", "parent")],
+        get_children(pd = pd, parent = parent)
+      )
+    }
+  )
   calls <- Filter(Negate(is.null), calls)
   fix_comments(calls)
 }
@@ -192,6 +200,7 @@ extract_occurrence <- function(calls_pd) {
       rep(FALSE, nrow(x))
     }
   }
+  browser()
   lapply(
     calls_pd,
     function(call_pd) {
