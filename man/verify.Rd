@@ -34,15 +34,14 @@ verify(tdata1)
 
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 verify(tdata2)
-verify(tdata2)@verified
-tdata2@verified
+tdata2@verified # is verified
 
 tdata3 <- teal_data()
 tdata3 <- within(tdata3, {
   stop("error")
 })
-try(verify(tdata3)) # fails
 
+try(verify(tdata3)) # fails
 
 a <- 1
 b <- a + 2

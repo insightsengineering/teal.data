@@ -363,6 +363,31 @@ testthat::test_that(
   }
 )
 
+testthat::test_that(
+  "@linksto is extracted for variable along with its code dependencies",
+  {
+    tdata <- teal_data() |>
+      eval_code("
+        foo <- function() {
+          env <- parent.frame()
+          env$x <- 0
+        }
+        foo() # @linksto x
+        y <- x
+      ")
+    testthat::expect_identical(
+      get_code(data, datanames = "x"),
+      paste("foo <- function() {",
+        "    env <- parent.frame()",
+        "    env$x <- 0",
+        "}",
+        "foo()",
+        sep = "\n"
+      )
+    )
+  }
+)
+
 # functions -------------------------------------------------------------------------------------------------------
 
 testthat::test_that("get_code with datanames ignores occurrence in function definition", {
