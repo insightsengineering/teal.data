@@ -27,7 +27,7 @@
 This package is used to create the data needed for `teal` applications. This data can be:
 
 - Independent data frames
-- `CDISC` data (for clinical trial reporting)
+- CDISC data (for clinical trial reporting)
 - Relational data
 - `MultiAssayExperiment` objects
 

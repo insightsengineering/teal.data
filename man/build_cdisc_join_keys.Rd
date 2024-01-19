@@ -8,7 +8,7 @@ build_cdisc_join_keys(default_cdisc_keys)
 }
 \arguments{
 \item{default_cdisc_keys}{(\code{list}) default definition of primary and foreign
-keys for \code{CDISC} datasets}
+keys for CDISC datasets}
 }
 \description{
 Helper method to build \code{default_cdisc_join_keys}

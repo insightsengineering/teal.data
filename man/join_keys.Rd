@@ -205,5 +205,5 @@ join_keys(td)
 \code{\link[=join_key]{join_key()}} for creating \code{join_keys_set},
 \code{\link[=parents]{parents()}} for parent operations,
 \code{\link[=teal_data]{teal_data()}} for \code{teal_data} constructor \emph{and}
-\link{default_cdisc_join_keys} for default \code{CDISC} keys.
+\link{default_cdisc_join_keys} for default CDISC keys.
 }
