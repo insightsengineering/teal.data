@@ -223,7 +223,7 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
 testthat::test_that(
   "get_code with datanames can extract the code for assign function where \"x\" is variable",
   {
-    testthat::skip("We will not tackle this some day, as this require code evaluation.")
+    testthat::skip("We will not tackle this some day, as this requires code evaluation.")
     code <- c(
       "x <- \"a\"",
       "assign(x, 5)",
