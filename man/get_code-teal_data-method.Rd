@@ -26,10 +26,56 @@ Retrieve code stored in \verb{@code}, which (in principle) can be used to recrea
 Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datanames}.
 If the code has not passed verification (with \code{\link[=verify]{verify()}}), a warning will be prepended.
 }
-\section{Notes for Developers}{
+\section{Extracting dataset-specific code}{
 
-To learn more about how a subset of code needed to reproduce a specific data set is extracted from all code,
-see \code{\link[=get_code_dependency]{get_code_dependency()}}.
+When \code{datanames} is specified, the code returned will be limited to the code needed to create the
+requested data sets. \code{code} stored in the \code{teal_data} object is statically analyzed to determine
+dependency tree between each line of the code. Analysis is performed automatically basing on the
+used symbols and it is working in a typical case when new dataset is created by assignment operator.
+For example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
+  eval_code("
+    foo <- function(x) x + 1
+    x <- 0
+    y <- foo(x)
+  ")
+get_code(data, datanames = "y")
+}\if{html}{\out{</div>}}
+
+In above case \code{y} depends on \code{z} and \code{foo} so the code returned by \code{get_code} will contain all three lines of code.
+\code{get_code(data, datanames = "x")} will return only the second line of code etc.
+\cr
+There could be cases when the dependency tree is not obvious. For example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
+  eval_code("
+    foo <- function() \{
+      env <- parent.frame()
+      env$x <- 0
+    \}
+    foo()
+    y <- x
+  ")
+get_code(data, datanames = "y")
+}\if{html}{\out{</div>}}
+
+In above case \code{y} depends on \code{x} but \code{x} is not created by assignment operator. In such cases
+\code{get_code(data, y)} will only return the second line of the code. To overcome this limitation
+add \verb{# @linksto x} at the end of a line where a side-effect occurs to specify that this line
+is required to reproduce a variable called \code{x}. So the code should look like:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
+  eval_code("
+    foo <- function() \{
+      env <- parent.frame()
+      env$x <- 0
+    \}
+    foo() # @linksto x
+    y <- x
+  ")
+get_code(data, datanames = "y")
+}\if{html}{\out{</div>}}
 }
 
 \examples{
