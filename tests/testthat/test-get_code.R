@@ -473,24 +473,26 @@ testthat::test_that(
 testthat::test_that(
   "get_code detects occurrence of function definition and @linksto usage",
   {
-    code <- c("
+    code <- c(
+      "
         foo <- function() {
           env <- parent.frame()
           env$x <- 0
         }",
-        "foo() # @linksto x",
-        "y <- x"
+      "foo() # @linksto x",
+      "y <- x"
     )
     tdata <- teal_data(code = code)
     testthat::expect_identical(
-      get_code(tdata, datanames = 'x'),
+      get_code(tdata, datanames = "x"),
       paste(
         warning_message,
         "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()",
         sep = "\n"
       )
     )
-})
+  }
+)
 # $ ---------------------------------------------------------------------------------------------------------------
 
 testthat::test_that("get_code with datanames understands $ usage and do not treat rhs of $ as objects (only lhs)", {
