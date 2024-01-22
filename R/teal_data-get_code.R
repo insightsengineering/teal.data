@@ -6,9 +6,57 @@
 #' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datanames`.
 #' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
-#' @section Notes for Developers:
-#' To learn more about how a subset of code needed to reproduce a specific data set is extracted from all code,
-#' see [`get_code_dependency()`].
+#' @section Extracting dataset-specific code:
+#' When `datanames` is specified, the code returned will be limited to the code needed to create the
+#' requested data sets. `code` stored in the `teal_data` object is statically analyzed to determine
+#' dependency tree between each line of the code. Analysis is performed automatically basing on the
+#' used symbols and it is working in a typical case when new dataset is created by assignment operator.
+#' For example:
+#' ```r
+#' data <- teal_data() |>
+#'   eval_code("
+#'     foo <- function(x) x + 1
+#'     x <- 0
+#'     y <- foo(x)
+#'   ")
+#' get_code(data, datanames = "y")
+#' ```
+#'
+#' In above case `y` depends on `z` and `foo` so the code returned by `get_code` will contain all three lines of code.
+#' `get_code(data, datanames = "x")` will return only the second line of code etc.
+#' \cr
+#' There could be cases when the dependency tree is not obvious. For example:
+#' ```r
+#' data <- teal_data() |>
+#'   eval_code("
+#'     foo <- function() {
+#'       env <- parent.frame()
+#'       env$x <- 0
+#'     }
+#'     foo()
+#'     y <- x
+#'   ")
+#' get_code(data, datanames = "y")
+#' ```
+#'
+#' In above case `y` depends on `x` but `x` is not created by assignment operator. In such cases
+#' `get_code(data, y)` will only return the second line of the code. To overcome this limitation
+#' add `# @linksto x` at the end of a line where a side-effect occurs to specify that this line
+#' is required to reproduce a variable called `x`. So the code should look like:
+#'
+#' ```r
+#' data <- teal_data() |>
+#'   eval_code("
+#'     foo <- function() {
+#'       env <- parent.frame()
+#'       env$x <- 0
+#'     }
+#'     foo() # @linksto x
+#'     y <- x
+#'   ")
+#' get_code(data, datanames = "y")
+#' ```
+#'
 #'
 #' @param object (`teal_data`)
 #' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of data set names to return the code for.

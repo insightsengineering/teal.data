@@ -199,7 +199,7 @@ extract_occurrence <- function(calls_pd) {
       data_call <- find_call(call_pd, "data")
       if (data_call) {
         sym <- call_pd[data_call + 1, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
       # Handle assign().
       assign_call <- find_call(call_pd, "assign")
@@ -213,7 +213,7 @@ extract_occurrence <- function(calls_pd) {
           pos <- 1
         }
         sym <- call_pd[assign_call + pos, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
 
       # What occurs in a function body is not tracked.
@@ -232,20 +232,21 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
       }
 
-      # If there was an assignment operation detect direction of it.
       ass_cond <- grep("ASSIGN", x$token)
-      if (length(ass_cond)) { # NOTE 1
-        sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 2
+      if (!length(ass_cond)) {
+        return(c("<-", unique(x[sym_cond, "text"])))
       }
-      if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE 3
+
+      sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 1
+      # If there was an assignment operation detect direction of it.
+      if (x$text[ass_cond] == "->") { # NOTE 2
         sym_cond <- rev(sym_cond)
       }
+
       append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
-      ### NOTE 3: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
-      ### NOTE 2: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
-      ### NOTE 1: Cases like 'data(iris)' that do not have an assignment operator.
-      ### NOTE 1: Then they are parsed as c("iris", "<-", "data")
+      ### NOTE 2: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
+      ### NOTE 1: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
     }
   )
 }
