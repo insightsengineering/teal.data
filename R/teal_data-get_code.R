@@ -17,7 +17,9 @@
 #' ```r
 #' data <- teal_data() |>
 #'   within(
-#'     foo <- function(x) x + 1
+#'     foo <- function(x) {
+#'       x + 1
+#'     }
 #'     x <- 0
 #'     y <- foo(x)
 #'   )
@@ -34,9 +36,9 @@
 #' data <- teal_data() |>
 #'   within(
 #'     foo <- function() {
-#'       env <- parent.frame()
-#'       env$x <- 0
+#'       x <<- x + 1
 #'     }
+#'     x <- 0
 #'     foo()
 #'     y <- x
 #'   )
@@ -53,9 +55,9 @@
 #' data <- teal_data() |>
 #'   eval_code("
 #'     foo <- function() {
-#'       env <- parent.frame()
-#'       env$x <- 0
+#'       x <<- x + 1
 #'     }
+#'     x <- 0
 #'     foo() # @linksto x
 #'     y <- x
 #'   ")

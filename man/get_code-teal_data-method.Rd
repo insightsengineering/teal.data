@@ -38,7 +38,9 @@ Consider the following example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   within(
-    foo <- function(x) x + 1
+    foo <- function(x) \{
+      x + 1
+    \}
     x <- 0
     y <- foo(x)
   )
@@ -55,9 +57,9 @@ assignment operator. In such cases \code{get_code(data, y)} will only return the
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   within(
     foo <- function() \{
-      env <- parent.frame()
-      env$x <- 0
+      x <<- x + 1
     \}
+    x <- 0
     foo()
     y <- x
   )
@@ -73,9 +75,9 @@ NOTE: \code{expr} passed to \code{within} function discards comments. To add a c
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   eval_code("
     foo <- function() \{
-      env <- parent.frame()
-      env$x <- 0
+      x <<- x + 1
     \}
+    x <- 0
     foo() # @linksto x
     y <- x
   ")
