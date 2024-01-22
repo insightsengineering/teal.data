@@ -672,4 +672,3 @@ testthat::test_that(
     )
   }
 )
-
