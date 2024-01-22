@@ -34,7 +34,7 @@ to determine dependency tree between each line of the code. Analysis is performe
 based on the used symbols and it is working in a standard case when a new dataset is created by
 the assignment operator.
 
-For example:
+Consider the following example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   within(
@@ -65,10 +65,10 @@ get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
 To overcome limitation from above example \code{get_code} allows to specify dependencies manually.
-Adding \verb{# @linksto x} at the end of a line where a untracked effect occurs will flag this line as
-dependent on \code{x}.
-NOTE: \code{within} accepts \code{expression} object only which discards comments. To add a code to
-\code{teal_data} object along with comments use \code{eval_code} function.
+Adding \verb{# @linksto x} at the end of a line where a non-standard evaluation occurs will "flag"
+this line as dependent on \code{x}.
+NOTE: \code{expr} passed to \code{within} function discards comments. To add a code with comments to
+\code{teal_data} object use \code{eval_code} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   eval_code("

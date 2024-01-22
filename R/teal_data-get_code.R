@@ -13,7 +13,7 @@
 #' based on the used symbols and it is working in a standard case when a new dataset is created by
 #' the assignment operator.
 #'
-#' For example:
+#' Consider the following example:
 #' ```r
 #' data <- teal_data() |>
 #'   within(
