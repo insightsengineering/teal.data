@@ -40,7 +40,7 @@ testthat::test_that("get_code with datanames extracts code of a binding from cha
   )
 })
 
-testthat::test_that("get_code with datanames extracts code of a binding from character vector containing simple code", {
+testthat::test_that("get_code with datanames extracts code without downstream usage", {
   code <- c(
     "a <- 1",
     "head(a)"
