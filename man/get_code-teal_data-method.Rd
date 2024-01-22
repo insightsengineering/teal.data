@@ -28,42 +28,47 @@ If the code has not passed verification (with \code{\link[=verify]{verify()}}), 
 }
 \section{Extracting dataset-specific code}{
 
-When \code{datanames} is specified, the code returned will be limited to the code needed to create the
-requested data sets. \code{code} stored in the \code{teal_data} object is statically analyzed to determine
-dependency tree between each line of the code. Analysis is performed automatically basing on the
-used symbols and it is working in a typical case when new dataset is created by assignment operator.
+When \code{datanames} is specified \code{get_code} will limits the output only to the lines of code needed
+to recreate the requested data sets. \code{code} stored in the \code{teal_data} object is analyzed statically
+to determine dependency tree between each line of the code. Analysis is performed automatically
+based on the used symbols and it is working in a standard case when a new dataset is created by
+the assignment operator.
+
 For example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
-  eval_code("
+  within(
     foo <- function(x) x + 1
     x <- 0
     y <- foo(x)
-  ")
+  )
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-In above case \code{y} depends on \code{z} and \code{foo} so the code returned by \code{get_code} will contain all three lines of code.
-\code{get_code(data, datanames = "x")} will return only the second line of code etc.
+In above case \code{y} depends on \code{x} and \code{foo} so the code returned by \code{get_code} will contain all
+three lines of code. \code{get_code(data, datanames = "x")} will return only the second line of code etc.
 \cr
-There could be cases when the dependency tree is not obvious. For example:
+When a code uses non-standard evaluation \code{get_code} won't be able to determine relationships
+between each calls. Consider the case where \code{y} depends on \code{x} but \code{x} is not created by
+assignment operator. In such cases \code{get_code(data, y)} will only return the second line of the code:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
-  eval_code("
+  within(
     foo <- function() \{
       env <- parent.frame()
       env$x <- 0
     \}
     foo()
     y <- x
-  ")
+  )
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-In above case \code{y} depends on \code{x} but \code{x} is not created by assignment operator. In such cases
-\code{get_code(data, y)} will only return the second line of the code. To overcome this limitation
-add \verb{# @linksto x} at the end of a line where a side-effect occurs to specify that this line
-is required to reproduce a variable called \code{x}. So the code should look like:
+To overcome limitation from above example \code{get_code} allows to specify dependencies manually.
+Adding \verb{# @linksto x} at the end of a line where a untracked effect occurs will flag this line as
+dependent on \code{x}.
+NOTE: \code{within} accepts \code{expression} object only which discards comments. To add a code to
+\code{teal_data} object along with comments use \code{eval_code} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   eval_code("

@@ -7,42 +7,47 @@
 #' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
 #' @section Extracting dataset-specific code:
-#' When `datanames` is specified, the code returned will be limited to the code needed to create the
-#' requested data sets. `code` stored in the `teal_data` object is statically analyzed to determine
-#' dependency tree between each line of the code. Analysis is performed automatically basing on the
-#' used symbols and it is working in a typical case when new dataset is created by assignment operator.
+#' When `datanames` is specified `get_code` will limits the output only to the lines of code needed
+#' to recreate the requested data sets. `code` stored in the `teal_data` object is analyzed statically
+#' to determine dependency tree between each line of the code. Analysis is performed automatically
+#' based on the used symbols and it is working in a standard case when a new dataset is created by
+#' the assignment operator.
+#'
 #' For example:
 #' ```r
 #' data <- teal_data() |>
-#'   eval_code("
+#'   within(
 #'     foo <- function(x) x + 1
 #'     x <- 0
 #'     y <- foo(x)
-#'   ")
+#'   )
 #' get_code(data, datanames = "y")
 #' ```
 #'
-#' In above case `y` depends on `z` and `foo` so the code returned by `get_code` will contain all three lines of code.
-#' `get_code(data, datanames = "x")` will return only the second line of code etc.
+#' In above case `y` depends on `x` and `foo` so the code returned by `get_code` will contain all
+#' three lines of code. `get_code(data, datanames = "x")` will return only the second line of code etc.
 #' \cr
-#' There could be cases when the dependency tree is not obvious. For example:
+#' When a code uses non-standard evaluation `get_code` won't be able to determine relationships
+#' between each calls. Consider the case where `y` depends on `x` but `x` is not created by
+#' assignment operator. In such cases `get_code(data, y)` will only return the second line of the code:
 #' ```r
 #' data <- teal_data() |>
-#'   eval_code("
+#'   within(
 #'     foo <- function() {
 #'       env <- parent.frame()
 #'       env$x <- 0
 #'     }
 #'     foo()
 #'     y <- x
-#'   ")
+#'   )
 #' get_code(data, datanames = "y")
 #' ```
 #'
-#' In above case `y` depends on `x` but `x` is not created by assignment operator. In such cases
-#' `get_code(data, y)` will only return the second line of the code. To overcome this limitation
-#' add `# @linksto x` at the end of a line where a side-effect occurs to specify that this line
-#' is required to reproduce a variable called `x`. So the code should look like:
+#' To overcome limitation from above example `get_code` allows to specify dependencies manually.
+#' Adding `# @linksto x` at the end of a line where a non-standard evaluation occurs will "flag"
+#' this line as dependent on `x`.
+#' NOTE: `expr` passed to `within` function discards comments. To add a code with comments to
+#' `teal_data` object use `eval_code` function.
 #'
 #' ```r
 #' data <- teal_data() |>
