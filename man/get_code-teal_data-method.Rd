@@ -37,38 +37,38 @@ the assignment operator.
 Consider the following example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
-  within(
+  within(\{
     foo <- function(x) \{
       x + 1
     \}
     x <- 0
     y <- foo(x)
-  )
+  \})
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-In above case \code{y} depends on \code{x} and \code{foo} so the code returned by \code{get_code} will contain all
-three lines of code. \code{get_code(data, datanames = "x")} will return only the second line of code etc.
+In above case \code{y} depends on \code{x} and \code{foo} so the code returned by \code{get_code(data, datanames = "y")}
+will contain all three calls. \code{get_code(data, datanames = "x")} will return only the second call etc.
 \cr
-When a code uses non-standard evaluation \code{get_code} won't be able to determine relationships
-between each calls. Consider the case where \code{y} depends on \code{x} but \code{x} is not created by
-assignment operator. In such cases \code{get_code(data, y)} will only return the second line of the code:
+\code{get_code} isn't always able to properly assess dependencies between each calls and symbols in a
+provided code. Consider the case where \code{y} depends on \code{x} but \code{x} is not created by assignment
+operator. In such cases \code{get_code(data, datanames = "y")} will only return the last call:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
-  within(
+  within(\{
     foo <- function() \{
       x <<- x + 1
     \}
     x <- 0
     foo()
     y <- x
-  )
+  \})
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-To overcome limitation from above example \code{get_code} allows to specify dependencies manually.
-Adding \verb{# @linksto x} at the end of a line where a non-standard evaluation occurs will "flag"
-this line as dependent on \code{x}.
+To overcome limitation from above example, \code{get_code} allows to specify dependencies manually.
+Adding \verb{# @linksto x} at the end of a line where unusual evaluation takes place will "flag"
+this call as dependent on \code{x}.
 NOTE: \code{expr} passed to \code{within} function discards comments. To add a code with comments to
 \code{teal_data} object use \code{eval_code} function.
 
