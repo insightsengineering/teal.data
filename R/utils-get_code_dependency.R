@@ -208,7 +208,8 @@ extract_occurrence <- function(calls_pd) {
         # "','" is for unnamed parameters, where "SYMBOL_SUB" is for named.
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','"), "text"]
-          pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = return(character(0L))))
+          pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = 0))
+          if (!pos) return(character(0L))
           # pos is indicator of the place of 'x'
           # 1. All parameters are named, but none is 'x' - return(character(0L))
           # 2. Some parameters are named, 'x' is in named parameters: match("x", setdiff(params, ","))
@@ -228,7 +229,7 @@ extract_occurrence <- function(calls_pd) {
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
       if (length(sym_cond) == 0) {
-        return(character(0))
+        return(character(0L))
       }
       # Watch out for SYMBOLS after $ and @. For x$a x@a: x is object, a is not.
       # For x$a, a's ID is $'s ID-2 so we need to remove all IDs that have ID = $ID - 2.
