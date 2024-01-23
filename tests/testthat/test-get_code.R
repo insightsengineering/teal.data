@@ -264,6 +264,23 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
   )
 })
 
+testthat::test_that("get_code works for assign detection no matter how many parametrers were provided in assign", {
+  code = c(
+    "x <- 1",
+    "assign(\"x\", 0, envir = environment())",
+    "y <- x"
+  )
+
+  tdata <- teal_data() |> eval_code(code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(code, collapse = "\n")
+  )
+
+})
+
+
 # @linksto ---------------------------------------------------------------------------------------------------------
 
 testthat::test_that("@linksto cause to return this line for affected binding", {
