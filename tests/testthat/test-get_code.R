@@ -187,6 +187,19 @@ testthat::test_that("get_code does not break if code is separated by ;", {
   )
 })
 
+testthat::test_that("get_code does not break if code uses quote", {
+  code <- c(
+    "expr <- quote(x <- x + 1)",
+    "x <- 0",
+    "eval(expr)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(code[1:2], collapse = "\n")
+  )
+})
+
 # assign ----------------------------------------------------------------------------------------------------------
 
 testthat::test_that("get_code with datanames can extract the code for assign function", {

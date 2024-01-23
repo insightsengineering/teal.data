@@ -215,6 +215,10 @@ extract_occurrence <- function(calls_pd) {
         sym <- call_pd[assign_call + pos, "text"]
         return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
+      quote_call <- find_call(call_pd, "quote")
+      if (quote_call) {
+        call_pd <- call_pd[-c(1:quote_call), ]
+      }
 
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]
@@ -239,7 +243,7 @@ extract_occurrence <- function(calls_pd) {
 
       sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 1
       # If there was an assignment operation detect direction of it.
-      if (x$text[ass_cond] == "->") { # NOTE 2
+      if (unique(x$text[ass_cond]) == "->") { # NOTE 2
         sym_cond <- rev(sym_cond)
       }
 
