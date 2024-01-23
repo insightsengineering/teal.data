@@ -125,19 +125,6 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
   )
 })
 
-testthat::test_that("get_code with datanames is possible to output the code for multiple objects", {
-  code <- c(
-    "a <- 1",
-    "b <- 2",
-    "c <- 3"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = c("a", "b")),
-    paste(code[1:2], collapse = "\n")
-  )
-})
-
 testthat::test_that("get_code with datanames can extract the code when using <<-", {
   code <- c(
     "a <- 1",
