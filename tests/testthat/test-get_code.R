@@ -196,7 +196,7 @@ testthat::test_that("get_code does not break if code uses quote", {
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    paste(code[1:2], collapse = "\n")
+    code[2]
   )
 })
 
