@@ -93,7 +93,7 @@ Here are known cases where manual tagging is necessary:
 \item non-standard assignment operators, \emph{e.g.} \verb{\%<>\%}
 \item objects used as conditions in \code{if} statements: \verb{if (<condition>)}
 \item objects used to iterate over in \code{for} loops: \verb{for(i in <sequence>)}
-\item evaluating expressions, \emph{e.g.} \verb{eval(<expression>)}
+\item creating and evaluating language objects, \emph{e.g.} \verb{eval(<call>)}
 }
 }
 

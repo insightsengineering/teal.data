@@ -69,7 +69,7 @@
 #' - non-standard assignment operators, _e.g._ `%<>%`
 #' - objects used as conditions in `if` statements: `if (<condition>)`
 #' - objects used to iterate over in `for` loops: `for(i in <sequence>)`
-#' - evaluating expressions, _e.g._ `eval(<expression>)`
+#' - creating and evaluating language objects, _e.g._ `eval(<call>)`
 #'
 #'
 #' @param object (`teal_data`)
