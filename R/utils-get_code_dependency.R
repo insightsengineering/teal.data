@@ -208,7 +208,7 @@ extract_occurrence <- function(calls_pd) {
         # "','" is for unnamed parameters, where "SYMBOL_SUB" is for named.
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','"), "text"]
-          pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = return(character(0L)))
+          pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = return(character(0L))))
         } else {
           # Object is the first entry after 'assign'.
           pos <- 1
