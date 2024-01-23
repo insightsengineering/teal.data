@@ -266,6 +266,19 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
+testthat::test_that("get_code does not break if @linksto is with eval in last line", {
+  code <- c(
+    "expr <- quote(x <- x + 1)",
+    "x <- 0",
+    "eval(expr) #@linksto x"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(gsub(" #@linksto x", "", code, fixed = TRUE), collapse = "\n")
+  )
+})
+
 testthat::test_that("@linksto cause to return this line for affected binding", {
   code <- "
   a <- 1 # @linksto b
