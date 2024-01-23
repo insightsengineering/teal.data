@@ -9,8 +9,8 @@
 #' @section Extracting dataset-specific code:
 #' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
 #' the requested data sets. The code stored in the `@code` slot is analyzed statically to determine
-#' which lines the datasets of interest depend upon. The analysis works best when objects are created
-#' by using the standard assignment operator ,`<-`, and it can fail in some situations.
+#' which lines the datasets of interest depend upon. The analysis works well when objects are created
+#' with standard infix assignment operators (see `?assignOps`) but it can fail in some situations.
 #'
 #' Consider the following examples:
 #'
@@ -61,7 +61,15 @@
 #'   ")
 #' get_code(data, datanames = "y")
 #' ```
-#' Now, the `foo()` call will be properly included in the code required to recreate `y`.
+#' Now the `foo()` call will be properly included in the code required to recreate `y`.
+#'
+#' Note that two functions that create objects as side effects, `assign` and `data`, are handled automatically.
+#'
+#' Here are known cases where manual tagging is necessary:
+#' - non-standard assignment operators, _e.g._ `%<>%`
+#' - objects used as conditions in `if` statements: `if (<condition>)`
+#' - objects used to iterate over in `for` loops: `for(i in <sequence>)`
+#' - evaluating expressions, _e.g._ `eval(<expression>)`
 #'
 #'
 #' @param object (`teal_data`)

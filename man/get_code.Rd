@@ -30,8 +30,8 @@ If the code has not passed verification (with \code{\link[=verify]{verify()}}), 
 
 When \code{datanames} is specified, the code returned will be limited  to the lines needed to \emph{create}
 the requested data sets. The code stored in the \verb{@code} slot is analyzed statically to determine
-which lines the datasets of interest depend upon. The analysis works best when objects are created
-by using the standard assignment operator ,\verb{<-}, and it can fail in some situations.
+which lines the datasets of interest depend upon. The analysis works well when objects are created
+with standard infix assignment operators (see \code{?assignOps}) but it can fail in some situations.
 
 Consider the following examples:
 
@@ -84,7 +84,17 @@ In order to include comments in code one must use the \code{eval_code} function 
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-Now, the \code{foo()} call will be properly included in the code required to recreate \code{y}.
+Now the \code{foo()} call will be properly included in the code required to recreate \code{y}.
+
+Note that two functions that create objects as side effects, \code{assign} and \code{data}, are handled automatically.
+
+Here are known cases where manual tagging is necessary:
+\itemize{
+\item non-standard assignment operators, \emph{e.g.} \verb{\%<>\%}
+\item objects used as conditions in \code{if} statements: \verb{if (<condition>)}
+\item objects used to iterate over in \code{for} loops: \verb{for(i in <sequence>)}
+\item evaluating expressions, \emph{e.g.} \verb{eval(<expression>)}
+}
 }
 
 \examples{
