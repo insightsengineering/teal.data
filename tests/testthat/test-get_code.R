@@ -267,6 +267,22 @@ testthat::test_that("get_code works for assign detection no matter how many para
 
 })
 
+testthat::test_that("", {
+  code <- c(
+    "x <- 1",
+    "assign(\"x\", 0, envir = environment())",
+    "`<-`(y,x)"
+  )
+
+  tdata <- eval_code(teal_data(), code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(c(code[1:2], "y <- x"), collapse = "\n")
+  )
+
+})
+
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 

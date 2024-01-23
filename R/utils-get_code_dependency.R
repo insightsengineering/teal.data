@@ -101,7 +101,8 @@ find_call <- function(call_pd, text) {
 extract_calls <- function(pd) {
   calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
   calls <- Filter(Negate(is.null), calls)
-  fix_comments(calls)
+  calls <- fix_comments(calls)
+  fix_arrows(calls)
 }
 
 #' @keywords internal
@@ -131,6 +132,20 @@ fix_comments <- function(calls) {
     }
   }
   calls
+}
+
+#' Fixes edge case of `<-` assignment operator being called as function,
+#' which is \code{`<-`(y,x)} instead of traditional `y <- x`.
+#' @keywords internal
+#' @noRd
+fix_arrows <- function(calls) {
+  lapply(
+    calls,
+    function(call) {
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<-`', c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->`', c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call
+    })
 }
 
 # code_graph ----
