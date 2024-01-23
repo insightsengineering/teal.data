@@ -2,7 +2,6 @@
 % Please edit documentation in R/teal_data-get_code.R
 \name{get_code,teal_data-method}
 \alias{get_code,teal_data-method}
-\alias{get_code}
 \title{Get code from \code{teal_data} object}
 \usage{
 \S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
@@ -16,7 +15,8 @@
 \item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of data set names to return the code for.}
 }
 \value{
-Either string or an expression representing code used to create the requested data sets.
+Either a character string or an expression. If \code{datanames} is used to request a specific dataset,
+only code that \emph{creates} that dataset (not code that uses it) is returned. Otherwise, all contents of \verb{@code}.
 }
 \description{
 Retrieve code from \code{teal_data} object.
@@ -28,13 +28,14 @@ If the code has not passed verification (with \code{\link[=verify]{verify()}}), 
 }
 \section{Extracting dataset-specific code}{
 
-When \code{datanames} is specified \code{get_code} will limits the output only to the lines of code needed
-to recreate the requested data sets. \code{code} stored in the \code{teal_data} object is analyzed statically
-to determine dependency tree between each line of the code. Analysis is performed automatically
-based on the used symbols and it is working in a standard case when a new dataset is created by
-the assignment operator.
+When \code{datanames} is specified, the code returned will be limited  to the lines needed to \emph{create}
+the requested data sets. The code stored in the \verb{@code} slot is analyzed statically to determine
+which lines the datasets of interest depend upon. The analysis works best when objects are created
+by using the standard assignment operator ,\verb{<-}, and it can fail in some situations.
 
-Consider the following example:
+Consider the following examples:
+
+\emph{Case 1: Usual assignments.}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   within(\{
@@ -47,12 +48,10 @@ Consider the following example:
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-In above case \code{y} depends on \code{x} and \code{foo} so the code returned by \code{get_code(data, datanames = "y")}
-will contain all three calls. \code{get_code(data, datanames = "x")} will return only the second call etc.
-\cr
-\code{get_code} isn't always able to properly assess dependencies between each calls and symbols in a
-provided code. Consider the case where \code{y} depends on \code{x} but \code{x} is not created by assignment
-operator. In such cases \code{get_code(data, datanames = "y")} will only return the last call:
+\code{x} has no dependencies, so \code{get_code(data, datanames = "x")} will return only the second call.\cr
+\code{y} depends on \code{x} and \code{foo}, so \code{get_code(data, datanames = "y")} will contain all three calls.
+
+\emph{Case 2: Some objects are created by a function's side effects.}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   within(\{
@@ -66,11 +65,12 @@ operator. In such cases \code{get_code(data, datanames = "y")} will only return 
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-To overcome limitation from above example, \code{get_code} allows to specify dependencies manually.
-Adding \verb{# @linksto x} at the end of a line where unusual evaluation takes place will "flag"
-this call as dependent on \code{x}.
-NOTE: \code{expr} passed to \code{within} function discards comments. To add a code with comments to
-\code{teal_data} object use \code{eval_code} function.
+Here, \code{y} depends on \code{x} but \code{x} is modified by \code{foo} as a side effect (not by reassignment)
+and so \code{get_code(data, datanames = "y")} will not return the \code{foo()} call.\cr
+To overcome this limitation, code dependencies can be specified manually.
+Lines where side effects occur can be flagged by adding "\verb{# @linksto <object name>}" at the end.\cr
+Note that \code{within} evaluates code passed to \code{expr} as is and comments are ignored.
+In order to include comments in code one must use the \code{eval_code} function instead.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- teal_data() |>
   eval_code("
@@ -83,10 +83,11 @@ NOTE: \code{expr} passed to \code{within} function discards comments. To add a c
   ")
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
+
+Now, the \code{foo()} call will be properly included in the code required to recreate \code{y}.
 }
 
 \examples{
-
 tdata1 <- teal_data()
 tdata1 <- within(tdata1, {
   a <- 1
@@ -100,4 +101,5 @@ get_code(tdata1, datanames = "b")
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 get_code(tdata2)
 get_code(verify(tdata2))
+
 }

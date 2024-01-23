@@ -7,14 +7,14 @@
 #' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
 #' @section Extracting dataset-specific code:
-#' When `datanames` is specified `get_code` will limits the output only to the lines of code needed
-#' to recreate the requested data sets. `code` stored in the `teal_data` object is analyzed statically
-#' to determine dependency tree between each line of the code. Analysis is performed automatically
-#' based on the used symbols and it is working in a standard case when a new dataset is created by
-#' the assignment operator.
+#' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
+#' the requested data sets. The code stored in the `@code` slot is analyzed statically to determine
+#' which lines the datasets of interest depend upon. The analysis works best when objects are created
+#' by using the standard assignment operator ,`<-`, and it can fail in some situations.
 #'
-#' Consider the following example:
+#' Consider the following examples:
 #'
+#' _Case 1: Usual assignments._
 #' ```r
 #' data <- teal_data() |>
 #'   within({
@@ -26,14 +26,10 @@
 #'   })
 #' get_code(data, datanames = "y")
 #' ```
+#' `x` has no dependencies, so `get_code(data, datanames = "x")` will return only the second call.\cr
+#' `y` depends on `x` and `foo`, so `get_code(data, datanames = "y")` will contain all three calls.
 #'
-#' In above case `y` depends on `x` and `foo` so the code returned by `get_code(data, datanames = "y")`
-#' will contain all three calls. `get_code(data, datanames = "x")` will return only the second call etc.
-#' \cr
-#' `get_code` isn't always able to properly assess dependencies between each calls and symbols in a
-#' provided code. Consider the case where `y` depends on `x` but `x` is not created by assignment
-#' operator. In such cases `get_code(data, datanames = "y")` will only return the last call:
-#'
+#' _Case 2: Some objects are created by a function's side effects._
 #' ```r
 #' data <- teal_data() |>
 #'   within({
@@ -46,12 +42,12 @@
 #'   })
 #' get_code(data, datanames = "y")
 #' ```
-#'
-#' To overcome limitation from above example, `get_code` allows to specify dependencies manually.
-#' Adding `# @linksto x` at the end of a line where unusual evaluation takes place will "flag"
-#' this call as dependent on `x`.
-#' NOTE: `expr` passed to `within` function discards comments. To add a code with comments to
-#' `teal_data` object use `eval_code` function.
+#' Here, `y` depends on `x` but `x` is modified by `foo` as a side effect (not by reassignment)
+#' and so `get_code(data, datanames = "y")` will not return the `foo()` call.\cr
+#' To overcome this limitation, code dependencies can be specified manually.
+#' Lines where side effects occur can be flagged by adding "`# @linksto <object name>`" at the end.\cr
+#' Note that `within` evaluates code passed to `expr` as is and comments are ignored.
+#' In order to include comments in code one must use the `eval_code` function instead.
 #'
 #' ```r
 #' data <- teal_data() |>
@@ -65,6 +61,7 @@
 #'   ")
 #' get_code(data, datanames = "y")
 #' ```
+#' Now, the `foo()` call will be properly included in the code required to recreate `y`.
 #'
 #'
 #' @param object (`teal_data`)
@@ -73,10 +70,10 @@
 #' `expression` (`deparse = FALSE`).
 #'
 #' @return
-#' Either string or an expression representing code used to create the requested data sets.
+#' Either a character string or an expression. If `datanames` is used to request a specific dataset,
+#' only code that _creates_ that dataset (not code that uses it) is returned. Otherwise, all contents of `@code`.
 #'
 #' @examples
-#'
 #' tdata1 <- teal_data()
 #' tdata1 <- within(tdata1, {
 #'   a <- 1
@@ -90,8 +87,10 @@
 #' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' get_code(tdata2)
 #' get_code(verify(tdata2))
+#'
+#' @rdname get_code
 #' @aliases get_code,teal_data-method
-#' @aliases get_code
+#'
 #' @export
 setMethod("get_code", signature = "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
