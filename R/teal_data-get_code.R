@@ -3,12 +3,12 @@
 #' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datanames`.
+#' Use `datanames` to limit the code to one or more of the datasets enumerated in `@datanames`.
 #' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
 #' @section Extracting dataset-specific code:
 #' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
-#' the requested data sets. The code stored in the `@code` slot is analyzed statically to determine
+#' the requested datasets. The code stored in the `@code` slot is analyzed statically to determine
 #' which lines the datasets of interest depend upon. The analysis works well when objects are created
 #' with standard infix assignment operators (see `?assignOps`) but it can fail in some situations.
 #'
@@ -73,7 +73,7 @@
 #'
 #'
 #' @param object (`teal_data`)
-#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of data set names to return the code for.
+#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of dataset names to return the code for.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #'
