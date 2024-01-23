@@ -271,7 +271,7 @@ testthat::test_that("get_code works for assign detection no matter how many para
     "y <- x"
   )
 
-  tdata <- teal_data() |> eval_code(code)
+  tdata <- eval_code(teal_data(), code)
 
   testthat::expect_identical(
     get_code(tdata, datanames = "y"),
