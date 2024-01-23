@@ -201,7 +201,7 @@ extract_occurrence <- function(calls_pd) {
         sym <- call_pd[data_call + 1, "text"]
         return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
-      # Handle assign().
+      # Handle assign(x = ).
       assign_call <- find_call(call_pd, "assign")
       if (assign_call) {
         # Check if parameters were named.
@@ -209,6 +209,12 @@ extract_occurrence <- function(calls_pd) {
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','"), "text"]
           pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = return(character(0L))))
+          # pos is indicator of the place of 'x'
+          # 1. All parameters are named, but none is 'x' - return(character(0L))
+          # 2. Some parameters are named, 'x' is in named parameters: match("x", setdiff(params, ","))
+          # - check "x" in params being just a vector of named parameters.
+          # 3. Some parameters are named, 'x' is not in named parameters
+          # - check first appearance of "," (unnamed parameter) in vector parameters.
         } else {
           # Object is the first entry after 'assign'.
           pos <- 1
