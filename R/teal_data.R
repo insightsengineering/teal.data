@@ -42,7 +42,7 @@ teal_data <- function(...,
     )
   ) {
     lifecycle::deprecate_stop(
-      when = "0.3.1",
+      when = "0.4.0",
       "teal_data(
         data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.
         Find more information on https://github.com/insightsengineering/teal/discussions/945'
