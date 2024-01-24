@@ -142,8 +142,11 @@ fix_arrows <- function(calls) {
   lapply(
     calls,
     function(call) {
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<-`', c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->`', c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<-`',  c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->`',  c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<<-`', c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->>`', c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`=`',   c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
       call
     })
 }
