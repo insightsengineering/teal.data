@@ -18,7 +18,7 @@ The `teal_data` class inherits from [`qenv`](https://insightsengineering.github.
 To create an object of class `teal_data`, use the `teal_data` function.
 `teal_data` has a number of methods to manage relevant information in private class slots.
 
-```{r, results = 'hide'}
+```{r, results = 'hide', message = FALSE}
 library(teal.data)
 
 # create teal_data object
