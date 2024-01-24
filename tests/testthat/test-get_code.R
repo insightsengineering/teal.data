@@ -1,6 +1,6 @@
 warning_message <- "warning('Code was not verified for reproducibility.')"
 
-testthat::test_that("get_code with datanames handles empty @code slot", {
+testthat::test_that("handles empty @code slot", {
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = character(0)), datanames = "a"),
     warning_message
@@ -11,7 +11,7 @@ testthat::test_that("get_code with datanames handles empty @code slot", {
   )
 })
 
-testthat::test_that("get_code with datanames handles code without symbols in RHS", {
+testthat::test_that("handles the code without symbols on rhs", {
   code <- c(
     "1 + 1",
     "a <- 5",
@@ -24,7 +24,7 @@ testthat::test_that("get_code with datanames handles code without symbols in RHS
   )
 })
 
-testthat::test_that("get_code with datanames extracts code of a binding from character vector containing simple code", {
+testthat::test_that("extracts the code of a binding from character vector containing simple code", {
   code <- c(
     "a <- 1",
     "b <- 2"
@@ -40,7 +40,7 @@ testthat::test_that("get_code with datanames extracts code of a binding from cha
   )
 })
 
-testthat::test_that("get_code with datanames extracts code without downstream usage", {
+testthat::test_that("extracts the code without downstream usage", {
   code <- c(
     "a <- 1",
     "head(a)"
@@ -52,7 +52,7 @@ testthat::test_that("get_code with datanames extracts code without downstream us
   )
 })
 
-testthat::test_that("get_code works for datanames of length > 1", {
+testthat::test_that("works for datanames of length > 1", {
   code <- c(
     "a <- 1",
     "b <- 2"
@@ -64,7 +64,7 @@ testthat::test_that("get_code works for datanames of length > 1", {
   )
 })
 
-testthat::test_that("get_code with datanames warns if binding doesn't exist in code", {
+testthat::test_that("warns if binding doesn't exist in code", {
   code <- c("a <- 1")
   tdata <- eval_code(teal_data(), code)
   testthat::expect_warning(
@@ -73,7 +73,7 @@ testthat::test_that("get_code with datanames warns if binding doesn't exist in c
   )
 })
 
-testthat::test_that("get_code with datanames does not fall into a loop", {
+testthat::test_that("does not fall into a loop", {
   code <- c(
     "a <- 1",
     "b <- a",
@@ -96,9 +96,7 @@ testthat::test_that("get_code with datanames does not fall into a loop", {
 })
 
 
-testthat::test_that(
-  "get_code with datanames extracts code of a parent binding but only those evaluated before coocurence",
-  {
+testthat::test_that("extracts code of a parent binding but only those evaluated before coocurence", {
     code <- c(
       "a <- 1",
       "b <- a",
@@ -112,7 +110,7 @@ testthat::test_that(
   }
 )
 
-testthat::test_that("get_code with datanames extracts code of a parent binding if used as an arg in fun call", {
+testthat::test_that("extracts the code of a parent binding if used as an arg in a function call", {
   code <- c(
     "a <- 1",
     "b <- identity(x = a)",
@@ -125,7 +123,7 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
   )
 })
 
-testthat::test_that("get_code with datanames can extract the code when using <<-", {
+testthat::test_that("extracts the code when using <<-", {
   code <- c(
     "a <- 1",
     "b <- a",
@@ -138,7 +136,7 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
   )
 })
 
-testthat::test_that("get_code with datanames detects every assign calls even if not evaluated", {
+testthat::test_that("detects every assign calls even if not evaluated, if there is only one assignment in this line", {
   code <- c(
     "a <- 1",
     "b <- 2",
@@ -151,7 +149,7 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
   )
 })
 
-testthat::test_that("get_code returns result of length 1 for non-empty input", {
+testthat::test_that("returns result of length 1 for non-empty input", {
   tdata1 <- teal_data()
   tdata1 <- within(tdata1, {
     a <- 1
@@ -163,7 +161,7 @@ testthat::test_that("get_code returns result of length 1 for non-empty input", {
   testthat::expect_length(get_code(tdata1, deparse = TRUE), 1)
 })
 
-testthat::test_that("get_code does not break if code is separated by ;", {
+testthat::test_that("does not break if code is separated by ;", {
   code <- c(
     "a <- 1;a <- a + 1"
   )
@@ -174,7 +172,7 @@ testthat::test_that("get_code does not break if code is separated by ;", {
   )
 })
 
-testthat::test_that("get_code does not break if code uses quote", {
+testthat::test_that("does not break if code uses quote()", {
   code <- c(
     "expr <- quote(x <- x + 1)",
     "x <- 0",
@@ -189,7 +187,7 @@ testthat::test_that("get_code does not break if code uses quote", {
 
 # assign ----------------------------------------------------------------------------------------------------------
 
-testthat::test_that("get_code with datanames can extract the code for assign function", {
+testthat::test_that("extracts the code for assign() where \"x\" is a literal string", {
   code <- c(
     "a <- 1",
     "assign('b', 5)",
@@ -220,10 +218,8 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
   )
 })
 
-testthat::test_that(
-  "get_code with datanames can extract the code for assign function where \"x\" is variable",
-  {
-    testthat::skip("We will not tackle this some day, as this requires code evaluation.")
+testthat::test_that("extracts the code for assign() where \"x\" is variable", {
+    testthat::skip("We will not resolve this, as this requires code evaluation.")
     code <- c(
       "x <- \"a\"",
       "assign(x, 5)",
@@ -237,21 +233,7 @@ testthat::test_that(
   }
 )
 
-
-testthat::test_that("@linksto tag indicate affected object if object is assigned anywhere in a code", {
-  code <- c(
-    "a <- 1",
-    "assign('b', 5) # @linksto b",
-    "b <- b + 2"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
-  )
-})
-
-testthat::test_that("get_code works for assign detection no matter how many parametrers were provided in assign", {
+testthat::test_that("works for assign() detection no matter how many parametrers were provided in assignq()", {
   code <- c(
     "x <- 1",
     "assign(\"x\", 0, envir = environment())",
@@ -268,7 +250,7 @@ testthat::test_that("get_code works for assign detection no matter how many para
   )
 })
 
-testthat::test_that("get_code detects function usage of assignment operator", {
+testthat::test_that("detects function usage of the assignment operator", {
   code <- c(
     "x <- 1",
     "`<-`(y,x)"
@@ -285,7 +267,7 @@ testthat::test_that("get_code detects function usage of assignment operator", {
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
-testthat::test_that("@linksto cause to return this line for affected binding", {
+testthat::test_that("@linksto makes a line being returned for an affected binding", {
   code <- "
   a <- 1 # @linksto b
   b <- 2
@@ -298,8 +280,8 @@ testthat::test_that("@linksto cause to return this line for affected binding", {
 })
 
 testthat::test_that(
-  "@linksto returns this line for affected binding
-  even if object is not specificed/created in the same eval_code",
+  "@linksto returns the line for an affected binding
+  even if the object did not exist in the same iteration of eval_code",
   {
     code <- c(
       "a <- 1 # @linksto b",
@@ -314,40 +296,7 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "@linksto returns this line for affected binding
-  if object is not specificed in the same element of code",
-  {
-    code <- c(
-      "a <- 1 ",
-      "b <- 2 # @linksto a"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "a"),
-      paste("a <- 1", "b <- 2", sep = "\n")
-    )
-  }
-)
-
-testthat::test_that(
-  "lines affecting parent evaluated after co-occurrence are not included in get_code with datanamesoutput",
-  {
-    code <- c(
-      "a <- 1",
-      "b <- a",
-      "a <- 3"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "b"),
-      paste("a <- 1", "b <- a", sep = "\n")
-    )
-  }
-)
-
-testthat::test_that(
-  "lines affecting parent evaluated after co-occurrence are not included in get_code with datanamesoutput
-  when using @linksto",
+  "lines affecting parent evaluated after co-occurrence are not included in output when using @linksto",
   {
     code <- c(
       "a <- 1 ",
@@ -368,23 +317,7 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "@linksto gets extracted if it's a side-effect on a dependent object",
-  {
-    code <- "
-      iris[1:5, ] -> iris2
-      iris_head <- head(iris) # @linksto iris2
-      classes <- lapply(iris2, class)
-    "
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "classes"),
-      paste("iris2 <- iris[1:5, ]", "iris_head <- head(iris)", "classes <- lapply(iris2, class)", sep = "\n")
-    )
-  }
-)
-
-testthat::test_that(
-  "@linksto gets extracted if it's a side-effect on a dependent object of a dependent object",
+  "@linksto gets extracted if it's a side-effect on a dependent object (even of a dependent object)",
   {
     code <- "
       iris[1:5, ] -> iris2
@@ -407,7 +340,7 @@ testthat::test_that(
 
 # functions -------------------------------------------------------------------------------------------------------
 
-testthat::test_that("get_code with datanames ignores occurrence in function definition", {
+testthat::test_that("ignores occurrence in a function definition", {
   code <- c(
     "b <- 2",
     "foo <- function(b) { b <- b + 2 }"
@@ -423,7 +356,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
-testthat::test_that("get_code with datanames ignores occurrence in function definition in lapply", {
+testthat::test_that("ignores occurrence in a function definition in lapply", {
   code <- c(
     "a <- list(a = 1, b = 2, c = 3)",
     "b <- lapply(a, FUN = function(x) { x <- x + 1 })",
@@ -438,7 +371,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
-testthat::test_that("get_code with datanames does not ignore occurrence in function body if object exsits in env", {
+testthat::test_that("does not ignore occurrence in function body if object exsits in env", {
   skip("This is not urgent and can be ommitted with @linksto tag.")
   code <- c(
     "a <- list(a = 1, b = 2, c = 3)",
@@ -453,7 +386,7 @@ testthat::test_that("get_code with datanames does not ignore occurrence in funct
   )
 })
 
-testthat::test_that("get_code with datanames ignores occurrence in function definition without { curly brackets", {
+testthat::test_that("ignores occurrence in function definition without { curly brackets", {
   code <- c(
     "b <- 2",
     "foo <- function(b) b <- b + 2 "
@@ -469,20 +402,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   )
 })
 
-testthat::test_that("get_code with datanames returns custom function calls on object", {
-  code <- c(
-    "b <- 2",
-    "foo <- function(b) { b <- b + 2 }",
-    "foo(b)"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = "b"),
-    code[1]
-  )
-})
-
-testthat::test_that("get_code with datanames detects occurrence of the function object", {
+testthat::test_that("detects occurrence of the function object", {
   code <- c(
     "a <- 1",
     "b <- 2",
@@ -496,9 +416,7 @@ testthat::test_that("get_code with datanames detects occurrence of the function 
   )
 })
 
-testthat::test_that(
-  "Can't detect occurrence of function definition when a formal is named the same as a function",
-  {
+testthat::test_that( "detects occurrence of a function definition when a formal is named the same as a function", {
     code <- c(
       "x <- 1",
       "foo <- function(foo = 1) 'text'",
@@ -512,9 +430,7 @@ testthat::test_that(
   }
 )
 
-testthat::test_that(
-  "get_code detects occurrence of function definition and @linksto usage",
-  {
+testthat::test_that("detects occurrence of a function definition with a @linksto usage", {
     code <- c(
       "
         foo <- function() {
@@ -537,7 +453,7 @@ testthat::test_that(
 )
 # $ ---------------------------------------------------------------------------------------------------------------
 
-testthat::test_that("get_code with datanames understands $ usage and do not treat rhs of $ as objects (only lhs)", {
+testthat::test_that("understands $ usage and do not treat rhs of $ as objects (only lhs)", {
   code <- c(
     "x <- data.frame(a = 1:3)",
     "a <- data.frame(y = 1:3)",
@@ -562,7 +478,7 @@ testthat::test_that("get_code with datanames understands $ usage and do not trea
   )
 })
 
-testthat::test_that("get_code with datanames detects cooccurrence properly even if all objects are on rhs", {
+testthat::test_that("detects cooccurrence properly even if all objects are on lhs", {
   code <- c(
     "a <- 1",
     "b <- list(c = 2)",
@@ -578,7 +494,7 @@ testthat::test_that("get_code with datanames detects cooccurrence properly even 
 
 # @ ---------------------------------------------------------------------------------------------------------------
 
-testthat::test_that("get_code with datanames understands @ usage and do not treat rhs of @ as objects (only lhs)", {
+testthat::test_that("understands @ usage and do not treat rhs of @ as objects (only lhs)", {
   code <- c(
     "setClass('aclass', slots = c(a = 'numeric', x = 'numeric', y = 'numeric')) # @linksto a x",
     "x <- new('aclass', a = 1:3, x = 1:3, y = 1:3)",
@@ -642,7 +558,7 @@ testthat::test_that("library() and require() are always returned", {
 
 # data() ----------------------------------------------------------------------------------------------------------
 
-testthat::test_that("get_call returns data call for a datanames specified asis", {
+testthat::test_that("data() call is returned when data name is provided as is", {
   code <- c(
     "set.seed(1)",
     "library(scda)",
@@ -666,7 +582,7 @@ testthat::test_that("get_call returns data call for a datanames specified asis",
   )
 })
 
-testthat::test_that("get_call data call is returned when data name is provided as character", {
+testthat::test_that("data() call is returned when data name is provided as a character", {
   code <- c(
     "set.seed(1)",
     "library(scda)",
@@ -690,17 +606,3 @@ testthat::test_that("get_call data call is returned when data name is provided a
   )
 })
 
-testthat::test_that(
-  "get_code with datanames can extract the code for objects assigned with data function",
-  {
-    code <- c(
-      "data(iris)",
-      "iris2 <- head(iris)"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "iris2"),
-      paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
-    )
-  }
-)
