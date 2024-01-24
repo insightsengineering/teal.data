@@ -134,9 +134,14 @@ fix_comments <- function(calls) {
   # If the first token is a COMMENT, then it belongs to the previous call.
   if (length(calls) >= 2) {
     for (i in 2:length(calls)) {
-      if (grepl("@linksto", calls[[i]][1, "text"])) {
+      comments_first <- grepl("@linksto", calls[[i]][1, "text"])
+      comments_second <- grepl("@linksto", calls[[i]][2, "text"]) && calls[[i]][1, "text"] == ""
+      if (comments_first) {
         calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1, ])
         calls[[i]] <- calls[[i]][-1, ]
+      } else if (comments_second) {
+        calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1:2, ])
+        calls[[i]] <- calls[[i]][-c(1:2), ]
       }
     }
   }
