@@ -97,18 +97,17 @@ testthat::test_that("does not fall into a loop", {
 
 
 testthat::test_that("extracts code of a parent binding but only those evaluated before coocurence", {
-    code <- c(
-      "a <- 1",
-      "b <- a",
-      "a <- 2"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "b"),
-      paste("a <- 1", "b <- a", sep = "\n")
-    )
-  }
-)
+  code <- c(
+    "a <- 1",
+    "b <- a",
+    "a <- 2"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste("a <- 1", "b <- a", sep = "\n")
+  )
+})
 
 testthat::test_that("extracts the code of a parent binding if used as an arg in a function call", {
   code <- c(
@@ -219,19 +218,18 @@ testthat::test_that("extracts the code for assign() where \"x\" is a literal str
 })
 
 testthat::test_that("extracts the code for assign() where \"x\" is variable", {
-    testthat::skip("We will not resolve this, as this requires code evaluation.")
-    code <- c(
-      "x <- \"a\"",
-      "assign(x, 5)",
-      "b <- a"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "b"),
-      paste(code, collapse = "\n")
-    )
-  }
-)
+  testthat::skip("We will not resolve this, as this requires code evaluation.")
+  code <- c(
+    "x <- \"a\"",
+    "assign(x, 5)",
+    "b <- a"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    paste(code, collapse = "\n")
+  )
+})
 
 testthat::test_that("works for assign() detection no matter how many parametrers were provided in assignq()", {
   code <- c(
@@ -416,41 +414,39 @@ testthat::test_that("detects occurrence of the function object", {
   )
 })
 
-testthat::test_that( "detects occurrence of a function definition when a formal is named the same as a function", {
-    code <- c(
-      "x <- 1",
-      "foo <- function(foo = 1) 'text'",
-      "a <- foo(x)"
-    )
-    tdata <- eval_code(teal_data(), code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "a"),
-      paste("x <- 1", "foo <- function(foo = 1) \"text\"", "a <- foo(x)", sep = "\n")
-    )
-  }
-)
+testthat::test_that("detects occurrence of a function definition when a formal is named the same as a function", {
+  code <- c(
+    "x <- 1",
+    "foo <- function(foo = 1) 'text'",
+    "a <- foo(x)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    paste("x <- 1", "foo <- function(foo = 1) \"text\"", "a <- foo(x)", sep = "\n")
+  )
+})
 
 testthat::test_that("detects occurrence of a function definition with a @linksto usage", {
-    code <- c(
-      "
+  code <- c(
+    "
         foo <- function() {
           env <- parent.frame()
           env$x <- 0
         }",
-      "foo() # @linksto x",
-      "y <- x"
+    "foo() # @linksto x",
+    "y <- x"
+  )
+  tdata <- teal_data(code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(
+      warning_message,
+      "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()",
+      sep = "\n"
     )
-    tdata <- teal_data(code = code)
-    testthat::expect_identical(
-      get_code(tdata, datanames = "x"),
-      paste(
-        warning_message,
-        "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()",
-        sep = "\n"
-      )
-    )
-  }
-)
+  )
+})
 # $ ---------------------------------------------------------------------------------------------------------------
 
 testthat::test_that("understands $ usage and do not treat rhs of $ as objects (only lhs)", {
@@ -605,4 +601,3 @@ testthat::test_that("data() call is returned when data name is provided as a cha
     )
   )
 })
-
