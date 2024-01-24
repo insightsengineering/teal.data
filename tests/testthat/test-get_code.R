@@ -40,6 +40,18 @@ testthat::test_that("get_code with datanames extracts code of a binding from cha
   )
 })
 
+testthat::test_that("get_code with datanames extracts code without downstream usage", {
+  code <- c(
+    "a <- 1",
+    "head(a)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    "a <- 1"
+  )
+})
+
 testthat::test_that("get_code works for datanames of length > 1", {
   code <- c(
     "a <- 1",
@@ -113,19 +125,6 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
   )
 })
 
-testthat::test_that("get_code with datanames is possible to output the code for multiple objects", {
-  code <- c(
-    "a <- 1",
-    "b <- 2",
-    "c <- 3"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = c("a", "b")),
-    paste(code[1:2], collapse = "\n")
-  )
-})
-
 testthat::test_that("get_code with datanames can extract the code when using <<-", {
   code <- c(
     "a <- 1",
@@ -133,7 +132,6 @@ testthat::test_that("get_code with datanames can extract the code when using <<-
     "b <<- b + 2"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     paste("a <- 1", "b <- a", "b <<- b + 2", sep = "\n")
@@ -147,7 +145,6 @@ testthat::test_that("get_code with datanames detects every assign calls even if 
     "eval(expression({b <- b + 2}))"
   )
   tdata <- eval_code(teal_data(), code)
-  datanames(tdata) <- c("a", "b")
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     paste("b <- 2", "eval(expression({\n    b <- b + 2\n}))", sep = "\n")
@@ -174,6 +171,19 @@ testthat::test_that("get_code does not break if code is separated by ;", {
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     gsub(";", "\n", code, fixed = TRUE)
+  )
+})
+
+testthat::test_that("get_code does not break if code uses quote", {
+  code <- c(
+    "expr <- quote(x <- x + 1)",
+    "x <- 0",
+    "eval(expr)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    code[2]
   )
 })
 
@@ -213,7 +223,7 @@ testthat::test_that("get_code with datanames can extract the code for assign fun
 testthat::test_that(
   "get_code with datanames can extract the code for assign function where \"x\" is variable",
   {
-    testthat::skip("We will tackle this some day!")
+    testthat::skip("We will not tackle this some day, as this requires code evaluation.")
     code <- c(
       "x <- \"a\"",
       "assign(x, 5)",
@@ -240,6 +250,40 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
     paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
   )
 })
+
+testthat::test_that("get_code works for assign detection no matter how many parametrers were provided in assign", {
+  code <- c(
+    "x <- 1",
+    "assign(\"x\", 0, envir = environment())",
+    "assign(inherits = FALSE, immediate = TRUE, \"z\", 5, envir = environment())",
+    "y <- x + z",
+    "y <- x"
+  )
+
+  tdata <- eval_code(teal_data(), code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(code, collapse = "\n")
+  )
+
+})
+
+testthat::test_that("get_code detects function usage of assignment operator", {
+  code <- c(
+    "x <- 1",
+    "`<-`(y,x)"
+  )
+
+  tdata <- eval_code(teal_data(), code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(c(code[1], "y <- x"), collapse = "\n")
+  )
+
+})
+
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
@@ -392,7 +436,7 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    paste("x <- 1", "print(x)", sep = "\n")
+    "x <- 1"
   )
 })
 
@@ -436,7 +480,7 @@ testthat::test_that("get_code with datanames returns custom function calls on ob
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    paste("b <- 2", "foo <- function(b) {\n    b <- b + 2\n}", "foo(b)", sep = "\n")
+    code[1]
   )
 })
 
@@ -470,6 +514,29 @@ testthat::test_that(
   }
 )
 
+testthat::test_that(
+  "get_code detects occurrence of function definition and @linksto usage",
+  {
+    code <- c(
+      "
+        foo <- function() {
+          env <- parent.frame()
+          env$x <- 0
+        }",
+      "foo() # @linksto x",
+      "y <- x"
+    )
+    tdata <- teal_data(code = code)
+    testthat::expect_identical(
+      get_code(tdata, datanames = "x"),
+      paste(
+        warning_message,
+        "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()",
+        sep = "\n"
+      )
+    )
+  }
+)
 # $ ---------------------------------------------------------------------------------------------------------------
 
 testthat::test_that("get_code with datanames understands $ usage and do not treat rhs of $ as objects (only lhs)", {
@@ -633,7 +700,6 @@ testthat::test_that(
       "iris2 <- head(iris)"
     )
     tdata <- eval_code(teal_data(), code)
-    datanames(tdata) <- c("iris2")
     testthat::expect_identical(
       get_code(tdata, datanames = "iris2"),
       paste("data(iris)", "iris2 <- head(iris)", sep = "\n")
