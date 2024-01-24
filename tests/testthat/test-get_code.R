@@ -266,7 +266,6 @@ testthat::test_that("get_code works for assign detection no matter how many para
     get_code(tdata, datanames = "y"),
     paste(code, collapse = "\n")
   )
-
 })
 
 testthat::test_that("get_code detects function usage of assignment operator", {
@@ -281,7 +280,6 @@ testthat::test_that("get_code detects function usage of assignment operator", {
     get_code(tdata, datanames = "y"),
     paste(c(code[1], "y <- x"), collapse = "\n")
   )
-
 })
 
 

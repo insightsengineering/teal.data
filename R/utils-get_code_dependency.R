@@ -142,13 +142,14 @@ fix_arrows <- function(calls) {
   lapply(
     calls,
     function(call) {
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<-`',  c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->`',  c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`<<-`', c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`->>`', c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == 'SYMBOL_FUNCTION_CALL' & call$text == '`=`',   c("token", "text")] <- c("LEFT_ASSIGN",  "<-")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->>`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`=`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
       call
-    })
+    }
+  )
 }
 
 # code_graph ----
@@ -228,17 +229,19 @@ extract_occurrence <- function(calls_pd) {
         if (any(call_pd$token == "SYMBOL_SUB")) {
           params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','", "EQ_SUB"), "text"]
           # Remove sequence of "=", ",".
-          if (length(params >1)) {
+          if (length(params > 1)) {
             remove <- integer(0)
             for (i in 2:length(params)) {
-              if (params[i-1] == "=" & params[i] == ",") {
-                remove <- c(remove, i-1, i)
+              if (params[i - 1] == "=" & params[i] == ",") {
+                remove <- c(remove, i - 1, i)
               }
             }
             if (length(remove)) params <- params[-remove]
           }
           pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = 0))
-          if (!pos) return(character(0L))
+          if (!pos) {
+            return(character(0L))
+          }
           # pos is indicator of the place of 'x'
           # 1. All parameters are named, but none is 'x' - return(character(0L))
           # 2. Some parameters are named, 'x' is in named parameters: match("x", setdiff(params, ","))
