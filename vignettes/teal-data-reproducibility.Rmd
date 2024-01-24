@@ -52,7 +52,7 @@ cat(get_code(data_with_data)) # warning is prepended
 
 In order to confirm that the code stored in `teal_data` exactly reproduces the contents of the environment, one must run the `verify()` function.
 This causes the code to be evaluated and the results to be compared to the contents of the environment.
-If the code- executes without errors and the results are the same as the contents already present in the environment, the verification is successful and the object's state will be changed to _verified_.
+If the code executes without errors and the results are the same as the contents already present in the environment, the verification is successful and the object's state will be changed to _verified_.
 Otherwise an error will be raised.
 
 #### verified
