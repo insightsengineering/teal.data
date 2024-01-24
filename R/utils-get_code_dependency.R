@@ -138,7 +138,7 @@ fix_comments <- function(calls) {
       }
     }
   }
-  Filter(function(x) nrow(x) != 0, calls)
+  Filter(nrow, calls)
 }
 
 # code_graph ----
