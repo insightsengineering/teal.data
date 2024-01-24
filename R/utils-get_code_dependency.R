@@ -99,9 +99,18 @@ find_call <- function(call_pd, text) {
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
-  calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  calls <- lapply(
+    pd[pd$parent == 0, "id"],
+    function(parent) {
+      rbind(
+        pd[pd$id == parent, c("token", "text", "id", "parent")],
+        get_children(pd = pd, parent = parent)
+      )
+    }
+  )
   calls <- Filter(Negate(is.null), calls)
-  fix_comments(calls)
+  calls <- fix_comments(calls)
+  fix_arrows(calls)
 }
 
 #' @keywords internal
@@ -130,7 +139,25 @@ fix_comments <- function(calls) {
       }
     }
   }
-  calls
+  Filter(nrow, calls)
+}
+
+#' Fixes edge case of `<-` assignment operator being called as function,
+#' which is \code{`<-`(y,x)} instead of traditional `y <- x`.
+#' @keywords internal
+#' @noRd
+fix_arrows <- function(calls) {
+  lapply(
+    calls,
+    function(call) {
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->>`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
+      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`=`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
+      call
+    }
+  )
 }
 
 # code_graph ----
@@ -199,21 +226,42 @@ extract_occurrence <- function(calls_pd) {
       data_call <- find_call(call_pd, "data")
       if (data_call) {
         sym <- call_pd[data_call + 1, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "data"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
-      # Handle assign().
+      # Handle assign(x = ).
       assign_call <- find_call(call_pd, "assign")
       if (assign_call) {
         # Check if parameters were named.
+        # "','" is for unnamed parameters, where "SYMBOL_SUB" is for named.
+        # "EQ_SUB" is for `=` appearing after the name of the named parameter.
         if (any(call_pd$token == "SYMBOL_SUB")) {
-          params <- call_pd[call_pd$token == "SYMBOL_SUB", "text"]
-          pos <- match("x", params, nomatch = length(params) + 1L)
+          params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','", "EQ_SUB"), "text"]
+          # Remove sequence of "=", ",".
+          if (length(params > 1)) {
+            remove <- integer(0)
+            for (i in 2:length(params)) {
+              if (params[i - 1] == "=" & params[i] == ",") {
+                remove <- c(remove, i - 1, i)
+              }
+            }
+            if (length(remove)) params <- params[-remove]
+          }
+          pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = 0))
+          if (!pos) {
+            return(character(0L))
+          }
+          # pos is indicator of the place of 'x'
+          # 1. All parameters are named, but none is 'x' - return(character(0L))
+          # 2. Some parameters are named, 'x' is in named parameters: match("x", setdiff(params, ","))
+          # - check "x" in params being just a vector of named parameters.
+          # 3. Some parameters are named, 'x' is not in named parameters
+          # - check first appearance of "," (unnamed parameter) in vector parameters.
         } else {
           # Object is the first entry after 'assign'.
           pos <- 1
         }
         sym <- call_pd[assign_call + pos, "text"]
-        return(c(gsub("^['\"]|['\"]$", "", sym), "<-", "assign"))
+        return(c(gsub("^['\"]|['\"]$", "", sym), "<-"))
       }
 
       # What occurs in a function body is not tracked.
@@ -221,7 +269,7 @@ extract_occurrence <- function(calls_pd) {
       sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
       if (length(sym_cond) == 0) {
-        return(character(0))
+        return(character(0L))
       }
       # Watch out for SYMBOLS after $ and @. For x$a x@a: x is object, a is not.
       # For x$a, a's ID is $'s ID-2 so we need to remove all IDs that have ID = $ID - 2.
@@ -232,20 +280,21 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- setdiff(sym_cond, which(x$id %in% after_dollar))
       }
 
-      # If there was an assignment operation detect direction of it.
       ass_cond <- grep("ASSIGN", x$token)
-      if (length(ass_cond)) { # NOTE 1
-        sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 2
+      if (!length(ass_cond)) {
+        return(c("<-", unique(x[sym_cond, "text"])))
       }
-      if ((length(ass_cond) && x$text[ass_cond] == "->") || !length(ass_cond)) { # NOTE 3
+
+      sym_cond <- sym_cond[sym_cond > ass_cond] # NOTE 1
+      # If there was an assignment operation detect direction of it.
+      if (unique(x$text[ass_cond]) == "->") { # NOTE 2
         sym_cond <- rev(sym_cond)
       }
+
       append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
-      ### NOTE 3: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
-      ### NOTE 2: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
-      ### NOTE 1: Cases like 'data(iris)' that do not have an assignment operator.
-      ### NOTE 1: Then they are parsed as c("iris", "<-", "data")
+      ### NOTE 2: What if there are 2 assignments: e.g. a <- b -> c.
+      ### NOTE 1: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
     }
   )
 }
