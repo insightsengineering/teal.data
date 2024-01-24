@@ -125,19 +125,6 @@ testthat::test_that("get_code with datanames extracts code of a parent binding i
   )
 })
 
-testthat::test_that("get_code with datanames is possible to output the code for multiple objects", {
-  code <- c(
-    "a <- 1",
-    "b <- 2",
-    "c <- 3"
-  )
-  tdata <- eval_code(teal_data(), code)
-  testthat::expect_identical(
-    get_code(tdata, datanames = c("a", "b")),
-    paste(code[1:2], collapse = "\n")
-  )
-})
-
 testthat::test_that("get_code with datanames can extract the code when using <<-", {
   code <- c(
     "a <- 1",
@@ -263,6 +250,40 @@ testthat::test_that("@linksto tag indicate affected object if object is assigned
     paste("assign(\"b\", 5)", "b <- b + 2", sep = "\n")
   )
 })
+
+testthat::test_that("get_code works for assign detection no matter how many parametrers were provided in assign", {
+  code <- c(
+    "x <- 1",
+    "assign(\"x\", 0, envir = environment())",
+    "assign(inherits = FALSE, immediate = TRUE, \"z\", 5, envir = environment())",
+    "y <- x + z",
+    "y <- x"
+  )
+
+  tdata <- eval_code(teal_data(), code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(code, collapse = "\n")
+  )
+
+})
+
+testthat::test_that("get_code detects function usage of assignment operator", {
+  code <- c(
+    "x <- 1",
+    "`<-`(y,x)"
+  )
+
+  tdata <- eval_code(teal_data(), code)
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "y"),
+    paste(c(code[1], "y <- x"), collapse = "\n")
+  )
+
+})
+
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
