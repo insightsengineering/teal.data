@@ -79,7 +79,7 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
 })
 
 testthat::test_that("join_keys cannot create acyclical graph", {
-  expect_error(
+  testthat::expect_error(
     join_keys(
       join_key("d1", "d2", "A"),
       join_key("d2", "d1", "A")
@@ -150,13 +150,13 @@ testthat::test_that("join_keys<-.teal_data overwrites existing join_keys", {
 testthat::test_that("join_keys()[]<-.join_keys with empty name is changed to the key value", {
   jk <- join_keys()
   join_keys(jk)[["d1"]][["d2"]] <- c("A" = "B", "C")
-  expect_equal(jk[["d1"]][["d2"]], c(A = "B", C = "C"))
+  testthat::expect_equal(jk[["d1"]][["d2"]], c(A = "B", C = "C"))
 })
 
 testthat::test_that("join_keys()[]<-.join_keys with named empty valued is changed to its name", {
   jk <- join_keys()
   join_keys(jk)[["d1"]][["d2"]] <- c(A = "B", C = "")
-  expect_equal(jk[["d1"]][["d2"]], c(A = "B", C = "C"))
+  testthat::expect_equal(jk[["d1"]][["d2"]], c(A = "B", C = "C"))
 })
 
 testthat::test_that("join_keys()[]<-.join_keys with empty value in a named vector are ignored ", {
