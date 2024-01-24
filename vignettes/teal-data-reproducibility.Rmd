@@ -84,3 +84,32 @@ data_wrong <- teal_data(
 )
 verify(data_wrong) # fails verification, raises error
 ```
+
+## Retrieving code
+
+The `get_code` function is used to retrieve the code stored in a `teal_data` object.
+A simple `get_code(<teal_data>)` will return the entirety of the code but using the `datanames` argument allows for obtaining a subset of the code that only deals with some of the objects stored in `teal_data`.
+
+```{r}
+library(teal.data)
+
+data <- within(teal_data(), {
+  i <- iris
+  m <- mtcars
+  head(i)
+})
+cat(get_code(data)) # retrieve all code
+cat(get_code(data, datanames = "i")) # retrieve code for `i`
+```
+
+Note that in when retrieving code for a specific dataset, the result is only the code used to _create_ that dataset, not code that _uses_ is.
+
+## Tracking object dependencies
+
+Calling `get_code` with `datanames` specified initiates an analysis of the stored code, in which object dependencies are automatically discovered.
+If object `x` is created with an expression that uses object `y`, the lines that create object `y` must also be returned.
+This is quite effective when objects are created by simple assignments like `x <- foo(y)`.
+However, in rare cases discovering dependencies is impossible, _e.g._  when opening connections to databases or when objects are created by side effects (functions acting on their calling environment implicitly rather than returning a value that is then assigned).
+In such cases the code author must manually tag code lines that are required for a dataset by adding a special comment to the lines: `# @linksto x` will cause the line to be included when retrieving coe for `x`.
+
+See `?get_code` for a detailed explanation and examples.
