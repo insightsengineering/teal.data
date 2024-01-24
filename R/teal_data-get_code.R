@@ -74,7 +74,7 @@
 #'
 #' @param object (`teal_data`)
 #' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of dataset names to return the code for.
-For more details see the "Extracting dataset-specific code" section. 
+#' For more details see the "Extracting dataset-specific code" section.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #'

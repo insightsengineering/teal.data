@@ -12,7 +12,8 @@
 \item{deparse}{(\code{logical}) flag specifying whether to return code as \code{character} (\code{deparse = TRUE}) or as
 \code{expression} (\code{deparse = FALSE}).}
 
-\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.}
+\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
+For more details see the "Extracting dataset-specific code" section.}
 }
 \value{
 Either a character string or an expression. If \code{datanames} is used to request a specific dataset,
