@@ -3,14 +3,14 @@
 #' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `datanames` to limit the code to one or more of the data sets enumerated in `@datanames`.
+#' Use `datanames` to limit the code to one or more of the datasets enumerated in `@datanames`.
 #' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
 #' @section Extracting dataset-specific code:
 #' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
-#' the requested data sets. The code stored in the `@code` slot is analyzed statically to determine
-#' which lines the datasets of interest depend upon. The analysis works best when objects are created
-#' by using the standard assignment operator ,`<-`, and it can fail in some situations.
+#' the requested datasets. The code stored in the `@code` slot is analyzed statically to determine
+#' which lines the datasets of interest depend upon. The analysis works well when objects are created
+#' with standard infix assignment operators (see `?assignOps`) but it can fail in some situations.
 #'
 #' Consider the following examples:
 #'
@@ -61,11 +61,19 @@
 #'   ")
 #' get_code(data, datanames = "y")
 #' ```
-#' Now, the `foo()` call will be properly included in the code required to recreate `y`.
+#' Now the `foo()` call will be properly included in the code required to recreate `y`.
+#'
+#' Note that two functions that create objects as side effects, `assign` and `data`, are handled automatically.
+#'
+#' Here are known cases where manual tagging is necessary:
+#' - non-standard assignment operators, _e.g._ `%<>%`
+#' - objects used as conditions in `if` statements: `if (<condition>)`
+#' - objects used to iterate over in `for` loops: `for(i in <sequence>)`
+#' - creating and evaluating language objects, _e.g._ `eval(<call>)`
 #'
 #'
 #' @param object (`teal_data`)
-#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of data set names to return the code for.
+#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of dataset names to return the code for.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
 #'

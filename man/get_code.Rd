@@ -12,7 +12,7 @@
 \item{deparse}{(\code{logical}) flag specifying whether to return code as \code{character} (\code{deparse = TRUE}) or as
 \code{expression} (\code{deparse = FALSE}).}
 
-\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of data set names to return the code for.}
+\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.}
 }
 \value{
 Either a character string or an expression. If \code{datanames} is used to request a specific dataset,
@@ -23,15 +23,15 @@ Retrieve code from \code{teal_data} object.
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
-Use \code{datanames} to limit the code to one or more of the data sets enumerated in \verb{@datanames}.
+Use \code{datanames} to limit the code to one or more of the datasets enumerated in \verb{@datanames}.
 If the code has not passed verification (with \code{\link[=verify]{verify()}}), a warning will be prepended.
 }
 \section{Extracting dataset-specific code}{
 
 When \code{datanames} is specified, the code returned will be limited  to the lines needed to \emph{create}
-the requested data sets. The code stored in the \verb{@code} slot is analyzed statically to determine
-which lines the datasets of interest depend upon. The analysis works best when objects are created
-by using the standard assignment operator ,\verb{<-}, and it can fail in some situations.
+the requested datasets. The code stored in the \verb{@code} slot is analyzed statically to determine
+which lines the datasets of interest depend upon. The analysis works well when objects are created
+with standard infix assignment operators (see \code{?assignOps}) but it can fail in some situations.
 
 Consider the following examples:
 
@@ -84,7 +84,17 @@ In order to include comments in code one must use the \code{eval_code} function 
 get_code(data, datanames = "y")
 }\if{html}{\out{</div>}}
 
-Now, the \code{foo()} call will be properly included in the code required to recreate \code{y}.
+Now the \code{foo()} call will be properly included in the code required to recreate \code{y}.
+
+Note that two functions that create objects as side effects, \code{assign} and \code{data}, are handled automatically.
+
+Here are known cases where manual tagging is necessary:
+\itemize{
+\item non-standard assignment operators, \emph{e.g.} \verb{\%<>\%}
+\item objects used as conditions in \code{if} statements: \verb{if (<condition>)}
+\item objects used to iterate over in \code{for} loops: \verb{for(i in <sequence>)}
+\item creating and evaluating language objects, \emph{e.g.} \verb{eval(<call>)}
+}
 }
 
 \examples{
