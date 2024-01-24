@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9040</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9041</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,16 +54,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -109,23 +99,23 @@ CoreDev</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>teal.data</code> package enables <code>teal</code>
-application developers to convert their data into a format which can be
-used inside <code>teal</code> applications. <code>teal_data</code> class
+<p>The <code>teal.data</code> package specifies the data format used in
+<code>teal</code> applications. The <code>teal_data</code> class
 inherits from <a href="https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html" class="external-link"><code>qenv</code></a>
 and is meant to be used for reproducibility purposes.</p>
 <div class="section level3">
 <h3 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h3>
-<p>To create a <code>teal_data</code> class object, use the
+<p>To create an object of class <code>teal_data</code>, use the
 <code>teal_data</code> function. <code>teal_data</code> has a number of
-methods which allow to set and get relevant information from private
-class slots.</p>
+methods to manage relevant information in private class slots.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/teal.data/">teal.data</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Loading required package: teal.code</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://insightsengineering.github.io/teal.data/">teal.data</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create teal_data object</span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># run code within teal_data to create data objects</span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span></span>
 <span>  <span class="va">my_data</span>,</span>
 <span>  <span class="op">{</span></span>
@@ -134,46 +124,55 @@ class slots.</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># get variables from teal_data environment</span></span>
+<span><span class="co"># get objects stored in teal_data</span></span>
 <span><span class="va">my_data</span><span class="op">[[</span><span class="st">"data1"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">my_data</span><span class="op">[[</span><span class="st">"data1"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># get reproducible code</span></span>
 <span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># set/get datanames</span></span>
+<span><span class="co"># get or set datanames</span></span>
 <span><span class="fu"><a href="../reference/datanames.html">datanames</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data1"</span>, <span class="st">"data2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/datanames.html">datanames</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># concise print</span></span>
+<span><span class="co"># print</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="teal_data-characteristics">
 <code>teal_data</code> characteristics<a class="anchor" aria-label="anchor" href="#teal_data-characteristics"></a>
 </h3>
-<p><code>teal_data</code> class object keeps the following information:
-- <code>env</code> - an environment containing data. - <code>code</code>
-- a string containing code to reproduce <code>env</code> (details in <a href="teal-data-reproducibility.html">teal_data reproducibility</a>). -
-<code>datanames</code> - a character vector with names of datasets. -
+<p>A <code>teal_data</code> object keeps the following information:</p>
+<ul>
+<li>
+<code>env</code> - an environment containing data.</li>
+<li>
+<code>code</code> - a string containing code to reproduce
+<code>env</code> (details in <a href="teal-data-reproducibility.html">reproducibility</a>).</li>
+<li>
+<code>datanames</code> - a character vector listing objects of
+interest to <code>teal</code> modules (details in <a href="https://insightsengineering.github.io/teal/latest-tag/articles/including-data-in-teal-applications.html" class="external-link">this
+<code>teal</code> vignette</a>).</li>
+<li>
 <code>join_keys</code> - a <code>join_keys</code> object defining
 relationships between datasets (details in <a href="join-keys.html">Join
-Keys</a>).</p>
+Keys</a>).</li>
+</ul>
 <div class="section level4">
 <h4 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
 </h4>
 <p>The primary function of <code>teal_data</code> is to provide
 reproducibility of data. We recommend to initialize empty
 <code>teal_data</code>, which marks object as <em>verified</em>, and
-create data sets with code evaluated in the object, using
+create datasets by evaluating code in the object, using
 <code>within</code> or <code>eval_code</code>. Read more in <a href="teal-data-reproducibility.html">teal_data Reproducibility</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="va">data</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">my_data</span> <span class="co"># is verified</span></span></code></pre></div>
 <pre><code><span><span class="co">## ✅︎ verified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x555e2e4e14c8&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x56252cbc2308&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
 <span><span class="co">## Bindings:</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">•</span> data: &lt;df[,2]&gt; [L]</span></span></code></pre>
@@ -181,10 +180,11 @@ create data sets with code evaluated in the object, using
 <div class="section level4">
 <h4 id="relational-data-models">Relational data models<a class="anchor" aria-label="anchor" href="#relational-data-models"></a>
 </h4>
-<p>The <code>teal_data</code> class can be extended to support
-relational data. The <code>join_keys</code> function can be used to
-specify relationships between datasets. See more in <a href="join-keys.html">join_keys</a>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>The <code>teal_data</code> class supports relational data.
+Relationships between datasets can be described by joining keys and
+stored in a <code>teal_data</code> object. These relationships can be
+read or set with the <code>join_keys</code> function. See more in <a href="join-keys.html">join_keys</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, x <span class="op">=</span> <span class="fl">11</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
