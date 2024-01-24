@@ -30,7 +30,6 @@ parents.join_keys <- function(x) {
 #' @describeIn parents Retrieves parents of `join_keys` inside `teal_data` object.
 #' @export
 #' @examples
-#'
 #' # Get parents of join_keys inside teal_data object ---
 #'
 #' td <- teal_data(
@@ -56,7 +55,6 @@ parents.teal_data <- function(x) {
 #' @describeIn parents Assignment of parents of `join_keys` object.
 #' @export
 #' @examples
-#'
 #' # Assignment of parents ---
 #'
 #' jk <- join_keys(
@@ -109,7 +107,6 @@ parents.teal_data <- function(x) {
 #' @describeIn parents Assignment of parents of `join_keys` inside `teal_data` object.
 #' @export
 #' @examples
-#'
 #' # Assignment of parents of join_keys inside teal_data object ---
 #'
 #' parents(td) <- list("ADTTE" = "ADSL") # replace existing
@@ -128,7 +125,6 @@ parents.teal_data <- function(x) {
 #' @export
 #'
 #' @examples
-#'
 #' # Get individual parent ---
 #'
 #' parent(jk, "ds2")

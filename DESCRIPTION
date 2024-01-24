@@ -38,21 +38,21 @@ Imports:
 Suggests:
     knitr (>= 1.42),
     rmarkdown (>= 2.19),
-    testthat (>= 3.1.5)
+    testthat (>= 3.1.5),
+    withr (>= 2.0.0)
 VignetteBuilder:
     knitr
 RdMacros:
     lifecycle
-Config/Needs/verdepcheck: mllg/checkmate, r-lib/lifecycle, r-lib/rlang,
-    yaml=vubiostat/r-yaml, yihui/knitr, rstudio/rmarkdown,
-    insightsengineering/teal.code, r-lib/testthat
+Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate, r-lib/lifecycle, r-lib/rlang,
+    yaml=vubiostat/r-yaml, yihui/knitr, rstudio/rmarkdown, r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-Collate: 
+RoxygenNote: 7.3.0
+Collate:
     'cdisc_data.R'
     'data.R'
     'default_cdisc_join_keys.R'

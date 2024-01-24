@@ -33,7 +33,6 @@ see \code{\link[=get_code_dependency]{get_code_dependency()}}.
 }
 
 \examples{
-
 tdata1 <- teal_data()
 tdata1 <- within(tdata1, {
   a <- 1

@@ -32,7 +32,7 @@
 #' @export
 #'
 cdisc_data <- function(...,
-                       join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],
+                       join_keys = default_cdisc_join_keys[names(rlang::list2(...))],
                        code = character(0),
                        check = FALSE) {
   teal_data(..., join_keys = join_keys, code = code, check = check)

@@ -137,7 +137,6 @@ jk <- join_keys(
 
 jk
 
-
 # Getter for join_keys ---
 
 jk["ds1", "ds2"]
@@ -147,7 +146,6 @@ jk["ds1", "ds2"]
 jk["ds1"]
 jk[1:2]
 jk[c("ds1", "ds2")]
-
 
 # Setting a new primary key ---
 
@@ -177,7 +175,6 @@ jk_merged <- c(
   join_key("ds5", keys = "pk5"),
   join_key("ds1", "ds5", c(pk1 = "pk5"))
 )
-
 # Assigning keys via join_keys(x)[i, j] <- value ----
 
 obj <- join_keys()
@@ -191,7 +188,6 @@ join_keys(obj)["ds1", "ds2"] <- c(pk1 = "pk2")
 join_keys(obj)["ds1", "ds3"] <- c(pk1 = "pk3")
 
 identical(jk, join_keys(obj))
-
 # Setter for join_keys within teal_data ----
 
 td <- teal_data()

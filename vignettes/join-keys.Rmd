@@ -1,7 +1,7 @@
 ---
 title: "Join Keys"
 author: "NEST CoreDev"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
@@ -88,19 +88,19 @@ jk
 | Output of `print(jk)`              | Output annotation                    |
 | ---------------------------------- |:----------------------------------------:|
 | `## A join_keys object containing foreign keys between 3 datasets:` |  **Title** |
-| `## ds1: [col_1]`                |  **Primary keys**<br />_\<dataset name\>_: [_\<primary_keys\>_]                                          | 
-| `##   <-- ds2: [col_1]`          | **Foreign keys**<br /> _(arrow `<--` denotes `ds1` is the parent of `ds2`)_                    | 
-| `##   <-- ds3: [col_1]`          |                                                                               | 
-| `## ds2: [col_1, col_2]`           |                                                                               | 
-| `##   --> ds1: [col_1]`          | arrow `-->` denotes `ds2` is a child of `ds1`                                                                              | 
+| `## ds1: [col_1]`                |  **Primary keys**<br />_\<dataset name\>_: [_\<primary_keys\>_]                                          |
+| `##   <-- ds2: [col_1]`          | **Foreign keys**<br /> _(arrow `<--` denotes `ds1` is the parent of `ds2`)_                    |
+| `##   <-- ds3: [col_1]`          |                                                                               |
+| `## ds2: [col_1, col_2]`           |                                                                               |
+| `##   --> ds1: [col_1]`          | arrow `-->` denotes `ds2` is a child of `ds1`                                                                              |
 | `##   --* (implicit via parent with): ds3` |  **Implicit relationship between `ds2` & `ds3`**<br />_(given that they share common keys with same parent)_    |
-| `## ds3: [col_1, col_3]`           |                                                                               | 
-| `##   --> ds1: [col_1]`          |                                                                               | 
-| `##   --* (implicit via parent with): ds2` |                                                                               | 
-| `## ds4: [no primary keys]`    |                                                                               | 
-| `##   <-> ds5: [col_5]`          |  **Foreign keys** <br />_(arrow `<->` denotes no parent definition between datasets)_      | 
-| `## ds5: [no primary keys]`    |                                                                               | 
-| `##   <-> ds4: [col_4] `         |                                                                               | 
+| `## ds3: [col_1, col_3]`           |                                                                               |
+| `##   --> ds1: [col_1]`          |                                                                               |
+| `##   --* (implicit via parent with): ds2` |                                                                               |
+| `## ds4: [no primary keys]`    |                                                                               |
+| `##   <-> ds5: [col_5]`          |  **Foreign keys** <br />_(arrow `<->` denotes no parent definition between datasets)_      |
+| `## ds5: [no primary keys]`    |                                                                               |
+| `##   <-> ds4: [col_4] `         |                                                                               |
 
 ## Accessing and Modifying keys
 

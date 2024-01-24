@@ -14,7 +14,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' # Getter for join_keys ---
 #'
 #' jk["ds1", "ds2"]
@@ -131,7 +130,6 @@
 #'
 #' @export
 #' @examples
-#'
 #' # Setting a new primary key ---
 #'
 #' jk["ds4", "ds4"] <- "pk4"
@@ -189,7 +187,6 @@
 #'
 #' @export
 #' @examples
-#'
 #' # Setting via x[[i]] <- value ---
 #'
 #' jk <- join_keys()

@@ -387,12 +387,12 @@ testthat::test_that("get_code with datanames ignores occurrence in function defi
     "b <- lapply(a, FUN = function(x) { x <- x + 1 })",
     "b <- Filter(function(x) x > 2, b)",
     "x <- 1",
-    "print(x)"
+    "identity(x)"
   )
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    paste("x <- 1", "print(x)", sep = "\n")
+    paste("x <- 1", "identity(x)", sep = "\n")
   )
 })
 

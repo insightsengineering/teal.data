@@ -19,7 +19,6 @@
 #' Either string or an expression representing code used to create the requested data sets.
 #'
 #' @examples
-#'
 #' tdata1 <- teal_data()
 #' tdata1 <- within(tdata1, {
 #'   a <- 1
