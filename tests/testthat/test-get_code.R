@@ -270,7 +270,6 @@ testthat::test_that("get_code works for assign detection no matter how many para
 testthat::test_that("get_code detects function usage of assignment operator", {
   code <- c(
     "x <- 1",
-    "assign(\"x\", 0, envir = environment())",
     "`<-`(y,x)"
   )
 
@@ -278,7 +277,7 @@ testthat::test_that("get_code detects function usage of assignment operator", {
 
   testthat::expect_identical(
     get_code(tdata, datanames = "y"),
-    paste(c(code[1:2], "y <- x"), collapse = "\n")
+    paste(c(code[1], "y <- x"), collapse = "\n")
   )
 
 })
