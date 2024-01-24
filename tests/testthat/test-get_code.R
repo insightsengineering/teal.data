@@ -255,6 +255,8 @@ testthat::test_that("get_code works for assign detection no matter how many para
   code <- c(
     "x <- 1",
     "assign(\"x\", 0, envir = environment())",
+    "assign(inherits = FALSE, immediate = TRUE, \"z\", 5, envir = environment())",
+    "y <- x + z",
     "y <- x"
   )
 

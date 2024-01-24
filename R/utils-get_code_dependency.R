@@ -224,8 +224,19 @@ extract_occurrence <- function(calls_pd) {
       if (assign_call) {
         # Check if parameters were named.
         # "','" is for unnamed parameters, where "SYMBOL_SUB" is for named.
+        # "EQ_SUB" is for `=` appearing after the name of the named parameter.
         if (any(call_pd$token == "SYMBOL_SUB")) {
-          params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','"), "text"]
+          params <- call_pd[call_pd$token %in% c("SYMBOL_SUB", "','", "EQ_SUB"), "text"]
+          # Remove sequence of "=", ",".
+          if (length(params >1)) {
+            remove <- integer(0)
+            for (i in 2:length(params)) {
+              if (params[i-1] == "=" & params[i] == ",") {
+                remove <- c(remove, i-1, i)
+              }
+            }
+            if (length(remove)) params <- params[-remove]
+          }
           pos <- match("x", setdiff(params, ","), nomatch = match(",", params, nomatch = 0))
           if (!pos) return(character(0L))
           # pos is indicator of the place of 'x'
