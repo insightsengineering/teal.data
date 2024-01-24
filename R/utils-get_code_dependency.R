@@ -110,7 +110,7 @@ extract_calls <- function(pd) {
   )
   calls <- Filter(function(call) !(nrow(call) == 1 && call$token == "';'"), calls)
   calls <- Filter(Negate(is.null), calls)
-  calls <- fix_comments(calls)
+  calls <- fix_shifted_comments(calls)
   fix_arrows(calls)
 }
 
@@ -128,20 +128,21 @@ get_children <- function(pd, parent) {
   }
 }
 
+#' Fixes edge case of comments being shifted to the next call.
 #' @keywords internal
 #' @noRd
-fix_comments <- function(calls) {
-  # If the first token is a COMMENT, then it belongs to the previous call.
+fix_shifted_comments <- function(calls) {
+  # If the first or the second token is a @linksto COMMENT,
+  #  then it belongs to the previous call.
   if (length(calls) >= 2) {
     for (i in 2:length(calls)) {
-      comments_first <- grepl("@linksto", calls[[i]][1, "text"])
-      comments_second <- grepl("@linksto", calls[[i]][2, "text"]) && calls[[i]][1, "text"] == ""
-      if (comments_first) {
-        calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1, ])
-        calls[[i]] <- calls[[i]][-1, ]
-      } else if (comments_second) {
-        calls[[i - 1]] <- rbind(calls[[i - 1]], calls[[i]][1:2, ])
-        calls[[i]] <- calls[[i]][-c(1:2), ]
+      comment_idx <- grep("@linksto", calls[[i]][, "text"])
+      if (isTRUE(comment_idx[1] <= 2)) {
+        calls[[i - 1]] <- rbind(
+          calls[[i - 1]],
+          calls[[i]][seq_len(comment_idx[1]), ]
+        )
+        calls[[i]] <- calls[[i]][-seq_len(comment_idx[1]), ]
       }
     }
   }
