@@ -282,7 +282,7 @@ extract_occurrence <- function(calls_pd) {
 
       append(unique(x[sym_cond, "text"]), "<-", after = 1)
 
-      ### NOTE 2: What if there are 2+ assignments, e.g. a <- b -> c or e.g. a <- b <- c.
+      ### NOTE 2: What if there are 2 assignments: e.g. a <- b -> c.
       ### NOTE 1: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.
     }
   )
