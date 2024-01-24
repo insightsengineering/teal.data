@@ -1,7 +1,9 @@
 ---
 title: "teal_data reproducibility"
 author: "NEST CoreDev"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{teal_data reproducibility}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,34 +12,50 @@ vignette: >
 
 # Reproducibility of `teal_data` objects
 
-Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from. Every data modification in `teal_data` object is performed in an encapsulated environment, separate from the global environment.
+Reproducibility is a primary function of the `qenv` class, which `teal_data` inherits from.
+Every data modification in a `teal_data` object is performed in an encapsulated environment, separate from the global environment.
 
-It is important to note that the reproducibility of this object is limited only to the data-code relationship. Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnvironment`) cannot be verified properly by the `teal_data`.
+It is important to note that the reproducibility of this object is limited only to the data-code relationship.
+Other aspects such as the reliability of the data source, reproducibility of the R session (including package versions), and creation and use of objects from other environments (e.g. `.GlobalEnv`) cannot be verified properly by `teal_data`.
+It is advisable to always begin analysis in a new session and run all code that pertains to the analysis within the `teal_data` object.
 
-## Verification status
+## Verification
 
-`teal_data` objects that are instantiated empty are created as _verified_. Objects can be modified only through `eval_code()` and `within()` functions to ensure that the code is saved in the object and always evaluated in the correct environment. Evaluating code in a `teal_data` object _does not_ change its verification status.
+### Verification status
+
+Every `teal_data` object has a _verification status_, which is a statement of whether the contents of the `env` can be reproduced by `code`.
+From this perspective, `teal_data` objects that are instantiated empty are _verified_ but ones instantiated with data and code are _unverified_ because the code need not be reproducible.
+Obviously, `teal_data` objects instantiated with data only are _unverified_ as well.
+
+When evaluating code in a `teal_data` object, the code that is stored is the same as the code that is executed, so it is reproducible by definition.
+Therefore, evaluating code in a `teal_data` object _does not_ change its verification status.
+
+The verification status is always printed when inspecting a `teal_data` object.
+Also, when retrieving code, unverified objects add a warning to the code stating that it has not passed verification.
 
 ```{r, message=FALSE, error=TRUE}
 library(teal.data)
 
-my_data <- teal_data()
-my_data <- within(my_data, data <- data.frame(x = 11:20))
-my_data <- within(my_data, data$id <- seq_len(nrow(data)))
-my_data # is verified
+data_empty <- teal_data()
+data_empty # is verified
+data_empty <- within(data_empty, i <- head(iris))
+data_empty # remains verified
+
+data_with_data <- teal_data(i = head(iris), code = "i <- tail(iris)")
+data_with_data # is unverified
+data_with_data <- within(data_with_data, i$rand <- sample(nrow(i)))
+data_with_data # remains unverified
+cat(get_code(data_with_data)) # warning is prepended
 ```
 
-Find out more in the `teal_data()` documentation.
+### Verification process
 
-## Verification
+In order to confirm that the code stored in `teal_data` exactly reproduces the contents of the environment, one must run the `verify()` function.
+This causes the code to be evaluated and the results to be compared to the contents of the environment.
+If the code- executes without errors and the results are the same as the contents already present in the environment, the verification is successful and the object's state will be changed to _verified_.
+Otherwise an error will be raised.
 
-`teal_data` objects instantiated with data and code run the risk of the code not being reproducible.
-Such objects will be created in an _unverified_ state. 
-To confirm that the code exactly reproduces the variables stored in the object, one must run the `verify()` function.
-If the verification succeeds, the object's state will be changed to _verified_, otherwise an error will be raised.
-When retrieving code, unverified objects will always add a warning to the code stating that it has not passed verification.
-
-### verified
+#### verified
 
 ```{r}
 library(teal.data)
@@ -55,7 +73,7 @@ data_right <- teal_data(
 (data_right_verified <- verify(data_right)) # returns verified object
 ```
 
-### unverified
+#### unverified
 
 ```{r, message=FALSE, error=TRUE}
 data_wrong <- teal_data(
