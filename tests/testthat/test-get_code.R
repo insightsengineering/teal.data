@@ -267,7 +267,7 @@ testthat::test_that("get_code works for assign detection no matter how many para
 
 })
 
-testthat::test_that("", {
+testthat::test_that("get_code detects function usage of assignment operator", {
   code <- c(
     "x <- 1",
     "assign(\"x\", 0, envir = environment())",
