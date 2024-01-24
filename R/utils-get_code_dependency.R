@@ -99,7 +99,15 @@ find_call <- function(call_pd, text) {
 #' @keywords internal
 #' @noRd
 extract_calls <- function(pd) {
-  calls <- lapply(pd[pd$parent == 0, "id"], get_children, pd = pd)
+  calls <- lapply(
+    pd[pd$parent == 0, "id"],
+    function(parent) {
+      rbind(
+        pd[pd$id == parent, c("token", "text", "id", "parent")],
+        get_children(pd = pd, parent = parent)
+      )
+    }
+  )
   calls <- Filter(Negate(is.null), calls)
   calls <- fix_comments(calls)
   fix_arrows(calls)
@@ -131,7 +139,7 @@ fix_comments <- function(calls) {
       }
     }
   }
-  calls
+  Filter(nrow, calls)
 }
 
 #' Fixes edge case of `<-` assignment operator being called as function,

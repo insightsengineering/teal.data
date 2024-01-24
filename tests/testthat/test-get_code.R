@@ -265,6 +265,22 @@ testthat::test_that("detects function usage of the assignment operator", {
 
 # @linksto ---------------------------------------------------------------------------------------------------------
 
+testthat::test_that("get_code does not break if @linksto is put in the last line", {
+  # In some cases R parses comment as a separate expression so the comment is not 
+  # directly associated with this line of code. This situation occurs when `eval` is in the last
+  # line of the code. Other cases are not known but are highly probable.
+  code <- c(
+    "expr <- quote(x <- x + 1)",
+    "x <- 0",
+    "eval(expr) #@linksto x"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(gsub(" #@linksto x", "", code, fixed = TRUE), collapse = "\n")
+  )
+})
+
 testthat::test_that("@linksto makes a line being returned for an affected binding", {
   code <- "
   a <- 1 # @linksto b
