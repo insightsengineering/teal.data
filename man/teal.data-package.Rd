@@ -21,7 +21,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Dawid Kaledkowski \email{dawid.kaledkowski@roche.com}
+\strong{Maintainer}: Dawid Kaledkowski \email{dawid.kaledkowski@roche.com} (\href{https://orcid.org/0000-0001-9533-457X}{ORCID})
 
 Authors:
 \itemize{
