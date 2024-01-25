@@ -4,12 +4,7 @@
 \alias{teal_data}
 \title{Comprehensive data integration function for \code{teal} applications}
 \usage{
-teal_data(
-  ...,
-  join_keys = teal.data::join_keys(),
-  code = character(0),
-  check = FALSE
-)
+teal_data(..., join_keys = teal.data::join_keys(), code = character(0), check)
 }
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
@@ -22,9 +17,8 @@ If empty then no joins between pairs of objects.}
 \item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible}
 
-\item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
-code included in the object definitions actually produces those objects.
-If \code{check} is true and preprocessing code is empty an error will be thrown.}
+\item{check}{(\code{logical}) r lifecycle::badge("deprecated")
+Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
 }
 \value{
 A \code{teal_data} object.

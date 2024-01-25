@@ -8,7 +8,7 @@ cdisc_data(
   ...,
   join_keys = teal.data::default_cdisc_join_keys[names(rlang::list2(...))],
   code = character(0),
-  check = FALSE
+  check
 )
 }
 \arguments{
@@ -23,9 +23,8 @@ For ADAM datasets it would be automatically derived.}
 \item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible}
 
-\item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
-code included in the object definitions actually produces those objects.
-If \code{check} is true and preprocessing code is empty an error will be thrown.}
+\item{check}{(\code{logical}) r lifecycle::badge("deprecated")
+Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
 }
 \value{
 A \code{teal_data} object.
