@@ -27,7 +27,7 @@ Authors:
 \itemize{
   \item Aleksander Chlebowski \email{aleksander.chlebowski@contractors.roche.com}
   \item Marcin Kosinski \email{marcin.kosinski.mk1@roche.com}
-  \item Andre Verissimo \email{andre.verissimo@roche.com}
+  \item Andre Verissimo \email{andre.verissimo@roche.com} (\href{https://orcid.org/0000-0002-2212-339X}{ORCID})
   \item Pawel Rucki \email{pawel.rucki@roche.com}
   \item Mahmoud Hallal \email{mahmoud.hallal@roche.com}
   \item Nikolas Burkoff
