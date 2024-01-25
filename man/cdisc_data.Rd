@@ -23,7 +23,7 @@ For ADAM datasets it would be automatically derived.}
 \item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible}
 
-\item{check}{(\code{logical}) r lifecycle::badge("deprecated")
+\item{check}{(\code{logical}) \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
 }
 \value{
