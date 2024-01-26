@@ -19,8 +19,8 @@ Authors@R: c(
     person("Dony", "Unardi", , "unardid@gene.com", role = "rev"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
-Description: Utilities to provide a unified data model for `teal` applications
-    with focusing on reproducibility and relational data.
+Description: Provides a `teal_data` class as a unified data model for `teal` applications
+    focusing on reproducibility and relational data.
 License: Apache License 2.0
 URL: https://insightsengineering.github.io/teal.data/,
     https://github.com/insightsengineering/teal.data/
