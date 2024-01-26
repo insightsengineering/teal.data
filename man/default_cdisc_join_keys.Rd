@@ -8,7 +8,7 @@
 An object of class \code{join_keys} (inherits from \code{list}) of length 19.
 }
 \source{
-https://github.com/insightsengineering/teal.data/blob/main/data-raw/data.R
+internal
 }
 \usage{
 default_cdisc_join_keys
