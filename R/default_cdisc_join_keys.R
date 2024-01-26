@@ -1,13 +1,5 @@
-#' List containing default joining keys for `CDISC` datasets
-#'
-#' This data object is created at loading time from `cdisc_datasets/cdisc_datasets.yaml`.
-#'
-#' @name default_cdisc_join_keys
-#' @docType data
-#' @export
-NULL
-
 #' Helper method to build `default_cdisc_join_keys`
+#'
 #' @param default_cdisc_keys (`list`) default definition of primary and foreign
 #' keys for `CDISC` datasets
 #'
