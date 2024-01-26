@@ -20,7 +20,8 @@ cdisc_data(
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}
 
-\item{code}{(\code{character}, \code{language}) code to reproduce the datasets.}
+\item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
+Note this code is not executed and the \code{teal_data} may not be reproducible}
 
 \item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
 code included in the object definitions actually produces those objects.

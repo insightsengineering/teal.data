@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.3.0.9040
-Date: 2024-01-23
+Version: 0.3.0.9042
+Date: 2024-01-24
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre")),
     person("Aleksander", "Chlebowski", , "aleksander.chlebowski@contractors.roche.com", role = "aut"),
@@ -51,7 +51,7 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 Collate: 
     'cdisc_data.R'
     'data.R'
