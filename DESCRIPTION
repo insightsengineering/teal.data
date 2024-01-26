@@ -56,7 +56,6 @@ RoxygenNote: 7.3.1
 Collate:
     'cdisc_data.R'
     'data.R'
-    'default_cdisc_join_keys.R'
     'formatters_var_labels.R'
     'deprecated.R'
     'dummy_function.R'

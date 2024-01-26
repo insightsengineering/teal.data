@@ -28,6 +28,28 @@ rADVS <- synthetic_cdisc_data("latest")$advs # nolint: object_name_linter.
 usethis::use_data(rADVS)
 
 ## Code to prepare default CDISC datasets for `teal.data`
-default_cdisc_keys <- yaml::yaml.load_file(file.path("inst", "cdisc_datasets", "cdisc_datasets.yaml"))
+build_cdisc_join_keys <- function(default_cdisc_keys) {
+  checkmate::assert_list(default_cdisc_keys, types = "list")
+
+  jk <- join_keys()
+  for (name in names(default_cdisc_keys)) {
+    # Set default primary keys
+    keys_list <- default_cdisc_keys[[name]]
+
+    if (!is.null(keys_list[["primary"]])) {
+      jk[[name]][[name]] <- keys_list[["primary"]]
+    }
+
+    if (!is.null(keys_list[["parent"]])) {
+      if (!is.null(keys_list[["foreign"]])) {
+        jk[[name]][[keys_list[["parent"]]]] <- keys_list[["foreign"]]
+      }
+      parents(jk)[[name]] <- keys_list[["parent"]]
+    }
+  }
+  jk
+}
+
+default_cdisc_keys <- yaml::yaml.load_file(file.path("data-raw", "cdisc_datasets", "cdisc_datasets.yaml"))
 default_cdisc_join_keys <- build_cdisc_join_keys(default_cdisc_keys)
 usethis::use_data(default_cdisc_join_keys)
