@@ -6,13 +6,6 @@
   )
   assign("default_cdisc_keys", default_cdisc_keys, envir = parent.env(environment()))
 
-  # update default_cdisc_join_keys
-  assign(
-    "default_cdisc_join_keys",
-    build_cdisc_join_keys(default_cdisc_keys),
-    envir = parent.env(environment())
-  )
-
   invisible()
 }
 
