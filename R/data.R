@@ -80,3 +80,13 @@
 #' @source internal
 #' @name rADVS
 "rADVS"
+
+#' List containing default joining keys for `CDISC` datasets
+#'
+#' This data object is created at loading time from `cdisc_datasets/cdisc_datasets.yaml`.
+#'
+#' @name default_cdisc_join_keys
+#' @usage default_cdisc_join_keys
+#' @docType data
+#' @source internal
+"default_cdisc_join_keys"
