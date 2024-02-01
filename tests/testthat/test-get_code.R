@@ -381,7 +381,7 @@ testthat::test_that("ignores occurrence in a function definition in lapply", {
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    paste("x <- 1", "identity(x)", sep = "\n")
+    "x <- 1"
   )
 })
 
