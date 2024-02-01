@@ -17,7 +17,7 @@ NULL
 
 .deprecate_function <- function(what, details) {
   lifecycle::deprecate_stop(
-    when = "0.3.1",
+    when = "0.4.0",
     what = what,
     details = details
   )
@@ -338,7 +338,7 @@ get_join_keys <- function(...) {
 #' `r lifecycle::badge("deprecated")`
 #'
 #' In previous versions of `teal.data` labels were managed with `get_labels()`.
-#' This function is deprecated as of `0.3.1`, use `col_labels` instead.
+#' This function is deprecated as of `0.4.0`, use `col_labels` instead.
 #' @export
 get_labels <- function(...) {
   .deprecate_function("get_labels()", "Use col_labels(data)")

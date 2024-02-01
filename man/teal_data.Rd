@@ -4,26 +4,21 @@
 \alias{teal_data}
 \title{Comprehensive data integration function for \code{teal} applications}
 \usage{
-teal_data(
-  ...,
-  join_keys = teal.data::join_keys(),
-  code = character(0),
-  check = FALSE
-)
+teal_data(..., join_keys = teal.data::join_keys(), code = character(0), check)
 }
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object
+\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object.
 
 (optional) object with dataset column relationships used for joining.
-If empty then no joins between pairs of objects}
+If empty then no joins between pairs of objects.}
 
-\item{code}{(\code{character}, \code{language}) code to reproduce the datasets.}
+\item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
+Note this code is not executed and the \code{teal_data} may not be reproducible}
 
-\item{check}{(\code{logical}) reproducibility check - whether to perform a check that the pre-processing
-code included in the object definitions actually produces those objects.
-If \code{check} is true and preprocessing code is empty an error will be thrown.}
+\item{check}{(\code{logical}) \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
 }
 \value{
 A \code{teal_data} object.
