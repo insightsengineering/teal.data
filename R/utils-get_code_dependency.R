@@ -167,28 +167,15 @@ fix_arrows <- function(calls) {
 #' @noRd
 sub_arrows <- function(call) {
   checkmate::assert_data_frame(call)
-  map <- map_arrows()
+  map <- data.frame(
+    row.names = c("`<-`", "`<<-`", "`=`"),
+    token = rep("LEFT_ASSIGN", 3),
+    text = rep("<-", 3)
+  )
   sub_ids <- call$text %in% rownames(map)
   call[sub_ids, c("token", "text")] <- map[call$text[sub_ids], ]
   call
 }
-
-#' Dictionary of assignment operator substitutions.
-#' @keywords internal
-#' @noRd
-map_arrows <- function() {
-  map <- rbind(
-    c("`<-`", "LEFT_ASSIGN", "<-"),
-    c("`->`", "RIGHT_ASSIGN", "->"),
-    c("`<<-`", "LEFT_ASSIGN", "<-"),
-    c("`->>`", "RIGHT_ASSIGN", "->"),
-    c("`=`", "LEFT_ASSIGN", "<-")
-  )
-  map <- data.frame(map, row.names = 1) # added this to avoid numeric index
-  names(map) <- c("token", "text")
-  map
-}
-
 
 # code_graph ----
 
