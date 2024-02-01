@@ -1,14 +1,16 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.4.0
-Date: 2024-01-24
+Version: 0.4.0.9000
+Date: 2024-02-01
 Authors@R: c(
-    person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9533-457X")),
+    person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-9533-457X")),
     person("Aleksander", "Chlebowski", , "aleksander.chlebowski@contractors.roche.com", role = "aut",
            comment = c(ORCID = "0000-0001-5018-6294")),
     person("Marcin", "Kosinski", , "marcin.kosinski.mk1@roche.com", role = "aut"),
-    person("Andre", "Verissimo", , "andre.verissimo@roche.com", role = "aut", comment = c(ORCID = "0000-0002-2212-339X")),
+    person("Andre", "Verissimo", , "andre.verissimo@roche.com", role = "aut",
+           comment = c(ORCID = "0000-0002-2212-339X")),
     person("Pawel", "Rucki", , "pawel.rucki@roche.com", role = "aut"),
     person("Mahmoud", "Hallal", , "mahmoud.hallal@roche.com", role = "aut"),
     person("Nikolas", "Burkoff", role = "aut"),
@@ -19,8 +21,8 @@ Authors@R: c(
     person("Dony", "Unardi", , "unardid@gene.com", role = "rev"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
-Description: Provides a 'teal_data' class as a unified data model for 'teal' applications
-    focusing on reproducibility and relational data.
+Description: Provides a 'teal_data' class as a unified data model for
+    'teal' applications focusing on reproducibility and relational data.
 License: Apache License 2.0
 URL: https://insightsengineering.github.io/teal.data/,
     https://github.com/insightsengineering/teal.data/
@@ -44,8 +46,8 @@ VignetteBuilder:
 RdMacros:
     lifecycle
 Config/Needs/verdepcheck: mllg/checkmate, r-lib/lifecycle, r-lib/rlang,
-    yihui/knitr, rstudio/rmarkdown,
-    insightsengineering/teal.code, r-lib/testthat
+    yihui/knitr, rstudio/rmarkdown, insightsengineering/teal.code,
+    r-lib/testthat
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US
