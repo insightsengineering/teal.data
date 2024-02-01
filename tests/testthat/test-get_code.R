@@ -253,12 +253,18 @@ testthat::test_that("detects function usage of the assignment operator", {
     "x <- 1",
     "`<-`(y,x)"
   )
+  code2 <- "`<-`(y, `<-`(x, 2))"
 
   tdata <- eval_code(teal_data(), code)
+  tdata2 <- eval_code(teal_data(), code2)
 
   testthat::expect_identical(
     get_code(tdata, datanames = "y"),
     paste(c(code[1], "y <- x"), collapse = "\n")
+  )
+  testthat::expect_identical(
+    get_code(tdata2, datanames = "y"),
+    "y <- x <- 2"
   )
 })
 

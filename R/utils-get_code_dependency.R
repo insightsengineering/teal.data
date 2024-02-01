@@ -154,18 +154,41 @@ fix_shifted_comments <- function(calls) {
 #' @keywords internal
 #' @noRd
 fix_arrows <- function(calls) {
-  lapply(
-    calls,
-    function(call) {
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->>`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`=`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call
-    }
-  )
+  checkmate::assert_list(calls)
+  lapply(calls, function(call) {
+    sym_fun <- call$token == "SYMBOL_FUNCTION_CALL"
+    call[sym_fun, ] <- sub_arrows(call[sym_fun, ])
+    call
+  })
 }
+
+#' Execution of assignment operator substitutions for a call.
+#' @keywords internal
+#' @noRd
+sub_arrows <- function(call) {
+  checkmate::assert_data_frame(call)
+  map <- map_arrows()
+  sub_ids <- call$text %in% rownames(map)
+  call[sub_ids, c("token", "text")] <- map[call$text[sub_ids],]
+  call
+}
+
+#' Dictionary of assignment operator substitutions.
+#' @keywords internal
+#' @noRd
+map_arrows <- function() {
+  map <- rbind(
+    c("`<-`", "LEFT_ASSIGN", "<-"),
+    c("`->`", "RIGHT_ASSIGN", "->"),
+    c("`<<-`", "LEFT_ASSIGN", "<-"),
+    c("`->>`", "RIGHT_ASSIGN", "->"),
+    c("`=`", "LEFT_ASSIGN", "<-")
+  )
+  map <- data.frame(map, row.names = 1) # added this to avoid numeric index
+  names(map) <- c("token", "text")
+  map
+}
+
 
 # code_graph ----
 
