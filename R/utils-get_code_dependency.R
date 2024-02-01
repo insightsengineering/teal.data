@@ -169,7 +169,7 @@ sub_arrows <- function(call) {
   checkmate::assert_data_frame(call)
   map <- map_arrows()
   sub_ids <- call$text %in% rownames(map)
-  call[sub_ids, c("token", "text")] <- map[call$text[sub_ids],]
+  call[sub_ids, c("token", "text")] <- map[call$text[sub_ids], ]
   call
 }
 
