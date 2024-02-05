@@ -2,20 +2,20 @@
 % Please edit documentation in R/dummy_function.R
 \name{example_cdisc_data}
 \alias{example_cdisc_data}
-\title{Generate sample \code{CDISC} datasets}
+\title{Generate sample CDISC datasets}
 \usage{
 example_cdisc_data(
   dataname = c("ADSL", "ADAE", "ADLB", "ADCM", "ADEX", "ADRS", "ADTR", "ADTTE", "ADVS")
 )
 }
 \arguments{
-\item{dataname}{(\code{character(1)}) name of a \code{CDISC} dataset}
+\item{dataname}{(\code{character(1)}) name of a CDISC dataset}
 }
 \value{
-A \code{CDISC} dataset as a \code{data.frame}.
+A CDISC dataset as a \code{data.frame}.
 }
 \description{
-Retrieves example \code{CDISC} datasets for use in examples and testing.
+Retrieves example CDISC datasets for use in examples and testing.
 }
 \details{
 This function returns a dummy dataset and should only be used within \code{teal.data}.
