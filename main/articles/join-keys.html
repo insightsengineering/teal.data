@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9001</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,19 +54,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/release-candidate">release-candidate</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0-rc1">v0.4.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0">v0.4.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -120,11 +107,10 @@ keys for a dataset and establish relationships with other datasets.</p>
 <li>Foreign/merge keys, analogous to <code>SQL</code> foreign keys.</li>
 </ul>
 <p>Typically, an application developer specifies these keys manually.
-However, for datasets following the <code>ADaM</code> standard,
+However, for datasets following the ADaM standard,
 <code>teal.data</code> can automatically assign keys using the
-<code>default_cdisc_join_keys</code> object. Refer to the section <a href="#join-keys-in-adam-datasets">“Joining Keys with <code>ADaM</code>
-Datasets”</a> for details on using this object to select specific
-datasets.</p>
+<code>default_cdisc_join_keys</code> object. Refer to the section <a href="#join-keys-in-adam-datasets">“Joining Keys with ADaM Datasets”</a>
+for details on using this object to select specific datasets.</p>
 <div class="section level5">
 <h5 id="uses-of-join_keys-class-in-teal-applications">Uses of <code>join_keys</code> class in <em>teal</em>
 applications<a class="anchor" aria-label="anchor" href="#uses-of-join_keys-class-in-teal-applications"></a>
@@ -579,11 +565,11 @@ together, just as if they were defined manually.</p>
 </div>
 <div class="section level2">
 <h2 id="join-keys-in-adam-datasets">
-<em>Join Keys</em> in <code>ADaM</code> Datasets<a class="anchor" aria-label="anchor" href="#join-keys-in-adam-datasets"></a>
+<em>Join Keys</em> in ADaM Datasets<a class="anchor" aria-label="anchor" href="#join-keys-in-adam-datasets"></a>
 </h2>
 <p><code>teal.data</code> provides a set of default join keys (primary
-and foreign) for datasets named according to the <code>ADaM</code>
-standard. They are stored in <code>default_cdisc_join_keys</code>.</p>
+and foreign) for datasets named according to the ADaM standard. They are
+stored in <code>default_cdisc_join_keys</code>.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">default_cdisc_join_keys</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] "ADAE"     "ADAETTE"  "ADCM"     "ADCSSRS"  "ADDV"     "ADEG"    </span></span>
