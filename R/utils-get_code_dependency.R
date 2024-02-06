@@ -240,12 +240,7 @@ extract_occurrence <- function(calls_pd) {
     if (any(x$token == "LBB")) {
       id_start <- min(x$id[x$token == "LBB"])
       id_end <- min(x$id[x$token == "']'"])
-      in_parenthesis <- x$token == "SYMBOL" & x$id > id_start & x$id < id_end
-      if (any(in_parenthesis)) {
-        x$text[in_parenthesis]
-      } else {
-        character(0)
-      }
+      x$text[x$token == "SYMBOL" & x$id > id_start & x$id < id_end]
     }
   }
   lapply(
