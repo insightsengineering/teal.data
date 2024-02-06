@@ -77,6 +77,7 @@
 #' For more details see the "Extracting dataset-specific code" section.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
+#' @param ... Parameters passed to other methods.
 #'
 #' @return
 #' Either a character string or an expression. If `datanames` is used to request a specific dataset,
@@ -101,12 +102,12 @@
 #' @aliases get_code,teal_data-method
 #'
 #' @export
-setMethod("get_code", signature = "teal_data", definition = function(object, deparse = TRUE, datanames = NULL) {
+setMethod("get_code", signature = "teal_data", definition = function(object, deparse = TRUE, datanames = NULL, ...) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(datanames)) {
-    get_code_dependency(object@code, datanames)
+    get_code_dependency(object@code, datanames, ...)
   } else {
     object@code
   }

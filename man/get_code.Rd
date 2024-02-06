@@ -4,7 +4,7 @@
 \alias{get_code,teal_data-method}
 \title{Get code from \code{teal_data} object}
 \usage{
-\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL)
+\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL, ...)
 }
 \arguments{
 \item{object}{(\code{teal_data})}
@@ -14,6 +14,8 @@
 
 \item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
+
+\item{...}{Parameters passed to other methods.}
 }
 \value{
 Either a character string or an expression. If \code{datanames} is used to request a specific dataset,
