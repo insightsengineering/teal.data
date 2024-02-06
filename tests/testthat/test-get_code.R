@@ -197,6 +197,20 @@ testthat::test_that("does not break if object is used in a function on lhs", {
   )
 })
 
+testthat::test_that(
+  "does not break if object is used in a function on lhs and influencers are both on lhs and rhs", {
+  code <- c(
+    "x <- 5",
+    "y <- length(x)",
+    "names(x)[y] <- y"
+  )
+  tdata <- eval_code(teal_data(), code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(code, collapse = "\n")
+  )
+})
+
 # assign ----------------------------------------------------------------------------------------------------------
 
 testthat::test_that("extracts the code for assign() where \"x\" is a literal string", {
