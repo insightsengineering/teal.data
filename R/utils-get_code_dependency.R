@@ -203,7 +203,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
+  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract object occurrence
@@ -234,6 +234,13 @@ extract_occurrence <- function(calls_pd) {
       x$id %in% get_children(x, function_id)$id
     } else {
       rep(FALSE, nrow(x))
+    }
+  }
+  in_parenthesis <- function(x) {
+    if (any(x$token %in% c("LBB", "'['"))) {
+      id_start <- min(x$id[x$token %in% c("LBB", "'['")])
+      id_end <- min(x$id[x$token == "']'"])
+      x$text[x$token == "SYMBOL" & x$id > id_start & x$id < id_end]
     }
   }
   lapply(
@@ -308,7 +315,14 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- rev(sym_cond)
       }
 
-      append(unique(x[sym_cond, "text"]), "<-", after = 1)
+      after <- match(min(x$id[ass_cond]), sort(x$id[c(min(ass_cond), sym_cond)])) - 1
+      ans <- append(x[sym_cond, "text"], "<-", after = max(1, after))
+      roll <- in_parenthesis(call_pd)
+      if (length(roll)) {
+        c(setdiff(ans, roll), roll)
+      } else {
+        ans
+      }
 
       ### NOTE 2: What if there are 2 assignments: e.g. a <- b -> c.
       ### NOTE 1: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.

@@ -184,6 +184,33 @@ testthat::test_that("does not break if code uses quote()", {
   )
 })
 
+testthat::test_that("does not break if object is used in a function on lhs", {
+  code <- c(
+    "data(iris)",
+    "iris2 <- iris",
+    "names(iris) <- letters[1:5]"
+  )
+  tdata <- eval_code(teal_data(), code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "iris"),
+    paste(code[c(1, 3)], collapse = "\n")
+  )
+})
+
+testthat::test_that(
+  "does not break if object is used in a function on lhs and influencers are both on lhs and rhs", {
+  code <- c(
+    "x <- 5",
+    "y <- length(x)",
+    "names(x)[y] <- y"
+  )
+  tdata <- eval_code(teal_data(), code = code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "x"),
+    paste(code, collapse = "\n")
+  )
+})
+
 # assign ----------------------------------------------------------------------------------------------------------
 
 testthat::test_that("extracts the code for assign() where \"x\" is a literal string", {
@@ -505,7 +532,7 @@ testthat::test_that("detects cooccurrence properly even if all objects are on lh
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    paste("a <- 1", "b <- list(c = 2)", "b[[a]] <- 3", sep = "\n")
+    paste(code, collapse = "\n")
   )
 })
 
