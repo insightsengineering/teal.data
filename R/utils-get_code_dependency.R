@@ -203,7 +203,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
+  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract object occurrence
@@ -237,8 +237,8 @@ extract_occurrence <- function(calls_pd) {
     }
   }
   in_parenthesis <- function(x) {
-    if (any(x$token == "LBB")) {
-      id_start <- min(x$id[x$token == "LBB"])
+    if (any(x$token %in% c("LBB", "'['"))) {
+      id_start <- min(x$id[x$token %in% c("LBB", "'['")])
       id_end <- min(x$id[x$token == "']'"])
       x$text[x$token == "SYMBOL" & x$id > id_start & x$id < id_end]
     }
@@ -316,7 +316,7 @@ extract_occurrence <- function(calls_pd) {
       }
 
       after <- match(min(x$id[ass_cond]), sort(x$id[c(min(ass_cond), sym_cond)])) - 1
-      ans <- append(unique(x[sym_cond, "text"]), "<-", after = max(1, after))
+      ans <- append(x[sym_cond, "text"], "<-", after = max(1, after))
       roll <- in_parenthesis(call_pd)
       if (length(roll)) {
         c(setdiff(ans, roll), roll)
