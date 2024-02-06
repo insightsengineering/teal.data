@@ -320,7 +320,7 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- rev(sym_cond)
       }
 
-      after = match(min(x$id[ass_cond]), sort(x$id[c(min(ass_cond), sym_cond)])) - 1
+      after <- match(min(x$id[ass_cond]), sort(x$id[c(min(ass_cond), sym_cond)])) - 1
       ans <- append(unique(x[sym_cond, "text"]), "<-", after = max(1, after))
       roll <- in_parenthesis(call_pd)
       if (length(roll)) {
