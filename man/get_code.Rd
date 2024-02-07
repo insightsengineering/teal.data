@@ -15,7 +15,9 @@
 \item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
-\item{...}{Parameters passed to other methods.}
+\item{...}{Parameters passed to internal methods. Currently, the only supported parameter is \code{check_names}
+(\code{logical(1)}) flag,  which is \code{TRUE} by default. Function warns about missing objects, if they do not exist in
+\code{code} but are passed in \code{datanames}. To remove the warning, set \code{check_names = FALSE}.}
 }
 \value{
 Either a character string or an expression. If \code{datanames} is used to request a specific dataset,

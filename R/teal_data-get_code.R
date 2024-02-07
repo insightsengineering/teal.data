@@ -77,7 +77,9 @@
 #' For more details see the "Extracting dataset-specific code" section.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
 #' `expression` (`deparse = FALSE`).
-#' @param ... Parameters passed to other methods.
+#' @param ... Parameters passed to internal methods. Currently, the only supported parameter is `check_names`
+#' (`logical(1)`) flag,  which is `TRUE` by default. Function warns about missing objects, if they do not exist in
+#' `code` but are passed in `datanames`. To remove the warning, set `check_names = FALSE`.
 #'
 #' @return
 #' Either a character string or an expression. If `datanames` is used to request a specific dataset,
