@@ -1,4 +1,7 @@
-# teal.data 0.4.0.9003
+# teal.data 0.4.1
+
+### Bug fixes
+* Fix bug detected in `get_code_dependency` that affects code reproducibility.
 
 # teal.data 0.4.0
 
