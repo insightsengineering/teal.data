@@ -1,5 +1,8 @@
 # teal.data 0.4.0.9004
 
+### Enhancements
+* Extended `get_code.teal_data()` with a possibility to steer internal methods with `...` parameter. 
+
 # teal.data 0.4.0
 
 ### Enhancements
@@ -7,7 +10,6 @@
 * Simplified `join_key` to better support primary keys.
 * `JoinKey` `R6` object was removed in favor of a list-like object with class name `join_keys`. Subset operators and assignments are supported (`[`, `[[`, `[<-` and `[[<-`)
 * `join_keys` function works as a constructor, getter and setter.
-* Extended `get_code.teal_data()` with a possibility to steer internal methods with `...` parameter. 
 
 ### Breaking changes
 
