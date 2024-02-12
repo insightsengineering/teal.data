@@ -14,7 +14,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,7 @@ for given datasets whose names match ADAM datasets names."><!-- mathjax --><scri
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/release-candidate">release-candidate</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0-rc1">v0.5.0-rc1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0-rc1">v0.4.0-rc1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
@@ -93,7 +94,7 @@ for given datasets whose names match ADAM datasets names.</p>
 <span>  <span class="va">...</span>,</span>
 <span>  join_keys <span class="op">=</span> <span class="fu">teal.data</span><span class="fu">::</span><span class="va"><a href="default_cdisc_join_keys.html">default_cdisc_join_keys</a></span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html" class="external-link">list2</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
-<span>  check <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="va">check</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,9 +117,8 @@ Note this code is not executed and the <code>teal_data</code> may not be reprodu
 
 
 <dt>check</dt>
-<dd><p>(<code>logical</code>) reproducibility check - whether to perform a check that the pre-processing
-code included in the object definitions actually produces those objects.
-If <code>check</code> is true and preprocessing code is empty an error will be thrown.</p></dd>
+<dd><p>(<code>logical</code>) <a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>
+Use <code><a href="verify.html">verify()</a></code> to verify code reproducibility .</p></dd>
 
 </dl></div>
     <div class="section level2">
