@@ -1,5 +1,8 @@
 # teal.data 0.4.0.9004
 
+### Enhancements
+* Extended `get_code.teal_data()` with a possibility to steer internal methods with `...` parameter. 
+
 # teal.data 0.4.0
 
 ### Enhancements
