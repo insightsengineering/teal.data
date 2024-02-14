@@ -154,17 +154,27 @@ fix_shifted_comments <- function(calls) {
 #' @keywords internal
 #' @noRd
 fix_arrows <- function(calls) {
-  lapply(
-    calls,
-    function(call) {
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`<<-`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`->>`", c("token", "text")] <- c("RIGHT_ASSIGN", "->")
-      call[call$token == "SYMBOL_FUNCTION_CALL" & call$text == "`=`", c("token", "text")] <- c("LEFT_ASSIGN", "<-")
-      call
-    }
+  checkmate::assert_list(calls)
+  lapply(calls, function(call) {
+    sym_fun <- call$token == "SYMBOL_FUNCTION_CALL"
+    call[sym_fun, ] <- sub_arrows(call[sym_fun, ])
+    call
+  })
+}
+
+#' Execution of assignment operator substitutions for a call.
+#' @keywords internal
+#' @noRd
+sub_arrows <- function(call) {
+  checkmate::assert_data_frame(call)
+  map <- data.frame(
+    row.names = c("`<-`", "`<<-`", "`=`"),
+    token = rep("LEFT_ASSIGN", 3),
+    text = rep("<-", 3)
   )
+  sub_ids <- call$text %in% rownames(map)
+  call[sub_ids, c("token", "text")] <- map[call$text[sub_ids], ]
+  call
 }
 
 # code_graph ----
@@ -193,7 +203,7 @@ code_graph <- function(calls_pd) {
 
   side_effects <- extract_side_effects(calls_pd)
 
-  mapply(function(x, y) unique(c(x, y)), side_effects, cooccurrence, SIMPLIFY = FALSE)
+  mapply(c, side_effects, cooccurrence, SIMPLIFY = FALSE)
 }
 
 #' Extract object occurrence
@@ -224,6 +234,13 @@ extract_occurrence <- function(calls_pd) {
       x$id %in% get_children(x, function_id)$id
     } else {
       rep(FALSE, nrow(x))
+    }
+  }
+  in_parenthesis <- function(x) {
+    if (any(x$token %in% c("LBB", "'['"))) {
+      id_start <- min(x$id[x$token %in% c("LBB", "'['")])
+      id_end <- min(x$id[x$token == "']'"])
+      x$text[x$token == "SYMBOL" & x$id > id_start & x$id < id_end]
     }
   }
   lapply(
@@ -298,7 +315,14 @@ extract_occurrence <- function(calls_pd) {
         sym_cond <- rev(sym_cond)
       }
 
-      append(unique(x[sym_cond, "text"]), "<-", after = 1)
+      after <- match(min(x$id[ass_cond]), sort(x$id[c(min(ass_cond), sym_cond)])) - 1
+      ans <- append(x[sym_cond, "text"], "<-", after = max(1, after))
+      roll <- in_parenthesis(call_pd)
+      if (length(roll)) {
+        c(setdiff(ans, roll), roll)
+      } else {
+        ans
+      }
 
       ### NOTE 2: What if there are 2 assignments: e.g. a <- b -> c.
       ### NOTE 1: For cases like 'eval(expression(b <- b + 2))' removes 'eval(expression('.

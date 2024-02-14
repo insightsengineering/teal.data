@@ -20,8 +20,8 @@ Each dataset _joining keys_ can be characterized by:
 - Foreign/merge keys, analogous to `SQL` foreign keys.
 
 Typically, an application developer specifies these keys manually.
-However, for datasets following the `ADaM` standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
-Refer to the section ["Joining Keys with `ADaM` Datasets"](#join-keys-in-adam-datasets) for details on using this object to select specific datasets.
+However, for datasets following the ADaM standard, `teal.data` can automatically assign keys using the `default_cdisc_join_keys` object.
+Refer to the section ["Joining Keys with ADaM Datasets"](#join-keys-in-adam-datasets) for details on using this object to select specific datasets.
 
 ##### Uses of `join_keys` class in _teal_ applications
 
@@ -296,9 +296,9 @@ join_keys(td)["ds2", "ds4"]
 
 Note that the definition above contains no `join_key` for `"ds2" <-> "ds4"`
 
-## _Join Keys_ in `ADaM` Datasets
+## _Join Keys_ in ADaM Datasets
 
-`teal.data` provides a set of default join keys (primary and foreign) for datasets named according to the `ADaM` standard. They are stored in `default_cdisc_join_keys`.
+`teal.data` provides a set of default join keys (primary and foreign) for datasets named according to the ADaM standard. They are stored in `default_cdisc_join_keys`.
 
 ```{r}
 names(default_cdisc_join_keys) |> sort()
