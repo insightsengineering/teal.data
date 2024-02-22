@@ -73,10 +73,14 @@ col_labels <- function(x, fill = FALSE) {
     .var.name = "Length of value is equal to the number of columns"
   )
 
-  if (is.null(names(value))) {
-    names(value) <- names(x)
-  }
-  x[names(value)] <- mapply(`attr<-`, x = x[names(value)], which = "label", value = value, SIMPLIFY = FALSE)
+  varnames <-
+    if (is.null(names(value))) {
+      names(x)
+    } else {
+      names(value)
+    }
+
+  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
   x
 }
 
@@ -87,12 +91,12 @@ col_relabel <- function(x, ...) {
   if (missing(...)) {
     return(x)
   }
-  dots <- list(...)
-  varnames <- names(dots)
+  value <- list(...)
+  varnames <- names(value)
 
   checkmate::assert_subset(varnames, names(x), .var.name = "names of ...")
-  lapply(dots, checkmate::assert_string, .var.name = "element of ...")
+  lapply(value, checkmate::assert_string, .var.name = "element of ...")
 
-  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = dots, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
   x
 }
