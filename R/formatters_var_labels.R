@@ -55,11 +55,6 @@ col_labels <- function(x, fill = FALSE) {
       }
   }
 
-  not_char <- !vapply(labels, checkmate::test_string, logical(1L), na.ok = TRUE)
-  if (any(not_char)) {
-    stop("labels for variables ", toString(names(not_char[not_char])), "are not character strings")
-  }
-
   unlist(labels, recursive = FALSE)
 }
 
@@ -77,6 +72,7 @@ col_labels <- function(x, fill = FALSE) {
     if (is.null(names(value))) {
       names(x)
     } else {
+      checkmate::assert_set_equal(names(value), names(x), .var.name = "column names")
       names(value)
     }
 
