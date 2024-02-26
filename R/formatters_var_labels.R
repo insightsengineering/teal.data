@@ -55,7 +55,7 @@ col_labels <- function(x, fill = FALSE) {
       }
   }
 
-  unlist(labels, recursive = FALSE)
+  unlist(labels)
 }
 
 #' @rdname col_labels
