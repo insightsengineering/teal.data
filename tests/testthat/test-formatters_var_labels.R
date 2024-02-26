@@ -49,7 +49,7 @@ testthat::test_that("col_labels<- value names must be same as variable names", {
   iris_df <- utils::head(iris, 2)
   testthat::expect_error(
     col_labels(iris_df) <- stats::setNames(as.character(1:5), toupper(names(iris_df))),
-    "undefined columns selected"
+    "Assertion on 'column names' failed: Must be a permutation of set"
   )
 })
 
@@ -85,7 +85,7 @@ testthat::test_that("col_labels<- matches labels to variables by names of values
 
 
 # col_relabel ----
-test_that("col_relabel correctly changes column labels in a data frame", {
+testthat::test_that("col_relabel correctly changes column labels in a data frame", {
   iris_df <- utils::head(iris, 2)
   iris_df <- col_relabel(iris_df, Sepal.Length = "Sepal Length of iris flower")
   testthat::expect_identical(
@@ -94,14 +94,14 @@ test_that("col_relabel correctly changes column labels in a data frame", {
   )
 })
 
-test_that("col_relabel throws an error for non-existent columns", {
+testthat::test_that("col_relabel throws an error for non-existent columns", {
   testthat::expect_error(
     col_relabel(iris, NonExistentColumn = "Label"),
     "Must be a subset of \\{.*\\}, but has additional elements \\{'NonExistentColumn'\\}"
   )
 })
 
-test_that("col_relabel returns the original data.frame when no new labels are specified", {
+testthat::test_that("col_relabel returns the original data.frame when no new labels are specified", {
   iris_df <- col_relabel(iris)
   testthat::expect_equal(iris_df, iris)
 })
