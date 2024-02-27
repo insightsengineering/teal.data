@@ -43,7 +43,7 @@ col_labels <- function(x, fill = FALSE) {
     return(character(0L))
   }
 
-  labels <- lapply(x, function(x) unname(attr(x, "label")))
+  labels <- lapply(x, function(x) as.vector(attr(x, "label")[[1]]))
 
   nulls <- vapply(labels, is.null, logical(1L))
   if (any(nulls)) {
