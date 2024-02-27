@@ -1,5 +1,8 @@
 # teal.data 0.5.0.9001
 
+### Bug fixes
+* Fixed bug in `col_labels` causing incorrect label names to be returned when input data contains named label attributes.
+
 # teal.data 0.5.0
 
 ### Bug fixes

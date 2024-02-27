@@ -21,6 +21,14 @@ testthat::test_that("col_labels returns a vector of column names when fill = TRU
   )
 })
 
+testthat::test_that("col_labels works with named label attributes", {
+  x <- iris
+  attr(x$Species, "label") <- c(Species = "Label for Species")
+  testthat::expect_true(
+    "Species" %in% names(col_labels(x))
+  )
+})
+
 
 # col_labels ----
 testthat::test_that("col_labels<- value accepts character vector", {
