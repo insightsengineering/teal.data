@@ -25,12 +25,30 @@ testthat::test_that("col_labels works with labels having additional attributes (
   x <- iris
   attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
   testthat::expect_identical(col_labels(x)[["Species"]], "Label for Species")
-)}
+})
 
 testthat::test_that("col_labels returns only 'names' attribute and ignores all the rest", {
   x <- iris
   attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
   testthat::expect_identical(attributes(col_labels(x)["Species"]), list(names = "Species"))
+})
+
+testthat::test_that("col_labels throws if label is not a character", {
+  x <- iris
+  attr(x$Species, "label") <- structure(1, names = "blah", foo = "bar")
+  testthat::expect_error(
+    col_labels(x),
+    "Assertion on ''Species' column label' failed"
+  )
+})
+
+testthat::test_that("col_labels throws if label is not a character of length 1", {
+  x <- iris
+  attr(x$Species, "label") <- structure(c("a", "b"), names = "blah", foo = "bar")
+  testthat::expect_error(
+    col_labels(x),
+    "Assertion on ''Species' column label' failed"
+  )
 })
 
 # col_labels ----
