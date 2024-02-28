@@ -21,14 +21,17 @@ testthat::test_that("col_labels returns a vector of column names when fill = TRU
   )
 })
 
-testthat::test_that("col_labels works with named label attributes", {
+testthat::test_that("col_labels works with labels having additional attributes (including names)", {
   x <- iris
-  attr(x$Species, "label") <- c(Species = "Label for Species")
-  testthat::expect_true(
-    "Species" %in% names(col_labels(x))
-  )
-})
+  attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
+  testthat::expect_identical(col_labels(x)[["Species"]], "Label for Species")
+)}
 
+testthat::test_that("col_labels returns only 'names' attribute and ignores all the rest", {
+  x <- iris
+  attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
+  testthat::expect_identical(attributes(col_labels(x)["Species"]), list(names = "Species"))
+})
 
 # col_labels ----
 testthat::test_that("col_labels<- value accepts character vector", {
