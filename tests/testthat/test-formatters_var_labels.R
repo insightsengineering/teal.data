@@ -38,7 +38,8 @@ testthat::test_that("col_labels throws if label is not a character", {
   attr(x$Species, "label") <- structure(1, names = "blah", foo = "bar")
   testthat::expect_error(
     col_labels(x),
-    "Assertion on 'column label' failed"
+    "Assertion on 'attr(x, \"label\")' failed",
+    fixed = TRUE
   )
 })
 
@@ -47,7 +48,8 @@ testthat::test_that("col_labels throws if label is not a character of length 1",
   attr(x$Species, "label") <- structure(c("a", "b"), names = "blah", foo = "bar")
   testthat::expect_error(
     col_labels(x),
-    "Assertion on 'column label' failed"
+    "Assertion on 'attr(x, \"label\")' failed",
+    fixed = TRUE
   )
 })
 

@@ -44,7 +44,7 @@ col_labels <- function(x, fill = FALSE) {
   }
 
   labels <- sapply(x, function(i) as.vector(attr(i, "label")), simplify = FALSE, USE.NAMES = TRUE)
-  lapply(labels, checkmate::assert_string, .var.name = "column label", null.ok = TRUE)
+  lapply(labels, checkmate::assert_string, .var.name = "attr(x, \"label\")", null.ok = TRUE)
 
   nulls <- vapply(labels, is.null, logical(1L))
   if (any(nulls)) {
