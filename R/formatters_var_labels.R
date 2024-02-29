@@ -84,16 +84,22 @@ col_labels <- function(x, fill = FALSE) {
       names(x)
     } else if (any(names(value) == "")) {
       specified_cols <- names(value)[names(value) != ""]
-      checkmate::assert_subset(specified_cols, names(x), .var.name = "column names")
+      checkmate::assert_subset(specified_cols, names(x), .var.name = "names of value")
       res <- names(value)
       res[res == ""] <- setdiff(names(x), specified_cols)
       res
     } else {
-      checkmate::assert_set_equal(names(value), names(x), .var.name = "column names")
+      checkmate::assert_set_equal(names(value), names(x), .var.name = "names of value")
       names(value)
     }
 
-  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
+  for (i in seq_along(value)) {
+    if (is.na(value[i])) {
+      attr(x[[varnames[i]]], "label") <- NULL
+    } else {
+      attr(x[[varnames[i]]], "label") <- value[[i]]
+    }
+  }
   x
 }
 
@@ -108,8 +114,14 @@ col_relabel <- function(x, ...) {
   varnames <- names(value)
 
   checkmate::assert_subset(varnames, names(x), .var.name = "names of ...")
-  lapply(value, checkmate::assert_string, .var.name = "element of ...")
+  lapply(value, checkmate::assert_string, .var.name = "element of ...", na.ok = TRUE)
 
-  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
+  for (i in seq_along(value)) {
+    if (is.na(value[i])) {
+      attr(x[[varnames[i]]], "label") <- NULL
+    } else {
+      attr(x[[varnames[i]]], "label") <- value[[i]]
+    }
+  }
   x
 }

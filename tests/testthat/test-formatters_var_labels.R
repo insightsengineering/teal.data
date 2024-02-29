@@ -80,7 +80,7 @@ testthat::test_that("col_labels<- value names must be same as variable names", {
   iris_df <- utils::head(iris, 2)
   testthat::expect_error(
     col_labels(iris_df) <- stats::setNames(as.character(1:5), toupper(names(iris_df))),
-    "Assertion on 'column names' failed: Must be a permutation of set"
+    "Assertion on 'names of value' failed: Must be a permutation of set"
   )
 })
 
@@ -132,6 +132,16 @@ testthat::test_that("col_labels<- matches labels to variables by names of values
   )
 })
 
+testthat::test_that("col_labels<- removes labels on NA_character_", {
+  x <- data.frame(a = 1, b = 2, c = 3)
+  col_labels(x) <- c("A", "B", "C")
+  col_labels(x) <- c(b = NA, "AA", NA)
+  testthat::expect_identical(
+    col_labels(x),
+    c(a = "AA", b = NA, c = NA)
+  )
+})
+
 
 # col_relabel ----
 testthat::test_that("col_relabel correctly changes column labels in a data frame", {
@@ -153,4 +163,14 @@ testthat::test_that("col_relabel throws an error for non-existent columns", {
 testthat::test_that("col_relabel returns the original data.frame when no new labels are specified", {
   iris_df <- col_relabel(iris)
   testthat::expect_equal(iris_df, iris)
+})
+
+testthat::test_that("col_relabel removes labels on NA_character_", {
+  x <- data.frame(a = 1, b = 2, c = 3)
+  col_labels(x) <- c("A", "B", "C")
+  x <- col_relabel(x, b = NA_character_)
+  testthat::expect_identical(
+    col_labels(x),
+    c(a = "A", b = NA, c = "C")
+  )
 })
