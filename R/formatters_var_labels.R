@@ -43,8 +43,18 @@ col_labels <- function(x, fill = FALSE) {
     return(character(0L))
   }
 
-  labels <- sapply(x, function(i) as.vector(attr(i, "label")), simplify = FALSE, USE.NAMES = TRUE)
-  lapply(labels, checkmate::assert_string, .var.name = "attr(x, \"label\")", null.ok = TRUE)
+  labels <- sapply(x, function(i) as.vector(attr(i, "label", exact = TRUE)), simplify = FALSE, USE.NAMES = TRUE)
+  mapply(
+    function(name, label) {
+      checkmate::assert_string(
+        label,
+        .var.name = sprintf("\"label\" attribute of column \"%s\"", name),
+        null.ok = TRUE
+      )
+    },
+    name = names(x),
+    label = labels
+  )
 
   nulls <- vapply(labels, is.null, logical(1L))
   if (any(nulls)) {
@@ -72,6 +82,12 @@ col_labels <- function(x, fill = FALSE) {
   varnames <-
     if (is.null(names(value))) {
       names(x)
+    } else if (any(names(value) == "")) {
+      specified_cols <- names(value)[names(value) != ""]
+      checkmate::assert_subset(specified_cols, names(x), .var.name = "column names")
+      res <- names(value)
+      res[res == ""] <- setdiff(names(x), specified_cols)
+      res
     } else {
       checkmate::assert_set_equal(names(value), names(x), .var.name = "column names")
       names(value)

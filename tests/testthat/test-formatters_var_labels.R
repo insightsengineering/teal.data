@@ -22,38 +22,38 @@ testthat::test_that("col_labels returns a vector of column names when fill = TRU
 })
 
 testthat::test_that("col_labels works with labels having additional attributes (including names)", {
-  x <- iris
-  attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
-  testthat::expect_identical(col_labels(x)[["Species"]], "Label for Species")
+  iris_df <- utils::head(iris, 2)
+  attr(iris_df$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
+  testthat::expect_identical(col_labels(iris_df)[["Species"]], "Label for Species")
 })
 
 testthat::test_that("col_labels returns only 'names' attribute and ignores all the rest", {
-  x <- iris
-  attr(x$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
-  testthat::expect_identical(attributes(col_labels(x)["Species"]), list(names = "Species"))
+  iris_df <- utils::head(iris, 2)
+  attr(iris_df$Species, "label") <- structure("Label for Species", names = "blah", foo = "bar")
+  testthat::expect_identical(attributes(col_labels(iris_df)["Species"]), list(names = "Species"))
 })
 
 testthat::test_that("col_labels throws if label is not a character", {
-  x <- iris
-  attr(x$Species, "label") <- structure(1, names = "blah", foo = "bar")
+  iris_df <- utils::head(iris, 2)
+  attr(iris_df$Species, "label") <- structure(1, names = "blah", foo = "bar")
   testthat::expect_error(
-    col_labels(x),
-    "Assertion on 'attr(x, \"label\")' failed",
+    col_labels(iris_df),
+    "Assertion on '\"label\" attribute of column \"Species\"' failed",
     fixed = TRUE
   )
 })
 
 testthat::test_that("col_labels throws if label is not a character of length 1", {
-  x <- iris
-  attr(x$Species, "label") <- structure(c("a", "b"), names = "blah", foo = "bar")
+  iris_df <- utils::head(iris, 2)
+  attr(iris_df$Species, "label") <- structure(c("a", "b"), names = "blah", foo = "bar")
   testthat::expect_error(
-    col_labels(x),
-    "Assertion on 'attr(x, \"label\")' failed",
+    col_labels(iris_df),
+    "Assertion on '\"label\" attribute of column \"Species\"' failed",
     fixed = TRUE
   )
 })
 
-# col_labels ----
+# col_labels<- ----
 testthat::test_that("col_labels<- value accepts character vector", {
   iris_df <- utils::head(iris, 2)
   testthat::expect_error(
@@ -91,6 +91,24 @@ testthat::test_that("col_labels<- sets variable labels when passed unnamed chara
   testthat::expect_identical(
     col_labels(iris_df),
     stats::setNames(labels, names(iris_df))
+  )
+})
+
+testthat::test_that("col_labels<- sets variable labels when passed partially named character vector", {
+  x <- data.frame(a = 1, b = 2, c = 3)
+  col_labels(x) <- c(a = "A", "B", "C")
+  testthat::expect_identical(
+    col_labels(x),
+    c(a = "A", b = "B", c = "C")
+  )
+})
+
+testthat::test_that("col_labels<- sets variable labels when passed partially named, unordered character vector", {
+  x <- data.frame(a = 1, b = 2, c = 3)
+  col_labels(x) <- c(b = "B", "A", "C")
+  testthat::expect_identical(
+    col_labels(x),
+    c(a = "A", b = "B", c = "C")
   )
 })
 
