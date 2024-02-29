@@ -43,24 +43,20 @@ col_labels <- function(x, fill = FALSE) {
     return(character(0L))
   }
 
-  vapply(
-    colnames(x),
-    function(colname) {
-      label <- as.vector(attr(x[[colname]], "label"))
-      checkmate::assert_string(label, .var.name = sprintf("'%s' column label", colname), null.ok = TRUE)
-      if (is.null(label)) {
-        if (fill) {
-          colname
-        } else {
-          NA_character_
-        }
+  labels <- sapply(x, function(i) as.vector(attr(i, "label")), simplify = FALSE, USE.NAMES = TRUE)
+  lapply(labels, checkmate::assert_string, .var.name = "column label", null.ok = TRUE)
+
+  nulls <- vapply(labels, is.null, logical(1L))
+  if (any(nulls)) {
+    labels[nulls] <-
+      if (fill) {
+        colnames(x)[nulls]
       } else {
-        label
+        NA_character_
       }
-    },
-    character(1L),
-    USE.NAMES = TRUE
-  )
+  }
+
+  unlist(labels)
 }
 
 #' @rdname col_labels
