@@ -11,7 +11,7 @@
 #'  if named, names must match variable names in `x` and will be used as key to set labels;
 #'  use `NA` to remove label from variable
 #' @param ... name-value pairs, where name corresponds to a variable name in `x`
-#'  and value is the new variable label
+#'  and value is the new variable label; use `NA` to remove label from variable
 #'
 #' @return
 #' For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
@@ -43,7 +43,18 @@ col_labels <- function(x, fill = FALSE) {
     return(character(0L))
   }
 
-  labels <- lapply(x, attr, "label")
+  labels <- sapply(x, function(i) as.vector(attr(i, "label", exact = TRUE)), simplify = FALSE, USE.NAMES = TRUE)
+  mapply(
+    function(name, label) {
+      checkmate::assert_string(
+        label,
+        .var.name = sprintf("\"label\" attribute of column \"%s\"", name),
+        null.ok = TRUE
+      )
+    },
+    name = names(x),
+    label = labels
+  )
 
   nulls <- vapply(labels, is.null, logical(1L))
   if (any(nulls)) {
@@ -71,12 +82,24 @@ col_labels <- function(x, fill = FALSE) {
   varnames <-
     if (is.null(names(value))) {
       names(x)
+    } else if (any(names(value) == "")) {
+      specified_cols <- names(value)[names(value) != ""]
+      checkmate::assert_subset(specified_cols, names(x), .var.name = "names of value")
+      res <- names(value)
+      res[res == ""] <- setdiff(names(x), specified_cols)
+      res
     } else {
-      checkmate::assert_set_equal(names(value), names(x), .var.name = "column names")
+      checkmate::assert_set_equal(names(value), names(x), .var.name = "names of value")
       names(value)
     }
 
-  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
+  for (i in seq_along(value)) {
+    if (is.na(value[i])) {
+      attr(x[[varnames[i]]], "label") <- NULL
+    } else {
+      attr(x[[varnames[i]]], "label") <- value[[i]]
+    }
+  }
   x
 }
 
@@ -91,8 +114,14 @@ col_relabel <- function(x, ...) {
   varnames <- names(value)
 
   checkmate::assert_subset(varnames, names(x), .var.name = "names of ...")
-  lapply(value, checkmate::assert_string, .var.name = "element of ...")
+  lapply(value, checkmate::assert_string, .var.name = "element of ...", na.ok = TRUE)
 
-  x[varnames] <- mapply(`attr<-`, x = x[varnames], which = "label", value = value, SIMPLIFY = FALSE)
+  for (i in seq_along(value)) {
+    if (is.na(value[i])) {
+      attr(x[[varnames[i]]], "label") <- NULL
+    } else {
+      attr(x[[varnames[i]]], "label") <- value[[i]]
+    }
+  }
   x
 }
