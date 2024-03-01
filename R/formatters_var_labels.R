@@ -11,7 +11,7 @@
 #'  if named, names must match variable names in `x` and will be used as key to set labels;
 #'  use `NA` to remove label from variable
 #' @param ... name-value pairs, where name corresponds to a variable name in `x`
-#'  and value is the new variable label
+#'  and value is the new variable label; use `NA` to remove label from variable
 #'
 #' @return
 #' For `col_labels`, named character vector of variable labels, the names being the corresponding variable names.
