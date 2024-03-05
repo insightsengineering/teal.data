@@ -7,12 +7,12 @@
 #'
 #' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.
 #'
-#' @param join_keys (`join_keys`) object or a single (`join_key_set`) object.
+#' @param join_keys (`join_keys`) optional, object or a single (`join_key_set`) object.
 #'
-#'  (optional) object with dataset column relationships used for joining.
+#'  object with dataset column relationships used for joining.
 #'  If empty then no joins between pairs of objects.
 #'
-#' @param code (`character`, `language`) optional code to reproduce the datasets provided in `...`.
+#' @param code (`character`, `language`) optional, code to reproduce the datasets provided in `...`.
 #'  Note this code is not executed and the `teal_data` may not be reproducible
 #'
 #' @param check (`logical`) `r lifecycle::badge("deprecated")`

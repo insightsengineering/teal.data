@@ -14,13 +14,13 @@ cdisc_data(
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) object or a single (\code{join_key_set}) object
+\item{join_keys}{(\code{join_keys}) optional, object or a single (\code{join_key_set}) object
 
-(optional) object with datasets column names used for joining.
+object with datasets column names used for joining.
 If empty then it would be automatically derived basing on intersection of datasets primary keys.
 For ADAM datasets it would be automatically derived.}
 
-\item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
+\item{code}{(\code{character}, \code{language}) optional, code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible}
 
 \item{check}{(\code{logical}) \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
