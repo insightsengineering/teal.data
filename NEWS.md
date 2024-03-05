@@ -1,4 +1,10 @@
-# teal.data 0.5.0.9000
+# teal.data 0.5.0.9002
+
+### Enhancements
+* `col_relabel` supports `NA` to remove labels (similar to the `col_labels<-`).
+
+### Bug fixes
+* Fixed bug in `col_labels` causing incorrect label names to be returned when input data contains named label attributes.
 
 # teal.data 0.5.0
 
