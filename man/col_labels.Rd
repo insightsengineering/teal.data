@@ -30,7 +30,7 @@ if named, names must match variable names in \code{x} and will be used as key to
 use \code{NA} to remove label from variable}
 
 \item{...}{name-value pairs, where name corresponds to a variable name in \code{x}
-and value is the new variable label}
+and value is the new variable label; use \code{NA} to remove label from variable}
 }
 \value{
 For \code{col_labels}, named character vector of variable labels, the names being the corresponding variable names.
