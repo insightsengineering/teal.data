@@ -11,7 +11,7 @@
 #' optional object with datasets column names used for joining.
 #' If empty then no joins between pairs of objects.
 #'
-#' @param code (`character`, `language`) optional, code to reproduce the datasets provided in `...`.
+#' @param code (`character`, `language`) optional code to reproduce the datasets provided in `...`.
 #'  Note this code is not executed and the `teal_data` may not be reproducible
 #'
 #' @param check (`logical`) `r lifecycle::badge("deprecated")`
