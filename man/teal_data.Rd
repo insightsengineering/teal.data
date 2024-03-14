@@ -9,9 +9,8 @@ teal_data(..., join_keys = teal.data::join_keys(), code = character(0), check)
 \arguments{
 \item{...}{any number of objects (presumably data objects) provided as \code{name = value} pairs.}
 
-\item{join_keys}{(\code{join_keys}) optional, object or a single (\code{join_key_set}) object.
-
-object with dataset column relationships used for joining.
+\item{join_keys}{(\code{join_keys} or single \code{join_key_set})
+optional object with datasets column names used for joining.
 If empty then no joins between pairs of objects.}
 
 \item{code}{(\code{character}, \code{language}) optional, code to reproduce the datasets provided in \code{...}.
