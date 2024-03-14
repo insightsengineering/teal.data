@@ -45,7 +45,7 @@ join_keys(x) <- value
 \method{print}{join_keys}(x, ...)
 }
 \arguments{
-\item{...}{(optional)
+\item{...}{optional,
 \itemize{
 \item either \code{teal_data} or \code{join_keys} object to extract \code{join_keys}
 \item or any number of \code{join_key_set} objects to create \code{join_keys}
