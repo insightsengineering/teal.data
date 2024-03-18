@@ -24,7 +24,7 @@ ds2 and ds1."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9003</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,21 +50,6 @@ ds2 and ds1."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/release-candidate">release-candidate</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0-rc1">v0.5.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0-rc1">v0.4.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0">v0.5.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0">v0.4.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -244,7 +229,6 @@ such as a <code>teal_data</code> object or <code>join_keys</code> object itself.
 <span class="r-out co"><span class="r-pr">#&gt;</span>   --&gt; ds1: [pk1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   --* (implicit via parent with): ds2 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Getter for join_keys ---</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">jk</span><span class="op">[</span><span class="st">"ds1"</span>, <span class="st">"ds2"</span><span class="op">]</span></span></span>
@@ -268,7 +252,6 @@ such as a <code>teal_data</code> object or <code>join_keys</code> object itself.
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;-- ds2: [pk2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ds2: [pk2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   --&gt; ds1: [pk1] </span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Setting a new primary key ---</span></span></span>
 <span class="r-in"><span></span></span>
@@ -298,7 +281,6 @@ such as a <code>teal_data</code> object or <code>join_keys</code> object itself.
 <span class="r-in"><span>  <span class="fu"><a href="join_key.html">join_key</a></span><span class="op">(</span><span class="st">"ds5"</span>, keys <span class="op">=</span> <span class="st">"pk5"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="join_key.html">join_key</a></span><span class="op">(</span><span class="st">"ds1"</span>, <span class="st">"ds5"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>pk1 <span class="op">=</span> <span class="st">"pk5"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Assigning keys via join_keys(x)[i, j] &lt;- value ----</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">join_keys</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -313,7 +295,6 @@ such as a <code>teal_data</code> object or <code>join_keys</code> object itself.
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">jk</span>, <span class="fu">join_keys</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Setter for join_keys within teal_data ----</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">td</span> <span class="op">&lt;-</span> <span class="fu"><a href="teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
