@@ -1,4 +1,4 @@
-# teal.data 0.5.0.9003
+# teal.data 0.5.0.9004
 
 ### Enhancements
 * `col_relabel` supports `NA` to remove labels (similar to the `col_labels<-`).
