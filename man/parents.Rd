@@ -67,7 +67,6 @@ Each element is defined by a \code{list} element, where \code{list("child" = "pa
 
 jk <- default_cdisc_join_keys["ADEX"]
 parents(jk)
-
 # Get parents of join_keys inside teal_data object ---
 
 td <- teal_data(
@@ -77,7 +76,6 @@ td <- teal_data(
   join_keys = default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 )
 parents(td)
-
 # Assignment of parents ---
 
 jk <- join_keys(
@@ -92,12 +90,10 @@ parents(jk) <- list(ds2 = "ds1")
 
 parents(jk)["ds6"] <- "ds5"
 parents(jk)["ds7"] <- "ds6"
-
 # Assignment of parents of join_keys inside teal_data object ---
 
 parents(td) <- list("ADTTE" = "ADSL") # replace existing
 parents(td)["ADRS"] <- "ADSL" # add new parent
-
 # Get individual parent ---
 
 parent(jk, "ds2")

@@ -111,7 +111,6 @@ join_keys.teal_data <- function(...) {
 #' @order 5
 #' @export
 #' @examples
-#'
 #' # Assigning keys via join_keys(x)[i, j] <- value ----
 #'
 #' obj <- join_keys()
@@ -133,7 +132,6 @@ join_keys.teal_data <- function(...) {
 #' @order 5
 #' @export
 #' @examples
-#'
 #' # Setter for join_keys within teal_data ----
 #'
 #' td <- teal_data()

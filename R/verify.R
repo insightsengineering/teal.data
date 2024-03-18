@@ -43,7 +43,9 @@
 #'           e <- 1"
 #' )
 #' tdata4
-#' try(verify(tdata4)) # fails
+#' \dontrun{
+#' verify(tdata4) # fails
+#' }
 #'
 #' @name verify
 #' @rdname verify
