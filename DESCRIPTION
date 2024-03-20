@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.5.0.9000
-Date: 2024-02-14
+Version: 0.5.0.9004
+Date: 2024-03-18
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9533-457X")),
@@ -40,14 +40,15 @@ Imports:
 Suggests:
     knitr (>= 1.42),
     rmarkdown (>= 2.19),
-    testthat (>= 3.1.5)
+    testthat (>= 3.1.5),
+    withr (>= 2.0.0)
 VignetteBuilder:
     knitr
 RdMacros:
     lifecycle
-Config/Needs/verdepcheck: mllg/checkmate, r-lib/lifecycle, r-lib/rlang,
-    yihui/knitr, rstudio/rmarkdown, insightsengineering/teal.code,
-    r-lib/testthat
+Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
+    r-lib/lifecycle, r-lib/rlang, yihui/knitr, rstudio/rmarkdown,
+    r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US

@@ -411,7 +411,7 @@ testthat::test_that("ignores occurrence in a function definition in lapply", {
     "b <- lapply(a, FUN = function(x) { x <- x + 1 })",
     "b <- Filter(function(x) x > 2, b)",
     "x <- 1",
-    "print(x)"
+    "identity(x)"
   )
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
