@@ -405,13 +405,29 @@ testthat::test_that("ignores occurrence in a function definition", {
   )
 })
 
+testthat::test_that("ignores occurrence in a function definition that has function in it", {
+  code <- c(
+    "b <- 2",
+    "foo <- function(b) { function(c) {b <- c + 2 }}"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    "b <- 2"
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "foo"),
+    "foo <- function(b) {\n    function(c) {\n        b <- c + 2\n    }\n}"
+  )
+})
+
 testthat::test_that("ignores occurrence in a function definition in lapply", {
   code <- c(
     "a <- list(a = 1, b = 2, c = 3)",
     "b <- lapply(a, FUN = function(x) { x <- x + 1 })",
     "b <- Filter(function(x) x > 2, b)",
     "x <- 1",
-    "print(x)"
+    "identity(x)"
   )
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(

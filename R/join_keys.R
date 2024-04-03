@@ -22,7 +22,7 @@
 #' - `join_keys(teal_data)`: Returns the `join_keys` object contained in `teal_data` object.
 #' - `join_keys(...)`: Creates a new object with one or more `join_key_set` parameters.
 #'
-#' @param ... (optional)
+#' @param ... optional,
 #' - either `teal_data` or `join_keys` object to extract `join_keys`
 #' - or any number of `join_key_set` objects to create `join_keys`
 #' - or nothing to create an empty `join_keys`
@@ -111,7 +111,6 @@ join_keys.teal_data <- function(...) {
 #' @order 5
 #' @export
 #' @examples
-#'
 #' # Assigning keys via join_keys(x)[i, j] <- value ----
 #'
 #' obj <- join_keys()
@@ -133,7 +132,6 @@ join_keys.teal_data <- function(...) {
 #' @order 5
 #' @export
 #' @examples
-#'
 #' # Setter for join_keys within teal_data ----
 #'
 #' td <- teal_data()
