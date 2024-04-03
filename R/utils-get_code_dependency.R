@@ -56,7 +56,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   lib_ind <- detect_libraries(calls_pd)
 
-  as.character(code[unique(c(lib_ind, ind))])
+  as.character(code[sort(unique(c(lib_ind, ind)))])
 }
 
 #' Locate function call token
