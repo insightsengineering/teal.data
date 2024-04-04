@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,21 +36,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/release-candidate">release-candidate</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0-rc1">v0.5.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0-rc1">v0.4.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0">v0.5.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0">v0.4.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -86,7 +71,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for teal_data</span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">object</span>, deparse <span class="op">=</span> <span class="cn">TRUE</span>, datanames <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">object</span>, deparse <span class="op">=</span> <span class="cn">TRUE</span>, datanames <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -142,7 +127,7 @@ with standard infix assignment operators (see <code><a href="https://rdrr.io/r/b
 <span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">foo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><code>x</code> has no dependencies, so <code>get_code(data, datanames = "x")</code> will return only the second call.<br><code>y</code> depends on <code>x</code> and <code>foo</code>, so <code>get_code(data, datanames = "y")</code> will contain all three calls.</p>
 <p><em>Case 2: Some objects are created by a function's side effects.</em></p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -154,7 +139,7 @@ with standard infix assignment operators (see <code><a href="https://rdrr.io/r/b
 <span>    <span class="fu">foo</span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span></span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Here, <code>y</code> depends on <code>x</code> but <code>x</code> is modified by <code>foo</code> as a side effect (not by reassignment)
 and so <code>get_code(data, datanames = "y")</code> will not return the <code>foo()</code> call.<br>
 To overcome this limitation, code dependencies can be specified manually.
@@ -162,7 +147,7 @@ Lines where side effects occur can be flagged by adding "<code># @linksto &lt;ob
 Note that <code>within</code> evaluates code passed to <code>expr</code> as is and comments are ignored.
 In order to include comments in code one must use the <code>eval_code</code> function instead.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">eval_code</a></span><span class="op">(</span><span class="st">"</span></span>
+<span>  <span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">eval_code</a></span><span class="op">(</span><span class="st">"</span></span>
 <span><span class="st">    foo &lt;- function() {</span></span>
 <span><span class="st">      x &lt;&lt;- x + 1</span></span>
 <span><span class="st">    }</span></span>
@@ -170,7 +155,7 @@ In order to include comments in code one must use the <code>eval_code</code> fun
 <span><span class="st">    foo() # @linksto x</span></span>
 <span><span class="st">    y &lt;- x</span></span>
 <span><span class="st">  "</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
+<span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data</span>, datanames <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Now the <code>foo()</code> call will be properly included in the code required to recreate <code>y</code>.</p>
 <p>Note that two functions that create objects as side effects, <code>assign</code> and <code>data</code>, are handled automatically.</p>
 <p>Here are known cases where manual tagging is necessary:</p><ul><li><p>non-standard assignment operators, <em>e.g.</em> <code>%&lt;&gt;%</code></p></li>
@@ -187,17 +172,17 @@ In order to include comments in code one must use the <code>eval_code</code> fun
 <span class="r-in"><span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">a</span><span class="op">^</span><span class="fl">5</span></span></span>
 <span class="r-in"><span>  <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a &lt;- 1\nb &lt;- a^5\nc &lt;- list(x = 2)"</span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span>, datanames <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span>, datanames <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a &lt;- 1"</span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span>, datanames <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata1</span>, datanames <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a &lt;- 1\nb &lt;- a^5"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="teal_data.html">teal_data</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="va">iris</span>, code <span class="op">=</span> <span class="st">"x1 &lt;- iris"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">tdata2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "warning('Code was not verified for reproducibility.')\nx1 &lt;- iris"</span>
-<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="fu"><a href="verify.html">verify</a></span><span class="op">(</span><span class="va">tdata2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="fu"><a href="verify.html">verify</a></span><span class="op">(</span><span class="va">tdata2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "x1 &lt;- iris"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
