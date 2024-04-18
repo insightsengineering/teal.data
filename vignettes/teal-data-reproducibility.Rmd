@@ -75,7 +75,7 @@ data_right <- teal_data(
 
 #### unverified
 
-```{r, message=FALSE, error=TRUE}
+```{r, message=FALSE, error=TRUE, purl=FALSE}
 data_wrong <- teal_data(
   data = data,
   code = quote({
