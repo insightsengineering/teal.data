@@ -42,3 +42,5 @@ SECURITY.md
 coverage.*
 data-raw/data.R
 ^pkgdown$
+^revdeprefs\.yaml$
+^revdep$
