@@ -42,6 +42,6 @@ SECURITY.md
 coverage.*
 data-raw/data.R
 ^pkgdown$
-^revdeprefs\.yaml$
+^.revdeprefs\.yaml$
 ^revdep$
 ^\.covrignore$
