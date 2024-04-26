@@ -29,3 +29,5 @@ vignettes/*.html
 vignettes/*.md
 /doc/
 /Meta/
+tests/testthat/_snaps/**/*.new.md
+tests/testthat/_snaps/**/*.new.svg
