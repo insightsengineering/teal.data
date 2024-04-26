@@ -42,6 +42,7 @@ repos:
           .*\.xml|
           .*/cdisc_datasets\.y[a]?ml|
           (.*/|)\_pkgdown.y[a]?ml|
+          (.*/|)\.covrignore|
           (.*/|)\.gitignore|
           (.*/|)\.gitlab-ci\.y[a]?ml|
           (.*/|)\.lintr|
