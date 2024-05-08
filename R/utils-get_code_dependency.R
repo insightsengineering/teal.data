@@ -56,7 +56,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   lib_ind <- detect_libraries(calls_pd)
 
-  as.character(code[unique(c(lib_ind, ind))])
+  as.character(code[sort(unique(c(lib_ind, ind)))])
 }
 
 #' Locate function call token
@@ -231,7 +231,7 @@ extract_occurrence <- function(calls_pd) {
     # then in calls_pd there is a `SYMBOL_FORMALS` entry for that object.
     function_id <- x[x$token == "FUNCTION", "parent"]
     if (length(function_id)) {
-      x$id %in% get_children(x, function_id)$id
+      x$id %in% get_children(x, function_id[1])$id
     } else {
       rep(FALSE, nrow(x))
     }
