@@ -33,6 +33,13 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
     return(code)
   }
 
+  # If code is bound in curly brackets, remove them.
+  tcode <- trimws(code)
+  if (grepl("^\\{", tcode) & grepl("\\}$", tcode)) {
+    code <- gsub("^\\{", "", gsub("\\}$", "", tcode))
+  }
+
+
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
   calls_pd <- extract_calls(pd)
