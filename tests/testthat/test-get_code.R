@@ -441,7 +441,7 @@ testthat::test_that("ignores occurrence in a function definition if there is mul
   tdata <- eval_code(teal_data(), code)
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
-    "b <- 2"
+    "b <- 2\nb <- b + 1"
   )
   testthat::expect_identical(
     get_code(tdata, datanames = "foo"),
