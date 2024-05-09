@@ -35,7 +35,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   # If code is bound in curly brackets, remove them.
   tcode <- trimws(code)
-  if (grepl("^\\{", tcode) & grepl("\\}$", tcode)) {
+  if (grepl("^\\{", tcode) && grepl("\\}$", tcode)) {
     code <- gsub("^\\{", "", gsub("\\}$", "", tcode))
   }
 
