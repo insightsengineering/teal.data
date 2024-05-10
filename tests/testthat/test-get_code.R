@@ -24,6 +24,16 @@ testthat::test_that("handles the code without symbols on rhs", {
   )
 })
 
+testthat::test_that("handles the code included in curly brackets", {
+  code <- "{1 + 1;a <- 5}"
+
+  testthat::expect_identical(
+    get_code(teal_data(a = 5, code = code), datanames = "a"),
+    paste(warning_message, "a <- 5", sep = "\n")
+  )
+})
+
+
 testthat::test_that("extracts the code of a binding from character vector containing simple code", {
   code <- c(
     "a <- 1",
@@ -414,6 +424,24 @@ testthat::test_that("ignores occurrence in a function definition that has functi
   testthat::expect_identical(
     get_code(tdata, datanames = "b"),
     "b <- 2"
+  )
+  testthat::expect_identical(
+    get_code(tdata, datanames = "foo"),
+    "foo <- function(b) {\n    function(c) {\n        b <- c + 2\n    }\n}"
+  )
+})
+
+testthat::test_that("ignores occurrence in a function definition if there is multiple function definitions", {
+  code <- c(
+    "b <- 2",
+    "foo <- function(b) { function(c) {b <- c + 2 }}",
+    "b <- b + 1",
+    "bar <- function(b) print(b)"
+  )
+  tdata <- eval_code(teal_data(), code)
+  testthat::expect_identical(
+    get_code(tdata, datanames = "b"),
+    "b <- 2\nb <- b + 1"
   )
   testthat::expect_identical(
     get_code(tdata, datanames = "foo"),
