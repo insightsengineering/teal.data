@@ -39,7 +39,7 @@ Imports:
     utils
 Suggests:
     knitr (>= 1.42),
-    rmarkdown (>= 2.19),
+    rmarkdown (>= 2.20),
     testthat (>= 3.1.5),
     withr (>= 2.0.0)
 VignetteBuilder:
