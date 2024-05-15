@@ -34,7 +34,6 @@ testthat::test_that("handles the code included in curly brackets", {
 })
 
 testthat::test_that("handles the code of length > 1 included in curly brackets", {
-
   tdata <- teal.data::teal_data(a = 5)
   tdata <- eval_code(tdata, code = "{a<-5}")
   tdata <- eval_code(tdata, code = "1+1")
