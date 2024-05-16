@@ -1,30 +1,29 @@
 ## code to prepare `data` for testing examples
-library(scda)
-rADAE <- synthetic_cdisc_data("latest")$adae # nolint: object_name_linter.
+rADAE <- random.cdisc.data::cadae # nolint: object_name_linter.
 usethis::use_data(rADAE)
 
-rADCM <- synthetic_cdisc_data("latest")$adcm # nolint: object_name_linter.
+rADCM <- random.cdisc.data::cadcm # nolint: object_name_linter.
 usethis::use_data(rADCM)
 
-rADEX <- synthetic_cdisc_data("latest")$adex # nolint: object_name_linter.
+rADEX <- random.cdisc.data::cadex # nolint: object_name_linter.
 usethis::use_data(rADEX)
 
-rADLB <- synthetic_cdisc_data("latest")$adlb # nolint: object_name_linter.
+rADLB <- random.cdisc.data::cadlb # nolint: object_name_linter.
 usethis::use_data(rADLB)
 
-rADRS <- synthetic_cdisc_data("latest")$adrs # nolint: object_name_linter.
+rADRS <- random.cdisc.data::cadrs # nolint: object_name_linter.
 usethis::use_data(rADRS)
 
-rADSL <- synthetic_cdisc_data("latest")$adsl # nolint: object_name_linter.
+rADSL <- random.cdisc.data::cadsl # nolint: object_name_linter.
 usethis::use_data(rADSL)
 
-rADTR <- synthetic_cdisc_data("latest")$adtr # nolint: object_name_linter.
+rADTR <- random.cdisc.data::cadtr # nolint: object_name_linter.
 usethis::use_data(rADTR)
 
-rADTTE <- synthetic_cdisc_data("latest")$adtte # nolint: object_name_linter.
+rADTTE <- random.cdisc.data::cadtte # nolint: object_name_linter.
 usethis::use_data(rADTTE)
 
-rADVS <- synthetic_cdisc_data("latest")$advs # nolint: object_name_linter.
+rADVS <- random.cdisc.data::cadvs # nolint: object_name_linter.
 usethis::use_data(rADVS)
 
 ## Code to prepare default CDISC datasets for `teal.data`
