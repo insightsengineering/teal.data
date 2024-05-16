@@ -34,13 +34,12 @@ testthat::test_that("handles the code included in curly brackets", {
 })
 
 testthat::test_that("handles the code of length > 1 when at least one is enclosed in curly brackets", {
-  tdata <- teal.data::teal_data(a = 5)
-  tdata <- eval_code(tdata, code = "{a<-5}")
-  tdata <- eval_code(tdata, code = "1+1")
+  code <- c("{a<-5}", "1+1")
+  tdata <- eval_code(eval_code(teal_data(), code[1]), code[2])
 
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
-    paste(warning_message, "a <- 5", sep = "\n")
+    "a <- 5"
   )
 })
 
