@@ -1,4 +1,4 @@
-# teal.data 0.6.0.9001
+# teal.data 0.6.0.9004
 
 # teal.data 0.6.0
 
@@ -76,6 +76,7 @@
 ### Miscellaneous
 * Exported `validate_metadata` function.
 * Replaced argument `name` by `archive_name` to comply with the latest version of the `synthetic_cdisc_dataset` function.
+* Replaced use of `scda` with `random.cdisc.data`
 
 ### Bug fixes
 * Fixed `get_raw_data` examples.

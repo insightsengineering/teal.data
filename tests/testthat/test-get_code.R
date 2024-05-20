@@ -33,6 +33,16 @@ testthat::test_that("handles the code included in curly brackets", {
   )
 })
 
+testthat::test_that("handles the code of length > 1 when at least one is enclosed in curly brackets", {
+  code <- c("{a<-5}", "1+1")
+  tdata <- eval_code(eval_code(teal_data(), code[1]), code[2])
+
+  testthat::expect_identical(
+    get_code(tdata, datanames = "a"),
+    "a <- 5"
+  )
+})
+
 
 testthat::test_that("extracts the code of a binding from character vector containing simple code", {
   code <- c(
@@ -626,7 +636,7 @@ testthat::test_that("understands @ usage and do not treat rhs of @ as objects (o
 testthat::test_that("library() and require() are always returned", {
   code <- c(
     "set.seed(1)",
-    "library(scda)",
+    "library(random.cdisc.data)",
     "require(dplyr)",
     "library(MultiAssayExperiment)",
     "x <- 5",
@@ -637,7 +647,7 @@ testthat::test_that("library() and require() are always returned", {
     get_code(tdata, datanames = "x"),
     paste(
       warning_message,
-      "library(scda)",
+      "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",
       "x <- 5",
@@ -652,7 +662,7 @@ testthat::test_that("library() and require() are always returned", {
 testthat::test_that("data() call is returned when data name is provided as is", {
   code <- c(
     "set.seed(1)",
-    "library(scda)",
+    "library(random.cdisc.data)",
     "require(dplyr)",
     "library(MultiAssayExperiment)",
     "data(miniACC, envir = environment())",
@@ -663,7 +673,7 @@ testthat::test_that("data() call is returned when data name is provided as is", 
     get_code(tdata, datanames = "x"),
     paste(
       warning_message,
-      "library(scda)",
+      "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",
       "data(miniACC, envir = environment())",
@@ -676,7 +686,7 @@ testthat::test_that("data() call is returned when data name is provided as is", 
 testthat::test_that("data() call is returned when data name is provided as a character", {
   code <- c(
     "set.seed(1)",
-    "library(scda)",
+    "library(random.cdisc.data)",
     "require(dplyr)",
     "library(MultiAssayExperiment)",
     "data('mtcars')",
@@ -687,7 +697,7 @@ testthat::test_that("data() call is returned when data name is provided as a cha
     get_code(tdata, datanames = "z"),
     paste(
       warning_message,
-      "library(scda)",
+      "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",
       "data(\"mtcars\")",
