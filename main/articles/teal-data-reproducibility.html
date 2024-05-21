@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9004</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,23 +54,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/release-candidate">release-candidate</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.6.0-rc1">v0.6.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0-rc1">v0.5.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0-rc1">v0.4.0-rc1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.6.0">v0.6.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.5.0">v0.5.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.4.0">v0.4.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/teal.data/v0.1.2">v0.1.2</a> </div></li>
-<!-- end dropdown for versions -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-reports">Reports</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-reports">
@@ -156,33 +139,33 @@ verification.</p>
 <span></span>
 <span><span class="va">data_empty</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">data_empty</span> <span class="co"># is verified</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;U+2705&gt;&lt;U+FE0E&gt; verified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x556ed3d3d1e8&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<pre><code><span><span class="co">## ✅︎ verified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x55d3076e9e38&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_empty</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">data_empty</span>, <span class="va">i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data_empty</span> <span class="co"># remains verified</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;U+2705&gt;&lt;U+FE0E&gt; verified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x556ed4910310&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<pre><code><span><span class="co">## ✅︎ verified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x55d3082b07d0&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
 <span><span class="co">## Bindings:</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">*</span> i: &lt;df[,5]&gt; [L]</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> i: &lt;df[,5]&gt; [L]</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_with_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teal_data.html">teal_data</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, code <span class="op">=</span> <span class="st">"i &lt;- head(iris)"</span><span class="op">)</span></span>
 <span><span class="va">data_with_data</span> <span class="co"># is unverified</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;U+2716&gt; unverified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x556ed082a780&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<pre><code><span><span class="co">## ✖ unverified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x55d30540abc0&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
 <span><span class="co">## Bindings:</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">*</span> i: &lt;df[,5]&gt; [L]</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> i: &lt;df[,5]&gt; [L]</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_with_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">within</a></span><span class="op">(</span><span class="va">data_with_data</span>, <span class="va">i</span><span class="op">$</span><span class="va">rand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data_with_data</span> <span class="co"># remains unverified</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;U+2716&gt; unverified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x556ed2527430&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<pre><code><span><span class="co">## ✖ unverified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x55d303883e10&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
 <span><span class="co">## Bindings:</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">*</span> i: &lt;df[,6]&gt; [L]</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> i: &lt;df[,6]&gt; [L]</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://insightsengineering.github.io/teal.code/latest-tag/reference/qenv.html" class="external-link">get_code</a></span><span class="op">(</span><span class="va">data_with_data</span><span class="op">)</span><span class="op">)</span> <span class="co"># warning is prepended</span></span></code></pre></div>
 <pre><code><span><span class="co">## warning('Code was not verified for reproducibility.')</span></span>
@@ -217,11 +200,11 @@ Otherwise an error will be raised.</p>
 <span>  <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">data_right_verified</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/verify.html">verify</a></span><span class="op">(</span><span class="va">data_right</span><span class="op">)</span><span class="op">)</span> <span class="co"># returns verified object</span></span></code></pre></div>
-<pre><code><span><span class="co">## &lt;U+2705&gt;&lt;U+FE0E&gt; verified teal_data object</span></span>
-<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x556ed4300458&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
+<pre><code><span><span class="co">## ✅︎ verified teal_data object</span></span>
+<span><span class="co">## <span style="color: #0000BB; font-weight: bold;">&lt;environment: 0x55d30793e838&gt;</span><span style="font-weight: bold;"> [L]</span></span></span>
 <span><span class="co">## Parent: &lt;environment: package:teal.data&gt;</span></span>
 <span><span class="co">## Bindings:</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">*</span> data: &lt;df[,2]&gt; [L]</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">•</span> data: &lt;df[,2]&gt; [L]</span></span></code></pre>
 </div>
 <div class="section level5">
 <h5 id="unverified">unverified<a class="anchor" aria-label="anchor" href="#unverified"></a>
@@ -236,7 +219,7 @@ Otherwise an error will be raised.</p>
 <span><span class="fu"><a href="../reference/verify.html">verify</a></span><span class="op">(</span><span class="va">data_wrong</span><span class="op">)</span> <span class="co"># fails verification, raises error</span></span></code></pre></div>
 <pre><code><span><span class="co">## Error: Code verification failed.</span></span>
 <span><span class="co">## Object(s) recreated with code that have different structure in data_wrong:</span></span>
-<span><span class="co">##   &lt;U+2022&gt; data</span></span></code></pre>
+<span><span class="co">##   • data</span></span></code></pre>
 </div>
 </div>
 </div>
