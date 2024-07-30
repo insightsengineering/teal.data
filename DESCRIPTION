@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.6.0.9001
-Date: 2024-05-10
+Version: 0.6.0.9005
+Date: 2024-05-21
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9533-457X")),
@@ -39,7 +39,7 @@ Imports:
     utils
 Suggests:
     knitr (>= 1.42),
-    rmarkdown (>= 2.19),
+    rmarkdown (>= 2.23),
     testthat (>= 3.1.5),
     withr (>= 2.0.0)
 VignetteBuilder:
