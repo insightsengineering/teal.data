@@ -43,6 +43,16 @@ testthat::test_that("datanames<- called on qenv.error does not change qenv.error
 })
 
 # topological_order ----
+
+testthat::test_that("datanames are set in topological in constructor if join_keys are specified", {
+  data <-
+    teal_data(b = data.frame(), a = data.frame(), join_keys = join_keys(join_key("a", "b", "id")))
+  testthat::expect_identical(
+    datanames(data),
+    c("a", "b")
+  )
+})
+
 testthat::test_that("datanames return topological order of datasets once join_keys are specified", {
   data <- within(teal_data(), {
     ADTTE <- teal.data::rADTTE
