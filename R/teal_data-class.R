@@ -82,7 +82,7 @@ new_teal_data <- function(data,
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
 
-  datanames <- .get_sorted_datanames(datanames = datanames, join_keys = join_keys, env = env)
+  datanames <- .get_sorted_datanames(datanames = datanames, join_keys = join_keys, env = new_env)
 
   methods::new(
     "teal_data",
