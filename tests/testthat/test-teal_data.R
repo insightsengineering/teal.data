@@ -28,17 +28,19 @@ testthat::test_that("teal_data initializes teal_data object with @datanames take
   )
 })
 
-testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed join_keys", {
+testthat::test_that(
+  "teal_data initializes teal_data object without @datanames taken from join_keys if objects did not exist in env", {
   testthat::expect_identical(
-    teal_data(join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
-    c("parent", "child")
+    datanames(teal_data(join_keys = join_keys(join_key("parent", "child", "id")))),
+    character(0)
   )
 })
 
-testthat::test_that("teal_data initializes teal_data object with @datanames taken from join_keys and passed objects", {
+testthat::test_that(
+  "teal_data initializes teal_data object with @datanames taken only from passed objects and not join_keys", {
   testthat::expect_identical(
-    teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))@datanames,
-    c("iris", "parent", "child")
+    datanames(teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))),
+    "iris"
   )
 })
 
