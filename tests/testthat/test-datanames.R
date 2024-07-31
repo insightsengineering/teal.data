@@ -41,3 +41,34 @@ testthat::test_that("datanames<- called on qenv.error does not change qenv.error
   qec <- qe
   testthat::expect_identical(qe, qec)
 })
+
+# topological_order ----
+testthat::test_that("datanames return topological order of datasets once join_keys are specified", {
+  data <- within(teal_data(), {
+    ADTTE <- teal.data::rADTTE
+    iris <- iris
+    ADSL <- teal.data::rADSL
+  })
+  datanames(data) <- c("ADTTE", "iris", "ADSL")
+  join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
+  testthat::expect_identical(
+    datanames(data),
+    c("ADSL", "ADTTE", "iris")
+  )
+})
+
+testthat::test_that("datanames return topological order of datasets after datanames are caled after join_keys", {
+  data <- within(teal_data(), {
+    ADTTE <- teal.data::rADTTE
+    iris <- iris
+    ADSL <- teal.data::rADSL
+  })
+
+  join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
+  datanames(data) <- c("ADTTE", "iris", "ADSL")
+
+  testthat::expect_identical(
+    datanames(data),
+    c("ADSL", "ADTTE", "iris")
+  )
+})
