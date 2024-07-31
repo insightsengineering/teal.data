@@ -55,7 +55,6 @@ setMethod("datanames<-", signature = c("qenv.error", "character"), definition = 
 
 #' @keywords internal
 sort_datanames <- function(datanames, joinkeys) {
-
   child_parent <- sapply(
     datanames,
     function(name) parent(joinkeys, name),
