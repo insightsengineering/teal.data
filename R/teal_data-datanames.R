@@ -58,7 +58,7 @@ sort_datanames <- function(datanames, joinkeys) {
 
   child_parent <- sapply(
     datanames,
-    function(name) teal.data::parent(joinkeys, name),
+    function(name) parent(joinkeys, name),
     USE.NAMES = TRUE,
     simplify = FALSE
   )
