@@ -63,5 +63,5 @@ sort_datanames <- function(datanames, joinkeys) {
     simplify = FALSE
   )
 
-  intersect(topological_sort(child_parent), datanames)
+  union(unlist(topological_sort(child_parent)), datanames)
 }
