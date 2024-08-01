@@ -3,7 +3,7 @@
 ### Enhancements
 
 - `datanames()`
-    - if `join_keys` are provided, the `datanames()` are now sorted in topological way (Kahn algorithm),
+    - if `join_keys` are provided, the `datanames()` are now sorted in topological way (`Kahn` algorithm),
     which means the parent dataset always precedes the child dataset.
     - are extended by the parent dataset name, if one of the child dataset exist in `datanames()` and
     the connection between child-parent is set through `join_keys` and `parent` exist in `teal_data` environment.
