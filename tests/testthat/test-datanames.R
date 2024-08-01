@@ -63,7 +63,8 @@ testthat::test_that("datanames return parent if in constructor it was provided i
   )
 })
 
-testthat::test_that("datanames do not return parent if in constructor it was provided in join_keys but do not exists in env", {
+testthat::test_that(
+  "datanames do not return parent if in constructor it was provided in join_keys but do not exists in env", {
   data <-
     teal_data(b = data.frame(), join_keys = join_keys(join_key("a", "b", "id")))
   testthat::expect_identical(
@@ -74,9 +75,9 @@ testthat::test_that("datanames do not return parent if in constructor it was pro
 
 testthat::test_that("datanames return topological order of datasets once join_keys are specified", {
   data <- within(teal_data(), {
-    ADTTE <- teal.data::rADTTE
+    ADTTE <- teal.data::rADTTE # nolint: object_name.
     iris <- iris
-    ADSL <- teal.data::rADSL
+    ADSL <- teal.data::rADSL # nolint: object_name.
   })
   datanames(data) <- c("ADTTE", "iris", "ADSL")
   join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
@@ -88,9 +89,9 @@ testthat::test_that("datanames return topological order of datasets once join_ke
 
 testthat::test_that("datanames return topological order of datasets after datanames are called after join_keys", {
   data <- within(teal_data(), {
-    ADTTE <- teal.data::rADTTE
+    ADTTE <- teal.data::rADTTE # nolint: object_name.
     iris <- iris
-    ADSL <- teal.data::rADSL
+    ADSL <- teal.data::rADSL # nolint: object_name.
   })
 
   join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
@@ -105,9 +106,9 @@ testthat::test_that("datanames return topological order of datasets after datana
 
 testthat::test_that("datanames return parent if join_keys were provided and parent exists in env", {
   data <- within(teal_data(), {
-    ADTTE <- teal.data::rADTTE
+    ADTTE <- teal.data::rADTTE # nolint: object_name.
     iris <- iris
-    ADSL <- teal.data::rADSL
+    ADSL <- teal.data::rADSL # nolint: object_name.
   })
 
   join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
@@ -121,7 +122,7 @@ testthat::test_that("datanames return parent if join_keys were provided and pare
 
 testthat::test_that("datanames do not return parent if join_keys were provided and parent did not exists in env", {
   data <- teal_data(
-    ADTTE = teal.data::rADTTE,
+    ADTTE = teal.data::rADTTE, # nolint: object_name.
     iris = iris
   )
 
