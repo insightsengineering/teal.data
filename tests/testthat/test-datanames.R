@@ -64,14 +64,16 @@ testthat::test_that("datanames return parent if in constructor it was provided i
 })
 
 testthat::test_that(
-  "datanames do not return parent if in constructor it was provided in join_keys but do not exists in env", {
-  data <-
-    teal_data(b = data.frame(), join_keys = join_keys(join_key("a", "b", "id")))
-  testthat::expect_identical(
-    datanames(data),
-    "b"
-  )
-})
+  "datanames do not return parent if in constructor it was provided in join_keys but do not exists in env",
+  {
+    data <-
+      teal_data(b = data.frame(), join_keys = join_keys(join_key("a", "b", "id")))
+    testthat::expect_identical(
+      datanames(data),
+      "b"
+    )
+  }
+)
 
 testthat::test_that("datanames return topological order of datasets once join_keys are specified", {
   data <- within(teal_data(), {
