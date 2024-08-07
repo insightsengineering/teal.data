@@ -118,7 +118,7 @@ setMethod("get_code", signature = "teal_data", definition = function(object, dep
   if (!object@verified) {
     if (length(code) == 0) {
       code <- c(verified_warning, code)
-    } else if (!grepl(verified_warning, code, fixed = TRUE)) {
+    } else if (!any(grepl(verified_warning, code, fixed = TRUE))) {
       code <- c(verified_warning, code)
     }
   }
