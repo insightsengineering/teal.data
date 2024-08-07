@@ -34,3 +34,17 @@ testthat::test_that("verify returns error for qenv.error input", {
 
   testthat::expect_error(verify(tdata4))
 })
+
+
+testthat::test_that("not verified warning is not added if it already exists in @code", {
+  x <- teal_data(iris = iris)
+  testthat::expect_identical(
+    get_code(x),
+    "warning('Code was not verified for reproducibility.')"
+  )
+  x@code <- get_code(x)
+  testthat::expect_identical(
+    get_code(x),
+    "warning('Code was not verified for reproducibility.')"
+  )
+})
