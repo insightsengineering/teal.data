@@ -77,7 +77,7 @@ new_teal_data <- function(data,
   }
   verified <- (length(code) == 0L && length(data) == 0L)
 
-  id <- seq(1, length.out = length(code))
+  id <- as.integer(seq(1, length.out = length(code)))
 
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
