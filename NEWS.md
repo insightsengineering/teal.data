@@ -1,4 +1,4 @@
-# teal.data 0.6.0.9006
+# teal.data 0.6.0.9007
 
 ### Enhancements
 
