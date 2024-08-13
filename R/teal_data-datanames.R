@@ -42,7 +42,7 @@ setMethod("datanames", signature = "qenv.error", definition = function(x) {
 setGeneric("datanames<-", function(x, value) standardGeneric("datanames<-"))
 setMethod("datanames<-", signature = c("teal_data", "character"), definition = function(x, value) {
   checkmate::assert_subset(value, names(x@env))
-  x@datanames <- value
+  x@datanames <- .get_sorted_datanames(datanames = value, join_keys = x@join_keys, env = x@env)
   methods::validObject(x)
   x
 })
@@ -50,3 +50,19 @@ setMethod("datanames<-", signature = c("qenv.error", "character"), definition = 
   methods::validObject(x)
   x
 })
+
+
+#' @keywords internal
+.get_sorted_datanames <- function(datanames, join_keys, env) {
+  child_parent <- sapply(
+    datanames,
+    function(name) parent(join_keys, name),
+    USE.NAMES = TRUE,
+    simplify = FALSE
+  )
+
+  union(
+    intersect(unlist(topological_sort(child_parent)), ls(env)),
+    datanames
+  )
+}
