@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.6.0.9007
-Date: 2024-08-12
+Version: 0.6.0.9009
+Date: 2024-08-26
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9533-457X")),
@@ -43,7 +43,8 @@ Suggests:
     testthat (>= 3.1.5),
     withr (>= 2.0.0)
 VignetteBuilder:
-    knitr
+    knitr,
+    rmarkdown
 RdMacros:
     lifecycle
 Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
