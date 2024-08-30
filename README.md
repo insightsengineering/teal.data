@@ -40,28 +40,21 @@ This package provides:
 ## Installation
 
 ```r
-# stable versions
 install.packages('teal.data')
-
-# install.packages("pak")
-pak::pak("insightsengineering/teal.data@*release")
 ```
 
-Alternatively, you might want to use the development version available on [r-universe](https://r-universe.dev/).
+Alternatively, you might want to use the development version.
 
 ```r
-# beta versions
-install.packages('teal.data', repos = c('https://pharmaverse.r-universe.dev', getOption('repos')))
-
 # install.packages("pak")
 pak::pak("insightsengineering/teal.data")
 ```
 
 ## Usage
 
-To understand how to use this package, please refer to the [Introduction to teal.data](https://insightsengineering.github.io/teal.data/latest-tag/articles/teal-data.html) article, which provides multiple examples of code implementation.
+To understand how to use this package, please refer to the [Introduction to `teal.data`](https://insightsengineering.github.io/teal.data/latest-tag/articles/teal-data.html) article, which provides multiple examples of code implementation.
 
-Below is the showcase of the example usage
+Below is the showcase of the example usage.
 
 ```r
 library(teal.data)
@@ -78,7 +71,7 @@ my_data <- cdisc_data(
   })
 )
 
-# or 
+# or
 
 my_data <- within(teal_data(), {
   ADSL <- example_cdisc_data("ADSL")
