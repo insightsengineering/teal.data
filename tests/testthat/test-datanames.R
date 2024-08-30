@@ -10,6 +10,12 @@ testthat::test_that("variables not in @datanames are omitted", {
   testthat::expect_identical(datanames(td), c("i", "m"))
 })
 
+testthat::test_that("datanames() returns all object names from @env if @datasets not specified", {
+  td <- teal_data(i = iris, m = mtcars)
+  td <- within(td, f <- faithful)
+  testthat::expect_identical(datanames(td), c("i", "m"))
+})
+
 # set ----
 testthat::test_that("datanames can set value of @datanames", {
   td <- teal_data(i = iris, m = mtcars)

@@ -26,10 +26,8 @@ Get or set the value of the \code{datanames} slot.
 }
 \details{
 The \verb{@datanames} slot in a \code{teal_data} object specifies which of the variables stored in its environment
-(the \verb{@env} slot) are data sets to be taken into consideration.
-The contents of \verb{@datanames} can be specified upon creation and default to all variables in \verb{@env}.
-Variables created later, which may well be data sets, are not automatically considered such.
-Use this function to update the slot.
+(the \verb{@env} slot) are data sets to be taken into consideration. If not set explicitly, then \code{\link[=datanames]{datanames()}} returns
+all variable names from \verb{@env}.
 }
 \examples{
 td <- teal_data(iris = iris)

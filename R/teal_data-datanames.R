@@ -3,10 +3,8 @@
 #' Get or set the value of the `datanames` slot.
 #'
 #' The `@datanames` slot in a `teal_data` object specifies which of the variables stored in its environment
-#' (the `@env` slot) are data sets to be taken into consideration.
-#' The contents of `@datanames` can be specified upon creation and default to all variables in `@env`.
-#' Variables created later, which may well be data sets, are not automatically considered such.
-#' Use this function to update the slot.
+#' (the `@env` slot) are data sets to be taken into consideration. If not set explicitly, then [datanames()] returns
+#' all variable names from `@env`.
 #'
 #' @param x (`teal_data`) object to access or modify
 #' @param value (`character`) new value for `@datanames`; all elements must be names of variables existing in `@env`
@@ -31,7 +29,17 @@
 #' @export
 setGeneric("datanames", function(x) standardGeneric("datanames"))
 setMethod("datanames", signature = "teal_data", definition = function(x) {
-  x@datanames
+  datanames <- if (length(x@datanames)) {
+    x@datanames
+  } else {
+    ls(teal.code::get_env(x), all.names = TRUE)
+  }
+  # sort and add parent if exists
+  .get_sorted_datanames(
+    datanames = datanames,
+    join_keys = join_keys(x),
+    env = teal.code::get_env(x)
+  )
 })
 setMethod("datanames", signature = "qenv.error", definition = function(x) {
   NULL
@@ -42,7 +50,7 @@ setMethod("datanames", signature = "qenv.error", definition = function(x) {
 setGeneric("datanames<-", function(x, value) standardGeneric("datanames<-"))
 setMethod("datanames<-", signature = c("teal_data", "character"), definition = function(x, value) {
   checkmate::assert_subset(value, names(x@env))
-  x@datanames <- .get_sorted_datanames(datanames = value, join_keys = x@join_keys, env = x@env)
+  x@datanames <- value
   methods::validObject(x)
   x
 })
