@@ -26,6 +26,7 @@ It is advisable to always begin analysis in a new session and run all code that 
 Every `teal_data` object has a _verification status_, which is a statement of whether the contents of the `env` can be reproduced by `code`.
 From this perspective, `teal_data` objects that are instantiated empty are _verified_ but ones instantiated with data and code are _unverified_ because the code need not be reproducible.
 Obviously, `teal_data` objects instantiated with data only are _unverified_ as well.
+Verification status can be checked by using `is_verified()` function.
 
 When evaluating code in a `teal_data` object, the code that is stored is the same as the code that is executed, so it is reproducible by definition.
 Therefore, evaluating code in a `teal_data` object _does not_ change its verification status.
@@ -42,10 +43,9 @@ data_empty <- within(data_empty, i <- head(iris))
 data_empty # remains verified
 
 data_with_data <- teal_data(i = head(iris), code = "i <- head(iris)")
-data_with_data # is unverified
+is_verified(data_with_data) # is unverified
 data_with_data <- within(data_with_data, i$rand <- sample(nrow(i)))
-data_with_data # remains unverified
-cat(get_code(data_with_data)) # warning is prepended
+is_verified(data_with_data) # remains unverified
 ```
 
 ### Verification process
@@ -70,7 +70,9 @@ data_right <- teal_data(
     data$id <- seq_len(nrow(data))
   })
 )
-(data_right_verified <- verify(data_right)) # returns verified object
+is_verified(data_right) # FALSE
+data_right_verified <- verify(data_right) # returns verified object
+is_verified(data_right_verified) # TRUE
 ```
 
 #### unverified

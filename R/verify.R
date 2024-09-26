@@ -1,11 +1,15 @@
 #' Verify code reproducibility
 #'
-#' Checks whether code in `teal_data` object reproduces the stored objects.
+#' Listed functions verify if code in [`teal_data`] object reproduces the stored objects.
+#' Verification status can be checked by [is_verified()], returning respectively `TRUE` or `FALSE`.
 #'
-#' If objects created by code in the `@code` slo|t of `x` are `all_equal` to the contents of the `@env` slot,
-#' the function updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
+#' [verify()] checks if objects created by code in the `@code` slot of `x` are `all_equal` to the
+#' contents of the `@env` slot,
+#' [verify()] updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
 #' Once verified, the slot will always be set to `TRUE`.
 #' If the `@code` fails to recreate objects in `teal_data@env`, an error is raised.
+#'
+#' See vignette `vignette("teal-data-reproducibility", package = "teal.data")` for more details.
 #'
 #' @return Input `teal_data` object or error.
 #'
@@ -21,7 +25,6 @@
 #'
 #' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' is_verified(tdata1)
-#' verify(tdata2)
 #' is_verified(verify(tdata2))
 #'
 #' tdata3 <- teal_data()
