@@ -10,6 +10,10 @@
     - do not allow to set a dataset name that do not exist in `teal_data` environment.
     - `teal_data` no longer set default `datanames()` based on `join_keys` names - it uses only data names.
 
+### Miscellaneous
+
+- `get_code` no longer adds `warning` message about failed verification.
+
 # teal.data 0.6.0
 
 ### Enhancements
