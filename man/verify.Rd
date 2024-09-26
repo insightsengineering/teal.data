@@ -4,9 +4,14 @@
 \alias{verify}
 \alias{verify,teal_data-method}
 \alias{verify,qenv.error-method}
+\alias{is_verified,teal_data-method}
+\alias{is_verified,qenv.error-method}
+\alias{is_verified}
 \title{Verify code reproducibility}
 \usage{
 verify(x)
+
+is_verified(x)
 }
 \arguments{
 \item{x}{\code{teal_data} object}
@@ -18,7 +23,7 @@ Input \code{teal_data} object or error.
 Checks whether code in \code{teal_data} object reproduces the stored objects.
 }
 \details{
-If objects created by code in the \verb{@code} slot of \code{x} are \code{all_equal} to the contents of the \verb{@env} slot,
+If objects created by code in the \verb{@code} slo|t of \code{x} are \code{all_equal} to the contents of the \verb{@env} slot,
 the function updates the \verb{@verified} slot to \code{TRUE} in the returned \code{teal_data} object.
 Once verified, the slot will always be set to \code{TRUE}.
 If the \verb{@code} fails to recreate objects in \code{teal_data@env}, an error is raised.
@@ -33,9 +38,9 @@ tdata1 <- within(tdata1, {
 verify(tdata1)
 
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
+is_verified(tdata1)
 verify(tdata2)
-verify(tdata2)@verified
-tdata2@verified
+is_verified(verify(tdata2))
 
 tdata3 <- teal_data()
 tdata3 <- within(tdata3, {
@@ -45,15 +50,11 @@ try(verify(tdata3)) # fails
 
 
 a <- 1
-b <- a + 2
-c <- list(x = 2)
-d <- 5
+b <- 2
 tdata4 <- teal_data(
-  a = a, b = b, c = c, d = d,
+  a = a, b = b,
   code = "a <- 1
-          b <- a
-          c <- list(x = 2)
-          e <- 1"
+          b <- 3"
 )
 tdata4
 \dontrun{
