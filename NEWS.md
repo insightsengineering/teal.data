@@ -9,7 +9,6 @@
     the connection between child-parent is set through `join_keys` and `parent` exist in `teal_data` environment.
     - do not allow to set a dataset name that do not exist in `teal_data` environment.
     - `teal_data` no longer set default `datanames()` based on `join_keys` names - it uses only data names.
-- Added `is_verified` method to return `TRUE` when objects stored in `teal_data` can be reproduced.
 
 ### Miscellaneous
 

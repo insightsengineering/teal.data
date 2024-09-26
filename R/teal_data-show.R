@@ -11,7 +11,7 @@
 #' verify(teal_data(x = iris, code = "x = iris"))
 #' @export
 setMethod("show", signature = "teal_data", function(object) {
-  if (is_verified(object)) {
+  if (object@verified) {
     cat("\u2705\ufe0e", "verified teal_data object\n")
   } else {
     cat("\u2716", "unverified teal_data object\n")

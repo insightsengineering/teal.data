@@ -1,15 +1,11 @@
 #' Verify code reproducibility
 #'
-#' Listed functions verify if code in [`teal_data`] object reproduces the stored objects.
-#' Verification status can be checked by [is_verified()], returning respectively `TRUE` or `FALSE`.
+#' Checks whether code in `teal_data` object reproduces the stored objects.
 #'
-#' [verify()] checks if objects created by code in the `@code` slot of `x` are `all_equal` to the
-#' contents of the `@env` slot,
-#' [verify()] updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
+#' If objects created by code in the `@code` slot of `x` are `all_equal` to the contents of the `@env` slot,
+#' the function updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
 #' Once verified, the slot will always be set to `TRUE`.
 #' If the `@code` fails to recreate objects in `teal_data@env`, an error is raised.
-#'
-#' See vignette `vignette("teal-data-reproducibility", package = "teal.data")` for more details.
 #'
 #' @return Input `teal_data` object or error.
 #'
@@ -24,8 +20,9 @@
 #' verify(tdata1)
 #'
 #' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
-#' is_verified(tdata1)
-#' is_verified(verify(tdata2))
+#' verify(tdata2)
+#' verify(tdata2)@verified
+#' tdata2@verified
 #'
 #' tdata3 <- teal_data()
 #' tdata3 <- within(tdata3, {
@@ -35,11 +32,15 @@
 #'
 #'
 #' a <- 1
-#' b <- 2
+#' b <- a + 2
+#' c <- list(x = 2)
+#' d <- 5
 #' tdata4 <- teal_data(
-#'   a = a, b = b,
+#'   a = a, b = b, c = c, d = d,
 #'   code = "a <- 1
-#'           b <- 3"
+#'           b <- a
+#'           c <- list(x = 2)
+#'           e <- 1"
 #' )
 #' tdata4
 #' \dontrun{
@@ -47,17 +48,14 @@
 #' }
 #'
 #' @name verify
+#' @rdname verify
 #' @aliases verify,teal_data-method
 #' @aliases verify,qenv.error-method
-#' @aliases is_verified,teal_data-method
-#' @aliases is_verified,qenv.error-method
-NULL
-
-#' @rdname verify
+#'
 #' @export
 setGeneric("verify", function(x) standardGeneric("verify"))
 setMethod("verify", signature = "teal_data", definition = function(x) {
-  if (is_verified(x)) {
+  if (x@verified) {
     return(x)
   }
   x_name <- deparse(substitute(x))
@@ -112,16 +110,5 @@ setMethod("verify", signature = "teal_data", definition = function(x) {
   }
 })
 setMethod("verify", signature = "qenv.error", definition = function(x) {
-  stop(conditionMessage(x), call. = FALSE)
-})
-
-
-#' @rdname verify
-#' @export
-setGeneric("is_verified", function(x) standardGeneric("is_verified"))
-setMethod("is_verified", signature = "teal_data", definition = function(x) {
-  x@verified
-})
-setMethod("is_verified", signature = "qenv.error", definition = function(x) {
   stop(conditionMessage(x), call. = FALSE)
 })
