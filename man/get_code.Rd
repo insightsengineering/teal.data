@@ -29,7 +29,6 @@ Retrieve code from \code{teal_data} object.
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
 Use \code{datanames} to limit the code to one or more of the datasets enumerated in \verb{@datanames}.
-If the code has not passed verification (with \code{\link[=verify]{verify()}}), a warning will be prepended.
 }
 \section{Extracting dataset-specific code}{
 

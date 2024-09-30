@@ -1,13 +1,11 @@
-warning_message <- "warning('Code was not verified for reproducibility.')"
-
 testthat::test_that("handles empty @code slot", {
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = character(0)), datanames = "a"),
-    warning_message
+    character(0)
   )
   testthat::expect_identical(
     get_code(teal_data(a = 1, code = ""), datanames = "a"),
-    paste0(warning_message, "\n")
+    ""
   )
 })
 
@@ -20,7 +18,7 @@ testthat::test_that("handles the code without symbols on rhs", {
 
   testthat::expect_identical(
     get_code(teal_data(a = 5, code = code), datanames = "a"),
-    paste(warning_message, "a <- 5", sep = "\n")
+    "a <- 5"
   )
 })
 
@@ -29,7 +27,7 @@ testthat::test_that("handles the code included in curly brackets", {
 
   testthat::expect_identical(
     get_code(teal_data(a = 5, code = code), datanames = "a"),
-    paste(warning_message, "a <- 5", sep = "\n")
+    "a <- 5"
   )
 })
 
@@ -545,11 +543,7 @@ testthat::test_that("detects occurrence of a function definition with a @linksto
   tdata <- teal_data(code = code)
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
-    paste(
-      warning_message,
-      "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()",
-      sep = "\n"
-    )
+    "foo <- function() {\n    env <- parent.frame()\n    env$x <- 0\n}\nfoo()"
   )
 })
 # $ ---------------------------------------------------------------------------------------------------------------
@@ -608,7 +602,6 @@ testthat::test_that("understands @ usage and do not treat rhs of @ as objects (o
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     paste(
-      warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
       'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
       sep = "\n"
@@ -617,7 +610,6 @@ testthat::test_that("understands @ usage and do not treat rhs of @ as objects (o
   testthat::expect_identical(
     get_code(tdata, datanames = "a"),
     paste(
-      warning_message,
       'setClass("aclass", slots = c(a = "numeric", x = "numeric", y = "numeric"))',
       'x <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
       'a <- new("aclass", a = 1:3, x = 1:3, y = 1:3)',
@@ -646,7 +638,6 @@ testthat::test_that("library() and require() are always returned", {
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     paste(
-      warning_message,
       "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",
@@ -672,7 +663,6 @@ testthat::test_that("data() call is returned when data name is provided as is", 
   testthat::expect_identical(
     get_code(tdata, datanames = "x"),
     paste(
-      warning_message,
       "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",
@@ -696,7 +686,6 @@ testthat::test_that("data() call is returned when data name is provided as a cha
   testthat::expect_identical(
     get_code(tdata, datanames = "z"),
     paste(
-      warning_message,
       "library(random.cdisc.data)",
       "require(dplyr)",
       "library(MultiAssayExperiment)",

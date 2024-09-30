@@ -4,7 +4,6 @@
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
 #' Use `datanames` to limit the code to one or more of the datasets enumerated in `@datanames`.
-#' If the code has not passed verification (with [`verify()`]), a warning will be prepended.
 #'
 #' @section Extracting dataset-specific code:
 #' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
@@ -112,10 +111,6 @@ setMethod("get_code", signature = "teal_data", definition = function(object, dep
     get_code_dependency(object@code, datanames, ...)
   } else {
     object@code
-  }
-
-  if (!object@verified) {
-    code <- c("warning('Code was not verified for reproducibility.')", code)
   }
 
   if (deparse) {
