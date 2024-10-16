@@ -696,8 +696,8 @@ testthat::test_that("data() call is returned when data name is provided as a cha
   )
 })
 
-testthat::describe("Backticked special symbols", {
-  testthat::it("starting with underscore code dependency is being detected", {
+testthat::describe("Backticked symbol", {
+  testthat::it("starting with underscore is detected in code dependency", {
     td <- teal_data() |>
       within({
         `_add_column_` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
@@ -714,7 +714,7 @@ testthat::describe("Backticked special symbols", {
     )
   })
 
-  testthat::it("with spaces code dependency is being detected", {
+  testthat::it("with space character is detected in code dependency", {
     td <- teal_data() |>
       within({
         `add column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
@@ -731,7 +731,24 @@ testthat::describe("Backticked special symbols", {
     )
   })
 
-  testthat::it("with non-native pipe code dependency is being detected", {
+  testthat::it("without special characters is cleaned and detecteed in code dependency", {
+    td <- teal_data() |>
+      within({
+        `add_column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
+        IRIS <- `add_column`(iris, dplyr::tibble(new_col = "new column"))
+      })
+
+    testthat::expect_identical(
+      get_code(td, datanames = "IRIS"),
+      paste(
+        sep = "\n",
+        "add_column <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
+        "IRIS <- add_column(iris, dplyr::tibble(new_col = \"new column\"))"
+      )
+    )
+  })
+
+  testthat::it("with non-native pipe is detected code dependency", {
     td <- teal_data() |>
       within({
         `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
