@@ -748,11 +748,30 @@ testthat::describe("Backticked symbol", {
     )
   })
 
-  testthat::it("with non-native pipe is detected code dependency", {
+  testthat::it("with non-native pipe used as function is detected code dependency", {
     td <- teal_data() |>
       within({
         `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
         iris_ds <- `%add_column%`(iris, dplyr::tibble(new_col = "new column"))
+      })
+
+    # Note that the original code is changed to use the non-native pipe operator
+    # correctly.
+    testthat::expect_identical(
+      get_code(td, datanames = "iris_ds"),
+      paste(
+        sep = "\n",
+        "`%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
+        "iris_ds <- iris %add_column% dplyr::tibble(new_col = \"new column\")"
+      )
+    )
+  })
+
+  testthat::it("with non-native pipe is detected code dependency", {
+    td <- teal_data() |>
+      within({
+        `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
+        iris_ds <- iris %add_column% dplyr::tibble(new_col = "new column")
       })
 
     # Note that the original code is changed to use the non-native pipe operator
