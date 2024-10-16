@@ -1,6 +1,6 @@
 #' Get code from `teal_data` object
 #'
-#' Retrieve code from `teal_data` object.
+#' `r lifecycle::badge("deprecated")` Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
 #' Use `datanames` to limit the code to one or more of the datasets enumerated in `@datanames`.
@@ -108,6 +108,7 @@ setMethod("get_code", signature = "teal_data", definition = function(object, dep
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(datanames)) {
+    warning("get_code(datanames) was deprecated in teal.data 0.6.1, use get_code(names) instead.")
     get_code_dependency(object@code, datanames, ...)
   } else {
     object@code
