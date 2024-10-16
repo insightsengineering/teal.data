@@ -695,3 +695,58 @@ testthat::test_that("data() call is returned when data name is provided as a cha
     )
   )
 })
+
+testthat::describe("Backticked special symbols", {
+  testthat::it("starting with underscore code dependency is being detected", {
+    td <- teal_data() |>
+      within({
+        `_add_column_` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
+        IRIS <- `_add_column_`(iris, dplyr::tibble(new_col = "new column"))
+      })
+
+    testthat::expect_identical(
+      get_code(td, datanames = "IRIS"),
+      paste(
+        sep = "\n",
+        "`_add_column_` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
+        "IRIS <- `_add_column_`(iris, dplyr::tibble(new_col = \"new column\"))"
+      )
+    )
+  })
+
+  testthat::it("with spaces code dependency is being detected", {
+    td <- teal_data() |>
+      within({
+        `add column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
+        IRIS <- `add column`(iris, dplyr::tibble(new_col = "new column"))
+      })
+
+    testthat::expect_identical(
+      get_code(td, datanames = "IRIS"),
+      paste(
+        sep = "\n",
+        "`add column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
+        "IRIS <- `add column`(iris, dplyr::tibble(new_col = \"new column\"))"
+      )
+    )
+  })
+
+  testthat::it("with non-native pipe code dependency is being detected", {
+    td <- teal_data() |>
+      within({
+        `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
+        IRIS <- `%add_column%`(iris, dplyr::tibble(new_col = "new column"))
+      })
+
+    # Note that the original code is changed to use the non-native pipe operator
+    # correctly.
+    testthat::expect_identical(
+      get_code(td, datanames = "IRIS"),
+      paste(
+        sep = "\n",
+        "`%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
+        "IRIS <- iris %add_column% dplyr::tibble(new_col = \"new column\")"
+      )
+    )
+  })
+})

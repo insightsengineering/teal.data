@@ -297,7 +297,7 @@ extract_occurrence <- function(calls_pd) {
 
       # What occurs in a function body is not tracked.
       x <- call_pd[!is_in_function(call_pd), ]
-      sym_cond <- which(x$token %in% c("SYMBOL", "SYMBOL_FUNCTION_CALL"))
+      sym_cond <- which(x$token %in% c("SPECIAL", "SYMBOL", "SYMBOL_FUNCTION_CALL"))
 
       if (length(sym_cond) == 0) {
         return(character(0L))
@@ -380,10 +380,12 @@ extract_side_effects <- function(calls_pd) {
 #' @keywords internal
 #' @noRd
 graph_parser <- function(x, graph) {
+  # normalize x to remove surrounding backticks
+  x <- gsub("^`|`$", "", x)
   occurrence <- vapply(
     graph, function(call) {
       ind <- match("<-", call, nomatch = length(call) + 1L)
-      x %in% call[seq_len(ind - 1L)]
+      x %in% gsub("^`|`$", "", call[seq_len(ind - 1L)])
     },
     logical(1)
   )
