@@ -700,16 +700,16 @@ testthat::describe("Backticked symbol", {
   testthat::it("starting with underscore is detected in code dependency", {
     td <- teal_data() |>
       within({
-        `_add_column_` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs) # nolint: object_name.
-        iris_ds <- `_add_column_`(iris, dplyr::tibble(new_col = "new column"))
+        `_add_column_` <- function(lhs, rhs) cbind(lhs, rhs) # nolint: object_name.
+        iris_ds <- `_add_column_`(iris, data.frame(new_col = "new column"))
       })
 
     testthat::expect_identical(
       get_code(td, datanames = "iris_ds"),
       paste(
         sep = "\n",
-        "`_add_column_` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
-        "iris_ds <- `_add_column_`(iris, dplyr::tibble(new_col = \"new column\"))"
+        "`_add_column_` <- function(lhs, rhs) cbind(lhs, rhs)",
+        "iris_ds <- `_add_column_`(iris, data.frame(new_col = \"new column\"))"
       )
     )
   })
@@ -717,16 +717,16 @@ testthat::describe("Backticked symbol", {
   testthat::it("with space character is detected in code dependency", {
     td <- teal_data() |>
       within({
-        `add column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs) # nolint: object_name.
-        iris_ds <- `add column`(iris, dplyr::tibble(new_col = "new column"))
+        `add column` <- function(lhs, rhs) cbind(lhs, rhs) # nolint: object_name.
+        iris_ds <- `add column`(iris, data.frame(new_col = "new column"))
       })
 
     testthat::expect_identical(
       get_code(td, datanames = "iris_ds"),
       paste(
         sep = "\n",
-        "`add column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
-        "iris_ds <- `add column`(iris, dplyr::tibble(new_col = \"new column\"))"
+        "`add column` <- function(lhs, rhs) cbind(lhs, rhs)",
+        "iris_ds <- `add column`(iris, data.frame(new_col = \"new column\"))"
       )
     )
   })
@@ -734,16 +734,16 @@ testthat::describe("Backticked symbol", {
   testthat::it("without special characters is cleaned and detecteed in code dependency", {
     td <- teal_data() |>
       within({
-        `add_column` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
-        iris_ds <- `add_column`(iris, dplyr::tibble(new_col = "new column"))
+        `add_column` <- function(lhs, rhs) cbind(lhs, rhs)
+        iris_ds <- `add_column`(iris, data.frame(new_col = "new column"))
       })
 
     testthat::expect_identical(
       get_code(td, datanames = "iris_ds"),
       paste(
         sep = "\n",
-        "add_column <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
-        "iris_ds <- add_column(iris, dplyr::tibble(new_col = \"new column\"))"
+        "add_column <- function(lhs, rhs) cbind(lhs, rhs)",
+        "iris_ds <- add_column(iris, data.frame(new_col = \"new column\"))"
       )
     )
   })
@@ -751,8 +751,8 @@ testthat::describe("Backticked symbol", {
   testthat::it("with non-native pipe used as function is detected code dependency", {
     td <- teal_data() |>
       within({
-        `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
-        iris_ds <- `%add_column%`(iris, dplyr::tibble(new_col = "new column"))
+        `%add_column%` <- function(lhs, rhs) cbind(lhs, rhs)
+        iris_ds <- `%add_column%`(iris, data.frame(new_col = "new column"))
       })
 
     # Note that the original code is changed to use the non-native pipe operator
@@ -761,8 +761,8 @@ testthat::describe("Backticked symbol", {
       get_code(td, datanames = "iris_ds"),
       paste(
         sep = "\n",
-        "`%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
-        "iris_ds <- iris %add_column% dplyr::tibble(new_col = \"new column\")"
+        "`%add_column%` <- function(lhs, rhs) cbind(lhs, rhs)",
+        "iris_ds <- iris %add_column% data.frame(new_col = \"new column\")"
       )
     )
   })
@@ -770,8 +770,8 @@ testthat::describe("Backticked symbol", {
   testthat::it("with non-native pipe is detected code dependency", {
     td <- teal_data() |>
       within({
-        `%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)
-        iris_ds <- iris %add_column% dplyr::tibble(new_col = "new column")
+        `%add_column%` <- function(lhs, rhs) cbind(lhs, rhs)
+        iris_ds <- iris %add_column% data.frame(new_col = "new column")
       })
 
     # Note that the original code is changed to use the non-native pipe operator
@@ -780,8 +780,8 @@ testthat::describe("Backticked symbol", {
       get_code(td, datanames = "iris_ds"),
       paste(
         sep = "\n",
-        "`%add_column%` <- function(lhs, rhs) dplyr::bind_cols(lhs, rhs)",
-        "iris_ds <- iris %add_column% dplyr::tibble(new_col = \"new column\")"
+        "`%add_column%` <- function(lhs, rhs) cbind(lhs, rhs)",
+        "iris_ds <- iris %add_column% data.frame(new_col = \"new column\")"
       )
     )
   })
