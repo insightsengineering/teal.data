@@ -29,7 +29,7 @@ Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
 A \code{teal_data} object.
 }
 \description{
-\verb{r lifecycle::badge("stable")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
 Function is a wrapper around \code{\link[=teal_data]{teal_data()}} and guesses \code{join_keys}
 for given datasets whose names match ADAM datasets names.
