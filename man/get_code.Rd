@@ -24,7 +24,7 @@ Either a character string or an expression. If \code{datanames} is used to reque
 only code that \emph{creates} that dataset (not code that uses it) is returned. Otherwise, all contents of \verb{@code}.
 }
 \description{
-Retrieve code from \code{teal_data} object.
+#' \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Retrieve code from \code{teal_data} object.
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.

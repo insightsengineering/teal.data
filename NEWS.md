@@ -1,5 +1,9 @@
 # teal.data 0.6.0.9012
 
+### Deprecations
+
+- `get_code(datanames)` `S4` method parameter for `teal_data()` object was soft deprecated. Use `get_code(names)`.
+
 ### Enhancements
 
 - `datanames()`
