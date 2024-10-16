@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.890300230946882" branch-rate="0" lines-covered="771" lines-valid="866" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-16 17:15:24.652768">
+<coverage line-rate="0.890300230946882" branch-rate="0" lines-covered="771" lines-valid="866" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-16 17:23:33.362787">
   <sources>
     <source>/__w/teal.data/teal.data/teal.data</source>
   </sources>
@@ -2150,10 +2150,10 @@
             </method>
             <method name="get_children" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="127" hits="2577" branch="false"/>
-                <line number="128" hits="2577" branch="false"/>
-                <line number="129" hits="2577" branch="false"/>
-                <line number="130" hits="1546" branch="false"/>
+                <line number="127" hits="2547" branch="false"/>
+                <line number="128" hits="2547" branch="false"/>
+                <line number="129" hits="2547" branch="false"/>
+                <line number="130" hits="1516" branch="false"/>
                 <line number="133" hits="1031" branch="false"/>
                 <line number="134" hits="1031" branch="false"/>
               </lines>
@@ -2376,10 +2376,10 @@
             <line number="119" hits="56" branch="false"/>
             <line number="120" hits="56" branch="false"/>
             <line number="121" hits="56" branch="false"/>
-            <line number="127" hits="2577" branch="false"/>
-            <line number="128" hits="2577" branch="false"/>
-            <line number="129" hits="2577" branch="false"/>
-            <line number="130" hits="1546" branch="false"/>
+            <line number="127" hits="2547" branch="false"/>
+            <line number="128" hits="2547" branch="false"/>
+            <line number="129" hits="2547" branch="false"/>
+            <line number="130" hits="1516" branch="false"/>
             <line number="133" hits="1031" branch="false"/>
             <line number="134" hits="1031" branch="false"/>
             <line number="144" hits="56" branch="false"/>
