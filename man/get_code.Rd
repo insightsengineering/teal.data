@@ -4,7 +4,7 @@
 \alias{get_code,teal_data-method}
 \title{Get code from \code{teal_data} object}
 \usage{
-\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL, ...)
+\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL, names = datanames, ...)
 }
 \arguments{
 \item{object}{(\code{teal_data})}
@@ -15,16 +15,19 @@
 \item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
+\item{names}{(\code{character}) Successor of \code{datanames}. Vector of dataset names to return the code for.
+For more details see the "Extracting dataset-specific code" section.}
+
 \item{...}{Parameters passed to internal methods. Currently, the only supported parameter is \code{check_names}
 (\code{logical(1)}) flag,  which is \code{TRUE} by default. Function warns about missing objects, if they do not exist in
 \code{code} but are passed in \code{datanames}. To remove the warning, set \code{check_names = FALSE}.}
 }
 \value{
-Either a character string or an expression. If \code{datanames} is used to request a specific dataset,
+Either a character string or an expression. If \code{names} is used to request a specific dataset,
 only code that \emph{creates} that dataset (not code that uses it) is returned. Otherwise, all contents of \verb{@code}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Retrieve code from \code{teal_data} object.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[teal.code:qenv]{teal.code::get_code()}}. Retrieve code from \code{teal_data} object.
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
@@ -49,11 +52,11 @@ Consider the following examples:
     x <- 0
     y <- foo(x)
   \})
-teal.code::get_code(data, names = "y")
+get_code(data, names = "y")
 }\if{html}{\out{</div>}}
 
-\code{x} has no dependencies, so \code{teal.code::get_code(data, names = "x")} will return only the second call.\cr
-\code{y} depends on \code{x} and \code{foo}, so \code{teal.code::get_code(data, names = "y")} will contain all three calls.
+\code{x} has no dependencies, so \code{get_code(data, names = "x")} will return only the second call.\cr
+\code{y} depends on \code{x} and \code{foo}, so \code{get_code(data, names = "y")} will contain all three calls.
 
 \emph{Case 2: Some objects are created by a function's side effects.}
 
@@ -66,11 +69,11 @@ teal.code::get_code(data, names = "y")
     foo()
     y <- x
   \})
-teal.code::get_code(data, names = "y")
+get_code(data, names = "y")
 }\if{html}{\out{</div>}}
 
 Here, \code{y} depends on \code{x} but \code{x} is modified by \code{foo} as a side effect (not by reassignment)
-and so \code{teal.code::get_code(data, names = "y")} will not return the \code{foo()} call.\cr
+and so \code{get_code(data, names = "y")} will not return the \code{foo()} call.\cr
 To overcome this limitation, code dependencies can be specified manually.
 Lines where side effects occur can be flagged by adding "\verb{# @linksto <object name>}" at the end.\cr
 Note that \code{within} evaluates code passed to \code{expr} as is and comments are ignored.
@@ -85,7 +88,7 @@ In order to include comments in code one must use the \code{eval_code} function 
     foo() # @linksto x
     y <- x
   ")
-get_code(data, datanames = "y")
+get_code(data, names = "y")
 }\if{html}{\out{</div>}}
 
 Now the \code{foo()} call will be properly included in the code required to recreate \code{y}.
@@ -109,8 +112,8 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 get_code(tdata1)
-teal.code::get_code(tdata1, names = "a")
-teal.code::get_code(tdata1, names = "b")
+get_code(tdata1, names = "a")
+get_code(tdata1, names = "b")
 
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 get_code(tdata2)
