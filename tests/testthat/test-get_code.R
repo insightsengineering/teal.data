@@ -731,7 +731,7 @@ testthat::describe("Backticked symbol", {
     )
   })
 
-  testthat::it("without special characters is cleaned and detecteed in code dependency", {
+  testthat::it("without special characters is cleaned and detected in code dependency", {
     td <- teal_data() |>
       within({
         `add_column` <- function(lhs, rhs) cbind(lhs, rhs)
