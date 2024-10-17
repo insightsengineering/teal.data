@@ -108,7 +108,12 @@ setMethod("get_code", signature = "teal_data", definition = function(object, dep
   checkmate::assert_flag(deparse)
 
   code <- if (!is.null(datanames)) {
-    warning("get_code(datanames) was deprecated in teal.data 0.6.1, use get_code(names) instead.", call. = FALSE)
+    lifecycle::deprecate_warn(
+      when = "0.6.1",
+      what = "teal.data::get_code(datanames)",
+      with = "teal.code::get_code(names)",
+      always = TRUE
+    )
     get_code_dependency(object@code, datanames, ...)
   } else {
     object@code
