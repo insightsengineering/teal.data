@@ -3,10 +3,10 @@
 #' `r lifecycle::badge("deprecated")` Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `datanames` to limit the code to one or more of the datasets enumerated in `@datanames`.
+#' Use `names` to limit the code to one or more of the datasets enumerated in `@datanames`.
 #'
 #' @section Extracting dataset-specific code:
-#' When `datanames` is specified, the code returned will be limited  to the lines needed to _create_
+#' When `names` is specified, the code returned will be limited  to the lines needed to _create_
 #' the requested datasets. The code stored in the `@code` slot is analyzed statically to determine
 #' which lines the datasets of interest depend upon. The analysis works well when objects are created
 #' with standard infix assignment operators (see `?assignOps`) but it can fail in some situations.
@@ -23,10 +23,10 @@
 #'     x <- 0
 #'     y <- foo(x)
 #'   })
-#' get_code(data, datanames = "y")
+#' teal.code::get_code(data, names = "y")
 #' ```
-#' `x` has no dependencies, so `get_code(data, datanames = "x")` will return only the second call.\cr
-#' `y` depends on `x` and `foo`, so `get_code(data, datanames = "y")` will contain all three calls.
+#' `x` has no dependencies, so `teal.code::get_code(data, names = "x")` will return only the second call.\cr
+#' `y` depends on `x` and `foo`, so `teal.code::get_code(data, names = "y")` will contain all three calls.
 #'
 #' _Case 2: Some objects are created by a function's side effects._
 #' ```r
@@ -39,10 +39,10 @@
 #'     foo()
 #'     y <- x
 #'   })
-#' get_code(data, datanames = "y")
+#' teal.code::get_code(data, names = "y")
 #' ```
 #' Here, `y` depends on `x` but `x` is modified by `foo` as a side effect (not by reassignment)
-#' and so `get_code(data, datanames = "y")` will not return the `foo()` call.\cr
+#' and so `teal.code::get_code(data, names = "y")` will not return the `foo()` call.\cr
 #' To overcome this limitation, code dependencies can be specified manually.
 #' Lines where side effects occur can be flagged by adding "`# @linksto <object name>`" at the end.\cr
 #' Note that `within` evaluates code passed to `expr` as is and comments are ignored.
@@ -92,8 +92,8 @@
 #'   c <- list(x = 2)
 #' })
 #' get_code(tdata1)
-#' get_code(tdata1, datanames = "a")
-#' get_code(tdata1, datanames = "b")
+#' teal.code::get_code(tdata1, names = "a")
+#' teal.code::get_code(tdata1, names = "b")
 #'
 #' tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 #' get_code(tdata2)

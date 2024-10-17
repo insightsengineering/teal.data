@@ -28,11 +28,11 @@ only code that \emph{creates} that dataset (not code that uses it) is returned. 
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
-Use \code{datanames} to limit the code to one or more of the datasets enumerated in \verb{@datanames}.
+Use \code{names} to limit the code to one or more of the datasets enumerated in \verb{@datanames}.
 }
 \section{Extracting dataset-specific code}{
 
-When \code{datanames} is specified, the code returned will be limited  to the lines needed to \emph{create}
+When \code{names} is specified, the code returned will be limited  to the lines needed to \emph{create}
 the requested datasets. The code stored in the \verb{@code} slot is analyzed statically to determine
 which lines the datasets of interest depend upon. The analysis works well when objects are created
 with standard infix assignment operators (see \code{?assignOps}) but it can fail in some situations.
@@ -49,11 +49,11 @@ Consider the following examples:
     x <- 0
     y <- foo(x)
   \})
-get_code(data, datanames = "y")
+teal.code::get_code(data, names = "y")
 }\if{html}{\out{</div>}}
 
-\code{x} has no dependencies, so \code{get_code(data, datanames = "x")} will return only the second call.\cr
-\code{y} depends on \code{x} and \code{foo}, so \code{get_code(data, datanames = "y")} will contain all three calls.
+\code{x} has no dependencies, so \code{teal.code::get_code(data, names = "x")} will return only the second call.\cr
+\code{y} depends on \code{x} and \code{foo}, so \code{teal.code::get_code(data, names = "y")} will contain all three calls.
 
 \emph{Case 2: Some objects are created by a function's side effects.}
 
@@ -66,11 +66,11 @@ get_code(data, datanames = "y")
     foo()
     y <- x
   \})
-get_code(data, datanames = "y")
+teal.code::get_code(data, names = "y")
 }\if{html}{\out{</div>}}
 
 Here, \code{y} depends on \code{x} but \code{x} is modified by \code{foo} as a side effect (not by reassignment)
-and so \code{get_code(data, datanames = "y")} will not return the \code{foo()} call.\cr
+and so \code{teal.code::get_code(data, names = "y")} will not return the \code{foo()} call.\cr
 To overcome this limitation, code dependencies can be specified manually.
 Lines where side effects occur can be flagged by adding "\verb{# @linksto <object name>}" at the end.\cr
 Note that \code{within} evaluates code passed to \code{expr} as is and comments are ignored.
@@ -109,8 +109,8 @@ tdata1 <- within(tdata1, {
   c <- list(x = 2)
 })
 get_code(tdata1)
-get_code(tdata1, datanames = "a")
-get_code(tdata1, datanames = "b")
+teal.code::get_code(tdata1, names = "a")
+teal.code::get_code(tdata1, names = "b")
 
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 get_code(tdata2)
