@@ -381,8 +381,8 @@ extract_side_effects <- function(calls_pd) {
 #' @noRd
 graph_parser <- function(x, graph) {
   # normalize x to remove surrounding backticks
-  x <- gsub("^`|`$", "", x)
-  graph <- lapply(graph, function(call) gsub("^`|`$", "", call))
+  x <- gsub("^`(.*)`$", "\\1", x)
+  graph <- lapply(graph, function(call) gsub("^`(.*)`$", "\\1", call))
   occurrence <- vapply(
     graph,
     function(call) {
