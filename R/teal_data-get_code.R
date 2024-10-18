@@ -105,19 +105,21 @@
 #' @aliases get_code,teal_data-method
 #'
 #' @export
-setMethod("get_code", signature = "teal_data",
-          definition = function(object, deparse = TRUE, datanames = NULL, names = datanames, ...) {
-  checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
-  checkmate::assert_flag(deparse)
+setMethod("get_code",
+  signature = "teal_data",
+  definition = function(object, deparse = TRUE, datanames = NULL, names = datanames, ...) {
+    checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
+    checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
+    checkmate::assert_flag(deparse)
 
-  if (!is.null(datanames)) {
-    lifecycle::deprecate_warn(
-      when = "0.6.1",
-      what = "get_code()",
-      with = "teal.code::get_code()",
-      always = TRUE
-    )
+    if (!is.null(datanames)) {
+      lifecycle::deprecate_warn(
+        when = "0.6.1",
+        what = "get_code()",
+        with = "teal.code::get_code()",
+        always = TRUE
+      )
+    }
+    teal.code::get_code(object = object, deparse = deparse, names = names, ...)
   }
-  teal.code::get_code(object = object, deparse = deparse, names = names, ...)
-})
+)
