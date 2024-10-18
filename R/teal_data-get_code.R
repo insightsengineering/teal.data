@@ -119,5 +119,6 @@ setMethod("get_code", signature = "teal_data",
       always = TRUE
     )
   }
+  class(object) <- "qenv"
   teal.code::get_code(object = object, deparse = deparse, names = names, ...)
 })
