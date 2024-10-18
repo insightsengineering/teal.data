@@ -55,7 +55,7 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
       ass_str <- gsub("^['\"]|['\"]$", "", ass_str)
       symbols <- c(ass_str, symbols)
     }
-    if (!all(sapply(names, as.name) %in% unique(symbols))) {
+    if (!all(names %in% unique(symbols))) {
       warning("Object(s) not found in code: ", toString(setdiff(names, symbols)))
     }
   }
