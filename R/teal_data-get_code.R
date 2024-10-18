@@ -108,19 +108,19 @@
 setMethod("get_code",
   signature = "teal_data",
   definition = function(object, deparse = TRUE, names = NULL, datanames = lifecycle::deprecated(), ...) {
+    lifecycle::deprecate_warn(
+      when = "0.6.1",
+      what = "teal.data::get_code()",
+      with = "teal.code::get_code()",
+      always = TRUE
+    )
     if (lifecycle::is_present(datanames)) {
-      lifecycle::deprecate_warn(
-        when = "0.6.1",
-        what = "teal.data::get_code(datanames = )",
-        with = "teal.code::get_code(names = )",
-        always = TRUE
-      )
       names <- datanames
     }
 
     checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
     checkmate::assert_flag(deparse)
 
-    callNextMethod(object = object, deparse = deparse, names = names, ...)
+    methods::callNextMethod(object = object, deparse = deparse, names = names, ...)
   }
 )
