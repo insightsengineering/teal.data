@@ -72,7 +72,7 @@
 #'
 #'
 #' @param object (`teal_data`)
-#' @param datanames `r lifecycle::badge("experimental")` (`character`) vector of dataset names to return the code for.
+#' @param datanames `r lifecycle::badge("deprecated")` (`character`) vector of dataset names to return the code for.
 #' For more details see the "Extracting dataset-specific code" section.
 #' @param names (`character`) Successor of `datanames`. Vector of dataset names to return the code for.
 #' For more details see the "Extracting dataset-specific code" section.

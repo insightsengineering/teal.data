@@ -21,7 +21,7 @@
 \item{names}{(\code{character}) Successor of \code{datanames}. Vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
-\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
+\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} (\code{character}) vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
 \item{...}{Parameters passed to internal methods. Currently, the only supported parameter is \code{check_names}
