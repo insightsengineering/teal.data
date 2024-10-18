@@ -42,7 +42,9 @@ get_code_dependency <- function(code, names, check_names = TRUE) {
 
   code <- parse(text = code, keep.source = TRUE)
   pd <- utils::getParseData(code)
+  pd <- normalize_pd(pd)
   calls_pd <- extract_calls(pd)
+
 
   if (check_names) {
     # Detect if names are actually in code.
@@ -175,7 +177,7 @@ fix_arrows <- function(calls) {
 sub_arrows <- function(call) {
   checkmate::assert_data_frame(call)
   map <- data.frame(
-    row.names = c("`<-`", "`<<-`", "`=`"),
+    row.names = c("<-", "<<-", "="),
     token = rep("LEFT_ASSIGN", 3),
     text = rep("<-", 3)
   )
@@ -380,9 +382,6 @@ extract_side_effects <- function(calls_pd) {
 #' @keywords internal
 #' @noRd
 graph_parser <- function(x, graph) {
-  # normalize x to remove surrounding backticks
-  x <- gsub("^`(.*)`$", "\\1", x)
-  graph <- lapply(graph, function(call) gsub("^`(.*)`$", "\\1", call))
   occurrence <- vapply(
     graph,
     function(call) {
@@ -437,4 +436,20 @@ detect_libraries <- function(calls_pd) {
       logical(1)
     )
   )
+}
+
+#' Normalize parsed data removing backticks from symbols
+#'
+#' @param pd `data.frame` resulting from `utils::getParseData()` call.
+#'
+#' @return `data.frame` with backticks removed from `text` column for `SYMBOL` tokens.
+#'
+#' @keywords internal
+#' @noRd
+normalize_pd <- function(pd) {
+  # Remove backticks from SYMBOL tokens
+  symbol_index <- grepl("^SYMBOL.*$", pd$token)
+  pd[symbol_index, "text"] <- gsub("^`(.*)`$", "\\1", pd[symbol_index, "text"])
+
+  pd
 }
