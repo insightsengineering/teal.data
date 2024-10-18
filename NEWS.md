@@ -1,9 +1,8 @@
 # teal.data 0.6.0.9012
 
-### Deprecation
+### Breaking changes
 
 - soft deprecate `datanames` argument of `get_code()`. Use `names` instead.
-
 
 ### Enhancements
 
