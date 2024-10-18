@@ -105,7 +105,8 @@
 #' @aliases get_code,teal_data-method
 #'
 #' @export
-setMethod("get_code", signature = "teal_data", definition = function(object, deparse = TRUE, datanames = NULL, names = datanames, ...) {
+setMethod("get_code", signature = "teal_data",
+          definition = function(object, deparse = TRUE, datanames = NULL, names = datanames, ...) {
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
   checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
