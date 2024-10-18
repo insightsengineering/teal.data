@@ -123,4 +123,3 @@ setMethod("get_code",
     callNextMethod(object = object, deparse = deparse, names = names, ...)
   }
 )
-

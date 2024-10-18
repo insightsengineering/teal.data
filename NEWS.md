@@ -2,7 +2,7 @@
 
 ### Deprecation
 
-- `get_code(datanames)` `S4` method parameter for `teal_data()` object was soft deprecated. Use `get_code(names)`.
+- soft deprecate `datanames` argument of `get_code()`. Use `names` instead.
 
 
 ### Enhancements
