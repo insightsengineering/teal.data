@@ -124,4 +124,3 @@ setMethod("get_code",
     teal.code::get_code(object = object, deparse = deparse, names = names, ...)
   }
 )
-
