@@ -4,7 +4,7 @@
 \alias{get_code,teal_data-method}
 \title{Get code from \code{teal_data} object}
 \usage{
-\S4method{get_code}{teal_data}(object, deparse = TRUE, datanames = NULL, names = datanames, ...)
+\S4method{get_code}{teal_data}(object, deparse = TRUE, names = datanames, datanames = NULL, ...)
 }
 \arguments{
 \item{object}{(\code{teal_data})}
@@ -12,10 +12,10 @@
 \item{deparse}{(\code{logical}) flag specifying whether to return code as \code{character} (\code{deparse = TRUE}) or as
 \code{expression} (\code{deparse = FALSE}).}
 
-\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
+\item{names}{(\code{character}) Successor of \code{datanames}. Vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
-\item{names}{(\code{character}) Successor of \code{datanames}. Vector of dataset names to return the code for.
+\item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} (\code{character}) vector of dataset names to return the code for.
 For more details see the "Extracting dataset-specific code" section.}
 
 \item{...}{Parameters passed to internal methods. Currently, the only supported parameter is \code{check_names}
