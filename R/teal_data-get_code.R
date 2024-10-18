@@ -120,8 +120,7 @@ setMethod("get_code",
         always = TRUE
       )
     }
-    class(object) <- "qenv"
-    teal.code::get_code(object = object, deparse = deparse, names = names, ...)
+    callNextMethod(object = object, deparse = deparse, names = names, ...)
   }
 )
 
