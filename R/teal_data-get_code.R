@@ -108,7 +108,6 @@
 setMethod("get_code",
   signature = "teal_data",
   definition = function(object, deparse = TRUE, names = NULL, datanames = lifecycle::deprecated(), ...) {
-
     if (lifecycle::is_present(datanames)) {
       lifecycle::deprecate_warn(
         when = "0.6.1",
