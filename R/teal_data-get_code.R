@@ -1,6 +1,6 @@
 #' Get code from `teal_data` object
 #'
-#' `r lifecycle::badge("deprecated")` Use [`teal.code::get_code()`]. Retrieve code from `teal_data` object.
+#' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
 #' Use `names` to limit the code to one or more of the datasets enumerated in `@datanames`.
@@ -73,7 +73,7 @@
 #'
 #' @param object (`teal_data`)
 #' @param datanames `r lifecycle::badge("deprecated")` (`character`) vector of dataset names to return the code for.
-#' For more details see the "Extracting dataset-specific code" section.
+#' For more details see the "Extracting dataset-specific code" section. Use `names` instead.
 #' @param names (`character`) Successor of `datanames`. Vector of dataset names to return the code for.
 #' For more details see the "Extracting dataset-specific code" section.
 #' @param deparse (`logical`) flag specifying whether to return code as `character` (`deparse = TRUE`) or as
@@ -108,14 +108,19 @@
 setMethod("get_code",
   signature = "teal_data",
   definition = function(object, deparse = TRUE, names = NULL, datanames = lifecycle::deprecated(), ...) {
-    lifecycle::deprecate_warn(
-      when = "0.6.1",
-      what = "teal.data::get_code()",
-      with = "teal.code::get_code()",
-      always = TRUE
-    )
+
     if (lifecycle::is_present(datanames)) {
+      lifecycle::deprecate_warn(
+        when = "0.6.1",
+        what = "teal.data::get_code(datanames)",
+        with = "teal.code::get_code(names)",
+        always = TRUE
+      )
       names <- datanames
+    }
+
+    if (!is.null(names) && lifecycle::is_present(datanames)) {
+      stop("Please use either 'names' (recommended) or 'datanames' parameter.")
     }
 
     checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)

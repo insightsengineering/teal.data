@@ -22,7 +22,7 @@
 For more details see the "Extracting dataset-specific code" section.}
 
 \item{datanames}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} (\code{character}) vector of dataset names to return the code for.
-For more details see the "Extracting dataset-specific code" section.}
+For more details see the "Extracting dataset-specific code" section. Use \code{names} instead.}
 
 \item{...}{Parameters passed to internal methods. Currently, the only supported parameter is \code{check_names}
 (\code{logical(1)}) flag,  which is \code{TRUE} by default. Function warns about missing objects, if they do not exist in
@@ -33,7 +33,7 @@ Either a character string or an expression. If \code{names} is used to request a
 only code that \emph{creates} that dataset (not code that uses it) is returned. Otherwise, all contents of \verb{@code}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[teal.code:qenv]{teal.code::get_code()}}. Retrieve code from \code{teal_data} object.
+Retrieve code from \code{teal_data} object.
 }
 \details{
 Retrieve code stored in \verb{@code}, which (in principle) can be used to recreate all objects found in \verb{@env}.
