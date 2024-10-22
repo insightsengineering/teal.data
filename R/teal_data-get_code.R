@@ -107,6 +107,11 @@ setMethod("get_code", signature = "teal_data", definition = function(object, dep
   checkmate::assert_character(datanames, min.len = 1L, null.ok = TRUE)
   checkmate::assert_flag(deparse)
 
+  # Normalize in case special it is backticked
+  if (!is.null(datanames)) {
+    datanames <- gsub("^`(.*)`$", "\\1", datanames)
+  }
+
   code <- if (!is.null(datanames)) {
     get_code_dependency(object@code, datanames, ...)
   } else {
