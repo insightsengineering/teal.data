@@ -19,7 +19,8 @@
 #'
 #' @seealso [base::all.equal()]
 #' @keywords internal
-#'
+#' @method all.equal join_keys
+#' @exportS3Method all.equal join_keys
 all.equal.join_keys <- function(target, current, ...) {
   .as_map <- function(.x) {
     old_attributes <- attributes(.x)
