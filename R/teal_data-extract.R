@@ -30,7 +30,7 @@
     return(teal_data())
   }
 
-  subset_qenv <- getFromNamespace("[.qenv", "teal.code")
+  subset_qenv <- utils::getFromNamespace("[.qenv", "teal.code")
   x <- subset_qenv(x, names_in_env)
   x@join_keys <- x@join_keys[names_in_env]
 
