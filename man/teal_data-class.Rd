@@ -36,10 +36,6 @@ Access with \code{\link[=get_warnings]{get_warnings()}}.}
 \item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in \verb{@env}.
 Access or modify with \code{\link[=join_keys]{join_keys()}}.}
 
-\item{\code{datanames}}{(\code{character}) vector of names of data sets in \verb{@env}.
-Used internally to distinguish them from auxiliary variables.
-Access or modify with \code{\link[=datanames]{datanames()}}.}
-
 \item{\code{verified}}{(\code{logical(1)}) flag signifying that code in \verb{@code} has been proven to yield contents of \verb{@env}.
 Used internally. See \code{\link[=verify]{verify()}} for more details.}
 }}

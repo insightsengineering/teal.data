@@ -26,9 +26,6 @@ setOldClass("join_keys")
 #' @slot messages (`character`) vector of messages raised when evaluating code.
 #' @slot join_keys (`join_keys`) object specifying joining keys for data sets in `@env`.
 #'  Access or modify with [join_keys()].
-#' @slot datanames (`character`) vector of names of data sets in `@env`.
-#'  Used internally to distinguish them from auxiliary variables.
-#'  Access or modify with [datanames()].
 #' @slot verified (`logical(1)`) flag signifying that code in `@code` has been proven to yield contents of `@env`.
 #'  Used internally. See [`verify()`] for more details.
 #'
@@ -37,10 +34,9 @@ setOldClass("join_keys")
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "join_keys", datanames = "character", verified = "logical"),
+  slots = c(join_keys = "join_keys", verified = "logical"),
   prototype = list(
     join_keys = join_keys(),
-    datanames = character(0),
     verified = logical(0)
   )
 )
@@ -53,18 +49,13 @@ setClass(
 #' @param code (`character` or `language`) code to reproduce the `data`.
 #'   Accepts and stores comments also.
 #' @param join_keys (`join_keys`) object
-#' @param datanames (`character`) names of datasets passed to `data`.
-#'   Needed when non-dataset objects are needed in the `env` slot.
 #' @rdname new_teal_data
 #' @keywords internal
 new_teal_data <- function(data,
                           code = character(0),
-                          join_keys = join_keys(),
-                          datanames = names(data)) {
+                          join_keys = join_keys()) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "join_keys")
-  if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
-  checkmate::assert_character(datanames)
   if (!any(is.language(code), is.character(code))) {
     stop("`code` must be a character or language object.")
   }
@@ -82,8 +73,6 @@ new_teal_data <- function(data,
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
 
-  datanames <- .get_sorted_datanames(datanames = datanames, join_keys = join_keys, env = new_env)
-
   methods::new(
     "teal_data",
     env = new_env,
@@ -92,7 +81,6 @@ new_teal_data <- function(data,
     messages = rep("", length(code)),
     id = id,
     join_keys = join_keys,
-    datanames = datanames,
     verified = verified
   )
 }

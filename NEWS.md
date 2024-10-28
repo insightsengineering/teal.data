@@ -3,16 +3,18 @@
 ### Breaking changes
 
 - soft deprecate `datanames` argument of `get_code()`. Use `names` instead.
+- Soft deprecate of `datanames()` and `datanames(x) <- value` functions. 
+Use `names()` and `names(x) <- value` instead.
 
 ### Enhancements
 
-- `datanames()`
-    - if `join_keys` are provided, the `datanames()` are now sorted in topological way (`Kahn` algorithm),
+- `names()` function is introduced replacing `datanames`.
+    - if `join_keys` are provided, the `names()` are now sorted in topological way (`Kahn` algorithm),
     which means the parent dataset always precedes the child dataset.
-    - are extended by the parent dataset name, if one of the child dataset exist in `datanames()` and
+    - are extended by the parent dataset name, if one of the child dataset exist in `names()` and
     the connection between child-parent is set through `join_keys` and `parent` exist in `teal_data` environment.
     - do not allow to set a dataset name that do not exist in `teal_data` environment.
-    - `teal_data` no longer set default `datanames()` based on `join_keys` names - it uses only data names.
+    - `teal_data` no longer set default `names()` based on `join_keys` names - it uses only data names.
 
 ### Miscellaneous
 

@@ -4,12 +4,7 @@
 \alias{new_teal_data}
 \title{Initialize \code{teal_data} object}
 \usage{
-new_teal_data(
-  data,
-  code = character(0),
-  join_keys = join_keys(),
-  datanames = names(data)
-)
+new_teal_data(data, code = character(0), join_keys = join_keys())
 }
 \arguments{
 \item{data}{(\verb{named list}) of data objects.}
@@ -18,9 +13,6 @@ new_teal_data(
 Accepts and stores comments also.}
 
 \item{join_keys}{(\code{join_keys}) object}
-
-\item{datanames}{(\code{character}) names of datasets passed to \code{data}.
-Needed when non-dataset objects are needed in the \code{env} slot.}
 }
 \description{
 Initialize \code{teal_data} object

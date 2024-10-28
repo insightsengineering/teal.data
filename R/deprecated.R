@@ -343,3 +343,38 @@ get_join_keys <- function(...) {
 get_labels <- function(...) {
   .deprecate_function("get_labels()", "Use col_labels(data)")
 }
+
+#' Names of data sets in `teal_data` object
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Use `names()` instead of `datanames()`.
+#'
+#' `datanames()` is deprecated. If object should be hidden, then use a `.` (dot)
+#' prefix for the object's name.
+#'
+#' @param x (`teal_data` or `qenv_error`) object to access or modify
+#' @param ... (`character`) new value for `@datanames`; all elements must be names of variables existing in `@env`
+#'
+#' @return The contents of `@datanames` or `teal_data` object with updated `@datanames`.
+#'
+#'
+#' @name datanames
+
+#' @rdname datanames
+#' @export
+datanames <- function(x, ...) {
+  lifecycle::deprecate_soft("0.6.1", "datanames()", details = "names()")
+  names(x)
+}
+
+#' @rdname datanames
+`datanames<-` <- function(x, value, ...) {
+  lifecycle::deprecate_soft(
+    "0.6.1",
+    "`datanames<-`()",
+    details = "Function has no effect. Use a `.` (dot) prefix to hide objects instead in `teal_data`. See the documentation for more details."
+  )
+  names(x)
+}
