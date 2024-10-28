@@ -8,9 +8,6 @@
 #' unless `all.names` parameter is set to `TRUE`.
 #'
 #' @param x A (`teal_data`) object to access or modify.
-#' @param all.names (`logical(1)`) that specifies whether to include hidden
-#' objects.
-#' @param value Does nothing as the names assignment is not supported.
 #'
 #' @return A character vector of names.
 #'
@@ -23,18 +20,9 @@
 #' names(td)
 #'
 #' @export
-names.teal_data <- function(x, all.names = FALSE) {
-  checkmate::assert_flag(all.names)
-  # Call method on qenv class
-  names_x <- utils::getS3method("names", class = "qenv")(x, all.names)
+names.teal_data <- function(x) {
+  names_x <- utils::getS3method("names", class = "qenv")(x)
   .get_sorted_names(names_x, join_keys(x), teal.code::get_env(x))
-}
-
-#' @rdname names.teal_data
-#' @export
-`names.teal_data<-` <- function(x, value) {
-  warning("`names(x) <- value` assignment does nothing for teal_data objects")
-  x
 }
 
 #' @keywords internal

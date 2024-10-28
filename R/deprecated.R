@@ -370,11 +370,22 @@ datanames <- function(x, ...) {
 }
 
 #' @rdname datanames
-`datanames<-` <- function(x, value, ...) {
+`datanames<-.teal_data` <- function(x, value, ...) {
   lifecycle::deprecate_soft(
     "0.6.1",
     "`datanames<-`()",
-    details = "Function has no effect. Use a `.` (dot) prefix to hide objects instead in `teal_data`. See the documentation for more details."
+    details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
   )
   names(x)
+}
+
+#' @export
+#' @keywords internal
+`names<-.teal_data` <- function(x, value) {
+  lifecycle::deprecate_warn(
+    "0.6.1",
+    "`names.teal_data<-`()",
+    details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
+  )
+  x
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/deprecated.R
 \name{datanames}
 \alias{datanames}
-\alias{datanames<-}
+\alias{datanames<-.teal_data}
 \title{Names of data sets in \code{teal_data} object}
 \usage{
 datanames(x, ...)
 
-datanames(x, ...) <- value
+datanames.teal_data(x, ...) <- value
 }
 \arguments{
 \item{x}{(\code{teal_data} or \code{qenv_error}) object to access or modify}

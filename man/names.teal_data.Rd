@@ -2,20 +2,12 @@
 % Please edit documentation in R/teal_data-names.R
 \name{names.teal_data}
 \alias{names.teal_data}
-\alias{names.teal_data<-}
 \title{Names of data sets in \code{teal_data} object}
 \usage{
-\method{names}{teal_data}(x, all.names = FALSE)
-
-\method{names}{`teal_data<-`}(x, value)
+\method{names}{teal_data}(x)
 }
 \arguments{
 \item{x}{A (\code{teal_data}) object to access or modify.}
-
-\item{all.names}{(\code{logical(1)}) that specifies whether to include hidden
-objects.}
-
-\item{value}{Does nothing as the names assignment is not supported.}
 }
 \value{
 A character vector of names.
