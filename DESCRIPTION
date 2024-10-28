@@ -73,6 +73,7 @@ Collate:
     'teal.data.R'
     'teal_data-class.R'
     'teal_data-datanames.R'
+    'teal_data-extract.R'
     'teal_data-get_code.R'
     'teal_data-show.R'
     'teal_data.R'
