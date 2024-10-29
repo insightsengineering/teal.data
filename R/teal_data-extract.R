@@ -29,9 +29,20 @@
   if (!length(names_in_env)) {
     return(teal_data())
   }
+  # From ?NextMethod
+  # To pass `names` to `NextMethod` - it looks like it needs to be called `names`
+  # and created in the environment of the function that calls `NextMehod`.
 
-  subset_qenv <- utils::getFromNamespace("[.qenv", "teal.code")
-  x <- subset_qenv(x, names_in_env)
+  # NextMethod works by creating a special call frame for the next method. If no new arguments are supplied, the
+  # arguments will be the same in number, order and name as those to the current method but their values will be
+  # promises to evaluate their name in the current method and environment. Any named arguments matched to ... are
+  # handled specially: they either replace existing arguments of the same name or are appended to the argument list.
+  # They are passed on as the promise that was supplied as an argument to the current environment.
+  # (S does this differently!) If they have been evaluated in the current (or a previous environment) they remain
+  # evaluated. (This is a complex area, and subject to change: see the draft ‘R Language Definition’.)
+
+  names <- names_in_env
+  x <- NextMethod("`[`", x)
   x@join_keys <- x@join_keys[names_in_env]
 
   x
