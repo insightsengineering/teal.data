@@ -1,5 +1,5 @@
 #'
-#' @section Subsetting:
+#' @describeIn teal_data Subsetting
 #' `x[names]` subsets objects in `teal_data` environment and limit the code to the necessary needed to build limited
 #' objects.
 #'
@@ -19,8 +19,6 @@
 #' join_keys(data["b"])
 #' join_keys(data)["a"] # should show empty keys
 #' join_keys(data)["b"]
-#'
-#' @rdname teal_data
 #'
 #' @export
 `[.teal_data` <- function(x, names) {
