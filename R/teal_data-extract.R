@@ -27,6 +27,7 @@
   checkmate::assert_class(names, "character")
   names_in_env <- intersect(names, ls(get_env(x)))
   if (!length(names_in_env)) {
+    warning("None of `names` elements exist in `teal_data`. Returning empty `teal_data`.")
     return(teal_data())
   }
   # From ?NextMethod
