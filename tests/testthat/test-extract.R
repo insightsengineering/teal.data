@@ -19,7 +19,7 @@ testthat::test_that("`[.` handles names as NA_character_", {
   )
 })
 
-testthat::test_that("`[.` thorws warnings if names is NULL", {
+testthat::test_that("`[.` throws warning if names is NULL", {
   data <- teal_data(x = 1, a = 2)
   testthat::expect_error(data[NULL], "Assertion on 'names' failed: Must inherit from class 'character'")
 })
