@@ -51,9 +51,7 @@ setClass(
 #' @param join_keys (`join_keys`) object
 #' @rdname new_teal_data
 #' @keywords internal
-new_teal_data <- function(data,
-                          code = character(0),
-                          join_keys = join_keys()) {
+new_teal_data <- function(data, code = character(0), join_keys = join_keys()) {
   checkmate::assert_list(data)
   checkmate::assert_class(join_keys, "join_keys")
   if (!any(is.language(code), is.character(code))) {
@@ -75,7 +73,7 @@ new_teal_data <- function(data,
 
   methods::new(
     "teal_data",
-    env = new_env,
+    .xData = new_env,
     code = code,
     warnings = rep("", length(code)),
     messages = rep("", length(code)),
