@@ -3,6 +3,26 @@ testthat::test_that("`[.` returns empty teal_data for improper names", {
   testthat::expect_equal(data["y"], teal_data())
 })
 
+testthat::test_that("`[.` handles empty names", {
+  data <- teal_data(x = 1, a = 2)
+  testthat::expect_equal(data[character(0)], teal_data())
+})
+
+testthat::test_that("`[.` handles names as NA_character_", {
+  data <- teal_data(x = 1, a = 2)
+  testthat::expect_equal(data[NA_character_], teal_data())
+})
+
+testthat::test_that("`[.` thorws warnings if names is NULL", {
+  data <- teal_data(x = 1, a = 2)
+  testthat::expect_error(data[NULL], "Assertion on 'names' failed: Must inherit from class 'character'")
+})
+
+testthat::test_that("`[.` thorws warnings if names is numeric", {
+  data <- teal_data(x = 1, a = 2)
+  testthat::expect_error(data[1], "Assertion on 'names' failed: Must inherit from class 'character'")
+})
+
 testthat::test_that("`[.` returns limited join_keys", {
   data <- teal_data(a = 1, b = 2)
 
