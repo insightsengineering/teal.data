@@ -14,19 +14,24 @@ setOldClass("join_keys")
 #' @name teal_data-class
 #' @rdname teal_data-class
 #'
-#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables.
-#'  Access variables with [get_var()] or [`[[`].
-#'  No setter provided. Evaluate code to add variables into `@env`.
-#' @slot code (`character`) vector representing code necessary to reproduce the contents of `@env`.
+#' @slot .xData (`environment`) environment containing data sets and possibly
+#'  auxiliary variables.
+#'  Access variables with [get()], [`$`], [get_var()] or [`[[`].
+#'  No setter provided. Evaluate code to add variables into `@.xData`.
+#' @slot code (`character`) vector representing code necessary to reproduce the
+#'  contents of `@.xData`.
 #'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
-#' @slot id (`integer`) random identifier assigned to each element of `@code`. Used internally.
+#' @slot id (`integer`) random identifier assigned to each element of `@code`.
+#'  Used internally.
 #' @slot warnings (`character`) vector of warnings raised when evaluating code.
 #'  Access with [get_warnings()].
 #' @slot messages (`character`) vector of messages raised when evaluating code.
-#' @slot join_keys (`join_keys`) object specifying joining keys for data sets in `@env`.
+#' @slot join_keys (`join_keys`) object specifying joining keys for data sets in
+#' `@.xData`.
 #'  Access or modify with [join_keys()].
-#' @slot verified (`logical(1)`) flag signifying that code in `@code` has been proven to yield contents of `@env`.
+#' @slot verified (`logical(1)`) flag signifying that code in `@code` has been
+#'  proven to yield contents of `@.xData`.
 #'  Used internally. See [`verify()`] for more details.
 #'
 #' @import teal.code

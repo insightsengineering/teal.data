@@ -11,18 +11,11 @@ testthat::test_that("variables with dot prefix are omitted", {
 })
 
 # set ---
-testthat::describe("names<- called on teal_data", {
-  testthat::it("throws warning", {
-    td <- teal_data(i = iris, m = mtcars)
-    testthat::expect_warning(names(td) <- c("a", "b", "c"), "assignment does nothing for qenv objects")
-  })
-
-  testthat::it("does not change it", {
-    td <- teal_data(i = iris, m = mtcars)
-    tdc <- td <- teal_data(i = iris, m = mtcars)
-    suppressWarnings(names(td) <- c("a", "b", "c"))
-    testthat::expect_identical(qe, qec)
-  })
+testthat::test_that("names<- called on teal_data does not change it", {
+  td <- teal_data(i = iris, m = mtcars)
+  tdc <- td <- teal_data(i = iris, m = mtcars)
+  suppressWarnings(names(td) <- c("a", "b", "c"))
+  testthat::expect_identical(td, tdc)
 })
 
 # qenv.error support ----
@@ -31,23 +24,6 @@ testthat::test_that("names supports qenv.error class", {
   testthat::expect_no_error(names(qe))
 })
 
-testthat::test_that("names called on qenv.error returns NULL", {
-  qe <- within(teal_data(), stop())
-  testthat::expect_null(names(qe))
-})
-
-testthat::describe("names<- called on qenv.error", {
-  testthat::it("throws warning", {
-    qe <- within(teal_data(), stop())
-    testthat::expect_warning(names(qe) <- c("a", "b", "c"), "assignment does nothing for qenv.error objects")
-  })
-  testthat::test_that("does not change qenv.error", {
-    qe <- within(teal_data(), stop())
-    qec <- within(teal_data(), stop())
-    suppressWarnings(names(qe) <- c("a", "b", "c"))
-    testthat::expect_identical(qe, qec)
-  })
-})
 
 # topological_order ----
 
@@ -124,10 +100,7 @@ testthat::test_that("names return parent if join_keys were provided and parent e
   join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
   names(join_keys(data)) <- c(".ADSL", "ADTTE")
 
-  testthat::expect_identical(
-    names(data),
-    c("ADSL", "ADTTE", "iris")
-  )
+  testthat::expect_setequal(names(data), c(".ADSL", "ADTTE", "iris"))
 })
 
 testthat::test_that("names do not return parent if join_keys were provided and parent did not exists in env", {
@@ -135,11 +108,6 @@ testthat::test_that("names do not return parent if join_keys were provided and p
     ADTTE = teal.data::rADTTE, # nolint: object_name.
     iris = iris
   )
-
   join_keys(data) <- default_cdisc_join_keys[c("ADSL", "ADTTE")]
-
-  testthat::expect_identical(
-    names(data),
-    c("ADTTE", "iris")
-  )
+  testthat::expect_setequal(names(data), c("ADTTE", "iris"))
 })

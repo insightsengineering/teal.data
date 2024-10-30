@@ -2,10 +2,12 @@
 #'
 #' Checks whether code in `teal_data` object reproduces the stored objects.
 #'
-#' If objects created by code in the `@code` slot of `x` are `all_equal` to the contents of the `@env` slot,
+#' If objects created by code in the `@code` slot of `x` are `all_equal` to the
+#' contents of the `@.xData` slot,
 #' the function updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
 #' Once verified, the slot will always be set to `TRUE`.
-#' If the `@code` fails to recreate objects in `teal_data@env`, an error is raised.
+#' If the `@code` fails to recreate objects in `teal_data`'s environment, an
+#' error is raised.
 #'
 #' @return Input `teal_data` object or error.
 #'
@@ -65,7 +67,7 @@ setMethod("verify", signature = "teal_data", definition = function(x) {
     stop(conditionMessage(y), call. = FALSE)
   }
 
-  reproduced <- isTRUE(all.equal(x@env, y@env))
+  reproduced <- isTRUE(all.equal(teal.code::get_env(x), teal.code::get_env(y)))
   if (reproduced) {
     x@verified <- TRUE
     methods::validObject(x)
@@ -74,15 +76,15 @@ setMethod("verify", signature = "teal_data", definition = function(x) {
     error <- "Code verification failed."
 
     objects_diff <- vapply(
-      intersect(names(x@env), names(y@env)),
+      intersect(names(x), names(y)),
       function(element) {
-        isTRUE(all.equal(x@env[[element]], y@env[[element]]))
+        isTRUE(all.equal(x[[element]], y[[element]]))
       },
       logical(1)
     )
 
-    names_diff_other <- setdiff(names(y@env), names(x@env))
-    names_diff_inenv <- setdiff(names(x@env), names(y@env))
+    names_diff_other <- setdiff(names(y), names(x))
+    names_diff_inenv <- setdiff(names(x), names(y))
 
     if (length(objects_diff)) {
       error <- c(

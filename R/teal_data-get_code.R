@@ -2,8 +2,10 @@
 #'
 #' Retrieve code from `teal_data` object.
 #'
-#' Retrieve code stored in `@code`, which (in principle) can be used to recreate all objects found in `@env`.
-#' Use `names` to limit the code to one or more of the datasets enumerated in `@datanames`.
+#' Retrieve code stored in `@code`, which (in principle) can be used to recreate
+#' all objects found in `@.xData`.
+#' Use `names` to limit the code to one or more of the datasets enumerated in
+#' the environment.
 #'
 #' @section Extracting dataset-specific code:
 #' When `names` is specified, the code returned will be limited  to the lines needed to _create_

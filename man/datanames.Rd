@@ -2,17 +2,21 @@
 % Please edit documentation in R/deprecated.R
 \name{datanames}
 \alias{datanames}
-\alias{datanames<-.teal_data}
+\alias{`datanames<-.teal_data`}
+\alias{datanames<-}
+\alias{names<-.teal_data}
 \title{Names of data sets in \code{teal_data} object}
 \usage{
-datanames(x, ...)
+datanames(x)
 
-datanames.teal_data(x, ...) <- value
+datanames(x) <- value
+
+\method{names}{teal_data}(x) <- value
 }
 \arguments{
 \item{x}{(\code{teal_data} or \code{qenv_error}) object to access or modify}
 
-\item{...}{(\code{character}) new value for \verb{@datanames}; all elements must be names of variables existing in \verb{@env}}
+\item{value}{(\code{character}) new value for \verb{@datanames}; all elements must be names of variables existing in \verb{@.xData}}
 }
 \value{
 The contents of \verb{@datanames} or \code{teal_data} object with updated \verb{@datanames}.
@@ -25,3 +29,4 @@ Use \code{names()} instead of \code{datanames()}.
 \code{datanames()} is deprecated. If object should be hidden, then use a \code{.} (dot)
 prefix for the object's name.
 }
+\keyword{internal}

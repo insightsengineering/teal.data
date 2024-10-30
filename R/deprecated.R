@@ -355,22 +355,23 @@ get_labels <- function(...) {
 #' prefix for the object's name.
 #'
 #' @param x (`teal_data` or `qenv_error`) object to access or modify
-#' @param ... (`character`) new value for `@datanames`; all elements must be names of variables existing in `@env`
+#' @param value (`character`) new value for `@datanames`; all elements must be names of variables existing in `@.xData`
 #'
 #' @return The contents of `@datanames` or `teal_data` object with updated `@datanames`.
-#'
+#' @aliases `datanames<-.teal_data`
 #'
 #' @name datanames
 
 #' @rdname datanames
 #' @export
-datanames <- function(x, ...) {
+datanames <- function(x) {
   lifecycle::deprecate_soft("0.6.1", "datanames()", details = "names()")
   names(x)
 }
 
 #' @rdname datanames
-`datanames<-.teal_data` <- function(x, value, ...) {
+#' @export
+`datanames<-` <- function(x, value) {
   lifecycle::deprecate_soft(
     "0.6.1",
     "`datanames<-`()",
@@ -379,12 +380,13 @@ datanames <- function(x, ...) {
   names(x)
 }
 
+#' @rdname datanames
 #' @export
 #' @keywords internal
 `names<-.teal_data` <- function(x, value) {
   lifecycle::deprecate_warn(
     "0.6.1",
-    "`names.teal_data<-`()",
+    "`names<-.teal_data`()",
     details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
   )
   x

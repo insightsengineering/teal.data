@@ -21,8 +21,8 @@
 #'
 #' @export
 names.teal_data <- function(x) {
-  names_x <- utils::getS3method("names", class = "qenv")(x)
-  .get_sorted_names(names_x, join_keys(x), teal.code::get_env(x))
+  names_x <- ls(x)
+  .get_sorted_names(names_x, join_keys(x), as.environment(x))
 }
 
 #' @keywords internal

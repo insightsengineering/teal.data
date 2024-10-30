@@ -18,25 +18,30 @@ If errors are raised, a \code{qenv.error} object is returned.
 \section{Slots}{
 
 \describe{
-\item{\code{env}}{(\code{environment}) environment containing data sets and possibly auxiliary variables.
-Access variables with \code{\link[=get_var]{get_var()}} or [\code{[[}].
-No setter provided. Evaluate code to add variables into \verb{@env}.}
+\item{\code{.xData}}{(\code{environment}) environment containing data sets and possibly
+auxiliary variables.
+Access variables with \code{\link[=get]{get()}}, \code{\link{$}}, \code{\link[=get_var]{get_var()}} or [\code{[[}].
+No setter provided. Evaluate code to add variables into \verb{@.xData}.}
 
-\item{\code{code}}{(\code{character}) vector representing code necessary to reproduce the contents of \verb{@env}.
+\item{\code{code}}{(\code{character}) vector representing code necessary to reproduce the
+contents of \verb{@.xData}.
 Access with \code{\link[=get_code]{get_code()}}.
 No setter provided. Evaluate code to append code to the slot.}
 
-\item{\code{id}}{(\code{integer}) random identifier assigned to each element of \verb{@code}. Used internally.}
+\item{\code{id}}{(\code{integer}) random identifier assigned to each element of \verb{@code}.
+Used internally.}
 
 \item{\code{warnings}}{(\code{character}) vector of warnings raised when evaluating code.
 Access with \code{\link[=get_warnings]{get_warnings()}}.}
 
 \item{\code{messages}}{(\code{character}) vector of messages raised when evaluating code.}
 
-\item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in \verb{@env}.
+\item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in
+\verb{@.xData}.
 Access or modify with \code{\link[=join_keys]{join_keys()}}.}
 
-\item{\code{verified}}{(\code{logical(1)}) flag signifying that code in \verb{@code} has been proven to yield contents of \verb{@env}.
+\item{\code{verified}}{(\code{logical(1)}) flag signifying that code in \verb{@code} has been
+proven to yield contents of \verb{@.xData}.
 Used internally. See \code{\link[=verify]{verify()}} for more details.}
 }}
 
