@@ -21,7 +21,6 @@
 #'
 #' @export
 #'
-#'
 #' @examples
 #' teal_data(x1 = iris, x2 = mtcars)
 #'
