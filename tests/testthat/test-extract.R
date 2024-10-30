@@ -1,16 +1,22 @@
 testthat::test_that("`[.` returns empty teal_data for improper names", {
   data <- teal_data(x = 1, a = 2)
-  testthat::expect_equal(data["y"], teal_data())
+  testthat::expect_warning(
+    testthat::expect_equal(data["y"], teal_data())
+  )
 })
 
 testthat::test_that("`[.` handles empty names", {
   data <- teal_data(x = 1, a = 2)
-  testthat::expect_equal(data[character(0)], teal_data())
+  testthat::expect_warning(
+    testthat::expect_equal(data[character(0)], teal_data())
+  )
 })
 
 testthat::test_that("`[.` handles names as NA_character_", {
   data <- teal_data(x = 1, a = 2)
-  testthat::expect_equal(data[NA_character_], teal_data())
+  testthat::expect_warning(
+    testthat::expect_equal(data[NA_character_], teal_data())
+  )
 })
 
 testthat::test_that("`[.` thorws warnings if names is NULL", {
