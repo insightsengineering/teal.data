@@ -30,7 +30,7 @@ testthat::test_that("`[.` returns limited join_keys", {
   empty_join_keys <- join_keys()
   attr(empty_join_keys, "names") <- character(0)
   testthat::expect_equal(
-    join_keys(data["a"]),  # By default   named list || names() is character(0)
-    empty_join_keys        # By default unnamed list || names() is NULL
+    join_keys(data["a"]), # By default   named list || names() is character(0)
+    empty_join_keys # By default unnamed list || names() is NULL
   )
 })
