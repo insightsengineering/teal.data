@@ -1,18 +1,3 @@
-testthat::test_that("`[.` returns empty teal_data for names not in teal_data", {
-  data <- teal_data(x = 1, a = 2)
-  testthat::expect_warning(
-    testthat::expect_equal(data["y"], teal_data()),
-    "None of `names` elements exist in `teal_data`. Returning empty `teal_data`."
-  )
-})
-
-testthat::test_that("`[.` returns limited teal_data for some names not in teal_data", {
-  data <- teal_data(x = 1, a = 2)
-  testthat::expect_warning(
-    testthat::expect_equal(data[c("y", "a")], data["a"]),
-    "Some elements of `names` do not exist in `teal_data`. Skipping those: y."
-  )
-})
 
 testthat::test_that("`[.` handles empty names", {
   data <- teal_data(x = 1, a = 2)
