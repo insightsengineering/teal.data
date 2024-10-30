@@ -24,7 +24,7 @@
 #'
 #' @export
 `[.teal_data` <- function(x, names) {
-  checkmate::assert_class(names, "character")
+  checkmate::assert_character(names)
   names <- intersect(names, ls(get_env(x)))
   if (!length(names)) {
     warning("None of `names` elements exist in `teal_data`. Returning empty `teal_data`.")
