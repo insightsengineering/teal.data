@@ -1,7 +1,16 @@
-testthat::test_that("`[.` returns empty teal_data for improper names", {
+testthat::test_that("`[.` returns empty teal_data for names not in teal_data", {
   data <- teal_data(x = 1, a = 2)
   testthat::expect_warning(
-    testthat::expect_equal(data["y"], teal_data())
+    testthat::expect_equal(data["y"], teal_data()),
+    "None of `names` elements exist in `teal_data`. Returning empty `teal_data`."
+  )
+})
+
+testthat::test_that("`[.` returns limited teal_data for some names not in teal_data", {
+  data <- teal_data(x = 1, a = 2)
+  testthat::expect_warning(
+    testthat::expect_equal(data[c("y", "a")], data["a"]),
+    "Some elements of `names` do not exist in `teal_data`. Skipping those: y."
   )
 })
 
@@ -21,12 +30,12 @@ testthat::test_that("`[.` handles names as NA_character_", {
 
 testthat::test_that("`[.` throws warning if names is NULL", {
   data <- teal_data(x = 1, a = 2)
-  testthat::expect_error(data[NULL], "Assertion on 'names' failed: Must inherit from class 'character'")
+  testthat::expect_error(data[NULL], "Assertion on 'names' failed: Must be of type 'character', not 'NULL'.")
 })
 
 testthat::test_that("`[.` thorws warnings if names is numeric", {
   data <- teal_data(x = 1, a = 2)
-  testthat::expect_error(data[1], "Assertion on 'names' failed: Must inherit from class 'character'")
+  testthat::expect_error(data[1], "Assertion on 'names' failed: Must be of type 'character', not 'double'.")
 })
 
 testthat::test_that("`[.` returns limited join_keys", {
