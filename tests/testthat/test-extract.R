@@ -1,4 +1,3 @@
-
 testthat::test_that("`[.` handles empty names", {
   data <- teal_data(x = 1, a = 2)
   testthat::expect_warning(
