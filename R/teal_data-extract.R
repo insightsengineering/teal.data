@@ -24,26 +24,7 @@
 #'
 #' @export
 `[.teal_data` <- function(x, names) {
-  checkmate::assert_character(names)
-  possible_names <- ls(get_env(x))
-  names_warn <- setdiff(names, possible_names)
-  names <- intersect(names, possible_names)
-  if (!length(names)) {
-    warning("None of `names` elements exist in `teal_data`. Returning empty `teal_data`.")
-    return(teal_data())
-  }
-
-  if (length(names_warn)) {
-    warning(
-      sprintf(
-        "Some elements of `names` do not exist in `teal_data`. Skipping those: %s.",
-        paste(names_warn, collapse = ", ")
-      )
-    )
-  }
-
   x <- NextMethod("`[`", x) # takes 'names' from function's environment
   x@join_keys <- x@join_keys[names]
-
   x
 }
