@@ -21,7 +21,7 @@
 #'
 #' @export
 names.teal_data <- function(x) {
-  names_x <- ls(x)
+  names_x <- names(as.environment(x))
   .get_sorted_names(names_x, join_keys(x), as.environment(x))
 }
 
