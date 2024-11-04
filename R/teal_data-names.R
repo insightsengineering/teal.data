@@ -27,6 +27,9 @@ names.teal_data <- function(x) {
   .get_sorted_names(ls(envir = envir), join_keys(x), envir)
 }
 
+#' @export
+length.teal.data <- function(x) length(ls(x))
+
 #' @keywords internal
 .get_sorted_names <- function(datanames, join_keys, env) {
   child_parent <- sapply(datanames, parent, x = join_keys, USE.NAMES = TRUE, simplify = FALSE)
