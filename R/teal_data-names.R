@@ -21,7 +21,9 @@
 #'
 #' @export
 names.teal_data <- function(x) {
-  names_x <- names(as.environment(x))
+  # Sorting can be safely done as environments don't have any order
+  # nor support numeric-index subsetting
+  names_x <- sort(names(as.environment(x)))
   .get_sorted_names(names_x, join_keys(x), as.environment(x))
 }
 
