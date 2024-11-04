@@ -14,12 +14,12 @@ A character vector of names.
 }
 \description{
 Functions to get the names of a \code{teal_data} object.
-The names are extrapolated from the objects in the \code{qenv} environment and
-are not stored statically, unlike the normal behavior of \code{names()} function.
+The names are obtained from the objects listed in the \code{qenv} environment.
 }
 \details{
-Objects named with a \code{.} (dot) prefix will be ignored and not returned,
-unless \code{all.names} parameter is set to \code{TRUE}.
+Objects named with a \code{.} (dot) prefix will be ignored and not returned.
+To get the names of all objects, use \code{ls(x, all.names = TRUE)}, however, it
+will not group the names by the join_keys topological structure.
 }
 \examples{
 td <- teal_data(iris = iris)
@@ -27,6 +27,6 @@ td <- within(td, mtcars <- mtcars)
 names(td)
 
 td <- within(td, .CO2 <- CO2)
-names(td)
+names(td) # '.CO2' will not be returned
 
 }
