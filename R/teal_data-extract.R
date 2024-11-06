@@ -24,9 +24,7 @@
 #'
 #' @export
 `[.teal_data` <- function(x, names) {
-  names_no_raw <- names
-  names <- c(names, ".raw_data")
   x <- NextMethod("`[`", x) # takes 'names' from function's environment
-  x@join_keys <- x@join_keys[names_no_raw]
+  x@join_keys <- x@join_keys[names]
   x
 }
