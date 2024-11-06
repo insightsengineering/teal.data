@@ -3,7 +3,7 @@
 #' Checks whether code in `teal_data` object reproduces the stored objects.
 #'
 #' If objects created by code in the `@code` slot of `x` are `all_equal` to the
-#' contents of the `@.xData` slot,
+#' contents of the environment (`@.xData` slot),
 #' the function updates the `@verified` slot to `TRUE` in the returned `teal_data` object.
 #' Once verified, the slot will always be set to `TRUE`.
 #' If the `@code` fails to recreate objects in `teal_data`'s environment, an

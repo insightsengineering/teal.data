@@ -3,7 +3,7 @@
 #' Retrieve code from `teal_data` object.
 #'
 #' Retrieve code stored in `@code`, which (in principle) can be used to recreate
-#' all objects found in `@.xData`.
+#' all objects found in the environment (`@.xData`).
 #' Use `names` to limit the code to one or more of the datasets enumerated in
 #' the environment.
 #'

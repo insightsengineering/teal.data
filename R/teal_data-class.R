@@ -46,44 +46,29 @@ setClass(
   )
 )
 
-#' Initialize `teal_data` object
+#' It initializes the `teal_data` class
 #'
-#' @name new_teal_data
-#'
-#' @param data (`named list`) of data objects.
-#' @param code (`character` or `language`) code to reproduce the `data`.
-#'   Accepts and stores comments also.
-#' @param join_keys (`join_keys`) object
-#' @rdname new_teal_data
-#' @keywords internal
-new_teal_data <- function(data, code = character(0), join_keys = join_keys()) {
-  checkmate::assert_list(data)
-  checkmate::assert_class(join_keys, "join_keys")
-  if (!any(is.language(code), is.character(code))) {
-    stop("`code` must be a character or language object.")
+#' Accepts .xData as a list and converts it to an environment before initializing
+#' parent constructor (`qenv`).
+#' @noRd
+setMethod(
+  "initialize",
+  "teal_data",
+  function(.Object, .xData = list(), join_keys = join_keys(), ...) { # nolint: object_name.
+    # Allow .xData to be a list and convert it to an environment
+    if (!missing(.xData) && inherits(.xData, "list")) {
+      .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv))
+      lockEnvironment(.xData, bindings = TRUE)
+    }
+    checkmate::assert_environment(.xData)
+
+    .Object <- methods::callNextMethod(.Object, .xData, join_keys = join_keys, ...) # nolint: object_name.
+
+    # teal data specific slots
+    checkmate::assert_class(join_keys, "join_keys")
+    .Object@verified <- (length(.Object@code) == 0L && length(.Object@.xData) == 0L)
+    .Object@join_keys <- join_keys
+
+    .Object
   }
-
-  if (is.language(code)) {
-    code <- paste(lang2calls(code), collapse = "\n")
-  }
-  if (length(code)) {
-    code <- paste(code, collapse = "\n")
-  }
-  verified <- (length(code) == 0L && length(data) == 0L)
-
-  id <- sample.int(.Machine$integer.max, size = length(code))
-
-  new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
-  lockEnvironment(new_env, bindings = TRUE)
-
-  methods::new(
-    "teal_data",
-    .xData = new_env,
-    code = code,
-    warnings = rep("", length(code)),
-    messages = rep("", length(code)),
-    id = id,
-    join_keys = join_keys,
-    verified = verified
-  )
-}
+)
