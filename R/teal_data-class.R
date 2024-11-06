@@ -97,3 +97,28 @@ new_teal_data <- function(data,
     verified = verified
   )
 }
+
+
+#' Reshape code to the list
+#'
+#' List will be divided by the calls. Each element of the list contains `id` and `dependency` attributes.
+#'
+#' @param code `character` with the code.
+#'
+#' @return list of `character`s of the length equal to the number of calls in `code`.
+#'
+#' @keywords internal
+#' @noRd
+code2list <- function(code) {
+  checkmate::assert_character(code, null.ok = TRUE)
+  if (length(code)) {
+    lapply(split_code(code), function(current_code) {
+      attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
+      parsed_code <- parse(text = trimws(current_code), keep.source = TRUE)
+      attr(current_code, "dependency") <- extract_dependency(parsed_code)
+      current_code
+    })
+  } else {
+    list(character(0))
+  }
+}
