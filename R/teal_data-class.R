@@ -86,46 +86,12 @@ new_teal_data <- function(data,
   new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
   lockEnvironment(new_env, bindings = TRUE)
 
-  # GO WITH BELOW OR
-  # apply eval_code(code) in here
-  # but eval_code() works on an object and teal_data/qenv does not exist YET
-  attr(code, "id") <- sample.int(.Machine$integer.max, 1)
-  if (length(code)) {
-    split_code <- getFromNamespace("split_code", "teal.code")
-    extract_calls <- getFromNamespace("extract_calls", "teal.code")
-    extract_side_effects <- getFromNamespace("extract_side_effects", "teal.code")
-    extract_occurrence <- getFromNamespace("extract_occurrence", "teal.code")
-
-    split_code <- split_code(code)
-    split_code <- lapply(split_code, function(current_code) {
-      attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
-      current_call <- parse(text = trimws(current_code), keep.source = TRUE)
-      pd <- utils::getParseData(current_call)
-      pd <- teal.code:::normalize_pd(pd)
-      call_pd <- extract_calls(pd)[[1]]
-
-      attr(current_code, "dependency") <-
-        c(extract_side_effects(call_pd), extract_occurrence(call_pd))
-      current_code
-    })
-  } else {
-    split_code <- list(character(0))
-    # TODO: do we assign
-    # attr(split_code[[1]], "id") <- sample.int() ?
-    # TODO: do we need
-    # attr(split_code[[1]], "dependency") <- cahracter(0) ?
-  }
-
-  # TODO:
-  # warnings are empty and messages are empty
-  # should we reconsider `@verified` field and should we reconsider eval_code in here?
-
   datanames <- .get_sorted_datanames(datanames = datanames, join_keys = join_keys, env = new_env)
 
   methods::new(
     "teal_data",
     env = new_env,
-    code = code,
+    code = code2list(code),
     join_keys = join_keys,
     datanames = datanames,
     verified = verified
