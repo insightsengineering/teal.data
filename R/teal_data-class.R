@@ -57,7 +57,7 @@ setMethod(
   function(.Object, .xData = list(), join_keys = join_keys(), ...) { # nolint: object_name.
     # Allow .xData to be a list and convert it to an environment
     if (!missing(.xData) && inherits(.xData, "list")) {
-      .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv))
+      .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv)) # nolint: object_name.
       lockEnvironment(.xData, bindings = TRUE)
     }
     checkmate::assert_environment(.xData)
@@ -66,8 +66,8 @@ setMethod(
 
     # teal data specific slots
     checkmate::assert_class(join_keys, "join_keys")
-    .Object@verified <- (length(.Object@code) == 0L && length(.Object@.xData) == 0L)
-    .Object@join_keys <- join_keys
+    .Object@verified <- (length(.Object@code) == 0L && length(.Object@.xData) == 0L) # nolint: object_name.
+    .Object@join_keys <- join_keys # nolint: object_name.
 
     .Object
   }
