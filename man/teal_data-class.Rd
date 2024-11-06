@@ -22,16 +22,10 @@ If errors are raised, a \code{qenv.error} object is returned.
 Access variables with \code{\link[=get_var]{get_var()}} or [\code{[[}].
 No setter provided. Evaluate code to add variables into \verb{@env}.}
 
-\item{\code{code}}{(\code{character}) vector representing code necessary to reproduce the contents of \verb{@env}.
+\item{\code{code}}{(\code{list} of \code{character}) representing code necessary to reproduce the contents of \verb{@env}.
 Access with \code{\link[=get_code]{get_code()}}.
-No setter provided. Evaluate code to append code to the slot.}
-
-\item{\code{id}}{(\code{integer}) random identifier assigned to each element of \verb{@code}. Used internally.}
-
-\item{\code{warnings}}{(\code{character}) vector of warnings raised when evaluating code.
-Access with \code{\link[=get_warnings]{get_warnings()}}.}
-
-\item{\code{messages}}{(\code{character}) vector of messages raised when evaluating code.}
+No setter provided. Evaluate code to append code to the slot.
+Read more in Code section.}
 
 \item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in \verb{@env}.
 Access or modify with \code{\link[=join_keys]{join_keys()}}.}
@@ -43,5 +37,18 @@ Access or modify with \code{\link[=datanames]{datanames()}}.}
 \item{\code{verified}}{(\code{logical(1)}) flag signifying that code in \verb{@code} has been proven to yield contents of \verb{@env}.
 Used internally. See \code{\link[=verify]{verify()}} for more details.}
 }}
+
+\section{Code}{
+
+
+Each code element is a character representing one call. Each element has possible attributes:
+\itemize{
+\item \code{warnings} (\code{character}) the warnings output when evaluating the code element
+\item \code{messages} (\code{character}) the messages output when evaluating the code element
+\item \verb{id (}integer`) random identifier of the code element to make sure uniqueness when joining
+\item \code{dependency} (\code{character}) names of objects that appear in this call and gets affected by this call,
+separated by \verb{<-} (objects on LHS of \verb{<-} are affected by this line, and objects on RHS are affecting this line)
+}
+}
 
 \keyword{internal}
