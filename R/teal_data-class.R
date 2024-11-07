@@ -60,15 +60,16 @@ setMethod(
       .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv)) # nolint: object_name.
       lockEnvironment(.xData, bindings = TRUE)
     }
+    args <- list(...)
     checkmate::assert_environment(.xData)
-
-    .Object <- methods::callNextMethod(.Object, .xData, join_keys = join_keys, ...) # nolint: object_name.
-
-    # teal data specific slots
     checkmate::assert_class(join_keys, "join_keys")
-    .Object@verified <- (length(.Object@code) == 0L && length(.Object@.xData) == 0L) # nolint: object_name.
-    .Object@join_keys <- join_keys # nolint: object_name.
-
-    .Object
+    checkmate::assert_list(args, names = "named")
+    methods::callNextMethod(
+      .Object,
+      .xData,
+      join_keys = join_keys,
+      verified = (length(args$code) == 0L && length(.xData) == 0L),
+      ...
+    )
   }
 )
