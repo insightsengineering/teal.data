@@ -17,7 +17,7 @@ testthat::test_that("verify returns the same object with changed @verified field
   testthat::expect_identical(tdata2@verified, FALSE)
   testthat::expect_identical(tdata2_ver@verified, TRUE)
   testthat::expect_identical(tdata2_ver@code, tdata2@code)
-  testthat::expect_identical(tdata2_ver@env, tdata2@env)
+  testthat::expect_identical(teal.code::get_env(tdata2_ver), teal.code::get_env(tdata2))
 })
 
 testthat::test_that("verify raises error if @code does not restore objects in @env", {

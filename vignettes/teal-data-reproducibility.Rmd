@@ -105,7 +105,7 @@ Note that in when retrieving code for a specific dataset, the result is only the
 
 ## Tracking object dependencies
 
-Calling `get_code` with `datanames` specified initiates an analysis of the stored code, in which object dependencies are automatically discovered.
+Calling `get_code` with `names` specified initiates an analysis of the stored code, in which object dependencies are automatically discovered.
 If object `x` is created with an expression that uses object `y`, the lines that create object `y` must also be returned.
 This is quite effective when objects are created by simple assignments like `x <- foo(y)`.
 However, in rare cases discovering dependencies is impossible, _e.g._  when opening connections to databases or when objects are created by side effects (functions acting on their calling environment implicitly rather than returning a value that is then assigned).

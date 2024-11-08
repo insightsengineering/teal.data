@@ -41,6 +41,7 @@ reference:
       - join_key
       - join_keys
       - join_keys<-
+      - names.teal_data
       - names<-.join_keys
       - parents
       - parents<-
