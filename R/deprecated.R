@@ -377,7 +377,7 @@ datanames <- function(x) {
     "`datanames<-`()",
     details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
   )
-  names(x)
+  x
 }
 
 #' @rdname datanames
