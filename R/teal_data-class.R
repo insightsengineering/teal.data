@@ -111,7 +111,11 @@ new_teal_data <- function(data,
 #' @noRd
 code2list <- function(code) {
   checkmate::assert_character(code, null.ok = TRUE)
-  if (length(code)) {
+  if (length(code) == 0) return(list())
+
+  parsed_code <- parse(text = code, keep.source = TRUE)
+
+  if (length(parsed_code)) {
     lapply(split_code(code), function(current_code) {
       attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
       parsed_code <- parse(text = trimws(current_code), keep.source = TRUE)
@@ -119,6 +123,9 @@ code2list <- function(code) {
       current_code
     })
   } else {
-    list(character(0))
+    # empty code like "", or just comments
+    attr(code, "id") <- sample.int(.Machine$integer.max, size = 1)
+    attr(code, "dependency") <- extract_dependency(parsed_code) # in case comment contains @linksto tag
+    list(code)
   }
 }
