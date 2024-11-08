@@ -60,8 +60,9 @@ teal_data <- function(...,
     if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
       stop("Dot (`...`) arguments on `teal_data()` must be named.")
     }
-    new_teal_data(
-      data = data_objects,
+    methods::new(
+      "teal_data",
+      .xData = data_objects,
       code = code,
       join_keys = join_keys
     )
