@@ -118,7 +118,7 @@ code2list <- function(code) {
   if (length(parsed_code)) {
     lapply(split_code(code), function(current_code) {
       attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
-      parsed_code <- parse(text = trimws(current_code), keep.source = TRUE)
+      parsed_code <- parse(text = current_code, keep.source = TRUE)
       attr(current_code, "dependency") <- extract_dependency(parsed_code)
       current_code
     })
