@@ -18,33 +18,25 @@ testthat::test_that("teal_data allows to initialize empty teal_data with join_ke
   )
 })
 
-testthat::test_that("teal_data initializes teal_data object with @datanames taken from passed objects", {
-  testthat::expect_identical(
-    teal_data(iris = iris, mtcars = mtcars)@datanames,
-    c("iris", "mtcars")
-  )
-})
-
 testthat::test_that(
-  "teal_data initializes teal_data object without @datanames taken from join_keys if objects did not exist in env",
+  "teal_data initializes teal_data object without names taken from join_keys if objects did not exist in env",
   {
     testthat::expect_identical(
-      datanames(teal_data(join_keys = join_keys(join_key("parent", "child", "id")))),
+      names(teal_data(join_keys = join_keys(join_key("parent", "child", "id")))),
       character(0)
     )
   }
 )
 
 testthat::test_that(
-  "teal_data initializes teal_data object with @datanames taken only from passed objects and not join_keys",
+  "teal_data initializes teal_data object with names taken only from passed objects and not join_keys",
   {
     testthat::expect_identical(
-      datanames(teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))),
+      names(teal_data(iris = iris, join_keys = join_keys(join_key("parent", "child", "id")))),
       "iris"
     )
   }
 )
-
 
 testthat::test_that("teal_data returns teal_data when data passed as named list", {
   df1 <- data.frame(id = c("A", "B"), a = c(1L, 2L))
@@ -90,9 +82,9 @@ testthat::test_that("teal_data code is concatenated into single string", {
   )
 })
 
-testthat::test_that("teal_data@env is locked. Not able to modify, add or remove bindings", {
+testthat::test_that("teal_data@.xData is locked. Not able to modify, add or remove bindings", {
   data <- teal_data(iris = iris)
-  testthat::expect_error(data@env$iris <- iris, "cannot change value of locked binding for 'iris'")
-  testthat::expect_error(data@env$iris2 <- iris, "cannot add bindings to a locked environment")
-  testthat::expect_error(rm("iris", envir = data@env), "cannot remove bindings from a locked environment")
+  testthat::expect_error(data@.xData$iris <- iris, "cannot change value of locked binding for 'iris'")
+  testthat::expect_error(data@.xData$iris2 <- iris, "cannot add bindings to a locked environment")
+  testthat::expect_error(rm("iris", envir = data@.xData), "cannot remove bindings from a locked environment")
 })

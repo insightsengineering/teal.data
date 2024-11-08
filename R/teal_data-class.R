@@ -14,19 +14,18 @@ setOldClass("join_keys")
 #' @name teal_data-class
 #' @rdname teal_data-class
 #'
-#' @slot env (`environment`) environment containing data sets and possibly auxiliary variables.
-#'  Access variables with [get_var()] or [`[[`].
-#'  No setter provided. Evaluate code to add variables into `@env`.
+#' @slot .xData (`environment`) environment containing data sets and possibly
+#'  auxiliary variables.
+#'  Access variables with [get()], [`$`], [get_var()] or [`[[`].
+#'  No setter provided. Evaluate code to add variables into `@.xData`.
 #' @slot code (`list` of `character`) representing code necessary to reproduce the contents of `@env`.
 #'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
-#'  Read more in Code section.
-#' @slot join_keys (`join_keys`) object specifying joining keys for data sets in `@env`.
+#' @slot join_keys (`join_keys`) object specifying joining keys for data sets in
+#' `@.xData`.
 #'  Access or modify with [join_keys()].
-#' @slot datanames (`character`) vector of names of data sets in `@env`.
-#'  Used internally to distinguish them from auxiliary variables.
-#'  Access or modify with [datanames()].
-#' @slot verified (`logical(1)`) flag signifying that code in `@code` has been proven to yield contents of `@env`.
+#' @slot verified (`logical(1)`) flag signifying that code in `@code` has been
+#'  proven to yield contents of `@.xData`.
 #'  Used internally. See [`verify()`] for more details.
 #'
 #' @section Code:
@@ -43,61 +42,52 @@ setOldClass("join_keys")
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "join_keys", datanames = "character", verified = "logical"),
+  slots = c(join_keys = "join_keys", verified = "logical"),
   prototype = list(
     join_keys = join_keys(),
-    datanames = character(0),
     verified = logical(0)
   )
 )
 
-#' Initialize `teal_data` object
+#' It initializes the `teal_data` class
 #'
-#' @name new_teal_data
-#'
-#' @param data (`named list`) of data objects.
-#' @param code (`character` or `language`) code to reproduce the `data`.
-#'   Accepts and stores comments also.
-#' @param join_keys (`join_keys`) object
-#' @param datanames (`character`) names of datasets passed to `data`.
-#'   Needed when non-dataset objects are needed in the `env` slot.
-#' @rdname new_teal_data
-#' @keywords internal
-new_teal_data <- function(data,
-                          code = character(0),
-                          join_keys = join_keys(),
-                          datanames = names(data)) {
-  checkmate::assert_list(data)
-  checkmate::assert_class(join_keys, "join_keys")
-  if (is.null(datanames)) datanames <- character(0) # todo: allow to specify
-  checkmate::assert_character(datanames)
-  if (!any(is.language(code), is.character(code))) {
-    stop("`code` must be a character or language object.")
+#' Accepts .xData as a list and converts it to an environment before initializing
+#' parent constructor (`qenv`).
+#' @noRd
+setMethod(
+  "initialize",
+  "teal_data",
+  function(.Object, .xData = list(), join_keys = join_keys(), code = list(), ...) { # nolint: object_name.
+    # Allow .xData to be a list and convert it to an environment
+    if (!missing(.xData) && inherits(.xData, "list")) {
+      .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv)) # nolint: object_name.
+      lockEnvironment(.xData, bindings = TRUE)
+    }
+    args <- list(...)
+    checkmate::assert_environment(.xData)
+    checkmate::assert_class(join_keys, "join_keys")
+    checkmate::assert_list(args, names = "named")
+    if (!any(is.language(code), is.character(code))) {
+      stop("`code` must be a character or language object.")
+    }
+
+    if (is.language(code)) {
+      code <- paste(lang2calls(code), collapse = "\n")
+    }
+    if (length(code)) {
+      code <- paste(code, collapse = "\n")
+    }
+
+    methods::callNextMethod(
+      .Object,
+      .xData,
+      join_keys = join_keys,
+      verified = (length(args$code) == 0L && length(.xData) == 0L),
+      code = code2list(code),
+      ...
+    )
   }
-
-  if (is.language(code)) {
-    code <- paste(lang2calls(code), collapse = "\n")
-  }
-  if (length(code)) {
-    code <- paste(code, collapse = "\n")
-  }
-  verified <- (length(code) == 0L && length(data) == 0L)
-
-  new_env <- rlang::env_clone(list2env(data), parent = parent.env(.GlobalEnv))
-  lockEnvironment(new_env, bindings = TRUE)
-
-  datanames <- .get_sorted_datanames(datanames = datanames, join_keys = join_keys, env = new_env)
-
-  methods::new(
-    "teal_data",
-    env = new_env,
-    code = code2list(code),
-    join_keys = join_keys,
-    datanames = datanames,
-    verified = verified
-  )
-}
-
+)
 
 #' Reshape code to the list
 #'
@@ -111,7 +101,9 @@ new_teal_data <- function(data,
 #' @noRd
 code2list <- function(code) {
   checkmate::assert_character(code, null.ok = TRUE)
-  if (length(code) == 0) return(list())
+  if (length(code) == 0) {
+    return(list())
+  }
 
   parsed_code <- parse(text = code, keep.source = TRUE)
 
