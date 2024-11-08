@@ -18,7 +18,7 @@ setOldClass("join_keys")
 #'  auxiliary variables.
 #'  Access variables with [get()], [`$`], [get_var()] or [`[[`].
 #'  No setter provided. Evaluate code to add variables into `@.xData`.
-#' @slot code (`list` of `character`) representing code necessary to reproduce the contents of `@env`.
+#' @slot code (`list` of `character`) representing code necessary to reproduce the contents of `qenv`.
 #'  Access with [get_code()].
 #'  No setter provided. Evaluate code to append code to the slot.
 #' @slot join_keys (`join_keys`) object specifying joining keys for data sets in

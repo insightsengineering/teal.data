@@ -101,9 +101,9 @@ in a parent-child relationship and the mapping is automatically mirrored between
 \section{Functions}{
 
 \itemize{
-\item \code{x[datanames]}: Returns a subset of the \code{join_keys} object for
-given \code{datanames}, including parent \code{datanames} and symmetric mirror keys between
-\code{datanames} in the result.
+\item \code{x[names]}: Returns a subset of the \code{join_keys} object for
+given \code{names}, including parent \code{names} and symmetric mirror keys between
+\code{names} in the result.
 \item \code{x[i, j]}: Returns join keys between datasets \code{i} and \code{j},
 including implicit keys inferred from their relationship with a parent.
 }

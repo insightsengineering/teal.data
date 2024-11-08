@@ -3,7 +3,7 @@ testthat::test_that("teal_data allows to initialize empty teal_data object", {
 })
 
 testthat::test_that("empty teal_data returns empty code and verified=TRUE", {
-  testthat::expect_identical(teal_data()@code, list(character(0)))
+  testthat::expect_identical(teal_data()@code, list())
   testthat::expect_identical(teal_data()@verified, TRUE)
 })
 

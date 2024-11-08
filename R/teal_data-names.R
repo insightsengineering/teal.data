@@ -24,18 +24,18 @@ names.teal_data <- function(x) {
   # Sorting from `ls` can be safely done as environments don't have any order
   # nor support numeric-index subsetting
   envir <- as.environment(x)
-  .get_sorted_names(ls(envir = envir), join_keys(x), envir)
+  .get_sorted_names(names = ls(envir = envir), join_keys = join_keys(x), env = envir)
 }
 
 #' @export
 length.teal.data <- function(x) length(ls(x))
 
 #' @keywords internal
-.get_sorted_names <- function(datanames, join_keys, env) {
-  child_parent <- sapply(datanames, parent, x = join_keys, USE.NAMES = TRUE, simplify = FALSE)
+.get_sorted_names <- function(names, join_keys, env) {
+  child_parent <- sapply(names, parent, x = join_keys, USE.NAMES = TRUE, simplify = FALSE)
 
   union(
     intersect(unlist(topological_sort(child_parent)), ls(env, all.names = TRUE)),
-    datanames
+    names
   )
 }

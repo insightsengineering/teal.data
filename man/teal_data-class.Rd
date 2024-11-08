@@ -23,19 +23,9 @@ auxiliary variables.
 Access variables with \code{\link[=get]{get()}}, \code{\link{$}}, \code{\link[=get_var]{get_var()}} or [\code{[[}].
 No setter provided. Evaluate code to add variables into \verb{@.xData}.}
 
-\item{\code{code}}{(\code{character}) vector representing code necessary to reproduce the
-contents of \verb{@.xData}.
+\item{\code{code}}{(\code{list} of \code{character}) representing code necessary to reproduce the contents of \code{qenv}.
 Access with \code{\link[=get_code]{get_code()}}.
-No setter provided. Evaluate code to append code to the slot.
-Read more in Code section.}
-
-\item{\code{id}}{(\code{integer}) random identifier assigned to each element of \verb{@code}.
-Used internally.}
-
-\item{\code{warnings}}{(\code{character}) vector of warnings raised when evaluating code.
-Access with \code{\link[=get_warnings]{get_warnings()}}.}
-
-\item{\code{messages}}{(\code{character}) vector of messages raised when evaluating code.}
+No setter provided. Evaluate code to append code to the slot.}
 
 \item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in
 \verb{@.xData}.

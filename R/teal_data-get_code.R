@@ -121,7 +121,7 @@ setMethod("get_code",
     }
 
     if (!is.null(names) && lifecycle::is_present(datanames)) {
-      stop("Please use either 'names' (recommended) or 'datanames' parameter.")
+      stop("'names' shouldn't be specified with deprecated 'datanames' parameter.")
     }
 
     checkmate::assert_character(names, min.len = 1L, null.ok = TRUE)

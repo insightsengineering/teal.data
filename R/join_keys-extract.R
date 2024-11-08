@@ -2,9 +2,9 @@
 #' @order 2
 #'
 #' @section Functions:
-#' - `x[datanames]`: Returns a subset of the `join_keys` object for
-#' given `datanames`, including parent `datanames` and symmetric mirror keys between
-#' `datanames` in the result.
+#' - `x[names]`: Returns a subset of the `join_keys` object for
+#' given `names`, including parent `names` and symmetric mirror keys between
+#' `names` in the result.
 #' - `x[i, j]`: Returns join keys between datasets `i` and `j`,
 #'   including implicit keys inferred from their relationship with a parent.
 #'
