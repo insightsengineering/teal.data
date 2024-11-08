@@ -32,8 +32,10 @@ testthat::test_that("`[.` returns limited join_keys", {
   data <- teal_data(a = 1, b = 2)
 
   join_keys(data) <- join_keys(join_key("a", "b", "x"))
+  empty_join_keys <- join_keys()
+  attr(empty_join_keys, "names") <- character(0)
   testthat::expect_equal(
     join_keys(data["a"]),
-    join_keys()
+    empty_join_keys
   )
 })
