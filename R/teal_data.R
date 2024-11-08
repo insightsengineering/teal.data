@@ -31,12 +31,29 @@ teal_data <- function(...,
     join_keys <- teal.data::join_keys(join_keys)
   }
 
-  if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
-    stop("Dot (`...`) arguments on `teal_data()` must be named.")
+  if (
+    checkmate::test_list(
+      data_objects,
+      types = c("TealDataConnector", "TealDataset", "TealDatasetConnector"),
+      min.len = 1
+    )
+  ) {
+    lifecycle::deprecate_stop(
+      when = "0.4.0",
+      "teal_data(
+        data_objects = 'should use data directly. Using TealDatasetConnector and TealDataset is deprecated.
+        Find more information on https://github.com/insightsengineering/teal/discussions/945'
+      )"
+    )
+  } else {
+    if (length(data_objects) > 0 && !checkmate::test_names(names(data_objects), type = "named")) {
+      stop("Dot (`...`) arguments on `teal_data()` must be named.")
+    }
+    methods::new(
+      "teal_data",
+      .xData = data_objects,
+      code = code,
+      join_keys = join_keys
+    )
   }
-  new_teal_data(
-    data = data_objects,
-    code = code,
-    join_keys = join_keys
-  )
 }

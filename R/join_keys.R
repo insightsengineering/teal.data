@@ -142,7 +142,6 @@ join_keys.teal_data <- function(...) {
 #' join_keys(td)
 `join_keys<-.teal_data` <- function(x, value) {
   join_keys(x@join_keys) <- value
-  datanames(x) <- x@datanames # datanames fun manages some exceptions
   x
 }
 
