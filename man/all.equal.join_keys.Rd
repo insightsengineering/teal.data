@@ -4,7 +4,7 @@
 \alias{all.equal.join_keys}
 \title{Test if two objects are (nearly) equal}
 \usage{
-\method{all}{equal.join_keys}(target, current, ...)
+\method{all.equal}{join_keys}(target, current, ...)
 }
 \arguments{
 \item{target}{\R object.}
