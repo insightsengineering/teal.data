@@ -25,9 +25,9 @@
 #' @export
 `[.teal_data` <- function(x, names) {
   x <- NextMethod("`[`", x, check_names = FALSE) # takes 'names' from function's environment
-  if (inherits(x, "qenv")) {
+  if (!inherits(x, "teal_data")) {
     return(teal_data())
-  } # all 'names' not in object
+  } # all 'names' not in object, and teal.code::`[.qenv` returns qenv()
   x@join_keys <- x@join_keys[names]
   x
 }
