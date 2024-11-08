@@ -2,11 +2,8 @@ testthat::test_that("teal_data allows to initialize empty teal_data object", {
   testthat::expect_s4_class(teal_data(), "teal_data")
 })
 
-testthat::test_that("empty teal_data returns empty code, id, wartnings and messages and verified=TRUE", {
-  testthat::expect_identical(teal_data()@code, character(0))
-  testthat::expect_identical(teal_data()@id, integer(0))
-  testthat::expect_identical(teal_data()@messages, character(0))
-  testthat::expect_identical(teal_data()@warnings, character(0))
+testthat::test_that("empty teal_data returns empty code and verified=TRUE", {
+  testthat::expect_identical(teal_data()@code, list(character(0)))
   testthat::expect_identical(teal_data()@verified, TRUE)
 })
 
@@ -79,16 +76,16 @@ testthat::test_that("teal_data accepts code as language", {
 
 testthat::test_that("teal_data code unfolds code-block wrapped in '{'", {
   testthat::expect_identical(
-    teal_data(iris1 = iris, code = quote({
+    get_code(teal_data(iris1 = iris, code = quote({
       iris1 <- iris
-    }))@code,
+    }))),
     "iris1 <- iris"
   )
 })
 
 testthat::test_that("teal_data code is concatenated into single string", {
   testthat::expect_identical(
-    teal_data(iris1 = iris, code = c("iris1 <- iris", "iris2 <- iris1"))@code,
+    get_code(teal_data(iris1 = iris, code = c("iris1 <- iris", "iris2 <- iris1"))),
     "iris1 <- iris\niris2 <- iris1"
   )
 })
