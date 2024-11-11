@@ -14,7 +14,7 @@
 #' @param code (`character`, `language`) optional code to reproduce the datasets provided in `...`.
 #'  Note this code is not executed and the `teal_data` may not be reproducible
 #'
-#' Use [verify()] to verify code reproducibility .
+#'  Use [verify()] to verify code reproducibility .
 #'
 #' @return A `teal_data` object.
 #'

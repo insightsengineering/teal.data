@@ -1,7 +1,7 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.6.0.9016
+Version: 0.6.0.9017
 Date: 2024-11-08
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = c("aut", "cre"),
@@ -72,10 +72,11 @@ Collate:
     'join_keys.R'
     'teal.data.R'
     'teal_data-class.R'
+    'teal_data-constructor.R'
+    'teal_data-extract.R'
     'teal_data-get_code.R'
     'teal_data-names.R'
     'teal_data-show.R'
-    'teal_data.R'
     'testhat-helpers.R'
     'topological_sort.R'
     'verify.R'
