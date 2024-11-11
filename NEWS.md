@@ -5,7 +5,7 @@
 - Soft deprecate `datanames` argument of `get_code()`. Use `names` instead.
 - Soft deprecate of `datanames()`. Use `names()` instead.
 - Deprecate of `datanames(x) <- value`. Does nothing, replace with renaming the objects inside the environment.
-- All arguments and functions deprecated on 0.4.0 were removed.
+- All parameters and functions deprecated on 0.4.0 were removed.
 
 
 ### Enhancements
