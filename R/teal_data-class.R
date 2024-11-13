@@ -28,14 +28,7 @@ setOldClass("join_keys")
 #'  proven to yield contents of `@.xData`.
 #'  Used internally. See [`verify()`] for more details.
 #'
-#' @section Code:
-#'
-#' Each code element is a character representing one call. Each element has possible attributes:
-#' - `warnings` (`character`) the warnings output when evaluating the code element
-#' - `messages` (`character`) the messages output when evaluating the code element
-#' - `id (`integer`) random identifier of the code element to make sure uniqueness when joining
-#' - `dependency` (`character`) names of objects that appear in this call and gets affected by this call,
-#' separated by `<-` (objects on LHS of `<-` are affected by this line, and objects on RHS are affecting this line)
+#' @inheritSection teal.code::`qenv-class` Code
 #'
 #' @import teal.code
 #' @keywords internal
