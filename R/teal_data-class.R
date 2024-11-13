@@ -107,17 +107,17 @@ code2list <- function(code) {
 
   parsed_code <- parse(text = code, keep.source = TRUE)
 
-  if (length(parsed_code)) {
+  code_list <- if (length(parsed_code)) {
     lapply(split_code(code), function(current_code) {
-      attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
       parsed_code <- parse(text = current_code, keep.source = TRUE)
       attr(current_code, "dependency") <- extract_dependency(parsed_code)
       current_code
     })
   } else {
     # empty code like "", or just comments
-    attr(code, "id") <- sample.int(.Machine$integer.max, size = 1)
     attr(code, "dependency") <- extract_dependency(parsed_code) # in case comment contains @linksto tag
     list(code)
   }
+  names(code_list) <- sample.int(.Machine$integer.max, length(code_list))
+  code_list
 }
