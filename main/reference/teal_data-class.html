@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">teal.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9019</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9020</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,11 +96,12 @@ Used internally. See <code><a href="verify.html">verify()</a></code> for more de
 
 
 
-<p>Each code element is a character representing one call. Each element has possible attributes:</p><ul><li><p><code>warnings</code> (<code>character</code>) the warnings output when evaluating the code element</p></li>
-<li><p><code>messages</code> (<code>character</code>) the messages output when evaluating the code element</p></li>
-<li><p><code>id (</code>integer`) random identifier of the code element to make sure uniqueness when joining</p></li>
+
+<p>Each code element is a character representing one call. Each element is named with the random
+identifier to make sure uniqueness when joining. Each element has possible attributes:</p><ul><li><p><code>warnings</code> (<code>character</code>) the warnings output when evaluating the code element.</p></li>
+<li><p><code>messages</code> (<code>character</code>) the messages output when evaluating the code element.</p></li>
 <li><p><code>dependency</code> (<code>character</code>) names of objects that appear in this call and gets affected by this call,
-separated by <code>&lt;-</code> (objects on LHS of <code>&lt;-</code> are affected by this line, and objects on RHS are affecting this line)</p></li>
+separated by <code>&lt;-</code> (objects on LHS of <code>&lt;-</code> are affected by this line, and objects on RHS are affecting this line).</p></li>
 </ul></div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
