@@ -28,14 +28,7 @@ setOldClass("join_keys")
 #'  proven to yield contents of `@.xData`.
 #'  Used internally. See [`verify()`] for more details.
 #'
-#' @section Code:
-#'
-#' Each code element is a character representing one call. Each element has possible attributes:
-#' - `warnings` (`character`) the warnings output when evaluating the code element
-#' - `messages` (`character`) the messages output when evaluating the code element
-#' - `id (`integer`) random identifier of the code element to make sure uniqueness when joining
-#' - `dependency` (`character`) names of objects that appear in this call and gets affected by this call,
-#' separated by `<-` (objects on LHS of `<-` are affected by this line, and objects on RHS are affecting this line)
+#' @inheritSection teal.code::`qenv-class` Code
 #'
 #' @import teal.code
 #' @keywords internal
@@ -107,17 +100,17 @@ code2list <- function(code) {
 
   parsed_code <- parse(text = code, keep.source = TRUE)
 
-  if (length(parsed_code)) {
+  code_list <- if (length(parsed_code)) {
     lapply(split_code(code), function(current_code) {
-      attr(current_code, "id") <- sample.int(.Machine$integer.max, 1)
       parsed_code <- parse(text = current_code, keep.source = TRUE)
       attr(current_code, "dependency") <- extract_dependency(parsed_code)
       current_code
     })
   } else {
     # empty code like "", or just comments
-    attr(code, "id") <- sample.int(.Machine$integer.max, size = 1)
     attr(code, "dependency") <- extract_dependency(parsed_code) # in case comment contains @linksto tag
     list(code)
   }
+  names(code_list) <- sample.int(.Machine$integer.max, length(code_list))
+  code_list
 }
