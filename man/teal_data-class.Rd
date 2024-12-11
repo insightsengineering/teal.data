@@ -20,11 +20,11 @@ If errors are raised, a \code{qenv.error} object is returned.
 \describe{
 \item{\code{.xData}}{(\code{environment}) environment containing data sets and possibly
 auxiliary variables.
-Access variables with \code{\link[=get]{get()}}, \code{\link{$}}, \code{\link[=get_var]{get_var()}} or [\code{[[}].
+Access variables with \code{\link[=get]{get()}}, \code{\link{$}}, \code{\link[teal.code:get_var]{teal.code::get_var()}} or [\code{[[}].
 No setter provided. Evaluate code to add variables into \verb{@.xData}.}
 
 \item{\code{code}}{(\code{list} of \code{character}) representing code necessary to reproduce the contents of \code{qenv}.
-Access with \code{\link[=get_code]{get_code()}}.
+Access with \code{\link[teal.code:qenv]{teal.code::get_code()}}.
 No setter provided. Evaluate code to append code to the slot.}
 
 \item{\code{join_keys}}{(\code{join_keys}) object specifying joining keys for data sets in
