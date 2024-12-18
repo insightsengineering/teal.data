@@ -16,7 +16,7 @@ The `teal_data` class inherits from [`qenv`](https://insightsengineering.github.
 ## Quick Start
 
 To create an object of class `teal_data`, use the `teal_data` function.
-`teal_data` has a number of methods to manage relevant information in private class slots.
+`teal_data` has a number of methods to interact with the object.
 
 ```{r, results = 'hide', message = FALSE}
 library(teal.data)
@@ -46,6 +46,7 @@ get_code(my_data)
 
 # get code just for specific object
 get_code(my_data, names = "data2")
+
 # get datanames
 names(my_data)
 
@@ -56,12 +57,12 @@ print(my_data)
 
 ## `teal_data` characteristics
 
-A `teal_data` object keeps the following information:
+A `teal_data` object inherits from the `environment` class (via `qenv` class), behaves like an environment, and has the following characteristics:
 
-- `env` - an environment containing data.
-- `code` - a string containing code to reproduce `env` (details in [reproducibility](teal-data-reproducibility.html)).
-- `names` - a character vector listing objects of interest to `teal` modules (details in [this `teal` vignette](https://insightsengineering.github.io/teal/latest-tag/articles/including-data-in-teal-applications.html)).
-- `join_keys` - a `join_keys` object defining relationships between datasets (details in [Join Keys](join-keys.html)).
+-	The environment is locked, and data modification is only possible through the `eval_code()` and `within()` functions.
+- It stores metadata about the code used to create the data [reproducibility](#reproducibility).
+- It maintains information about relationships between datasets [Join Keys](#relational-data-models).
+- Is immutable which means that each code evaluation does not modify the original `teal_data` object directly. 
 
 ### Reproducibility
 
@@ -104,8 +105,8 @@ join_keys(my_data["child"])
 
 ### Hidden objects
 
-An object is hidden in `teal_data` if its name starts with a dot (`.`).
-This can be used to pass auxiliary objects / function in the `teal_data` instance, without being visible in the `teal` summary and filter panel.
+An object is hidden in `teal_data` if its name starts with a dot (`.`). This can be used to pass auxiliary objects in
+the `teal_data` instance, without being visible in the `teal` summary and filter panel.
 
 ```{r}
 my_data <- teal_data()
@@ -114,5 +115,6 @@ my_data <- within(my_data, {
   .data2 <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
 })
 
+ls(my_data)
 names(my_data)
 ```

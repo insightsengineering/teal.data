@@ -19,7 +19,7 @@ If empty then no joins between pairs of objects.}
 \item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible
 
-Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
+Use \code{\link[=verify]{verify()}} to verify code reproducibility.}
 
 \item{x}{(\code{teal_data})}
 
@@ -33,6 +33,24 @@ A \code{teal_data} object.
 
 Universal function to pass data to teal application.
 }
+\details{
+\code{teal_data} is an extension of \code{\link[teal.code:qenv]{teal.code::qenv}} class. Please get familiar with \code{\link{teal.code}}
+characteristics first.
+}
+\section{\code{teal_data} characteristics}{
+
+
+A \code{teal_data} object inherits from the \code{environment} class (via \code{qenv} class), behaves like an
+environment, and has #' the following characteristics:
+\itemize{
+\item The environment is locked, and data modification is only possible through the \code{eval_code()}
+and \code{within()} functions.
+\item It stores metadata about the code used to create the data.
+\item It maintains information about relationships between datasets.
+\item Is immutable which means that each code evaluation does not modify the original \code{teal_data} object directly.
+}
+}
+
 \section{Subsetting}{
 
 \code{x[names]} subsets objects in \code{teal_data} environment and limit the code to the necessary needed to build limited
@@ -55,4 +73,7 @@ join_keys(data["b"])
 join_keys(data)["a"] # should show empty keys
 join_keys(data)["b"]
 
+}
+\seealso{
+\link{get_code}, \link{get_var}, \link{names}
 }

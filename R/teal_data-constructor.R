@@ -14,7 +14,24 @@
 #' @param code (`character`, `language`) optional code to reproduce the datasets provided in `...`.
 #'  Note this code is not executed and the `teal_data` may not be reproducible
 #'
-#'  Use [verify()] to verify code reproducibility .
+#'  Use [verify()] to verify code reproducibility.
+#'
+#' @details
+#'
+#' `teal_data` is an extension of [`teal.code::qenv`] class. Please get familiar with [`teal.code`]
+#' characteristics first.
+#'
+#' @section `teal_data` characteristics:
+#'
+#' A `teal_data` object inherits from the `environment` class (via `qenv` class), behaves like an
+#' environment, and has #' the following characteristics:
+#'
+#' -	The environment is locked, and data modification is only possible through the `eval_code()`
+#' and `within()` functions.
+#' - It stores metadata about the code used to create the data.
+#' - It maintains information about relationships between datasets.
+#' - Is immutable which means that each code evaluation does not modify the original `teal_data` object directly.
+#'
 #'
 #' @return A `teal_data` object.
 #'
