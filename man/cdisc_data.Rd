@@ -21,7 +21,7 @@ For ADAM datasets it would be automatically derived.}
 \item{code}{(\code{character}, \code{language}) optional code to reproduce the datasets provided in \code{...}.
 Note this code is not executed and the \code{teal_data} may not be reproducible
 
-Use \code{\link[=verify]{verify()}} to verify code reproducibility .}
+Use \code{\link[=verify]{verify()}} to verify code reproducibility.}
 }
 \value{
 A \code{teal_data} object.
