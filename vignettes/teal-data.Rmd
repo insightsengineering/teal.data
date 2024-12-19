@@ -11,7 +11,16 @@ vignette: >
 # Introduction
 
 The `teal.data` package specifies the data format used in `teal` applications. 
-The `teal_data` class inherits from [`qenv`](https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html) and is meant to be used for reproducibility purposes. 
+
+
+A `teal_data` is meant to be used for reproducibility purposes. The class inherits from [`qenv`](https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html) and we encourage to get familiar with [`teal.code`](https://insightsengineering.github.io/teal.code/latest-tag/) first. `teal_data` has following characteristics:
+
+- It inherits from the environment and methods such as `$`, `get()`, `ls()`, `as.list()` work out of the box.
+- `teal_data` is a locked environment, and data modification is only possible through the `teal.code::eval_code()` and `within.qenv()` functions.
+- It stores metadata about the code used to create the data (see [reproducibility](#reproducibility)).
+- It supports slicing by `[`.
+- Is immutable which means that each code evaluation does not modify the original `teal_data` environment directly.
+- It maintains information about relationships between datasets (see [Join Keys](#relational-data-models)).
 
 ## Quick Start
 
@@ -53,16 +62,6 @@ names(my_data)
 # print
 print(my_data)
 ```
-
-
-## `teal_data` characteristics
-
-A `teal_data` object inherits from the `environment` class (via `qenv` class), behaves like an environment, and has the following characteristics:
-
--	The environment is locked, and data modification is only possible through the `eval_code()` and `within()` functions.
-- It stores metadata about the code used to create the data [reproducibility](#reproducibility).
-- It maintains information about relationships between datasets [Join Keys](#relational-data-models).
-- Is immutable which means that each code evaluation does not modify the original `teal_data` object directly. 
 
 ### Reproducibility
 

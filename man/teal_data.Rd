@@ -31,26 +31,24 @@ A \code{teal_data} object.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 
-Universal function to pass data to teal application.
+Initializes a data for \code{teal} application.
 }
 \details{
-\code{teal_data} is an extension of \code{\link[teal.code:qenv]{teal.code::qenv}} class. Please get familiar with \code{\link{teal.code}}
-characteristics first.
-}
-\section{\code{teal_data} characteristics}{
-
-
-A \code{teal_data} object inherits from the \code{environment} class (via \code{qenv} class), behaves like an
-environment, and has #' the following characteristics:
+A \code{teal_data} is meant to be used for reproducibility purposes. The class inherits from
+\code{\link{qenv}} and we encourage to get familiar with \CRANpkg{teal.code} first.
+\code{teal_data} has following characteristics:
 \itemize{
-\item The environment is locked, and data modification is only possible through the \code{eval_code()}
-and \code{within()} functions.
-\item It stores metadata about the code used to create the data.
-\item It maintains information about relationships between datasets.
-\item Is immutable which means that each code evaluation does not modify the original \code{teal_data} object directly.
+\item It inherits from the environment and methods such as \code{\link{$}}, \code{\link[=get]{get()}}, \code{\link[=ls]{ls()}}, \code{\link[=as.list]{as.list()}},
+\code{\link[=parent.env]{parent.env()}} work out of the box.
+\item \code{teal_data} is a locked environment, and data modification is only possible through the
+\code{\link[teal.code:eval_code]{teal.code::eval_code()}} and \code{\link[=within.qenv]{within.qenv()}} functions.
+\item It stores metadata about the code used to create the data (see \code{\link[=get_code]{get_code()}}).
+\item It supports slicing (see \code{\link[teal.code:subset-qenv]{teal.code::subset-qenv}})
+\item Is immutable which means that each code evaluation does not modify the original \code{teal_data}
+environment directly.
+\item It maintains information about relationships between datasets (see \code{\link[=join_keys]{join_keys()}}).
 }
 }
-
 \section{Subsetting}{
 
 \code{x[names]} subsets objects in \code{teal_data} environment and limit the code to the necessary needed to build limited
@@ -75,5 +73,5 @@ join_keys(data)["b"]
 
 }
 \seealso{
-\link{get_code}, \link{get_var}, \link{names}
+\code{\link[teal.code:eval_code]{teal.code::eval_code}}, \code{\link[=get_code]{get_code()}}, \code{\link[=join_keys]{join_keys()}}, \code{\link[=names.teal_data]{names.teal_data()}}
 }
