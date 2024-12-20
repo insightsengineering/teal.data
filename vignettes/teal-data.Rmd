@@ -19,7 +19,7 @@ A `teal_data` is meant to be used for reproducibility purposes. The class inheri
 - `teal_data` is a locked environment, and data modification is only possible through the `teal.code::eval_code()` and `within.qenv()` functions.
 - It stores metadata about the code used to create the data (see [reproducibility](#reproducibility)).
 - It supports slicing by `[`.
-- Is immutable which means that each code evaluation does not modify the original `teal_data` environment directly.
+- It is immutable which means that each code evaluation does not modify the original `teal_data` environment directly.
 - It maintains information about relationships between datasets (see [Join Keys](#relational-data-models)).
 
 ## Quick Start
