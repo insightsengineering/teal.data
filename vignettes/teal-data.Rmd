@@ -11,12 +11,21 @@ vignette: >
 # Introduction
 
 The `teal.data` package specifies the data format used in `teal` applications. 
-The `teal_data` class inherits from [`qenv`](https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html) and is meant to be used for reproducibility purposes. 
+
+
+A `teal_data` is meant to be used for reproducibility purposes. The class inherits from [`qenv`](https://insightsengineering.github.io/teal.code/latest-tag/articles/qenv.html) and we encourage to get familiar with [`teal.code`](https://insightsengineering.github.io/teal.code/latest-tag/) first. `teal_data` has following characteristics:
+
+- It inherits from the environment and methods such as `$`, `get()`, `ls()`, `as.list()` work out of the box.
+- `teal_data` is a locked environment, and data modification is only possible through the `teal.code::eval_code()` and `within.qenv()` functions.
+- It stores metadata about the code used to create the data (see [reproducibility](#reproducibility)).
+- It supports slicing by `[`.
+- It is immutable which means that each code evaluation does not modify the original `teal_data` environment directly.
+- It maintains information about relationships between datasets (see [Join Keys](#relational-data-models)).
 
 ## Quick Start
 
 To create an object of class `teal_data`, use the `teal_data` function.
-`teal_data` has a number of methods to manage relevant information in private class slots.
+`teal_data` has a number of methods to interact with the object.
 
 ```{r, results = 'hide', message = FALSE}
 library(teal.data)
@@ -46,22 +55,13 @@ get_code(my_data)
 
 # get code just for specific object
 get_code(my_data, names = "data2")
+
 # get datanames
 names(my_data)
 
 # print
 print(my_data)
 ```
-
-
-## `teal_data` characteristics
-
-A `teal_data` object keeps the following information:
-
-- `env` - an environment containing data.
-- `code` - a string containing code to reproduce `env` (details in [reproducibility](teal-data-reproducibility.html)).
-- `names` - a character vector listing objects of interest to `teal` modules (details in [this `teal` vignette](https://insightsengineering.github.io/teal/latest-tag/articles/including-data-in-teal-applications.html)).
-- `join_keys` - a `join_keys` object defining relationships between datasets (details in [Join Keys](join-keys.html)).
 
 ### Reproducibility
 
@@ -104,8 +104,8 @@ join_keys(my_data["child"])
 
 ### Hidden objects
 
-An object is hidden in `teal_data` if its name starts with a dot (`.`).
-This can be used to pass auxiliary objects / function in the `teal_data` instance, without being visible in the `teal` summary and filter panel.
+An object is hidden in `teal_data` if its name starts with a dot (`.`). This can be used to pass auxiliary objects in
+the `teal_data` instance, without being visible in the `teal` summary and filter panel.
 
 ```{r}
 my_data <- teal_data()
@@ -114,5 +114,6 @@ my_data <- within(my_data, {
   .data2 <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
 })
 
+ls(my_data)
 names(my_data)
 ```
