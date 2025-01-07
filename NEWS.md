@@ -1,4 +1,4 @@
-# teal.data 0.6.0.9023
+# teal.data 0.6.0.9024
 
 ### Breaking changes
 
