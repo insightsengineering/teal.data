@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("stable")`
 #'
-#' Universal function to pass data to teal application.
+#' Initializes a data for `teal` application.
 #'
 #' @param ... any number of objects (presumably data objects) provided as `name = value` pairs.
 #'
@@ -14,9 +14,27 @@
 #' @param code (`character`, `language`) optional code to reproduce the datasets provided in `...`.
 #'  Note this code is not executed and the `teal_data` may not be reproducible
 #'
-#'  Use [verify()] to verify code reproducibility .
+#'  Use [verify()] to verify code reproducibility.
+#'
+#' @details
+#'
+#' A `teal_data` is meant to be used for reproducibility purposes. The class inherits from
+#' [`teal.data::qenv`] and we encourage to get familiar with \CRANpkg{teal.code} first.
+#' `teal_data` has following characteristics:
+#'
+#' - It inherits from the environment and methods such as [`$`], [get()], [ls()], [as.list()],
+#' [parent.env()] work out of the box.
+#' - `teal_data` is a locked environment, and data modification is only possible through the
+#' [teal.code::eval_code()] and [within.qenv()] functions.
+#' - It stores metadata about the code used to create the data (see [get_code()]).
+#' - It supports slicing (see [`teal.code::subset-qenv`])
+#' - Is immutable which means that each code evaluation does not modify the original `teal_data`
+#'   environment directly.
+#' - It maintains information about relationships between datasets (see [join_keys()]).
 #'
 #' @return A `teal_data` object.
+#'
+#' @seealso [`teal.code::eval_code`], [get_code()], [join_keys()], [names.teal_data()]
 #'
 #' @export
 #'

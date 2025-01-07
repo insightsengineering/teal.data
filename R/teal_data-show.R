@@ -16,5 +16,6 @@ setMethod("show", signature = "teal_data", function(object) {
   } else {
     cat("\u2716", "unverified teal_data object\n")
   }
-  rlang::env_print(teal.code::get_env(object))
+  methods::callNextMethod(object)
+  invisible(object)
 })
