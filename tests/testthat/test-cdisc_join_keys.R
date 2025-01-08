@@ -1,5 +1,5 @@
 testthat::test_that("default_cdisc_join_keys is assigned in package environment", {
-  testthat::expect_true(exists("default_cdisc_join_keys"))
+  testthat::expect_true(exists("default_cdisc_join_keys", where = asNamespace("teal.data")))
   testthat::expect_gt(length(default_cdisc_join_keys), 0)
 })
 

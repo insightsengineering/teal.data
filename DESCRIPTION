@@ -40,7 +40,7 @@ Imports:
 Suggests:
     knitr (>= 1.42),
     rmarkdown (>= 2.23),
-    testthat (>= 3.1.5),
+    testthat (>= 3.2.2),
     withr (>= 2.0.0)
 VignetteBuilder:
     knitr,
