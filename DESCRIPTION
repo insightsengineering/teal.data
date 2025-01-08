@@ -41,7 +41,7 @@ Suggests:
     knitr (>= 1.42),
     rmarkdown (>= 2.23),
     testthat (>= 3.2.2),
-    withr (>= 2.0.0)
+    withr (>= 2.2.0)
 VignetteBuilder:
     knitr,
     rmarkdown
