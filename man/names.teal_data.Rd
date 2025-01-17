@@ -20,13 +20,24 @@ The names are obtained from the objects listed in the \code{qenv} environment.
 Objects named with a \code{.} (dot) prefix will be ignored and not returned.
 To get the names of all objects, use \code{ls(x, all.names = TRUE)}, however, it
 will not group the names by the join_keys topological structure.
+
+In order to rename objects in the \code{teal_data} object, use base R functions (see examples).
 }
 \examples{
 td <- teal_data(iris = iris)
 td <- within(td, mtcars <- mtcars)
 names(td)
 
+# hidden objects with dot-prefix
 td <- within(td, .CO2 <- CO2)
 names(td) # '.CO2' will not be returned
+
+# rename objects
+td <- teal_data(iris = iris)
+td <- within(td, {
+  new_iris <- iris
+  rm(iris)
+})
+names(td) # only 'new_iris' will be returned
 
 }
