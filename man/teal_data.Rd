@@ -35,13 +35,13 @@ Initializes a data for \code{teal} application.
 }
 \details{
 A \code{teal_data} is meant to be used for reproducibility purposes. The class inherits from
-\code{\link{qenv}} and we encourage to get familiar with \CRANpkg{teal.code} first.
+\code{\link[teal.code:qenv]{teal.code::qenv}} and we encourage to get familiar with \CRANpkg{teal.code} first.
 \code{teal_data} has following characteristics:
 \itemize{
 \item It inherits from the environment and methods such as \code{\link{$}}, \code{\link[=get]{get()}}, \code{\link[=ls]{ls()}}, \code{\link[=as.list]{as.list()}},
 \code{\link[=parent.env]{parent.env()}} work out of the box.
 \item \code{teal_data} is a locked environment, and data modification is only possible through the
-\code{\link[teal.code:eval_code]{teal.code::eval_code()}} and \code{\link[=within.qenv]{within.qenv()}} functions.
+\code{\link[teal.code:eval_code]{teal.code::eval_code()}} and \code{\link[teal.code:eval_code]{teal.code::within.qenv()}} functions.
 \item It stores metadata about the code used to create the data (see \code{\link[=get_code]{get_code()}}).
 \item It supports slicing (see \code{\link[teal.code:subset-qenv]{teal.code::subset-qenv}})
 \item Is immutable which means that each code evaluation does not modify the original \code{teal_data}
