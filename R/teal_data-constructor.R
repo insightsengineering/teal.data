@@ -26,7 +26,7 @@
 #' [parent.env()] work out of the box.
 #' - `teal_data` is a locked environment, and data modification is only possible through the
 #' [teal.code::eval_code()] and [teal.code::within.qenv()] functions.
-#' - It stores metadata about the code used to create the data (see [get_code,teal_data-method]).
+#' - It stores metadata about the code used to create the data (see [get_code()][get_code,teal_data-method]).
 #' - It supports slicing (see [`teal.code::subset-qenv`])
 #' - Is immutable which means that each code evaluation does not modify the original `teal_data`
 #'   environment directly.
