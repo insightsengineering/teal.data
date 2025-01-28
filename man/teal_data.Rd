@@ -42,7 +42,7 @@ A \code{teal_data} is meant to be used for reproducibility purposes. The class i
 \code{\link[=parent.env]{parent.env()}} work out of the box.
 \item \code{teal_data} is a locked environment, and data modification is only possible through the
 \code{\link[teal.code:eval_code]{teal.code::eval_code()}} and \code{\link[teal.code:eval_code]{teal.code::within.qenv()}} functions.
-\item It stores metadata about the code used to create the data (see \code{\link[=get_code]{get_code()}}).
+\item It stores metadata about the code used to create the data (see \link{get_code,teal_data-method}).
 \item It supports slicing (see \code{\link[teal.code:subset-qenv]{teal.code::subset-qenv}})
 \item Is immutable which means that each code evaluation does not modify the original \code{teal_data}
 environment directly.
@@ -73,5 +73,5 @@ join_keys(data)["b"]
 
 }
 \seealso{
-\code{\link[teal.code:eval_code]{teal.code::eval_code}}, \code{\link[=get_code]{get_code()}}, \code{\link[=join_keys]{join_keys()}}, \code{\link[=names.teal_data]{names.teal_data()}}
+\code{\link[teal.code:eval_code]{teal.code::eval_code}}, \link{get_code,teal_data-method}, \code{\link[=join_keys]{join_keys()}}, \code{\link[=names.teal_data]{names.teal_data()}}
 }
