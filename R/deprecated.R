@@ -20,7 +20,7 @@
 #' @export
 datanames <- function(x) {
   lifecycle::deprecate_soft(
-    when = "0.6.1",
+    when = "0.7.0",
     what = "datanames()",
     with = "names()"
   )
@@ -31,7 +31,7 @@ datanames <- function(x) {
 #' @export
 `datanames<-` <- function(x, value) {
   lifecycle::deprecate_soft(
-    when = "0.6.1",
+    when = "0.7.0",
     what = "`datanames<-`()",
     details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
   )
@@ -43,7 +43,7 @@ datanames <- function(x) {
 #' @keywords internal
 `names<-.teal_data` <- function(x, value) {
   lifecycle::deprecate_warn(
-    when = "0.6.1",
+    when = "0.7.0",
     what = "`names<-.teal_data`()",
     details = "invalid to use `datanames()<-` or `names()<-` on an object of class `teal_data`. See ?names.teal_data"
   )

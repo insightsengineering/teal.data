@@ -112,7 +112,7 @@ setMethod("get_code",
   definition = function(object, deparse = TRUE, names = NULL, datanames = lifecycle::deprecated(), ...) {
     if (lifecycle::is_present(datanames)) {
       lifecycle::deprecate_warn(
-        when = "0.6.1",
+        when = "0.7.0",
         what = "teal.data::get_code(datanames)",
         with = "teal.code::get_code(names)",
         always = TRUE

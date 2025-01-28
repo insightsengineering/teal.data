@@ -19,14 +19,14 @@
 #' @details
 #'
 #' A `teal_data` is meant to be used for reproducibility purposes. The class inherits from
-#' [`teal.data::qenv`] and we encourage to get familiar with \CRANpkg{teal.code} first.
+#' [`teal.code::qenv`] and we encourage to get familiar with \CRANpkg{teal.code} first.
 #' `teal_data` has following characteristics:
 #'
 #' - It inherits from the environment and methods such as [`$`], [get()], [ls()], [as.list()],
 #' [parent.env()] work out of the box.
 #' - `teal_data` is a locked environment, and data modification is only possible through the
-#' [teal.code::eval_code()] and [within.qenv()] functions.
-#' - It stores metadata about the code used to create the data (see [get_code()]).
+#' [teal.code::eval_code()] and [`within.qenv()`][teal.code::within.qenv()] functions.
+#' - It stores metadata about the code used to create the data (see [`get_code()`][get_code,teal_data-method]).
 #' - It supports slicing (see [`teal.code::subset-qenv`])
 #' - Is immutable which means that each code evaluation does not modify the original `teal_data`
 #'   environment directly.
@@ -34,7 +34,7 @@
 #'
 #' @return A `teal_data` object.
 #'
-#' @seealso [`teal.code::eval_code`], [get_code()], [join_keys()], [names.teal_data()]
+#' @seealso [`teal.code::eval_code`], [`get_code()`][get_code,teal_data-method], [join_keys()], [names.teal_data()]
 #'
 #' @export
 #'
