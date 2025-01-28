@@ -1,0 +1,11 @@
+pandoc: '3.4'
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  join-keys: join-keys.html
+  teal-data-reproducibility: teal-data-reproducibility.html
+  teal-data: teal-data.html
+last_built: 2025-01-28T19:45Z
+urls:
+  reference: https://insightsengineering.github.io/teal.data/reference
+  article: https://insightsengineering.github.io/teal.data/articles
