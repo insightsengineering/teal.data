@@ -1,4 +1,4 @@
-# teal.data 0.6.0.9027
+# teal.data 0.7.0
 
 ### Breaking changes
 
@@ -6,7 +6,6 @@
 - Soft deprecate of `datanames()`. Use `names()` instead.
 - Deprecate of `datanames(x) <- value`. Does nothing, replace with renaming the objects inside the environment.
 - All parameters and functions deprecated on 0.4.0 were removed.
-
 
 ### Enhancements
 
