@@ -66,13 +66,11 @@ a parent-child relationship between the datasets.
 \item \code{FALSE} when the relationship is undirected.
 }}
 
-\item{value}{For \verb{x[i, j, directed = TRUE)] <- value} (named/unnamed \code{character})
+\item{value}{For \code{x[i, j, directed = TRUE] <- value} (named/unnamed \code{character})
 Column mapping between datasets.
 
 For \code{join_keys(x) <- value}: (\code{join_key_set} or list of \code{join_key_set}) relationship
-pairs to add to \code{join_keys} list.
-
-[i, j, directed = TRUE)]: R:i,\%20j,\%20directed\%20=\%20TRUE)}
+pairs to add to \code{join_keys} list.}
 }
 \value{
 \code{join_keys} object.
