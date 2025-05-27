@@ -90,6 +90,7 @@ code2list <- function(code) {
   if (length(code) == 0) {
     return(list())
   }
+  code <- paste(code, collapse = "\n")
 
   parsed_code <- parse(text = code, keep.source = TRUE)
 
