@@ -64,7 +64,7 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
       "parents" = list()
     )
   )
-  # Relaxed comparison (not ordered and without need of empty attributes)
+
   testthat::expect_identical(
     jk,
     structure(
