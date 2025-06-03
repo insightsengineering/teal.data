@@ -64,15 +64,15 @@ testthat::test_that("join_keys is a collection of join_key, ie named list with n
       "parents" = list()
     )
   )
-
   # Relaxed comparison (not ordered and without need of empty attributes)
-  testthat::expect_equal(
+  testthat::expect_identical(
     jk,
     structure(
       list(
-        d2 = list(d2 = c(test = "test")),
-        d1 = list(d1 = c(test = "test"))
+        d1 = list(d1 = c(test = "test")),
+        d2 = list(d2 = c(test = "test"))
       ),
+      parents = list(),
       class = c("join_keys", "list")
     )
   )
@@ -100,21 +100,33 @@ testthat::test_that("join_keys.join_keys returns itself", {
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (unnamed) foreign key", {
   my_keys <- join_keys(join_key("d1", "d2", "a"))
-  expected_keys <- join_keys(join_key("d2", "d1", "a", directed = FALSE))
-  parents(expected_keys) <- list(d2 = "d1")
-
-  testthat::expect_equal(my_keys, expected_keys)
+  testthat::expect_identical(
+    my_keys,
+    structure(
+      list(
+        d1 = list(d2 = c(a = "a")),
+        d2 = list(d1 = c(a = "a"))
+      ),
+      parents = list(d2 = "d1"),
+      class = c("join_keys", "list")
+    )
+  )
 })
 
 testthat::test_that("join_keys constructor adds symmetric keys on given (named) foreign key", {
-  expected_keys <- join_keys(join_key("d2", "d1", c(b = "a"), directed = FALSE))
-  parents(expected_keys) <- list(d2 = "d1")
+  my_keys <- join_keys(join_key("d2", "d1", c(b = "a"), directed = FALSE))
+  parents(my_keys) <- list(d2 = "d1")
 
   testthat::expect_equal(
-    join_keys(
-      join_key("d1", "d2", c(a = "b"))
-    ),
-    expected_keys
+    my_keys,
+    structure(
+      list(
+        d2 = list(d1 = c(b = "a")),
+        d1 = list(d2 = c(a = "b"))
+      ),
+      parents = list(d2 = "d1"),
+      class = c("join_keys", "list")
+    )
   )
 })
 
