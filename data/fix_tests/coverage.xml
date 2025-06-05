@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.943639291465378" branch-rate="0" lines-covered="586" lines-valid="621" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-06-03 19:06:32.33388">
+<coverage line-rate="0.941176470588235" branch-rate="0" lines-covered="560" lines-valid="595" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-06-05 05:42:33.800215">
   <sources>
     <source>/__w/teal.data/teal.data/teal.data</source>
   </sources>
   <packages>
-    <package name="teal.data" line-rate="0.943639291465378" branch-rate="0" complexity="0">
+    <package name="teal.data" line-rate="0.941176470588235" branch-rate="0" complexity="0">
       <classes>
         <class name="cdisc_data.R" filename="R/cdisc_data.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -1645,68 +1645,6 @@
             <line number="17" hits="0" branch="false"/>
             <line number="19" hits="0" branch="false"/>
             <line number="20" hits="0" branch="false"/>
-          </lines>
-        </class>
-        <class name="testhat-helpers.R" filename="R/testhat-helpers.R" line-rate="1" branch-rate="0" complexity="0">
-          <methods>
-            <method name="all.equal.join_keys" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="24" hits="14" branch="false"/>
-                <line number="25" hits="14" branch="false"/>
-                <line number="27" hits="14" branch="false"/>
-                <line number="28" hits="14" branch="false"/>
-                <line number="29" hits="14" branch="false"/>
-                <line number="30" hits="14" branch="false"/>
-                <line number="31" hits="12" branch="false"/>
-                <line number="32" hits="14" branch="false"/>
-                <line number="33" hits="14" branch="false"/>
-                <line number="34" hits="14" branch="false"/>
-                <line number="35" hits="14" branch="false"/>
-                <line number="38" hits="14" branch="false"/>
-                <line number="41" hits="14" branch="false"/>
-                <line number="42" hits="14" branch="false"/>
-                <line number="43" hits="14" branch="false"/>
-                <line number="44" hits="14" branch="false"/>
-                <line number="45" hits="14" branch="false"/>
-                <line number="46" hits="14" branch="false"/>
-                <line number="47" hits="14" branch="false"/>
-                <line number="48" hits="14" branch="false"/>
-                <line number="49" hits="14" branch="false"/>
-                <line number="50" hits="14" branch="false"/>
-                <line number="51" hits="14" branch="false"/>
-                <line number="52" hits="14" branch="false"/>
-                <line number="53" hits="14" branch="false"/>
-                <line number="54" hits="14" branch="false"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="24" hits="14" branch="false"/>
-            <line number="25" hits="14" branch="false"/>
-            <line number="27" hits="14" branch="false"/>
-            <line number="28" hits="14" branch="false"/>
-            <line number="29" hits="14" branch="false"/>
-            <line number="30" hits="14" branch="false"/>
-            <line number="31" hits="12" branch="false"/>
-            <line number="32" hits="14" branch="false"/>
-            <line number="33" hits="14" branch="false"/>
-            <line number="34" hits="14" branch="false"/>
-            <line number="35" hits="14" branch="false"/>
-            <line number="38" hits="14" branch="false"/>
-            <line number="41" hits="14" branch="false"/>
-            <line number="42" hits="14" branch="false"/>
-            <line number="43" hits="14" branch="false"/>
-            <line number="44" hits="14" branch="false"/>
-            <line number="45" hits="14" branch="false"/>
-            <line number="46" hits="14" branch="false"/>
-            <line number="47" hits="14" branch="false"/>
-            <line number="48" hits="14" branch="false"/>
-            <line number="49" hits="14" branch="false"/>
-            <line number="50" hits="14" branch="false"/>
-            <line number="51" hits="14" branch="false"/>
-            <line number="52" hits="14" branch="false"/>
-            <line number="53" hits="14" branch="false"/>
-            <line number="54" hits="14" branch="false"/>
           </lines>
         </class>
         <class name="topological_sort.R" filename="R/topological_sort.R" line-rate="1" branch-rate="0" complexity="0">
