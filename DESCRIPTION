@@ -77,7 +77,6 @@ Collate:
     'teal_data-get_code.R'
     'teal_data-names.R'
     'teal_data-show.R'
-    'testhat-helpers.R'
     'topological_sort.R'
     'verify.R'
     'zzz.R'
