@@ -19,7 +19,7 @@
 #'   join_key("ADSL", "ADAE", c(USUBJID = "USUBJID"))
 #' )
 #' data <- append_join_keys(data, keys1)
-#' join_keys(data)data
+#' join_keys(data)
 #'
 #' @export
 append_join_keys <- function(x, values, after = length(join_keys(x))) {
