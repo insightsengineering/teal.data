@@ -12,9 +12,9 @@
 #' @export
 setMethod("show", signature = "teal_data", function(object) {
   if (object@verified) {
-    cat("\u2705\ufe0e", "verified teal_data object\n")
+    cat("\u2705\ufe0e", "code verified\n")
   } else {
-    cat("\u2716", "unverified teal_data object\n")
+    cat("\u2716", "code unverified\n")
   }
   methods::callNextMethod(object)
   invisible(object)
