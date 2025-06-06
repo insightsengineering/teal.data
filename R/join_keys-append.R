@@ -25,6 +25,7 @@
 append_join_keys <- function(x, values, after = length(join_keys(x))) {
   checkmate::assert_class(x, "teal_data")
   checkmate::assert_int(after, lower = 0, upper = length(join_keys(x)), null.ok = TRUE)
+  checkmate::assert_class(value, "join_keys")
 
   join_keys(x) <- append(join_keys(x), values, after = after)
   x
