@@ -26,7 +26,7 @@ setOldClass("join_keys")
 #'  Access or modify with [join_keys()].
 #' @slot verified (`logical(1)`) flag signifying that code in `@code` has been
 #'  proven to yield contents of `@.xData`.
-#'  Used internally. See [`verify()`] for more details.
+#'  Used internally. See [`teal.data::verify()`] for more details.
 #'
 #' @inheritSection teal.code::`qenv-class` Code
 #'
