@@ -178,9 +178,8 @@ testthat::test_that("c.join_keys merges existing parents are overwritten", {
     join_key("d3", "d4", "cd", directed = FALSE),
     join_key("d2", "d3", "cb", directed = FALSE)
   )
-  parents(expected) <- list(d2 = "d1", d3 = "d2", d4 = "d3")
-
-  testthat::expect_equal(c(jk1, jk2), expected)
+  parents(expected) <- list(d2 = "d1", d4 = "d3", d3 = "d2")
+  testthat::expect_identical(c(jk1, jk2), expected)
 })
 
 testthat::test_that("c.join_keys throws error when merge produces acyclical graph", {

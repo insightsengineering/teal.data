@@ -60,12 +60,12 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset inc
   )
 
   expected <- join_keys(
-    join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
+    join_key("d1", "d1", "a"),
     join_key("d1", "d2", "ab")
   )
 
-  testthat::expect_equal(my_keys["d2"], expected)
+  testthat::expect_identical(my_keys["d2"], expected)
 })
 
 testthat::test_that("join_keys[i] returns join_keys object for given dataset and doesn't include its children", {
@@ -78,12 +78,12 @@ testthat::test_that("join_keys[i] returns join_keys object for given dataset and
   )
 
   expected <- join_keys(
-    join_key("d1", "d1", "a"),
     join_key("d2", "d2", "b"),
+    join_key("d1", "d1", "a"),
     join_key("d1", "d2", "ab")
   )
 
-  testthat::expect_equal(my_keys["d2"], expected)
+  testthat::expect_identical(my_keys["d2"], expected)
 })
 
 testthat::test_that("join_keys[i] returns empty join_keys for inexisting dataset", {
@@ -268,11 +268,15 @@ testthat::test_that("join_keys[i,j]<- removes keys with NULL", {
   )
   my_keys["d2", "d1"] <- NULL
 
-  testthat::expect_equal(
+  testthat::expect_identical(
     my_keys,
-    join_keys(
-      join_key("d1", "d1", "A"),
-      join_key("d2", "d2", "B")
+    structure(
+      list(
+        d1 = list(d1 = c(A = "A")),
+        d2 = list(d2 = c(B = "B"))
+      ),
+      parents = setNames(list(), character(0)), # named list
+      class = c("join_keys", "list")
     )
   )
 })
@@ -330,17 +334,18 @@ testthat::test_that("[[<-.join_keys adds symmetrical change without parents to t
   jk <- join_keys()
   jk[["d1"]][["d2"]] <- c("A" = "B", "C" = "C")
 
-  testthat::expect_equal(
+  testthat::expect_identical(
     jk,
     structure(
       list(
         d1 = list(
-          d2 = c(c("A" = "B", "C" = "C"))
+          d2 = c("A" = "B", "C" = "C")
         ),
         d2 = list(
           d1 = c("B" = "A", "C" = "C")
         )
       ),
+      parents = list(),
       class = c("join_keys", "list")
     )
   )
