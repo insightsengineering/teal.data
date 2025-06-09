@@ -47,7 +47,7 @@ setMethod(
   "initialize",
   "teal_data",
   function(.Object, .xData, join_keys, code, ...) { # nolint: object_name.
-    if (missing(.xData)) .xData <- new.env()
+    if (missing(.xData)) .xData <- new.env() # nolint: object_name.
     if (missing(join_keys)) join_keys <- teal.data::join_keys()
     if (missing(code)) code <- character(0L)
     args <- list(...)

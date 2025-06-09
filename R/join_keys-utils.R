@@ -39,8 +39,7 @@ assert_compatible_keys <- function(join_key_1, join_key_2) {
     }
   }
 
-  # otherwise they are compatible
-  return(TRUE)
+  TRUE # otherwise they are compatible
 }
 
 #' Validate parent-child key
