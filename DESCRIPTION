@@ -45,6 +45,8 @@ Suggests:
 VignetteBuilder:
     knitr,
     rmarkdown
+Remotes:
+    insightsengineering/teal.code@teal_reportable
 RdMacros:
     lifecycle
 Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
