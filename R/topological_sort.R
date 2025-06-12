@@ -50,7 +50,7 @@ topological_sort <- function(graph) {
       paste0(setdiff(names(in_degrees), sorted), collapse = " ")
     )
   } else {
-    return(sorted)
+    sorted
   }
 }
 

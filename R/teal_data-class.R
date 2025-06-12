@@ -26,7 +26,7 @@ setOldClass("join_keys")
 #'  Access or modify with [join_keys()].
 #' @slot verified (`logical(1)`) flag signifying that code in `@code` has been
 #'  proven to yield contents of `@.xData`.
-#'  Used internally. See [`verify()`] for more details.
+#'  Used internally. See [`teal.data::verify()`] for more details.
 #'
 #' @inheritSection teal.code::`qenv-class` Code
 #'
@@ -35,11 +35,7 @@ setOldClass("join_keys")
 setClass(
   Class = "teal_data",
   contains = "qenv",
-  slots = c(join_keys = "join_keys", verified = "logical"),
-  prototype = list(
-    join_keys = join_keys(),
-    verified = logical(0)
-  )
+  slots = c(join_keys = "join_keys", verified = "logical")
 )
 
 #' It initializes the `teal_data` class
@@ -50,13 +46,12 @@ setClass(
 setMethod(
   "initialize",
   "teal_data",
-  function(.Object, .xData = list(), join_keys = join_keys(), code = list(), ...) { # nolint: object_name.
-    # Allow .xData to be a list and convert it to an environment
-    if (!missing(.xData) && inherits(.xData, "list")) {
-      .xData <- rlang::env_clone(list2env(.xData), parent = parent.env(.GlobalEnv)) # nolint: object_name.
-      lockEnvironment(.xData, bindings = TRUE)
-    }
+  function(.Object, .xData, join_keys, code, ...) { # nolint: object_name.
+    if (missing(.xData)) .xData <- new.env() # nolint: object_name.
+    if (missing(join_keys)) join_keys <- teal.data::join_keys()
+    if (missing(code)) code <- character(0L)
     args <- list(...)
+
     checkmate::assert_environment(.xData)
     checkmate::assert_class(join_keys, "join_keys")
     checkmate::assert_list(args, names = "named")
@@ -67,15 +62,12 @@ setMethod(
     if (is.language(code)) {
       code <- paste(lang2calls(code), collapse = "\n")
     }
-    if (length(code)) {
-      code <- paste(code, collapse = "\n")
-    }
 
     methods::callNextMethod(
       .Object,
       .xData,
       join_keys = join_keys,
-      verified = (length(args$code) == 0L && length(.xData) == 0L),
+      verified = (length(code) == 0L && length(.xData) == 0L),
       code = code2list(code),
       ...
     )
@@ -97,6 +89,7 @@ code2list <- function(code) {
   if (length(code) == 0) {
     return(list())
   }
+  code <- paste(code, collapse = "\n")
 
   parsed_code <- parse(text = code, keep.source = TRUE)
 
