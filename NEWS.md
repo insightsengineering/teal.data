@@ -1,5 +1,9 @@
 # teal.data 0.7.0.9003
 
+### Breaking changes
+
+* Print of a `teal_data` object now shows "code (un)verified" instead of "(un)verified teal_data object".
+
 # teal.data 0.7.0
 
 ### Breaking changes
