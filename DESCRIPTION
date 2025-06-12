@@ -65,6 +65,7 @@ Collate:
     'deprecated.R'
     'dummy_function.R'
     'join_key.R'
+    'join_keys-append.R'
     'join_keys-c.R'
     'join_keys-extract.R'
     'join_keys-names.R'
