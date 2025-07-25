@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADRS}
 \alias{rADRS}
-\title{Random response}
+\title{Random response analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 3200 rows and 65 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadrs]{random.cdisc.data::cadrs}
 }
 \usage{
 rADRS
 }
 \description{
-Random response
+Random response analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

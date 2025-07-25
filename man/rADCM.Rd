@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADCM}
 \alias{rADCM}
-\title{Random concomitant medications}
+\title{Random concomitant medications analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 3685 rows and 83 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadcm]{random.cdisc.data::cadcm}
 }
 \usage{
 rADCM
 }
 \description{
-Random concomitant medications
+Random concomitant medications analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

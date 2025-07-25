@@ -1,65 +1,70 @@
-#' Random adverse events
+#' Random adverse events analysis dataset
 #'
 #' @docType data
 #' @usage rADAE
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadae format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadae]
 #' @name rADAE
 "rADAE"
 
-#' Random concomitant medications
+#' Random concomitant medications analysis dataset
 #'
 #' @docType data
 #' @usage rADCM
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadcm format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadcm]
 #' @name rADCM
 "rADCM"
 
-#' Random response
-#'
-#' Random exposure.
+#' Random response analysis dataset
 #'
 #' @docType data
 #' @usage rADEX
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadex format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadex]
 #' @name rADEX
 "rADEX"
 
-#' Random lab analysis
+#' Random laboratory data analysis dataset
 #'
 #' @docType data
 #' @usage rADLB
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadlb format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadlb]
 #' @name rADLB
 "rADLB"
 
-#' Random response
+#' Random response analysis dataset
 #'
 #' @docType data
 #' @usage rADRS
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadrs format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadrs]
 #' @name rADRS
 "rADRS"
 
-#' Random patient listing
+#' Random patient listing dataset
 #'
 #' @docType data
 #' @usage rADSL
-#' @keywords datasets internal
-#' @source internal
+#' @keywords datasets
+#' @inherit random.cdisc.data::cadsl format
+#' @source [random.cdisc.data::cadsl]
 #' @name rADSL
 "rADSL"
 
-#' Random data `rADTR`
+#' Random tumor response analysis dataset
 #'
 #' @docType data
 #' @usage rADTR
-#' @keywords datasets internal
-#' @source internal
+#' @keywords datasets
+#' @inherit random.cdisc.data::cadtr format
+#' @source [random.cdisc.data::cadtr]
 #' @name rADTR
 "rADTR"
 
@@ -67,26 +72,26 @@
 #'
 #' @docType data
 #' @usage rADTTE
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadtte format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadtte]
 #' @name rADTTE
 "rADTTE"
 
-#' Random data `rADVS`
+#' Random vital signs analysis dataset
 #'
 #' @docType data
 #' @usage rADVS
-#' @keywords datasets internal
-#' @source internal
+#' @inherit random.cdisc.data::cadvs format
+#' @keywords datasets
+#' @source [random.cdisc.data::cadvs]
 #' @name rADVS
 "rADVS"
 
 #' List containing default joining keys for `CDISC` datasets
 #'
-#' This data object is created at loading time from `cdisc_datasets/cdisc_datasets.yaml`.
-#'
 #' @name default_cdisc_join_keys
 #' @usage default_cdisc_join_keys
 #' @docType data
-#' @source internal
+#' @source internal. See `data-raw/cdisc_datasets.yaml` and `data-raw/data.R` for details.
 "default_cdisc_join_keys"

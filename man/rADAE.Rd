@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADAE}
 \alias{rADAE}
-\title{Random adverse events}
+\title{Random adverse events analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1934 rows and 92 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadae]{random.cdisc.data::cadae}
 }
 \usage{
 rADAE
 }
 \description{
-Random adverse events
+Random adverse events analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

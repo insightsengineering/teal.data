@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADEX}
 \alias{rADEX}
-\title{Random response}
+\title{Random response analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 6400 rows and 79 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadex]{random.cdisc.data::cadex}
 }
 \usage{
 rADEX
 }
 \description{
-Random exposure.
+Random response analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

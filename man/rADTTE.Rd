@@ -8,7 +8,7 @@
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 2000 rows and 67 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadtte]{random.cdisc.data::cadtte}
 }
 \usage{
 rADTTE
@@ -17,4 +17,3 @@ rADTTE
 Random time to event analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

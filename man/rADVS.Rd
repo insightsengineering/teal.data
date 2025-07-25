@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADVS}
 \alias{rADVS}
-\title{Random data \code{rADVS}}
+\title{Random vital signs analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 16800 rows and 87 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadvs]{random.cdisc.data::cadvs}
 }
 \usage{
 rADVS
 }
 \description{
-Random data \code{rADVS}
+Random vital signs analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

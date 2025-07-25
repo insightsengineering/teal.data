@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADLB}
 \alias{rADLB}
-\title{Random lab analysis}
+\title{Random laboratory data analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 8400 rows and 102 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadlb]{random.cdisc.data::cadlb}
 }
 \usage{
 rADLB
 }
 \description{
-Random lab analysis
+Random laboratory data analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

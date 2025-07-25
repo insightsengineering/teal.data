@@ -9,7 +9,7 @@ example_cdisc_data(
 )
 }
 \arguments{
-\item{dataname}{(\code{character(1)}) name of a CDISC dataset}
+\item{dataname}{(\code{character(1)}) name of a CDISC dataset.}
 }
 \value{
 A CDISC dataset as a \code{data.frame}.
@@ -19,5 +19,5 @@ Retrieves example CDISC datasets for use in examples and testing.
 }
 \details{
 This function returns a dummy dataset and should only be used within \code{teal.data}.
-Note that the datasets are not created and maintained in \code{teal.data}, they are retrieved its dependencies.
+Note that the datasets are not created and maintained in \code{teal.data}, they are retrieved from \code{\link[random.cdisc.data:random.cdisc.data-package]{random.cdisc.data}} package.
 }

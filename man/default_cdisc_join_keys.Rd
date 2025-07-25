@@ -8,12 +8,12 @@
 An object of class \code{join_keys} (inherits from \code{list}) of length 19.
 }
 \source{
-internal
+internal. See \code{data-raw/cdisc_datasets.yaml} and \code{data-raw/data.R} for details.
 }
 \usage{
 default_cdisc_join_keys
 }
 \description{
-This data object is created at loading time from \code{cdisc_datasets/cdisc_datasets.yaml}.
+List containing default joining keys for \code{CDISC} datasets
 }
 \keyword{datasets}

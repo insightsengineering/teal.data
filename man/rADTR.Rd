@@ -3,18 +3,17 @@
 \docType{data}
 \name{rADTR}
 \alias{rADTR}
-\title{Random data \code{rADTR}}
+\title{Random tumor response analysis dataset}
 \format{
 An object of class \code{data.frame} with 2800 rows and 76 columns.
 }
 \source{
-internal
+\link[random.cdisc.data:cadtr]{random.cdisc.data::cadtr}
 }
 \usage{
 rADTR
 }
 \description{
-Random data \code{rADTR}
+Random tumor response analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}
