@@ -3,7 +3,7 @@
 \docType{data}
 \name{rADSL}
 \alias{rADSL}
-\title{Random patient listing dataset}
+\title{Random subject-level analysis dataset}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 400 rows and 55 columns.
 }
@@ -14,6 +14,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 rADSL
 }
 \description{
-Random patient listing dataset
+Random subject-level analysis dataset
 }
 \keyword{datasets}
+\keyword{internal}

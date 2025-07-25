@@ -17,3 +17,4 @@ rADAE
 Random adverse events analysis dataset
 }
 \keyword{datasets}
+\keyword{internal}
