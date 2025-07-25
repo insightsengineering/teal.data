@@ -48,7 +48,7 @@
 #' @name rADRS
 "rADRS"
 
-#' Random patient listing dataset
+#' Random subject-level analysis dataset
 #'
 #' @docType data
 #' @usage rADSL
