@@ -39,6 +39,7 @@ Imports:
     utils
 Suggests:
     knitr (>= 1.42),
+    random.cdisc.data (>= 0.2.1),
     rmarkdown (>= 2.23),
     testthat (>= 3.2.2),
     withr (>= 2.0.0)
@@ -51,7 +52,7 @@ Remotes:
     insightsengineering/teal.code@main
 Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
     r-lib/lifecycle, r-lib/rlang, yihui/knitr, rstudio/rmarkdown,
-    r-lib/testthat, r-lib/withr
+    insightsengineering/random.cdisc.data, r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
 Encoding: UTF-8
 Language: en-US
