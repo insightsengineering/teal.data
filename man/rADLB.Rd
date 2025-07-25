@@ -17,4 +17,3 @@ rADLB
 Random laboratory data analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

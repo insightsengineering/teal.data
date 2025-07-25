@@ -3,7 +3,7 @@
 #' @docType data
 #' @usage rADAE
 #' @inherit random.cdisc.data::cadae format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadae]
 #' @name rADAE
 "rADAE"
@@ -13,7 +13,7 @@
 #' @docType data
 #' @usage rADCM
 #' @inherit random.cdisc.data::cadcm format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadcm]
 #' @name rADCM
 "rADCM"
@@ -23,7 +23,7 @@
 #' @docType data
 #' @usage rADEX
 #' @inherit random.cdisc.data::cadex format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadex]
 #' @name rADEX
 "rADEX"
@@ -33,7 +33,7 @@
 #' @docType data
 #' @usage rADLB
 #' @inherit random.cdisc.data::cadlb format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadlb]
 #' @name rADLB
 "rADLB"
@@ -43,7 +43,7 @@
 #' @docType data
 #' @usage rADRS
 #' @inherit random.cdisc.data::cadrs format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadrs]
 #' @name rADRS
 "rADRS"
@@ -52,7 +52,7 @@
 #'
 #' @docType data
 #' @usage rADSL
-#' @keywords datasets internal
+#' @keywords datasets
 #' @inherit random.cdisc.data::cadsl format
 #' @source [random.cdisc.data::cadsl]
 #' @name rADSL
@@ -62,7 +62,7 @@
 #'
 #' @docType data
 #' @usage rADTR
-#' @keywords datasets internal
+#' @keywords datasets
 #' @inherit random.cdisc.data::cadtr format
 #' @source [random.cdisc.data::cadtr]
 #' @name rADTR
@@ -73,7 +73,7 @@
 #' @docType data
 #' @usage rADTTE
 #' @inherit random.cdisc.data::cadtte format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadtte]
 #' @name rADTTE
 "rADTTE"
@@ -83,7 +83,7 @@
 #' @docType data
 #' @usage rADVS
 #' @inherit random.cdisc.data::cadvs format
-#' @keywords datasets internal
+#' @keywords datasets
 #' @source [random.cdisc.data::cadvs]
 #' @name rADVS
 "rADVS"

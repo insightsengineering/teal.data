@@ -17,4 +17,3 @@ rADTR
 Random tumor response analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

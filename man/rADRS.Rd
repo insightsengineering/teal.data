@@ -17,4 +17,3 @@ rADRS
 Random response analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}

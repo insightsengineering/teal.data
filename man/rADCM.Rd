@@ -17,4 +17,3 @@ rADCM
 Random concomitant medications analysis dataset
 }
 \keyword{datasets}
-\keyword{internal}
