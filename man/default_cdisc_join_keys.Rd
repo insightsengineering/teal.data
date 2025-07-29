@@ -14,6 +14,13 @@ internal. See \code{data-raw/cdisc_datasets.yaml} and \code{data-raw/data.R} for
 default_cdisc_join_keys
 }
 \description{
-List containing default joining keys for \code{CDISC} datasets
+These represent primary and foreign keys for joining \code{CDISC} datasets.
+}
+\examples{
+default_cdisc_join_keys
+default_cdisc_join_keys[c("ADSL", "ADAE")] # Subset for ADSL and ADAE
+}
+\seealso{
+\code{\link[=join_keys]{join_keys()}}
 }
 \keyword{datasets}

@@ -20,7 +20,7 @@ repos:
           - methods
           - rlang
           - stats
-          - teal.code
+          - insightsengineering/teal.code
           - utils
           - yaml
       - id: spell-check

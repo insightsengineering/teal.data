@@ -19,5 +19,6 @@ Retrieves example CDISC datasets for use in examples and testing.
 }
 \details{
 This function returns a dummy dataset and should only be used within \code{teal.data}.
-Note that the datasets are not created and maintained in \code{teal.data}, they are retrieved from \code{\link[random.cdisc.data:random.cdisc.data-package]{random.cdisc.data}} package.
+Note that the datasets are not created and maintained in \code{teal.data}, they are retrieved from
+\code{\link[random.cdisc.data:random.cdisc.data-package]{random.cdisc.data}} package.
 }
