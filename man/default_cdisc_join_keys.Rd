@@ -8,12 +8,19 @@
 An object of class \code{join_keys} (inherits from \code{list}) of length 19.
 }
 \source{
-internal
+internal. See \code{data-raw/cdisc_datasets.yaml} and \code{data-raw/data.R} for details.
 }
 \usage{
 default_cdisc_join_keys
 }
 \description{
-This data object is created at loading time from \code{cdisc_datasets/cdisc_datasets.yaml}.
+These represent primary and foreign keys for joining \code{CDISC} datasets.
+}
+\examples{
+default_cdisc_join_keys
+default_cdisc_join_keys[c("ADSL", "ADAE")] # Subset for ADSL and ADAE
+}
+\seealso{
+\code{\link[=join_keys]{join_keys()}}
 }
 \keyword{datasets}

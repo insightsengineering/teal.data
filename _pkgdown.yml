@@ -20,6 +20,7 @@ navbar:
           href: unit-test-report-non-cran/
     github:
       icon: fa-github
+      aria-label: View on Github
       href: https://github.com/insightsengineering/teal.data
 
 articles:
@@ -56,3 +57,16 @@ reference:
       - col_labels<-
       - col_relabel
       - example_cdisc_data
+  - title: Built-in datasets
+    desc: >
+      Random CDISC synthetic data generated from `{random.cdisc.data}` package.
+    contents:
+      - rADSL
+      - rADAE
+      - rADLB
+      - rADCM
+      - rADEX
+      - rADRS
+      - rADTR
+      - rADTTE
+      - rADVS
