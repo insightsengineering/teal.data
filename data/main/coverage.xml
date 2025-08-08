@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.936026936026936" branch-rate="0" lines-covered="556" lines-valid="594" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-06-12 14:54:01.81099">
+<coverage line-rate="0.936026936026936" branch-rate="0" lines-covered="556" lines-valid="594" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-08-08 12:49:07.063278">
   <sources>
     <source>/__w/teal.data/teal.data/teal.data</source>
   </sources>
@@ -77,14 +77,14 @@
           <methods>
             <method name="example_cdisc_data" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
-                <line number="14" hits="0" branch="false"/>
                 <line number="15" hits="0" branch="false"/>
+                <line number="16" hits="0" branch="false"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="14" hits="0" branch="false"/>
             <line number="15" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
           </lines>
         </class>
         <class name="formatters_var_labels.R" filename="R/formatters_var_labels.R" line-rate="1" branch-rate="0" complexity="0">
