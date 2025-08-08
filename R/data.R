@@ -12,7 +12,7 @@
 # nolint start: line_length.
 #' @format - `rADSL`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADSL)` rows and `r ncol(rADSL)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADSL"
 
 #' @description - `rADAE`: Random adverse events analysis dataset
