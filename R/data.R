@@ -22,7 +22,7 @@
 # nolint start: line_length.
 #' @format - `rADAE`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADAE)` rows and `r ncol(rADAE)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADAE"
 
 #' @description - `rADCM`: Random concomitant medications analysis dataset
@@ -32,7 +32,7 @@
 # nolint start: line_length.
 #' @format - `rADCM`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADCM)` rows and `r ncol(rADCM)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADCM"
 
 #' @description - `rADEX`: Random response analysis dataset
@@ -42,7 +42,7 @@
 # nolint start: line_length.
 #' @format - `rADEX`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADEX)` rows and `r ncol(rADEX)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADEX"
 
 #' @description - `rADLB`: Random laboratory data analysis dataset
@@ -52,7 +52,7 @@
 # nolint start: line_length.
 #' @format - `rADLB`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADLB)` rows and `r ncol(rADLB)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADLB"
 
 #' @description - `rADRS`: Random response analysis dataset
@@ -62,7 +62,7 @@
 # nolint start: line_length.
 #' @format - `rADRS`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADRS)` rows and `r ncol(rADRS)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADRS"
 
 #' @description - `rADTR`: Random tumor response analysis dataset
@@ -72,7 +72,7 @@
 # nolint start: line_length.
 #' @format - `rADTR`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADTR)` rows and `r ncol(rADTR)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADTR"
 
 #' @description - `rADTTE`: Random time to event analysis dataset
@@ -82,7 +82,7 @@
 # nolint start: line_length.
 #' @format - `rADTTE`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADTTE)` rows and `r ncol(rADTTE)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADTTE"
 
 #' @description - `rADVS`: Random vital signs analysis dataset
@@ -92,7 +92,7 @@
 # nolint start: line_length.
 #' @format - `rADVS`: An object of class `tbl_df` (inherits from `tbl`, `data.frame`) with `r nrow(rADVS)` rows and `r ncol(rADVS)` columns.
 # nolint end: line_length.
-#' @rdname rADSL
+#' @rdname random_cdisc_data
 "rADVS"
 
 #' List containing default joining keys for `CDISC` datasets
