@@ -1,7 +1,6 @@
 #' Comprehensive data integration function for `teal` applications
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
 #'
 #' Initializes a data for `teal` application.
 #'

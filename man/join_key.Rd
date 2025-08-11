@@ -30,8 +30,6 @@ a parent-child relationship between the datasets.
 object of class \code{join_key_set} to be passed into \code{join_keys} function.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-
 Create a relationship between two datasets, \code{dataset_1} and \code{dataset_2}.
 By default, this function establishes a directed relationship with \code{dataset_1} as the parent.
 If \code{dataset_2} is not specified, the function creates a primary key for \code{dataset_1}.
