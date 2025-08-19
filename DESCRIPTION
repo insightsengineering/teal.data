@@ -48,8 +48,6 @@ VignetteBuilder:
     rmarkdown
 RdMacros:
     lifecycle
-Remotes:
-    
 Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
     r-lib/lifecycle, r-lib/rlang, yihui/knitr, rstudio/rmarkdown,
     insightsengineering/random.cdisc.data, r-lib/testthat, r-lib/withr
