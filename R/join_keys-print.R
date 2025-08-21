@@ -6,7 +6,7 @@ format.join_keys <- function(x, ...) {
     my_parents <- parents(x)
     names_sorted <- topological_sort(my_parents)
     names <- union(names_sorted, names(x))
-    x_implicit <- update_keys_given_parents(x)
+    x_indirect <- .append_indirect_links(x)
     out <- lapply(names, function(i) {
       out_i <- lapply(union(i, names(x[[i]])), function(j) {
         direction <- if (identical(my_parents[[j]], i)) {
@@ -27,13 +27,13 @@ format.join_keys <- function(x, ...) {
         )
       })
 
-      implicit_datasets <- setdiff(names(x_implicit[[i]]), names(x[[i]]))
-      if (length(implicit_datasets) > 0) {
+      indirect_datasets <- setdiff(names(x_indirect[[i]]), names(x[[i]]))
+      if (length(indirect_datasets) > 0) {
         out_i <- c(
           out_i,
           paste0(
-            "  --* (implicit via parent with): ",
-            paste(implicit_datasets, collapse = ", ")
+            "  --* (indirect via foreign dataset): ",
+            paste(indirect_datasets, collapse = ", ")
           )
         )
       }
