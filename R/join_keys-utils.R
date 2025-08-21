@@ -138,7 +138,7 @@ assert_compatible_keys2 <- function(x, y) {
           join_key(
             dataset_1 = parent_name,
             dataset_2 = child_name,
-            keys = setNames(unname(this_key_pair), names(ancestors_key_pair)),
+            keys = stats::setNames(unname(this_key_pair), names(ancestors_key_pair)),
             directed = FALSE
           )
         )

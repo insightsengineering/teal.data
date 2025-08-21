@@ -289,7 +289,7 @@ testthat::test_that("join_keys[i,j]<- removes keys with NULL", {
         d1 = list(d1 = c(A = "A")),
         d2 = list(d2 = c(B = "B"))
       ),
-      parents = setNames(list(), character(0)), # named list
+      parents = stats::setNames(list(), character(0)), # named list
       class = c("join_keys", "list")
     )
   )
