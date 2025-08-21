@@ -141,7 +141,7 @@ testthat::test_that("join_keys[i,j] returns keys for pair given by numeric indic
   testthat::expect_identical(my_keys[2, 1], c(`child-parent` = "child-parent"))
 })
 
-testthat::test_that("join_keys[i,j] return NULL for given pair when no such key and no common parent", {
+testthat::test_that("join_keys[i,j] return NULL for given pair when not linked via foreign datasets and keys", {
   my_keys <- join_keys(
     join_key("a", "a", "aa"),
     join_key("b", "b", "bb"),
@@ -153,7 +153,7 @@ testthat::test_that("join_keys[i,j] return NULL for given pair when no such key 
 })
 
 testthat::test_that(
-  "join_keys[i,j] doesn't infer keys between children if they don't have common key to parent",
+  "join_keys[i,j] doesn't infer keys between datasets if they don't refer to the same column in foreign dataset",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
@@ -167,7 +167,7 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "join_keys[i,j] doesn't infer keys between grandchildren",
+  "join_keys[i,j] doesn't infer keys between grandchildren if they don't refer to the same col in the foreign dataset",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
@@ -183,7 +183,7 @@ testthat::test_that(
 )
 
 testthat::test_that(
-  "join_keys[i,j ] infer keys between children through foreign keys to parent. ",
+  "join_keys[i,j ] infer keys between datasets through foreign datasets to parent. ",
   {
     my_keys <- join_keys(
       join_key("a", "a", "aa"),
@@ -193,6 +193,20 @@ testthat::test_that(
       join_key("a", "c", c("aa" = "cc"))
     )
     # "bb" and "cc" are the names in child datasets, "aa" is the name in parent dataset
+    testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
+  }
+)
+
+testthat::test_that(
+  "join_keys[i,j ] infer keys between datasets if they are linked to the same col in their common foreign dataset.",
+  {
+    my_keys <- join_keys(
+      join_key("a", "a", "aa", directed = FALSE),
+      join_key("b", "b", "bb", directed = FALSE),
+      join_key("c", "c", "cc", directed = FALSE),
+      join_key("a", "b", c("aa" = "bb")),
+      join_key("a", "c", c("aa" = "cc"))
+    )
     testthat::expect_identical(my_keys["b", "c"], c(bb = "cc"))
   }
 )
@@ -275,7 +289,7 @@ testthat::test_that("join_keys[i,j]<- removes keys with NULL", {
         d1 = list(d1 = c(A = "A")),
         d2 = list(d2 = c(B = "B"))
       ),
-      parents = setNames(list(), character(0)), # named list
+      parents = stats::setNames(list(), character(0)), # named list
       class = c("join_keys", "list")
     )
   )
