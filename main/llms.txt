@@ -1,0 +1,268 @@
+# teal.data
+
+[![CRAN
+Version](https://www.r-pkg.org/badges/version/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Total
+Downloads](http://cranlogs.r-pkg.org/badges/grand-total/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Month
+Downloads](http://cranlogs.r-pkg.org/badges/last-month/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+[![Last Week
+Downloads](http://cranlogs.r-pkg.org/badges/last-week/teal.data?color=green)](https://cran.r-project.org/package=teal.data)
+
+[![Check
+🛠](https://github.com/insightsengineering/teal.data/actions/workflows/check.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/main/unit-test-report/)
+[![Docs
+📚](https://github.com/insightsengineering/teal.data/actions/workflows/docs.yaml/badge.svg)](https://insightsengineering.github.io/teal.data/)
+[![Code Coverage
+📔](https://raw.githubusercontent.com/insightsengineering/teal.data/_xml_coverage_reports/data/main/badge.svg)](https://insightsengineering.github.io/teal.data/main/coverage-report/)
+
+![GitHub
+forks](https://img.shields.io/github/forks/insightsengineering/teal.data?style=social)![GitHub
+repo
+stars](https://img.shields.io/github/stars/insightsengineering/teal.data?style=social)
+
+![GitHub commit
+activity](https://img.shields.io/github/commit-activity/m/insightsengineering/teal.data)![GitHub
+contributors](https://img.shields.io/github/contributors/insightsengineering/teal.data)![GitHub
+last
+commit](https://img.shields.io/github/last-commit/insightsengineering/teal.data)![GitHub
+pull
+requests](https://img.shields.io/github/issues-pr/insightsengineering/teal.data)![GitHub
+repo
+size](https://img.shields.io/github/repo-size/insightsengineering/teal.data)![GitHub
+language
+count](https://img.shields.io/github/languages/count/insightsengineering/teal.data)[![Project
+Status: Active – The project has reached a stable, usable state and is
+being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Current
+Version](https://img.shields.io/github/r-package/v/insightsengineering/teal.data/main?color=purple&label=package%20version)](https://github.com/insightsengineering/teal.data/tree/main)
+[![Open
+Issues](https://img.shields.io/github/issues-raw/insightsengineering/teal.data?color=red&label=open%20issues)](https://github.com/insightsengineering/teal.data/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+
+This package is used to create the data needed for `teal` applications.
+This data can be:
+
+- Independent data frames
+- CDISC data (for clinical trial reporting)
+- Relational data
+- `MultiAssayExperiment` objects
+
+This package provides:
+
+- the mechanism for pulling data from existing systems
+- the ability to mutate (i.e. pre-process) the data
+- record the operations used to create the data to enable
+  reproducibility
+
+## Installation
+
+``` r
+install.packages('teal.data')
+```
+
+Alternatively, you might want to use the development version.
+
+``` r
+# install.packages("pak")
+pak::pak("insightsengineering/teal.data")
+```
+
+## Usage
+
+To understand how to use this package, please refer to the [Introduction
+to
+`teal.data`](https://insightsengineering.github.io/teal.data/latest-tag/articles/teal-data.html)
+article, which provides multiple examples of code implementation.
+
+Below is the showcase of the example usage.
+
+``` r
+library(teal.data)
+```
+
+``` r
+# quick start for clinical trial data
+my_data <- cdisc_data(
+  ADSL = example_cdisc_data("ADSL"),
+  ADTTE = example_cdisc_data("ADTTE"),
+  code = quote({
+    ADSL <- example_cdisc_data("ADSL")
+    ADTTE <- example_cdisc_data("ADTTE")
+  })
+)
+
+# or
+
+my_data <- within(teal_data(), {
+  ADSL <- example_cdisc_data("ADSL")
+  ADTTE <- example_cdisc_data("ADTTE")
+})
+datanames <- c("ADSL", "ADTTE")
+datanames(my_data) <- datanames
+join_keys(my_data) <- default_cdisc_join_keys[datanames]
+```
+
+``` r
+# quick start for general data
+my_general_data <- within(teal_data(), {
+  iris <- iris
+  mtcars <- mtcars
+})
+```
+
+``` r
+# reproducibility check
+data <- teal_data(iris = iris, code = "iris <- mtcars")
+verify(data)
+#> Error: Code verification failed.
+#>  Object(s) recreated with code that have different structure in data:
+#>  • iris
+```
+
+``` r
+# code extraction
+iris2_data <- within(teal_data(), {iris2 <- iris[1:6, ]})
+get_code(iris2_data)
+#> "iris2 <- iris[1:6, ]"
+```
+
+## Getting help
+
+If you encounter a bug or have a feature request, please file an issue.
+For questions, discussions, and staying up to date, please use the
+`teal` channel in the [`pharmaverse` slack
+workspace](https://pharmaverse.slack.com).
+
+## Stargazers and Forkers
+
+### Stargazers over time
+
+[![Stargazers over
+time](https://starchart.cc/insightsengineering/teal.data.svg)](https://starchart.cc/insightsengineering/teal.data)
+
+### Stargazers
+
+[![Stargazers repo roster for
+@insightsengineering/teal.data](http://reporoster.com/stars/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/stargazers)
+
+### Forkers
+
+[![Forkers repo roster for
+@insightsengineering/teal.data](http://reporoster.com/forks/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/network/members)
+
+# Package index
+
+## Reproducible data class
+
+Functions to create and manage teal_data class.
+
+- [`cdisc_data()`](https://insightsengineering.github.io/teal.data/reference/cdisc_data.md)
+  :
+
+  Data input for `teal` app
+
+- [`datanames()`](https://insightsengineering.github.io/teal.data/reference/datanames.md)
+  [`` `datanames<-`() ``](https://insightsengineering.github.io/teal.data/reference/datanames.md)
+  [`` `names<-`( ``*`<teal_data>`*`)`](https://insightsengineering.github.io/teal.data/reference/datanames.md)
+  **\[deprecated\]** :
+
+  Names of data sets in `teal_data` object
+
+- [`get_code(`*`<teal_data>`*`)`](https://insightsengineering.github.io/teal.data/reference/get_code.md)
+  :
+
+  Get code from `teal_data` object
+
+- [`join_key()`](https://insightsengineering.github.io/teal.data/reference/join_key.md)
+  : Create a relationship between a pair of datasets
+
+- [`join_keys()`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`` `[`( ``*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`` `[<-`( ``*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`c(`*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`c(`*`<join_key_set>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`` `join_keys<-`() ``](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`format(`*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  [`print(`*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)
+  :
+
+  Manage relationships between datasets using `join_keys`
+
+- [`names(`*`<teal_data>`*`)`](https://insightsengineering.github.io/teal.data/reference/names.teal_data.md)
+  :
+
+  Names of data sets in `teal_data` object
+
+- [`` `names<-`( ``*`<join_keys>`*`)`](https://insightsengineering.github.io/teal.data/reference/names-set-.join_keys.md)
+  :
+
+  The names of a `join_keys` object
+
+- [`parents()`](https://insightsengineering.github.io/teal.data/reference/parents.md)
+  [`` `parents<-`() ``](https://insightsengineering.github.io/teal.data/reference/parents.md)
+  [`parent()`](https://insightsengineering.github.io/teal.data/reference/parents.md)
+  :
+
+  Get and set parents in `join_keys` object
+
+- [`show(`*`<teal_data>`*`)`](https://insightsengineering.github.io/teal.data/reference/show-teal_data-method.md)
+  :
+
+  Show `teal_data` object
+
+- [`teal_data()`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)
+  [`` `[`( ``*`<teal_data>`*`)`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)
+  :
+
+  Comprehensive data integration function for `teal` applications
+
+- [`verify()`](https://insightsengineering.github.io/teal.data/reference/verify.md)
+  : Verify code reproducibility
+
+## Helpers
+
+Other useful functions for users and developers.
+
+- [`default_cdisc_join_keys`](https://insightsengineering.github.io/teal.data/reference/default_cdisc_join_keys.md)
+  :
+
+  List containing default joining keys for `CDISC` datasets
+
+- [`col_labels()`](https://insightsengineering.github.io/teal.data/reference/col_labels.md)
+  [`` `col_labels<-`() ``](https://insightsengineering.github.io/teal.data/reference/col_labels.md)
+  [`col_relabel()`](https://insightsengineering.github.io/teal.data/reference/col_labels.md)
+  : Variable labels
+
+- [`example_cdisc_data()`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)
+  : Generate sample CDISC datasets
+
+## Built-in datasets
+
+Random CDISC synthetic data generated from
+[random.cdisc.data](https://insightsengineering.github.io/random.cdisc.data/)
+package.
+
+- [`rADSL`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADAE`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADCM`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADEX`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADLB`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADRS`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADTR`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADTTE`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  [`rADVS`](https://insightsengineering.github.io/teal.data/reference/random_cdisc_data.md)
+  :
+
+  Simulated `CDISC` Data for Examples
+
+# Articles
+
+### Get started
+
+- [Introduction to
+  teal.data](https://insightsengineering.github.io/teal.data/articles/teal-data.md):
+- [teal_data
+  reproducibility](https://insightsengineering.github.io/teal.data/articles/teal-data-reproducibility.md):
+- [Join
+  Keys](https://insightsengineering.github.io/teal.data/articles/join-keys.md):
