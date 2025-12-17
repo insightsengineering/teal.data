@@ -2,12 +2,26 @@
 % Please edit documentation in R/join_keys-utils.R
 \name{.append_indirect_links}
 \alias{.append_indirect_links}
+\alias{.append_indirect_links_recursive}
 \title{Append indirect links}
 \usage{
 .append_indirect_links(x)
+
+.append_indirect_links_recursive(
+  x,
+  node_name,
+  parent_name,
+  nodes_visited = character(0)
+)
 }
 \arguments{
 \item{x}{(\code{join_keys}) object to update the keys.}
+
+\item{node_name}{(\code{character}) name of the current node being processed.}
+
+\item{parent_name}{(\code{character}) name of the parent node. If missing, no parent is considered.}
+
+\item{nodes_visited}{(\code{character}) vector of node names that have already been visited to prevent cycles.}
 }
 \value{
 (\code{self}) invisibly for chaining
@@ -15,5 +29,8 @@
 \description{
 Adds the keys between datasets if they are connected by the same set of keys
 via other foreign datasets.
+Algorithm searches each key pair (parent -> child) and assess if higher-level-ancestor can be
+linked with child by common keys.
+Algorithm is protected against infinite recursion and visits each node only once.
 }
 \keyword{internal}

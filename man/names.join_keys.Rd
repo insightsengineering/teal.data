@@ -6,8 +6,6 @@
 \title{The names of a \code{join_keys} object}
 \usage{
 \method{names}{join_keys}(x) <- value
-
-\method{names}{join_keys}(x)
 }
 \arguments{
 \item{x}{an \R object.}

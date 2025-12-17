@@ -34,14 +34,3 @@
   class(new_x) <- c("join_keys", "list")
   new_x
 }
-
-#' @rdname names.join_keys
-#' @export
-names.join_keys <- function(x) {
-  new_x <- unclass(x)
-  child_parent <- sapply(names(new_x), parent, x = x, USE.NAMES = TRUE, simplify = FALSE)
-  union(
-    unlist(topological_sort(child_parent)),
-    names(new_x)
-  )
-}

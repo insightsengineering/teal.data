@@ -110,6 +110,9 @@ assert_compatible_keys2 <- function(x, y) {
 #'
 #' Adds the keys between datasets if they are connected by the same set of keys
 #' via other foreign datasets.
+#' Algorithm searches each key pair (parent -> child) and assess if higher-level-ancestor can be
+#' linked with child by common keys.
+#' Algorithm is protected against infinite recursion and visits each node only once.
 #'
 #' @param x (`join_keys`) object to update the keys.
 #'
@@ -118,17 +121,21 @@ assert_compatible_keys2 <- function(x, y) {
 #' @keywords internal
 .append_indirect_links <- function(x) {
   for (node_name in names(x)) {
-    x <- .search_recursive(x, node_name)
+    x <- .append_indirect_links_recursive(x, node_name)
   }
   x
 }
 
-.search_recursive <- function(x, node_name, parent_name, nodes_visited = node_name) {
-  children_names <- setdiff(names(x[[node_name]]), nodes_visited)
-  nodes_visited <- c(nodes_visited, children_names)
+#' @rdname dot-append_indirect_links
+#'
+#' @param node_name (`character`) name of the current node being processed.
+#' @param parent_name (`character`) name of the parent node. If missing, no parent is considered.
+#' @param nodes_visited (`character`) vector of node names that have already been visited to prevent cycles.
+.append_indirect_links_recursive <- function(x, node_name, parent_name, nodes_visited = character(0)) {
+  children_names <- setdiff(names(x[[node_name]]), union(nodes_visited, node_name))
+  nodes_visited <- union(nodes_visited, children_names)
   if (length(children_names)) {
     for (child_name in children_names) {
-      # todo: make sure they are connected correctly with the keys
       if (!missing(parent_name)) {
         ancestors_key_pair <- x[[parent_name]][[node_name]] # !important: using x[a, b] will result in infinite loop
         this_key_pair <- x[[node_name]][[child_name]]
@@ -143,8 +150,9 @@ assert_compatible_keys2 <- function(x, y) {
           )
         )
       }
-      x <- .search_recursive(x = x, node_name = child_name, parent_name = node_name, nodes_visited = nodes_visited)
-      nodes_visited <- union(nodes_visited, names(x[[node_name]]))
+      x <- .append_indirect_links_recursive(
+        x = x, node_name = child_name, parent_name = node_name, nodes_visited = nodes_visited
+      )
     }
   }
   x
