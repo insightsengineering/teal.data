@@ -131,7 +131,10 @@ assert_compatible_keys2 <- function(x, y) {
 #' @param node_name (`character`) name of the current node being processed.
 #' @param parent_name (`character`) name of the parent node. If missing, no parent is considered.
 #' @param nodes_visited (`character`) vector of node names that have already been visited to prevent cycles.
-.append_indirect_links_recursive <- function(x, node_name, parent_name, nodes_visited = character(0)) {
+.append_indirect_links_recursive <- function(x, # nolint: object_length_linter
+                                             node_name,
+                                             parent_name,
+                                             nodes_visited = character(0)) {
   children_names <- setdiff(names(x[[node_name]]), union(nodes_visited, node_name))
   nodes_visited <- union(nodes_visited, children_names)
   if (length(children_names)) {
