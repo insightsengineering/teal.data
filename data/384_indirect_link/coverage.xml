@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.936241610738255" branch-rate="0" lines-covered="558" lines-valid="596" branches-covered="0" branches-valid="0" complexity="0" version="3.6.5" timestamp="2025-12-17 14:59:05.827197">
+<coverage line-rate="0.936241610738255" branch-rate="0" lines-covered="558" lines-valid="596" branches-covered="0" branches-valid="0" complexity="0" version="3.6.5" timestamp="2025-12-17 15:20:15.656219">
   <sources>
     <source>/__w/teal.data/teal.data/teal.data</source>
   </sources>
@@ -937,27 +937,27 @@
             </method>
             <method name=".append_indirect_links_recursive" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="135" hits="151" branch="false"/>
-                <line number="136" hits="151" branch="false"/>
-                <line number="137" hits="151" branch="false"/>
-                <line number="138" hits="91" branch="false"/>
-                <line number="139" hits="132" branch="false"/>
-                <line number="140" hits="78" branch="false"/>
-                <line number="141" hits="78" branch="false"/>
-                <line number="142" hits="18" branch="false"/>
-                <line number="143" hits="60" branch="false"/>
-                <line number="144" hits="60" branch="false"/>
-                <line number="145" hits="60" branch="false"/>
+                <line number="138" hits="151" branch="false"/>
+                <line number="139" hits="151" branch="false"/>
+                <line number="140" hits="151" branch="false"/>
+                <line number="141" hits="91" branch="false"/>
+                <line number="142" hits="132" branch="false"/>
+                <line number="143" hits="78" branch="false"/>
+                <line number="144" hits="78" branch="false"/>
+                <line number="145" hits="18" branch="false"/>
                 <line number="146" hits="60" branch="false"/>
                 <line number="147" hits="60" branch="false"/>
                 <line number="148" hits="60" branch="false"/>
                 <line number="149" hits="60" branch="false"/>
                 <line number="150" hits="60" branch="false"/>
                 <line number="151" hits="60" branch="false"/>
-                <line number="153" hits="114" branch="false"/>
-                <line number="154" hits="114" branch="false"/>
-                <line number="155" hits="114" branch="false"/>
-                <line number="158" hits="151" branch="false"/>
+                <line number="152" hits="60" branch="false"/>
+                <line number="153" hits="60" branch="false"/>
+                <line number="154" hits="60" branch="false"/>
+                <line number="156" hits="114" branch="false"/>
+                <line number="157" hits="114" branch="false"/>
+                <line number="158" hits="114" branch="false"/>
+                <line number="161" hits="151" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -1016,27 +1016,27 @@
             <line number="123" hits="13" branch="false"/>
             <line number="124" hits="37" branch="false"/>
             <line number="126" hits="13" branch="false"/>
-            <line number="135" hits="151" branch="false"/>
-            <line number="136" hits="151" branch="false"/>
-            <line number="137" hits="151" branch="false"/>
-            <line number="138" hits="91" branch="false"/>
-            <line number="139" hits="132" branch="false"/>
-            <line number="140" hits="78" branch="false"/>
-            <line number="141" hits="78" branch="false"/>
-            <line number="142" hits="18" branch="false"/>
-            <line number="143" hits="60" branch="false"/>
-            <line number="144" hits="60" branch="false"/>
-            <line number="145" hits="60" branch="false"/>
+            <line number="138" hits="151" branch="false"/>
+            <line number="139" hits="151" branch="false"/>
+            <line number="140" hits="151" branch="false"/>
+            <line number="141" hits="91" branch="false"/>
+            <line number="142" hits="132" branch="false"/>
+            <line number="143" hits="78" branch="false"/>
+            <line number="144" hits="78" branch="false"/>
+            <line number="145" hits="18" branch="false"/>
             <line number="146" hits="60" branch="false"/>
             <line number="147" hits="60" branch="false"/>
             <line number="148" hits="60" branch="false"/>
             <line number="149" hits="60" branch="false"/>
             <line number="150" hits="60" branch="false"/>
             <line number="151" hits="60" branch="false"/>
-            <line number="153" hits="114" branch="false"/>
-            <line number="154" hits="114" branch="false"/>
-            <line number="155" hits="114" branch="false"/>
-            <line number="158" hits="151" branch="false"/>
+            <line number="152" hits="60" branch="false"/>
+            <line number="153" hits="60" branch="false"/>
+            <line number="154" hits="60" branch="false"/>
+            <line number="156" hits="114" branch="false"/>
+            <line number="157" hits="114" branch="false"/>
+            <line number="158" hits="114" branch="false"/>
+            <line number="161" hits="151" branch="false"/>
           </lines>
         </class>
         <class name="join_keys.R" filename="R/join_keys.R" line-rate="1" branch-rate="0" complexity="0">
