@@ -120,8 +120,12 @@ assert_compatible_keys2 <- function(x, y) {
 #'
 #' @keywords internal
 .append_indirect_links <- function(x) {
+  # environment to track visited nodes
+  visited_env <- new.env(parent = emptyenv())
+  visited_env$nodes <- character(0)
+
   for (node_name in names(x)) {
-    x <- .append_indirect_links_recursive(x, node_name)
+    x <- .append_indirect_links_recursive(x, node_name, visited_env = visited_env)
   }
   x
 }
@@ -130,13 +134,13 @@ assert_compatible_keys2 <- function(x, y) {
 #'
 #' @param node_name (`character`) name of the current node being processed.
 #' @param parent_name (`character`) name of the parent node. If missing, no parent is considered.
-#' @param nodes_visited (`character`) vector of node names that have already been visited to prevent cycles.
+#' @param visited_env (`environment`) environment containing visited nodes to prevent cycles.
 .append_indirect_links_recursive <- function(x, # nolint: object_length_linter
                                              node_name,
                                              parent_name,
-                                             nodes_visited = character(0)) {
-  children_names <- setdiff(names(x[[node_name]]), union(nodes_visited, node_name))
-  nodes_visited <- union(nodes_visited, children_names)
+                                             visited_env) {
+  children_names <- setdiff(names(x[[node_name]]), union(visited_env$nodes, node_name))
+  visited_env$nodes <- union(visited_env$nodes, children_names)
   if (length(children_names)) {
     for (child_name in children_names) {
       if (!missing(parent_name)) {
@@ -154,7 +158,7 @@ assert_compatible_keys2 <- function(x, y) {
         )
       }
       x <- .append_indirect_links_recursive(
-        x = x, node_name = child_name, parent_name = node_name, nodes_visited = nodes_visited
+        x = x, node_name = child_name, parent_name = node_name, visited_env = visited_env
       )
     }
   }

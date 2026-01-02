@@ -7,12 +7,7 @@
 \usage{
 .append_indirect_links(x)
 
-.append_indirect_links_recursive(
-  x,
-  node_name,
-  parent_name,
-  nodes_visited = character(0)
-)
+.append_indirect_links_recursive(x, node_name, parent_name, visited_env)
 }
 \arguments{
 \item{x}{(\code{join_keys}) object to update the keys.}
@@ -21,7 +16,7 @@
 
 \item{parent_name}{(\code{character}) name of the parent node. If missing, no parent is considered.}
 
-\item{nodes_visited}{(\code{character}) vector of node names that have already been visited to prevent cycles.}
+\item{visited_env}{(\code{environment}) environment containing visited nodes to prevent cycles.}
 }
 \value{
 (\code{self}) invisibly for chaining
