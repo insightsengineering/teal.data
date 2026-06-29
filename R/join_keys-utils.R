@@ -106,48 +106,61 @@ assert_compatible_keys2 <- function(x, y) {
   TRUE
 }
 
-#' Updates the keys of the datasets based on the parents
+#' Append indirect links
+#'
+#' Adds the keys between datasets if they are connected by the same set of keys
+#' via other foreign datasets.
+#' Algorithm searches each key pair (parent -> child) and assess if higher-level-ancestor can be
+#' linked with child by common keys.
+#' Algorithm is protected against infinite recursion and visits each node only once.
 #'
 #' @param x (`join_keys`) object to update the keys.
 #'
 #' @return (`self`) invisibly for chaining
 #'
 #' @keywords internal
-update_keys_given_parents <- function(x) {
-  jk <- join_keys(x)
+.append_indirect_links <- function(x) {
+  # environment to track visited nodes
+  visited_env <- new.env(parent = emptyenv())
+  visited_env$nodes <- character(0)
 
-  checkmate::assert_class(jk, "join_keys", .var.name = checkmate::vname(x))
+  for (node_name in names(x)) {
+    x <- .append_indirect_links_recursive(x, node_name, visited_env = visited_env)
+  }
+  x
+}
 
-  datanames <- names(jk)
-  for (d1_ix in seq_along(datanames)) {
-    d1 <- datanames[[d1_ix]]
-    d1_parent <- parent(jk, d1)
-    for (d2 in datanames[-1 * seq.int(d1_ix)]) {
-      if (length(jk[[d1]][[d2]]) == 0) {
-        d2_parent <- parent(jk, d2)
-
-        if (!identical(d1_parent, d2_parent) || length(d1_parent) == 0) next
-
-        # both has the same parent -> common keys to parent
-        keys_d1_parent <- sort(jk[[d1]][[d1_parent]])
-        keys_d2_parent <- sort(jk[[d2]][[d2_parent]])
-
-        common_ix_1 <- unname(keys_d1_parent) %in% unname(keys_d2_parent)
-        common_ix_2 <- unname(keys_d2_parent) %in% unname(keys_d1_parent)
-
-        # No common keys between datasets - leave empty
-        if (all(!common_ix_1)) next
-
-        fk <- structure(
-          names(keys_d2_parent)[common_ix_2],
-          names = names(keys_d1_parent)[common_ix_1]
+#' @rdname dot-append_indirect_links
+#'
+#' @param node_name (`character`) name of the current node being processed.
+#' @param parent_name (`character`) name of the parent node. If missing, no parent is considered.
+#' @param visited_env (`environment`) environment containing visited nodes to prevent cycles.
+.append_indirect_links_recursive <- function(x, # nolint: object_length_linter
+                                             node_name,
+                                             parent_name,
+                                             visited_env) {
+  children_names <- setdiff(names(x[[node_name]]), union(visited_env$nodes, node_name))
+  visited_env$nodes <- union(visited_env$nodes, children_names)
+  if (length(children_names)) {
+    for (child_name in children_names) {
+      if (!missing(parent_name)) {
+        ancestors_key_pair <- x[[parent_name]][[node_name]] # !important: using x[a, b] will result in infinite loop
+        this_key_pair <- x[[node_name]][[child_name]]
+        if (!identical(unname(ancestors_key_pair), names(this_key_pair))) next
+        x <- c(
+          x,
+          join_key(
+            dataset_1 = parent_name,
+            dataset_2 = child_name,
+            keys = stats::setNames(unname(this_key_pair), names(ancestors_key_pair)),
+            directed = FALSE
+          )
         )
-        jk[[d1]][[d2]] <- fk # mutate join key
       }
+      x <- .append_indirect_links_recursive(
+        x = x, node_name = child_name, parent_name = node_name, visited_env = visited_env
+      )
     }
   }
-  # check parent child relation
-  assert_parent_child(x = jk)
-
-  jk
+  x
 }

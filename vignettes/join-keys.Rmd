@@ -93,10 +93,10 @@ jk
 | `##   <-- ds3: [col_1]`          |                                                                               |
 | `## ds2: [col_1, col_2]`           |                                                                               |
 | `##   --> ds1: [col_1]`          | arrow `-->` denotes `ds2` is a child of `ds1`                                                                              |
-| `##   --* (implicit via parent with): ds3` |  **Implicit relationship between `ds2` & `ds3`**<br />_(given that they share common keys with same parent)_    |
+| `##   --* (indirect via foreign dataset): ds3` |  **Implicit relationship between `ds2` & `ds3`**<br />_(given that they are linked to the same keys in their common foreign dataset)_    |
 | `## ds3: [col_1, col_3]`           |                                                                               |
 | `##   --> ds1: [col_1]`          |                                                                               |
-| `##   --* (implicit via parent with): ds2` |                                                                               |
+| `##   --* (indirect via foreign dataset): ds2` |                                                                               |
 | `## ds4: [no primary keys]`    |                                                                               |
 | `##   <-> ds5: [col_5]`          |  **Foreign keys** <br />_(arrow `<->` denotes no parent definition between datasets)_      |
 | `## ds5: [no primary keys]`    |                                                                               |
@@ -174,7 +174,7 @@ c(jk1, join_key("ds3", "ds3", "col_3"))
 
 There are 2 types of relationships encoded with _joining keys_ that are described in the following sections. The _primary_ and _foreign_ keys are created explicitly using the constructor for individual keys (`join_key`).
 
-Additionally, the `join_keys` object infers implicit relationships when two datasets share foreign keys to a parent dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
+Additionally, the `join_keys` object infers indirect relationships when two datasets are linked via the same keys in their foreign dataset, but not between themselves. These implicit relationships are available just like another foreign key and can be used to merge datasets, despite not being defined by the user.
 
 ### Primary Key with `teal_data`
 

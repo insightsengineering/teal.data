@@ -103,7 +103,7 @@ in a parent-child relationship and the mapping is automatically mirrored between
 given \code{names}, including parent \code{names} and symmetric mirror keys between
 \code{names} in the result.
 \item \code{x[i, j]}: Returns join keys between datasets \code{i} and \code{j},
-including implicit keys inferred from their relationship with a parent.
+including implicit keys inferred from their relationship via foreign dataset.
 }
 
 

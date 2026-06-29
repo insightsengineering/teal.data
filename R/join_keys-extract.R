@@ -6,7 +6,7 @@
 #' given `names`, including parent `names` and symmetric mirror keys between
 #' `names` in the result.
 #' - `x[i, j]`: Returns join keys between datasets `i` and `j`,
-#'   including implicit keys inferred from their relationship with a parent.
+#'   including implicit keys inferred from their relationship via foreign dataset.
 #'
 #' @param i,j indices specifying elements to extract or replace. Index should be a
 #' a character vector, but it can also take numeric, logical, `NULL` or missing.
@@ -56,7 +56,7 @@
     if (is.numeric(i)) i <- names(x)[i]
     if (is.numeric(j)) j <- names(x)[j]
 
-    subset_x <- update_keys_given_parents(x[union(i, j)])
+    subset_x <- .append_indirect_links(x[union(i, j)])
     return(subset_x[[i]][[j]])
   } else if (!missing(j)) {
     # ie. select all keys which have j as dataset_2
