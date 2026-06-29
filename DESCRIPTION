@@ -1,8 +1,8 @@
 Type: Package
 Package: teal.data
 Title: Data Model for 'teal' Applications
-Version: 0.8.1
-Date: 2026-06-26
+Version: 0.8.1.9000
+Date: 2026-06-29
 Authors@R: c(
     person("Dawid", "Kaledkowski", , "dawid.kaledkowski@roche.com", role = "aut",
            comment = c(ORCID = "0000-0001-9533-457X")),
@@ -52,6 +52,7 @@ Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
     r-lib/lifecycle, r-lib/rlang, yihui/knitr, rstudio/rmarkdown,
     insightsengineering/random.cdisc.data, r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
+Config/roxygen2/version: 8.0.0
 Encoding: UTF-8
 Language: en-US
 LazyData: true
@@ -80,4 +81,3 @@ Collate:
     'topological_sort.R'
     'verify.R'
     'zzz.R'
-Config/roxygen2/version: 8.0.0
