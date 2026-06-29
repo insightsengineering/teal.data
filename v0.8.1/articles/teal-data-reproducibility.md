@@ -1,0 +1,195 @@
+# teal_data reproducibility
+
+## Reproducibility of `teal_data` objects
+
+Reproducibility is a primary function of the `qenv` class, which
+`teal_data` inherits from. Every data modification in a `teal_data`
+object is performed in an encapsulated environment, separate from the
+global environment.
+
+It is important to note that the reproducibility of this object is
+limited only to the data-code relationship. Other aspects such as the
+reliability of the data source, reproducibility of the R session
+(including package versions), and creation and use of objects from other
+environments (e.g. `.GlobalEnv`) cannot be verified properly by
+`teal_data`. It is advisable to always begin analysis in a new session
+and run all code that pertains to the analysis within the `teal_data`
+object.
+
+### Verification
+
+#### Verification status
+
+Every `teal_data` object has a *verification status*, which is a
+statement of whether the contents of the `env` can be reproduced by
+`code`. From this perspective, `teal_data` objects that are instantiated
+empty are *verified* but ones instantiated with data and code are
+*unverified* because the code need not be reproducible. Obviously,
+`teal_data` objects instantiated with data only are *unverified* as
+well.
+
+When evaluating code in a `teal_data` object, the code that is stored is
+the same as the code that is executed, so it is reproducible by
+definition. Therefore, evaluating code in a `teal_data` object *does
+not* change its verification status.
+
+The verification status is always printed when inspecting a `teal_data`
+object. Also, when retrieving code, unverified objects add a warning to
+the code stating that it has not passed verification.
+
+``` r
+
+library(teal.data)
+
+data_empty <- teal_data()
+data_empty # is verified
+```
+
+    ## ✅︎ code verified
+    ## <environment: 0x55757d859e78> 🔒 
+    ## Parent: <environment: package:teal.data>
+
+``` r
+
+data_empty <- within(data_empty, i <- head(iris))
+data_empty # remains verified
+```
+
+    ## ✅︎ code verified
+    ## <environment: 0x55757e7a88a0> 🔒 
+    ## Parent: <environment: package:teal.data> 
+    ## Bindings:
+    ## - i: [data.frame]
+
+``` r
+
+data_with_data <- teal_data(i = head(iris), code = "i <- head(iris)")
+data_with_data # is unverified
+```
+
+    ## ✖ code unverified
+    ## <environment: 0x55757f3d4a20> 🔒 
+    ## Parent: <environment: package:teal.data> 
+    ## Bindings:
+    ## - i: [data.frame]
+
+``` r
+
+data_with_data <- within(data_with_data, i$rand <- sample(nrow(i)))
+data_with_data # remains unverified
+```
+
+    ## ✖ code unverified
+    ## <environment: 0x55757fe832b8> 🔒 
+    ## Parent: <environment: package:teal.data> 
+    ## Bindings:
+    ## - i: [data.frame]
+
+#### Verification process
+
+In order to confirm that the code stored in `teal_data` exactly
+reproduces the contents of the environment, one must run the
+[`verify()`](https://insightsengineering.github.io/teal.data/reference/verify.md)
+function. This causes the code to be evaluated and the results to be
+compared to the contents of the environment. If the code executes
+without errors and the results are the same as the contents already
+present in the environment, the verification is successful and the
+object’s state will be changed to *verified*. Otherwise an error will be
+raised.
+
+##### verified
+
+``` r
+
+library(teal.data)
+
+data <- data.frame(x = 11:20)
+data$id <- seq_len(nrow(data))
+
+data_right <- teal_data(
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+    data$id <- seq_len(nrow(data))
+  })
+) # is unverified
+(data_right_verified <- verify(data_right)) # returns verified object
+```
+
+    ## ✅︎ code verified
+    ## <environment: 0x55757d9215a8> 🔒 
+    ## Parent: <environment: package:teal.data> 
+    ## Bindings:
+    ## - data: [data.frame]
+
+##### unverified
+
+``` r
+
+data_wrong <- teal_data(
+  data = data,
+  code = quote({
+    data <- data.frame(x = 11:20)
+  })
+)
+verify(data_wrong) # fails verification, raises error
+```
+
+    ## Error:
+    ## ! Code verification failed.
+    ## Object(s) recreated with code that have different structure in data_wrong:
+    ##   • data
+
+### Retrieving code
+
+The `get_code` function is used to retrieve the code stored in a
+`teal_data` object. A simple `get_code(<teal_data>)` will return the
+entirety of the code but using the `names` argument allows for obtaining
+a subset of the code that only deals with some of the objects stored in
+`teal_data`.
+
+``` r
+
+library(teal.data)
+
+data <- within(teal_data(), {
+  i <- iris
+  m <- mtcars
+  head(i)
+})
+cat(get_code(data)) # retrieve all code
+```
+
+    ## i <- iris
+    ## m <- mtcars
+    ## head(i)
+
+``` r
+
+cat(get_code(data, names = "i")) # retrieve code for `i`
+```
+
+    ## i <- iris
+
+Note that in when retrieving code for a specific dataset, the result is
+only the code used to *create* that dataset, not code that *uses* is.
+
+### Tracking object dependencies
+
+Calling `get_code` with `names` specified initiates an analysis of the
+stored code, in which object dependencies are automatically discovered.
+If object `x` is created with an expression that uses object `y`, the
+lines that create object `y` must also be returned. This is quite
+effective when objects are created by simple assignments like
+`x <- foo(y)`. However, in rare cases discovering dependencies is
+impossible, *e.g.* when opening connections to databases or when objects
+are created by side effects (functions acting on their calling
+environment implicitly rather than returning a value that is then
+assigned). In such cases the code author must manually tag code lines
+that are required for a dataset by adding a special comment to the
+lines: `# @linksto x` will cause the line to be included when retrieving
+code for `x`.
+
+See
+[`?get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)
+for a detailed explanation and examples.
