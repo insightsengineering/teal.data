@@ -1,6 +1,12 @@
 # Changelog
 
-## teal.data 0.8.0.9001
+## teal.data 0.8.1.9000
+
+## teal.data 0.8.1
+
+CRAN release: 2026-06-29
+
+- Update maintainer.
 
 ## teal.data 0.8.0
 

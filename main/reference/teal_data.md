@@ -99,7 +99,7 @@ to the necessary needed to build limited objects.
 ``` r
 teal_data(x1 = iris, x2 = mtcars)
 #> ✖ code unverified
-#> <environment: 0x559c05af8fb0> 🔒 
+#> <environment: 0x55bab6a8ef98> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - x1: [data.frame]
@@ -111,13 +111,13 @@ data <- teal_data()
 data <- eval_code(data, "a <- 1;b<-2")
 data["a"]
 #> ✅︎ code verified
-#> <environment: 0x559c00a75b70> 🔒 
+#> <environment: 0x55bab25182b0> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - a: [numeric]
 data[c("a", "b")]
 #> ✅︎ code verified
-#> <environment: 0x559c0068ee18> 🔒 
+#> <environment: 0x55bab92b4ca0> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - a: [numeric]

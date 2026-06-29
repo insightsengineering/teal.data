@@ -77,6 +77,7 @@ By default, the new joining key will set the `dataset_1` as the parent.
 ##### Example & Output
 
 ``` r
+
 library(teal.data)
 jk <- join_keys(
   join_key("ds1", keys = "col_1"), # ds1: [col_1]
@@ -100,6 +101,7 @@ primary/foreign keys. Both indices must be a string denoting the dataset
 name.
 
 ``` r
+
 # Using the jk object defined in "Anatomy of Join Keys"
 jk
 ```
@@ -120,6 +122,7 @@ jk
     ##   <-> ds4: [col_4]
 
 ``` r
+
 # Getting primary key of "ds1"
 jk["ds1", "ds1"]
 ```
@@ -128,6 +131,7 @@ jk["ds1", "ds1"]
     ## "col_1"
 
 ``` r
+
 # Getting foreign keys between "ds4" and "ds5"
 jk["ds4", "ds5"]
 ```
@@ -139,6 +143,7 @@ Note that there is a symmetry in the keys between `ds4` and `ds5`
 relationship:
 
 ``` r
+
 jk["ds5", "ds4"]
 ```
 
@@ -146,6 +151,7 @@ jk["ds5", "ds4"]
     ## "col_4"
 
 ``` r
+
 jk["ds5", "ds4"]
 ```
 
@@ -156,6 +162,7 @@ When only 1 argument is used this operator will return a `join_keys`
 object that is filtered accordingly.
 
 ``` r
+
 # Using the jk object defined in "Anatomy of Join Keys"
 jk
 ```
@@ -176,6 +183,7 @@ jk
     ##   <-> ds4: [col_4]
 
 ``` r
+
 # Getting primary key of "ds1"
 jk["ds1", "ds1"]
 ```
@@ -184,6 +192,7 @@ jk["ds1", "ds1"]
     ## "col_1"
 
 ``` r
+
 # Getting keys of "ds1" and "ds2"
 jk[c("ds1", "ds2")]
 ```
@@ -200,6 +209,7 @@ where the parent (by default) will be the dataset defined in the first
 index. Assigning `NULL` value will delete the relationship.
 
 ``` r
+
 # Adding a new ds5 <-- ds1 key
 jk["ds1", "ds5"] <- "a_column"
 
@@ -220,6 +230,7 @@ objects created through the `join_key` function. These objects can be
 provided as the initial argument or in any other position as needed.
 
 ``` r
+
 jk1 <- join_keys(join_key("ds1", "ds1", "col_1"))
 jk2 <- join_keys(join_key("ds2", "ds2", "col_1"), join_key("ds1", "ds2", "col_1"))
 
@@ -234,6 +245,7 @@ c(jk1, jk2)
     ##   --> ds1: [col_1]
 
 ``` r
+
 # Keeping last occurence
 c(jk1, jk2, join_keys(join_key("ds2", "ds2", "col_2"), join_key("ds1", "ds2", c("col_1" = "col_2"))))
 ```
@@ -245,6 +257,7 @@ c(jk1, jk2, join_keys(join_key("ds2", "ds2", "col_2"), join_key("ds1", "ds2", c(
     ##   --> ds1: [col_1]
 
 ``` r
+
 # Merges join_key and join_key_set objects (from join_key function)
 c(jk1, join_key("ds3", "ds3", "col_3"))
 ```
@@ -274,6 +287,7 @@ column(s) of the dataset that (together) uniquely identify rows in the
 dataset.
 
 ``` r
+
 library(teal.data)
 
 td_pk <- within(
@@ -293,6 +307,7 @@ We can extend the previous example and define primary keys for multiple
 datasets:
 
 ``` r
+
 td_pk <- within(
   td_pk,
   {
@@ -325,6 +340,7 @@ present in the table.
 For example:
 
 ``` r
+
 library(teal.data)
 
 td_fk <- within(
@@ -372,6 +388,7 @@ These implicit relationships can be used to merge 2 datasets together,
 just as if they were defined manually.
 
 ``` r
+
 library(teal.data)
 
 td <- within(
@@ -414,6 +431,7 @@ join_keys(td)
     ##   --* (implicit via parent with): ds2
 
 ``` r
+
 join_keys(td)["ds2", "ds4"]
 ```
 
@@ -430,6 +448,7 @@ for datasets named according to the ADaM standard. They are stored in
 `default_cdisc_join_keys`.
 
 ``` r
+
 names(default_cdisc_join_keys) |> sort()
 ```
 
@@ -446,6 +465,7 @@ has one) as well as any pair-wise relationships in the resulting
 selection.
 
 ``` r
+
 default_cdisc_join_keys
 ```
 
@@ -525,6 +545,7 @@ default_cdisc_join_keys
     ##   --* (implicit via parent with): ADAE, ADEG, ADTTE, ADAETTE, ADCM, ADEX, ADLB, ADMH, ADQS, ADRS, ADSAFTTE, ADVS, ADDV, ADSUB, ADHY, ADQLQC, ADCSSRS
 
 ``` r
+
 default_cdisc_join_keys["ADSL"]
 ```
 
@@ -532,6 +553,7 @@ default_cdisc_join_keys["ADSL"]
     ## ADSL: [STUDYID, USUBJID]
 
 ``` r
+
 default_cdisc_join_keys["ADTTE"]
 ```
 
@@ -542,6 +564,7 @@ default_cdisc_join_keys["ADTTE"]
     ##   --> ADSL: [STUDYID, USUBJID]
 
 ``` r
+
 default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
 ```
 

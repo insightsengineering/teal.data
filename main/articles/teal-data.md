@@ -34,6 +34,7 @@ To create an object of class `teal_data`, use the `teal_data` function.
 `teal_data` has a number of methods to interact with the object.
 
 ``` r
+
 library(teal.data)
 
 # create teal_data object
@@ -78,6 +79,7 @@ using `within` or `eval_code`. Read more in [teal_data
 Reproducibility](https://insightsengineering.github.io/teal.data/articles/teal-data-reproducibility.md).
 
 ``` r
+
 my_data <- teal_data()
 my_data <- within(my_data, data <- data.frame(x = 11:20))
 my_data <- within(my_data, data$id <- seq_len(nrow(data)))
@@ -85,7 +87,7 @@ my_data # is verified
 ```
 
     ## ✅︎ code verified
-    ## <environment: 0x5571ef261d70> 🔒 
+    ## <environment: 0x563d49fe1368> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - data: [data.frame]
@@ -99,6 +101,7 @@ function. See more in
 [join_keys](https://insightsengineering.github.io/teal.data/articles/join-keys.md).
 
 ``` r
+
 my_data <- teal_data()
 my_data <- within(my_data, {
   data <- data.frame(id = 1:10, x = 11:20)
@@ -121,6 +124,7 @@ join_keys(my_data)
     ##   --> child: [data_id]
 
 ``` r
+
 # join_keys for limited object
 join_keys(my_data["child"])
 ```
@@ -135,6 +139,7 @@ This can be used to pass auxiliary objects in the `teal_data` instance,
 without being visible in the `teal` summary and filter panel.
 
 ``` r
+
 my_data <- teal_data()
 my_data <- within(my_data, {
   data <- data.frame(id = 1:10, x = 11:20)
@@ -147,6 +152,7 @@ ls(my_data)
     ## [1] "data"
 
 ``` r
+
 names(my_data)
 ```
 

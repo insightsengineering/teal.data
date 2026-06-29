@@ -58,12 +58,14 @@ This package provides:
 ## Installation
 
 ``` r
+
 install.packages('teal.data')
 ```
 
 Alternatively, you might want to use the development version.
 
 ``` r
+
 # install.packages("pak")
 pak::pak("insightsengineering/teal.data")
 ```
@@ -78,10 +80,12 @@ article, which provides multiple examples of code implementation.
 Below is the showcase of the example usage.
 
 ``` r
+
 library(teal.data)
 ```
 
 ``` r
+
 # quick start for clinical trial data
 my_data <- cdisc_data(
   ADSL = example_cdisc_data("ADSL"),
@@ -104,6 +108,7 @@ join_keys(my_data) <- default_cdisc_join_keys[datanames]
 ```
 
 ``` r
+
 # quick start for general data
 my_general_data <- within(teal_data(), {
   iris <- iris
@@ -112,6 +117,7 @@ my_general_data <- within(teal_data(), {
 ```
 
 ``` r
+
 # reproducibility check
 data <- teal_data(iris = iris, code = "iris <- mtcars")
 verify(data)
@@ -121,6 +127,7 @@ verify(data)
 ```
 
 ``` r
+
 # code extraction
 iris2_data <- within(teal_data(), {iris2 <- iris[1:6, ]})
 get_code(iris2_data)
@@ -133,20 +140,3 @@ If you encounter a bug or have a feature request, please file an issue.
 For questions, discussions, and staying up to date, please use the
 `teal` channel in the [`pharmaverse` slack
 workspace](https://pharmaverse.slack.com).
-
-## Stargazers and Forkers
-
-### Stargazers over time
-
-[![Stargazers over
-time](https://starchart.cc/insightsengineering/teal.data.svg)](https://starchart.cc/insightsengineering/teal.data)
-
-### Stargazers
-
-[![Stargazers repo roster for
-@insightsengineering/teal.data](http://reporoster.com/stars/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/stargazers)
-
-### Forkers
-
-[![Forkers repo roster for
-@insightsengineering/teal.data](http://reporoster.com/forks/insightsengineering/teal.data)](https://github.com/insightsengineering/teal.data/network/members)

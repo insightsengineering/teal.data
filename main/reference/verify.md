@@ -37,7 +37,7 @@ tdata1 <- within(tdata1, {
 })
 verify(tdata1)
 #> ✅︎ code verified
-#> <environment: 0x559c05294690> 🔒 
+#> <environment: 0x55bab6c387b8> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - a: [numeric]
@@ -47,7 +47,7 @@ verify(tdata1)
 tdata2 <- teal_data(x1 = iris, code = "x1 <- iris")
 verify(tdata2)
 #> ✅︎ code verified
-#> <environment: 0x559c00f1bac0> 🔒 
+#> <environment: 0x55bab34b0408> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - x1: [data.frame]
@@ -79,7 +79,7 @@ tdata4 <- teal_data(
 )
 tdata4
 #> ✖ code unverified
-#> <environment: 0x559c03d69968> 🔒 
+#> <environment: 0x55baba88eb18> 🔒 
 #> Parent: <environment: devtools_shims> 
 #> Bindings:
 #> - a: [numeric]

@@ -38,6 +38,7 @@ object. Also, when retrieving code, unverified objects add a warning to
 the code stating that it has not passed verification.
 
 ``` r
+
 library(teal.data)
 
 data_empty <- teal_data()
@@ -45,38 +46,41 @@ data_empty # is verified
 ```
 
     ## ✅︎ code verified
-    ## <environment: 0x56347faf1320> 🔒 
+    ## <environment: 0x556d7ec95a88> 🔒 
     ## Parent: <environment: package:teal.data>
 
 ``` r
+
 data_empty <- within(data_empty, i <- head(iris))
 data_empty # remains verified
 ```
 
     ## ✅︎ code verified
-    ## <environment: 0x563480a36050> 🔒 
+    ## <environment: 0x556d7fbe3fd0> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
 
 ``` r
+
 data_with_data <- teal_data(i = head(iris), code = "i <- head(iris)")
 data_with_data # is unverified
 ```
 
     ## ✖ code unverified
-    ## <environment: 0x56348166f5d0> 🔒 
+    ## <environment: 0x556d80810540> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
 
 ``` r
+
 data_with_data <- within(data_with_data, i$rand <- sample(nrow(i)))
 data_with_data # remains unverified
 ```
 
     ## ✖ code unverified
-    ## <environment: 0x5634821264b0> 🔒 
+    ## <environment: 0x556d812bedd8> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
@@ -96,6 +100,7 @@ raised.
 ##### verified
 
 ``` r
+
 library(teal.data)
 
 data <- data.frame(x = 11:20)
@@ -112,7 +117,7 @@ data_right <- teal_data(
 ```
 
     ## ✅︎ code verified
-    ## <environment: 0x56347f905ac0> 🔒 
+    ## <environment: 0x556d7ed5d1b8> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - data: [data.frame]
@@ -120,6 +125,7 @@ data_right <- teal_data(
 ##### unverified
 
 ``` r
+
 data_wrong <- teal_data(
   data = data,
   code = quote({
@@ -129,7 +135,8 @@ data_wrong <- teal_data(
 verify(data_wrong) # fails verification, raises error
 ```
 
-    ## Error: Code verification failed.
+    ## Error:
+    ## ! Code verification failed.
     ## Object(s) recreated with code that have different structure in data_wrong:
     ##   • data
 
@@ -142,6 +149,7 @@ a subset of the code that only deals with some of the objects stored in
 `teal_data`.
 
 ``` r
+
 library(teal.data)
 
 data <- within(teal_data(), {
@@ -157,6 +165,7 @@ cat(get_code(data)) # retrieve all code
     ## head(i)
 
 ``` r
+
 cat(get_code(data, names = "i")) # retrieve code for `i`
 ```
 
