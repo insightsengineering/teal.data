@@ -6,12 +6,6 @@
 \usage{
 \method{names}{join_keys}(x) <- value
 }
-\arguments{
-\item{x}{an \R object.}
-
-\item{value}{a character vector of up to the same length as \code{x}, or
-    \code{NULL}.}
-}
 \description{
 The names of a \code{join_keys} object
 }
