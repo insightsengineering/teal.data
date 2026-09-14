@@ -27,7 +27,7 @@ Refer to the section ["Joining Keys with ADaM Datasets"](#join-keys-in-adam-data
 
 The primary function of the `join_keys` class in `teal` applications is to facilitate the seamless [merging of datasets](https://pharmaverse.github.io/teal.transform/latest-tag/articles/data-merge.html) using `teal.transform`.
 
-Additionally, it plays a role in the data filtering using the _[Filter Panel](https://pharmaverse/teal/latest-tag/articles/filter-panel.html)_ in a `teal` application.
+Additionally, it plays a role in the data filtering using the _[Filter Panel](https://pharmaverse.github.io/teal/latest-tag/articles/filter-panel.html)_ in a `teal` application.
 The filters applied to a (parent) dataset are also applied to their children.
 
 ## Anatomy of `join_keys`
