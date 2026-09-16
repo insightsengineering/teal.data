@@ -1,6 +1,6 @@
 #' The names of a `join_keys` object
 #'
-#' @inheritParams base::`names<-`
+#' @inheritParams base::names
 #' @export
 `names<-.join_keys` <- function(x, value) {
   new_x <- unclass(x)

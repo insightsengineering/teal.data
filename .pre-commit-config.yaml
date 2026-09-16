@@ -20,7 +20,7 @@ repos:
           - methods
           - rlang
           - stats
-          - insightsengineering/teal.code
+          - pharmaverse/teal.code
           - utils
           - yaml
       - id: spell-check

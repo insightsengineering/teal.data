@@ -24,9 +24,9 @@ Authors@R: c(
 Description: Provides a 'teal_data' class as a unified data model for
     'teal' applications focusing on reproducibility and relational data.
 License: Apache License 2.0
-URL: https://insightsengineering.github.io/teal.data/,
-    https://github.com/insightsengineering/teal.data/
-BugReports: https://github.com/insightsengineering/teal.data/issues
+URL: https://pharmaverse.github.io/teal.data/,
+    https://github.com/pharmaverse/teal.data/
+BugReports: https://github.com/pharmaverse/teal.data/issues
 Depends:
     R (>= 4.0),
     teal.code (>= 0.7.0)
@@ -48,11 +48,11 @@ VignetteBuilder:
     rmarkdown
 RdMacros:
     lifecycle
-Config/Needs/verdepcheck: insightsengineering/teal.code, mllg/checkmate,
+Config/Needs/verdepcheck: pharmaverse/teal.code, mllg/checkmate,
     r-lib/lifecycle, r-lib/rlang, yihui/knitr, rstudio/rmarkdown,
     insightsengineering/random.cdisc.data, r-lib/testthat, r-lib/withr
 Config/Needs/website: insightsengineering/nesttemplate
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Encoding: UTF-8
 Language: en-US
 LazyData: true
