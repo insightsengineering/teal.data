@@ -47,3 +47,4 @@ data-raw/data.R
 ^\.covrignore$
 ^vignettes/_AGENTS\.Rmd$
 ^AGENTS\.md$
+^CLAUDE\.md$
