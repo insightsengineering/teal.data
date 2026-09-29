@@ -1,0 +1,63 @@
+---
+# This file generates AGENTS.md in the package root.
+# It is not part of the package build or the pkgdown site.
+# To regenerate it, run from the package root:
+#   rmarkdown::render("vignettes/_AGENTS.Rmd", output_file = file.path("AGENTS.md"))
+output:
+  github_document:
+    html_preview: false
+params:
+  url: "https://raw.githubusercontent.com/insightsengineering/teal/refs/heads/add_common_claude%40main/SHARED_AGENTS.md"
+---
+# teal.data R Package Development Guide
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Package Overview
+
+`teal.data` is part of the `teal` framework and provides an API to manage datasets keys in a `teal` app.
+The keys are column names of datasets that allow merging the different datasets.
+
+It provides 4 main features to the framework:
+
+- `join_keys` to show and modify relationships between datasets.
+- `parents()` to modify parent-child relationships.
+- `teal_data` object that extends on `qenv` API by adding API to relate datasets.
+- See `vignettes/teal-data.Rmd` as reference material.
+
+## Development Context
+
+The main feature of this package is to provide `teal` apps with functionality to relate between datasets.
+
+### Relationships with other packages
+
+Direct dependencies:
+
+- `teal.code`: `teal_data` extends a `qenv` object from `teal.code`, where the code execution and reproducibility features are implemented.
+  - Any issue with code execution and reproducibility should be addressed in this package
+
+Usage in other framework packages:
+
+- `teal`: uses the API in `teal.reporter` to maintain an instance of the reporter and uses the exported shiny modules for the interface
+  - Converts the `data` argument in `teal::init()` function to the `teal_report` object that is used in the modules
+  - `teal_report` depends on `teal_data`
+- teal module: The `data` argument passed on to modules uses the `teal_report` data type.
+  - Automatically tracks the code execution and output objects
+  - It is used in custom modules as well as R packages on CRAN: `teal.modules.clinical` and `teal.modules.general`
+
+### Extending teal.data
+
+`teal.data` should allow for its functionality to be extended by users according to their specific needs.
+This can be achieved by adding new methods or overwriting default ones
+
+
+```{r teal_content, echo=FALSE, results='asis'}
+# Append common shared instructions from teal framework
+common_claude_url <- params$url
+common_claude_path <- tempfile()
+download.file(url = common_claude_url, destfile = common_claude_path, quiet = TRUE)
+common_claude_shared <- readLines(common_claude_path)
+cat(common_claude_shared, sep = "\n")
+```

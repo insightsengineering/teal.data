@@ -45,3 +45,5 @@ data-raw/data.R
 ^.revdeprefs\.yaml$
 ^revdep$
 ^\.covrignore$
+^vignettes/_AGENTS\.Rmd$
+^AGENTS\.md$
