@@ -42,12 +42,8 @@ Direct dependencies:
 
 Usage in other framework packages:
 
-- `teal`: uses the API in `teal.reporter` to maintain an instance of the reporter and uses the exported shiny modules for the interface
-  - Converts the `data` argument in `teal::init()` function to the `teal_report` object that is used in the modules
-  - `teal_report` depends on `teal_data`
-- teal module: The `data` argument passed on to modules uses the `teal_report` data type.
-  - Automatically tracks the code execution and output objects
-  - It is used in custom modules as well as R packages on CRAN: `teal.modules.clinical` and `teal.modules.general`
+- `teal`: uses `teal_data` to manage the data and relationships. 
+  - It is passed to the modules which convert it to `teal_reporter` for the report
 
 ### Extending teal.data
 
