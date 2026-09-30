@@ -27,8 +27,7 @@ setOldClass("join_keys")
 #' @slot verified (`logical(1)`) flag signifying that code in `@code` has been
 #'  proven to yield contents of `@.xData`.
 #'  Used internally. See [`teal.data::verify()`] for more details.
-#'
-# Section copied from teal.code::`qenv-class` due to roxygen 8.1.0 issues it needs to be copied
+# FIXME https://github.com/r-lib/roxygen2/issues/1918 @inheritSection teal.code::`qenv-class` Code
 #' @section Code:
 #'
 #' Each code element is a character representing one call. Each element is named with the random
