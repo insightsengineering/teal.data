@@ -25,7 +25,7 @@ It provides 4 main features to the framework:
 - `join_keys` to show and modify relationships between datasets.
 - `parents()` to modify parent-child relationships.
 - `teal_data` object that extends on `qenv` API by adding API to relate datasets.
-- See `vignettes/teal-data.Rmd` as reference material.
+- See `@vignettes/teal-data.Rmd` as reference material.
 
 ## Development Context
 
@@ -35,7 +35,9 @@ The main feature of this package is to provide `teal` apps with functionality to
 
 Direct dependencies:
 
-- `teal.code`: `teal_data` extends a `qenv` object from `teal.code`, where the code execution and reproducibility features are implemented.
+- `teal.code`: `teal_data` extends a `qenv` object from `teal.code`,
+  where the code execution and reproducibility features are implemented. 
+  Any issue with code execution and reproducibility should be addressed in this package.
   - Any issue with code execution and reproducibility should be addressed in this package
 
 Usage in other framework packages:
@@ -59,5 +61,8 @@ common_claude_url <- params$url
 common_claude_path <- tempfile()
 download.file(url = common_claude_url, destfile = common_claude_path, quiet = TRUE)
 common_claude_shared <- readLines(common_claude_path)
+# remove a heading line only intented to aovid a markdown lint error
+line_to_avoid_lintr <- grep("^# ", common_agents_shared)
+common_agents_shared <- common_agents_shared[-1 * line_to_avoid_lintr]
 cat(common_claude_shared, sep = "\n")
 ```
