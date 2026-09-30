@@ -13,7 +13,7 @@ It provides 4 main features to the framework:
 - `parents()` to modify parent-child relationships.
 - `teal_data` object that extends on `qenv` API by adding API to relate
   datasets.
-- See `vignettes/teal-data.Rmd` as reference material.
+- See `@vignettes/teal-data.Rmd` as reference material.
 
 ## Development Context
 
@@ -26,21 +26,16 @@ Direct dependencies:
 
 - `teal.code`: `teal_data` extends a `qenv` object from `teal.code`,
   where the code execution and reproducibility features are implemented.
+  Any issue with code execution and reproducibility should be addressed
+  in this package.
   - Any issue with code execution and reproducibility should be
     addressed in this package
 
 Usage in other framework packages:
 
-- `teal`: uses the API in `teal.reporter` to maintain an instance of the
-  reporter and uses the exported shiny modules for the interface
-  - Converts the `data` argument in `teal::init()` function to the
-    `teal_report` object that is used in the modules
-  - `teal_report` depends on `teal_data`
-- teal module: The `data` argument passed on to modules uses the
-  `teal_report` data type.
-  - Automatically tracks the code execution and output objects
-  - It is used in custom modules as well as R packages on CRAN:
-    `teal.modules.clinical` and `teal.modules.general`
+- `teal`: uses `teal_data` to manage the data and relationships.
+  - It is passed to the modules which convert it to `teal_reporter` for
+    the report
 
 ### Extending teal.data
 
@@ -61,8 +56,8 @@ Follow the standard R package structure with teal-specific conventions:
 
 ``` text
 package_name/
-├── .gitlab-ci.yml    # CI/CD workflows (if package uses Gitlab)
-├── .github           # CI/CD workflows (if package uses GitHub)
+├── .gitlab-ci.yml    # CI/CD workflows (if package hosted in Gitlab)
+├── .github           # CI/CD workflows (if package hosted in GitHub)
 ├── R/                # R source code
 ├── tests/testthat/   # Unit tests using testthat
 ├── vignettes/        # Long-form documentation
@@ -98,13 +93,15 @@ package_name/
 ### Code Quality
 
 - **Run `pre-commit` hooks**: Always run `pre-commit run --all-files`
-  before committing. Fix any issues it reports - the error messages are
+  before committing, Fix any issues it reports - the error messages are
   informative and will guide you. It automatically checks code style,
-  documentation, linting, and other quality issues.
+  documentation and other quality issues. If pre-commit is not
+  available, run the checks manually. Lint the R code manually as well
+  if not called by pre-commit.
 - **Follow `tidyverse` style**: General R code style follows the
   `tidyverse` style guide.
 - **Documentation**: All exported functions must have `roxygen2`
-  documentation with `@returns` and `@examples` fields
+  documentation with `@returns` and `@examples` fields.
 - **Formatting** rules are configured in the `.lintr` file.
 
 ## Dependencies and Imports
