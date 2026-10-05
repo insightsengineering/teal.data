@@ -37,50 +37,42 @@ The verification status is always printed when inspecting a `teal_data`
 object. Also, when retrieving code, unverified objects add a warning to
 the code stating that it has not passed verification.
 
-``` r
-
-library(teal.data)
-
-data_empty <- teal_data()
-data_empty # is verified
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`data_empty`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)`\
+`data_empty`` ``# is verified`
 
     ## ✅︎ code verified
-    ## <environment: 0x556d7ec95a88> 🔒 
+    ## <environment: 0x55cbde5b1340> 🔒 
     ## Parent: <environment: package:teal.data>
 
-``` r
-
-data_empty <- within(data_empty, i <- head(iris))
-data_empty # remains verified
-```
+\
+`data_empty`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``data_empty``, ``i`` ``<-`` `[`head`](https://rdrr.io/r/utils/head.html)`(``iris``)``)`\
+`data_empty`` ``# remains verified`
 
     ## ✅︎ code verified
-    ## <environment: 0x556d7fbe3fd0> 🔒 
+    ## <environment: 0x55cbdf4fa828> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
 
-``` r
-
-data_with_data <- teal_data(i = head(iris), code = "i <- head(iris)")
-data_with_data # is unverified
-```
+\
+`data_with_data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``i ``=`` `[`head`](https://rdrr.io/r/utils/head.html)`(``iris``)``, code ``=`` ``"i <- head(iris)"``)`\
+`data_with_data`` ``# is unverified`
 
     ## ✖ code unverified
-    ## <environment: 0x556d80810540> 🔒 
+    ## <environment: 0x55cbe01265b0> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
 
-``` r
-
-data_with_data <- within(data_with_data, i$rand <- sample(nrow(i)))
-data_with_data # remains unverified
-```
+\
+`data_with_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``data_with_data``, ``i``$``rand`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``i``)``)``)`\
+`data_with_data`` ``# remains unverified`
 
     ## ✖ code unverified
-    ## <environment: 0x556d812bedd8> 🔒 
+    ## <environment: 0x55cbe0bd6168> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - i: [data.frame]
@@ -99,41 +91,37 @@ raised.
 
 ##### verified
 
-``` r
-
-library(teal.data)
-
-data <- data.frame(x = 11:20)
-data$id <- seq_len(nrow(data))
-
-data_right <- teal_data(
-  data = data,
-  code = quote({
-    data <- data.frame(x = 11:20)
-    data$id <- seq_len(nrow(data))
-  })
-) # is unverified
-(data_right_verified <- verify(data_right)) # returns verified object
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x ``=`` ``11``:``20``)`\
+`data``$``id`` ``<-`` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``data``)``)`\
+\
+`data_right`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(`\
+`  data ``=`` ``data``,`\
+`  code ``=`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``{`\
+`    ``data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x ``=`` ``11``:``20``)`\
+`    ``data``$``id`` ``<-`` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``data``)``)`\
+`  ``}``)`\
+`)`` ``# is unverified`\
+`(``data_right_verified`` ``<-`` `[`verify`](https://insightsengineering.github.io/teal.data/reference/verify.md)`(``data_right``)``)`` ``# returns verified object`
 
     ## ✅︎ code verified
-    ## <environment: 0x556d7ed5d1b8> 🔒 
+    ## <environment: 0x55cbdeeb7748> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - data: [data.frame]
 
 ##### unverified
 
-``` r
-
-data_wrong <- teal_data(
-  data = data,
-  code = quote({
-    data <- data.frame(x = 11:20)
-  })
-)
-verify(data_wrong) # fails verification, raises error
-```
+\
+`data_wrong`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(`\
+`  data ``=`` ``data``,`\
+`  code ``=`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``{`\
+`    ``data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x ``=`` ``11``:``20``)`\
+`  ``}``)`\
+`)`\
+[`verify`](https://insightsengineering.github.io/teal.data/reference/verify.md)`(``data_wrong``)`` ``# fails verification, raises error`
 
     ## Error:
     ## ! Code verification failed.
@@ -148,26 +136,22 @@ entirety of the code but using the `names` argument allows for obtaining
 a subset of the code that only deals with some of the objects stored in
 `teal_data`.
 
-``` r
-
-library(teal.data)
-
-data <- within(teal_data(), {
-  i <- iris
-  m <- mtcars
-  head(i)
-})
-cat(get_code(data)) # retrieve all code
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``, ``{`\
+`  ``i`` ``<-`` ``iris`\
+`  ``m`` ``<-`` ``mtcars`\
+`  `[`head`](https://rdrr.io/r/utils/head.html)`(``i``)`\
+`}``)`\
+[`cat`](https://rdrr.io/r/base/cat.html)`(`[`get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)`(``data``)``)`` ``# retrieve all code`
 
     ## i <- iris
     ## m <- mtcars
     ## head(i)
 
-``` r
-
-cat(get_code(data, names = "i")) # retrieve code for `i`
-```
+\
+[`cat`](https://rdrr.io/r/base/cat.html)`(`[`get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)`(``data``, names ``=`` ``"i"``)``)`` ``` # retrieve code for `i` ``
 
     ## i <- iris
 

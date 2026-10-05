@@ -57,18 +57,14 @@ This package provides:
 
 ## Installation
 
-``` r
-
-install.packages('teal.data')
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``'teal.data'``)`
 
 Alternatively, you might want to use the development version.
 
-``` r
-
-# install.packages("pak")
-pak::pak("insightsengineering/teal.data")
-```
+\
+`# install.packages("pak")`\
+`pak``::`[`pak`](https://pak.r-lib.org/reference/pak.html)`(``"insightsengineering/teal.data"``)`
 
 ## Usage
 
@@ -79,60 +75,50 @@ article, which provides multiple examples of code implementation.
 
 Below is the showcase of the example usage.
 
-``` r
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`
 
-library(teal.data)
-```
+\
+`# quick start for clinical trial data`\
+`my_data`` ``<-`` `[`cdisc_data`](https://insightsengineering.github.io/teal.data/reference/cdisc_data.md)`(`\
+`  ADSL ``=`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADSL"``)``,`\
+`  ADTTE ``=`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADTTE"``)``,`\
+`  code ``=`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``{`\
+`    ``ADSL`` ``<-`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADSL"``)`\
+`    ``ADTTE`` ``<-`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADTTE"``)`\
+`  ``}``)`\
+`)`\
+\
+`# or`\
+\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``, ``{`\
+`  ``ADSL`` ``<-`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADSL"``)`\
+`  ``ADTTE`` ``<-`` `[`example_cdisc_data`](https://insightsengineering.github.io/teal.data/reference/example_cdisc_data.md)`(``"ADTTE"``)`\
+`}``)`\
+`datanames`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"ADSL"``, ``"ADTTE"``)`\
+[`datanames`](https://insightsengineering.github.io/teal.data/reference/datanames.md)`(``my_data``)`` ``<-`` ``datanames`\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``my_data``)`` ``<-`` ``default_cdisc_join_keys``[``datanames``]`
 
-``` r
+\
+`# quick start for general data`\
+`my_general_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``, ``{`\
+`  ``iris`` ``<-`` ``iris`\
+`  ``mtcars`` ``<-`` ``mtcars`\
+`}``)`
 
-# quick start for clinical trial data
-my_data <- cdisc_data(
-  ADSL = example_cdisc_data("ADSL"),
-  ADTTE = example_cdisc_data("ADTTE"),
-  code = quote({
-    ADSL <- example_cdisc_data("ADSL")
-    ADTTE <- example_cdisc_data("ADTTE")
-  })
-)
+\
+`# reproducibility check`\
+`data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``iris ``=`` ``iris``, code ``=`` ``"iris <- mtcars"``)`\
+[`verify`](https://insightsengineering.github.io/teal.data/reference/verify.md)`(``data``)`\
+`#> Error: Code verification failed.`\
+`#>  Object(s) recreated with code that have different structure in data:`\
+`#>  • iris`
 
-# or
-
-my_data <- within(teal_data(), {
-  ADSL <- example_cdisc_data("ADSL")
-  ADTTE <- example_cdisc_data("ADTTE")
-})
-datanames <- c("ADSL", "ADTTE")
-datanames(my_data) <- datanames
-join_keys(my_data) <- default_cdisc_join_keys[datanames]
-```
-
-``` r
-
-# quick start for general data
-my_general_data <- within(teal_data(), {
-  iris <- iris
-  mtcars <- mtcars
-})
-```
-
-``` r
-
-# reproducibility check
-data <- teal_data(iris = iris, code = "iris <- mtcars")
-verify(data)
-#> Error: Code verification failed.
-#>  Object(s) recreated with code that have different structure in data:
-#>  • iris
-```
-
-``` r
-
-# code extraction
-iris2_data <- within(teal_data(), {iris2 <- iris[1:6, ]})
-get_code(iris2_data)
-#> "iris2 <- iris[1:6, ]"
-```
+\
+`# code extraction`\
+`iris2_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``, ``{``iris2`` ``<-`` ``iris``[``1``:``6``, ``]``}``)`\
+[`get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)`(``iris2_data``)`\
+`#> "iris2 <- iris[1:6, ]"`
 
 ## Getting help
 

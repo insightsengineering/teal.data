@@ -37,13 +37,13 @@ Source:
 
 Kaledkowski D, Chlebowski A, Kosinski M, Verissimo A, Rucki P, Hallal M,
 Burkoff N, Nasinski M, Pagacz K, Zhao J (2026). *teal.data: Data Model
-for 'teal' Applications*. R package version 0.8.1.9000,
+for 'teal' Applications*. R package version 0.8.1.9001,
 <https://insightsengineering.github.io/teal.data/>.
 
-    @Manual{,
-      title = {teal.data: Data Model for 'teal' Applications},
-      author = {Dawid Kaledkowski and Aleksander Chlebowski and Marcin Kosinski and Andre Verissimo and Pawel Rucki and Mahmoud Hallal and Nikolas Burkoff and Maciej Nasinski and Konrad Pagacz and Junlue Zhao},
-      year = {2026},
-      note = {R package version 0.8.1.9000},
-      url = {https://insightsengineering.github.io/teal.data/},
-    }
+@Manual{,\
+  title = {teal.data: Data Model for 'teal' Applications},\
+  author = {Dawid Kaledkowski and Aleksander Chlebowski and Marcin Kosinski and Andre Verissimo and Pawel Rucki and Mahmoud Hallal and Nikolas Burkoff and Maciej Nasinski and Konrad Pagacz and Junlue Zhao},\
+  year = {2026},\
+  note = {R package version 0.8.1.9001},\
+  url = {https://insightsengineering.github.io/teal.data/},\
+}

@@ -76,21 +76,19 @@ By default, the new joining key will set the `dataset_1` as the parent.
 
 ##### Example & Output
 
-``` r
-
-library(teal.data)
-jk <- join_keys(
-  join_key("ds1", keys = "col_1"), # ds1: [col_1]
-  join_key("ds2", keys = c("col_1", "col_2")), # ds2: [col_1, col_2]
-  join_key("ds3", keys = c("col_1", "col_3")), # ds3: [col_1, col_3]
-  join_key("ds1", "ds2", keys = "col_1"), # ds1 <-- ds2
-  join_key("ds1", "ds3", keys = "col_1"), # ds1 <-- ds3
-  join_key("ds4", "ds5", keys = c("col_4" = "col_5"), directed = FALSE) # ds4 <--> ds5
-)
-
-# The parent-child relationships are created automatically (unless 'parent' parameter is "none")
-jk
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+`jk`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, keys ``=`` ``"col_1"``)``, ``# ds1: [col_1]`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"col_1"``, ``"col_2"``)``)``, ``# ds2: [col_1, col_2]`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds3"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"col_1"``, ``"col_3"``)``)``, ``# ds3: [col_1, col_3]`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds2"``, keys ``=`` ``"col_1"``)``, ``# ds1 <-- ds2`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds3"``, keys ``=`` ``"col_1"``)``, ``# ds1 <-- ds3`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds4"``, ``"ds5"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"col_4"`` ``=`` ``"col_5"``)``, directed ``=`` ``FALSE``)`` ``# ds4 <--> ds5`\
+`)`\
+\
+`# The parent-child relationships are created automatically (unless 'parent' parameter is "none")`\
+`jk`
 
 [TABLE]
 
@@ -100,11 +98,9 @@ The *subset* operator with 2 indices (`x[i, j]`) is used to retrieve the
 primary/foreign keys. Both indices must be a string denoting the dataset
 name.
 
-``` r
-
-# Using the jk object defined in "Anatomy of Join Keys"
-jk
-```
+\
+`# Using the jk object defined in "Anatomy of Join Keys"`\
+`jk`
 
     ## A join_keys object containing foreign keys between 5 datasets:
     ## ds1: [col_1]
@@ -121,20 +117,16 @@ jk
     ## ds5: [no primary keys]
     ##   <-> ds4: [col_4]
 
-``` r
-
-# Getting primary key of "ds1"
-jk["ds1", "ds1"]
-```
+\
+`# Getting primary key of "ds1"`\
+`jk``[``"ds1"``, ``"ds1"``]`
 
     ##   col_1 
     ## "col_1"
 
-``` r
-
-# Getting foreign keys between "ds4" and "ds5"
-jk["ds4", "ds5"]
-```
+\
+`# Getting foreign keys between "ds4" and "ds5"`\
+`jk``[``"ds4"``, ``"ds5"``]`
 
     ##   col_4 
     ## "col_5"
@@ -142,18 +134,14 @@ jk["ds4", "ds5"]
 Note that there is a symmetry in the keys between `ds4` and `ds5`
 relationship:
 
-``` r
-
-jk["ds5", "ds4"]
-```
+\
+`jk``[``"ds5"``, ``"ds4"``]`
 
     ##   col_5 
     ## "col_4"
 
-``` r
-
-jk["ds5", "ds4"]
-```
+\
+`jk``[``"ds5"``, ``"ds4"``]`
 
     ##   col_5 
     ## "col_4"
@@ -161,11 +149,9 @@ jk["ds5", "ds4"]
 When only 1 argument is used this operator will return a `join_keys`
 object that is filtered accordingly.
 
-``` r
-
-# Using the jk object defined in "Anatomy of Join Keys"
-jk
-```
+\
+`# Using the jk object defined in "Anatomy of Join Keys"`\
+`jk`
 
     ## A join_keys object containing foreign keys between 5 datasets:
     ## ds1: [col_1]
@@ -182,20 +168,16 @@ jk
     ## ds5: [no primary keys]
     ##   <-> ds4: [col_4]
 
-``` r
-
-# Getting primary key of "ds1"
-jk["ds1", "ds1"]
-```
+\
+`# Getting primary key of "ds1"`\
+`jk``[``"ds1"``, ``"ds1"``]`
 
     ##   col_1 
     ## "col_1"
 
-``` r
-
-# Getting keys of "ds1" and "ds2"
-jk[c("ds1", "ds2")]
-```
+\
+`# Getting keys of "ds1" and "ds2"`\
+`jk``[`[`c`](https://rdrr.io/r/base/c.html)`(``"ds1"``, ``"ds2"``)``]`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## ds1: [col_1]
@@ -208,14 +190,12 @@ operator `<-`. A symmetric relationship will be created automatically,
 where the parent (by default) will be the dataset defined in the first
 index. Assigning `NULL` value will delete the relationship.
 
-``` r
-
-# Adding a new ds5 <-- ds1 key
-jk["ds1", "ds5"] <- "a_column"
-
-# Removing an existing key
-jk["ds4", "ds5"] <- NULL
-```
+\
+`# Adding a new ds5 <-- ds1 key`\
+`jk``[``"ds1"``, ``"ds5"``]`` ``<-`` ``"a_column"`\
+\
+`# Removing an existing key`\
+`jk``[``"ds4"``, ``"ds5"``]`` ``<-`` ``NULL`
 
 ## Merging Join Keys
 
@@ -229,14 +209,12 @@ For added convenience, the function also accommodates `join_key_set`
 objects created through the `join_key` function. These objects can be
 provided as the initial argument or in any other position as needed.
 
-``` r
-
-jk1 <- join_keys(join_key("ds1", "ds1", "col_1"))
-jk2 <- join_keys(join_key("ds2", "ds2", "col_1"), join_key("ds1", "ds2", "col_1"))
-
-# Merging
-c(jk1, jk2)
-```
+\
+`jk1`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds1"``, ``"col_1"``)``)`\
+`jk2`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, ``"ds2"``, ``"col_1"``)``, `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds2"``, ``"col_1"``)``)`\
+\
+`# Merging`\
+[`c`](https://rdrr.io/r/base/c.html)`(``jk1``, ``jk2``)`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## ds1: [col_1]
@@ -244,11 +222,9 @@ c(jk1, jk2)
     ## ds2: [col_1]
     ##   --> ds1: [col_1]
 
-``` r
-
-# Keeping last occurence
-c(jk1, jk2, join_keys(join_key("ds2", "ds2", "col_2"), join_key("ds1", "ds2", c("col_1" = "col_2"))))
-```
+\
+`# Keeping last occurence`\
+[`c`](https://rdrr.io/r/base/c.html)`(``jk1``, ``jk2``, `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, ``"ds2"``, ``"col_2"``)``, `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds2"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"col_1"`` ``=`` ``"col_2"``)``)``)``)`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## ds1: [col_1]
@@ -256,11 +232,9 @@ c(jk1, jk2, join_keys(join_key("ds2", "ds2", "col_2"), join_key("ds1", "ds2", c(
     ## ds2: [col_2]
     ##   --> ds1: [col_1]
 
-``` r
-
-# Merges join_key and join_key_set objects (from join_key function)
-c(jk1, join_key("ds3", "ds3", "col_3"))
-```
+\
+`# Merges join_key and join_key_set objects (from join_key function)`\
+[`c`](https://rdrr.io/r/base/c.html)`(``jk1``, `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds3"``, ``"ds3"``, ``"col_3"``)``)`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## ds1: [col_1]
@@ -286,19 +260,17 @@ join keys is to use the `join_keys` argument. We can specify the
 column(s) of the dataset that (together) uniquely identify rows in the
 dataset.
 
-``` r
-
-library(teal.data)
-
-td_pk <- within(
-  teal_data(),
-  ds1 <- transform(iris, id = seq_len(nrow(iris)))
-)
-
-join_keys(td_pk) <- join_keys(join_key("ds1", keys = "id"))
-
-join_keys(td_pk)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`td_pk`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`\
+`  `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``,`\
+`  ``ds1`` ``<-`` `[`transform`](https://rdrr.io/r/base/transform.html)`(``iris``, id ``=`` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``iris``)``)``)`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_pk``)`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, keys ``=`` ``"id"``)``)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_pk``)`
 
     ## A join_keys object containing foreign keys between 1 datasets:
     ## ds1: [id]
@@ -306,21 +278,19 @@ join_keys(td_pk)
 We can extend the previous example and define primary keys for multiple
 datasets:
 
-``` r
-
-td_pk <- within(
-  td_pk,
-  {
-    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
-    ds3 <- data.frame(V = 5:14, N = 4)
-  }
-)
-
-join_keys(td_pk)["ds2", "ds2"] <- c("V", "W")
-join_keys(td_pk)["ds3", "ds3"] <- c("V", "W")
-
-join_keys(td_pk)
-```
+\
+`td_pk`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`\
+`  ``td_pk``,`\
+`  ``{`\
+`    ``ds2`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``W ``=`` ``10``:``1``, V ``=`` ``5``:``14``, M ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``1``:``5``, ``2``)``)`\
+`    ``ds3`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``V ``=`` ``5``:``14``, N ``=`` ``4``)`\
+`  ``}`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_pk``)``[``"ds2"``, ``"ds2"``]`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``, ``"W"``)`\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_pk``)``[``"ds3"``, ``"ds3"``]`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``, ``"W"``)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_pk``)`
 
     ## A join_keys object containing foreign keys between 3 datasets:
     ## ds1: [id]
@@ -339,31 +309,29 @@ present in the table.
 
 For example:
 
-``` r
-
-library(teal.data)
-
-td_fk <- within(
-  teal_data(),
-  {
-    ds1 <- data.frame(X = 1:10, Y = 21:30, Z = 1:10)
-    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
-    ds3 <- data.frame(V = 5:14, N = 4)
-  }
-)
-
-join_keys(td_fk) <- join_keys(
-  # Primary keys
-  join_key("ds1", keys = c("X")),
-  join_key("ds2", keys = c("V", "W")),
-  join_key("ds3", keys = c("V")),
-  # Foreign keys
-  join_key("ds1", "ds2", c("X" = "W")),
-  join_key("ds2", "ds3", c("V" = "V"))
-)
-
-join_keys(td_fk)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`td_fk`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`\
+`  `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``,`\
+`  ``{`\
+`    ``ds1`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``X ``=`` ``1``:``10``, Y ``=`` ``21``:``30``, Z ``=`` ``1``:``10``)`\
+`    ``ds2`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``W ``=`` ``10``:``1``, V ``=`` ``5``:``14``, M ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``1``:``5``, ``2``)``)`\
+`    ``ds3`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``V ``=`` ``5``:``14``, N ``=`` ``4``)`\
+`  ``}`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_fk``)`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`\
+`  ``# Primary keys`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"X"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``, ``"W"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds3"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``)``)``,`\
+`  ``# Foreign keys`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds2"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"X"`` ``=`` ``"W"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, ``"ds3"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"V"`` ``=`` ``"V"``)``)`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td_fk``)`
 
     ## A join_keys object containing foreign keys between 3 datasets:
     ## ds1: [X]
@@ -387,34 +355,32 @@ and overwritten just as any other foreign key.
 These implicit relationships can be used to merge 2 datasets together,
 just as if they were defined manually.
 
-``` r
-
-library(teal.data)
-
-td <- within(
-  teal_data(),
-  {
-    ds1 <- data.frame(X = 1:10, Y = 21:30, Z = 1:10)
-    ds2 <- data.frame(W = 10:1, V = 5:14, M = rep(1:5, 2))
-    ds3 <- data.frame(V = 5:14, N = 4)
-    ds4 <- data.frame(V = 5:14, R = rnorm(10))
-  }
-)
-
-join_keys(td) <- join_keys(
-  # Primary keys
-  join_key("ds1", keys = c("X")),
-  join_key("ds2", keys = c("V", "W")),
-  join_key("ds3", keys = c("V")),
-  join_key("ds4", keys = c("V")),
-  # Foreign keys
-  join_key("ds1", "ds2", c("X" = "W")),
-  join_key("ds2", "ds3", c("V" = "V")),
-  join_key("ds1", "ds4", c("X" = "B"))
-)
-
-join_keys(td)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`td`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`\
+`  `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)``,`\
+`  ``{`\
+`    ``ds1`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``X ``=`` ``1``:``10``, Y ``=`` ``21``:``30``, Z ``=`` ``1``:``10``)`\
+`    ``ds2`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``W ``=`` ``10``:``1``, V ``=`` ``5``:``14``, M ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``1``:``5``, ``2``)``)`\
+`    ``ds3`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``V ``=`` ``5``:``14``, N ``=`` ``4``)`\
+`    ``ds4`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``V ``=`` ``5``:``14``, R ``=`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``10``)``)`\
+`  ``}`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td``)`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`\
+`  ``# Primary keys`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"X"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``, ``"W"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds3"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds4"``, keys ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"V"``)``)``,`\
+`  ``# Foreign keys`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds2"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"X"`` ``=`` ``"W"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds2"``, ``"ds3"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"V"`` ``=`` ``"V"``)``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"ds1"``, ``"ds4"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"X"`` ``=`` ``"B"``)``)`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td``)`
 
     ## A join_keys object containing foreign keys between 4 datasets:
     ## ds1: [X]
@@ -430,10 +396,8 @@ join_keys(td)
     ##   --> ds1: [X]
     ##   --* (implicit via parent with): ds2
 
-``` r
-
-join_keys(td)["ds2", "ds4"]
-```
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``td``)``[``"ds2"``, ``"ds4"``]`
 
     ##   W 
     ## "B"
@@ -447,10 +411,8 @@ Note that the definition above contains no `join_key` for
 for datasets named according to the ADaM standard. They are stored in
 `default_cdisc_join_keys`.
 
-``` r
-
-names(default_cdisc_join_keys) |> sort()
-```
+\
+[`names`](https://rdrr.io/r/base/names.html)`(``default_cdisc_join_keys``)`` ``|>`` `[`sort`](https://rdrr.io/r/base/sort.html)`(``)`
 
     ##  [1] "ADAE"     "ADAETTE"  "ADCM"     "ADCSSRS"  "ADDV"     "ADEG"    
     ##  [7] "ADEQ5D5L" "ADEX"     "ADHY"     "ADLB"     "ADMH"     "ADQLQC"  
@@ -464,10 +426,8 @@ every element that is selected, its parent will also be returned (if it
 has one) as well as any pair-wise relationships in the resulting
 selection.
 
-``` r
-
-default_cdisc_join_keys
-```
+\
+`default_cdisc_join_keys`
 
     ## A join_keys object containing foreign keys between 19 datasets:
     ## ADSL: [STUDYID, USUBJID]
@@ -544,18 +504,14 @@ default_cdisc_join_keys
     ##   --> ADSL: [STUDYID, USUBJID]
     ##   --* (implicit via parent with): ADAE, ADEG, ADTTE, ADAETTE, ADCM, ADEX, ADLB, ADMH, ADQS, ADRS, ADSAFTTE, ADVS, ADDV, ADSUB, ADHY, ADQLQC, ADCSSRS
 
-``` r
-
-default_cdisc_join_keys["ADSL"]
-```
+\
+`default_cdisc_join_keys``[``"ADSL"``]`
 
     ## A join_keys object containing foreign keys between 1 datasets:
     ## ADSL: [STUDYID, USUBJID]
 
-``` r
-
-default_cdisc_join_keys["ADTTE"]
-```
+\
+`default_cdisc_join_keys``[``"ADTTE"``]`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## ADSL: [STUDYID, USUBJID]
@@ -563,10 +519,8 @@ default_cdisc_join_keys["ADTTE"]
     ## ADTTE: [STUDYID, USUBJID, PARAMCD]
     ##   --> ADSL: [STUDYID, USUBJID]
 
-``` r
-
-default_cdisc_join_keys[c("ADSL", "ADTTE", "ADRS")]
-```
+\
+`default_cdisc_join_keys``[`[`c`](https://rdrr.io/r/base/c.html)`(``"ADSL"``, ``"ADTTE"``, ``"ADRS"``)``]`
 
     ## A join_keys object containing foreign keys between 3 datasets:
     ## ADSL: [STUDYID, USUBJID]

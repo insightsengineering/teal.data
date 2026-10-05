@@ -33,42 +33,40 @@ first. `teal_data` has following characteristics:
 To create an object of class `teal_data`, use the `teal_data` function.
 `teal_data` has a number of methods to interact with the object.
 
-``` r
-
-library(teal.data)
-
-# create teal_data object
-my_data <- teal_data()
-
-# run code within teal_data to create data objects
-my_data <- within(
-  my_data,
-  {
-    data1 <- data.frame(id = 1:10, x = 11:20)
-    data2 <- data.frame(id = 1:10, x = 21:30)
-    data3 <- data.frame(id = 1:10, x = 31:40)
-  }
-)
-
-# get objects stored in teal_data
-my_data[["data1"]]
-my_data[["data2"]]
-
-# limit objects stored in teal_data
-my_data[c("data1", "data3")]
-
-# get reproducible code
-get_code(my_data)
-
-# get code just for specific object
-get_code(my_data, names = "data2")
-
-# get datanames
-names(my_data)
-
-# print
-print(my_data)
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`teal.data`](https://insightsengineering.github.io/teal.data/)`)`\
+\
+`# create teal_data object`\
+`my_data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)`\
+\
+`# run code within teal_data to create data objects`\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(`\
+`  ``my_data``,`\
+`  ``{`\
+`    ``data1`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``10``, x ``=`` ``11``:``20``)`\
+`    ``data2`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``10``, x ``=`` ``21``:``30``)`\
+`    ``data3`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``10``, x ``=`` ``31``:``40``)`\
+`  ``}`\
+`)`\
+\
+`# get objects stored in teal_data`\
+`my_data``[[``"data1"``]``]`\
+`my_data``[[``"data2"``]``]`\
+\
+`# limit objects stored in teal_data`\
+`my_data``[`[`c`](https://rdrr.io/r/base/c.html)`(``"data1"``, ``"data3"``)``]`\
+\
+`# get reproducible code`\
+[`get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)`(``my_data``)`\
+\
+`# get code just for specific object`\
+[`get_code`](https://insightsengineering.github.io/teal.code/latest-tag/reference/get_code.html)`(``my_data``, names ``=`` ``"data2"``)`\
+\
+`# get datanames`\
+[`names`](https://rdrr.io/r/base/names.html)`(``my_data``)`\
+\
+`# print`\
+[`print`](https://rdrr.io/r/base/print.html)`(``my_data``)`
 
 #### Reproducibility
 
@@ -78,16 +76,14 @@ as *verified*, and create datasets by evaluating code in the object,
 using `within` or `eval_code`. Read more in [teal_data
 Reproducibility](https://insightsengineering.github.io/teal.data/articles/teal-data-reproducibility.md).
 
-``` r
-
-my_data <- teal_data()
-my_data <- within(my_data, data <- data.frame(x = 11:20))
-my_data <- within(my_data, data$id <- seq_len(nrow(data)))
-my_data # is verified
-```
+\
+`my_data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)`\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``my_data``, ``data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``x ``=`` ``11``:``20``)``)`\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``my_data``, ``data``$``id`` ``<-`` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``data``)``)``)`\
+`my_data`` ``# is verified`
 
     ## ✅︎ code verified
-    ## <environment: 0x563d49fe1368> 🔒 
+    ## <environment: 0x5582755a70d0> 🔒 
     ## Parent: <environment: package:teal.data> 
     ## Bindings:
     ## - data: [data.frame]
@@ -100,22 +96,20 @@ object. These relationships can be read or set with the `join_keys`
 function. See more in
 [join_keys](https://insightsengineering.github.io/teal.data/articles/join-keys.md).
 
-``` r
-
-my_data <- teal_data()
-my_data <- within(my_data, {
-  data <- data.frame(id = 1:10, x = 11:20)
-  child <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
-})
-
-join_keys(my_data) <- join_keys(
-  join_key("data", "data", key = "id"),
-  join_key("child", "child", key = "id"),
-  join_key("child", "data", key = c("data_id" = "id"))
-)
-
-join_keys(my_data)
-```
+\
+`my_data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)`\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``my_data``, ``{`\
+`  ``data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``10``, x ``=`` ``11``:``20``)`\
+`  ``child`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``20``, data_id ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``:``10``, ``1``:``10``)``, y ``=`` ``21``:``30``)`\
+`}``)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``my_data``)`` ``<-`` `[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"data"``, ``"data"``, key ``=`` ``"id"``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"child"``, ``"child"``, key ``=`` ``"id"``)``,`\
+`  `[`join_key`](https://insightsengineering.github.io/teal.data/reference/join_key.md)`(``"child"``, ``"data"``, key ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"data_id"`` ``=`` ``"id"``)``)`\
+`)`\
+\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``my_data``)`
 
     ## A join_keys object containing foreign keys between 2 datasets:
     ## child: [id]
@@ -123,11 +117,9 @@ join_keys(my_data)
     ## data: [id]
     ##   --> child: [data_id]
 
-``` r
-
-# join_keys for limited object
-join_keys(my_data["child"])
-```
+\
+`# join_keys for limited object`\
+[`join_keys`](https://insightsengineering.github.io/teal.data/reference/join_keys.md)`(``my_data``[``"child"``]``)`
 
     ## A join_keys object containing foreign keys between 1 datasets:
     ## child: [id]
@@ -138,22 +130,18 @@ An object is hidden in `teal_data` if its name starts with a dot (`.`).
 This can be used to pass auxiliary objects in the `teal_data` instance,
 without being visible in the `teal` summary and filter panel.
 
-``` r
-
-my_data <- teal_data()
-my_data <- within(my_data, {
-  data <- data.frame(id = 1:10, x = 11:20)
-  .data2 <- data.frame(id = 1:20, data_id = c(1:10, 1:10), y = 21:30)
-})
-
-ls(my_data)
-```
+\
+`my_data`` ``<-`` `[`teal_data`](https://insightsengineering.github.io/teal.data/reference/teal_data.md)`(``)`\
+`my_data`` ``<-`` `[`within`](https://rdrr.io/r/base/with.html)`(``my_data``, ``{`\
+`  ``data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``10``, x ``=`` ``11``:``20``)`\
+`  ``.data2`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(``id ``=`` ``1``:``20``, data_id ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``:``10``, ``1``:``10``)``, y ``=`` ``21``:``30``)`\
+`}``)`\
+\
+[`ls`](https://rdrr.io/r/base/ls.html)`(``my_data``)`
 
     ## [1] "data"
 
-``` r
-
-names(my_data)
-```
+\
+[`names`](https://rdrr.io/r/base/names.html)`(``my_data``)`
 
     ## [1] "data"
