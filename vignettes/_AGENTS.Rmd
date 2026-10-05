@@ -57,13 +57,20 @@ common_agents_url <- params$url
 common_agents_path <- tempfile()
 download.file(url = common_agents_url, destfile = common_agents_path, quiet = TRUE)
 common_agents_shared <- readLines(common_agents_path)
-# remove a heading line only intented to aovid a markdown lint error
-line_to_avoid_lintr <- grep("^# ", common_agents_shared)
 # remove section intended only for module packages
-begins_module_section <- grep("<!-- Begins Module Section", common_agents_shared, fixed = TRUE)
-ends_module_section <- grep("<!-- Ends Module Section", common_agents_shared, fixed = TRUE)
-common_agents_shared <- common_agents_shared[
-  -1 * c(line_to_avoid_lintr, seq(from = begins_module_section, to = ends_module_section))
-]
-cat(common_agents_shared, sep = "\n")
+remove_sections <- c("<!-- (Begins|Ends) Module Section")
+Reduce(
+  function(x, y) {
+    delim <- grep(y, x)
+    if (length(delim) == 0) {
+      return(x)
+    } else if (length(delim) != 2) {
+      stop("Section delimiters are not balanced")
+    }
+    x[-1 * seq(from = delim[1], to = delim[2])]
+  },
+  remove_sections,
+  init = common_agents_shared
+) |>
+  cat(sep = "\n")
 ```
