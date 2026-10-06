@@ -1,5 +1,5 @@
 ---
-url: https://insightsengineering.github.io/teal.data
+url: https://pharmaverse.github.io/teal.data
 
 template:
   package: nesttemplate
@@ -21,7 +21,7 @@ navbar:
     github:
       icon: fa-github
       aria-label: View on Github
-      href: https://github.com/insightsengineering/teal.data
+      href: https://github.com/pharmaverse/teal.data
 
 articles:
   - title: Get started

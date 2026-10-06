@@ -1,33 +1,33 @@
 ---
 current_repo:
-  repo: insightsengineering/teal.data
+  repo: pharmaverse/teal.data
   host: https://github.com
 upstream_repos:
-  insightsengineering/teal.code:
-    repo: insightsengineering/teal.code
+  pharmaverse/teal.code:
+    repo: pharmaverse/teal.code
     host: https://github.com
 downstream_repos:
-  insightsengineering/teal.slice:
-    repo: insightsengineering/teal.slice
+  pharmaverse/teal.slice:
+    repo: pharmaverse/teal.slice
     host: https://github.com
-  insightsengineering/teal:
-    repo: insightsengineering/teal
+  pharmaverse/teal:
+    repo: pharmaverse/teal
     host: https://github.com
-  insightsengineering/teal.modules.general:
-    repo: insightsengineering/teal.modules.general
+  pharmaverse/teal.modules.general:
+    repo: pharmaverse/teal.modules.general
     host: https://github.com
-  insightsengineering/teal.modules.clinical:
-    repo: insightsengineering/teal.modules.clinical
+  pharmaverse/teal.modules.clinical:
+    repo: pharmaverse/teal.modules.clinical
     host: https://github.com
-  insightsengineering/teal.transform:
-    repo: insightsengineering/teal.transform
+  pharmaverse/teal.transform:
+    repo: pharmaverse/teal.transform
     host: https://github.com
-  insightsengineering/teal.osprey:
-    repo: insightsengineering/teal.osprey
+  pharmaverse/teal.osprey:
+    repo: pharmaverse/teal.osprey
     host: https://github.com
-  insightsengineering/teal.modules.hermes:
-    repo: insightsengineering/teal.modules.hermes
+  pharmaverse/teal.modules.hermes:
+    repo: pharmaverse/teal.modules.hermes
     host: https://github.com
-  insightsengineering/teal.modules.helios:
-    repo: insightsengineering/teal.modules.helios
+  pharmaverse/teal.modules.helios:
+    repo: pharmaverse/teal.modules.helios
     host: https://github.com

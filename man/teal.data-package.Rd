@@ -14,9 +14,9 @@ it's easily extendable by another data sources.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://insightsengineering.github.io/teal.data/}
-  \item \url{https://github.com/insightsengineering/teal.data/}
-  \item Report bugs at \url{https://github.com/insightsengineering/teal.data/issues}
+  \item \url{https://pharmaverse.github.io/teal.data/}
+  \item \url{https://github.com/pharmaverse/teal.data/}
+  \item Report bugs at \url{https://github.com/pharmaverse/teal.data/issues}
 }
 
 }
